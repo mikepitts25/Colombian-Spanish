@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Deck, FlashCard } from '../types';
 
-const KEY = 'SRS_DECKS_V1';
+const KEY = 'SRS_DECKS_V2'; // bump to V2 to force reseed/merge on upgrade
 
 export async function loadDecks(): Promise<Deck[]> {
   const raw = await AsyncStorage.getItem(KEY);

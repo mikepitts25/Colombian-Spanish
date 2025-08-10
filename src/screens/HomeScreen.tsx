@@ -3,34 +3,43 @@ import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import Tag from '../components/Tag';
-import AudioButton from '../components/AudioButton';
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen() {
-  const { ready, decks, activeDeck, setActiveDeckId } = useDeck();
+  const { ready, decks, activeDeck, activeDeckId, setActiveDeckId } = useDeck();
+  const nav = useNavigation<any>();
   if (!ready) return <SafeAreaView style={styles.wrap}><Text style={styles.h1}>Cargando…</Text></SafeAreaView>;
 
   return (
     <SafeAreaView style={styles.wrap}>
       <Text style={styles.h1}>Colombian Spanish 🇨🇴</Text>
-      <Text style={styles.sub}>Spaced repetition • active recall • interleaving • dual coding</Text>
+      <Text style={styles.sub}>Choose a deck to study. Your current deck is highlighted.</Text>
 
       <FlatList
         data={decks}
         keyExtractor={d => d.id}
-        renderItem={({ item }) => (
-          <View style={[styles.card, item.id === activeDeck?.id && { borderColor: colors.accent, borderWidth: 2 }]}> 
-            <Text style={styles.deckTitle}>{item.name}</Text>
-            <Text style={styles.deckDesc}>{item.description}</Text>
-            <View style={{ flexDirection: 'row', marginTop: spacing(1) }}>
-              <Tag label={`Cards: ${item.cards.length}`} />
-              <Tag label={'Dialect: CO'} />
+        renderItem={({ item }) => {
+          const isActive = item.id === activeDeckId;
+          return (
+            <View style={[styles.card, isActive && { borderColor: colors.accent, borderWidth: 2 }]}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Text style={styles.deckTitle}>{item.name}</Text>
+                {isActive ? <Tag label="Active" /> : null}
+              </View>
+              <Text style={styles.deckDesc}>{item.description}</Text>
+              <View style={{ flexDirection: 'row', marginTop: spacing(1) }}>
+                <Tag label={`Cards: ${item.cards.length}`} />
+                <Tag label={'Dialect: CO'} />
+              </View>
+              <Text
+                onPress={() => { setActiveDeckId(item.id); nav.navigate('Study'); }}
+                style={styles.select}
+              >
+                Use this deck →
+              </Text>
             </View>
-            <View style={{ marginTop: spacing(1) }}>
-              <AudioButton text={item.cards[0]?.front ?? 'Hola'} />
-            </View>
-            <Text onPress={() => setActiveDeckId(item.id)} style={styles.select}>Use this deck →</Text>
-          </View>
-        )}
+          );
+        }}
       />
     </SafeAreaView>
   );
