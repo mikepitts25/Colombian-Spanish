@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Deck, FlashCard } from '../types';
 
-const KEY = 'SRS_DECKS_V2'; // bump to V2 to force reseed/merge on upgrade
+const KEY = 'SRS_DECKS_V3';
 
 export async function loadDecks(): Promise<Deck[]> {
   const raw = await AsyncStorage.getItem(KEY);
@@ -26,4 +26,10 @@ export async function addCard(deckId: string, card: FlashCard) {
   if (!d) return;
   d.cards.push(card);
   await saveDecks(decks);
+}
+
+export async function removeDeckById(deckId: string) {
+  const decks = await loadDecks();
+  const next = decks.filter(d => d.id !== deckId);
+  await saveDecks(next);
 }

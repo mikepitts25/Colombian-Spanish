@@ -2,16 +2,17 @@ import React, { createContext, useContext, useEffect, useMemo, useState, ReactNo
 import { loadDecks, saveDecks, upsertDeck, addCard as addCardStorage } from '../storage/storage';
 import { Deck, FlashCard } from '../types';
 import { nextBatch, gradeCard } from '../utils/srs';
-import { ColombianBasicDeck } from '../data/decks/colombian_basic';
+import { ActionsDeck } from '../data/decks/actions';
 
-let SEED_DECKS: Deck[] = [ColombianBasicDeck];
+let SEED_DECKS: Deck[] = [ActionsDeck];
 try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const decksIndex = require('../data/decks');
-  if (decksIndex && decksIndex.ALL_DECKS && Array.isArray(decksIndex.ALL_DECKS) && decksIndex.ALL_DECKS.length > 0) {
+  if (decksIndex && Array.isArray(decksIndex.ALL_DECKS) && decksIndex.ALL_DECKS.length > 0) {
     SEED_DECKS = decksIndex.ALL_DECKS as Deck[];
   }
 } catch {}
+
+const REMOVED_IDS = new Set<string>(['colombian-basic-1']);
 
 type Ctx = {
   ready: boolean;
@@ -30,17 +31,20 @@ const DeckContext = createContext<Ctx | undefined>(undefined);
 export function DeckProvider({ children }: { children: ReactNode }) {
   const [decks, setDecks] = useState<Deck[]>([]);
   const [ready, setReady] = useState(false);
-  const [activeDeckId, setActiveDeckId] = useState<string | undefined>('colombian-basic-1');
+  const [activeDeckId, setActiveDeckId] = useState<string | undefined>(undefined);
 
-  async function seedOrMerge() {
-    const stored = await loadDecks();
-    if (!stored || stored.length === 0) {
+  async function migrateAndSeed() {
+    const stored = (await loadDecks()).filter(d => !REMOVED_IDS.has(d.id));
+
+    if (stored.length === 0) {
       for (const d of SEED_DECKS) {
         await upsertDeck(d);
       }
       setDecks(SEED_DECKS);
+      setActiveDeckId(SEED_DECKS[0]?.id);
       return;
     }
+
     const storedIds = new Set(stored.map(d => d.id));
     let changed = false;
     for (const d of SEED_DECKS) {
@@ -53,11 +57,14 @@ export function DeckProvider({ children }: { children: ReactNode }) {
       await saveDecks(stored);
     }
     setDecks(stored);
+    if (!activeDeckId || !stored.some(d => d.id === activeDeckId)) {
+      setActiveDeckId(stored[0]?.id);
+    }
   }
 
   useEffect(() => {
     (async () => {
-      await seedOrMerge();
+      await migrateAndSeed();
       setReady(true);
     })();
   }, []);
@@ -96,12 +103,12 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     } as FlashCard;
     await addCardStorage(activeDeck.id, card);
     const updated = await loadDecks();
-    setDecks(updated);
+    setDecks(updated.filter(d => !REMOVED_IDS.has(d.id)));
   }
 
   async function reload() {
     const stored = await loadDecks();
-    setDecks(stored);
+    setDecks(stored.filter(d => !REMOVED_IDS.has(d.id)));
   }
 
   const value: Ctx = {
