@@ -17,21 +17,33 @@ function Tabs() {
         headerTintColor: '#fff',
         tabBarStyle: { backgroundColor: '#0f172a', borderTopColor: '#0b1229' },
         tabBarActiveTintColor: '#22d3ee',
-        tabBarInactiveTintColor: '#94a3b8'
+        tabBarInactiveTintColor: '#94a3b8',
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{
-        tabBarLabel: ({ color }) => <Text style={{ color }}>Inicio</Text>,
-        title: 'Inicio'
-      }} />
-      <Tab.Screen name="Study" component={StudyScreen} options={{
-        tabBarLabel: ({ color }) => <Text style={{ color }}>Estudiar</Text>,
-        title: 'Estudiar'
-      }} />
-      <Tab.Screen name="Add" component={AddCardScreen} options={{
-        tabBarLabel: ({ color }) => <Text style={{ color }}>Agregar</Text>,
-        title: 'Agregar Tarjetas'
-      }} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: ({ color }) => <Text style={{ color }}>Home</Text>,
+          title: 'Home',
+        }}
+      />
+      <Tab.Screen
+        name="Study"
+        component={StudyScreen}
+        options={{
+          tabBarLabel: ({ color }) => <Text style={{ color }}>Study</Text>,
+          title: 'Study',
+        }}
+      />
+      <Tab.Screen
+        name="Add"
+        component={AddCardScreen}
+        options={{
+          tabBarLabel: ({ color }) => <Text style={{ color }}>Add</Text>,
+          title: 'Add Cards',
+        }}
+      />
     </Tab.Navigator>
   );
 }

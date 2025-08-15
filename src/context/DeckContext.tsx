@@ -2,17 +2,16 @@ import React, { createContext, useContext, useEffect, useMemo, useState, ReactNo
 import { loadDecks, saveDecks, upsertDeck, addCard as addCardStorage } from '../storage/storage';
 import { Deck, FlashCard } from '../types';
 import { nextBatch, gradeCard } from '../utils/srs';
-import { ActionsDeck } from '../data/decks/actions';
 
-let SEED_DECKS: Deck[] = [ActionsDeck];
+// Try to import ALL_DECKS from src/data/decks (static build-time import)
+let SEED_DECKS: Deck[] = [];
 try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const decksIndex = require('../data/decks');
-  if (decksIndex && Array.isArray(decksIndex.ALL_DECKS) && decksIndex.ALL_DECKS.length > 0) {
+  if (decksIndex && Array.isArray(decksIndex.ALL_DECKS)) {
     SEED_DECKS = decksIndex.ALL_DECKS as Deck[];
   }
 } catch {}
-
-const REMOVED_IDS = new Set<string>(['colombian-basic-1']);
 
 type Ctx = {
   ready: boolean;
@@ -22,7 +21,8 @@ type Ctx = {
   setActiveDeckId: (id: string) => void;
   getStudyBatch: (size?: number) => FlashCard[];
   recordAnswer: (cardId: string, quality: 0|1|2|3|4|5) => Promise<void>;
-  addCard: (card: Omit<FlashCard, 'createdAt'|'due'|'reps'|'interval'|'ease'>) => Promise<void>;
+  addCardToDeck: (deckId: string, card: Omit<FlashCard, 'createdAt'|'due'|'reps'|'interval'|'ease'>) => Promise<void>;
+  createDeck: (name: string, description?: string) => Promise<Deck | undefined>;
   reload: () => Promise<void>;
 };
 
@@ -33,40 +33,38 @@ export function DeckProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
   const [activeDeckId, setActiveDeckId] = useState<string | undefined>(undefined);
 
-  async function migrateAndSeed() {
-    const stored = (await loadDecks()).filter(d => !REMOVED_IDS.has(d.id));
-
-    if (stored.length === 0) {
+  async function seedOrMerge() {
+    const stored = await loadDecks();
+    let working = stored ?? [];
+    // Seed on truly empty installs
+    if (!working || working.length === 0) {
+      if (SEED_DECKS.length > 0) {
+        for (const d of SEED_DECKS) {
+          await upsertDeck(d);
+        }
+        working = SEED_DECKS.slice();
+      } else {
+        working = [];
+      }
+    } else {
+      // Merge in any new seed decks by id
+      const present = new Set(working.map(d => d.id));
+      let changed = false;
       for (const d of SEED_DECKS) {
-        await upsertDeck(d);
+        if (!present.has(d.id)) { working.push(d); changed = true; }
       }
-      setDecks(SEED_DECKS);
-      setActiveDeckId(SEED_DECKS[0]?.id);
-      return;
+      if (changed) await saveDecks(working);
     }
-
-    const storedIds = new Set(stored.map(d => d.id));
-    let changed = false;
-    for (const d of SEED_DECKS) {
-      if (!storedIds.has(d.id)) {
-        stored.push(d);
-        changed = true;
-      }
-    }
-    if (changed) {
-      await saveDecks(stored);
-    }
-    setDecks(stored);
-    if (!activeDeckId || !stored.some(d => d.id === activeDeckId)) {
-      setActiveDeckId(stored[0]?.id);
-    }
+    setDecks(working);
+    if (!activeDeckId && working.length > 0) setActiveDeckId(working[0].id);
   }
 
   useEffect(() => {
     (async () => {
-      await migrateAndSeed();
+      await seedOrMerge();
       setReady(true);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const activeDeck = useMemo(() => decks.find(d => d.id === activeDeckId) || decks[0], [decks, activeDeckId]);
@@ -91,8 +89,7 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     await setDeck(deck);
   }
 
-  async function addCard(newCard: Omit<FlashCard, 'createdAt'|'due'|'reps'|'interval'|'ease'>) {
-    if (!activeDeck) return;
+  async function addCardToDeck(deckId: string, newCard: Omit<FlashCard, 'createdAt'|'due'|'reps'|'interval'|'ease'>) {
     const card: FlashCard = {
       ...newCard,
       createdAt: Date.now(),
@@ -101,14 +98,24 @@ export function DeckProvider({ children }: { children: ReactNode }) {
       interval: 0,
       ease: 2.5
     } as FlashCard;
-    await addCardStorage(activeDeck.id, card);
+    await addCardStorage(deckId, card);
     const updated = await loadDecks();
-    setDecks(updated.filter(d => !REMOVED_IDS.has(d.id)));
+    setDecks(updated);
+  }
+
+  async function createDeck(name: string, description?: string) : Promise<Deck | undefined> {
+    const id = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now();
+    const newDeck: Deck = { id, name: name.trim(), description: description || '', cards: [] };
+    await upsertDeck(newDeck);
+    const updated = await loadDecks();
+    setDecks(updated);
+    if (!activeDeckId) setActiveDeckId(newDeck.id);
+    return newDeck;
   }
 
   async function reload() {
     const stored = await loadDecks();
-    setDecks(stored.filter(d => !REMOVED_IDS.has(d.id)));
+    setDecks(stored);
   }
 
   const value: Ctx = {
@@ -119,7 +126,8 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     setActiveDeckId,
     getStudyBatch,
     recordAnswer,
-    addCard,
+    addCardToDeck,
+    createDeck,
     reload,
   };
 
