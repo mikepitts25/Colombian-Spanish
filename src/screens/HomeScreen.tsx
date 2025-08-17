@@ -1,58 +1,79 @@
-import React, { useMemo } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, View, Pressable, ScrollView, LayoutAnimation, UIManager, Platform } from 'react-native';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
 
-type CategoryKey = 'People' | 'Places' | 'Around the House' | 'Food & Drink' | 'Communication' | 'Health' | 'Nature & Weather' | 'Work & School' | 'Numbers & Dates' | 'Sports & Hobbies' | 'Tech' | 'Colombianisms' | 'Other';
+type CategoryKey =
+  | 'Colombianisms'
+  | 'Essentials'
+  | 'People & Relationships'
+  | 'Places & Travel'
+  | 'Home & Daily Life'
+  | 'Food & Drink'
+  | 'Communication'
+  | 'Health'
+  | 'Nature'
+  | 'Work & School'
+  | 'Numbers & Time'
+  | 'Fun & Culture'
+  | 'Tech'
+  | 'Other';
+
+// enable animations on Android
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId } = useDeck();
   const nav = useNavigation<any>();
+  const [openCats, setOpenCats] = useState<Record<string, boolean>>({});
 
-  // 🔧 FIX: call useMemo unconditionally so hook order never changes
   const sections = useMemo(() => groupIntoCategories(decks || []), [decks]);
+
+  const toggleCat = (key: string) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setOpenCats(prev => ({ ...prev, [key]: !prev[key] }));
+  };
 
   if (!ready) return <SafeAreaView style={styles.wrap}><Text style={styles.h1}>Cargando…</Text></SafeAreaView>;
 
   return (
     <SafeAreaView style={styles.wrap}>
       <Text style={styles.h1}>Colombian Spanish 🇨🇴</Text>
-      <Text style={styles.sub}>Pick a deck to study. Tap to activate — long-press to preview details.</Text>
+      <Text style={styles.sub}>Pick a category to expand and study its decks.</Text>
 
       <ScrollView contentContainerStyle={{ paddingBottom: spacing(3) }}>
-        {/* Colombianisms shortcut */}
-        {sections.find(s => s.key === 'Colombianisms' && s.data.length > 0) ? (
-          <Pressable style={styles.banner} onPress={() => {
-            const slang = sections.find(s => s.key === 'Colombianisms')!.data[0];
-            setActiveDeckId(slang.id); nav.navigate('Study');
-          }}>
-            <Text style={styles.bannerTitle}>🇨🇴 Slang & Colloquialisms</Text>
-            <Text style={styles.bannerSub}>Real-life Spanish for Colombia</Text>
-          </Pressable>
-        ) : null}
-
-        {sections.map(section => (
-          <View key={section.key} style={{ marginBottom: spacing(2) }}>
-            <Text style={styles.sectionTitle}>{section.key}</Text>
-            <View style={styles.grid}>
-              {section.data.map(deck => {
-                const isActive = deck.id === activeDeckId;
-                return (
-                  <Pressable
-                    key={deck.id}
-                    style={[styles.tile, isActive && styles.tileActive]}
-                    onPress={() => { setActiveDeckId(deck.id); nav.navigate('Study'); }}
-                  >
-                    <Text style={styles.tileTitle} numberOfLines={2}>{deck.name}</Text>
-                    <Text style={styles.tileSub}>{deck.cards.length} cards</Text>
-                    {isActive ? <Text style={styles.activeBadge}>Active</Text> : null}
-                  </Pressable>
-                );
-              })}
+        {sections.map(section => {
+          const isOpen = !!openCats[section.key];
+          return (
+            <View key={section.key} style={styles.catBlock}>
+              <Pressable style={styles.catTile} onPress={() => toggleCat(section.key)}>
+                <Text style={styles.catTitle}>{section.key}</Text>
+                <Text style={styles.catSub}>{section.data.length} decks</Text>
+              </Pressable>
+              {isOpen && (
+                <View style={styles.grid}>
+                  {section.data.map(deck => {
+                    const isActive = deck.id === activeDeckId;
+                    return (
+                      <Pressable
+                        key={deck.id}
+                        style={[styles.tile, isActive && styles.tileActive]}
+                        onPress={() => { setActiveDeckId(deck.id); nav.navigate('Study'); }}
+                      >
+                        <Text style={styles.tileTitle} numberOfLines={2}>{deck.name}</Text>
+                        <Text style={styles.tileSub}>{deck.cards.length} cards</Text>
+                        {isActive ? <Text style={styles.activeBadge}>Active</Text> : null}
+                      </Pressable>
+                    );
+                  })}
+                </View>
+              )}
             </View>
-          </View>
-        ))}
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -60,18 +81,19 @@ export default function HomeScreen() {
 
 function groupIntoCategories(decks: any[]) {
   const buckets: Record<CategoryKey, any[]> = {
-    'People': [],
-    'Places': [],
-    'Around the House': [],
+    'Colombianisms': [],
+    'Essentials': [],
+    'People & Relationships': [],
+    'Places & Travel': [],
+    'Home & Daily Life': [],
     'Food & Drink': [],
     'Communication': [],
     'Health': [],
-    'Nature & Weather': [],
+    'Nature': [],
     'Work & School': [],
-    'Numbers & Dates': [],
-    'Sports & Hobbies': [],
+    'Numbers & Time': [],
+    'Fun & Culture': [],
     'Tech': [],
-    'Colombianisms': [],
     'Other': []
   };
 
@@ -81,16 +103,17 @@ function groupIntoCategories(decks: any[]) {
     const text = name + ' ' + tags.join(' ');
 
     if (/(slang|jerga|coloquial|colombia|colombianism)/.test(text)) buckets['Colombianisms'].push(d);
-    else if (/(family|people|professions|body|emotions|relationships)/.test(text)) buckets['People'].push(d);
-    else if (/(place|travel|transport|city|cali|bogotá|bogota|medellín|medellin)/.test(text)) buckets['Places'].push(d);
-    else if (/(house|home|casa|kitchen|bathroom|around the house)/.test(text)) buckets['Around the House'].push(d);
+    else if (/(basic|intro|common|essential)/.test(text)) buckets['Essentials'].push(d);
+    else if (/(family|people|professions|body|emotions|relationships)/.test(text)) buckets['People & Relationships'].push(d);
+    else if (/(place|travel|transport|city|cali|bogotá|bogota|medellín|medellin)/.test(text)) buckets['Places & Travel'].push(d);
+    else if (/(house|home|casa|kitchen|bathroom|daily)/.test(text)) buckets['Home & Daily Life'].push(d);
     else if (/(food|drink|comida|bebida|restaurant|market)/.test(text)) buckets['Food & Drink'].push(d);
     else if (/(communicat|message|call|greeting|conversation|talk)/.test(text)) buckets['Communication'].push(d);
     else if (/(health|clinic|pharmacy|medicine|salud)/.test(text)) buckets['Health'].push(d);
-    else if (/(weather|clima|nature|animals|outdoor)/.test(text)) buckets['Nature & Weather'].push(d);
+    else if (/(weather|clima|nature|animals|outdoor)/.test(text)) buckets['Nature'].push(d);
     else if (/(work|job|school|study|professions|office)/.test(text)) buckets['Work & School'].push(d);
-    else if (/(number|date|time|calendar|holidays)/.test(text)) buckets['Numbers & Dates'].push(d);
-    else if (/(sport|hobby|music|games)/.test(text)) buckets['Sports & Hobbies'].push(d);
+    else if (/(number|date|time|calendar|holidays)/.test(text)) buckets['Numbers & Time'].push(d);
+    else if (/(sport|hobby|music|games|culture|art)/.test(text)) buckets['Fun & Culture'].push(d);
     else if (/(tech|technology|computer|phone|apps)/.test(text)) buckets['Tech'].push(d);
     else buckets['Other'].push(d);
   }
@@ -104,8 +127,18 @@ const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
   h1: { color: colors.text, fontSize: 26, fontWeight: '800', marginBottom: spacing(0.5) },
   sub: { color: colors.sub, marginBottom: spacing(2) },
-  sectionTitle: { color: '#cbd5e1', fontWeight: '800', marginBottom: spacing(1) },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  catBlock: { marginBottom: spacing(2) },
+  catTile: {
+    backgroundColor: '#1e293b',
+    padding: spacing(1.5),
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#334155',
+    marginBottom: 6,
+  },
+  catTitle: { color: colors.text, fontWeight: '800', fontSize: 18 },
+  catSub: { color: colors.sub },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 6 },
   tile: {
     width: '48%',
     backgroundColor: colors.card,
@@ -128,15 +161,5 @@ const styles = StyleSheet.create({
     color: '#93c5fd',
     fontSize: 12,
     fontWeight: '800'
-  },
-  banner: {
-    backgroundColor: '#042f2e',
-    padding: spacing(2),
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: '#065f46',
-    marginBottom: spacing(2)
-  },
-  bannerTitle: { color: '#a7f3d0', fontWeight: '900' },
-  bannerSub: { color: '#6ee7b7' }
+  }
 });
