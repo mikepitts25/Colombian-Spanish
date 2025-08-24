@@ -32,6 +32,26 @@ export default function HomeScreen() {
 
   const sections = useMemo(() => groupIntoCategories(decks || []), [decks]);
 
+  // --- Smart section: Top Decks / Due Today ---
+  // Calculate the end of today once per mount
+  const endOfToday = useMemo(() => {
+    const d = new Date();
+    d.setHours(23, 59, 59, 999);
+    return d.getTime();
+  }, []);
+
+  // Compute due counts per deck, sort descending, take top N
+  const topDueDecks = useMemo(() => {
+    return (decks || [])
+      .map((d: any) => ({
+        ...d,
+        dueCount: (d.cards || []).filter((c: any) => (c?.due ?? 0) <= endOfToday).length,
+      }))
+      .filter((d: any) => d.dueCount > 0)
+      .sort((a: any, b: any) => b.dueCount - a.dueCount)
+      .slice(0, 6);
+  }, [decks, endOfToday]);
+
   const toggleCat = (key: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setOpenCats(prev => ({ ...prev, [key]: !prev[key] }));
@@ -45,6 +65,28 @@ export default function HomeScreen() {
       <Text style={styles.sub}>Pick a category to expand and study its decks.</Text>
 
       <ScrollView contentContainerStyle={{ paddingBottom: spacing(3) }}>
+        {/* Top Decks / Due Today */}
+        {topDueDecks.length > 0 && (
+          <View style={styles.dueWrap}>
+            <View style={styles.dueHeaderRow}>
+              <Text style={styles.dueTitle}>Due Today</Text>
+              <Text style={styles.dueSub}>{topDueDecks.reduce((sum: number, d: any) => sum + (d?.dueCount ?? 0), 0)} cards</Text>
+            </View>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.dueRow}>
+              {topDueDecks.map((deck: any) => (
+                <Pressable
+                  key={deck.id}
+                  style={styles.dueTile}
+                  onPress={() => { setActiveDeckId(deck.id); nav.navigate('Study'); }}
+                >
+                  <View style={styles.dueBadge}><Text style={styles.dueBadgeText}>{deck.dueCount}</Text></View>
+                  <Text style={styles.dueName} numberOfLines={2}>{deck.name}</Text>
+                  <Text style={styles.dueGo}>Study →</Text>
+                </Pressable>
+              ))}
+            </ScrollView>
+          </View>
+        )}
         {sections.map(section => {
           const isOpen = !!openCats[section.key];
           return (
@@ -161,5 +203,31 @@ const styles = StyleSheet.create({
     color: '#93c5fd',
     fontSize: 12,
     fontWeight: '800'
-  }
+  },
+  // Due Today section
+  dueWrap: { marginBottom: spacing(2) },
+  dueHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 },
+  dueTitle: { color: '#e2e8f0', fontWeight: '900', fontSize: 18 },
+  dueSub: { color: colors.sub, fontWeight: '700' },
+  dueRow: { gap: 10 },
+  dueTile: {
+    width: 160,
+    backgroundColor: '#0b1220',
+    borderColor: '#1f2937',
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: spacing(1.25),
+    marginRight: 10
+  },
+  dueBadge: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#ef4444',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 999,
+    marginBottom: 6
+  },
+  dueBadgeText: { color: 'white', fontWeight: '900' },
+  dueName: { color: colors.text, fontWeight: '800', marginBottom: 6 },
+  dueGo: { color: '#93c5fd', fontWeight: '800' },
 });
