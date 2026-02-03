@@ -1,53 +1,24 @@
 {
   "expo": {
-    "name": "Colombian Spanish",
-    "slug": "colombian-spanish",
+    "name": "Colombian Spanish SRS",
+    "slug": "colombian-spanish-srs",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0f172a",
-      "dark": {
-        "image": "./assets/splash.png",
-        "backgroundColor": "#0f172a"
-      }
+      "backgroundColor": "#0f172a"
     },
+    "updates": { "fallbackToCacheTimeout": 0 },
     "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.mikepitts.colombianspanish",
-      "buildNumber": "1.0.0",
-      "infoPlist": {
-        "NSMicrophoneUsageDescription": "This app uses the microphone for speech recognition practice.",
-        "NSSpeechRecognitionUsageDescription": "This app uses speech recognition to help you practice pronunciation."
-      }
-    },
+    "ios": { "supportsTablet": true },
     "android": {
-      "package": "com.mikepitts.colombianspanish",
-      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0f172a"
-      },
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ]
-    },
-    "web": {
-      "bundler": "metro",
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-speech"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "colombian-spanish-srs"
       }
     },
-    "owner": "mikepitts25"
+    "web": { "bundler": "metro", "favicon": "./assets/favicon.png" }
   }
 }
