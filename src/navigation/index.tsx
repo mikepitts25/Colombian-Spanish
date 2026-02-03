@@ -5,6 +5,7 @@ import { Text } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import StudyScreen from '../screens/StudyScreen';
 import AddCardScreen from '../screens/AddCardScreen';
+import PhrasebookScreen from '../screens/PhrasebookScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,14 @@ function Tabs() {
         options={{
           tabBarLabel: ({ color }) => <Text style={{ color }}>Add</Text>,
           title: 'Add Cards',
+        }}
+      />
+      <Tab.Screen
+        name="Phrasebook"
+        component={PhrasebookScreen}
+        options={{
+          tabBarLabel: ({ color }) => <Text style={{ color }}>Phrasebook</Text>,
+          title: 'Phrasebook',
         }}
       />
     </Tab.Navigator>

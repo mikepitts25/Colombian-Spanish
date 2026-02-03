@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Pressable } from 'react-native';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import Flashcard from '../components/Flashcard';
@@ -7,7 +7,7 @@ import ProgressBar from '../components/ProgressBar';
 import { getDailyProgress, incrementDailyProgress } from '../storage/storage';
 
 export default function StudyScreen() {
-  const { ready, activeDeck, getStudyBatch, recordAnswer } = useDeck();
+  const { ready, activeDeck, getStudyBatch, recordAnswer, toggleFavorite } = useDeck();
   const [seed, setSeed] = useState(0);
   const batch = useMemo(() => (ready && activeDeck) ? getStudyBatch(15) : [], [ready, activeDeck, seed]);
   const [idx, setIdx] = useState(0);
@@ -49,7 +49,14 @@ export default function StudyScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>Study — {activeDeck.name}</Text>
+      <View style={styles.headerRow}>
+        <Text style={styles.h1}>Study — {activeDeck.name}</Text>
+        {card ? (
+          <Pressable onPress={() => toggleFavorite(card.id)} style={styles.starBtn}>
+            <Text style={styles.starText}>{card.favorite ? '★' : '☆'}</Text>
+          </Pressable>
+        ) : null}
+      </View>
       <ProgressBar progress={progress} />
       <Text style={styles.progressLabel}>Daily Progress: {percent}% ({daily.count}/{daily.target})</Text>
       {progress >= 1 && congratsShown && (
@@ -75,7 +82,10 @@ export default function StudyScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  h1: { color: colors.text, fontSize: 22, fontWeight: '800', marginBottom: spacing(1) },
+  headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
+  h1: { color: colors.text, fontSize: 22, fontWeight: '800', marginBottom: spacing(1), flex: 1 },
+  starBtn: { width: 44, height: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: '#0b1220', borderWidth: 1, borderColor: '#1f2937' },
+  starText: { color: '#fde047', fontWeight: '900', fontSize: 22 },
   sub: { color: colors.sub },
   meta: { color: colors.sub, textAlign: 'center', marginTop: spacing(1) },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },

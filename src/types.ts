@@ -7,6 +7,7 @@ export interface FlashCard {
   example?: string; // example sentence
   tags?: string[]; // e.g., "Bogotá", "Cali", "slang"
   ipa?: string; // pronunciation hint
+  favorite?: boolean; // user-starred
   createdAt: number;
   due: number; // unix timestamp
   reps: number; // successful repetitions
