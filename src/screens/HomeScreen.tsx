@@ -61,8 +61,15 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>Colombian Spanish 🇨🇴</Text>
-      <Text style={styles.sub}>Pick a category to expand and study its decks.</Text>
+      <View style={styles.headerRow}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.h1}>Colombian Spanish 🇨🇴</Text>
+          <Text style={styles.sub}>Pick a category to expand and study its decks.</Text>
+        </View>
+        <Pressable style={styles.manageBtn} onPress={() => nav.navigate('ManageDecks')}>
+          <Text style={styles.manageText}>Manage</Text>
+        </Pressable>
+      </View>
 
       <ScrollView contentContainerStyle={{ paddingBottom: spacing(3) }}>
         {/* Top Decks / Due Today */}
@@ -167,6 +174,9 @@ function groupIntoCategories(decks: any[]) {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
+  headerRow: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 },
+  manageBtn: { backgroundColor: '#0b1220', borderWidth: 1, borderColor: '#1f2937', borderRadius: 12, paddingVertical: 10, paddingHorizontal: 12, alignItems: 'center', justifyContent: 'center' },
+  manageText: { color: '#e2e8f0', fontWeight: '900' },
   h1: { color: colors.text, fontSize: 26, fontWeight: '800', marginBottom: spacing(0.5) },
   sub: { color: colors.sub, marginBottom: spacing(2) },
   catBlock: { marginBottom: spacing(2) },
