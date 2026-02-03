@@ -1,5 +1,15 @@
 import React, { useMemo, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Pressable, ScrollView, LayoutAnimation, UIManager, Platform } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  ScrollView,
+  LayoutAnimation,
+  UIManager,
+  Platform,
+} from 'react-native';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
@@ -54,10 +64,15 @@ export default function HomeScreen() {
 
   const toggleCat = (key: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setOpenCats(prev => ({ ...prev, [key]: !prev[key] }));
+    setOpenCats((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  if (!ready) return <SafeAreaView style={styles.wrap}><Text style={styles.h1}>Cargando…</Text></SafeAreaView>;
+  if (!ready)
+    return (
+      <SafeAreaView style={styles.wrap}>
+        <Text style={styles.h1}>Cargando…</Text>
+      </SafeAreaView>
+    );
 
   return (
     <SafeAreaView style={styles.wrap}>
@@ -70,24 +85,37 @@ export default function HomeScreen() {
           <View style={styles.dueWrap}>
             <View style={styles.dueHeaderRow}>
               <Text style={styles.dueTitle}>Due Today</Text>
-              <Text style={styles.dueSub}>{topDueDecks.reduce((sum: number, d: any) => sum + (d?.dueCount ?? 0), 0)} cards</Text>
+              <Text style={styles.dueSub}>
+                {topDueDecks.reduce((sum: number, d: any) => sum + (d?.dueCount ?? 0), 0)} cards
+              </Text>
             </View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.dueRow}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.dueRow}
+            >
               {topDueDecks.map((deck: any) => (
                 <Pressable
                   key={deck.id}
                   style={styles.dueTile}
-                  onPress={() => { setActiveDeckId(deck.id); nav.navigate('Study'); }}
+                  onPress={() => {
+                    setActiveDeckId(deck.id);
+                    nav.navigate('Study');
+                  }}
                 >
-                  <View style={styles.dueBadge}><Text style={styles.dueBadgeText}>{deck.dueCount}</Text></View>
-                  <Text style={styles.dueName} numberOfLines={2}>{deck.name}</Text>
+                  <View style={styles.dueBadge}>
+                    <Text style={styles.dueBadgeText}>{deck.dueCount}</Text>
+                  </View>
+                  <Text style={styles.dueName} numberOfLines={2}>
+                    {deck.name}
+                  </Text>
                   <Text style={styles.dueGo}>Study →</Text>
                 </Pressable>
               ))}
             </ScrollView>
           </View>
         )}
-        {sections.map(section => {
+        {sections.map((section) => {
           const isOpen = !!openCats[section.key];
           return (
             <View key={section.key} style={styles.catBlock}>
@@ -97,15 +125,20 @@ export default function HomeScreen() {
               </Pressable>
               {isOpen && (
                 <View style={styles.grid}>
-                  {section.data.map(deck => {
+                  {section.data.map((deck) => {
                     const isActive = deck.id === activeDeckId;
                     return (
                       <Pressable
                         key={deck.id}
                         style={[styles.tile, isActive && styles.tileActive]}
-                        onPress={() => { setActiveDeckId(deck.id); nav.navigate('Study'); }}
+                        onPress={() => {
+                          setActiveDeckId(deck.id);
+                          nav.navigate('Study');
+                        }}
                       >
-                        <Text style={styles.tileTitle} numberOfLines={2}>{deck.name}</Text>
+                        <Text style={styles.tileTitle} numberOfLines={2}>
+                          {deck.name}
+                        </Text>
                         <Text style={styles.tileSub}>{deck.cards.length} cards</Text>
                         {isActive ? <Text style={styles.activeBadge}>Active</Text> : null}
                       </Pressable>
@@ -123,20 +156,20 @@ export default function HomeScreen() {
 
 function groupIntoCategories(decks: any[]) {
   const buckets: Record<CategoryKey, any[]> = {
-    'Colombianisms': [],
-    'Essentials': [],
+    Colombianisms: [],
+    Essentials: [],
     'People & Relationships': [],
     'Places & Travel': [],
     'Home & Daily Life': [],
     'Food & Drink': [],
-    'Communication': [],
-    'Health': [],
-    'Nature': [],
+    Communication: [],
+    Health: [],
+    Nature: [],
     'Work & School': [],
     'Numbers & Time': [],
     'Fun & Culture': [],
-    'Tech': [],
-    'Other': []
+    Tech: [],
+    Other: [],
   };
 
   for (const d of decks) {
@@ -144,16 +177,23 @@ function groupIntoCategories(decks: any[]) {
     const tags = (d.cards?.[0]?.tags || []).map((t: string) => (t || '').toLowerCase());
     const text = name + ' ' + tags.join(' ');
 
-    if (/(slang|jerga|coloquial|colombia|colombianism)/.test(text)) buckets['Colombianisms'].push(d);
+    if (/(slang|jerga|coloquial|colombia|colombianism)/.test(text))
+      buckets['Colombianisms'].push(d);
     else if (/(basic|intro|common|essential)/.test(text)) buckets['Essentials'].push(d);
-    else if (/(family|people|professions|body|emotions|relationships)/.test(text)) buckets['People & Relationships'].push(d);
-    else if (/(place|travel|transport|city|cali|bogotá|bogota|medellín|medellin)/.test(text)) buckets['Places & Travel'].push(d);
-    else if (/(house|home|casa|kitchen|bathroom|daily)/.test(text)) buckets['Home & Daily Life'].push(d);
-    else if (/(food|drink|comida|bebida|restaurant|market)/.test(text)) buckets['Food & Drink'].push(d);
-    else if (/(communicat|message|call|greeting|conversation|talk)/.test(text)) buckets['Communication'].push(d);
+    else if (/(family|people|professions|body|emotions|relationships)/.test(text))
+      buckets['People & Relationships'].push(d);
+    else if (/(place|travel|transport|city|cali|bogotá|bogota|medellín|medellin)/.test(text))
+      buckets['Places & Travel'].push(d);
+    else if (/(house|home|casa|kitchen|bathroom|daily)/.test(text))
+      buckets['Home & Daily Life'].push(d);
+    else if (/(food|drink|comida|bebida|restaurant|market)/.test(text))
+      buckets['Food & Drink'].push(d);
+    else if (/(communicat|message|call|greeting|conversation|talk)/.test(text))
+      buckets['Communication'].push(d);
     else if (/(health|clinic|pharmacy|medicine|salud)/.test(text)) buckets['Health'].push(d);
     else if (/(weather|clima|nature|animals|outdoor)/.test(text)) buckets['Nature'].push(d);
-    else if (/(work|job|school|study|professions|office)/.test(text)) buckets['Work & School'].push(d);
+    else if (/(work|job|school|study|professions|office)/.test(text))
+      buckets['Work & School'].push(d);
     else if (/(number|date|time|calendar|holidays)/.test(text)) buckets['Numbers & Time'].push(d);
     else if (/(sport|hobby|music|games|culture|art)/.test(text)) buckets['Fun & Culture'].push(d);
     else if (/(tech|technology|computer|phone|apps)/.test(text)) buckets['Tech'].push(d);
@@ -188,7 +228,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#1f2937',
-    marginBottom: 12
+    marginBottom: 12,
   },
   tileActive: { borderColor: colors.accent, borderWidth: 2 },
   tileTitle: { color: colors.text, fontWeight: '800' },
@@ -202,11 +242,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#0b1220',
     color: '#93c5fd',
     fontSize: 12,
-    fontWeight: '800'
+    fontWeight: '800',
   },
   // Due Today section
   dueWrap: { marginBottom: spacing(2) },
-  dueHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 },
+  dueHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    marginBottom: 6,
+  },
   dueTitle: { color: '#e2e8f0', fontWeight: '900', fontSize: 18 },
   dueSub: { color: colors.sub, fontWeight: '700' },
   dueRow: { gap: 10 },
@@ -217,7 +262,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 12,
     padding: spacing(1.25),
-    marginRight: 10
+    marginRight: 10,
   },
   dueBadge: {
     alignSelf: 'flex-start',
@@ -225,7 +270,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 999,
-    marginBottom: 6
+    marginBottom: 6,
   },
   dueBadgeText: { color: 'white', fontWeight: '900' },
   dueName: { color: colors.text, fontWeight: '800', marginBottom: 6 },
