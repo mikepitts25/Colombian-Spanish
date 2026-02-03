@@ -71,7 +71,7 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>Ajustes</Text>
+      <Text style={styles.h1}>Settings</Text>
 
       <View style={styles.card}>
         <Text style={styles.h2}>Daily goal</Text>
@@ -92,7 +92,7 @@ export default function SettingsScreen() {
         <Pressable style={styles.primary} onPress={exportBackup}>
           <Text style={styles.primaryText}>Copy backup JSON</Text>
         </Pressable>
-        <Pressable style={[styles.primary, { backgroundColor: '#0ea5e9' }]} onPress={importBackup}>
+        <Pressable style={[styles.primary, { backgroundColor: '#0ea5e9', marginTop: 8 }]} onPress={importBackup}>
           <Text style={styles.primaryText}>Import from clipboard</Text>
         </Pressable>
         <Text style={styles.sub}>Tip: export first, then import on another device. Everything stays local.</Text>

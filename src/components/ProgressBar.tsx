@@ -12,5 +12,5 @@ export default function ProgressBar({ progress }: { progress: number }) {
 
 const styles = StyleSheet.create({
   wrap: { height: 10, backgroundColor: '#1f2937', borderRadius: 999 },
-  bar: { height: '100%', backgroundColor: colors.accent, borderRadius: 999 }
+  bar: { height: '100%', backgroundColor: colors.accent, borderRadius: 999 },
 });
