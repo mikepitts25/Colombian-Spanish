@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { colors, spacing } from '../styles/theme';
-import { getDailyProgress, setDailyTarget } from '../storage/storage';
+import { getDailyProgress, setDailyTarget, saveDecks, loadDecks } from '../storage/storage';
 import * as Clipboard from 'expo-clipboard';
-import { loadDecks } from '../storage/storage';
 
 export default function SettingsScreen() {
   const [target, setTarget] = useState(10);
@@ -35,9 +34,44 @@ export default function SettingsScreen() {
     Alert.alert('Backup copied', 'Your decks/learning data backup JSON was copied to clipboard. Paste it somewhere safe.');
   }
 
+  async function importBackup() {
+    const raw = await Clipboard.getStringAsync();
+    if (!raw || !raw.trim()) return Alert.alert('Nothing to import', 'Clipboard is empty. Copy a backup JSON first.');
+
+    let parsed: any;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return Alert.alert('Invalid JSON', 'Clipboard does not contain valid JSON.');
+    }
+
+    if (!parsed || parsed.kind !== 'colombian-spanish-backup') {
+      return Alert.alert('Not a backup', 'Clipboard JSON is not a Colombian Spanish backup export.');
+    }
+    if (!Array.isArray(parsed.decks)) {
+      return Alert.alert('Invalid backup', 'Backup is missing decks.');
+    }
+
+    Alert.alert(
+      'Import backup?',
+      'This will replace your current decks + progress on this device. Make sure you exported first if you want to keep what you have.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Replace & Import',
+          style: 'destructive',
+          onPress: async () => {
+            await saveDecks(parsed.decks);
+            Alert.alert('Imported', 'Backup imported. Restart the app if anything looks out of date.');
+          },
+        },
+      ]
+    );
+  }
+
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>Settings</Text>
+      <Text style={styles.h1}>Ajustes</Text>
 
       <View style={styles.card}>
         <Text style={styles.h2}>Daily goal</Text>
@@ -54,11 +88,14 @@ export default function SettingsScreen() {
 
       <View style={styles.card}>
         <Text style={styles.h2}>Backup</Text>
-        <Text style={styles.p}>Export your decks and progress as JSON (copied to clipboard).</Text>
+        <Text style={styles.p}>Export/import your decks + SRS progress as JSON (via clipboard).</Text>
         <Pressable style={styles.primary} onPress={exportBackup}>
           <Text style={styles.primaryText}>Copy backup JSON</Text>
         </Pressable>
-        <Text style={styles.sub}>Import UI is next. This keeps everything local and private.</Text>
+        <Pressable style={[styles.primary, { backgroundColor: '#0ea5e9' }]} onPress={importBackup}>
+          <Text style={styles.primaryText}>Import from clipboard</Text>
+        </Pressable>
+        <Text style={styles.sub}>Tip: export first, then import on another device. Everything stays local.</Text>
       </View>
 
       <View style={styles.card}>
