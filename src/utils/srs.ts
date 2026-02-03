@@ -57,8 +57,9 @@ export function gradeCard(card: FlashCard, quality: Quality): FlashCard {
   c.interval = clamp(c.interval, 0, 365); // don’t exceed a year
   // Translate interval to due date
   const addMs =
-    c.interval === 0 ? 15 * 60 * 1000 : // 15 minutes for immediate recheck
-    Math.round(c.interval * DAY);
+    c.interval === 0
+      ? 15 * 60 * 1000 // 15 minutes for immediate recheck
+      : Math.round(c.interval * DAY);
 
   c.due = now + addMs;
 
@@ -80,14 +81,18 @@ export function nextBatch(cards: FlashCard[], size = 15): FlashCard[] {
   const copy = [...cards];
 
   const ready = copy
-    .filter(c => (c.due ?? 0) <= now)
+    .filter((c) => (c.due ?? 0) <= now)
     .sort((a, b) => (a.due ?? 0) - (b.due ?? 0) || a.id.localeCompare(b.id));
 
   if (ready.length >= size) return ready.slice(0, size);
 
   const notYet = copy
-    .filter(c => (c.due ?? 0) > now || c.due == null)
-    .sort((a, b) => (a.due ?? Number.MAX_SAFE_INTEGER) - (b.due ?? Number.MAX_SAFE_INTEGER) || a.id.localeCompare(b.id));
+    .filter((c) => (c.due ?? 0) > now || c.due == null)
+    .sort(
+      (a, b) =>
+        (a.due ?? Number.MAX_SAFE_INTEGER) - (b.due ?? Number.MAX_SAFE_INTEGER) ||
+        a.id.localeCompare(b.id),
+    );
 
   return [...ready, ...notYet.slice(0, Math.max(0, size - ready.length))];
 }
