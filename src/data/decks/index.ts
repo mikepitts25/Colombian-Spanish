@@ -3,6 +3,7 @@ import { Deck } from '../../types';
 
 import { ActionsDeck } from './actions';
 import { BodyDeck } from './body';
+import { BusinessDeck } from './business';
 import { ClothingDeck } from './clothing';
 import { ColombianFoodDeck } from './colombian_food';
 import { ColorsDeck } from './colors';
@@ -39,6 +40,7 @@ import { WeatherDeck } from './weather';
 export {
   ActionsDeck,
   BodyDeck,
+  BusinessDeck,
   ClothingDeck,
   ColombianFoodDeck,
   ColorsDeck,
@@ -76,6 +78,7 @@ export {
 export const ALL_DECKS: Deck[] = [
   ActionsDeck,
   BodyDeck,
+  BusinessDeck,
   ClothingDeck,
   ColombianFoodDeck,
   ColorsDeck,
