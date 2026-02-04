@@ -1,0 +1,171 @@
+name: CI - Test PRs & Main
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+
+# Cancel in-progress runs on new pushes
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Job 1: Code Quality Checks
+  lint-and-typecheck:
+    name: 🔍 Lint & Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: 🔎 TypeScript Check
+        run: npm run typecheck
+        continue-on-error: false
+
+      - name: 🧹 ESLint Check
+        run: npm run lint
+        continue-on-error: false
+
+      - name: 💅 Prettier Check
+        run: npm run format:check
+        continue-on-error: false
+
+  # Job 2: Validate App Data (custom for Colombian Spanish)
+  validate-data:
+    name: 📚 Validate Card Data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: 🗂️ Validate Deck Index
+        run: |
+          # Install tsx for TypeScript execution
+          npm install --save-dev tsx
+          npx tsx -e "
+          const { ALL_DECKS } = require('./src/data/decks');
+
+          console.log('✅ Deck index loads successfully');
+          console.log('📊 Total decks:', ALL_DECKS.length);
+          const totalCards = ALL_DECKS.reduce((sum, d) => sum + (d.cards?.length || 0), 0);
+          console.log('🎴 Total cards:', totalCards);
+
+          // Check for duplicate IDs
+          const allIds = ALL_DECKS.flatMap(d => d.cards?.map(c => c.id) || []);
+          const duplicates = allIds.filter((item, index) => allIds.indexOf(item) !== index);
+          if (duplicates.length > 0) {
+            console.error('❌ Duplicate card IDs found:', duplicates);
+            process.exit(1);
+          }
+          console.log('✅ No duplicate card IDs');
+
+          // Check each deck has required fields
+          for (const deck of ALL_DECKS) {
+            if (!deck.id || !deck.name || !Array.isArray(deck.cards)) {
+              console.error('❌ Invalid deck:', deck.name || deck.id);
+              process.exit(1);
+            }
+          }
+          console.log('✅ All decks have valid structure');
+
+          console.log('\n🎉 All validations passed!');
+          "
+        continue-on-error: false
+
+  # Job 3: Test Build (Expo Prebuild)
+  test-build:
+    name: 🏗️ Test Build
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, validate-data]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: 🏗️ Test Expo Prebuild
+        run: npx expo prebuild --platform ios --no-install
+        env:
+          CI: true
+
+  # Job 4: PR Summary
+  pr-summary:
+    name: 📝 PR Summary
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, validate-data, test-build]
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📊 Generate Summary
+        run: |
+          echo "## ✅ All Checks Passed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔍 Lint & Type Check | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+          echo "| 📚 Card Data Validation | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🏗️ Build Test | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Ready to merge!** 🚀" >> $GITHUB_STEP_SUMMARY
+
+  # Job 5: Notify on Failure
+  notify-failure:
+    name: ❌ Notify on Failure
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, validate-data, test-build]
+    if: failure() && github.event_name == 'pull_request'
+    steps:
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const failed = [];
+            if ('${{ needs.lint-and-typecheck.result }}' !== 'success') failed.push('🔍 Lint & Type Check');
+            if ('${{ needs.validate-data.result }}' !== 'success') failed.push('📚 Card Data Validation');
+            if ('${{ needs.test-build.result }}' !== 'success') failed.push('🏗️ Build Test');
+
+            const body = `## ❌ Build Failed
+
+            The following checks failed:
+            ${failed.map(f => `- ${f}`).join('\\n')}
+
+            Please fix the issues before merging.
+
+            [View Details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });

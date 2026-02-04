@@ -6,6 +6,8 @@ import HomeScreen from '../screens/HomeScreen';
 import StudyScreen from '../screens/StudyScreen';
 import AddCardScreen from '../screens/AddCardScreen';
 import BrowseScreen from '../screens/BrowseScreen';
+import PhrasebookScreen from '../screens/PhrasebookScreen';
+import ManageDecksScreen from '../screens/ManageDecksScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -53,6 +55,14 @@ function Tabs() {
           title: 'Browse',
         }}
       />
+      <Tab.Screen
+        name="Phrasebook"
+        component={PhrasebookScreen}
+        options={{
+          tabBarLabel: ({ color }) => <Text style={{ color }}>Phrasebook</Text>,
+          title: 'Phrasebook',
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -61,6 +71,15 @@ export default function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={Tabs} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="ManageDecks"
+        component={ManageDecksScreen}
+        options={{
+          title: 'Manage Decks',
+          headerStyle: { backgroundColor: '#0f172a' },
+          headerTintColor: '#fff',
+        }}
+      />
     </Stack.Navigator>
   );
 }
