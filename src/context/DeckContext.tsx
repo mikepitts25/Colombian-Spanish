@@ -21,6 +21,7 @@ type Ctx = {
   setActiveDeckId: (id: string) => void;
   getStudyBatch: (size?: number) => FlashCard[];
   recordAnswer: (cardId: string, quality: 0 | 1 | 2 | 3 | 4 | 5) => Promise<void>;
+  toggleFavorite: (cardId: string) => Promise<void>;
   addCardToDeck: (
     deckId: string,
     card: Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'>,
@@ -98,6 +99,23 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     await setDeck(deck);
   }
 
+  async function toggleFavorite(cardId: string) {
+    const stored = await loadDecks();
+    let changed = false;
+    const next = (stored || []).map((d) => {
+      const cards = (d.cards || []).map((c) => {
+        if (c.id !== cardId) return c;
+        changed = true;
+        return { ...c, favorite: !c.favorite };
+      });
+      return { ...d, cards };
+    });
+    if (changed) {
+      await saveDecks(next);
+      setDecks(next);
+    }
+  }
+
   async function addCardToDeck(
     deckId: string,
     newCard: Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'>,
@@ -145,6 +163,7 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     setActiveDeckId,
     getStudyBatch,
     recordAnswer,
+    toggleFavorite,
     addCardToDeck,
     createDeck,
     reload,
