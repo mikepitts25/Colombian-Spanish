@@ -20,9 +20,12 @@ type Ctx = {
   activeDeckId: string | undefined;
   setActiveDeckId: (id: string) => void;
   getStudyBatch: (size?: number) => FlashCard[];
-  recordAnswer: (cardId: string, quality: 0|1|2|3|4|5) => Promise<void>;
+  recordAnswer: (cardId: string, quality: 0 | 1 | 2 | 3 | 4 | 5) => Promise<void>;
   toggleFavorite: (cardId: string) => Promise<void>;
-  addCardToDeck: (deckId: string, card: Omit<FlashCard, 'createdAt'|'due'|'reps'|'interval'|'ease'>) => Promise<void>;
+  addCardToDeck: (
+    deckId: string,
+    card: Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'>,
+  ) => Promise<void>;
   createDeck: (name: string, description?: string) => Promise<Deck | undefined>;
   reload: () => Promise<void>;
 };
@@ -49,10 +52,13 @@ export function DeckProvider({ children }: { children: ReactNode }) {
       }
     } else {
       // Merge in any new seed decks by id
-      const present = new Set(working.map(d => d.id));
+      const present = new Set(working.map((d) => d.id));
       let changed = false;
       for (const d of SEED_DECKS) {
-        if (!present.has(d.id)) { working.push(d); changed = true; }
+        if (!present.has(d.id)) {
+          working.push(d);
+          changed = true;
+        }
       }
       if (changed) await saveDecks(working);
     }
@@ -68,10 +74,13 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const activeDeck = useMemo(() => decks.find(d => d.id === activeDeckId) || decks[0], [decks, activeDeckId]);
+  const activeDeck = useMemo(
+    () => decks.find((d) => d.id === activeDeckId) || decks[0],
+    [decks, activeDeckId],
+  );
 
   async function setDeck(updated: Deck) {
-    const arr = decks.map(d => d.id === updated.id ? updated : d);
+    const arr = decks.map((d) => (d.id === updated.id ? updated : d));
     setDecks(arr);
     await saveDecks(arr);
   }
@@ -81,10 +90,10 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     return nextBatch(activeDeck.cards, size);
   }
 
-  async function recordAnswer(cardId: string, quality: 0|1|2|3|4|5) {
+  async function recordAnswer(cardId: string, quality: 0 | 1 | 2 | 3 | 4 | 5) {
     if (!activeDeck) return;
     const deck = { ...activeDeck };
-    const idx = deck.cards.findIndex(c => c.id === cardId);
+    const idx = deck.cards.findIndex((c) => c.id === cardId);
     if (idx === -1) return;
     deck.cards[idx] = gradeCard(deck.cards[idx], quality);
     await setDeck(deck);
@@ -93,8 +102,8 @@ export function DeckProvider({ children }: { children: ReactNode }) {
   async function toggleFavorite(cardId: string) {
     const stored = await loadDecks();
     let changed = false;
-    const next = (stored || []).map(d => {
-      const cards = (d.cards || []).map(c => {
+    const next = (stored || []).map((d) => {
+      const cards = (d.cards || []).map((c) => {
         if (c.id !== cardId) return c;
         changed = true;
         return { ...c, favorite: !c.favorite };
@@ -107,22 +116,32 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  async function addCardToDeck(deckId: string, newCard: Omit<FlashCard, 'createdAt'|'due'|'reps'|'interval'|'ease'>) {
+  async function addCardToDeck(
+    deckId: string,
+    newCard: Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'>,
+  ) {
     const card: FlashCard = {
       ...newCard,
       createdAt: Date.now(),
       due: Date.now(),
       reps: 0,
       interval: 0,
-      ease: 2.5
+      ease: 2.5,
     } as FlashCard;
     await addCardStorage(deckId, card);
     const updated = await loadDecks();
     setDecks(updated);
   }
 
-  async function createDeck(name: string, description?: string) : Promise<Deck | undefined> {
-    const id = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now();
+  async function createDeck(name: string, description?: string): Promise<Deck | undefined> {
+    const id =
+      name
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '') +
+      '-' +
+      Date.now();
     const newDeck: Deck = { id, name: name.trim(), description: description || '', cards: [] };
     await upsertDeck(newDeck);
     const updated = await loadDecks();
