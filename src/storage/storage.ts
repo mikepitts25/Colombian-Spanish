@@ -8,7 +8,11 @@ type DailyProgress = { date: string; count: number; target: number };
 export async function loadDecks(): Promise<Deck[]> {
   const raw = await AsyncStorage.getItem(KEY);
   if (!raw) return [];
-  try { return JSON.parse(raw); } catch { return []; }
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
 }
 
 export async function saveDecks(decks: Deck[]) {
@@ -17,14 +21,15 @@ export async function saveDecks(decks: Deck[]) {
 
 export async function upsertDeck(deck: Deck) {
   const decks = await loadDecks();
-  const idx = decks.findIndex(d => d.id === deck.id);
-  if (idx === -1) decks.push(deck); else decks[idx] = deck;
+  const idx = decks.findIndex((d) => d.id === deck.id);
+  if (idx === -1) decks.push(deck);
+  else decks[idx] = deck;
   await saveDecks(decks);
 }
 
 export async function addCard(deckId: string, card: FlashCard) {
   const decks = await loadDecks();
-  const d = decks.find(dd => dd.id === deckId);
+  const d = decks.find((dd) => dd.id === deckId);
   if (!d) return;
   d.cards.push(card);
   await saveDecks(decks);
@@ -32,30 +37,30 @@ export async function addCard(deckId: string, card: FlashCard) {
 
 export async function removeDeckById(deckId: string) {
   const decks = await loadDecks();
-  const next = decks.filter(d => d.id !== deckId);
+  const next = decks.filter((d) => d.id !== deckId);
   await saveDecks(next);
 }
 
 export async function renameDeckById(deckId: string, name: string) {
   const decks = await loadDecks();
-  const next = decks.map(d => d.id === deckId ? { ...d, name } : d);
+  const next = decks.map((d) => (d.id === deckId ? { ...d, name } : d));
   await saveDecks(next);
 }
 
 export async function resetDeckProgressById(deckId: string) {
   const decks = await loadDecks();
   const now = Date.now();
-  const next = decks.map(d => {
+  const next = decks.map((d) => {
     if (d.id !== deckId) return d;
     return {
       ...d,
-      cards: (d.cards || []).map(c => ({
+      cards: (d.cards || []).map((c) => ({
         ...c,
         due: now,
         reps: 0,
         interval: 0,
         ease: 2.5,
-      }))
+      })),
     };
   });
   await saveDecks(next);
