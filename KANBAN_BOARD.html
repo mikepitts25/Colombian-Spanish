@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎩 Gatsby's Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * { font-family: 'Inter', sans-serif; }
+        
+        .glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .column {
+            min-height: 200px;
+        }
+        
+        .card {
+            transition: all 0.2s ease;
+            cursor: grab;
+        }
+        
+        .card:active {
+            cursor: grabbing;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .status-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .typing-indicator span {
+            animation: typing 1.4s infinite;
+            display: inline-block;
+        }
+        
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        
+        .priority-high { border-left: 4px solid #ef4444; }
+        .priority-medium { border-left: 4px solid #f59e0b; }
+        .priority-low { border-left: 4px solid #10b981; }
+        
+        .column-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+    <!-- Header with Status -->
+    <header class="glass fixed top-0 left-0 right-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-2xl shadow-lg shadow-cyan-500/20">
+                    🎩
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                        Gatsby's Command Center
+                    </h1>
+                    <p class="text-sm text-slate-400">Colombian Spanish SRS Project</p>
+                </div>
+            </div>
+            
+            <!-- Live Status Indicator -->
+            <div class="flex items-center gap-3">
+                <div id="status-indicator" class="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30">
+                    <div class="w-3 h-3 rounded-full bg-emerald-500 status-pulse"></div>
+                    <span class="text-sm font-medium text-emerald-400">Active</span>
+                </div>
+                <div id="activity-text" class="text-sm text-slate-400 hidden md:block">
+                    Processing...
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-8 px-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Stats Row -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="glass rounded-xl p-4">
+                    <div class="flex items-center gap-2 text-cyan-400 mb-1">
+                        <i data-lucide="layers" class="w-4 h-4"></i>
+                        <span class="text-sm font-medium">Total Cards</span>
+                    </div>
+                    <div class="text-2xl font-bold">1,016</div>
+                </div>
+                <div class="glass rounded-xl p-4">
+                    <div class="flex items-center gap-2 text-purple-400 mb-1">
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                        <span class="text-sm font-medium">Decks</span>
+                    </div>
+                    <div class="text-2xl font-bold">35</div>
+                </div>
+                <div class="glass rounded-xl p-4">
+                    <div class="flex items-center gap-2 text-amber-400 mb-1">
+                        <i data-lucide="git-pull-request" class="w-4 h-4"></i>
+                        <span class="text-sm font-medium">PRs Merged</span>
+                    </div>
+                    <div class="text-2xl font-bold">8</div>
+                </div>
+                <div class="glass rounded-xl p-4">
+                    <div class="flex items-center gap-2 text-emerald-400 mb-1">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                        <span class="text-sm font-medium">CI Status</span>
+                    </div>
+                    <div class="text-2xl font-bold text-emerald-400">Passing</div>
+                </div>
+            </div>
+
+            <!-- Add Task Button -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-lg font-semibold text-slate-300">Project Board</h2>
+                <button onclick="addNewTask()" class="flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-medium transition-colors">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    Add Task
+                </button>
+            </div>
+
+            <!-- Kanban Board -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Backlog Column -->
+                <div class="glass rounded-xl flex flex-col max-h-[calc(100vh-300px)]">
+                    <div class="column-header glass rounded-t-xl p-4 border-b border-slate-700/50">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-slate-500"></div>
+                                <h3 class="font-semibold">Backlog</h3>
+                            </div>
+                            <span class="text-xs bg-slate-700 px-2 py-1 rounded-full" id="count-backlog">0</span>
+                        </div>
+                    </div>
+                    <div id="backlog" class="column flex-1 p-3 overflow-y-auto space-y-3" data-column="backlog">
+                        <!-- Cards will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- In Progress Column -->
+                <div class="glass rounded-xl flex flex-col max-h-[calc(100vh-300px)]">
+                    <div class="column-header glass rounded-t-xl p-4 border-b border-slate-700/50">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                                <h3 class="font-semibold">In Progress</h3>
+                            </div>
+                            <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full" id="count-progress">0</span>
+                        </div>
+                    </div>
+                    <div id="progress" class="column flex-1 p-3 overflow-y-auto space-y-3" data-column="progress">
+                        <!-- Cards will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Review Column -->
+                <div class="glass rounded-xl flex flex-col max-h-[calc(100vh-300px)]">
+                    <div class="column-header glass rounded-t-xl p-4 border-b border-slate-700/50">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                <h3 class="font-semibold">In Review</h3>
+                            </div>
+                            <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full" id="count-review">0</span>
+                        </div>
+                    </div>
+                    <div id="review" class="column flex-1 p-3 overflow-y-auto space-y-3" data-column="review">
+                        <!-- Cards will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Done Column -->
+                <div class="glass rounded-xl flex flex-col max-h-[calc(100vh-300px)]">
+                    <div class="column-header glass rounded-t-xl p-4 border-b border-slate-700/50">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                                <h3 class="font-semibold">Done</h3>
+                            </div>
+                            <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full" id="count-done">0</span>
+                        </div>
+                    </div>
+                    <div id="done" class="column flex-1 p-3 overflow-y-auto space-y-3" data-column="done">
+                        <!-- Cards will be populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Task Modal -->
+    <div id="task-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="glass rounded-xl p-6 w-full max-w-md">
+            <h3 class="text-lg font-bold mb-4">Add New Task</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">Task Title</label>
+                    <input type="text" id="task-title" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-500" placeholder="Enter task title...">
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">Priority</label>
+                    <select id="task-priority" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-500">
+                        <option value="high">🔴 High</option>
+                        <option value="medium">🟡 Medium</option>
+                        <option value="low">🟢 Low</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">Project</label>
+                    <select id="task-project" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-500">
+                        <option value="colombian-spanish">Colombian Spanish</option>
+                        <option value="spicesync">SpiceSync</option>
+                    </select>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button onclick="closeModal()" class="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg font-medium transition-colors">Cancel</button>
+                    <button onclick="saveTask()" class="flex-1 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-medium transition-colors">Add Task</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Initial data
+        const initialTasks = {
+            backlog: [
+                { id: '1', title: 'Create app icons (1024x1024)', priority: 'high', project: 'colombian-spanish', tags: ['design'] },
+                { id: '2', title: 'Generate App Store screenshots', priority: 'high', project: 'colombian-spanish', tags: ['marketing'] },
+                { id: '3', title: 'Submit to App Store', priority: 'high', project: 'colombian-spanish', tags: ['release'] },
+                { id: '4', title: 'Research native speaker audio', priority: 'medium', project: 'colombian-spanish', tags: ['research'] },
+                { id: '5', title: 'Design premium paywall UI', priority: 'medium', project: 'colombian-spanish', tags: ['design'] },
+                { id: '6', title: 'Add RevenueCat integration', priority: 'medium', project: 'colombian-spanish', tags: ['dev'] },
+                { id: '7', title: 'Create landing page', priority: 'low', project: 'colombian-spanish', tags: ['marketing'] },
+                { id: '8', title: 'Finish SpiceSync MVP', priority: 'high', project: 'spicesync', tags: ['dev'] },
+            ],
+            progress: [
+                { id: '9', title: 'Fix CI Pipeline - Build Test', priority: 'high', project: 'colombian-spanish', tags: ['devops'] },
+            ],
+            review: [
+                { id: '10', title: 'All PRs merged (8 total)', priority: 'high', project: 'colombian-spanish', tags: ['dev'] },
+                { id: '11', title: 'Code quality enforcement', priority: 'medium', project: 'colombian-spanish', tags: ['devops'] },
+            ],
+            done: [
+                { id: '12', title: 'Content blitz - 1,016 cards', priority: 'high', project: 'colombian-spanish', tags: ['content'] },
+                { id: '13', title: 'Set up CI/CD pipeline', priority: 'high', project: 'colombian-spanish', tags: ['devops'] },
+                { id: '14', title: 'Merge PR #8 - CI Pipeline', priority: 'high', project: 'colombian-spanish', tags: ['dev'] },
+                { id: '15', title: 'Merge PR #7 - Audio Controls', priority: 'high', project: 'colombian-spanish', tags: ['dev'] },
+                { id: '16', title: 'Merge PR #6 - ESLint/Prettier', priority: 'high', project: 'colombian-spanish', tags: ['dev'] },
+            ]
+        };
+
+        // Load from localStorage or use initial data
+        function loadTasks() {
+            const saved = localStorage.getItem('kanban-tasks');
+            return saved ? JSON.parse(saved) : initialTasks;
+        }
+
+        // Save to localStorage
+        function saveTasks() {
+            const tasks = {
+                backlog: getColumnTasks('backlog'),
+                progress: getColumnTasks('progress'),
+                review: getColumnTasks('review'),
+                done: getColumnTasks('done')
+            };
+            localStorage.setItem('kanban-tasks', JSON.stringify(tasks));
+            updateCounts();
+        }
+
+        // Get tasks from a column
+        function getColumnTasks(columnId) {
+            const column = document.getElementById(columnId);
+            return Array.from(column.children).map(card => ({
+                id: card.dataset.id,
+                title: card.querySelector('.card-title').textContent,
+                priority: card.dataset.priority,
+                project: card.dataset.project,
+                tags: JSON.parse(card.dataset.tags || '[]')
+            }));
+        }
+
+        // Create card HTML
+        function createCard(task) {
+            const priorityColors = {
+                high: 'priority-high border-red-500',
+                medium: 'priority-medium border-amber-500',
+                low: 'priority-low border-emerald-500'
+            };
+
+            const projectColors = {
+                'colombian-spanish': 'bg-cyan-500/20 text-cyan-400',
+                'spicesync': 'bg-purple-500/20 text-purple-400'
+            };
+
+            const div = document.createElement('div');
+            div.className = `card glass rounded-lg p-3 border-l-4 ${priorityColors[task.priority]}`;
+            div.dataset.id = task.id;
+            div.dataset.priority = task.priority;
+            div.dataset.project = task.project;
+            div.dataset.tags = JSON.stringify(task.tags || []);
+            div.innerHTML = `
+                <div class="flex items-start justify-between mb-2">
+                    <span class="text-xs px-2 py-0.5 rounded ${projectColors[task.project]}">
+                        ${task.project === 'colombian-spanish' ? '🇨🇴 Colombian' : '🔥 SpiceSync'}
+                    </span>
+                    <button onclick="deleteTask('${task.id}')" class="text-slate-500 hover:text-red-400 transition-colors">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <h4 class="card-title font-medium text-sm mb-2 text-slate-200">${task.title}</h4>
+                <div class="flex flex-wrap gap-1">
+                    ${(task.tags || []).map(tag => `
+                        <span class="text-xs bg-slate-700/50 text-slate-400 px-1.5 py-0.5 rounded">${tag}</span>
+                    `).join('')}
+                </div>
+            `;
+            return div;
+        }
+
+        // Render tasks
+        function renderTasks() {
+            const tasks = loadTasks();
+            
+            Object.keys(tasks).forEach(columnId => {
+                const column = document.getElementById(columnId);
+                column.innerHTML = '';
+                tasks[columnId].forEach(task => {
+                    column.appendChild(createCard(task));
+                });
+            });
+            
+            lucide.createIcons();
+            updateCounts();
+        }
+
+        // Update column counts
+        function updateCounts() {
+            ['backlog', 'progress', 'review', 'done'].forEach(id => {
+                const count = document.getElementById(id).children.length;
+                document.getElementById(`count-${id}`).textContent = count;
+            });
+        }
+
+        // Initialize Sortable
+        ['backlog', 'progress', 'review', 'done'].forEach(id => {
+            new Sortable(document.getElementById(id), {
+                group: 'kanban',
+                animation: 150,
+                ghostClass: 'bg-slate-700/50',
+                dragClass: 'opacity-50',
+                onEnd: saveTasks
+            });
+        });
+
+        // Modal functions
+        function addNewTask() {
+            document.getElementById('task-modal').classList.remove('hidden');
+            document.getElementById('task-modal').classList.add('flex');
+            document.getElementById('task-title').focus();
+        }
+
+        function closeModal() {
+            document.getElementById('task-modal').classList.add('hidden');
+            document.getElementById('task-modal').classList.remove('flex');
+            document.getElementById('task-title').value = '';
+        }
+
+        function saveTask() {
+            const title = document.getElementById('task-title').value;
+            const priority = document.getElementById('task-priority').value;
+            const project = document.getElementById('task-project').value;
+            
+            if (!title) return;
+            
+            const task = {
+                id: Date.now().toString(),
+                title,
+                priority,
+                project,
+                tags: []
+            };
+            
+            const card = createCard(task);
+            document.getElementById('backlog').appendChild(card);
+            lucide.createIcons();
+            saveTasks();
+            closeModal();
+        }
+
+        function deleteTask(id) {
+            const card = document.querySelector(`[data-id="${id}"]`);
+            if (card) {
+                card.remove();
+                saveTasks();
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('task-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        // Simulate status updates (in real implementation, this would come from your backend)
+        function updateStatus() {
+            const statuses = [
+                { text: 'Active', color: 'emerald', activity: 'Processing...' },
+                { text: 'Idle', color: 'slate', activity: 'Waiting for input...' },
+                { text: 'Working', color: 'cyan', activity: 'Merging PRs...' },
+                { text: 'Thinking', color: 'amber', activity: 'Analyzing code...' }
+            ];
+            
+            // In real implementation, this would be driven by actual activity
+            // For now, just keep it as "Active" since I am actively working
+        }
+
+        // Initial render
+        renderTasks();
+
+        // Update status every 30 seconds (simulated)
+        setInterval(updateStatus, 30000);
+    </script>
+</body>
+</html>
