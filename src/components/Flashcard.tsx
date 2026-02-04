@@ -1,5 +1,5 @@
 // src/components/Flashcard.tsx
-import React, { useMemo, useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Animated, Easing, PanResponder, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Speech from 'expo-speech';
 import { colors, spacing } from '../styles/theme';
@@ -17,18 +17,20 @@ export default function Flashcard({ card, onGrade }: Props) {
   // Flip animation (Y-rotation)
   const rot = useRef(new Animated.Value(0)).current; // 0 = front, 180 = back
   const frontDeg = rot.interpolate({ inputRange: [0, 180], outputRange: ['0deg', '180deg'] });
-  const backDeg  = rot.interpolate({ inputRange: [0, 180], outputRange: ['180deg', '360deg'] });
+  const backDeg = rot.interpolate({ inputRange: [0, 180], outputRange: ['180deg', '360deg'] });
 
   // Horizontal swipe gesture
   const translateX = useRef(new Animated.Value(0)).current;
-  const tilt = translateX.interpolate({ inputRange: [-150, 0, 150], outputRange: ['-6deg', '0deg', '6deg'] });
-  const opacity = translateX.interpolate({ inputRange: [-150, 0, 150], outputRange: [0.85, 1, 0.85] });
+  const tilt = translateX.interpolate({
+    inputRange: [-150, 0, 150],
+    outputRange: ['-6deg', '0deg', '6deg'],
+  });
+  const opacity = translateX.interpolate({
+    inputRange: [-150, 0, 150],
+    outputRange: [0.85, 1, 0.85],
+  });
 
-  // Acceptable answers kept for future quiz/validation flows (not used on the card anymore)
-  useMemo(() => {
-    const _ = card; // placeholder to keep dependency intentionally
-    return undefined;
-  }, [card]);
+  // (reserved for future quiz/validation flows)
 
   function say() {
     Speech.speak(card.front, { language: 'es-CO', pitch: 1.03, rate: 0.98 });
@@ -62,13 +64,19 @@ export default function Flashcard({ card, onGrade }: Props) {
   const SWIPE_THRESHOLD = 80; // px
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_evt, gs) => Math.abs(gs.dx) > 8 && Math.abs(gs.dx) > Math.abs(gs.dy),
+      onMoveShouldSetPanResponder: (_evt, gs) =>
+        Math.abs(gs.dx) > 8 && Math.abs(gs.dx) > Math.abs(gs.dy),
       onPanResponderMove: Animated.event([null, { dx: translateX }], { useNativeDriver: false }),
       onPanResponderRelease: (_evt, gs) => {
         const { dx } = gs;
         if (dx > SWIPE_THRESHOLD) {
           // Swipe Right => Good (4)
-          Animated.timing(translateX, { toValue: 400, duration: 180, easing: Easing.out(Easing.quad), useNativeDriver: true }).start(() => {
+          Animated.timing(translateX, {
+            toValue: 400,
+            duration: 180,
+            easing: Easing.out(Easing.quad),
+            useNativeDriver: true,
+          }).start(() => {
             translateX.setValue(0);
             // Return to front for next card
             if (!isFront) flip('front');
@@ -76,7 +84,12 @@ export default function Flashcard({ card, onGrade }: Props) {
           });
         } else if (dx < -SWIPE_THRESHOLD) {
           // Swipe Left => Hard (2) to see it more often
-          Animated.timing(translateX, { toValue: -400, duration: 180, easing: Easing.out(Easing.quad), useNativeDriver: true }).start(() => {
+          Animated.timing(translateX, {
+            toValue: -400,
+            duration: 180,
+            easing: Easing.out(Easing.quad),
+            useNativeDriver: true,
+          }).start(() => {
             translateX.setValue(0);
             if (!isFront) flip('front');
             onGrade(2);
@@ -86,7 +99,7 @@ export default function Flashcard({ card, onGrade }: Props) {
           Animated.spring(translateX, { toValue: 0, useNativeDriver: true, bounciness: 8 }).start();
         }
       },
-    })
+    }),
   ).current;
 
   return (
@@ -98,7 +111,12 @@ export default function Flashcard({ card, onGrade }: Props) {
         <View style={styles.cardWrap}>
           {/* FRONT */}
           <Animated.View
-            style={[styles.card, styles.cardFace, styles.cardFront, { transform: [{ perspective: 1000 }, { rotateY: frontDeg }] }]}
+            style={[
+              styles.card,
+              styles.cardFace,
+              styles.cardFront,
+              { transform: [{ perspective: 1000 }, { rotateY: frontDeg }] },
+            ]}
             pointerEvents={isFront ? 'auto' : 'none'}
           >
             <Pressable onPress={() => flip('back')} onLongPress={say} style={styles.facePressable}>
@@ -110,7 +128,12 @@ export default function Flashcard({ card, onGrade }: Props) {
 
           {/* BACK */}
           <Animated.View
-            style={[styles.card, styles.cardFace, styles.cardBack, { transform: [{ perspective: 1000 }, { rotateY: backDeg }] }]}
+            style={[
+              styles.card,
+              styles.cardFace,
+              styles.cardBack,
+              { transform: [{ perspective: 1000 }, { rotateY: backDeg }] },
+            ]}
             pointerEvents={isFront ? 'none' : 'auto'}
           >
             <Pressable onPress={() => flip('front')} onLongPress={say} style={styles.facePressable}>
@@ -119,7 +142,9 @@ export default function Flashcard({ card, onGrade }: Props) {
           </Animated.View>
         </View>
       </Animated.View>
-      <Text style={styles.swipeFooter}>Swipe ⬅️ To See More often · Swipe ➡️ To See Less Often</Text>
+      <Text style={styles.swipeFooter}>
+        Swipe ⬅️ To See More often · Swipe ➡️ To See Less Often
+      </Text>
     </View>
   );
 }
