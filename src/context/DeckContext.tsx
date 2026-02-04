@@ -1,5 +1,13 @@
 import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
-import { loadDecks, saveDecks, upsertDeck, addCard as addCardStorage } from '../storage/storage';
+import {
+  loadDecks,
+  saveDecks,
+  upsertDeck,
+  addCard as addCardStorage,
+  removeDeckById,
+  renameDeckById,
+  resetDeckProgressById,
+} from '../storage/storage';
 import { Deck, FlashCard } from '../types';
 import { nextBatch, gradeCard } from '../utils/srs';
 
@@ -27,6 +35,9 @@ type Ctx = {
     card: Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'>,
   ) => Promise<void>;
   createDeck: (name: string, description?: string) => Promise<Deck | undefined>;
+  renameDeck: (deckId: string, name: string) => Promise<void>;
+  deleteDeck: (deckId: string) => Promise<void>;
+  resetDeckProgress: (deckId: string) => Promise<void>;
   reload: () => Promise<void>;
 };
 
@@ -150,6 +161,25 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     return newDeck;
   }
 
+  async function renameDeck(deckId: string, name: string) {
+    await renameDeckById(deckId, name);
+    const updated = await loadDecks();
+    setDecks(updated);
+  }
+
+  async function deleteDeck(deckId: string) {
+    await removeDeckById(deckId);
+    const updated = await loadDecks();
+    setDecks(updated);
+    if (activeDeckId === deckId) setActiveDeckId(updated[0]?.id);
+  }
+
+  async function resetDeckProgress(deckId: string) {
+    await resetDeckProgressById(deckId);
+    const updated = await loadDecks();
+    setDecks(updated);
+  }
+
   async function reload() {
     const stored = await loadDecks();
     setDecks(stored);
@@ -166,6 +196,9 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     toggleFavorite,
     addCardToDeck,
     createDeck,
+    renameDeck,
+    deleteDeck,
+    resetDeckProgress,
     reload,
   };
 
