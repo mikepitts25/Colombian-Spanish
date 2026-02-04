@@ -110,5 +110,5 @@ export const ALL_DECKS: Deck[] = [
   TechnologyDeck,
   TransportDeck,
   TravelDeck,
-  WeatherDeck
+  WeatherDeck,
 ];
