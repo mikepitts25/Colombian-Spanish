@@ -61,38 +61,37 @@ jobs:
 
       - name: 🗂️ Validate Deck Index
         run: |
-          node -e "
-          try {
-            const decks = require('./src/data/decks');
-            console.log('✅ Deck index loads successfully');
-            console.log('📊 Total decks:', decks.ALL_DECKS.length);
-            const totalCards = decks.ALL_DECKS.reduce((sum, d) => sum + (d.cards?.length || 0), 0);
-            console.log('🎴 Total cards:', totalCards);
-            
-            // Check for duplicate IDs
-            const allIds = decks.ALL_DECKS.flatMap(d => d.cards?.map(c => c.id) || []);
-            const duplicates = allIds.filter((item, index) => allIds.indexOf(item) !== index);
-            if (duplicates.length > 0) {
-              console.error('❌ Duplicate card IDs found:', duplicates);
-              process.exit(1);
-            }
-            console.log('✅ No duplicate card IDs');
-            
-            // Check each deck has required fields
-            for (const deck of decks.ALL_DECKS) {
-              if (!deck.id || !deck.name || !Array.isArray(deck.cards)) {
-                console.error('❌ Invalid deck:', deck.name || deck.id);
-                process.exit(1);
-              }
-            }
-            console.log('✅ All decks have valid structure');
-            
-            console.log('\\n🎉 All validations passed!');
-          } catch (err) {
-            console.error('❌ Error loading decks:', err.message);
+          # Install tsx for TypeScript execution
+          npm install --save-dev tsx
+          npx tsx -e "
+          const { ALL_DECKS } = require('./src/data/decks');
+          
+          console.log('✅ Deck index loads successfully');
+          console.log('📊 Total decks:', ALL_DECKS.length);
+          const totalCards = ALL_DECKS.reduce((sum, d) => sum + (d.cards?.length || 0), 0);
+          console.log('🎴 Total cards:', totalCards);
+          
+          // Check for duplicate IDs
+          const allIds = ALL_DECKS.flatMap(d => d.cards?.map(c => c.id) || []);
+          const duplicates = allIds.filter((item, index) => allIds.indexOf(item) !== index);
+          if (duplicates.length > 0) {
+            console.error('❌ Duplicate card IDs found:', duplicates);
             process.exit(1);
           }
+          console.log('✅ No duplicate card IDs');
+          
+          // Check each deck has required fields
+          for (const deck of ALL_DECKS) {
+            if (!deck.id || !deck.name || !Array.isArray(deck.cards)) {
+              console.error('❌ Invalid deck:', deck.name || deck.id);
+              process.exit(1);
+            }
+          }
+          console.log('✅ All decks have valid structure');
+          
+          console.log('\n🎉 All validations passed!');
           "
+        continue-on-error: false
 
   # Job 3: Test Build (Expo Prebuild)
   test-build:

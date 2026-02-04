@@ -34,6 +34,17 @@ export default function StudyScreen() {
   const percent = Math.round(progress * 100);
   const [congratsShown, setCongratsShown] = useState(false);
 
+  // Compute card for auto-speak effect - must be before early returns
+  const cardForSpeak = ready && activeDeck ? batch[idx] : null;
+
+  React.useEffect(() => {
+    if (!cardForSpeak) return;
+    if (!prefs.autoSpeak) return;
+    Speech.stop();
+    Speech.speak(cardForSpeak.front, { language: 'es-CO', pitch: 1.03, rate: prefs.speechRate });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardForSpeak?.id, prefs.autoSpeak, prefs.speechRate]);
+
   if (!ready)
     return (
       <SafeAreaView style={styles.wrap}>
@@ -43,14 +54,6 @@ export default function StudyScreen() {
   if (!activeDeck) return null;
 
   const card = batch[idx];
-
-  React.useEffect(() => {
-    if (!card) return;
-    if (!prefs.autoSpeak) return;
-    Speech.stop();
-    Speech.speak(card.front, { language: 'es-CO', pitch: 1.03, rate: prefs.speechRate });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [card?.id, prefs.autoSpeak, prefs.speechRate]);
 
   async function grade(q: 0 | 1 | 2 | 3 | 4 | 5) {
     if (!card) return;
