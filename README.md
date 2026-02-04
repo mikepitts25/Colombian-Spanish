@@ -8,7 +8,7 @@ Learn real Colombian Spanish with 1,000+ flashcards covering slang, expressions,
 
 ## 📱 Screenshots
 
-*(Coming soon)*
+*(Coming soon - app is in development)*
 
 ## ✨ Features
 
