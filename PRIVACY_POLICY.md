@@ -9,10 +9,12 @@ Colombian Spanish SRS ("we," "our," or "us") is committed to protecting your pri
 ## Information We Collect
 
 ### Information You Provide
+
 - **Study Progress**: We store your flashcard study progress, including which cards you've reviewed and your performance metrics, locally on your device.
 - **Custom Cards**: Any custom flashcards you create are stored locally on your device.
 
 ### Information We Do Not Collect
+
 - **Personal Information**: We do not collect names, email addresses, phone numbers, or any other personally identifiable information.
 - **Location Data**: We do not track or collect your location.
 - **Usage Analytics**: We do not use third-party analytics services or track your usage patterns.
@@ -21,6 +23,7 @@ Colombian Spanish SRS ("we," "our," or "us") is committed to protecting your pri
 ## How We Use Your Information
 
 All data is stored **locally on your device** using secure device storage (AsyncStorage). We use this information solely to:
+
 - Track your study progress and schedule review sessions
 - Display your learning statistics
 - Save custom cards you create
@@ -48,6 +51,7 @@ We may update our Privacy Policy from time to time. We will notify you of any ch
 ## Your Rights
 
 Since all data is stored locally on your device, you have complete control over your information:
+
 - You can delete data by uninstalling the app
 - You can reset your progress within the app settings
 - You can export your custom cards (feature coming soon)
@@ -55,6 +59,7 @@ Since all data is stored locally on your device, you have complete control over 
 ## Contact Us
 
 If you have any questions about this Privacy Policy, please contact us:
+
 - **Email**: [Your contact email]
 - **GitHub**: https://github.com/mikepitts25/Colombian-Spanish
 

@@ -65,12 +65,12 @@ jobs:
           npm install --save-dev tsx
           npx tsx -e "
           const { ALL_DECKS } = require('./src/data/decks');
-          
+
           console.log('✅ Deck index loads successfully');
           console.log('📊 Total decks:', ALL_DECKS.length);
           const totalCards = ALL_DECKS.reduce((sum, d) => sum + (d.cards?.length || 0), 0);
           console.log('🎴 Total cards:', totalCards);
-          
+
           // Check for duplicate IDs
           const allIds = ALL_DECKS.flatMap(d => d.cards?.map(c => c.id) || []);
           const duplicates = allIds.filter((item, index) => allIds.indexOf(item) !== index);
@@ -79,7 +79,7 @@ jobs:
             process.exit(1);
           }
           console.log('✅ No duplicate card IDs');
-          
+
           // Check each deck has required fields
           for (const deck of ALL_DECKS) {
             if (!deck.id || !deck.name || !Array.isArray(deck.cards)) {
@@ -88,7 +88,7 @@ jobs:
             }
           }
           console.log('✅ All decks have valid structure');
-          
+
           console.log('\n🎉 All validations passed!');
           "
         continue-on-error: false
@@ -153,16 +153,16 @@ jobs:
             if ('${{ needs.lint-and-typecheck.result }}' !== 'success') failed.push('🔍 Lint & Type Check');
             if ('${{ needs.validate-data.result }}' !== 'success') failed.push('📚 Card Data Validation');
             if ('${{ needs.test-build.result }}' !== 'success') failed.push('🏗️ Build Test');
-            
+
             const body = `## ❌ Build Failed
-            
+
             The following checks failed:
             ${failed.map(f => `- ${f}`).join('\\n')}
-            
+
             Please fix the issues before merging.
-            
+
             [View Details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,

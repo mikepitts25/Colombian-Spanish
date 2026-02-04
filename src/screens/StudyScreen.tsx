@@ -78,7 +78,9 @@ export default function StudyScreen() {
   }
 
   async function bumpRate(delta: number) {
-    const next = await setPrefs({ speechRate: Math.max(0.6, Math.min(1.3, +(prefs.speechRate + delta).toFixed(2))) });
+    const next = await setPrefs({
+      speechRate: Math.max(0.6, Math.min(1.3, +(prefs.speechRate + delta).toFixed(2))),
+    });
     setPrefsState(next);
   }
 
@@ -97,8 +99,13 @@ export default function StudyScreen() {
       <Text style={styles.h1}>Study — {activeDeck.name}</Text>
 
       <View style={styles.audioRow}>
-        <Pressable style={[styles.audioBtn, prefs.autoSpeak && styles.audioBtnOn]} onPress={toggleAutoSpeak}>
-          <Text style={[styles.audioBtnText, prefs.autoSpeak && styles.audioBtnTextOn]}>{prefs.autoSpeak ? 'Auto 🔊 ON' : 'Auto 🔊 OFF'}</Text>
+        <Pressable
+          style={[styles.audioBtn, prefs.autoSpeak && styles.audioBtnOn]}
+          onPress={toggleAutoSpeak}
+        >
+          <Text style={[styles.audioBtnText, prefs.autoSpeak && styles.audioBtnTextOn]}>
+            {prefs.autoSpeak ? 'Auto 🔊 ON' : 'Auto 🔊 OFF'}
+          </Text>
         </Pressable>
         <Pressable style={styles.audioBtn} onPress={replay}>
           <Text style={styles.audioBtnText}>Replay</Text>
@@ -110,8 +117,12 @@ export default function StudyScreen() {
 
       <View style={styles.rateRow}>
         <Text style={styles.rateLabel}>Rate: {prefs.speechRate.toFixed(2)}</Text>
-        <Pressable style={styles.rateBtn} onPress={() => bumpRate(-0.05)}><Text style={styles.rateBtnText}>-</Text></Pressable>
-        <Pressable style={styles.rateBtn} onPress={() => bumpRate(+0.05)}><Text style={styles.rateBtnText}>+</Text></Pressable>
+        <Pressable style={styles.rateBtn} onPress={() => bumpRate(-0.05)}>
+          <Text style={styles.rateBtnText}>-</Text>
+        </Pressable>
+        <Pressable style={styles.rateBtn} onPress={() => bumpRate(+0.05)}>
+          <Text style={styles.rateBtnText}>+</Text>
+        </Pressable>
       </View>
 
       <ProgressBar progress={progress} />
@@ -145,13 +156,29 @@ const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
   h1: { color: colors.text, fontSize: 22, fontWeight: '800', marginBottom: spacing(1) },
   audioRow: { flexDirection: 'row', gap: 8, flexWrap: 'wrap', marginBottom: 8 },
-  audioBtn: { backgroundColor: '#0b1220', borderWidth: 1, borderColor: '#1f2937', borderRadius: 12, paddingVertical: 8, paddingHorizontal: 10 },
+  audioBtn: {
+    backgroundColor: '#0b1220',
+    borderWidth: 1,
+    borderColor: '#1f2937',
+    borderRadius: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+  },
   audioBtnOn: { backgroundColor: '#052e2b', borderColor: '#065f46' },
   audioBtnText: { color: '#e2e8f0', fontWeight: '900' },
   audioBtnTextOn: { color: '#a7f3d0' },
   rateRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: spacing(1) },
   rateLabel: { color: colors.sub, fontWeight: '800' },
-  rateBtn: { width: 36, height: 36, borderRadius: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#0b1220', borderWidth: 1, borderColor: '#1f2937' },
+  rateBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0b1220',
+    borderWidth: 1,
+    borderColor: '#1f2937',
+  },
   rateBtnText: { color: '#e2e8f0', fontWeight: '900', fontSize: 18 },
   sub: { color: colors.sub },
   meta: { color: colors.sub, textAlign: 'center', marginTop: spacing(1) },

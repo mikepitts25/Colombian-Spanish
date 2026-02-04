@@ -8,7 +8,7 @@ Learn real Colombian Spanish with 1,000+ flashcards covering slang, expressions,
 
 ## 📱 Screenshots
 
-*(Coming soon - app is in development)*
+_(Coming soon - app is in development)_
 
 ## ✨ Features
 
@@ -22,18 +22,21 @@ Learn real Colombian Spanish with 1,000+ flashcards covering slang, expressions,
 ## 📚 Content Includes
 
 ### Colombian Slang & Expressions
+
 - Jerga Colombiana (general slang)
 - Paisa slang (Medellín-specific)
 - Colombian expressions & sayings
 - Dating & relationship phrases
 
 ### Practical Categories
+
 - Food & drinks (including Colombian specialties)
 - Travel & emergency phrases
 - Business & professional Spanish
 - Culture & festivals
 
 ### Core Vocabulary
+
 - Daily life, family, emotions
 - Shopping, transport, health
 - Numbers, dates, weather
@@ -42,6 +45,7 @@ Learn real Colombian Spanish with 1,000+ flashcards covering slang, expressions,
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - npm or yarn
 - iOS Simulator (Mac) or Android Emulator
@@ -122,6 +126,7 @@ This app uses a modified **SM-2** spaced repetition algorithm:
 ## 🤝 Contributing
 
 Contributions welcome! Areas where help is needed:
+
 - Additional Colombian slang and expressions
 - Audio recordings by native speakers
 - UI/UX improvements
