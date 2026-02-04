@@ -5,6 +5,7 @@ import { Text } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import StudyScreen from '../screens/StudyScreen';
 import AddCardScreen from '../screens/AddCardScreen';
+import BrowseScreen from '../screens/BrowseScreen';
 import PhrasebookScreen from '../screens/PhrasebookScreen';
 import ManageDecksScreen from '../screens/ManageDecksScreen';
 
@@ -44,6 +45,14 @@ function Tabs() {
         options={{
           tabBarLabel: ({ color }) => <Text style={{ color }}>Add</Text>,
           title: 'Add Cards',
+        }}
+      />
+      <Tab.Screen
+        name="Browse"
+        component={BrowseScreen}
+        options={{
+          tabBarLabel: ({ color }) => <Text style={{ color }}>Browse</Text>,
+          title: 'Browse',
         }}
       />
       <Tab.Screen
