@@ -7,6 +7,7 @@ import StudyScreen from '../screens/StudyScreen';
 import AddCardScreen from '../screens/AddCardScreen';
 import BrowseScreen from '../screens/BrowseScreen';
 import PhrasebookScreen from '../screens/PhrasebookScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import ManageDecksScreen from '../screens/ManageDecksScreen';
 
 const Tab = createBottomTabNavigator();
@@ -61,6 +62,14 @@ function Tabs() {
         options={{
           tabBarLabel: ({ color }) => <Text style={{ color }}>Phrasebook</Text>,
           title: 'Phrasebook',
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: ({ color }) => <Text style={{ color }}>Settings</Text>,
+          title: 'Settings',
         }}
       />
     </Tab.Navigator>
