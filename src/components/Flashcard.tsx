@@ -95,7 +95,7 @@ export default function Flashcard({ card, onGrade }: Props) {
             onGrade(2);
           });
         } else {
-          // Not far enough — snap back
+          // Not far enough - snap back
           Animated.spring(translateX, { toValue: 0, useNativeDriver: true, bounciness: 8 }).start();
         }
       },
@@ -121,7 +121,7 @@ export default function Flashcard({ card, onGrade }: Props) {
           >
             <Pressable onPress={() => flip('back')} onLongPress={say} style={styles.facePressable}>
               <Text style={styles.frontText}>{card.front}</Text>
-              {card.example ? <Text style={styles.example}>“{card.example}”</Text> : null}
+              {card.example ? <ExampleText example={card.example} /> : null}
               <Text style={styles.hint}>Tap to flip • Long-press to listen 🔊</Text>
             </Pressable>
           </Animated.View>
@@ -149,6 +149,17 @@ export default function Flashcard({ card, onGrade }: Props) {
   );
 }
 
+function ExampleText({ example }: { example: string }) {
+  const parts = example.split('|').map((s) => s.trim());
+  const [spanish, english] = parts.length >= 2 ? [parts[0], parts[1]] : [example, null];
+  return (
+    <View style={{ marginTop: spacing(1) }}>
+      <Text style={styles.example}>"{spanish}"</Text>
+      {english ? <Text style={styles.exampleEn}>{english}</Text> : null}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   cardWrap: { minHeight: 260 },
   card: {
@@ -170,7 +181,8 @@ const styles = StyleSheet.create({
   facePressable: { flex: 1, justifyContent: 'center' },
   frontText: { color: colors.text, fontSize: 28, fontWeight: '700', textAlign: 'center' },
   backText: { color: colors.text, fontSize: 24, fontWeight: '700', textAlign: 'center' },
-  example: { color: colors.sub, fontSize: 14, marginTop: spacing(1), textAlign: 'center' },
+  example: { color: colors.sub, fontSize: 14, marginTop: spacing(0.5), textAlign: 'center', fontStyle: 'italic' },
+  exampleEn: { color: colors.accent, fontSize: 13, marginTop: spacing(0.5), textAlign: 'center' },
   hint: { color: colors.sub, fontSize: 12, marginTop: spacing(2), textAlign: 'center' },
   sub: { color: colors.sub },
   swipeFooter: { color: colors.sub, textAlign: 'center', marginTop: spacing(1), fontSize: 12 },

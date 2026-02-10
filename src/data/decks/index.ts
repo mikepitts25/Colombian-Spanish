@@ -36,6 +36,7 @@ import { TechnologyDeck } from './technology';
 import { TransportDeck } from './transport';
 import { TravelDeck } from './travel';
 import { WeatherDeck } from './weather';
+import { UsefulPhrasesDeck } from './useful_phrases';
 
 export {
   ActionsDeck,
@@ -73,6 +74,7 @@ export {
   TransportDeck,
   TravelDeck,
   WeatherDeck,
+  UsefulPhrasesDeck,
 };
 
 export const ALL_DECKS: Deck[] = [
@@ -111,4 +113,5 @@ export const ALL_DECKS: Deck[] = [
   TransportDeck,
   TravelDeck,
   WeatherDeck,
+  UsefulPhrasesDeck,
 ];

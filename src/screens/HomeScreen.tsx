@@ -14,21 +14,22 @@ import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
 
-type CategoryKey =
-  | 'Colombianisms'
-  | 'Essentials'
-  | 'People & Relationships'
-  | 'Places & Travel'
-  | 'Home & Daily Life'
-  | 'Food & Drink'
-  | 'Communication'
-  | 'Health'
-  | 'Nature'
-  | 'Work & School'
-  | 'Numbers & Time'
-  | 'Fun & Culture'
-  | 'Tech'
-  | 'Other';
+const categoryEmojis: Record<string, string> = {
+  'Colombianisms': '🇨🇴',
+  'Essentials': '📚',
+  'People & Relationships': '👥',
+  'Places & Travel': '🌎',
+  'Home & Daily Life': '🏠',
+  'Food & Drink': '🍽️',
+  'Communication': '💬',
+  'Health': '❤️',
+  'Nature': '🌿',
+  'Work & School': '💼',
+  'Numbers & Time': '🔢',
+  'Fun & Culture': '🎉',
+  'Tech': '📱',
+  'Other': '📦',
+};
 
 // enable animations on Android
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -162,7 +163,7 @@ export default function HomeScreen() {
 }
 
 function groupIntoCategories(decks: any[]) {
-  const buckets: Record<CategoryKey, any[]> = {
+  const buckets: Record<string, any[]> = {
     Colombianisms: [],
     Essentials: [],
     'People & Relationships': [],
@@ -184,10 +185,10 @@ function groupIntoCategories(decks: any[]) {
     const tags = (d.cards?.[0]?.tags || []).map((t: string) => (t || '').toLowerCase());
     const text = name + ' ' + tags.join(' ');
 
-    if (/(slang|jerga|coloquial|colombia|colombianism)/.test(text))
+    if (/(slang|jerga|coloquial|colombia|colombianism|paisa|rolo)/.test(text))
       buckets['Colombianisms'].push(d);
-    else if (/(basic|intro|common|essential)/.test(text)) buckets['Essentials'].push(d);
-    else if (/(family|people|professions|body|emotions|relationships)/.test(text))
+    else if (/(basic|intro|common|essential|greeting|phrase)/.test(text)) buckets['Essentials'].push(d);
+    else if (/(family|people|professions|body|emotions|relationships|dating)/.test(text))
       buckets['People & Relationships'].push(d);
     else if (/(place|travel|transport|city|cali|bogotá|bogota|medellín|medellin)/.test(text))
       buckets['Places & Travel'].push(d);
@@ -199,7 +200,7 @@ function groupIntoCategories(decks: any[]) {
       buckets['Communication'].push(d);
     else if (/(health|clinic|pharmacy|medicine|salud)/.test(text)) buckets['Health'].push(d);
     else if (/(weather|clima|nature|animals|outdoor)/.test(text)) buckets['Nature'].push(d);
-    else if (/(work|job|school|study|professions|office)/.test(text))
+    else if (/(work|job|school|study|professions|office|business)/.test(text))
       buckets['Work & School'].push(d);
     else if (/(number|date|time|calendar|holidays)/.test(text)) buckets['Numbers & Time'].push(d);
     else if (/(sport|hobby|music|games|culture|art)/.test(text)) buckets['Fun & Culture'].push(d);
@@ -209,7 +210,11 @@ function groupIntoCategories(decks: any[]) {
 
   return Object.entries(buckets)
     .filter(([, arr]) => arr.length > 0)
-    .map(([key, data]) => ({ key, data }));
+    .map(([key, data]) => ({ 
+      key: `${categoryEmojis[key] || '📦'} ${key}`, 
+      data,
+      rawKey: key,
+    }));
 }
 
 const styles = StyleSheet.create({
