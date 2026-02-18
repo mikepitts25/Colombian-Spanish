@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Pressable, SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native';
-import { colors, spacing } from '../styles/theme';
+import { colors, spacing, radius } from '../styles/theme';
 import { getDailyProgress, setDailyTarget, saveDecks, loadDecks } from '../storage/storage';
 import * as Clipboard from 'expo-clipboard';
 
@@ -144,12 +144,12 @@ const styles = StyleSheet.create({
     paddingBottom: spacing(2),
   },
   title: {
-    color: colors.text,
+    color: colors.textPrimary,
     fontSize: 28,
     fontWeight: '800',
   },
   subtitle: {
-    color: colors.sub,
+    color: colors.textSecondary,
     fontSize: 16,
     marginTop: spacing(0.5),
   },
@@ -157,14 +157,14 @@ const styles = StyleSheet.create({
     padding: spacing(2),
     gap: spacing(2),
   },
-  h2: { color: colors.text, fontSize: 16, fontWeight: '900', marginBottom: 6 },
-  p: { color: colors.sub },
-  sub: { color: colors.sub, marginTop: 8 },
+  h2: { color: colors.textPrimary, fontSize: 16, fontWeight: '900', marginBottom: 6 },
+  p: { color: colors.textSecondary },
+  sub: { color: colors.textTertiary, marginTop: 8 },
   card: {
-    backgroundColor: '#0e1526',
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: '#111827',
-    borderRadius: 14,
+    borderColor: colors.border,
+    borderRadius: radius.lg,
     padding: spacing(1.5),
     gap: 8,
   },
@@ -172,17 +172,17 @@ const styles = StyleSheet.create({
   pill: {
     paddingVertical: 8,
     paddingHorizontal: 12,
-    borderRadius: 999,
-    backgroundColor: '#111827',
+    borderRadius: radius.full,
+    backgroundColor: colors.surfaceElevated,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: colors.border,
   },
-  pillActive: { backgroundColor: '#1d4ed8', borderColor: '#1d4ed8' },
-  pillText: { color: '#cbd5e1', fontWeight: '900' },
+  pillActive: { backgroundColor: colors.info, borderColor: colors.info },
+  pillText: { color: colors.textSecondary, fontWeight: '900' },
   pillTextActive: { color: 'white' },
   primary: {
-    backgroundColor: '#2563eb',
-    borderRadius: 12,
+    backgroundColor: colors.info,
+    borderRadius: radius.lg,
     paddingVertical: 12,
     paddingHorizontal: 14,
     alignItems: 'center',

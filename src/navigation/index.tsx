@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text, View } from 'react-native';
+import { colors } from '../styles/theme';
 
 // Tab Screens (4 main tabs)
 import HomeScreen from '../screens/HomeScreen';
@@ -41,7 +42,7 @@ function TabLabel({ name, focused }: { name: string; focused: boolean }) {
   return (
     <Text
       style={{
-        color: focused ? '#22d3ee' : '#94a3b8',
+        color: focused ? colors.brand : colors.textSecondary,
         fontSize: 11,
         fontWeight: focused ? '600' : '400',
         marginTop: 2,
@@ -57,18 +58,18 @@ function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerStyle: { backgroundColor: '#0f172a' },
-        headerTintColor: '#fff',
+        headerStyle: { backgroundColor: colors.bg },
+        headerTintColor: colors.textPrimary,
         tabBarStyle: {
-          backgroundColor: '#0f172a',
-          borderTopColor: '#1e293b',
+          backgroundColor: colors.bg,
+          borderTopColor: colors.border,
           borderTopWidth: 1,
           paddingBottom: 8,
           paddingTop: 8,
           height: 64,
         },
-        tabBarActiveTintColor: '#22d3ee',
-        tabBarInactiveTintColor: '#94a3b8',
+        tabBarActiveTintColor: colors.brand,
+        tabBarInactiveTintColor: colors.textSecondary,
         tabBarIcon: ({ focused }) => <TabIcon name={route.name} focused={focused} />,
         tabBarLabel: ({ focused }) => <TabLabel name={route.name} focused={focused} />,
       })}
@@ -102,8 +103,8 @@ export default function RootNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: '#0f172a' },
-        headerTintColor: '#fff',
+        headerStyle: { backgroundColor: colors.bg },
+        headerTintColor: colors.textPrimary,
       }}
     >
       <Stack.Screen

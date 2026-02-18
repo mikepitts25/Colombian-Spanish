@@ -6,7 +6,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
-import { colors, spacing } from '../styles/theme';
+import { colors, spacing, radius } from '../styles/theme';
 import { getDailyProgress } from '../storage/storage';
 import { useDeck } from '../hooks/useDeck';
 
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg,
   },
   loading: {
-    color: colors.text,
+    color: colors.textPrimary,
     fontSize: 18,
     textAlign: 'center',
     marginTop: spacing(4),
@@ -155,12 +155,12 @@ const styles = StyleSheet.create({
     paddingBottom: spacing(2),
   },
   title: {
-    color: colors.text,
+    color: colors.textPrimary,
     fontSize: 28,
     fontWeight: '800',
   },
   subtitle: {
-    color: colors.sub,
+    color: colors.textSecondary,
     fontSize: 16,
     marginTop: spacing(0.5),
   },
@@ -169,39 +169,39 @@ const styles = StyleSheet.create({
     gap: spacing(2),
   },
   card: {
-    backgroundColor: colors.card,
-    borderRadius: 12,
+    backgroundColor: colors.surface,
+    borderRadius: radius.lg,
     padding: spacing(2.5),
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: colors.border,
   },
   motivationCard: {
-    backgroundColor: '#1e293b',
+    backgroundColor: colors.surfaceElevated,
   },
   cardTitle: {
-    color: colors.text,
+    color: colors.textPrimary,
     fontSize: 16,
     fontWeight: '700',
     marginBottom: spacing(1),
   },
   progressBar: {
     height: 8,
-    backgroundColor: '#1f2937',
-    borderRadius: 4,
+    backgroundColor: colors.border,
+    borderRadius: radius.sm,
     overflow: 'hidden',
     marginBottom: spacing(1),
   },
   progressFill: {
     height: '100%',
-    backgroundColor: colors.accent,
-    borderRadius: 4,
+    backgroundColor: colors.brand,
+    borderRadius: radius.sm,
   },
   progressText: {
-    color: colors.sub,
+    color: colors.textSecondary,
     fontSize: 14,
   },
   celebration: {
-    color: '#10b981',
+    color: colors.success,
     fontSize: 14,
     fontWeight: '700',
     marginTop: spacing(0.5),
@@ -214,31 +214,31 @@ const styles = StyleSheet.create({
   statBox: {
     flex: 1,
     minWidth: '45%',
-    backgroundColor: colors.card,
-    borderRadius: 12,
+    backgroundColor: colors.surface,
+    borderRadius: radius.lg,
     padding: spacing(2),
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: colors.border,
   },
   statNumber: {
-    color: colors.accent,
+    color: colors.brand,
     fontSize: 24,
     fontWeight: '800',
   },
   statLabel: {
-    color: colors.sub,
+    color: colors.textSecondary,
     fontSize: 12,
     marginTop: spacing(0.5),
   },
   motivationTitle: {
-    color: '#fbbf24',
+    color: colors.warning,
     fontSize: 16,
     fontWeight: '700',
     marginBottom: spacing(0.5),
   },
   motivationText: {
-    color: colors.sub,
+    color: colors.textSecondary,
     fontSize: 14,
     lineHeight: 20,
   },

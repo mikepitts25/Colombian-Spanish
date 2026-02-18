@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { colors, spacing } from '../styles/theme';
+import { colors, spacing, radius } from '../styles/theme';
 
 export default function ExploreScreen() {
   const nav = useNavigation<any>();
@@ -76,12 +76,12 @@ const styles = StyleSheet.create({
     paddingBottom: spacing(2),
   },
   title: {
-    color: colors.text,
+    color: colors.textPrimary,
     fontSize: 28,
     fontWeight: '800',
   },
   subtitle: {
-    color: colors.sub,
+    color: colors.textSecondary,
     fontSize: 16,
     marginTop: spacing(0.5),
   },
@@ -90,24 +90,23 @@ const styles = StyleSheet.create({
     gap: spacing(1.5),
   },
   card: {
-    backgroundColor: colors.card,
-    borderRadius: 12,
+    backgroundColor: colors.surface,
+    borderRadius: radius.lg,
     padding: spacing(2.5),
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: colors.border,
   },
   cardPressed: {
-    opacity: 0.8,
-    backgroundColor: '#1e293b',
+    backgroundColor: colors.surfacePressed,
   },
   cardTitle: {
-    color: colors.text,
+    color: colors.textPrimary,
     fontSize: 18,
     fontWeight: '700',
     marginBottom: spacing(0.5),
   },
   cardDescription: {
-    color: colors.sub,
+    color: colors.textSecondary,
     fontSize: 14,
   },
 });
