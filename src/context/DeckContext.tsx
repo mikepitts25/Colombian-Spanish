@@ -38,6 +38,7 @@ type Ctx = {
   renameDeck: (deckId: string, name: string) => Promise<void>;
   deleteDeck: (deckId: string) => Promise<void>;
   resetDeckProgress: (deckId: string) => Promise<void>;
+  resetAllDecksProgress: () => Promise<void>;
   reload: () => Promise<void>;
 };
 
@@ -180,6 +181,14 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     setDecks(updated);
   }
 
+  async function resetAllDecksProgress() {
+    for (const deck of decks) {
+      await resetDeckProgressById(deck.id);
+    }
+    const updated = await loadDecks();
+    setDecks(updated);
+  }
+
   async function reload() {
     const stored = await loadDecks();
     setDecks(stored);
@@ -199,6 +208,7 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     renameDeck,
     deleteDeck,
     resetDeckProgress,
+    resetAllDecksProgress,
     reload,
   };
 

@@ -15,7 +15,7 @@ import { useDeck } from '../hooks/useDeck';
 import { Deck } from '../types';
 
 export default function ManageDecksScreen() {
-  const { ready, decks, renameDeck, deleteDeck, resetDeckProgress, setActiveDeckId } = useDeck();
+  const { ready, decks, renameDeck, deleteDeck, resetDeckProgress, resetAllDecksProgress, setActiveDeckId } = useDeck();
   const [q, setQ] = useState('');
 
   const [renameOpen, setRenameOpen] = useState(false);
@@ -66,6 +66,18 @@ export default function ManageDecksScreen() {
     );
   }
 
+  function confirmResetAll() {
+    const totalCards = decks?.reduce((sum, d) => sum + d.cards.length, 0) || 0;
+    Alert.alert(
+      'Reset ALL progress?',
+      `This will reset SRS stats for ALL ${decks?.length || 0} decks (${totalCards} cards). This cannot be undone.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Reset All', style: 'destructive', onPress: () => resetAllDecksProgress() },
+      ],
+    );
+  }
+
   if (!ready)
     return (
       <SafeAreaView style={styles.wrap}>
@@ -87,6 +99,10 @@ export default function ManageDecksScreen() {
         autoCapitalize="none"
         autoCorrect={false}
       />
+
+      <Pressable style={styles.resetAllBtn} onPress={confirmResetAll}>
+        <Text style={styles.resetAllText}>🔄 Reset All Progress</Text>
+      </Pressable>
 
       <FlatList
         data={filtered}
@@ -200,6 +216,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   btnText: { color: '#e2e8f0', fontWeight: '900' },
+  resetAllBtn: {
+    backgroundColor: '#7c2d12',
+    borderRadius: 12,
+    padding: spacing(1.5),
+    alignItems: 'center',
+    marginBottom: spacing(1.5),
+    borderWidth: 1,
+    borderColor: '#9a3412',
+  },
+  resetAllText: { color: '#fca5a5', fontWeight: '800', fontSize: 14 },
 
   modalBackdrop: {
     flex: 1,

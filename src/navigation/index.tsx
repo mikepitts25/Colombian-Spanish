@@ -76,30 +76,22 @@ function MainTabs() {
       <Tab.Screen
         name="Learn"
         component={HomeScreen}
-        options={{
-          title: 'Learn Spanish',
-        }}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Explore"
         component={ExploreScreen}
-        options={{
-          title: 'Explore',
-        }}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Progress"
         component={ProgressScreen}
-        options={{
-          title: 'My Progress',
-        }}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{
-          title: 'Settings',
-        }}
+        options={{ headerShown: false }}
       />
     </Tab.Navigator>
   );
