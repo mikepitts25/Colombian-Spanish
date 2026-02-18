@@ -158,24 +158,6 @@ export default function StudyScreen() {
         </Text>
       </View>
 
-      {/* Action hints - beginner friendly */}
-      <View style={styles.hintsContainer}>
-        <View style={styles.hintRow}>
-          <View style={styles.hintItem}>
-            <Text style={styles.hintIcon}>👆</Text>
-            <Text style={styles.hintText}>Tap card to flip</Text>
-          </View>
-          <View style={styles.hintItem}>
-            <Text style={styles.hintIcon}>⬅️</Text>
-            <Text style={styles.hintText}>Swipe left = Hard</Text>
-          </View>
-          <View style={styles.hintItem}>
-            <Text style={styles.hintIcon}>➡️</Text>
-            <Text style={styles.hintText}>Swipe right = Good</Text>
-          </View>
-        </View>
-      </View>
-
       {/* Optional: SRS metadata (hidden by default) */}
       <Pressable onPress={() => setShowMeta(!showMeta)} style={styles.metaToggle}>
         <Text style={styles.metaToggleText}>
@@ -318,27 +300,6 @@ const styles = StyleSheet.create({
     paddingVertical: spacing(1),
   },
   batchText: {
-    color: colors.textTertiary,
-    fontSize: typography.size.xs,
-  },
-
-  // Hints
-  hintsContainer: {
-    paddingHorizontal: spacing(2),
-    paddingBottom: spacing(1.5),
-  },
-  hintRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  hintItem: {
-    alignItems: 'center',
-  },
-  hintIcon: {
-    fontSize: 20,
-    marginBottom: 2,
-  },
-  hintText: {
     color: colors.textTertiary,
     fontSize: typography.size.xs,
   },
