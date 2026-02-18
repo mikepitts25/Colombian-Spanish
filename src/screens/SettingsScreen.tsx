@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native';
 import { colors, spacing } from '../styles/theme';
 import { getDailyProgress, setDailyTarget, saveDecks, loadDecks } from '../storage/storage';
 import * as Clipboard from 'expo-clipboard';
@@ -80,62 +80,68 @@ export default function SettingsScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.wrap}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Settings</Text>
         <Text style={styles.subtitle}>Customize your learning experience</Text>
       </View>
 
-      <View style={styles.card}>
-        <Text style={styles.h2}>Daily goal</Text>
-        <Text style={styles.p}>Cards per day: {loaded ? target : '…'}</Text>
-        <View style={styles.row}>
-          {[5, 10, 15, 25].map((n) => (
-            <Pressable
-              key={n}
-              style={[styles.pill, target === n && styles.pillActive]}
-              onPress={() => setGoal(n)}
-            >
-              <Text style={[styles.pillText, target === n && styles.pillTextActive]}>{n}</Text>
-            </Pressable>
-          ))}
+      <ScrollView contentContainerStyle={styles.content}>
+        <View style={styles.card}>
+          <Text style={styles.h2}>Daily goal</Text>
+          <Text style={styles.p}>Cards per day: {loaded ? target : '…'}</Text>
+          <View style={styles.row}>
+            {[5, 10, 15, 25].map((n) => (
+              <Pressable
+                key={n}
+                style={[styles.pill, target === n && styles.pillActive]}
+                onPress={() => setGoal(n)}
+              >
+                <Text style={[styles.pillText, target === n && styles.pillTextActive]}>{n}</Text>
+              </Pressable>
+            ))}
+          </View>
+          <Text style={styles.sub}>This controls the daily progress meter on the Study screen.</Text>
         </View>
-        <Text style={styles.sub}>This controls the daily progress meter on the Study screen.</Text>
-      </View>
 
-      <View style={styles.card}>
-        <Text style={styles.h2}>Backup</Text>
-        <Text style={styles.p}>
-          Export/import your decks + SRS progress as JSON (via clipboard).
-        </Text>
-        <Pressable style={styles.primary} onPress={exportBackup}>
-          <Text style={styles.primaryText}>Copy backup JSON</Text>
-        </Pressable>
-        <Pressable
-          style={[styles.primary, { backgroundColor: '#0ea5e9', marginTop: 8 }]}
-          onPress={importBackup}
-        >
-          <Text style={styles.primaryText}>Import from clipboard</Text>
-        </Pressable>
-        <Text style={styles.sub}>
-          Tip: export first, then import on another device. Everything stays local.
-        </Text>
-      </View>
+        <View style={styles.card}>
+          <Text style={styles.h2}>Backup</Text>
+          <Text style={styles.p}>
+            Export/import your decks + SRS progress as JSON (via clipboard).
+          </Text>
+          <Pressable style={styles.primary} onPress={exportBackup}>
+            <Text style={styles.primaryText}>Copy backup JSON</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.primary, { backgroundColor: '#0ea5e9', marginTop: 8 }]}
+            onPress={importBackup}
+          >
+            <Text style={styles.primaryText}>Import from clipboard</Text>
+          </Pressable>
+          <Text style={styles.sub}>
+            Tip: export first, then import on another device. Everything stays local.
+          </Text>
+        </View>
 
-      <View style={styles.card}>
-        <Text style={styles.h2}>Safety</Text>
-        <Text style={styles.p}>
-          This app is offline-first and stores data locally on your device.
-        </Text>
-      </View>
+        <View style={styles.card}>
+          <Text style={styles.h2}>Safety</Text>
+          <Text style={styles.p}>
+            This app is offline-first and stores data locally on your device.
+          </Text>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2), gap: spacing(2) },
+  container: {
+    flex: 1,
+    backgroundColor: colors.bg,
+  },
   header: {
-    paddingBottom: spacing(0.5),
+    padding: spacing(3),
+    paddingBottom: spacing(2),
   },
   title: {
     color: colors.text,
@@ -146,6 +152,10 @@ const styles = StyleSheet.create({
     color: colors.sub,
     fontSize: 16,
     marginTop: spacing(0.5),
+  },
+  content: {
+    padding: spacing(2),
+    gap: spacing(2),
   },
   h2: { color: colors.text, fontSize: 16, fontWeight: '900', marginBottom: 6 },
   p: { color: colors.sub },

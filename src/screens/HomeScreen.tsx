@@ -70,19 +70,19 @@ export default function HomeScreen() {
 
   if (!ready)
     return (
-      <SafeAreaView style={styles.wrap}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.title}>Cargando…</Text>
       </SafeAreaView>
     );
 
   return (
-    <SafeAreaView style={styles.wrap}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Learn Spanish</Text>
+        <Text style={styles.title}>Colombian Spanish 🇨🇴</Text>
         <Text style={styles.subtitle}>Pick a category to expand and study</Text>
       </View>
 
-      <ScrollView contentContainerStyle={{ paddingBottom: spacing(3) }}>
+      <ScrollView contentContainerStyle={styles.content}>
         {/* Top Decks / Due Today */}
         {topDueDecks.length > 0 && (
           <View style={styles.dueWrap}>
@@ -213,8 +213,12 @@ function groupIntoCategories(decks: any[]) {
 }
 
 const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
+  container: {
+    flex: 1,
+    backgroundColor: colors.bg,
+  },
   header: {
+    padding: spacing(3),
     paddingBottom: spacing(2),
   },
   title: {
@@ -226,6 +230,10 @@ const styles = StyleSheet.create({
     color: colors.sub,
     fontSize: 16,
     marginTop: spacing(0.5),
+  },
+  content: {
+    padding: spacing(2),
+    paddingBottom: spacing(3),
   },
   catBlock: { marginBottom: spacing(2) },
   catTile: {
