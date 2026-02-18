@@ -1,74 +1,103 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+
+// Tab Screens (4 main tabs)
 import HomeScreen from '../screens/HomeScreen';
+import ExploreScreen from '../screens/ExploreScreen';
+import ProgressScreen from '../screens/ProgressScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+
+// Stack Screens (accessed from tabs)
 import StudyScreen from '../screens/StudyScreen';
 import AddCardScreen from '../screens/AddCardScreen';
+import ManageDecksScreen from '../screens/ManageDecksScreen';
 import BrowseScreen from '../screens/BrowseScreen';
 import PhrasebookScreen from '../screens/PhrasebookScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import ManageDecksScreen from '../screens/ManageDecksScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function Tabs() {
+// Tab Icons
+function TabIcon({ name, focused }: { name: string; focused: boolean }) {
+  const icons: Record<string, string> = {
+    Learn: '📚',
+    Explore: '🔍',
+    Progress: '📊',
+    Settings: '⚙️',
+  };
+  
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: '#0f172a' },
-        headerTintColor: '#fff',
-        tabBarStyle: { backgroundColor: '#0f172a', borderTopColor: '#0b1229' },
-        tabBarActiveTintColor: '#22d3ee',
-        tabBarInactiveTintColor: '#94a3b8',
+    <View style={{ alignItems: 'center' }}>
+      <Text style={{ fontSize: 20, opacity: focused ? 1 : 0.6 }}>
+        {icons[name] || '•'}
+      </Text>
+    </View>
+  );
+}
+
+function TabLabel({ name, focused }: { name: string; focused: boolean }) {
+  return (
+    <Text
+      style={{
+        color: focused ? '#22d3ee' : '#94a3b8',
+        fontSize: 11,
+        fontWeight: focused ? '600' : '400',
+        marginTop: 2,
       }}
     >
+      {name}
+    </Text>
+  );
+}
+
+// Main Tab Navigator (4 tabs)
+function MainTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerStyle: { backgroundColor: '#0f172a' },
+        headerTintColor: '#fff',
+        tabBarStyle: {
+          backgroundColor: '#0f172a',
+          borderTopColor: '#1e293b',
+          borderTopWidth: 1,
+          paddingBottom: 8,
+          paddingTop: 8,
+          height: 64,
+        },
+        tabBarActiveTintColor: '#22d3ee',
+        tabBarInactiveTintColor: '#94a3b8',
+        tabBarIcon: ({ focused }) => <TabIcon name={route.name} focused={focused} />,
+        tabBarLabel: ({ focused }) => <TabLabel name={route.name} focused={focused} />,
+      })}
+    >
       <Tab.Screen
-        name="Home"
+        name="Learn"
         component={HomeScreen}
         options={{
-          tabBarLabel: ({ color }) => <Text style={{ color }}>Home</Text>,
-          title: 'Home',
+          title: 'Learn Spanish',
         }}
       />
       <Tab.Screen
-        name="Study"
-        component={StudyScreen}
+        name="Explore"
+        component={ExploreScreen}
         options={{
-          tabBarLabel: ({ color }) => <Text style={{ color }}>Study</Text>,
-          title: 'Study',
+          title: 'Explore',
         }}
       />
       <Tab.Screen
-        name="Add"
-        component={AddCardScreen}
+        name="Progress"
+        component={ProgressScreen}
         options={{
-          tabBarLabel: ({ color }) => <Text style={{ color }}>Add</Text>,
-          title: 'Add Cards',
-        }}
-      />
-      <Tab.Screen
-        name="Browse"
-        component={BrowseScreen}
-        options={{
-          tabBarLabel: ({ color }) => <Text style={{ color }}>Browse</Text>,
-          title: 'Browse',
-        }}
-      />
-      <Tab.Screen
-        name="Phrasebook"
-        component={PhrasebookScreen}
-        options={{
-          tabBarLabel: ({ color }) => <Text style={{ color }}>Phrasebook</Text>,
-          title: 'Phrasebook',
+          title: 'My Progress',
         }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarLabel: ({ color }) => <Text style={{ color }}>Settings</Text>,
           title: 'Settings',
         }}
       />
@@ -76,18 +105,47 @@ function Tabs() {
   );
 }
 
+// Root Navigator
 export default function RootNavigator() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Root" component={Tabs} options={{ headerShown: false }} />
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#0f172a' },
+        headerTintColor: '#fff',
+      }}
+    >
+      <Stack.Screen
+        name="Main"
+        component={MainTabs}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Study"
+        component={StudyScreen}
+        options={{ title: 'Study' }}
+      />
+      <Stack.Screen
+        name="Browse"
+        component={BrowseScreen}
+        options={{ title: 'Browse' }}
+      />
+      <Stack.Screen
+        name="Phrasebook"
+        component={PhrasebookScreen}
+        options={{ title: 'Phrasebook' }}
+      />
+      <Stack.Screen
+        name="AddCard"
+        component={AddCardScreen}
+        options={{
+          title: 'Add Card',
+          presentation: 'modal',
+        }}
+      />
       <Stack.Screen
         name="ManageDecks"
         component={ManageDecksScreen}
-        options={{
-          title: 'Manage Decks',
-          headerStyle: { backgroundColor: '#0f172a' },
-          headerTintColor: '#fff',
-        }}
+        options={{ title: 'Manage Decks' }}
       />
     </Stack.Navigator>
   );
