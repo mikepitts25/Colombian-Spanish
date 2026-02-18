@@ -121,6 +121,7 @@ export default function Flashcard({ card, onGrade }: Props) {
   const SWIPE_THRESHOLD = 100;
   const panResponder = useRef(
     PanResponder.create({
+      onStartShouldSetPanResponder: () => false, // Don't capture taps
       onMoveShouldSetPanResponder: (_evt, gs) =>
         Math.abs(gs.dx) > 8 && Math.abs(gs.dx) > Math.abs(gs.dy),
       onPanResponderMove: (_evt, gs) => {
