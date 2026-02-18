@@ -10,9 +10,10 @@ import {
   UIManager,
   Platform,
 } from 'react-native';
-import { colors, spacing, radius } from '../styles/theme';
+import { colors, spacing, radius, typography } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
+import { getDailyProgress } from '../storage/storage';
 
 const categoryEmojis: Record<string, string> = {
   'Colombianisms': '🇨🇴',
@@ -40,118 +41,227 @@ export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId } = useDeck();
   const nav = useNavigation<any>();
   const [openCats, setOpenCats] = useState<Record<string, boolean>>({});
+  const [dailyProgress, setDailyProgress] = useState({ count: 0, target: 10 });
+
+  React.useEffect(() => {
+    (async () => {
+      const dp = await getDailyProgress();
+      setDailyProgress({ count: dp.count, target: dp.target });
+    })();
+  }, []);
 
   const sections = useMemo(() => groupIntoCategories(decks || []), [decks]);
 
-  // --- Smart section: Top Decks / Due Today ---
-  // Calculate the end of today once per mount
+  // Calculate the end of today
   const endOfToday = useMemo(() => {
     const d = new Date();
     d.setHours(23, 59, 59, 999);
     return d.getTime();
   }, []);
 
-  // Compute due counts per deck, sort descending, take top N
-  const topDueDecks = useMemo(() => {
-    return (decks || [])
-      .map((d: any) => ({
+  // Due cards today
+  const dueCards = useMemo(() => {
+    return (decks || []).reduce((sum, d) => {
+      return sum + (d.cards || []).filter((c: any) => (c?.due ?? 0) <= endOfToday).length;
+    }, 0);
+  }, [decks, endOfToday]);
+
+  // Resume deck - deck with most studied cards
+  const resumeDeck = useMemo(() => {
+    const studied = (decks || [])
+      .map((d) => ({
         ...d,
+        studiedCount: (d.cards || []).filter((c: any) => (c?.reps ?? 0) > 0).length,
         dueCount: (d.cards || []).filter((c: any) => (c?.due ?? 0) <= endOfToday).length,
       }))
-      .filter((d: any) => d.dueCount > 0)
-      .sort((a: any, b: any) => b.dueCount - a.dueCount)
-      .slice(0, 6);
+      .filter((d) => d.studiedCount > 0)
+      .sort((a, b) => b.studiedCount - a.studiedCount)[0];
+    return studied;
   }, [decks, endOfToday]);
+
+  // Beginner-friendly starter decks
+  const starterDecks = useMemo(() => {
+    const starters = [
+      'deck-greetings',
+      'deck-numbers',
+      'deck-common-phrases',
+      'deck-slang',
+      'deck-paisa',
+    ];
+    return (decks || []).filter((d) => starters.includes(d.id)).slice(0, 4);
+  }, [decks]);
 
   const toggleCat = (key: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setOpenCats((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  if (!ready)
+  if (!ready) {
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>Cargando…</Text>
       </SafeAreaView>
     );
+  }
+
+  const hasStarted = resumeDeck !== undefined;
+  const dailyPercent = Math.min(100, Math.round((dailyProgress.count / dailyProgress.target) * 100));
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Colombian Spanish 🇨🇴</Text>
-        <Text style={styles.subtitle}>Pick a category to expand and study</Text>
-      </View>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.title}>Colombian Spanish 🇨🇴</Text>
+          <Text style={styles.subtitle}>
+            {hasStarted ? 'Keep up your streak!' : 'Start your journey today'}
+          </Text>
+        </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
-        {/* Top Decks / Due Today */}
-        {topDueDecks.length > 0 && (
-          <View style={styles.dueWrap}>
-            <View style={styles.dueHeaderRow}>
-              <Text style={styles.dueTitle}>Due Today</Text>
-              <Text style={styles.dueSub}>
-                {topDueDecks.reduce((sum: number, d: any) => sum + (d?.dueCount ?? 0), 0)} cards
-              </Text>
-            </View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.dueRow}
+        {/* Primary CTA Section */}
+        <View style={styles.heroSection}>
+          {hasStarted ? (
+            /* Continue Learning Card */
+            <Pressable
+              style={styles.mainActionCard}
+              onPress={() => {
+                setActiveDeckId(resumeDeck.id);
+                nav.navigate('Study');
+              }}
             >
-              {topDueDecks.map((deck: any) => (
+              <View style={styles.mainActionHeader}>
+                <Text style={styles.mainActionLabel}>Continue Learning</Text>
+                {dueCards > 0 && (
+                  <View style={styles.dueBadge}>
+                    <Text style={styles.dueBadgeText}>{dueCards} due</Text>
+                  </View>
+                )}
+              </View>
+              <Text style={styles.mainActionTitle}>{resumeDeck.name}</Text>
+              <Text style={styles.mainActionSub}>
+                {resumeDeck.studiedCount} cards studied • {resumeDeck.dueCount} due today
+              </Text>
+              <View style={styles.progressBar}>
+                <View
+                  style={[styles.progressFill, { width: `${dailyPercent}%` }]}
+                />
+              </View>
+              <Text style={styles.progressText}>
+                {dailyProgress.count}/{dailyProgress.target} daily goal
+              </Text>
+            </Pressable>
+          ) : (
+            /* Start Learning Card for new users */
+            <Pressable
+              style={[styles.mainActionCard, styles.startCard]}
+              onPress={() => {
+                if (starterDecks[0]) {
+                  setActiveDeckId(starterDecks[0].id);
+                  nav.navigate('Study');
+                }
+              }}
+            >
+              <Text style={styles.startEmoji}>🚀</Text>
+              <Text style={styles.startTitle}>Start Learning Today</Text>
+              <Text style={styles.startSub}>
+                Begin with {starterDecks[0]?.name || 'Greetings'} - the perfect place for beginners
+              </Text>
+            </Pressable>
+          )}
+        </View>
+
+        {/* Quick Start / Resume Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>
+            {hasStarted ? 'Quick Resume' : 'Quick Start'}
+          </Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.quickStartRow}
+          >
+            {(hasStarted
+              ? [resumeDeck, ...(decks || []).filter((d) => d.id !== resumeDeck.id)].slice(0, 5)
+              : starterDecks
+            ).map((deck) => {
+              const dueCount = (deck.cards || []).filter(
+                (c: any) => (c?.due ?? 0) <= endOfToday
+              ).length;
+              return (
                 <Pressable
                   key={deck.id}
-                  style={styles.dueTile}
+                  style={styles.quickTile}
                   onPress={() => {
                     setActiveDeckId(deck.id);
                     nav.navigate('Study');
                   }}
                 >
-                  <View style={styles.dueBadge}>
-                    <Text style={styles.dueBadgeText}>{deck.dueCount}</Text>
-                  </View>
-                  <Text style={styles.dueName} numberOfLines={2}>
+                  {dueCount > 0 && (
+                    <View style={styles.quickTileBadge}>
+                      <Text style={styles.quickTileBadgeText}>{dueCount}</Text>
+                    </View>
+                  )}
+                  <Text style={styles.quickTileName} numberOfLines={2}>
                     {deck.name}
                   </Text>
-                  <Text style={styles.dueGo}>Study →</Text>
+                  <Text style={styles.quickTileCount}>{deck.cards.length} cards</Text>
                 </Pressable>
-              ))}
-            </ScrollView>
-          </View>
-        )}
-        {sections.map((section) => {
-          const isOpen = !!openCats[section.key];
-          return (
-            <View key={section.key} style={styles.catBlock}>
-              <Pressable style={styles.catTile} onPress={() => toggleCat(section.key)}>
-                <Text style={styles.catTitle}>{section.key}</Text>
-                <Text style={styles.catSub}>{section.data.length} decks</Text>
-              </Pressable>
-              {isOpen && (
-                <View style={styles.grid}>
-                  {section.data.map((deck) => {
-                    const isActive = deck.id === activeDeckId;
-                    return (
-                      <Pressable
-                        key={deck.id}
-                        style={[styles.tile, isActive && styles.tileActive]}
-                        onPress={() => {
-                          setActiveDeckId(deck.id);
-                          nav.navigate('Study');
-                        }}
-                      >
-                        <Text style={styles.tileTitle} numberOfLines={2}>
-                          {deck.name}
-                        </Text>
-                        <Text style={styles.tileSub}>{deck.cards.length} cards</Text>
-                        {isActive ? <Text style={styles.activeBadge}>Active</Text> : null}
-                      </Pressable>
-                    );
-                  })}
-                </View>
-              )}
-            </View>
-          );
-        })}
+              );
+            })}
+          </ScrollView>
+        </View>
+
+        {/* All Categories Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Browse by Category</Text>
+          {sections.map((section) => {
+            const isOpen = !!openCats[section.key];
+            return (
+              <View key={section.key} style={styles.catBlock}>
+                <Pressable
+                  style={[styles.catTile, isOpen && styles.catTileOpen]}
+                  onPress={() => toggleCat(section.key)}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.catTitle}>{section.key}</Text>
+                    <Text style={styles.catSub}>{section.data.length} decks</Text>
+                  </View>
+                  <Text style={styles.catArrow}>{isOpen ? '▼' : '▶'}</Text>
+                </Pressable>
+                {isOpen && (
+                  <View style={styles.grid}>
+                    {section.data.map((deck) => {
+                      const isActive = deck.id === activeDeckId;
+                      return (
+                        <Pressable
+                          key={deck.id}
+                          style={[styles.tile, isActive && styles.tileActive]}
+                          onPress={() => {
+                            setActiveDeckId(deck.id);
+                            nav.navigate('Study');
+                          }}
+                        >
+                          <Text style={styles.tileTitle} numberOfLines={2}>
+                            {deck.name}
+                          </Text>
+                          <Text style={styles.tileSub}>{deck.cards.length} cards</Text>
+                          {isActive && (
+                            <View style={styles.activeBadge}>
+                              <Text style={styles.activeBadgeText}>Active</Text>
+                            </View>
+                          )}
+                        </Pressable>
+                      );
+                    })}
+                  </View>
+                )}
+              </View>
+            );
+          })}
+        </View>
+
+        {/* Spacer for bottom */}
+        <View style={{ height: spacing(2) }} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -205,8 +315,8 @@ function groupIntoCategories(decks: any[]) {
 
   return Object.entries(buckets)
     .filter(([, arr]) => arr.length > 0)
-    .map(([key, data]) => ({ 
-      key: `${categoryEmojis[key] || '📦'} ${key}`, 
+    .map(([key, data]) => ({
+      key: `${categoryEmojis[key] || '📦'} ${key}`,
       data,
       rawKey: key,
     }));
@@ -217,88 +327,233 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.bg,
   },
+  scrollContent: {
+    paddingBottom: spacing(3),
+  },
   header: {
     padding: spacing(3),
     paddingBottom: spacing(2),
   },
   title: {
     color: colors.textPrimary,
-    fontSize: 28,
-    fontWeight: '800',
+    fontSize: typography.size['3xl'],
+    fontWeight: typography.weight.extrabold,
   },
   subtitle: {
     color: colors.textSecondary,
-    fontSize: 16,
+    fontSize: typography.size.base,
     marginTop: spacing(0.5),
   },
-  content: {
-    padding: spacing(2),
-    paddingBottom: spacing(3),
+
+  // Hero / Main Action Section
+  heroSection: {
+    paddingHorizontal: spacing(2),
+    marginBottom: spacing(2),
   },
-  catBlock: { marginBottom: spacing(2) },
-  catTile: {
-    backgroundColor: colors.surfaceElevated,
-    padding: spacing(1.5),
+  mainActionCard: {
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    padding: spacing(3),
+    borderWidth: 2,
+    borderColor: colors.brand,
+  },
+  startCard: {
+    backgroundColor: colors.brandMuted,
+    borderColor: colors.brand,
+    alignItems: 'center',
+    paddingVertical: spacing(4),
+  },
+  mainActionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing(1),
+  },
+  mainActionLabel: {
+    color: colors.brand,
+    fontSize: typography.size.sm,
+    fontWeight: typography.weight.bold,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  dueBadge: {
+    backgroundColor: colors.danger,
+    paddingHorizontal: spacing(1),
+    paddingVertical: spacing(0.25),
+    borderRadius: radius.full,
+  },
+  dueBadgeText: {
+    color: 'white',
+    fontSize: typography.size.xs,
+    fontWeight: typography.weight.bold,
+  },
+  mainActionTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.size.xl,
+    fontWeight: typography.weight.extrabold,
+    marginBottom: spacing(0.5),
+  },
+  mainActionSub: {
+    color: colors.textSecondary,
+    fontSize: typography.size.sm,
+    marginBottom: spacing(1.5),
+  },
+  startEmoji: {
+    fontSize: 48,
+    marginBottom: spacing(1),
+  },
+  startTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.size['2xl'],
+    fontWeight: typography.weight.extrabold,
+    marginBottom: spacing(0.5),
+  },
+  startSub: {
+    color: colors.textSecondary,
+    fontSize: typography.size.base,
+    textAlign: 'center',
+  },
+  progressBar: {
+    height: 6,
+    backgroundColor: colors.border,
+    borderRadius: radius.full,
+    overflow: 'hidden',
+    marginBottom: spacing(0.5),
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: colors.brand,
+    borderRadius: radius.full,
+  },
+  progressText: {
+    color: colors.textTertiary,
+    fontSize: typography.size.xs,
+  },
+
+  // Section styling
+  section: {
+    marginTop: spacing(2),
+    paddingHorizontal: spacing(2),
+  },
+  sectionTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.size.lg,
+    fontWeight: typography.weight.bold,
+    marginBottom: spacing(1),
+  },
+
+  // Quick Start / Resume row
+  quickStartRow: {
+    gap: spacing(1.5),
+    paddingRight: spacing(2),
+  },
+  quickTile: {
+    width: 140,
+    backgroundColor: colors.surface,
     borderRadius: radius.lg,
+    padding: spacing(1.5),
     borderWidth: 1,
-    borderColor: colors.borderActive,
-    marginBottom: 6,
+    borderColor: colors.border,
   },
-  catTitle: { color: colors.textPrimary, fontWeight: '800', fontSize: 18 },
-  catSub: { color: colors.textSecondary },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 6 },
-  tile: {
-    width: '48%',
+  quickTileBadge: {
+    position: 'absolute',
+    top: -6,
+    right: -6,
+    backgroundColor: colors.danger,
+    minWidth: 24,
+    height: 24,
+    borderRadius: radius.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1,
+  },
+  quickTileBadgeText: {
+    color: 'white',
+    fontSize: typography.size.xs,
+    fontWeight: typography.weight.bold,
+  },
+  quickTileName: {
+    color: colors.textPrimary,
+    fontWeight: typography.weight.bold,
+    fontSize: typography.size.sm,
+    marginBottom: spacing(0.5),
+  },
+  quickTileCount: {
+    color: colors.textSecondary,
+    fontSize: typography.size.xs,
+  },
+
+  // Categories
+  catBlock: {
+    marginBottom: spacing(1),
+  },
+  catTile: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: colors.surface,
     padding: spacing(1.5),
     borderRadius: radius.lg,
     borderWidth: 1,
     borderColor: colors.border,
-    marginBottom: 12,
   },
-  tileActive: { borderColor: colors.brand, borderWidth: 2 },
-  tileTitle: { color: colors.textPrimary, fontWeight: '800' },
-  tileSub: { color: colors.textSecondary, marginTop: 2 },
-  activeBadge: {
+  catTileOpen: {
+    borderColor: colors.borderActive,
+    backgroundColor: colors.surfaceElevated,
+  },
+  catTitle: {
+    color: colors.textPrimary,
+    fontWeight: typography.weight.bold,
+    fontSize: typography.size.base,
+  },
+  catSub: {
+    color: colors.textSecondary,
+    fontSize: typography.size.xs,
+    marginTop: 2,
+  },
+  catArrow: {
+    color: colors.textTertiary,
+    fontSize: typography.size.sm,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
     marginTop: spacing(1),
+    paddingLeft: spacing(1),
+  },
+  tile: {
+    width: '48%',
+    backgroundColor: colors.surfaceElevated,
+    padding: spacing(1.25),
+    borderRadius: radius.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  tileActive: {
+    borderColor: colors.brand,
+    borderWidth: 2,
+  },
+  tileTitle: {
+    color: colors.textPrimary,
+    fontWeight: typography.weight.bold,
+    fontSize: typography.size.sm,
+  },
+  tileSub: {
+    color: colors.textSecondary,
+    fontSize: typography.size.xs,
+    marginTop: 2,
+  },
+  activeBadge: {
+    marginTop: spacing(0.5),
     alignSelf: 'flex-start',
-    paddingHorizontal: 8,
+    paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: radius.full,
     backgroundColor: colors.brandMuted,
+  },
+  activeBadgeText: {
     color: colors.brand,
-    fontSize: 12,
-    fontWeight: '800',
+    fontSize: typography.size.xs,
+    fontWeight: typography.weight.bold,
   },
-  // Due Today section
-  dueWrap: { marginBottom: spacing(2) },
-  dueHeaderRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
-    marginBottom: 6,
-  },
-  dueTitle: { color: colors.textPrimary, fontWeight: '900', fontSize: 18 },
-  dueSub: { color: colors.textSecondary, fontWeight: '700' },
-  dueRow: { gap: 10 },
-  dueTile: {
-    width: 160,
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderWidth: 1,
-    borderRadius: radius.lg,
-    padding: spacing(1.25),
-    marginRight: 10,
-  },
-  dueBadge: {
-    alignSelf: 'flex-start',
-    backgroundColor: colors.danger,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: radius.full,
-    marginBottom: 6,
-  },
-  dueBadgeText: { color: 'white', fontWeight: '900' },
-  dueName: { color: colors.textPrimary, fontWeight: '800', marginBottom: 6 },
-  dueGo: { color: colors.brand, fontWeight: '800' },
 });
