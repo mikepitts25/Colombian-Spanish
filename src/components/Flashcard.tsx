@@ -34,7 +34,7 @@ export default function Flashcard({ card, onGrade }: Props) {
 
   // Horizontal swipe gesture
   const translateX = useRef(new Animated.Value(0)).current;
-  const translateY = useRef(new Animated.Value(50)).current; // Start slightly lower for entrance
+  const translateY = useRef(new Animated.Value(50)).current;
   const cardOpacity = useRef(new Animated.Value(0)).current;
   
   // Swipe feedback overlays
@@ -82,7 +82,7 @@ export default function Flashcard({ card, onGrade }: Props) {
       ]).start();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [card.id]); // Re-run when card changes
+  }, [card.id]);
 
   function say() {
     Speech.speak(card.front, { language: 'es-CO', pitch: 1.03, rate: 0.98 });
@@ -117,11 +117,15 @@ export default function Flashcard({ card, onGrade }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [card.id]);
 
+  // Handle card press (tap to flip)
+  const handleCardPress = () => {
+    flip();
+  };
+
   // Pan responder for swipe grading
   const SWIPE_THRESHOLD = 100;
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: () => false, // Don't capture taps
       onMoveShouldSetPanResponder: (_evt, gs) =>
         Math.abs(gs.dx) > 8 && Math.abs(gs.dx) > Math.abs(gs.dy),
       onPanResponderMove: (_evt, gs) => {
@@ -195,7 +199,7 @@ export default function Flashcard({ card, onGrade }: Props) {
             pointerEvents={isFront ? 'auto' : 'none'}
           >
             <Pressable 
-              onPress={() => flip('back')} 
+              onPress={handleCardPress}
               onLongPress={say} 
               style={styles.facePressable}
               accessibilityLabel={`Spanish phrase: ${card.front}. Tap to flip.`}
@@ -221,7 +225,7 @@ export default function Flashcard({ card, onGrade }: Props) {
             pointerEvents={isFront ? 'none' : 'auto'}
           >
             <Pressable 
-              onPress={() => flip('front')} 
+              onPress={handleCardPress}
               onLongPress={say} 
               style={styles.facePressable}
               accessibilityLabel={`English: ${card.back}. Swipe left for hard, right for good.`}
@@ -261,7 +265,7 @@ export default function Flashcard({ card, onGrade }: Props) {
         </Pressable>
         <Pressable 
           style={[styles.actionBtn, styles.flipBtn]} 
-          onPress={() => flip()}
+          onPress={handleCardPress}
           accessibilityLabel="Flip card"
           accessibilityRole="button"
         >
@@ -390,6 +394,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 4,
+    pointerEvents: 'none',
   },
   leftOverlay: {
     backgroundColor: 'rgba(239, 68, 68, 0.15)',
