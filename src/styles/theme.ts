@@ -4,7 +4,7 @@
 // ============================================
 // COLOR TOKENS - Semantic naming
 // ============================================
-export const colors = {
+const colorTokens = {
   // Backgrounds
   bg: '#0a0f1c',                    // Main app background (deeper dark)
   surface: '#111827',               // Cards, containers
@@ -44,16 +44,20 @@ export const colors = {
     dark: ['#0a0f1c', '#111827'] as const,
     success: ['#059669', '#10b981'] as const,
   },
+} as const;
 
+// Create colors with legacy aliases included
+export const colors = {
+  ...colorTokens,
   // LEGACY ALIASES (backward compatibility)
   /** @deprecated Use colors.surface instead */
-  card: '#111827',
+  card: colorTokens.surface,
   /** @deprecated Use colors.textPrimary instead */
-  text: '#f8fafc',
+  text: colorTokens.textPrimary,
   /** @deprecated Use colors.textSecondary instead */
-  sub: '#94a3b8',
+  sub: colorTokens.textSecondary,
   /** @deprecated Use colors.brand instead */
-  accent: '#22d3ee',
+  accent: colorTokens.brand,
 };
 
 // ============================================
@@ -94,7 +98,7 @@ export const typography = {
     normal: 0,
     wide: 0.025,
   },
-};
+} as const;
 
 // ============================================
 // SPACING - 8px base grid
@@ -214,12 +218,6 @@ export const text = colors.textPrimary;
 export const sub = colors.textSecondary;
 /** @deprecated Use colors.brand instead */
 export const accent = colors.brand;
-
-// Add backward compatibility to colors object itself
-colors.card = colors.surface;
-colors.text = colors.textPrimary;
-colors.sub = colors.textSecondary;
-colors.accent = colors.brand;
 
 // ============================================
 // COMPLETE THEME OBJECT
