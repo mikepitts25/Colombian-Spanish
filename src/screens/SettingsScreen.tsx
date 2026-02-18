@@ -81,7 +81,10 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>Settings</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>Settings</Text>
+        <Text style={styles.subtitle}>Customize your learning experience</Text>
+      </View>
 
       <View style={styles.card}>
         <Text style={styles.h2}>Daily goal</Text>
@@ -131,7 +134,19 @@ export default function SettingsScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2), gap: spacing(2) },
-  h1: { color: colors.text, fontSize: 22, fontWeight: '900' },
+  header: {
+    paddingBottom: spacing(0.5),
+  },
+  title: {
+    color: colors.text,
+    fontSize: 28,
+    fontWeight: '800',
+  },
+  subtitle: {
+    color: colors.sub,
+    fontSize: 16,
+    marginTop: spacing(0.5),
+  },
   h2: { color: colors.text, fontSize: 16, fontWeight: '900', marginBottom: 6 },
   p: { color: colors.sub },
   sub: { color: colors.sub, marginTop: 8 },
