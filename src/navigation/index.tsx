@@ -131,7 +131,7 @@ export default function RootNavigator() {
         name="AddCard"
         component={AddCardScreen}
         options={{
-          title: 'Add Card',
+          headerShown: false,
           presentation: 'modal',
         }}
       />
