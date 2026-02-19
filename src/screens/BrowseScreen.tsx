@@ -76,14 +76,6 @@ export default function BrowseScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>Browse</Text>
-        <Text style={styles.subtitle}>
-          {decks?.length || 0} decks • {decks?.reduce((s, d) => s + d.cards.length, 0) || 0} cards
-        </Text>
-      </View>
-
       <View style={styles.content}>
         {/* Search Bar - Prominent */}
         <View style={styles.searchContainer}>
@@ -279,23 +271,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.bg,
   },
-  header: {
-    padding: spacing(3),
-    paddingBottom: spacing(2),
-  },
-  title: {
-    color: colors.textPrimary,
-    fontSize: typography.size['3xl'],
-    fontWeight: typography.weight.extrabold,
-  },
-  subtitle: {
-    color: colors.textSecondary,
-    fontSize: typography.size.base,
-    marginTop: spacing(0.5),
-  },
   content: {
     flex: 1,
-    paddingHorizontal: spacing(2),
+    padding: spacing(2),
   },
   
   // Search

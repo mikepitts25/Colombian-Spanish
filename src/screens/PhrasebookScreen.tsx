@@ -37,9 +37,6 @@ export default function PhrasebookScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>Phrasebook</Text>
-      <Text style={styles.sub}>Your starred cards across all decks (offline + private).</Text>
-
       <TextInput
         value={q}
         onChangeText={setQ}
@@ -95,8 +92,6 @@ export default function PhrasebookScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  h1: { color: colors.text, fontSize: 22, fontWeight: '900', marginBottom: 4 },
-  sub: { color: colors.sub, marginBottom: spacing(1.5) },
   search: {
     backgroundColor: '#0b1220',
     borderWidth: 1,

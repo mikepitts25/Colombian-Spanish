@@ -87,9 +87,6 @@ export default function ManageDecksScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>Manage Decks</Text>
-      <Text style={styles.sub}>Rename, delete, and reset learning progress.</Text>
-
       <TextInput
         value={q}
         onChangeText={setQ}
@@ -168,8 +165,6 @@ export default function ManageDecksScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
-  sub: { color: colors.textSecondary, marginBottom: spacing(1.25) },
   search: {
     backgroundColor: colors.surface,
     borderWidth: 1,
