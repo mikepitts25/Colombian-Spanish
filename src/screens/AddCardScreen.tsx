@@ -17,6 +17,7 @@ import { colors, spacing, radius, typography } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
 import { Deck, FlashCard } from '../types';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function AddCardScreen() {
   const { decks, activeDeckId, addCardToDeck, createDeck } = useDeck();
@@ -133,10 +134,17 @@ export default function AddCardScreen() {
         style={styles.keyboardView}
       >
         <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Header */}
+          {/* Header with back button */}
           <View style={styles.header}>
+            <Pressable 
+              style={styles.backButton}
+              onPress={() => nav.goBack()}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <Ionicons name="arrow-back" size={24} color={colors.textPrimary} />
+            </Pressable>
             <Text style={styles.title}>Add New Card</Text>
-            <Text style={styles.subtitle}>Create your own flashcard</Text>
+            <View style={styles.backButtonPlaceholder} />
           </View>
 
           {/* Progress Steps */}
@@ -403,22 +411,34 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    padding: spacing(2),
+    paddingHorizontal: spacing(2),
+    paddingBottom: spacing(4),
   },
   
   // Header
   header: {
-    marginBottom: spacing(2),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing(2),
+    paddingTop: spacing(2),
+    paddingBottom: spacing(2),
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: radius.full,
+    backgroundColor: colors.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backButtonPlaceholder: {
+    width: 40,
   },
   title: {
     color: colors.textPrimary,
     fontSize: typography.size['2xl'],
     fontWeight: typography.weight.extrabold,
-  },
-  subtitle: {
-    color: colors.textSecondary,
-    fontSize: typography.size.base,
-    marginTop: spacing(0.25),
   },
   
   // Steps indicator
