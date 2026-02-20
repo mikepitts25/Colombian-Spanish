@@ -98,7 +98,7 @@ export default function HomeScreen() {
 
   if (!ready) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} accessibilityLabel="Loading home screen">
         <Text style={styles.title}>Cargando…</Text>
       </SafeAreaView>
     );
@@ -108,12 +108,18 @@ export default function HomeScreen() {
   const dailyPercent = Math.min(100, Math.round((dailyProgress.count / dailyProgress.target) * 100));
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} accessibilityLabel="Home screen">
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.title}>Colombian Spanish 🇨🇴</Text>
-          <Text style={styles.subtitle}>
+        <View style={styles.header} accessibilityRole="header">
+          <Text 
+            style={styles.title}
+            accessibilityRole="header"
+            accessibilityLabel="Colombian Spanish"
+          >
+            Colombian Spanish 🇨🇴
+          </Text>
+          <Text style={styles.subtitle} accessibilityLabel={hasStarted ? 'Keep up your streak' : 'Start your journey today'}>
             {hasStarted ? 'Keep up your streak!' : 'Start your journey today'}
           </Text>
         </View>
@@ -128,11 +134,17 @@ export default function HomeScreen() {
                 setActiveDeckId(resumeDeck.id);
                 nav.navigate('Study');
               }}
+              accessibilityLabel={`Continue learning ${resumeDeck.name}`}
+              accessibilityHint={`${resumeDeck.dueCount} cards due today. Double tap to study.`}
+              accessibilityRole="button"
             >
               <View style={styles.mainActionHeader}>
                 <Text style={styles.mainActionLabel}>Continue Learning</Text>
                 {dueCards > 0 && (
-                  <View style={styles.dueBadge}>
+                  <View 
+                    style={styles.dueBadge}
+                    accessibilityLabel={`${dueCards} cards due`}
+                  >
                     <Text style={styles.dueBadgeText}>{dueCards} due</Text>
                   </View>
                 )}
@@ -141,7 +153,11 @@ export default function HomeScreen() {
               <Text style={styles.mainActionSub}>
                 {resumeDeck.studiedCount} cards studied • {resumeDeck.dueCount} due today
               </Text>
-              <View style={styles.progressBar}>
+              <View 
+                style={styles.progressBar}
+                accessibilityLabel={`Daily progress: ${dailyPercent} percent`}
+                accessibilityValue={{ min: 0, max: 100, now: dailyPercent }}
+              >
                 <View
                   style={[styles.progressFill, { width: `${dailyPercent}%` }]}
                 />
@@ -160,6 +176,9 @@ export default function HomeScreen() {
                   nav.navigate('Study');
                 }
               }}
+              accessibilityLabel="Start learning today"
+              accessibilityHint={`Begin with ${starterDecks[0]?.name || 'Greetings'} deck. Double tap to start.`}
+              accessibilityRole="button"
             >
               <Text style={styles.startEmoji}>🚀</Text>
               <Text style={styles.startTitle}>Start Learning Today</Text>
@@ -172,13 +191,17 @@ export default function HomeScreen() {
 
         {/* Quick Start / Resume Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>
+          <Text 
+            style={styles.sectionTitle}
+            accessibilityRole="header"
+          >
             {hasStarted ? 'Quick Resume' : 'Quick Start'}
           </Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.quickStartRow}
+            accessibilityLabel="Quick start decks"
           >
             {(hasStarted
               ? [resumeDeck, ...(decks || []).filter((d) => d.id !== resumeDeck.id)].slice(0, 5)
@@ -195,9 +218,16 @@ export default function HomeScreen() {
                     setActiveDeckId(deck.id);
                     nav.navigate('Study');
                   }}
+                  accessibilityLabel={`${deck.name}, ${deck.cards.length} cards`}
+                  accessibilityHint={dueCount > 0 ? `${dueCount} cards due. Double tap to study.` : 'Double tap to study this deck'}
+                  accessibilityRole="button"
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                 >
                   {dueCount > 0 && (
-                    <View style={styles.quickTileBadge}>
+                    <View 
+                      style={styles.quickTileBadge}
+                      accessibilityLabel={`${dueCount} due`}
+                    >
                       <Text style={styles.quickTileBadgeText}>{dueCount}</Text>
                     </View>
                   )}
@@ -213,7 +243,12 @@ export default function HomeScreen() {
 
         {/* All Categories Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Browse by Category</Text>
+          <Text 
+            style={styles.sectionTitle}
+            accessibilityRole="header"
+          >
+            Browse by Category
+          </Text>
           {sections.map((section) => {
             const isOpen = !!openCats[section.key];
             return (
@@ -221,6 +256,10 @@ export default function HomeScreen() {
                 <Pressable
                   style={[styles.catTile, isOpen && styles.catTileOpen]}
                   onPress={() => toggleCat(section.key)}
+                  accessibilityLabel={`${section.key}, ${section.data.length} decks`}
+                  accessibilityHint={isOpen ? 'Double tap to collapse' : 'Double tap to expand'}
+                  accessibilityRole="button"
+                  accessibilityState={{ expanded: isOpen }}
                 >
                   <View style={{ flex: 1 }}>
                     <Text style={styles.catTitle}>{section.key}</Text>
@@ -229,7 +268,7 @@ export default function HomeScreen() {
                   <Text style={styles.catArrow}>{isOpen ? '▼' : '▶'}</Text>
                 </Pressable>
                 {isOpen && (
-                  <View style={styles.grid}>
+                  <View style={styles.grid} accessibilityLabel={`${section.key} decks`}>
                     {section.data.map((deck) => {
                       const isActive = deck.id === activeDeckId;
                       return (
@@ -240,13 +279,21 @@ export default function HomeScreen() {
                             setActiveDeckId(deck.id);
                             nav.navigate('Study');
                           }}
+                          accessibilityLabel={`${deck.name}, ${deck.cards.length} cards${isActive ? ', currently selected' : ''}`}
+                          accessibilityHint="Double tap to select and study this deck"
+                          accessibilityRole="button"
+                          accessibilityState={{ selected: isActive }}
+                          hitSlop={{ top: 4, bottom: 4, left: 4, right: 4 }}
                         >
                           <Text style={styles.tileTitle} numberOfLines={2}>
                             {deck.name}
                           </Text>
                           <Text style={styles.tileSub}>{deck.cards.length} cards</Text>
                           {isActive && (
-                            <View style={styles.activeBadge}>
+                            <View 
+                              style={styles.activeBadge}
+                              accessibilityLabel="Active deck"
+                            >
                               <Text style={styles.activeBadgeText}>Active</Text>
                             </View>
                           )}
@@ -356,6 +403,7 @@ const styles = StyleSheet.create({
     padding: spacing(3),
     borderWidth: 2,
     borderColor: colors.brand,
+    minHeight: 44, // Accessibility: minimum touch target
   },
   startCard: {
     backgroundColor: colors.brandMuted,
@@ -381,6 +429,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing(1),
     paddingVertical: spacing(0.25),
     borderRadius: radius.full,
+    minWidth: 44, // Accessibility: minimum touch target
+    minHeight: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   dueBadgeText: {
     color: 'white',
@@ -454,6 +506,7 @@ const styles = StyleSheet.create({
     padding: spacing(1.5),
     borderWidth: 1,
     borderColor: colors.border,
+    minHeight: 80, // Accessibility: better touch target
   },
   quickTileBadge: {
     position: 'absolute',
@@ -495,6 +548,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     borderWidth: 1,
     borderColor: colors.border,
+    minHeight: 44, // Accessibility: minimum touch target
   },
   catTileOpen: {
     borderColor: colors.borderActive,
@@ -528,6 +582,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     borderWidth: 1,
     borderColor: colors.border,
+    minHeight: 70, // Accessibility: better touch target
   },
   tileActive: {
     borderColor: colors.brand,

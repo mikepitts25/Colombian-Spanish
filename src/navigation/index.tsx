@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text, View } from 'react-native';
+import { Text, View, AccessibilityInfo } from 'react-native';
 import { colors } from '../styles/theme';
 
 // Tab Screens (4 main tabs)
@@ -20,7 +20,7 @@ import PhrasebookScreen from '../screens/PhrasebookScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-// Tab Icons
+// Tab Icons with accessibility
 function TabIcon({ name, focused }: { name: string; focused: boolean }) {
   const icons: Record<string, string> = {
     Learn: '📚',
@@ -29,9 +29,24 @@ function TabIcon({ name, focused }: { name: string; focused: boolean }) {
     Settings: '⚙️',
   };
   
+  const labels: Record<string, string> = {
+    Learn: 'Learn tab',
+    Explore: 'Explore tab',
+    Progress: 'Progress tab',
+    Settings: 'Settings tab',
+  };
+  
   return (
-    <View style={{ alignItems: 'center' }}>
-      <Text style={{ fontSize: 20, opacity: focused ? 1 : 0.6 }}>
+    <View 
+      style={{ alignItems: 'center' }}
+      accessibilityLabel={labels[name]}
+      accessibilityState={{ selected: focused }}
+    >
+      <Text 
+        style={{ fontSize: 20, opacity: focused ? 1 : 0.6 }}
+        accessibilityElementsHidden={true}
+        importantForAccessibility="no"
+      >
         {icons[name] || '•'}
       </Text>
     </View>
@@ -47,6 +62,8 @@ function TabLabel({ name, focused }: { name: string; focused: boolean }) {
         fontWeight: focused ? '600' : '400',
         marginTop: 2,
       }}
+      accessibilityElementsHidden={true}
+      importantForAccessibility="no"
     >
       {name}
     </Text>
@@ -72,27 +89,42 @@ function MainTabs() {
         tabBarInactiveTintColor: colors.textSecondary,
         tabBarIcon: ({ focused }) => <TabIcon name={route.name} focused={focused} />,
         tabBarLabel: ({ focused }) => <TabLabel name={route.name} focused={focused} />,
+        // Accessibility: ensure tabs are properly announced
+        tabBarAccessibilityLabel: `${route.name} tab`,
+        tabBarTestID: `tab-${route.name.toLowerCase()}`,
       })}
     >
       <Tab.Screen
         name="Learn"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false,
+          tabBarAccessibilityLabel: 'Learn tab, home screen',
+        }}
       />
       <Tab.Screen
         name="Explore"
         component={ExploreScreen}
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false,
+          tabBarAccessibilityLabel: 'Explore tab, browse decks and features',
+        }}
       />
       <Tab.Screen
         name="Progress"
         component={ProgressScreen}
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false,
+          tabBarAccessibilityLabel: 'Progress tab, view your learning stats',
+        }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false,
+          tabBarAccessibilityLabel: 'Settings tab, app preferences',
+        }}
       />
     </Tab.Navigator>
   );
@@ -105,6 +137,8 @@ export default function RootNavigator() {
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
         headerTintColor: colors.textPrimary,
+        // Accessibility
+        headerBackAccessibilityLabel: 'Go back',
       }}
     >
       <Stack.Screen
@@ -115,17 +149,26 @@ export default function RootNavigator() {
       <Stack.Screen
         name="Study"
         component={StudyScreen}
-        options={{ title: 'Study' }}
+        options={{ 
+          title: 'Study',
+          headerBackAccessibilityLabel: 'Back to home',
+        }}
       />
       <Stack.Screen
         name="Browse"
         component={BrowseScreen}
-        options={{ title: 'Browse' }}
+        options={{ 
+          title: 'Browse',
+          headerBackAccessibilityLabel: 'Back to explore',
+        }}
       />
       <Stack.Screen
         name="Phrasebook"
         component={PhrasebookScreen}
-        options={{ title: 'Phrasebook' }}
+        options={{ 
+          title: 'Phrasebook',
+          headerBackAccessibilityLabel: 'Back to explore',
+        }}
       />
       <Stack.Screen
         name="AddCard"
@@ -138,7 +181,10 @@ export default function RootNavigator() {
       <Stack.Screen
         name="ManageDecks"
         component={ManageDecksScreen}
-        options={{ title: 'Manage Decks' }}
+        options={{ 
+          title: 'Manage Decks',
+          headerBackAccessibilityLabel: 'Back to explore',
+        }}
       />
     </Stack.Navigator>
   );
