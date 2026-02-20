@@ -111,3 +111,61 @@ export async function setDailyTarget(target: number): Promise<DailyProgress> {
   await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(next));
   return next;
 }
+
+const STREAK_KEY = 'SRS_STUDY_STREAK_V1';
+
+export async function getStudyStreak(): Promise<number> {
+  const raw = await AsyncStorage.getItem(STREAK_KEY);
+  if (!raw) return 0;
+  try {
+    const { streak, lastStudyDate } = JSON.parse(raw);
+    const today = todayISO();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setHours(0, 0, 0, 0);
+    const yesterdayISO = yesterday.toISOString();
+
+    // If last study was today, return current streak
+    if (lastStudyDate === today) return streak || 0;
+    // If last study was yesterday, streak is still valid
+    if (lastStudyDate === yesterdayISO) return streak || 0;
+    // Otherwise, streak is broken
+    return 0;
+  } catch {
+    return 0;
+  }
+}
+
+export async function recordStudySession(): Promise<number> {
+  const currentStreak = await getStudyStreak();
+  const today = todayISO();
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  yesterday.setHours(0, 0, 0, 0);
+  const yesterdayISO = yesterday.toISOString();
+
+  const raw = await AsyncStorage.getItem(STREAK_KEY);
+  let lastStudyDate = '';
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      lastStudyDate = parsed.lastStudyDate;
+    } catch {}
+  }
+
+  // Already studied today, don't increment
+  if (lastStudyDate === today) return currentStreak;
+
+  // Check if we should increment or reset
+  let newStreak = 1;
+  if (lastStudyDate === yesterdayISO) {
+    newStreak = currentStreak + 1;
+  }
+
+  await AsyncStorage.setItem(STREAK_KEY, JSON.stringify({
+    streak: newStreak,
+    lastStudyDate: today,
+  }));
+
+  return newStreak;
+}
