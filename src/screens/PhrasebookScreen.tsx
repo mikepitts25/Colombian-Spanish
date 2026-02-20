@@ -25,7 +25,7 @@ export default function PhrasebookScreen() {
         deckId: d.id,
         deckName: d.name,
         card: c,
-        savedAt: c.favoritedAt || c.createdAt || 0,
+        savedAt: c.createdAt || 0,
       })),
     );
     const favs = all.filter((x) => !!x.card.favorite);

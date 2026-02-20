@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text, View, AccessibilityInfo } from 'react-native';
+import { Text, View } from 'react-native';
 import { colors } from '../styles/theme';
 
 // Tab Screens (4 main tabs)
@@ -137,8 +137,6 @@ export default function RootNavigator() {
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
         headerTintColor: colors.textPrimary,
-        // Accessibility
-        headerBackAccessibilityLabel: 'Go back',
       }}
     >
       <Stack.Screen
@@ -149,26 +147,17 @@ export default function RootNavigator() {
       <Stack.Screen
         name="Study"
         component={StudyScreen}
-        options={{ 
-          title: 'Study',
-          headerBackAccessibilityLabel: 'Back to home',
-        }}
+        options={{ title: 'Study' }}
       />
       <Stack.Screen
         name="Browse"
         component={BrowseScreen}
-        options={{ 
-          title: 'Browse',
-          headerBackAccessibilityLabel: 'Back to explore',
-        }}
+        options={{ title: 'Browse' }}
       />
       <Stack.Screen
         name="Phrasebook"
         component={PhrasebookScreen}
-        options={{ 
-          title: 'Phrasebook',
-          headerBackAccessibilityLabel: 'Back to explore',
-        }}
+        options={{ title: 'Phrasebook' }}
       />
       <Stack.Screen
         name="AddCard"
@@ -181,10 +170,7 @@ export default function RootNavigator() {
       <Stack.Screen
         name="ManageDecks"
         component={ManageDecksScreen}
-        options={{ 
-          title: 'Manage Decks',
-          headerBackAccessibilityLabel: 'Back to explore',
-        }}
+        options={{ title: 'Manage Decks' }}
       />
     </Stack.Navigator>
   );

@@ -275,7 +275,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: spacing(2),
   },
-  
+  title: {
+    color: colors.textPrimary,
+    fontSize: typography.size.lg,
+    textAlign: 'center',
+    marginTop: spacing(4),
+  },
+
   // Search
   searchContainer: {
     flexDirection: 'row',
