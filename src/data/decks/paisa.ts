@@ -190,7 +190,7 @@ export const PaisaDeck: Deck = {
       id: '1215',
       front: "¿Qué hay pa' hacer?",
       back: "What's there to do?",
-      example: "¿Parce, qué hay pa' hacer hoy?",
+      example: "¿Parce, qué hay pa' hacer hoy? | Buddy, what's there to do today?",
       tags: ['paisa', 'Medellín'],
       createdAt: 1754759195954,
       due: 1754759195954,
@@ -430,7 +430,7 @@ export const PaisaDeck: Deck = {
       id: '1235',
       front: "estar pela'o",
       back: 'to be broke / have no money',
-      example: "No puedo salir, estoy pela'o.",
+      example: "No puedo salir, estoy pela'o. | I can't go out, I'm broke."
       tags: ['paisa', 'Medellín', 'money'],
       createdAt: 1754759195954,
       due: 1754759195954,
