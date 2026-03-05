@@ -238,7 +238,7 @@ export const Dates_timeDeck: Deck = {
       id: '0523',
       front: 'fecha',
       back: 'date',
-      example: "¿Cuál es la fecha de hoy? | What's today"s date?',
+      example: "¿Cuál es la fecha de hoy? | What's today's date?",
       tags: ['dates/time'],
       createdAt: 1754759195954,
       due: 1754759195954,
