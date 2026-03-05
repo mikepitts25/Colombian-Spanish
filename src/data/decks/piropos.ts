@@ -118,7 +118,7 @@ export const PiroposDeck: Deck = {
       id: 'pirop-010',
       front: `Me encanta tu energía`,
       back: `I love your energy`,
-      example: 'Me encanta tu energía, siempre positiva. | I love your energy, always positive.',
+      example: `Me encanta tu energía, siempre positiva. | I love your energy, always positive.`,
       tags: ['compliments', 'personality'],
       createdAt: 1754759195954,
       due: 1754759195954,

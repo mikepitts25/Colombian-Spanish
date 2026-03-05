@@ -310,7 +310,7 @@ export const ConversationDeck: Deck = {
       id: '1125',
       front: `Tranquilo/a`,
       back: `Calm down / Take it easy`,
-      example: 'Tranquilo, todo va a salir bien. | Calm down, everything is going to work out fine.',
+      example: `Tranquilo, todo va a salir bien. | Calm down, everything is going to work out fine.`,
       tags: ['conversation', 'reassurance'],
       createdAt: 1754759195954,
       due: 1754759195954,
