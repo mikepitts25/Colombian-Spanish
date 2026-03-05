@@ -94,7 +94,7 @@ export const TransportDeck: Deck = {
       id: '0110',
       front: 'ruta',
       back: 'route',
-      example: '¿Cuál es la ruta más rápida? | What's the fastest route?',
+      example: "¿Cuál es la ruta más rápida? | What's the fastest route?",
       tags: ['transport'],
       createdAt: 1754759195954,
       due: 1754759195954,

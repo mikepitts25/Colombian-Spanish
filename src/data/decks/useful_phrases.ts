@@ -435,7 +435,7 @@ export const UsefulPhrasesDeck: Deck = {
       id: 'phrase-036',
       front: '¿Qué hora es?',
       back: 'What time is it?',
-      example: '¿Qué hora es? Son las tres. | What time is it? It is three o\'clock.',
+      example: "¿Qué hora es? Son las tres. | What time is it? It is three o\'clock.",
       tags: ['essentials', 'time'],
       createdAt: 1754759195954,
       due: 1754759195954,

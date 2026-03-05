@@ -227,7 +227,7 @@ export const NumbersDeck: Deck = {
       id: 'num-003',
       front: 'catorce',
       back: 'fourteen',
-      example: 'El catorce de febrero es San Valentín. | February fourteenth is Valentine\'s Day.',
+      example: "El catorce de febrero es San Valentín. | February fourteenth is Valentine\'s Day.",
       tags: ['numbers'],
       createdAt: 1754759195954,
       due: 1754759195954,

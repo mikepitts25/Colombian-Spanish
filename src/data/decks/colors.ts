@@ -10,7 +10,7 @@ export const ColorsDeck: Deck = {
       id: '0297',
       front: 'rojo',
       back: 'red',
-      example: 'Me gusta el carro rojo de mi tío. | I like my uncle's red car.',
+      example: "Me gusta el carro rojo de mi tío. | I like my uncle's red car.",
       tags: ['colors'],
       createdAt: 1754759195954,
       due: 1754759195954,

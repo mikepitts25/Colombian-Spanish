@@ -94,7 +94,7 @@ export const SportsDeck: Deck = {
       id: '0445',
       front: 'partido',
       back: 'match/game',
-      example: 'El partido de hoy fue emocionante. | Today\'s game was exciting.',
+      example: "El partido de hoy fue emocionante. | Today\'s game was exciting.",
       tags: ['sports'],
       createdAt: 1754759195954,
       due: 1754759195954,
