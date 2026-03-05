@@ -322,7 +322,7 @@ export const SlangDeck: Deck = {
       id: '0187',
       front: `plata`,
       back: `money`,
-      example: "No tengo plata para salir. | I don't have money to go out.`,
+      example: `No tengo plata para salir. | I don't have money to go out.`,
       tags: ['slang', 'Colombia', 'coloquial'],
       createdAt: 1754759195954,
       due: 1754759195954,

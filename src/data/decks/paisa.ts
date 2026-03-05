@@ -670,7 +670,7 @@ export const PaisaDeck: Deck = {
       id: '1255',
       front: `Que así sea`,
       back: `So be it / Amen`,
-      example: 'Que así sea, ojalá se mejore pronto. | So be it, hopefully she gets better soon.`,
+      example: `Que así sea, ojalá se mejore pronto. | So be it, hopefully she gets better soon.`,
       tags: ['paisa', 'Medellín', 'religious'],
       createdAt: 1754759195954,
       due: 1754759195954,

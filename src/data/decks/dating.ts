@@ -597,7 +597,7 @@ export const DatingDeck: Deck = {
     {
       id: '1449',
       front: `Sigamos como amigos`,
-      back: "Let's just be friends`,
+      back: `Let's just be friends`,
       example: "Eres una buena persona, pero sigamos como amigos. | You're a good person, but let"s just be friends.',
       tags: ['dating', 'breakup'],
       createdAt: 1754759195954,
