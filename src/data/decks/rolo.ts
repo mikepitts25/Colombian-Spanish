@@ -213,7 +213,7 @@ export const RoloDeck: Deck = {
     {
       id: '1717',
       front: `Mamerto`,
-      back: 'Hipster / pretentious person / leftist (context-dependent)',
+      back: `Hipster / pretentious person / leftist (context-dependent)`,
       example: `Ese mamerto se cree muy intelectual. | That hipster thinks he's very intellectual.`,
       tags: ['rolo', 'Bogotá', 'slang'],
       createdAt: 1754759195954,
@@ -225,7 +225,7 @@ export const RoloDeck: Deck = {
     {
       id: '1718',
       front: `Ñero`,
-      back: 'Thug / rough person / low-class (can be endearing too)',
+      back: `Thug / rough person / low-class (can be endearing too)`,
       example: `No te pongas ñero, habla bien. | Don't act like a thug, speak properly.`,
       tags: ['rolo', 'Bogotá', 'slang'],
       createdAt: 1754759195954,

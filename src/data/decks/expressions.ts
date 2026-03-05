@@ -333,7 +333,7 @@ example: `No le pidas ayuda, no tiene dos dedos de frente. | Don't ask him for h
     {
       id: '1027',
       front: `Meterse en camisa de once varas`,
-      back: 'To get involved in something too complicated',
+      back: `To get involved in something too complicated`,
       example: `No te metas en camisa de once varas, eso no es asunto tuyo. | Don't get involved in something too complicated, it"s not your business.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -345,7 +345,7 @@ example: `No le pidas ayuda, no tiene dos dedos de frente. | Don't ask him for h
     {
       id: '1028',
       front: `Más falso que billete de tres mil`,
-      back: 'Extremely fake / two-faced',
+      back: `Extremely fake / two-faced`,
 example: `No confíes en él, es más falso que billete de tres mil. | Don't trust him, he"s extremely fake.`,
       tags: ['expression', 'Colombia', 'insult'],
       createdAt: 1754759195954,
@@ -357,7 +357,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1029',
       front: `Dar cátedra`,
-      back: 'To teach a lesson / demonstrate expertise',
+      back: `To teach a lesson / demonstrate expertise`,
       example: `Ese jugador dio cátedra en el partido de ayer. | That player taught a lesson in yesterday's game.`,
       tags: ['expression', 'Colombia', 'praise'],
       createdAt: 1754759195954,
@@ -369,7 +369,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1030',
       front: `Echar cuento`,
-      back: 'To chat / tell stories / socialize',
+      back: `To chat / tell stories / socialize`,
       example: `Nos sentamos a echar cuento toda la tarde. | We sat chatting all afternoon.`,
       tags: ['expression', 'Colombia', 'social'],
       createdAt: 1754759195954,
@@ -381,7 +381,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1031',
       front: `Quedar en cinta`,
-      back: 'To get pregnant (be left with a sash)',
+      back: `To get pregnant (be left with a sash)`,
       example: `Se casaron porque ella quedó en cinta. | They got married because she got pregnant.`,
       tags: ['expression', 'Colombia', 'sensitive'],
       createdAt: 1754759195954,
@@ -393,7 +393,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1032',
       front: `Tener pinta`,
-      back: 'To look good / promising / attractive',
+      back: `To look good / promising / attractive`,
       example: `Esa película tiene pinta, vamos a verla. | That movie looks good, let's go see it.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -405,7 +405,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1033',
       front: `En la quiebra`,
-      back: 'Bankrupt / broke',
+      back: `Bankrupt / broke`,
       example: `La empresa quedó en la quiebra después de la pandemia. | The company went bankrupt after the pandemic.`,
       tags: ['expression', 'Colombia', 'business'],
       createdAt: 1754759195954,
@@ -417,7 +417,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1034',
       front: `Saber la bola`,
-      back: 'To know the score / be informed (Medellín)',
+      back: `To know the score / be informed (Medellín)`,
       example: `Ese man sí sabe la bola de lo que pasa aquí. | That guy really knows what's going on here.`,
       tags: ['expression', 'Medellín', 'slang'],
       createdAt: 1754759195954,
@@ -429,7 +429,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1035',
       front: `Tener mala pata`,
-      back: 'To have bad luck',
+      back: `To have bad luck`,
       example: `Tengo mala pata, siempre me toca el tráfico. | I have bad luck, I always get stuck in traffic.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -441,7 +441,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1036',
       front: `Caerle a alguien`,
-      back: 'To show up unexpectedly / To hit on someone',
+      back: `To show up unexpectedly / To hit on someone`,
       example: `Le caí a su casa ayer sin avisar. | I showed up at his house yesterday without warning.`,
       tags: ['expression', 'Colombia', 'social'],
       createdAt: 1754759195954,
@@ -453,7 +453,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1037',
       front: `Más aburrido que una olla viuda`,
-      back: 'Extremely boring',
+      back: `Extremely boring`,
       example: `La conferencia fue más aburrida que una olla viuda. | The conference was extremely boring.`,
       tags: ['expression', 'Colombia', 'humor'],
       createdAt: 1754759195954,
@@ -465,7 +465,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1038',
       front: `Estar hasta la coronilla`,
-      back: 'To be fed up / had enough',
+      back: `To be fed up / had enough`,
       example: `Estoy hasta la coronilla de tantas mentiras. | I'm fed up with so many lies.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -477,7 +477,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1039',
       front: `Meter cizaña`,
-      back: 'To stir up trouble / gossip',
+      back: `To stir up trouble / gossip`,
       example: `No le hagas caso, solo está metiendo cizaña. | Don't pay attention to him, he"s just stirring up trouble.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -489,7 +489,7 @@ example: `No confíes en él, es más falso que billete de tres mil. | Don't tru
     {
       id: '1040',
       front: `Hablar mierda`,
-      back: 'To talk nonsense / bullshit (vulgar)',
+      back: `To talk nonsense / bullshit (vulgar)`,
 example: `No le creas, está hablando mierda. | Don't believe him, he"s talking nonsense.`,
       tags: ['expression', 'Colombia', 'vulgar'],
       createdAt: 1754759195954,
@@ -501,7 +501,7 @@ example: `No le creas, está hablando mierda. | Don't believe him, he"s talking 
     {
       id: '1041',
       front: `Ir a la chingada`,
-      back: 'To go to hell / get ruined (vulgar)',
+      back: `To go to hell / get ruined (vulgar)`,
       example: `Si sigues así, todo va a ir a la chingada. | If you keep this up, everything will go to hell.`,
       tags: ['expression', 'Colombia', 'vulgar'],
       createdAt: 1754759195954,
@@ -513,7 +513,7 @@ example: `No le creas, está hablando mierda. | Don't believe him, he"s talking 
     {
       id: '1042',
       front: `Estar en la luna de Valencia`,
-      back: 'To be completely spaced out',
+      back: `To be completely spaced out`,
 example: `No entendió nada, está en la luna de Valencia. | He didn't understand anything, he"s completely spaced out.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -525,7 +525,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1043',
       front: `Estar en el quinto pino`,
-      back: 'To be in the middle of nowhere',
+      back: `To be in the middle of nowhere`,
       example: `Viven en el quinto pino, muy lejos de todo. | They live in the middle of nowhere, very far from everything.`,
       tags: ['expression', 'Colombia', 'location'],
       createdAt: 1754759195954,
@@ -537,7 +537,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1044',
       front: `Costar un ojo de la cara`,
-      back: 'To cost an arm and a leg',
+      back: `To cost an arm and a leg`,
       example: `El arreglo del carro me costó un ojo de la cara. | The car repair cost me an arm and a leg.`,
       tags: ['expression', 'Colombia', 'money'],
       createdAt: 1754759195954,
@@ -549,7 +549,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1045',
       front: `Más rápido que un rayo`,
-      back: 'Faster than lightning',
+      back: `Faster than lightning`,
       example: `Terminó el trabajo más rápido que un rayo. | He finished the work faster than lightning.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -561,7 +561,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1046',
       front: `Como agua para chocolate`,
-      back: 'Extremely angry / boiling mad',
+      back: `Extremely angry / boiling mad`,
       example: `Llegó a la casa como agua para chocolate. | He arrived home boiling mad.`,
       tags: ['expression', 'Colombia', 'anger'],
       createdAt: 1754759195954,
@@ -573,7 +573,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1047',
       front: `Estar entre la espada y la pared`,
-      back: 'To be between a rock and a hard place',
+      back: `To be between a rock and a hard place`,
       example: `Estoy entre la espada y la pared con esta decisión. | I'm between a rock and a hard place with this decision.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -585,7 +585,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1048',
       front: `A buenas horas mangas verdes`,
-      back: 'Too little, too late',
+      back: `Too little, too late`,
       example: `A buenas horas mangas verdes, ya se fueron los ladrones. | Too little too late, the thieves already left.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -597,7 +597,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1049',
       front: `Cada loco con su tema`,
-      back: 'To each their own',
+      back: `To each their own`,
       example: `Él quiere pizza, ella quiere hamburguesa—cada loco con su tema. | He wants pizza, she wants hamburgers—to each their own.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -609,7 +609,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1050',
       front: `El que persevera alcanza`,
-      back: 'Good things come to those who wait / Persistence pays off',
+      back: `Good things come to those who wait / Persistence pays off`,
       example: `Sigue estudiando, el que persevera alcanza. | Keep studying, persistence pays off.`,
       tags: ['expression', 'Colombia', 'wisdom'],
       createdAt: 1754759195954,
@@ -621,7 +621,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1051',
       front: `Más sabe el diablo por viejo que por diablo`,
-      back: 'Wisdom comes with age / Experience matters',
+      back: `Wisdom comes with age / Experience matters`,
       example: `Escucha a tu abuelo, más sabe el diablo por viejo. | Listen to your grandfather, wisdom comes with age.`,
       tags: ['expression', 'Colombia', 'wisdom'],
       createdAt: 1754759195954,
@@ -633,7 +633,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1052',
       front: `Pueblo que canta no muere`,
-      back: 'A community that celebrates survives',
+      back: `A community that celebrates survives`,
       example: `Festejen siempre, pueblo que canta no muere. | Always celebrate, a community that celebrates survives.`,
       tags: ['expression', 'Colombia', 'culture'],
       createdAt: 1754759195954,
@@ -645,7 +645,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1053',
       front: `Barriga llena, corazón contento`,
-      back: 'Full belly, happy heart',
+      back: `Full belly, happy heart`,
       example: `Comamos bien, barriga llena corazón contento. | Let's eat well, full belly happy heart.`,
       tags: ['expression', 'Colombia', 'food'],
       createdAt: 1754759195954,
@@ -657,7 +657,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1054',
       front: `Obras son amores y no buenas razones`,
-      back: 'Actions speak louder than words',
+      back: `Actions speak louder than words`,
       example: `No me digas que me quieres, muéstrame—obras son amores. | Don't tell me you love me, show me—actions speak louder than words.`,
       tags: ['expression', 'Colombia', 'wisdom'],
       createdAt: 1754759195954,
@@ -669,7 +669,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1055',
       front: `Quien no llora no mama`,
-      back: 'The squeaky wheel gets the grease',
+      back: `The squeaky wheel gets the grease`,
       example: `Tienes que pedir el aumento, quien no llora no mama. | You have to ask for the raise, the squeaky wheel gets the grease.`,
       tags: ['expression', 'Colombia', 'wisdom'],
       createdAt: 1754759195954,
@@ -681,7 +681,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1056',
       front: `De los errores se aprende`,
-      back: 'You learn from your mistakes',
+      back: `You learn from your mistakes`,
       example: `No te preocupes, de los errores se aprende. | Don't worry, you learn from your mistakes.`,
       tags: ['expression', 'Colombia', 'wisdom'],
       createdAt: 1754759195954,
@@ -693,7 +693,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1057',
       front: `Ponte las pilas`,
-      back: 'Get your act together / Step it up',
+      back: `Get your act together / Step it up`,
       example: `El examen es mañana, ¡ponte las pilas! | The exam is tomorrow, get your act together!`,
       tags: ['expression', 'Colombia', 'motivation'],
       createdAt: 1754759195954,
@@ -705,7 +705,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1058',
       front: `Echarle ganas`,
-      back: 'Put in effort / Try hard',
+      back: `Put in effort / Try hard`,
       example: `Échale ganas al trabajo y verás resultados. | Put effort into your work and you'll see results.`,
       tags: ['expression', 'Colombia', 'motivation'],
       createdAt: 1754759195954,
@@ -717,7 +717,7 @@ example: `No entendió nada, está en la luna de Valencia. | He didn't understan
     {
       id: '1059',
       front: `Todo bien?`,
-      back: 'Everything good? / All good?',
+      back: `Everything good? / All good?`,
       example: `¡Parcero! ¿Todo bien? ¿Qué contás? | Hey buddy! Everything good? What's up?`,
       tags: ['greeting', 'Colombia', 'slang'],
       createdAt: 1754759195954,
