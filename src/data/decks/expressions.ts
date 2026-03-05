@@ -8,8 +8,8 @@ export const ExpressionsDeck: Deck = {
   cards: [
     {
       id: '1000',
-      front: 'No dar papaya',
-      back: "Don't make yourself a target / Don't tempt fate",
+      front: `No dar papaya`,
+      back: `Don't make yourself a target / Don't tempt fate`,
       example: `En esta ciudad, no des papaya—cuida tus cosas. | In this city, don't make yourself a target—watch your things.`,
       tags: ['expression', 'Colombia', 'advice'],
       createdAt: 1754759195954,
@@ -20,8 +20,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1001',
-      front: '¿Qué más?',
-      back: "What's up? / How's it going?",
+      front: `¿Qué más?`,
+      back: `What's up? / How's it going?`,
       example: `¡Parcero! ¿Qué más? ¿Cómo has estado? | Dude! What's up? How have you been?`,
       tags: ['greeting', 'Colombia', 'slang'],
       createdAt: 1754759195954,
@@ -32,8 +32,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1002',
-      front: '¿O qué?',
-      back: 'Or what? / Right? (tag question)',
+      front: `¿O qué?`,
+      back: `Or what? / Right? (tag question)`,
       example: `Nos vemos mañana, ¿o qué? | See you tomorrow, right?`,
       tags: ['expression', 'Colombia', 'slang'],
       createdAt: 1754759195954,
@@ -44,8 +44,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1003',
-      front: 'De una',
-      back: "For sure / Absolutely / Let's do it",
+      front: `De una`,
+      back: `For sure / Absolutely / Let's do it`,
       example: `¿Vamos a la fiesta? ¡De una! | Are we going to the party? Absolutely!`,
       tags: ['expression', 'Colombia', 'agreement'],
       createdAt: 1754759195954,
@@ -56,8 +56,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1004',
-      front: 'Qué pena',
-      back: 'Sorry / What a shame / Embarrassing',
+      front: `Qué pena`,
+      back: `Sorry / What a shame / Embarrassing`,
       example: `Qué pena llegar tarde, había mucho tráfico. | Sorry for being late, there was a lot of traffic.`,
       tags: ['expression', 'Colombia', 'apology'],
       createdAt: 1754759195954,
@@ -68,8 +68,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1005',
-      front: 'Poner los cachos',
-      back: 'To cheat on someone (put horns on)',
+      front: `Poner los cachos`,
+      back: `To cheat on someone (put horns on)`,
       example: `Dicen que le puso los cachos a su novia. | They say he cheated on his girlfriend.`,
       tags: ['expression', 'Colombia', 'relationships'],
       createdAt: 1754759195954,
@@ -80,8 +80,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1006',
-      front: 'Echar los perros',
-      back: 'To hit on someone / To flirt',
+      front: `Echar los perros`,
+      back: `To hit on someone / To flirt`,
       example: `Ese man le está echando los perros a María. | That guy is hitting on María.`,
       tags: ['expression', 'Colombia', 'flirting'],
       createdAt: 1754759195954,
@@ -92,9 +92,9 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1007',
-      front: 'Estar en la luna',
-      back: 'To be daydreaming / spaced out',
-      example: `No escuchaste nada, estás en la luna. | You didn't hear anything, you"re daydreaming.',
+      front: `Estar en la luna`,
+      back: `To be daydreaming / spaced out`,
+      example: `No escuchaste nada, estás en la luna. | You didn't hear anything, you"re daydreaming.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
       due: 1754759195954,
@@ -104,8 +104,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1008',
-      front: 'Más perdido que el hijo de Lindbergh',
-      back: 'Completely lost / Clueless',
+      front: `Más perdido que el hijo de Lindbergh`,
+      back: `Completely lost / Clueless`,
       example: "Estoy más perdido que el hijo de Lindbergh en esta clase. | I'm completely lost in this class.`,
       tags: ['expression', 'Colombia', 'humor'],
       createdAt: 1754759195954,
@@ -116,8 +116,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1009',
-      front: 'Más contento que un niño con zapatos nuevos',
-      back: 'Extremely happy',
+      front: `Más contento que un niño con zapatos nuevos`,
+      back: `Extremely happy`,
       example: `Llegó a la fiesta más contento que un niño con zapatos nuevos. | He arrived at the party extremely happy.`,
       tags: ['expression', 'Colombia', 'happiness'],
       createdAt: 1754759195954,
@@ -128,9 +128,9 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1010',
-      front: 'Más peligroso que niño con hambre',
-      back: 'Very dangerous / Unpredictable',
-      example: `No lo provoques, está más peligroso que niño con hambre. | Don't provoke him, he"s very unpredictable.',
+      front: `Más peligroso que niño con hambre`,
+      back: `Very dangerous / Unpredictable`,
+      example: `No lo provoques, está más peligroso que niño con hambre. | Don't provoke him, he"s very unpredictable.`,
       tags: ['expression', 'Colombia', 'humor'],
       createdAt: 1754759195954,
       due: 1754759195954,
@@ -140,8 +140,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1011',
-      front: 'Más largo que un lunes sin plata',
-      back: 'Extremely long / Boring',
+      front: `Más largo que un lunes sin plata`,
+      back: `Extremely long / Boring`,
       example: 'La reunión fue más larga que un lunes sin plata. | The meeting was extremely long and boring.',
       tags: ['expression', 'Colombia', 'humor'],
       createdAt: 1754759195954,
@@ -152,8 +152,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1012',
-      front: 'Más amarrado que el dedo de un muerto',
-      back: 'Extremely stingy / Cheap',
+      front: `Más amarrado que el dedo de un muerto`,
+      back: `Extremely stingy / Cheap`,
       example: "No va a pagar la cuenta, es más amarrado que el dedo de un muerto. | He's not going to pay the bill, he"s extremely stingy.',
       tags: ['expression', 'Colombia', 'humor'],
       createdAt: 1754759195954,
@@ -164,8 +164,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1013',
-      front: 'Tener malas pulgas',
-      back: 'To be in a bad mood / Grumpy',
+      front: `Tener malas pulgas`,
+      back: `To be in a bad mood / Grumpy`,
       example: "No le hables ahora, tiene malas pulgas hoy. | Don't talk to him now, he"s in a bad mood today.',
       tags: ['expression', 'Colombia', 'mood'],
       createdAt: 1754759195954,
@@ -176,8 +176,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1014',
-      front: 'Tener la camisa bien puesta',
-      back: 'To be responsible / Have your act together',
+      front: `Tener la camisa bien puesta`,
+      back: `To be responsible / Have your act together`,
       example: 'Ese pelao tiene la camisa bien puesta, siempre cumple. | That guy has his act together, he always follows through.',
       tags: ['expression', 'Colombia', 'praise'],
       createdAt: 1754759195954,
@@ -188,8 +188,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1015',
-      front: 'No tener dos dedos de frente',
-      back: 'To be clueless / Not too smart',
+      front: `No tener dos dedos de frente`,
+      back: `To be clueless / Not too smart`,
       example: "No le pidas ayuda, no tiene dos dedos de frente. | Don't ask him for help, he"s clueless.',
       tags: ['expression', 'Colombia', 'insult'],
       createdAt: 1754759195954,
@@ -200,8 +200,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1016',
-      front: 'Hablar hasta por los codos',
-      back: "To talk non-stop / Talk someone's ear off`,
+      front: `Hablar hasta por los codos`,
+      back: `To talk non-stop / Talk someone's ear off`,
       example: `Esa mujer habla hasta por los codos, no para nunca. | That woman talks non-stop, she never shuts up.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -212,8 +212,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1017',
-      front: 'Ver la hora',
-      back: "To watch the clock / Can't wait to leave",
+      front: `Ver la hora`,
+      back: "To watch the clock / Can't wait to leave`,
       example: `En el trabajo solo veo la hora para salir. | At work I just watch the clock waiting to leave.`,
       tags: ['expression', 'Colombia', 'work'],
       createdAt: 1754759195954,
@@ -224,8 +224,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1018',
-      front: 'Ir a la pinta',
-      back: 'To go to the corner store / corner shop',
+      front: `Ir a la pinta`,
+      back: `To go to the corner store / corner shop`,
       example: `Voy a la pinta a comprar pan. | I'm going to the corner store to buy bread.`,
       tags: ['expression', 'Colombia', 'daily'],
       createdAt: 1754759195954,
@@ -236,8 +236,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1019',
-      front: 'Al pelo',
-      back: 'Perfect / Just right / Awesome',
+      front: `Al pelo`,
+      back: `Perfect / Just right / Awesome`,
       example: `El plan salió al pelo, todo perfecto. | The plan worked out perfectly, everything was great.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -248,8 +248,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1020',
-      front: 'En verga',
-      back: 'Broken / Ruined / Messed up (vulgar)',
+      front: `En verga`,
+      back: `Broken / Ruined / Messed up (vulgar)`,
       example: `Se dañó el carro, quedó en verga. | The car broke down, it's ruined.`,
       tags: ['expression', 'Colombia', 'vulgar'],
       createdAt: 1754759195954,
@@ -260,8 +260,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1021',
-      front: 'Estar mamado de',
-      back: 'To be fed up with / Sick of',
+      front: `Estar mamado de`,
+      back: `To be fed up with / Sick of`,
       example: `Estoy mamado de este tráfico todos los días. | I'm fed up with this traffic every day.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -272,9 +272,9 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1022',
-      front: 'Hacer una vaca',
-      back: 'To pool money / chip in',
-      example: `Vamos a hacer una vaca para el regalo de Carlos. | Let's pool our money for Carlos"s gift.',
+      front: `Hacer una vaca`,
+      back: `To pool money / chip in`,
+      example: `Vamos a hacer una vaca para el regalo de Carlos. | Let's pool our money for Carlos"s gift.`,
       tags: ['expression', 'Colombia', 'money'],
       createdAt: 1754759195954,
       due: 1754759195954,
@@ -284,8 +284,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1023',
-      front: 'Tomar tinto',
-      back: 'To have coffee (black coffee)',
+      front: `Tomar tinto`,
+      back: `To have coffee (black coffee)`,
       example: '¿Vamos a tomar tinto a la esquina? | Shall we go have coffee at the corner?',
       tags: ['expression', 'Colombia', 'food'],
       createdAt: 1754759195954,
@@ -296,8 +296,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1024',
-      front: 'Dar la lata',
-      back: 'To annoy / bother someone',
+      front: `Dar la lata`,
+      back: `To annoy / bother someone`,
       example: "Deja de dar la lata, estoy ocupado. | Stop bothering me, I'm busy.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -308,9 +308,9 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1025',
-      front: 'Estar en la ruina',
-      back: 'To be broke / penniless',
-      example: `No puedo salir este mes, estoy en la ruina. | I can't go out this month, I"m broke.',
+      front: `Estar en la ruina`,
+      back: `To be broke / penniless`,
+      example: `No puedo salir este mes, estoy en la ruina. | I can't go out this month, I"m broke.`,
       tags: ['expression', 'Colombia', 'money'],
       createdAt: 1754759195954,
       due: 1754759195954,
@@ -320,8 +320,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1026',
-      front: 'Pagar el pato',
-      back: "To take the blame / pay for something you didn't do`,
+      front: `Pagar el pato`,
+      back: `To take the blame / pay for something you didn't do`,
       example: `Yo no fui, pero tuve que pagar el pato. | I didn't do it, but I had to take the blame.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
@@ -332,9 +332,9 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1027',
-      front: 'Meterse en camisa de once varas',
+      front: `Meterse en camisa de once varas`,
       back: 'To get involved in something too complicated',
-      example: `No te metas en camisa de once varas, eso no es asunto tuyo. | Don't get involved in something too complicated, it"s not your business.',
+      example: `No te metas en camisa de once varas, eso no es asunto tuyo. | Don't get involved in something too complicated, it"s not your business.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
       due: 1754759195954,
@@ -344,7 +344,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1028',
-      front: 'Más falso que billete de tres mil',
+      front: `Más falso que billete de tres mil`,
       back: 'Extremely fake / two-faced',
       example: "No confíes en él, es más falso que billete de tres mil. | Don't trust him, he"s extremely fake.',
       tags: ['expression', 'Colombia', 'insult'],
@@ -356,7 +356,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1029',
-      front: 'Dar cátedra',
+      front: `Dar cátedra`,
       back: 'To teach a lesson / demonstrate expertise',
       example: "Ese jugador dio cátedra en el partido de ayer. | That player taught a lesson in yesterday's game.`,
       tags: ['expression', 'Colombia', 'praise'],
@@ -368,7 +368,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1030',
-      front: 'Echar cuento',
+      front: `Echar cuento`,
       back: 'To chat / tell stories / socialize',
       example: `Nos sentamos a echar cuento toda la tarde. | We sat chatting all afternoon.`,
       tags: ['expression', 'Colombia', 'social'],
@@ -380,7 +380,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1031',
-      front: 'Quedar en cinta',
+      front: `Quedar en cinta`,
       back: 'To get pregnant (be left with a sash)',
       example: `Se casaron porque ella quedó en cinta. | They got married because she got pregnant.`,
       tags: ['expression', 'Colombia', 'sensitive'],
@@ -392,7 +392,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1032',
-      front: 'Tener pinta',
+      front: `Tener pinta`,
       back: 'To look good / promising / attractive',
       example: `Esa película tiene pinta, vamos a verla. | That movie looks good, let's go see it.`,
       tags: ['expression', 'Colombia'],
@@ -404,7 +404,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1033',
-      front: 'En la quiebra',
+      front: `En la quiebra`,
       back: 'Bankrupt / broke',
       example: `La empresa quedó en la quiebra después de la pandemia. | The company went bankrupt after the pandemic.`,
       tags: ['expression', 'Colombia', 'business'],
@@ -416,7 +416,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1034',
-      front: 'Saber la bola',
+      front: `Saber la bola`,
       back: 'To know the score / be informed (Medellín)',
       example: `Ese man sí sabe la bola de lo que pasa aquí. | That guy really knows what's going on here.`,
       tags: ['expression', 'Medellín', 'slang'],
@@ -428,7 +428,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1035',
-      front: 'Tener mala pata',
+      front: `Tener mala pata`,
       back: 'To have bad luck',
       example: `Tengo mala pata, siempre me toca el tráfico. | I have bad luck, I always get stuck in traffic.`,
       tags: ['expression', 'Colombia'],
@@ -440,7 +440,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1036',
-      front: 'Caerle a alguien',
+      front: `Caerle a alguien`,
       back: 'To show up unexpectedly / To hit on someone',
       example: `Le caí a su casa ayer sin avisar. | I showed up at his house yesterday without warning.`,
       tags: ['expression', 'Colombia', 'social'],
@@ -452,7 +452,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1037',
-      front: 'Más aburrido que una olla viuda',
+      front: `Más aburrido que una olla viuda`,
       back: 'Extremely boring',
       example: `La conferencia fue más aburrida que una olla viuda. | The conference was extremely boring.`,
       tags: ['expression', 'Colombia', 'humor'],
@@ -464,7 +464,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1038',
-      front: 'Estar hasta la coronilla',
+      front: `Estar hasta la coronilla`,
       back: 'To be fed up / had enough',
       example: `Estoy hasta la coronilla de tantas mentiras. | I'm fed up with so many lies.`,
       tags: ['expression', 'Colombia'],
@@ -476,9 +476,9 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1039',
-      front: 'Meter cizaña',
+      front: `Meter cizaña`,
       back: 'To stir up trouble / gossip',
-      example: `No le hagas caso, solo está metiendo cizaña. | Don't pay attention to him, he"s just stirring up trouble.',
+      example: `No le hagas caso, solo está metiendo cizaña. | Don't pay attention to him, he"s just stirring up trouble.`,
       tags: ['expression', 'Colombia'],
       createdAt: 1754759195954,
       due: 1754759195954,
@@ -488,7 +488,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1040',
-      front: 'Hablar mierda',
+      front: `Hablar mierda`,
       back: 'To talk nonsense / bullshit (vulgar)',
       example: "No le creas, está hablando mierda. | Don't believe him, he"s talking nonsense.',
       tags: ['expression', 'Colombia', 'vulgar'],
@@ -500,7 +500,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1041',
-      front: 'Ir a la chingada',
+      front: `Ir a la chingada`,
       back: 'To go to hell / get ruined (vulgar)',
       example: 'Si sigues así, todo va a ir a la chingada. | If you keep this up, everything will go to hell.',
       tags: ['expression', 'Colombia', 'vulgar'],
@@ -512,7 +512,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1042',
-      front: 'Estar en la luna de Valencia',
+      front: `Estar en la luna de Valencia`,
       back: 'To be completely spaced out',
       example: "No entendió nada, está en la luna de Valencia. | He didn't understand anything, he"s completely spaced out.',
       tags: ['expression', 'Colombia'],
@@ -524,7 +524,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1043',
-      front: 'Estar en el quinto pino',
+      front: `Estar en el quinto pino`,
       back: 'To be in the middle of nowhere',
       example: 'Viven en el quinto pino, muy lejos de todo. | They live in the middle of nowhere, very far from everything.',
       tags: ['expression', 'Colombia', 'location'],
@@ -536,7 +536,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1044',
-      front: 'Costar un ojo de la cara',
+      front: `Costar un ojo de la cara`,
       back: 'To cost an arm and a leg',
       example: 'El arreglo del carro me costó un ojo de la cara. | The car repair cost me an arm and a leg.',
       tags: ['expression', 'Colombia', 'money'],
@@ -548,7 +548,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1045',
-      front: 'Más rápido que un rayo',
+      front: `Más rápido que un rayo`,
       back: 'Faster than lightning',
       example: 'Terminó el trabajo más rápido que un rayo. | He finished the work faster than lightning.',
       tags: ['expression', 'Colombia'],
@@ -560,7 +560,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1046',
-      front: 'Como agua para chocolate',
+      front: `Como agua para chocolate`,
       back: 'Extremely angry / boiling mad',
       example: 'Llegó a la casa como agua para chocolate. | He arrived home boiling mad.',
       tags: ['expression', 'Colombia', 'anger'],
@@ -572,7 +572,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1047',
-      front: 'Estar entre la espada y la pared',
+      front: `Estar entre la espada y la pared`,
       back: 'To be between a rock and a hard place',
       example: "Estoy entre la espada y la pared con esta decisión. | I'm between a rock and a hard place with this decision.`,
       tags: ['expression', 'Colombia'],
@@ -584,7 +584,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1048',
-      front: 'A buenas horas mangas verdes',
+      front: `A buenas horas mangas verdes`,
       back: 'Too little, too late',
       example: `A buenas horas mangas verdes, ya se fueron los ladrones. | Too little too late, the thieves already left.`,
       tags: ['expression', 'Colombia'],
@@ -596,7 +596,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1049',
-      front: 'Cada loco con su tema',
+      front: `Cada loco con su tema`,
       back: 'To each their own',
       example: `Él quiere pizza, ella quiere hamburguesa—cada loco con su tema. | He wants pizza, she wants hamburgers—to each their own.`,
       tags: ['expression', 'Colombia'],
@@ -608,7 +608,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1050',
-      front: 'El que persevera alcanza',
+      front: `El que persevera alcanza`,
       back: 'Good things come to those who wait / Persistence pays off',
       example: `Sigue estudiando, el que persevera alcanza. | Keep studying, persistence pays off.`,
       tags: ['expression', 'Colombia', 'wisdom'],
@@ -620,7 +620,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1051',
-      front: 'Más sabe el diablo por viejo que por diablo',
+      front: `Más sabe el diablo por viejo que por diablo`,
       back: 'Wisdom comes with age / Experience matters',
       example: `Escucha a tu abuelo, más sabe el diablo por viejo. | Listen to your grandfather, wisdom comes with age.`,
       tags: ['expression', 'Colombia', 'wisdom'],
@@ -632,7 +632,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1052',
-      front: 'Pueblo que canta no muere',
+      front: `Pueblo que canta no muere`,
       back: 'A community that celebrates survives',
       example: `Festejen siempre, pueblo que canta no muere. | Always celebrate, a community that celebrates survives.`,
       tags: ['expression', 'Colombia', 'culture'],
@@ -644,7 +644,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1053',
-      front: 'Barriga llena, corazón contento',
+      front: `Barriga llena, corazón contento`,
       back: 'Full belly, happy heart',
       example: `Comamos bien, barriga llena corazón contento. | Let's eat well, full belly happy heart.`,
       tags: ['expression', 'Colombia', 'food'],
@@ -656,7 +656,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1054',
-      front: 'Obras son amores y no buenas razones',
+      front: `Obras son amores y no buenas razones`,
       back: 'Actions speak louder than words',
       example: `No me digas que me quieres, muéstrame—obras son amores. | Don't tell me you love me, show me—actions speak louder than words.`,
       tags: ['expression', 'Colombia', 'wisdom'],
@@ -668,7 +668,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1055',
-      front: 'Quien no llora no mama',
+      front: `Quien no llora no mama`,
       back: 'The squeaky wheel gets the grease',
       example: `Tienes que pedir el aumento, quien no llora no mama. | You have to ask for the raise, the squeaky wheel gets the grease.`,
       tags: ['expression', 'Colombia', 'wisdom'],
@@ -680,7 +680,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1056',
-      front: 'De los errores se aprende',
+      front: `De los errores se aprende`,
       back: 'You learn from your mistakes',
       example: `No te preocupes, de los errores se aprende. | Don't worry, you learn from your mistakes.`,
       tags: ['expression', 'Colombia', 'wisdom'],
@@ -692,7 +692,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1057',
-      front: 'Ponte las pilas',
+      front: `Ponte las pilas`,
       back: 'Get your act together / Step it up',
       example: `El examen es mañana, ¡ponte las pilas! | The exam is tomorrow, get your act together!`,
       tags: ['expression', 'Colombia', 'motivation'],
@@ -704,7 +704,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1058',
-      front: 'Echarle ganas',
+      front: `Echarle ganas`,
       back: 'Put in effort / Try hard',
       example: `Échale ganas al trabajo y verás resultados. | Put effort into your work and you'll see results.`,
       tags: ['expression', 'Colombia', 'motivation'],
@@ -716,7 +716,7 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1059',
-      front: 'Todo bien?',
+      front: `Todo bien?`,
       back: 'Everything good? / All good?',
       example: `¡Parcero! ¿Todo bien? ¿Qué contás? | Hey buddy! Everything good? What's up?`,
       tags: ['greeting', 'Colombia', 'slang'],
@@ -728,8 +728,8 @@ export const ExpressionsDeck: Deck = {
     },
     {
       id: '1060',
-      front: '¿Qué hubo?',
-      back: "What's up? / What happened? (past tense greeting)",
+      front: `¿Qué hubo?`,
+      back: "What's up? / What happened? (past tense greeting)`,
       example: `¿Qué hubo, parce? ¿Cómo te fue? | What's up, buddy? How did it go?`,
       tags: ['greeting', 'Colombia', 'slang'],
       createdAt: 1754759195954,

@@ -8,8 +8,8 @@ export const SportsDeck: Deck = {
   cards: [
     {
       id: '0438',
-      front: 'fútbol',
-      back: 'soccer',
+      front: `fútbol`,
+      back: `soccer`,
       example: `El fútbol es el deporte más popular en Colombia. | Soccer is the most popular sport in Colombia.`,
       tags: ['sports'],
       createdAt: 1754759195954,
@@ -20,8 +20,8 @@ export const SportsDeck: Deck = {
     },
     {
       id: '0439',
-      front: 'baloncesto',
-      back: 'basketball',
+      front: `baloncesto`,
+      back: `basketball`,
       example: `Jugamos baloncesto en el parque. | We play basketball at the park.`,
       tags: ['sports'],
       createdAt: 1754759195954,
@@ -32,8 +32,8 @@ export const SportsDeck: Deck = {
     },
     {
       id: '0440',
-      front: 'ciclismo',
-      back: 'cycling',
+      front: `ciclismo`,
+      back: `cycling`,
       example: `El ciclismo es muy popular en las montañas. | Cycling is very popular in the mountains.`,
       tags: ['sports'],
       createdAt: 1754759195954,
@@ -44,8 +44,8 @@ export const SportsDeck: Deck = {
     },
     {
       id: '0441',
-      front: 'natación',
-      back: 'swimming',
+      front: `natación`,
+      back: `swimming`,
       example: `La natación es buena para la salud. | Swimming is good for your health.`,
       tags: ['sports'],
       createdAt: 1754759195954,
@@ -56,8 +56,8 @@ export const SportsDeck: Deck = {
     },
     {
       id: '0442',
-      front: 'tenis',
-      back: 'tennis',
+      front: `tenis`,
+      back: `tennis`,
       example: `Mi hermana juega tenis los sábados. | My sister plays tennis on Saturdays.`,
       tags: ['sports'],
       createdAt: 1754759195954,
@@ -68,8 +68,8 @@ export const SportsDeck: Deck = {
     },
     {
       id: '0443',
-      front: 'equipo',
-      back: 'team',
+      front: `equipo`,
+      back: `team`,
       example: `Mi equipo ganó el torneo. | My team won the tournament.`,
       tags: ['sports'],
       createdAt: 1754759195954,
@@ -80,8 +80,8 @@ export const SportsDeck: Deck = {
     },
     {
       id: '0444',
-      front: 'golear',
-      back: 'to score many goals',
+      front: `golear`,
+      back: `to score many goals`,
       example: `El equipo local goleó al visitante. | The home team scored many goals against the visitors.`,
       tags: ['sports'],
       createdAt: 1754759195954,
@@ -92,8 +92,8 @@ export const SportsDeck: Deck = {
     },
     {
       id: '0445',
-      front: 'partido',
-      back: 'match/game',
+      front: `partido`,
+      back: `match/game`,
       example: `El partido de hoy fue emocionante. | Today\'s game was exciting.`,
       tags: ['sports'],
       createdAt: 1754759195954,
@@ -104,8 +104,8 @@ export const SportsDeck: Deck = {
     },
     {
       id: '0446',
-      front: 'jugador',
-      back: 'player',
+      front: `jugador`,
+      back: `player`,
       example: `Ese jugador es muy talentoso. | That player is very talented.`,
       tags: ['sports'],
       createdAt: 1754759195954,

@@ -8,8 +8,8 @@ export const ClothingDeck: Deck = {
   cards: [
     {
       id: '0447',
-      front: 'camisa',
-      back: 'shirt',
+      front: `camisa`,
+      back: `shirt`,
       example: `Me compré una camisa nueva. | I bought a new shirt.`,
       tags: ['clothing'],
       createdAt: 1754759195954,
@@ -20,8 +20,8 @@ export const ClothingDeck: Deck = {
     },
     {
       id: '0448',
-      front: 'pantalón',
-      back: 'pants',
+      front: `pantalón`,
+      back: `pants`,
       example: `El pantalón es muy cómodo. | The pants are very comfortable.`,
       tags: ['clothing'],
       createdAt: 1754759195954,
@@ -32,8 +32,8 @@ export const ClothingDeck: Deck = {
     },
     {
       id: '0449',
-      front: 'falda',
-      back: 'skirt',
+      front: `falda`,
+      back: `skirt`,
       example: `Ella lleva una falda azul. | She's wearing a blue skirt.`,
       tags: ['clothing'],
       createdAt: 1754759195954,
@@ -44,8 +44,8 @@ export const ClothingDeck: Deck = {
     },
     {
       id: '0450',
-      front: 'chaqueta',
-      back: 'jacket',
+      front: `chaqueta`,
+      back: `jacket`,
       example: `Hace frío, ponte la chaqueta. | It's cold, put on your jacket.`,
       tags: ['clothing'],
       createdAt: 1754759195954,
@@ -56,8 +56,8 @@ export const ClothingDeck: Deck = {
     },
     {
       id: '0451',
-      front: 'zapatos',
-      back: 'shoes',
+      front: `zapatos`,
+      back: `shoes`,
       example: `Mis zapatos están sucios. | My shoes are dirty.`,
       tags: ['clothing'],
       createdAt: 1754759195954,
@@ -68,8 +68,8 @@ export const ClothingDeck: Deck = {
     },
     {
       id: '0452',
-      front: 'medias',
-      back: 'socks',
+      front: `medias`,
+      back: `socks`,
       example: `Necesito medias limpias. | I need clean socks.`,
       tags: ['clothing'],
       createdAt: 1754759195954,
@@ -80,8 +80,8 @@ export const ClothingDeck: Deck = {
     },
     {
       id: '0453',
-      front: 'vestido',
-      back: 'dress',
+      front: `vestido`,
+      back: `dress`,
       example: `Me puse un vestido para la fiesta. | I put on a dress for the party.`,
       tags: ['clothing'],
       createdAt: 1754759195954,
@@ -92,8 +92,8 @@ export const ClothingDeck: Deck = {
     },
     {
       id: '0454',
-      front: 'gorro',
-      back: 'cap/hat',
+      front: `gorro`,
+      back: `cap/hat`,
       example: `Lleva un gorro porque hace sol. | Wear a cap because it's sunny.`,
       tags: ['clothing'],
       createdAt: 1754759195954,
@@ -104,8 +104,8 @@ export const ClothingDeck: Deck = {
     },
     {
       id: '0455',
-      front: 'bufanda',
-      back: 'scarf',
+      front: `bufanda`,
+      back: `scarf`,
       example: `Uso bufanda en Bogotá porque hace frío. | I wear a scarf in Bogotá because it's cold.`,
       tags: ['clothing'],
       createdAt: 1754759195954,

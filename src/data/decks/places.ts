@@ -8,8 +8,8 @@ export const PlacesDeck: Deck = {
   cards: [
     {
       id: '0458',
-      front: 'iglesia',
-      back: 'church',
+      front: `iglesia`,
+      back: `church`,
       example: `La iglesia está en la plaza principal. | The church is in the main square.`,
       tags: ['places'],
       createdAt: 1754759195954,
@@ -20,8 +20,8 @@ export const PlacesDeck: Deck = {
     },
     {
       id: '0459',
-      front: 'hospital',
-      back: 'hospital',
+      front: `hospital`,
+      back: `hospital`,
       example: `Llevamos a mi abuela al hospital. | We took my grandmother to the hospital.`,
       tags: ['places'],
       createdAt: 1754759195954,
@@ -32,8 +32,8 @@ export const PlacesDeck: Deck = {
     },
     {
       id: '0460',
-      front: 'biblioteca',
-      back: 'library',
+      front: `biblioteca`,
+      back: `library`,
       example: `Estudio en la biblioteca por las tardes. | I study at the library in the afternoons.`,
       tags: ['places'],
       createdAt: 1754759195954,
@@ -44,8 +44,8 @@ export const PlacesDeck: Deck = {
     },
     {
       id: '0461',
-      front: 'centro comercial',
-      back: 'shopping mall',
+      front: `centro comercial`,
+      back: `shopping mall`,
       example: `Vamos al centro comercial el sábado. | We\'re going to the shopping mall on Saturday.`,
       tags: ['places'],
       createdAt: 1754759195954,
@@ -56,8 +56,8 @@ export const PlacesDeck: Deck = {
     },
     {
       id: '0462',
-      front: 'banco',
-      back: 'bank',
+      front: `banco`,
+      back: `bank`,
       example: `Voy al banco a retirar dinero. | I\'m going to the bank to withdraw money.`,
       tags: ['places'],
       createdAt: 1754759195954,
@@ -68,8 +68,8 @@ export const PlacesDeck: Deck = {
     },
     {
       id: '0463',
-      front: 'parqueadero',
-      back: 'parking lot',
+      front: `parqueadero`,
+      back: `parking lot`,
       example: `El parqueadero está lleno. | The parking lot is full.`,
       tags: ['places'],
       createdAt: 1754759195954,
@@ -80,8 +80,8 @@ export const PlacesDeck: Deck = {
     },
     {
       id: '0464',
-      front: 'universidad',
-      back: 'university',
+      front: `universidad`,
+      back: `university`,
       example: `Mi prima estudia en la universidad Nacional. | My cousin studies at the National University.`,
       tags: ['places'],
       createdAt: 1754759195954,
@@ -92,8 +92,8 @@ export const PlacesDeck: Deck = {
     },
     {
       id: '0465',
-      front: 'cafetería',
-      back: 'cafeteria',
+      front: `cafetería`,
+      back: `cafeteria`,
       example: `Desayunamos en la cafetería del colegio. | We had breakfast at the school cafeteria.`,
       tags: ['places'],
       createdAt: 1754759195954,
@@ -104,8 +104,8 @@ export const PlacesDeck: Deck = {
     },
     {
       id: '0466',
-      front: 'estadio',
-      back: 'stadium',
+      front: `estadio`,
+      back: `stadium`,
       example: `El estadio se llena en los partidos importantes. | The stadium fills up during important games.`,
       tags: ['places'],
       createdAt: 1754759195954,
