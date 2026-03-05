@@ -55,7 +55,7 @@ export const PaisaDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '1204`,
+      id: '1204',
       front: `¿Sí o qué?`,
       back: `Yes or what? (confirmation)`,
       example: `¿Vamos a rumbear, sí o qué? | We going out or what?',
@@ -139,7 +139,7 @@ export const PaisaDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '1211`,
+      id: '1211',
       front: `lambón`,
       back: `kiss-ass / suck-up`,
       example: `Ese pelao es muy lambón con el profesor. | That kid is such a suck-up with the teacher.',
@@ -271,7 +271,7 @@ export const PaisaDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '1222`,
+      id: '1222',
       front: `más raro que perro en bicicleta`,
       back: `stranger than a dog on a bicycle`,
       example: `Ese man es más raro que perro en bicicleta. | That guy is stranger than a dog on a bicycle.',
