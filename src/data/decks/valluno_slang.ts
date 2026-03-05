@@ -235,7 +235,7 @@ export const VallunoDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: 'val-020`,
+      id: 'val-020',
       front: `zopenco`,
       back: `stupid / dumb (male)`,
       example: `Ese zopenco no entiende nada. | That stupid guy doesn't understand anything.`,

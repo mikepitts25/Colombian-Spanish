@@ -163,7 +163,7 @@ export const RoloDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: 'rolo-014`,
+      id: 'rolo-014',
       front: `cachaco/cachaca`,
       back: `person from Bogotá (or things from Bogotá)`,
       example: `Los cachacos hablan muy formal. | People from Bogotá speak very formally.',
