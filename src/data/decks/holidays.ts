@@ -106,7 +106,7 @@ export const HolidaysDeck: Deck = {
       id: '0325`,
       front: `Día de Velitas`,
       back: `Day of the Little Candles`,
-      example: `El Día de Velitas encendemos velas y faroles. | On the Day of the Little Candles we light candles and lanterns.`,
+      example: `El Día de Velitas encendemos velas y faroles. | On the Day of the Little Candles we light candles and lanterns.',
       tags: ['holidays'],
       createdAt: 1754759195954,
       due: 1754759195954,

@@ -142,7 +142,7 @@ export const PiroposDeck: Deck = {
       id: 'pirop-012`,
       front: `Qué bien hueles`,
       back: `You smell so good`,
-      example: `Qué bien hueles, ¿qué perfume es? | You smell so good, what perfume is that?`,
+      example: `Qué bien hueles, ¿qué perfume es? | You smell so good, what perfume is that?',
       tags: ['compliments', 'romance'],
       createdAt: 1754759195954,
       due: 1754759195954,
