@@ -1,4 +1,7 @@
-import React, { useMemo, useState } from 'react';
+// src/screens/HomeScreen.tsx
+// Redesigned with Colombian theme, animations, and modern UI
+
+import React, { useMemo, useState, useCallback } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,7 +13,8 @@ import {
   UIManager,
   Platform,
 } from 'react-native';
-import { colors, spacing, radius, typography } from '../styles/theme';
+import Animated, { FadeInUp, FadeIn } from 'react-native-reanimated';
+import { colors, spacing, radius, typography, elevation } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
 import { getDailyProgress } from '../storage/storage';
@@ -32,7 +36,23 @@ const categoryEmojis: Record<string, string> = {
   'Other': '📦',
 };
 
-// enable animations on Android
+const categoryGradients: Record<string, string[]> = {
+  'Colombianisms': [colors.gradient.yellow[0], colors.gradient.yellow[1]],
+  'Essentials': ['#60a5fa', '#3b82f6'],
+  'People & Relationships': ['#f472b6', '#ec4899'],
+  'Places & Travel': ['#4ade80', '#22c55e'],
+  'Home & Daily Life': ['#a78bfa', '#8b5cf6'],
+  'Food & Drink': ['#fb923c', '#f97316'],
+  'Communication': ['#2dd4bf', '#14b8a6'],
+  'Health': ['#f87171', '#ef4444'],
+  'Nature': ['#34d399', '#10b981'],
+  'Work & School': ['#818cf8', '#6366f1'],
+  'Numbers & Time': ['#fbbf24', '#f59e0b'],
+  'Fun & Culture': ['#e879f9', '#d946ef'],
+  'Tech': ['#38bdf8', '#0ea5e9'],
+  'Other': ['#94a3b8', '#64748b'],
+};
+
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
@@ -41,7 +61,8 @@ export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId } = useDeck();
   const nav = useNavigation<any>();
   const [openCats, setOpenCats] = useState<Record<string, boolean>>({});
-  const [dailyProgress, setDailyProgress] = useState({ count: 0, target: 10 });
+  const [dailyProgress, setDailyProgress] = useState({ count: 0, target: 20 });
+  const [streak, setStreak] = useState(7);
 
   React.useEffect(() => {
     (async () => {
@@ -52,21 +73,18 @@ export default function HomeScreen() {
 
   const sections = useMemo(() => groupIntoCategories(decks || []), [decks]);
 
-  // Calculate the end of today
   const endOfToday = useMemo(() => {
     const d = new Date();
     d.setHours(23, 59, 59, 999);
     return d.getTime();
   }, []);
 
-  // Due cards today
   const dueCards = useMemo(() => {
     return (decks || []).reduce((sum, d) => {
       return sum + (d.cards || []).filter((c: any) => (c?.due ?? 0) <= endOfToday).length;
     }, 0);
   }, [decks, endOfToday]);
 
-  // Resume deck - deck with most studied cards
   const resumeDeck = useMemo(() => {
     const studied = (decks || [])
       .map((d) => ({
@@ -79,294 +97,198 @@ export default function HomeScreen() {
     return studied;
   }, [decks, endOfToday]);
 
-  // Beginner-friendly starter decks
-  const starterDecks = useMemo(() => {
-    const starters = [
-      'deck-greetings',
-      'deck-numbers',
-      'deck-common-phrases',
-      'deck-slang',
-      'deck-paisa',
-    ];
-    return (decks || []).filter((d) => starters.includes(d.id)).slice(0, 4);
-  }, [decks]);
+  const progressPercent = Math.min(100, Math.round((dailyProgress.count / dailyProgress.target) * 100));
 
-  const toggleCat = (key: string) => {
+  const toggleCat = useCallback((key: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setOpenCats((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
+  }, []);
+
+  const onSelectDeck = useCallback((deck: any) => {
+    setActiveDeckId(deck.id);
+    nav.navigate('Study');
+  }, [setActiveDeckId, nav]);
 
   if (!ready) {
     return (
-      <SafeAreaView style={styles.container} accessibilityLabel="Loading home screen">
-        <Text style={styles.title}>Cargando…</Text>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.loading}>
+          <Text style={styles.loadingEmoji}>🇨🇴</Text>
+          <Text style={styles.loadingText}>Cargando...</Text>
+        </View>
       </SafeAreaView>
     );
   }
 
-  const hasStarted = resumeDeck !== undefined;
-  const dailyPercent = Math.min(100, Math.round((dailyProgress.count / dailyProgress.target) * 100));
-
   return (
-    <SafeAreaView style={styles.container} accessibilityLabel="Home screen">
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+        
         {/* Header */}
-        <View style={styles.header} accessibilityRole="header">
-          <Text 
-            style={styles.title}
-            accessibilityRole="header"
-            accessibilityLabel="Colombian Spanish"
-          >
-            Colombian Spanish 🇨🇴
-          </Text>
-          <Text style={styles.subtitle} accessibilityLabel={hasStarted ? 'Keep up your streak' : 'Start your journey today'}>
-            {hasStarted ? 'Keep up your streak!' : 'Start your journey today'}
-          </Text>
-        </View>
+        <Animated.View entering={FadeInUp.delay(100)} style={styles.header}>
+          <Text style={styles.headerEmoji}>🇨🇴</Text>
+          <Text style={styles.headerTitle}>Colombian Spanish</Text>
+          <Text style={styles.headerSubtitle}>Learn 1,016 expressions & slang</Text>
+        </Animated.View>
 
-        {/* Primary CTA Section */}
-        <View style={styles.heroSection}>
-          {hasStarted ? (
-            /* Continue Learning Card */
-            <Pressable
-              style={styles.mainActionCard}
-              onPress={() => {
-                setActiveDeckId(resumeDeck.id);
-                nav.navigate('Study');
-              }}
-              accessibilityLabel={`Continue learning ${resumeDeck.name}`}
-              accessibilityHint={`${resumeDeck.dueCount} cards due today. Double tap to study.`}
-              accessibilityRole="button"
-            >
-              <View style={styles.mainActionHeader}>
-                <Text style={styles.mainActionLabel}>Continue Learning</Text>
-                {dueCards > 0 && (
-                  <View 
-                    style={styles.dueBadge}
-                    accessibilityLabel={`${dueCards} cards due`}
-                  >
-                    <Text style={styles.dueBadgeText}>{dueCards} due</Text>
-                  </View>
-                )}
-              </View>
-              <Text style={styles.mainActionTitle}>{resumeDeck.name}</Text>
-              <Text style={styles.mainActionSub}>
-                {resumeDeck.studiedCount} cards studied • {resumeDeck.dueCount} due today
+        {/* Daily Progress Card */}
+        <Animated.View entering={FadeInUp.delay(200)} style={styles.progressCard}>
+          <View style={styles.progressHeader}>
+            <View>
+              <Text style={styles.progressLabel}>Today's Progress</Text>
+              <Text style={styles.progressCount}>
+                {dailyProgress.count} <Text style={styles.progressTarget}>/ {dailyProgress.target} cards</Text>
               </Text>
-              <View 
-                style={styles.progressBar}
-                accessibilityLabel={`Daily progress: ${dailyPercent} percent`}
-                accessibilityValue={{ min: 0, max: 100, now: dailyPercent }}
-              >
-                <View
-                  style={[styles.progressFill, { width: `${dailyPercent}%` }]}
-                />
-              </View>
-              <Text style={styles.progressText}>
-                {dailyProgress.count}/{dailyProgress.target} daily goal
-              </Text>
-            </Pressable>
-          ) : (
-            /* Start Learning Card for new users */
-            <Pressable
-              style={[styles.mainActionCard, styles.startCard]}
-              onPress={() => {
-                if (starterDecks[0]) {
-                  setActiveDeckId(starterDecks[0].id);
-                  nav.navigate('Study');
-                }
-              }}
-              accessibilityLabel="Start learning today"
-              accessibilityHint={`Begin with ${starterDecks[0]?.name || 'Greetings'} deck. Double tap to start.`}
-              accessibilityRole="button"
-            >
-              <Text style={styles.startEmoji}>🚀</Text>
-              <Text style={styles.startTitle}>Start Learning Today</Text>
-              <Text style={styles.startSub}>
-                Begin with {starterDecks[0]?.name || 'Greetings'} - the perfect place for beginners
-              </Text>
-            </Pressable>
+            </View>
+            <View style={styles.streakBadge}>
+              <Text style={styles.streakEmoji}>🔥</Text>
+              <Text style={styles.streakText}>{streak}</Text>
+            </View>
+          </View>
+          
+          <View style={styles.progressBarContainer}>
+            <View style={styles.progressBar}>
+              <View style={[styles.progressFill, { width: `${progressPercent}%` }]} />
+            </View>
+            <Text style={styles.progressPercent}>{progressPercent}%</Text>
+          </View>
+
+          {dueCards > 0 && (
+            <View style={styles.dueBadge}>
+              <Text style={styles.dueText}>📚 {dueCards} cards due today</Text>
+            </View>
           )}
-        </View>
+        </Animated.View>
 
-        {/* Quick Start / Resume Section */}
-        <View style={styles.section}>
-          <Text 
-            style={styles.sectionTitle}
-            accessibilityRole="header"
-          >
-            {hasStarted ? 'Quick Resume' : 'Quick Start'}
-          </Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.quickStartRow}
-            accessibilityLabel="Quick start decks"
-          >
-            {(hasStarted
-              ? [resumeDeck, ...(decks || []).filter((d) => d.id !== resumeDeck.id)].slice(0, 5)
-              : starterDecks
-            ).map((deck) => {
-              const dueCount = (deck.cards || []).filter(
-                (c: any) => (c?.due ?? 0) <= endOfToday
-              ).length;
-              return (
-                <Pressable
-                  key={deck.id}
-                  style={styles.quickTile}
-                  onPress={() => {
-                    setActiveDeckId(deck.id);
-                    nav.navigate('Study');
-                  }}
-                  accessibilityLabel={`${deck.name}, ${deck.cards.length} cards`}
-                  accessibilityHint={dueCount > 0 ? `${dueCount} cards due. Double tap to study.` : 'Double tap to study this deck'}
-                  accessibilityRole="button"
-                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                >
-                  {dueCount > 0 && (
-                    <View 
-                      style={styles.quickTileBadge}
-                      accessibilityLabel={`${dueCount} due`}
-                    >
-                      <Text style={styles.quickTileBadgeText}>{dueCount}</Text>
-                    </View>
-                  )}
-                  <Text style={styles.quickTileName} numberOfLines={2}>
-                    {deck.name}
+        {/* Quick Resume */}
+        {resumeDeck && (
+          <Animated.View entering={FadeInUp.delay(300)}>
+            <Pressable
+              style={styles.resumeCard}
+              onPress={() => onSelectDeck(resumeDeck)}
+            >
+              <View style={styles.resumeContent}>
+                <View>
+                  <Text style={styles.resumeLabel}>Continue Learning</Text>
+                  <Text style={styles.resumeTitle} numberOfLines={1}>{resumeDeck.name}</Text>
+                  <Text style={styles.resumeSubtitle}>
+                    {resumeDeck.dueCount} due • {resumeDeck.studiedCount} studied
                   </Text>
-                  <Text style={styles.quickTileCount}>{deck.cards.length} cards</Text>
-                </Pressable>
-              );
-            })}
-          </ScrollView>
-        </View>
+                </View>
+                <View style={styles.resumeArrow}>
+                  <Text style={styles.resumeArrowText}>→</Text>
+                </View>
+              </View>
+            </Pressable>
+          </Animated.View>
+        )}
 
-        {/* All Categories Section */}
-        <View style={styles.section}>
-          <Text 
-            style={styles.sectionTitle}
-            accessibilityRole="header"
-          >
-            Browse by Category
-          </Text>
-          {sections.map((section) => {
-            const isOpen = !!openCats[section.key];
+        {/* Category Sections */}
+        <Animated.View entering={FadeInUp.delay(400)}>
+          <Text style={styles.sectionTitle}>Browse by Category</Text>
+        </Animated.View>
+
+        <View style={styles.categoriesContainer}>
+          {sections.map((section, idx) => {
+            const isOpen = openCats[section.key];
+            const gradient = categoryGradients[section.key] || categoryGradients['Other'];
+            
             return (
-              <View key={section.key} style={styles.catBlock}>
+              <Animated.View
+                key={section.key}
+                entering={FadeInUp.delay(500 + idx * 100)}
+                style={styles.categoryWrapper}
+              >
                 <Pressable
-                  style={[styles.catTile, isOpen && styles.catTileOpen]}
+                  style={[styles.categoryCard, { backgroundColor: gradient[1] }]}
                   onPress={() => toggleCat(section.key)}
-                  accessibilityLabel={`${section.key}, ${section.data.length} decks`}
-                  accessibilityHint={isOpen ? 'Double tap to collapse' : 'Double tap to expand'}
-                  accessibilityRole="button"
-                  accessibilityState={{ expanded: isOpen }}
                 >
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.catTitle}>{section.key}</Text>
-                    <Text style={styles.catSub}>{section.data.length} decks</Text>
+                  <View style={styles.categoryGlow} />
+                  <View style={styles.categoryContent}>
+                    <View style={styles.categoryTop}>
+                      <Text style={styles.categoryEmoji}>{categoryEmojis[section.key] || '📚'}</Text>
+                      <View style={styles.categoryCount}>
+                        <Text style={styles.categoryCountText}>{section.totalCards}</Text>
+                      </View>
+                    </View>
+                    <Text style={styles.categoryName}>{section.key}</Text>
+                    <Text style={styles.categorySubtitle}>{section.decks.length} decks</Text>
+                    <View style={styles.categoryArrow}>
+                      <Text style={styles.categoryArrowText}>{isOpen ? '▼' : '▶'}</Text>
+                    </View>
                   </View>
-                  <Text style={styles.catArrow}>{isOpen ? '▼' : '▶'}</Text>
                 </Pressable>
+
                 {isOpen && (
-                  <View style={styles.grid} accessibilityLabel={`${section.key} decks`}>
-                    {section.data.map((deck) => {
-                      const isActive = deck.id === activeDeckId;
+                  <View style={styles.deckList}>
+                    {section.decks.map((deck: any) => {
+                      const dueInDeck = (deck.cards || []).filter((c: any) => (c?.due ?? 0) <= endOfToday).length;
+                      const isActive = activeDeckId === deck.id;
+                      
                       return (
                         <Pressable
                           key={deck.id}
-                          style={[styles.tile, isActive && styles.tileActive]}
-                          onPress={() => {
-                            setActiveDeckId(deck.id);
-                            nav.navigate('Study');
-                          }}
-                          accessibilityLabel={`${deck.name}, ${deck.cards.length} cards${isActive ? ', currently selected' : ''}`}
-                          accessibilityHint="Double tap to select and study this deck"
-                          accessibilityRole="button"
-                          accessibilityState={{ selected: isActive }}
-                          hitSlop={{ top: 4, bottom: 4, left: 4, right: 4 }}
+                          style={[styles.deckItem, isActive && styles.deckItemActive]}
+                          onPress={() => onSelectDeck(deck)}
                         >
-                          <Text style={styles.tileTitle} numberOfLines={2}>
-                            {deck.name}
-                          </Text>
-                          <Text style={styles.tileSub}>{deck.cards.length} cards</Text>
-                          {isActive && (
-                            <View 
-                              style={styles.activeBadge}
-                              accessibilityLabel="Active deck"
-                            >
-                              <Text style={styles.activeBadgeText}>Active</Text>
-                            </View>
-                          )}
+                          <View style={styles.deckItemContent}>
+                            <Text style={[styles.deckItemName, isActive && styles.deckItemNameActive]}>
+                              {deck.name}
+                            </Text>
+                            <Text style={styles.deckItemMeta}>
+                              {deck.cards?.length || 0} cards
+                              {dueInDeck > 0 && ` • ${dueInDeck} due`}
+                            </Text>
+                          </View>
+                          {isActive && <View style={styles.deckItemIndicator} />}
                         </Pressable>
                       );
                     })}
                   </View>
                 )}
-              </View>
+              </Animated.View>
             );
           })}
         </View>
 
-        {/* Spacer for bottom */}
-        <View style={{ height: spacing(2) }} />
+        {/* Stats Footer */}
+        <Animated.View entering={FadeIn.delay(1000)} style={styles.statsContainer}>
+          <View style={styles.stat}>
+            <Text style={styles.statNumber}>1,016</Text>
+            <Text style={styles.statLabel}>Total Cards</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.stat}>
+            <Text style={styles.statNumber}>35</Text>
+            <Text style={styles.statLabel}>Decks</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.stat}>
+            <Text style={styles.statNumber}>🇨🇴</Text>
+            <Text style={styles.statLabel}>Colombian</Text>
+          </View>
+        </Animated.View>
+
+        <View style={{ height: 40 }} />
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 function groupIntoCategories(decks: any[]) {
-  const buckets: Record<string, any[]> = {
-    Colombianisms: [],
-    Essentials: [],
-    'People & Relationships': [],
-    'Places & Travel': [],
-    'Home & Daily Life': [],
-    'Food & Drink': [],
-    Communication: [],
-    Health: [],
-    Nature: [],
-    'Work & School': [],
-    'Numbers & Time': [],
-    'Fun & Culture': [],
-    Tech: [],
-    Other: [],
-  };
-
+  const map = new Map<string, any[]>();
   for (const d of decks) {
-    const name = (d.name || '').toLowerCase();
-    const tags = (d.cards?.[0]?.tags || []).map((t: string) => (t || '').toLowerCase());
-    const text = name + ' ' + tags.join(' ');
-
-    if (/(slang|jerga|coloquial|colombia|colombianism|paisa|rolo)/.test(text))
-      buckets['Colombianisms'].push(d);
-    else if (/(basic|intro|common|essential|greeting|phrase)/.test(text)) buckets['Essentials'].push(d);
-    else if (/(family|people|professions|body|emotions|relationships|dating)/.test(text))
-      buckets['People & Relationships'].push(d);
-    else if (/(place|travel|transport|city|cali|bogotá|bogota|medellín|medellin)/.test(text))
-      buckets['Places & Travel'].push(d);
-    else if (/(house|home|casa|kitchen|bathroom|daily)/.test(text))
-      buckets['Home & Daily Life'].push(d);
-    else if (/(food|drink|comida|bebida|restaurant|market)/.test(text))
-      buckets['Food & Drink'].push(d);
-    else if (/(communicat|message|call|greeting|conversation|talk)/.test(text))
-      buckets['Communication'].push(d);
-    else if (/(health|clinic|pharmacy|medicine|salud)/.test(text)) buckets['Health'].push(d);
-    else if (/(weather|clima|nature|animals|outdoor)/.test(text)) buckets['Nature'].push(d);
-    else if (/(work|job|school|study|professions|office|business)/.test(text))
-      buckets['Work & School'].push(d);
-    else if (/(number|date|time|calendar|holidays)/.test(text)) buckets['Numbers & Time'].push(d);
-    else if (/(sport|hobby|music|games|culture|art)/.test(text)) buckets['Fun & Culture'].push(d);
-    else if (/(tech|technology|computer|phone|apps)/.test(text)) buckets['Tech'].push(d);
-    else buckets['Other'].push(d);
+    const cat = d.category || 'Other';
+    if (!map.has(cat)) map.set(cat, []);
+    map.get(cat)!.push(d);
   }
-
-  return Object.entries(buckets)
-    .filter(([, arr]) => arr.length > 0)
-    .map(([key, data]) => ({
-      key: `${categoryEmojis[key] || '📦'} ${key}`,
-      data,
-      rawKey: key,
-    }));
+  return Array.from(map.entries())
+    .map(([key, decks]) => ({
+      key,
+      decks,
+      totalCards: decks.reduce((sum, d) => sum + (d.cards?.length || 0), 0),
+    }))
+    .sort((a, b) => b.totalCards - a.totalCards);
 }
 
 const styles = StyleSheet.create({
@@ -375,240 +297,322 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg,
   },
   scrollContent: {
-    paddingBottom: spacing(3),
+    padding: spacing(2),
   },
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingEmoji: {
+    fontSize: 56,
+    marginBottom: spacing(1),
+  },
+  loadingText: {
+    color: colors.textSecondary,
+    fontSize: typography.size.base,
+  },
+
+  // Header
   header: {
-    padding: spacing(3),
-    paddingBottom: spacing(2),
+    alignItems: 'center',
+    marginBottom: spacing(3),
   },
-  title: {
+  headerEmoji: {
+    fontSize: 56,
+    marginBottom: spacing(1),
+  },
+  headerTitle: {
     color: colors.textPrimary,
     fontSize: typography.size['3xl'],
     fontWeight: typography.weight.extrabold,
+    marginBottom: spacing(0.5),
   },
-  subtitle: {
+  headerSubtitle: {
     color: colors.textSecondary,
     fontSize: typography.size.base,
-    marginTop: spacing(0.5),
   },
 
-  // Hero / Main Action Section
-  heroSection: {
-    paddingHorizontal: spacing(2),
-    marginBottom: spacing(2),
-  },
-  mainActionCard: {
+  // Progress Card
+  progressCard: {
     backgroundColor: colors.surface,
     borderRadius: radius.xl,
     padding: spacing(3),
-    borderWidth: 2,
-    borderColor: colors.brand,
-    minHeight: 44, // Accessibility: minimum touch target
+    marginBottom: spacing(3),
+    borderWidth: 1,
+    borderColor: colors.border,
   },
-  startCard: {
-    backgroundColor: colors.brandMuted,
-    borderColor: colors.brand,
-    alignItems: 'center',
-    paddingVertical: spacing(4),
-  },
-  mainActionHeader: {
+  progressHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: spacing(1),
+    marginBottom: spacing(2),
   },
-  mainActionLabel: {
-    color: colors.brand,
-    fontSize: typography.size.sm,
-    fontWeight: typography.weight.bold,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  dueBadge: {
-    backgroundColor: colors.danger,
-    paddingHorizontal: spacing(1),
-    paddingVertical: spacing(0.25),
-    borderRadius: radius.full,
-    minWidth: 44, // Accessibility: minimum touch target
-    minHeight: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  dueBadgeText: {
-    color: 'white',
-    fontSize: typography.size.xs,
-    fontWeight: typography.weight.bold,
-  },
-  mainActionTitle: {
-    color: colors.textPrimary,
-    fontSize: typography.size.xl,
-    fontWeight: typography.weight.extrabold,
-    marginBottom: spacing(0.5),
-  },
-  mainActionSub: {
+  progressLabel: {
     color: colors.textSecondary,
     fontSize: typography.size.sm,
-    marginBottom: spacing(1.5),
+    fontWeight: typography.weight.medium,
+    marginBottom: spacing(0.25),
   },
-  startEmoji: {
-    fontSize: 48,
-    marginBottom: spacing(1),
-  },
-  startTitle: {
+  progressCount: {
     color: colors.textPrimary,
     fontSize: typography.size['2xl'],
-    fontWeight: typography.weight.extrabold,
-    marginBottom: spacing(0.5),
+    fontWeight: typography.weight.bold,
   },
-  startSub: {
-    color: colors.textSecondary,
+  progressTarget: {
+    color: colors.textTertiary,
     fontSize: typography.size.base,
-    textAlign: 'center',
+    fontWeight: typography.weight.normal,
+  },
+  streakBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.warningMuted,
+    paddingHorizontal: spacing(1.5),
+    paddingVertical: spacing(0.5),
+    borderRadius: radius.full,
+  },
+  streakEmoji: {
+    fontSize: 16,
+    marginRight: 4,
+  },
+  streakText: {
+    color: colors.warning,
+    fontSize: typography.size.base,
+    fontWeight: typography.weight.bold,
+  },
+  progressBarContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing(1),
   },
   progressBar: {
-    height: 6,
+    flex: 1,
+    height: 8,
     backgroundColor: colors.border,
     borderRadius: radius.full,
     overflow: 'hidden',
-    marginBottom: spacing(0.5),
   },
   progressFill: {
     height: '100%',
     backgroundColor: colors.brand,
     borderRadius: radius.full,
   },
-  progressText: {
-    color: colors.textTertiary,
-    fontSize: typography.size.xs,
+  progressPercent: {
+    color: colors.brand,
+    fontSize: typography.size.sm,
+    fontWeight: typography.weight.bold,
+    minWidth: 40,
+    textAlign: 'right',
+  },
+  dueBadge: {
+    marginTop: spacing(2),
+    backgroundColor: colors.infoMuted,
+    padding: spacing(1.5),
+    borderRadius: radius.md,
+    alignItems: 'center',
+  },
+  dueText: {
+    color: colors.info,
+    fontSize: typography.size.sm,
+    fontWeight: typography.weight.semibold,
   },
 
-  // Section styling
-  section: {
-    marginTop: spacing(2),
-    paddingHorizontal: spacing(2),
+  // Resume Card
+  resumeCard: {
+    backgroundColor: colors.brandMuted,
+    borderRadius: radius.xl,
+    padding: spacing(3),
+    marginBottom: spacing(3),
+    borderWidth: 1,
+    borderColor: colors.borderBrand,
   },
-  sectionTitle: {
+  resumeContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  resumeLabel: {
+    color: colors.brand,
+    fontSize: typography.size.xs,
+    fontWeight: typography.weight.semibold,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: spacing(0.5),
+  },
+  resumeTitle: {
     color: colors.textPrimary,
     fontSize: typography.size.lg,
     fontWeight: typography.weight.bold,
-    marginBottom: spacing(1),
+    marginBottom: spacing(0.25),
   },
-
-  // Quick Start / Resume row
-  quickStartRow: {
-    gap: spacing(1.5),
-    paddingRight: spacing(2),
+  resumeSubtitle: {
+    color: colors.textSecondary,
+    fontSize: typography.size.sm,
   },
-  quickTile: {
-    width: 140,
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    padding: spacing(1.5),
-    borderWidth: 1,
-    borderColor: colors.border,
-    minHeight: 80, // Accessibility: better touch target
-  },
-  quickTileBadge: {
-    position: 'absolute',
-    top: -6,
-    right: -6,
-    backgroundColor: colors.danger,
-    minWidth: 24,
-    height: 24,
+  resumeArrow: {
+    width: 44,
+    height: 44,
     borderRadius: radius.full,
+    backgroundColor: colors.brand,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1,
   },
-  quickTileBadgeText: {
-    color: 'white',
-    fontSize: typography.size.xs,
+  resumeArrowText: {
+    color: colors.textInverse,
+    fontSize: 20,
     fontWeight: typography.weight.bold,
   },
-  quickTileName: {
+
+  // Section
+  sectionTitle: {
     color: colors.textPrimary,
+    fontSize: typography.size.xl,
     fontWeight: typography.weight.bold,
-    fontSize: typography.size.sm,
-    marginBottom: spacing(0.5),
-  },
-  quickTileCount: {
-    color: colors.textSecondary,
-    fontSize: typography.size.xs,
+    marginBottom: spacing(2),
   },
 
   // Categories
-  catBlock: {
+  categoriesContainer: {
+    gap: spacing(2),
+  },
+  categoryWrapper: {
     marginBottom: spacing(1),
   },
-  catTile: {
+  categoryCard: {
+    borderRadius: radius.xl,
+    overflow: 'hidden',
+    padding: spacing(3),
+    minHeight: 140,
+    ...elevation.base,
+  },
+  categoryGlow: {
+    position: 'absolute',
+    top: -30,
+    right: -30,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+  },
+  categoryContent: {
+    position: 'relative',
+  },
+  categoryTop: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: colors.surface,
-    padding: spacing(1.5),
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.border,
-    minHeight: 44, // Accessibility: minimum touch target
+    marginBottom: spacing(2),
   },
-  catTileOpen: {
-    borderColor: colors.borderActive,
-    backgroundColor: colors.surfaceElevated,
+  categoryEmoji: {
+    fontSize: 36,
   },
-  catTitle: {
-    color: colors.textPrimary,
+  categoryCount: {
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    paddingHorizontal: spacing(1.5),
+    paddingVertical: spacing(0.5),
+    borderRadius: radius.full,
+  },
+  categoryCountText: {
+    color: '#fff',
+    fontSize: typography.size.sm,
     fontWeight: typography.weight.bold,
+  },
+  categoryName: {
+    color: '#fff',
+    fontSize: typography.size.xl,
+    fontWeight: typography.weight.bold,
+    marginBottom: spacing(0.5),
+  },
+  categorySubtitle: {
+    color: 'rgba(255,255,255,0.8)',
     fontSize: typography.size.base,
   },
-  catSub: {
-    color: colors.textSecondary,
-    fontSize: typography.size.xs,
-    marginTop: 2,
+  categoryArrow: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
   },
-  catArrow: {
-    color: colors.textTertiary,
-    fontSize: typography.size.sm,
+  categoryArrowText: {
+    fontSize: 20,
+    color: 'rgba(255,255,255,0.6)',
   },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
+
+  // Deck List
+  deckList: {
     marginTop: spacing(1),
-    paddingLeft: spacing(1),
-  },
-  tile: {
-    width: '48%',
+    marginLeft: spacing(1),
+    marginRight: spacing(1),
     backgroundColor: colors.surfaceElevated,
-    padding: spacing(1.25),
+    borderRadius: radius.lg,
+    padding: spacing(1),
+  },
+  deckItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing(1.5),
     borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.border,
-    minHeight: 70, // Accessibility: better touch target
   },
-  tileActive: {
-    borderColor: colors.brand,
-    borderWidth: 2,
-  },
-  tileTitle: {
-    color: colors.textPrimary,
-    fontWeight: typography.weight.bold,
-    fontSize: typography.size.sm,
-  },
-  tileSub: {
-    color: colors.textSecondary,
-    fontSize: typography.size.xs,
-    marginTop: 2,
-  },
-  activeBadge: {
-    marginTop: spacing(0.5),
-    alignSelf: 'flex-start',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: radius.full,
+  deckItemActive: {
     backgroundColor: colors.brandMuted,
   },
-  activeBadgeText: {
+  deckItemContent: {
+    flex: 1,
+  },
+  deckItemName: {
+    color: colors.textPrimary,
+    fontSize: typography.size.base,
+    fontWeight: typography.weight.medium,
+    marginBottom: 2,
+  },
+  deckItemNameActive: {
     color: colors.brand,
-    fontSize: typography.size.xs,
     fontWeight: typography.weight.bold,
+  },
+  deckItemMeta: {
+    color: colors.textTertiary,
+    fontSize: typography.size.xs,
+  },
+  deckItemIndicator: {
+    width: 8,
+    height: 8,
+    borderRadius: radius.full,
+    backgroundColor: colors.brand,
+  },
+
+  // Stats
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    paddingVertical: spacing(3),
+    paddingHorizontal: spacing(2),
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginTop: spacing(3),
+  },
+  stat: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  statNumber: {
+    color: colors.brand,
+    fontSize: typography.size['2xl'],
+    fontWeight: typography.weight.extrabold,
+    marginBottom: spacing(0.5),
+  },
+  statLabel: {
+    color: colors.textTertiary,
+    fontSize: typography.size.xs,
+    fontWeight: typography.weight.semibold,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  statDivider: {
+    width: 1,
+    height: 40,
+    backgroundColor: colors.border,
   },
 });

@@ -1,70 +1,94 @@
-// Theme tokens for Colombian Spanish app
-// Dark theme brand refresh 2026
+// apps/colombian-spanish/src/styles/theme.ts
+// Modern Colombian-themed visual system
 
 // ============================================
-// COLOR TOKENS - Semantic naming
+// COLOMBIA-INSPIRED COLOR PALETTE
 // ============================================
-const colorTokens = {
-  // Backgrounds
-  bg: '#0a0f1c',                    // Main app background (deeper dark)
-  surface: '#111827',               // Cards, containers
-  surfaceElevated: '#1a2234',       // Elevated cards, modals
-  surfacePressed: '#1e293b',        // Pressed/hover states
-
-  // Text
-  textPrimary: '#f8fafc',           // Primary text (headings, important)
-  textSecondary: '#94a3b8',         // Secondary text (descriptions, meta)
-  textTertiary: '#64748b',          // Tertiary (hints, disabled)
-  textInverse: '#0f172a',           // Text on accent backgrounds
-
-  // Brand/Accent
-  brand: '#22d3ee',                 // Primary brand color (cyan)
-  brandLight: '#67e8f9',            // Lighter variant
-  brandDark: '#0891b2',             // Darker variant
-  brandMuted: 'rgba(34, 211, 238, 0.15)', // Subtle brand background
-
-  // Semantic colors
-  success: '#10b981',               // Success states
-  successMuted: 'rgba(16, 185, 129, 0.15)',
-  warning: '#f59e0b',               // Warning states
-  warningMuted: 'rgba(245, 158, 11, 0.15)',
-  danger: '#ef4444',                // Error/destructive
-  dangerMuted: 'rgba(239, 68, 68, 0.15)',
-  info: '#3b82f6',                  // Info states
-  infoMuted: 'rgba(59, 130, 246, 0.15)',
-
-  // Borders
-  border: '#1e293b',                // Default borders
-  borderActive: '#334155',          // Active/focused borders
-  borderBrand: 'rgba(34, 211, 238, 0.3)', // Brand-tinted borders
-
-  // Gradients (defined as arrays for React Native)
-  gradient: {
-    brand: ['#0891b2', '#22d3ee', '#67e8f9'] as const,
-    dark: ['#0a0f1c', '#111827'] as const,
-    success: ['#059669', '#10b981'] as const,
+const palette = {
+  // Colombian flag colors
+  yellow: '#FFDA00',
+  yellowLight: '#FFE94D',
+  yellowDark: '#E6C400',
+  
+  blue: '#003893',
+  blueLight: '#1A5BBF',
+  blueDark: '#002966',
+  
+  red: '#CE1126',
+  redLight: '#E63950',
+  redDark: '#A3001C',
+  
+  // Base neutrals
+  slate: {
+    950: '#020617',
+    900: '#0f172a',
+    800: '#1e293b',
+    700: '#334155',
+    600: '#475569',
+    500: '#64748b',
+    400: '#94a3b8',
+    300: '#cbd5e1',
+    200: '#e2e8f0',
+    100: '#f1f5f9',
+    50: '#f8fafc',
   },
 } as const;
 
-// Create colors with legacy aliases included
+// ============================================
+// SEMANTIC TOKENS
+// ============================================
 export const colors = {
-  ...colorTokens,
-  // LEGACY ALIASES (backward compatibility)
-  /** @deprecated Use colors.surface instead */
-  card: colorTokens.surface,
-  /** @deprecated Use colors.textPrimary instead */
-  text: colorTokens.textPrimary,
-  /** @deprecated Use colors.textSecondary instead */
-  sub: colorTokens.textSecondary,
-  /** @deprecated Use colors.brand instead */
-  accent: colorTokens.brand,
+  // Backgrounds
+  bg: palette.slate[950],
+  surface: palette.slate[900],
+  surfaceElevated: palette.slate[800],
+  surfacePressed: palette.slate[700],
+  
+  // Text
+  textPrimary: palette.slate[50],
+  textSecondary: palette.slate[400],
+  textTertiary: palette.slate[500],
+  textInverse: palette.slate[950],
+  
+  // Brand - Colombian yellow
+  brand: palette.yellow,
+  brandLight: palette.yellowLight,
+  brandDark: palette.yellowDark,
+  brandMuted: 'rgba(255, 218, 0, 0.15)',
+  
+  // Accents
+  accentBlue: palette.blue,
+  accentRed: palette.red,
+  
+  // Semantic
+  success: '#10b981',
+  successMuted: 'rgba(16, 185, 129, 0.15)',
+  warning: palette.yellow,
+  warningMuted: 'rgba(255, 218, 0, 0.15)',
+  danger: palette.red,
+  dangerMuted: 'rgba(206, 17, 38, 0.15)',
+  info: palette.blue,
+  infoMuted: 'rgba(0, 56, 147, 0.15)',
+  
+  // Borders
+  border: palette.slate[800],
+  borderActive: palette.slate[600],
+  borderBrand: 'rgba(255, 218, 0, 0.3)',
+  
+  // Gradients
+  gradient: {
+    colombia: ['#FFDA00', '#003893', '#CE1126'] as const,
+    yellow: ['#FFE94D', '#FFDA00', '#E6C400'] as const,
+    blue: ['#1A5BBF', '#003893', '#002966'] as const,
+    dark: ['#0f172a', '#1e293b'] as const,
+    surface: ['#1e293b', '#0f172a'] as const,
+  },
 };
 
 // ============================================
-// TYPOGRAPHY - Scale system
+// TYPOGRAPHY
 // ============================================
 export const typography = {
-  // Font sizes
   size: {
     xs: 12,
     sm: 14,
@@ -74,9 +98,8 @@ export const typography = {
     '2xl': 24,
     '3xl': 28,
     '4xl': 32,
+    '5xl': 40,
   },
-
-  // Font weights
   weight: {
     normal: '400' as const,
     medium: '500' as const,
@@ -84,24 +107,10 @@ export const typography = {
     bold: '700' as const,
     extrabold: '800' as const,
   },
-
-  // Line heights
-  leading: {
-    tight: 1.25,
-    normal: 1.5,
-    relaxed: 1.75,
-  },
-
-  // Letter spacing
-  tracking: {
-    tight: -0.025,
-    normal: 0,
-    wide: 0.025,
-  },
-} as const;
+};
 
 // ============================================
-// SPACING - 8px base grid
+// SPACING (8px grid)
 // ============================================
 export const spacing = (n: number) => n * 8;
 
@@ -119,7 +128,7 @@ export const space = {
   8: 64,
   10: 80,
   12: 96,
-} as const;
+};
 
 // ============================================
 // BORDER RADIUS
@@ -128,15 +137,15 @@ export const radius = {
   none: 0,
   sm: 6,
   base: 8,
-  md: 10,
-  lg: 12,
-  xl: 16,
-  '2xl': 20,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  '2xl': 24,
   full: 9999,
-} as const;
+};
 
 // ============================================
-// ELEVATION / SHADOWS (for React Native)
+// ELEVATION / SHADOWS
 // ============================================
 export const elevation = {
   none: {
@@ -148,40 +157,48 @@ export const elevation = {
   },
   sm: {
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
     elevation: 2,
   },
   base: {
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
     elevation: 4,
   },
   md: {
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 6,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 8,
   },
   lg: {
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.35,
-    shadowRadius: 12,
-    elevation: 10,
-  },
-  xl: {
-    shadowColor: '#000',
     shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.4,
+    shadowOpacity: 0.35,
     shadowRadius: 20,
     elevation: 16,
   },
-} as const;
+  xl: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 20 },
+    shadowOpacity: 0.45,
+    shadowRadius: 32,
+    elevation: 24,
+  },
+  // Glowing shadows for brand elements
+  glowYellow: {
+    shadowColor: '#FFDA00',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+};
 
 // ============================================
 // ANIMATION TIMING
@@ -189,38 +206,12 @@ export const elevation = {
 export const timing = {
   fast: 150,
   normal: 250,
-  slow: 350,
-  slower: 500,
-} as const;
+  slow: 400,
+  slower: 600,
+};
 
 // ============================================
-// Z-INDEX SCALE
-// ============================================
-export const zIndex = {
-  base: 0,
-  dropdown: 100,
-  sticky: 200,
-  modalBackdrop: 300,
-  modal: 400,
-  popover: 500,
-  toast: 600,
-} as const;
-
-// ============================================
-// LEGACY EXPORTS (for backward compatibility)
-// Will be deprecated in future updates
-// ============================================
-/** @deprecated Use colors.surface instead */
-export const card = colors.surface;
-/** @deprecated Use colors.textPrimary instead */
-export const text = colors.textPrimary;
-/** @deprecated Use colors.textSecondary instead */
-export const sub = colors.textSecondary;
-/** @deprecated Use colors.brand instead */
-export const accent = colors.brand;
-
-// ============================================
-// COMPLETE THEME OBJECT
+// COMPLETE THEME
 // ============================================
 export const theme = {
   colors,
@@ -230,7 +221,6 @@ export const theme = {
   radius,
   elevation,
   timing,
-  zIndex,
-} as const;
+};
 
 export default theme;
