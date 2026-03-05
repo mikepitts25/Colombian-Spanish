@@ -82,7 +82,7 @@ export const ActionsDeck: Deck = {
       id: '0353',
       front: 'buscar',
       back: 'to look for',
-      example: 'Voy a buscar mis llaves. | I'm going to look for my keys.',
+      example: "Voy a buscar mis llaves. | I'm going to look for my keys.",
       tags: ['actions'],
       createdAt: 1754759195954,
       due: 1754759195954,
