@@ -1,7 +1,7 @@
 // src/screens/StudyScreen.tsx
 // Redesigned with animations, better flashcards, and Colombian theme
 
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useRef } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,7 +21,7 @@ import Animated, {
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { colors, spacing, radius, typography, elevation } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
-import { getDailyProgress, incrementDailyProgress } from '../storage/storage';
+import { getDailyProgress, incrementDailyProgress, markWordAsSeen } from '../storage/storage';
 import * as Speech from 'expo-speech';
 
 const { width: SCREEN_W } = Dimensions.get('window');
@@ -35,9 +35,15 @@ export default function StudyScreen() {
   }, [ready, activeDeck, seed, getStudyBatch]);
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
-  
+
   const [daily, setDaily] = useState<{ count: number; target: number }>({ count: 0, target: 20 });
   const [showMeta, setShowMeta] = useState(false);
+
+  // Use ref to access current card in callbacks without dependency issues
+  const currentCardRef = useRef(batch[idx] || null);
+  currentCardRef.current = batch[idx] || null;
+  const currentDeckRef = useRef(activeDeck);
+  currentDeckRef.current = activeDeck;
 
   // Animation values
   const flipProgress = useSharedValue(0);
@@ -64,14 +70,20 @@ export default function StudyScreen() {
     });
   }, []);
 
-  const flipCard = useCallback(() => {
+  const flipCard = useCallback(async () => {
     const toValue = flipped ? 0 : 1;
     flipProgress.value = withTiming(toValue, { duration: 400 });
-    setFlipped(!flipped);
-    if (!flipped && card) {
+    const newFlipped = !flipped;
+    setFlipped(newFlipped);
+
+    // Mark word as seen when user flips to see the answer (English side)
+    const card = currentCardRef.current;
+    const deck = currentDeckRef.current;
+    if (newFlipped && card && deck) {
       speak(card.back);
+      await markWordAsSeen(card.id, deck.id, card.front, card.back);
     }
-  }, [flipped, flipProgress, card]);
+  }, [flipped, flipProgress, speak]);
 
   const resetCardPosition = useCallback(() => {
     cardTranslateX.value = withSpring(0);
@@ -93,12 +105,13 @@ export default function StudyScreen() {
   }, [batch.length, flipProgress, resetCardPosition]);
 
   const grade = useCallback(async (q: 0 | 1 | 2 | 3 | 4 | 5) => {
+    const card = currentCardRef.current;
     if (!card) return;
     await recordAnswer(card.id, q);
     const nextDP = await incrementDailyProgress(1);
     setDaily({ count: nextDP.count, target: nextDP.target });
     advanceCard();
-  }, [card, recordAnswer, advanceCard]);
+  }, [recordAnswer, advanceCard]);
 
   // Swipe gesture
   const swipeGesture = Gesture.Pan()
@@ -184,7 +197,7 @@ export default function StudyScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+    <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerTop}>

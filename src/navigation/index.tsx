@@ -4,9 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text, View } from 'react-native';
 import { colors } from '../styles/theme';
 
-// Tab Screens (4 main tabs)
+// Tab Screens (5 main tabs)
 import HomeScreen from '../screens/HomeScreen';
 import ExploreScreen from '../screens/ExploreScreen';
+import QuizScreen from '../screens/QuizScreen';
 import ProgressScreen from '../screens/ProgressScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
@@ -25,6 +26,7 @@ function TabIcon({ name, focused }: { name: string; focused: boolean }) {
   const icons: Record<string, string> = {
     Learn: '📚',
     Explore: '🔍',
+    Quiz: '🎯',
     Progress: '📊',
     Settings: '⚙️',
   };
@@ -32,6 +34,7 @@ function TabIcon({ name, focused }: { name: string; focused: boolean }) {
   const labels: Record<string, string> = {
     Learn: 'Learn tab',
     Explore: 'Explore tab',
+    Quiz: 'Quiz tab',
     Progress: 'Progress tab',
     Settings: 'Settings tab',
   };
@@ -70,7 +73,7 @@ function TabLabel({ name, focused }: { name: string; focused: boolean }) {
   );
 }
 
-// Main Tab Navigator (4 tabs)
+// Main Tab Navigator (5 tabs)
 function MainTabs() {
   return (
     <Tab.Navigator
@@ -97,7 +100,7 @@ function MainTabs() {
       <Tab.Screen
         name="Learn"
         component={HomeScreen}
-        options={{ 
+        options={{
           headerShown: false,
           tabBarAccessibilityLabel: 'Learn tab, home screen',
         }}
@@ -105,15 +108,23 @@ function MainTabs() {
       <Tab.Screen
         name="Explore"
         component={ExploreScreen}
-        options={{ 
+        options={{
           headerShown: false,
           tabBarAccessibilityLabel: 'Explore tab, browse decks and features',
         }}
       />
       <Tab.Screen
+        name="Quiz"
+        component={QuizScreen}
+        options={{
+          headerShown: false,
+          tabBarAccessibilityLabel: 'Quiz tab, test your vocabulary',
+        }}
+      />
+      <Tab.Screen
         name="Progress"
         component={ProgressScreen}
-        options={{ 
+        options={{
           headerShown: false,
           tabBarAccessibilityLabel: 'Progress tab, view your learning stats',
         }}
@@ -121,7 +132,7 @@ function MainTabs() {
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ 
+        options={{
           headerShown: false,
           tabBarAccessibilityLabel: 'Settings tab, app preferences',
         }}

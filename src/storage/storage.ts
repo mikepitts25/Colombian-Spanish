@@ -3,7 +3,17 @@ import { Deck, FlashCard } from '../types';
 
 const KEY = 'SRS_DECKS_V3';
 const DAILY_KEY = 'SRS_DAILY_PROGRESS_V1';
+const SEEN_WORDS_KEY = 'SEEN_WORDS_V1';
 type DailyProgress = { date: string; count: number; target: number };
+
+export interface SeenWord {
+  cardId: string;
+  deckId: string;
+  spanish: string;
+  english: string;
+  firstSeenAt: number;
+  reviewCount: number;
+}
 
 export async function loadDecks(): Promise<Deck[]> {
   const raw = await AsyncStorage.getItem(KEY);
@@ -168,4 +178,52 @@ export async function recordStudySession(): Promise<number> {
   }));
 
   return newStreak;
+}
+
+// ==================== SEEN WORDS (for Quiz) ====================
+
+export async function getSeenWords(): Promise<SeenWord[]> {
+  const raw = await AsyncStorage.getItem(SEEN_WORDS_KEY);
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
+export async function saveSeenWords(words: SeenWord[]) {
+  await AsyncStorage.setItem(SEEN_WORDS_KEY, JSON.stringify(words));
+}
+
+export async function markWordAsSeen(
+  cardId: string,
+  deckId: string,
+  spanish: string,
+  english: string
+): Promise<void> {
+  const seen = await getSeenWords();
+  const existing = seen.find((w) => w.cardId === cardId);
+  
+  if (existing) {
+    // Update review count
+    existing.reviewCount += 1;
+    await saveSeenWords(seen);
+  } else {
+    // Add new seen word
+    const newWord: SeenWord = {
+      cardId,
+      deckId,
+      spanish,
+      english,
+      firstSeenAt: Date.now(),
+      reviewCount: 1,
+    };
+    await saveSeenWords([...seen, newWord]);
+  }
+}
+
+export async function getSeenWordById(cardId: string): Promise<SeenWord | undefined> {
+  const seen = await getSeenWords();
+  return seen.find((w) => w.cardId === cardId);
 }
