@@ -1,0 +1,60 @@
+Name,Phase,Priority,Effort,Impact,Status,Owner,Region,Notes
+SRS Algorithm Implementation,MVP,P0,M,High,Done,Backend,All,SM-2 based algorithm
+1000+ Flashcards,MVP,P0,L,High,Done,Content,All,35 themed decks
+Cross-Platform App (iOS + Android),MVP,P0,L,High,Done,Mobile,All,React Native/Expo
+Text-to-Speech Integration,MVP,P0,S,High,Done,Mobile,All,Colombian accent
+Daily Goals System,MVP,P0,S,High,Done,Frontend,All,Cards per day target
+Progress Tracking,MVP,P0,S,High,Done,Frontend,All,Cards learned and streaks
+Offline-First Architecture,MVP,P0,M,High,Done,Mobile,All,No internet required
+Custom Card Creation,MVP,P0,M,High,Done,Frontend,All,User-generated content
+Basic UI/UX Design,MVP,P0,M,High,Done,Design,All,Clean accessible interface
+App Store Submission,MVP,P0,S,High,Not Started,DevOps,All,iOS App Store and Google Play
+Native Speaker Audio Recordings,Content Quality,P0,XL,High,Not Started,Content,All,Replace TTS with real audio
+Regional Dialect Selector,Content Quality,P0,M,High,Not Started,Frontend,All,Paisa Costeno Caleno etc
+Cultural Context Notes,Content Quality,P0,L,High,Not Started,Content,All,Usage notes on each card
+Formality Indicators,Content Quality,P0,S,High,Not Started,Content,All,Formal/Casual/Vulgar tags
+Pronunciation Guides,Content Quality,P0,M,High,Not Started,Content,All,IPA or phonetic spelling
+Expand to 1500+ Cards,Content Quality,P1,L,High,Not Started,Content,All,500 new cards
+Dating & Relationships Deck,Content Quality,P1,M,High,Not Started,Content,All,High user demand
+Paisa Slang Deep Dive,Content Quality,P1,M,High,Not Started,Content,Paisa,Medellin-specific
+Emergency & Safety Phrases,Content Quality,P1,S,High,Not Started,Content,All,Critical for travelers
+Example Sentences,Content Quality,P1,M,Medium,Not Started,Content,All,Context for each word
+Streak Tracking,Engagement,P1,S,High,Not Started,Frontend,All,Daily study streaks
+Achievement System,Engagement,P1,M,High,Not Started,Frontend,All,Badges for milestones
+Quiz Mode,Engagement,P1,M,High,Not Started,Frontend,All,Multiple choice typing
+Progress Statistics Dashboard,Engagement,P1,M,Medium,Not Started,Frontend,All,Visual learning stats
+Streak Freeze/Restore,Engagement,P1,S,Medium,Not Started,Frontend,All,Allow missed days
+Dark Mode,Engagement,P1,S,Medium,Not Started,Frontend,All,User preference
+Push Notifications,Engagement,P1,S,High,Not Started,Backend,All,Study reminders
+Leaderboards (Optional),Engagement,P2,M,Low,Not Started,Backend,All,Weekly competitions
+Study Reminders (Smart),Engagement,P2,M,Medium,Not Started,Backend,All,Optimal time suggestions
+Difficult Words Mode,Engagement,P2,S,Medium,Not Started,Frontend,All,Focus on hard cards
+Study Session Timer,Engagement,P2,XS,Low,Not Started,Frontend,All,Track study time
+Listening Comprehension Mode,Advanced Learning,P1,L,High,Not Started,Content,All,Audio-only exercises
+Grammar Explanations,Advanced Learning,P1,L,Medium,Not Started,Content,All,Contextual grammar tips
+Sentence Building Exercises,Advanced Learning,P1,M,High,Not Started,Frontend,All,Construct sentences
+Spaced Repetition Optimization,Advanced Learning,P1,M,Medium,Not Started,Backend,All,Improve SM-2 algorithm
+Cloud Sync,Advanced Learning,P1,M,Medium,Not Started,Backend,All,Cross-device progress
+Speech Recognition (Pronunciation),Advanced Learning,P2,XL,High,Not Started,AI/ML,All,Check pronunciation
+AI Conversation Practice,Advanced Learning,P2,XL,High,Not Started,AI/ML,All,Chatbot conversations
+Flashcard Import/Export,Advanced Learning,P2,S,Medium,Not Started,Frontend,All,Anki compatibility
+Deck Sharing,Advanced Learning,P2,M,Low,Not Started,Backend,All,Share custom decks
+Search Function,Advanced Learning,P2,S,Medium,Not Started,Frontend,All,Find specific cards
+Video Content with Natives,Content Expansion,P2,XL,High,Not Started,Content,All,Real conversation clips
+Costeno Expressions Deck,Content Expansion,P2,M,Medium,Not Started,Content,Costeno,Caribbean coast slang
+Caleno Slang Deck,Content Expansion,P2,M,Medium,Not Started,Content,Caleno,Cali-specific
+Business Spanish Deck,Content Expansion,P2,M,Medium,Not Started,Content,All,Professional contexts
+Festival & Events Vocabulary,Content Expansion,P2,S,Medium,Not Started,Content,All,Cultural events
+Food & Dining Deep Dive,Content Expansion,P2,M,Medium,Not Started,Content,All,Ordering ingredients
+Total Cards: 2000+,Content Expansion,P2,XL,High,Not Started,Content,All,Double the content
+Music Integration,Content Expansion,P3,L,Low,Not Started,Content,All,Lyrics vocabulary
+Podcast Episodes,Content Expansion,P3,XL,Medium,Not Started,Content,All,Colombian Spanish podcast
+Story Mode,Content Expansion,P3,L,Medium,Not Started,Content,All,Narrative learning
+Slang Evolution Notes,Content Expansion,P3,S,Low,Not Started,Content,All,Historical context
+Web App Version,Scale,P3,L,Medium,Not Started,Frontend,All,Browser-based learning
+Tutor Marketplace,Scale,P3,XL,Medium,Not Started,Partnership,All,Connect with tutors
+Community Features,Scale,P3,XL,Low,Not Started,Backend,All,Forums discussions
+Certification Program,Scale,P3,L,Medium,Not Started,Business,All,Completion certificates
+Localization (Other Languages),Scale,P3,L,Low,Not Started,Frontend,All,App in Spanish etc
+AR/VR Experiences,Scale,P3,XL,Low,Not Started,Innovation,All,Immersive learning
+Integration with Colombian Media,Scale,P3,M,Medium,Not Started,Partnership,All,News TV radio
