@@ -35,6 +35,11 @@ export const ShoppingDeck: Deck = {
       front: `cambiar`,
       back: `to exchange`,
       example: `Quiero cambiar este pantalón por una talla más grande. | I want to exchange these pants for a larger size.`,
+      conjugation: {
+        present: { yo: 'cambio', tu: 'cambias', el: 'cambia', nosotros: 'cambiamos', ellos: 'cambian' },
+        past: { yo: 'cambié', tu: 'cambiaste', el: 'cambió', nosotros: 'cambiamos', ellos: 'cambiaron' },
+        future: { yo: 'cambiaré', tu: 'cambiarás', el: 'cambiará', nosotros: 'cambiaremos', ellos: 'cambiarán' },
+      },
       tags: ['shopping'],
       createdAt: 1754759195954,
       due: 1754759195954,
@@ -83,6 +88,11 @@ export const ShoppingDeck: Deck = {
       front: `probarse`,
       back: `to try on`,
       example: `Voy a probarme esta chaqueta. | I'm going to try on this jacket.`,
+      conjugation: {
+        present: { yo: 'me pruebo', tu: 'te pruebas', el: 'se prueba', nosotros: 'nos probamos', ellos: 'se prueban' },
+        past: { yo: 'me probé', tu: 'te probaste', el: 'se probó', nosotros: 'nos probamos', ellos: 'se probaron' },
+        future: { yo: 'me probaré', tu: 'te probarás', el: 'se probará', nosotros: 'nos probaremos', ellos: 'se probarán' },
+      },
       tags: ['shopping'],
       createdAt: 1754759195954,
       due: 1754759195954,
