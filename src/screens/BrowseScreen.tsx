@@ -14,6 +14,7 @@ import { colors, spacing, radius, typography } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
+import { isVerb, lookupConjugation } from '../utils/verbUtils';
 
 type Row = { deckId: string; deckName: string; card: any };
 
@@ -179,6 +180,9 @@ export default function BrowseScreen() {
                     {item.card.tags?.map((tag: string) => (
                       <Text key={tag} style={styles.tag}>#{tag}</Text>
                     ))}
+                    {isVerb(item.card) && lookupConjugation(item.card.front)?.irregular && (
+                      <Text style={styles.irregularTag}>⚠ irregular</Text>
+                    )}
                   </View>
                 </View>
                 <View style={styles.cardActions}>
@@ -443,6 +447,11 @@ const styles = StyleSheet.create({
   tag: {
     color: colors.textTertiary,
     fontSize: typography.size.xs,
+  },
+  irregularTag: {
+    color: colors.warning,
+    fontSize: typography.size.xs,
+    fontWeight: typography.weight.semibold,
   },
   cardActions: {
     justifyContent: 'center',

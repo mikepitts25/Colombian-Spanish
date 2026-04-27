@@ -23,6 +23,8 @@ import { colors, spacing, radius, typography, elevation } from '../styles/theme'
 import { useDeck } from '../hooks/useDeck';
 import { getDailyProgress, incrementDailyProgress } from '../storage/storage';
 import * as Speech from 'expo-speech';
+import ConjugationPanel from '../components/ConjugationPanel';
+import { isVerb } from '../utils/verbUtils';
 
 const { width: SCREEN_W } = Dimensions.get('window');
 const CARD_W = Math.min(SCREEN_W * 0.9, 400);
@@ -250,6 +252,9 @@ export default function StudyScreen() {
         <Pressable style={styles.flipBtn} onPress={flipCard}>
           <Text style={styles.flipBtnText}>{flipped ? 'Show Spanish' : 'Show English'}</Text>
         </Pressable>
+
+        {/* Conjugation panel — shown for verb cards */}
+        {isVerb(card) && <ConjugationPanel infinitive={card.front} />}
       </View>
 
       {/* Grading buttons */}
