@@ -3,17 +3,7 @@ import { Deck, FlashCard } from '../types';
 
 const KEY = 'SRS_DECKS_V3';
 const DAILY_KEY = 'SRS_DAILY_PROGRESS_V1';
-const SEEN_WORDS_KEY = 'SEEN_WORDS_V1';
 type DailyProgress = { date: string; count: number; target: number };
-
-export interface SeenWord {
-  cardId: string;
-  deckId: string;
-  spanish: string;
-  english: string;
-  firstSeenAt: number;
-  reviewCount: number;
-}
 
 export async function loadDecks(): Promise<Deck[]> {
   const raw = await AsyncStorage.getItem(KEY);
@@ -48,31 +38,6 @@ export async function addCard(deckId: string, card: FlashCard) {
 export async function removeDeckById(deckId: string) {
   const decks = await loadDecks();
   const next = decks.filter((d) => d.id !== deckId);
-  await saveDecks(next);
-}
-
-export async function renameDeckById(deckId: string, name: string) {
-  const decks = await loadDecks();
-  const next = decks.map((d) => (d.id === deckId ? { ...d, name } : d));
-  await saveDecks(next);
-}
-
-export async function resetDeckProgressById(deckId: string) {
-  const decks = await loadDecks();
-  const now = Date.now();
-  const next = decks.map((d) => {
-    if (d.id !== deckId) return d;
-    return {
-      ...d,
-      cards: (d.cards || []).map((c) => ({
-        ...c,
-        due: now,
-        reps: 0,
-        interval: 0,
-        ease: 2.5,
-      })),
-    };
-  });
   await saveDecks(next);
 }
 
@@ -120,110 +85,4 @@ export async function setDailyTarget(target: number): Promise<DailyProgress> {
   const next: DailyProgress = { ...current, target: Math.max(1, Math.floor(target)) };
   await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(next));
   return next;
-}
-
-const STREAK_KEY = 'SRS_STUDY_STREAK_V1';
-
-export async function getStudyStreak(): Promise<number> {
-  const raw = await AsyncStorage.getItem(STREAK_KEY);
-  if (!raw) return 0;
-  try {
-    const { streak, lastStudyDate } = JSON.parse(raw);
-    const today = todayISO();
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    yesterday.setHours(0, 0, 0, 0);
-    const yesterdayISO = yesterday.toISOString();
-
-    // If last study was today, return current streak
-    if (lastStudyDate === today) return streak || 0;
-    // If last study was yesterday, streak is still valid
-    if (lastStudyDate === yesterdayISO) return streak || 0;
-    // Otherwise, streak is broken
-    return 0;
-  } catch {
-    return 0;
-  }
-}
-
-export async function recordStudySession(): Promise<number> {
-  const currentStreak = await getStudyStreak();
-  const today = todayISO();
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  yesterday.setHours(0, 0, 0, 0);
-  const yesterdayISO = yesterday.toISOString();
-
-  const raw = await AsyncStorage.getItem(STREAK_KEY);
-  let lastStudyDate = '';
-  if (raw) {
-    try {
-      const parsed = JSON.parse(raw);
-      lastStudyDate = parsed.lastStudyDate;
-    } catch {}
-  }
-
-  // Already studied today, don't increment
-  if (lastStudyDate === today) return currentStreak;
-
-  // Check if we should increment or reset
-  let newStreak = 1;
-  if (lastStudyDate === yesterdayISO) {
-    newStreak = currentStreak + 1;
-  }
-
-  await AsyncStorage.setItem(STREAK_KEY, JSON.stringify({
-    streak: newStreak,
-    lastStudyDate: today,
-  }));
-
-  return newStreak;
-}
-
-// ==================== SEEN WORDS (for Quiz) ====================
-
-export async function getSeenWords(): Promise<SeenWord[]> {
-  const raw = await AsyncStorage.getItem(SEEN_WORDS_KEY);
-  if (!raw) return [];
-  try {
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
-export async function saveSeenWords(words: SeenWord[]) {
-  await AsyncStorage.setItem(SEEN_WORDS_KEY, JSON.stringify(words));
-}
-
-export async function markWordAsSeen(
-  cardId: string,
-  deckId: string,
-  spanish: string,
-  english: string
-): Promise<void> {
-  const seen = await getSeenWords();
-  const existing = seen.find((w) => w.cardId === cardId);
-  
-  if (existing) {
-    // Update review count
-    existing.reviewCount += 1;
-    await saveSeenWords(seen);
-  } else {
-    // Add new seen word
-    const newWord: SeenWord = {
-      cardId,
-      deckId,
-      spanish,
-      english,
-      firstSeenAt: Date.now(),
-      reviewCount: 1,
-    };
-    await saveSeenWords([...seen, newWord]);
-  }
-}
-
-export async function getSeenWordById(cardId: string): Promise<SeenWord | undefined> {
-  const seen = await getSeenWords();
-  return seen.find((w) => w.cardId === cardId);
 }
