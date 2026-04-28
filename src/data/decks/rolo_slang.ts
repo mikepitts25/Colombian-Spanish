@@ -1,8 +1,8 @@
 // Rolo slang - Bogotá specific
 import { Deck } from '../../types';
 
-export const RoloDeck: Deck = {
-  id: 'deck-rolo',
+export const RoloSlangDeck: Deck = {
+  id: 'deck-rolo-slang',
   name: 'Rolo Slang (Bogotá)',
   description: 'Jerga específica de Bogotá y la región cachaca.',
   cards: [

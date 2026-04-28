@@ -7,7 +7,7 @@ export const ActionsDeck: Deck = {
   description: 'Vocabulario de actions.',
   cards: [
     {
-      id: '0347',
+      id: '2000',
       front: `saltar`,
       back: `to jump`,
       example: `Los niños saltan en el parque. | The children jump in the park.`,
@@ -24,7 +24,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0348',
+      id: '2001',
       front: `bailar`,
       back: `to dance`,
       example: `Me encanta bailar salsa. | I love to dance salsa.`,
@@ -41,7 +41,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0349',
+      id: '2002',
       front: `cantar`,
       back: `to sing`,
       example: `Mi hermana canta muy bien. | My sister sings very well.`,
@@ -58,7 +58,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0350',
+      id: '2003',
       front: `dibujar`,
       back: `to draw`,
       example: `Me gusta dibujar paisajes. | I like to draw landscapes.`,
@@ -75,7 +75,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0351',
+      id: '2004',
       front: `nadar`,
       back: `to swim`,
       example: `Nadamos en la piscina los domingos. | We swim in the pool on Sundays.`,
@@ -92,7 +92,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0352',
+      id: '2005',
       front: `ayudar`,
       back: `to help`,
       example: `¿Me puedes ayudar con la tarea? | Can you help me with the homework?`,
@@ -109,7 +109,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0353',
+      id: '2006',
       front: `buscar`,
       back: `to look for`,
       example: `Voy a buscar mis llaves. | I'm going to look for my keys.`,
@@ -126,7 +126,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0354',
+      id: '2007',
       front: `olvidar`,
       back: `to forget`,
       example: `Olvidé tu cumpleaños, lo siento. | I forgot your birthday, sorry.`,
@@ -143,7 +143,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0355',
+      id: '2008',
       front: `recordar`,
       back: `to remember`,
       example: `No puedo recordar su nombre. | I can't remember his name.`,
@@ -160,7 +160,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0356',
+      id: '2009',
       front: `visitar`,
       back: `to visit`,
       example: `Vamos a visitar a los abuelos el domingo. | We're going to visit the grandparents on Sunday.`,
@@ -177,7 +177,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0467',
+      id: '2120',
       front: `mirar`,
       back: `to look at/watch`,
       example: `Vamos a mirar una película. | We're going to watch a movie.`,
@@ -194,7 +194,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0468',
+      id: '2121',
       front: `abrir`,
       back: `to open`,
       example: `¿Puedes abrir la puerta? | Can you open the door?`,
@@ -211,7 +211,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0469',
+      id: '2122',
       front: `cerrar`,
       back: `to close`,
       example: `Voy a cerrar la ventana. | I'm going to close the window.`,
@@ -228,7 +228,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0470',
+      id: '2123',
       front: `pintar`,
       back: `to paint`,
       example: `Me gusta pintar cuadros en mi tiempo libre. | I like to paint pictures in my free time.`,
@@ -245,7 +245,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0471',
+      id: '2124',
       front: `aprender`,
       back: `to learn`,
       example: `Quiero aprender a manejar. | I want to learn to drive.`,
@@ -263,7 +263,7 @@ export const ActionsDeck: Deck = {
     },
     // NEW VERBS START HERE
     {
-      id: '0472',
+      id: '2125',
       front: 'comer',
       back: 'to eat',
       example: 'Como arepa todos los días. | I eat arepa every day.',
@@ -280,7 +280,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0473',
+      id: '2126',
       front: 'beber',
       back: 'to drink',
       example: 'Bebo café por la mañana. | I drink coffee in the morning.',
@@ -297,7 +297,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0474',
+      id: '2127',
       front: 'hablar',
       back: 'to speak/talk',
       example: 'Hablo español con mis amigos. | I speak Spanish with my friends.',
@@ -314,7 +314,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0475',
+      id: '2128',
       front: 'escribir',
       back: 'to write',
       example: 'Escribo en mi diario cada noche. | I write in my diary every night.',
@@ -331,7 +331,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0476',
+      id: '2129',
       front: 'leer',
       back: 'to read',
       example: 'Leo libros en español para practicar. | I read books in Spanish to practice.',
@@ -348,7 +348,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0477',
+      id: '2130',
       front: 'correr',
       back: 'to run',
       example: 'Corro cinco kilómetros cada mañana. | I run five kilometers every morning.',
@@ -365,7 +365,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0478',
+      id: '2131',
       front: 'caminar',
       back: 'to walk',
       example: 'Caminamos por el parque después de cenar. | We walk through the park after dinner.',
@@ -382,7 +382,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0479',
+      id: '2132',
       front: 'trabajar',
       back: 'to work',
       example: 'Trabajo ocho horas al día. | I work eight hours a day.',
@@ -399,7 +399,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0480',
+      id: '2133',
       front: 'estudiar',
       back: 'to study',
       example: 'Estudio español todos los días. | I study Spanish every day.',
@@ -416,7 +416,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0481',
+      id: '2134',
       front: 'dormir',
       back: 'to sleep',
       example: 'Duermo ocho horas cada noche. | I sleep eight hours every night.',
@@ -433,7 +433,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0482',
+      id: '2135',
       front: 'vivir',
       back: 'to live',
       example: 'Vivo en Bogotá desde hace cinco años. | I have lived in Bogotá for five years.',
@@ -450,7 +450,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0483',
+      id: '2136',
       front: 'jugar',
       back: 'to play',
       example: 'Juego fútbol todos los sábados. | I play soccer every Saturday.',
@@ -467,7 +467,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0484',
+      id: '2137',
       front: 'venir',
       back: 'to come',
       example: 'Vengo de Medellín. | I come from Medellín.',
@@ -484,7 +484,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0485',
+      id: '2138',
       front: 'ir',
       back: 'to go',
       example: 'Voy al mercado. ¿Vienes? | I am going to the market. Coming?',
@@ -501,7 +501,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0486',
+      id: '2139',
       front: 'tener',
       back: 'to have',
       example: 'Tengo dos hermanos. | I have two siblings.',
@@ -518,7 +518,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0487',
+      id: '2140',
       front: 'hacer',
       back: 'to do / to make',
       example: '¿Qué haces este fin de semana? | What are you doing this weekend?',
@@ -535,7 +535,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0488',
+      id: '2141',
       front: 'decir',
       back: 'to say / to tell',
       example: '¿Qué dijiste? No te escuché. | What did you say? I did not hear you.',
@@ -552,7 +552,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0489',
+      id: '2142',
       front: 'poder',
       back: 'to be able to / can',
       example: '¿Puedes ayudarme? | Can you help me?',
@@ -569,7 +569,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0490',
+      id: '2143',
       front: 'querer',
       back: 'to want',
       example: 'Quiero aprender español colombiano. | I want to learn Colombian Spanish.',
@@ -586,7 +586,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0491',
+      id: '2144',
       front: 'saber',
       back: 'to know (facts)',
       example: '¿Sabes dónde queda el museo? | Do you know where the museum is?',
@@ -603,7 +603,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0492',
+      id: '2145',
       front: 'ver',
       back: 'to see',
       example: 'Veo que estás aprendiendo rápido. | I see you are learning fast.',
@@ -620,7 +620,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0493',
+      id: '2146',
       front: 'dar',
       back: 'to give',
       example: 'Te doy las gracias por tu ayuda. | I give you thanks for your help.',
@@ -637,7 +637,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0494',
+      id: '2147',
       front: 'poner',
       back: 'to put / to place',
       example: 'Pon la mesa, por favor. | Set the table, please.',
@@ -654,7 +654,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0495',
+      id: '2148',
       front: 'pensar',
       back: 'to think',
       example: 'Pienso que el español colombiano es muy claro. | I think Colombian Spanish is very clear.',
@@ -671,7 +671,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0496',
+      id: '2149',
       front: 'sentir',
       back: 'to feel',
       example: 'Me siento muy feliz hoy. | I feel very happy today.',
@@ -688,7 +688,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0497',
+      id: '2150',
       front: 'entender',
       back: 'to understand',
       example: 'No entiendo la pregunta. | I do not understand the question.',
@@ -705,7 +705,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0498',
+      id: '2151',
       front: 'traer',
       back: 'to bring',
       example: '¿Traes el paraguas? Parece que va a llover. | Did you bring the umbrella? It looks like rain.',
@@ -722,7 +722,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0499',
+      id: '2152',
       front: 'salir',
       back: 'to leave / to go out',
       example: 'Salimos esta noche. ¿Te animas? | We are going out tonight. You in?',
@@ -739,7 +739,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0500',
+      id: '2153',
       front: 'volver',
       back: 'to return / to come back',
       example: 'Vuelvo a casa tarde hoy. | I am returning home late today.',
@@ -756,7 +756,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0501',
+      id: '2154',
       front: 'conocer',
       back: 'to know (people/places)',
       example: '¿Conoces Bogotá? Es muy bonita. | Do you know Bogotá? It is very nice.',
@@ -773,7 +773,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0502',
+      id: '2155',
       front: 'empezar',
       back: 'to start / to begin',
       example: 'Empiezo mi nuevo trabajo mañana. | I start my new job tomorrow.',
@@ -790,7 +790,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0503',
+      id: '2156',
       front: 'sentarse',
       back: 'to sit down',
       example: 'Siéntate, por favor. | Sit down, please.',
@@ -807,7 +807,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0504',
+      id: '2157',
       front: 'levantarse',
       back: 'to get up / to stand up',
       example: 'Me levanto temprano todos los días. | I get up early every day.',
@@ -824,7 +824,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0505',
+      id: '2158',
       front: 'llamar',
       back: 'to call',
       example: 'Te llamo más tarde. | I will call you later.',
@@ -841,7 +841,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0506',
+      id: '2159',
       front: 'esperar',
       back: 'to wait / to hope',
       example: 'Te espero en el parque. | I will wait for you in the park.',
@@ -858,7 +858,7 @@ export const ActionsDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: '0507',
+      id: '2160',
       front: 'tomar',
       back: 'to take / to drink',
       example: 'Tomo café todas las mañanas. | I drink coffee every morning.',

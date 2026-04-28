@@ -31,7 +31,7 @@ import { PiroposDeck } from './piropos';
 import { PlacesDeck } from './places';
 import { ProfessionsDeck } from './professions';
 import { RestaurantPhrasesDeck } from './restaurant_phrases';
-import { RoloDeck } from './rolo_slang';
+import { RoloSlangDeck } from './rolo_slang';
 import { RoutinesDeck } from './routines';
 import { SchoolDeck } from './school';
 import { ShoppingDeck } from './shopping';
@@ -77,7 +77,7 @@ export {
   PlacesDeck,
   ProfessionsDeck,
   RestaurantPhrasesDeck,
-  RoloDeck,
+  RoloSlangDeck,
   RoutinesDeck,
   SchoolDeck,
   ShoppingDeck,
@@ -124,7 +124,7 @@ export const ALL_DECKS: Deck[] = [
   PlacesDeck,
   ProfessionsDeck,
   RestaurantPhrasesDeck,
-  RoloDeck,
+  RoloSlangDeck,
   RoutinesDeck,
   SchoolDeck,
   ShoppingDeck,
