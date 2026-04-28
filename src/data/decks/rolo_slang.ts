@@ -1,8 +1,8 @@
 // Rolo slang - Bogotá specific
 import { Deck } from '../../types';
 
-export const RoloDeck: Deck = {
-  id: 'deck-rolo',
+export const RoloSlangDeck: Deck = {
+  id: 'deck-rolo-slang',
   name: 'Rolo Slang (Bogotá)',
   description: 'Jerga específica de Bogotá y la región cachaca.',
   cards: [
@@ -166,7 +166,7 @@ export const RoloDeck: Deck = {
       id: 'rolo-014',
       front: `cachaco/cachaca`,
       back: `person from Bogotá (or things from Bogotá)`,
-      example: `Los cachacos hablan muy formal. | People from Bogotá speak very formally.',
+      example: `Los cachacos hablan muy formal. | People from Bogotá speak very formally.`,
       tags: ['rolo', 'Bogotá', 'slang'],
       createdAt: 1754759195954,
       due: 1754759195954,
@@ -175,7 +175,7 @@ export const RoloDeck: Deck = {
       ease: 2.5,
     },
     {
-      id: 'rolo-015`,
+      id: 'rolo-015',
       front: `trabajar de sol a sol`,
       back: `to work from sunup to sundown`,
       example: `Mi abuelo trabajó de sol a sol. | My grandfather worked from sunup to sundown.`,

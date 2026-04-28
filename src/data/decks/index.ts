@@ -10,7 +10,6 @@ import { ColombianFoodDeck } from './colombian_food';
 import { ColorsDeck } from './colors';
 import { CommunicationDeck } from './communication';
 import { ConversationDeck } from './conversation';
-import { CostenoDeck } from './costeno_slang';
 import { CultureDeck } from './culture';
 import { Daily_lifeDeck } from './daily_life';
 import { DatingDeck } from './dating';
@@ -26,10 +25,9 @@ import { HouseDeck } from './house';
 import { NatureDeck } from './nature';
 import { NumbersDeck } from './numbers';
 import { PaisaDeck } from './paisa';
-import { PiroposDeck } from './piropos';
 import { PlacesDeck } from './places';
 import { ProfessionsDeck } from './professions';
-import { RoloDeck } from './rolo_slang';
+import { RoloDeck } from './rolo';
 import { RoutinesDeck } from './routines';
 import { SchoolDeck } from './school';
 import { ShoppingDeck } from './shopping';
@@ -38,8 +36,6 @@ import { SportsDeck } from './sports';
 import { TechnologyDeck } from './technology';
 import { TransportDeck } from './transport';
 import { TravelDeck } from './travel';
-import { UsefulPhrasesDeck } from './useful_phrases';
-import { VallunoDeck } from './valluno_slang';
 import { WeatherDeck } from './weather';
 
 export {
@@ -52,7 +48,6 @@ export {
   ColorsDeck,
   CommunicationDeck,
   ConversationDeck,
-  CostenoDeck,
   CultureDeck,
   Daily_lifeDeck,
   DatingDeck,
@@ -68,7 +63,6 @@ export {
   NatureDeck,
   NumbersDeck,
   PaisaDeck,
-  PiroposDeck,
   PlacesDeck,
   ProfessionsDeck,
   RoloDeck,
@@ -80,8 +74,6 @@ export {
   TechnologyDeck,
   TransportDeck,
   TravelDeck,
-  UsefulPhrasesDeck,
-  VallunoDeck,
   WeatherDeck,
 };
 
@@ -95,7 +87,6 @@ export const ALL_DECKS: Deck[] = [
   ColorsDeck,
   CommunicationDeck,
   ConversationDeck,
-  CostenoDeck,
   CultureDeck,
   Daily_lifeDeck,
   DatingDeck,
@@ -111,7 +102,6 @@ export const ALL_DECKS: Deck[] = [
   NatureDeck,
   NumbersDeck,
   PaisaDeck,
-  PiroposDeck,
   PlacesDeck,
   ProfessionsDeck,
   RoloDeck,
@@ -123,7 +113,5 @@ export const ALL_DECKS: Deck[] = [
   TechnologyDeck,
   TransportDeck,
   TravelDeck,
-  UsefulPhrasesDeck,
-  VallunoDeck,
   WeatherDeck,
 ];

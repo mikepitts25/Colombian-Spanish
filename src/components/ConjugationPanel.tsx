@@ -1,270 +1,363 @@
 import React, { useState } from 'react';
 import {
-  Modal,
   View,
   Text,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
   Pressable,
   ScrollView,
-  StyleSheet,
 } from 'react-native';
+import { ConjugationTable, lookupConjugation } from '../data/conjugations';
 import { colors, spacing, radius, typography } from '../styles/theme';
-import { lookupConjugation } from '../utils/verbUtils';
 
-interface Props {
+interface ConjugationPanelProps {
   infinitive: string;
+  compact?: boolean;
 }
 
-const PERSONS = ['yo', 'vos', 'él/ella', 'nosotros', 'ustedes', 'ellos'] as const;
-type PersonKey = 'yo' | 'vos' | 'el_ella' | 'nosotros' | 'ustedes' | 'ellos';
-const PERSON_KEYS: PersonKey[] = ['yo', 'vos', 'el_ella', 'nosotros', 'ustedes', 'ellos'];
+const pronouns = [
+  { key: 'yo', label: 'yo' },
+  { key: 'vos', label: 'vos', highlight: true }, // Colombian informal
+  { key: 'el', label: 'él/ella' },
+  { key: 'nosotros', label: 'nosotros' },
+  { key: 'ustedes', label: 'ustedes', highlight: true }, // Colombian plural (no vosotros)
+];
 
-export default function ConjugationPanel({ infinitive }: Props) {
-  const [visible, setVisible] = useState(false);
-  const entry = lookupConjugation(infinitive);
+const tenseLabels: Record<string, string> = {
+  presente: 'Presente',
+  preterito: 'Pretérito',
+  futuro: 'Futuro',
+};
 
-  if (!entry) return null;
+export default function ConjugationPanel({ infinitive, compact = false }: ConjugationPanelProps) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [activeTense, setActiveTense] = useState<'presente' | 'preterito' | 'futuro'>('presente');
+
+  const conjugation = lookupConjugation(infinitive);
+
+  if (!conjugation) {
+    return null;
+  }
+
+  const isIrregular = conjugation.irregular;
+
+  if (compact) {
+    return (
+      <TouchableOpacity
+        style={[styles.compactButton, isIrregular && styles.irregularButton]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={[styles.compactButtonText, isIrregular && styles.irregularButtonText]}>
+          {isIrregular ? '⚠ ' : ''}Conjugar ▾
+        </Text>
+      </TouchableOpacity>
+    );
+  }
 
   return (
     <>
-      <Pressable
-        style={[styles.trigger, entry.irregular && styles.triggerIrregular]}
-        onPress={() => setVisible(true)}
-        accessibilityLabel="Show conjugation table"
+      {/* Compact trigger button */}
+      <TouchableOpacity
+        style={[styles.triggerButton, isIrregular && styles.irregularTriggerButton]}
+        onPress={() => setModalVisible(true)}
       >
-        <Text style={[styles.triggerText, entry.irregular && styles.triggerTextIrregular]}>
-          Conjugar ▾
+        <Text style={[styles.triggerButtonText, isIrregular && styles.irregularTriggerText]}>
+          {isIrregular ? '⚠ ' : ''}Conjugar ▾
         </Text>
-        {entry.irregular && (
-          <Text style={styles.irregularBadge}>⚠ irregular</Text>
+        {isIrregular && (
+          <Text style={styles.irregularBadge}>irregular</Text>
         )}
-      </Pressable>
+      </TouchableOpacity>
 
+      {/* Modal */}
       <Modal
-        visible={visible}
-        transparent
         animationType="slide"
-        onRequestClose={() => setVisible(false)}
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
       >
-        <Pressable style={styles.backdrop} onPress={() => setVisible(false)}>
-          <Pressable style={styles.sheet} onPress={(e) => e.stopPropagation()}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
             {/* Header */}
-            <View style={styles.sheetHeader}>
-              <View style={styles.sheetTitleRow}>
-                <Text style={styles.sheetInfinitive}>{infinitive}</Text>
-                {entry.irregular && (
+            <View style={styles.modalHeader}>
+              <View style={styles.headerLeft}>
+                <Text style={styles.modalTitle}>{infinitive}</Text>
+                {isIrregular && (
                   <View style={styles.irregularPill}>
                     <Text style={styles.irregularPillText}>⚠ irregular</Text>
                   </View>
                 )}
               </View>
-              {entry.irregular_note && (
-                <Text style={styles.irregularNote}>{entry.irregular_note}</Text>
-              )}
-              <Pressable style={styles.closeBtn} onPress={() => setVisible(false)}>
-                <Text style={styles.closeBtnText}>✕</Text>
+              <Pressable onPress={() => setModalVisible(false)} style={styles.closeButton}>
+                <Text style={styles.closeButtonText}>✕</Text>
               </Pressable>
             </View>
 
-            <ScrollView
-              style={styles.tableScroll}
-              showsVerticalScrollIndicator={false}
-            >
-              {/* Column headers */}
-              <View style={styles.row}>
-                <View style={styles.personCell} />
-                <View style={styles.tenseCell}>
-                  <Text style={styles.tenseHeader}>Presente</Text>
-                </View>
-                <View style={styles.tenseCell}>
-                  <Text style={styles.tenseHeader}>Pretérito</Text>
-                </View>
-                <View style={styles.tenseCell}>
-                  <Text style={styles.tenseHeader}>Futuro</Text>
-                </View>
+            {/* Irregular note */}
+            {isIrregular && conjugation.irregularNote && (
+              <View style={styles.noteBox}>
+                <Text style={styles.noteText}>{conjugation.irregularNote}</Text>
               </View>
+            )}
 
-              {/* Data rows */}
-              {PERSON_KEYS.map((key, i) => (
-                <View
-                  key={key}
-                  style={[styles.row, i % 2 === 1 && styles.rowAlt]}
+            {/* Tense selector */}
+            <View style={styles.tabContainer}>
+              {(Object.keys(tenseLabels) as Array<'presente' | 'preterito' | 'futuro'>).map((tense) => (
+                <TouchableOpacity
+                  key={tense}
+                  style={[styles.tab, activeTense === tense && styles.activeTab]}
+                  onPress={() => setActiveTense(tense)}
                 >
-                  <View style={styles.personCell}>
-                    <Text style={styles.personLabel}>{PERSONS[i]}</Text>
+                  <Text style={[styles.tabText, activeTense === tense && styles.activeTabText]}>
+                    {tenseLabels[tense]}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Conjugation table */}
+            <ScrollView style={styles.tableContainer}>
+              {pronouns.map(({ key, label, highlight }) => (
+                <View key={key} style={styles.row}>
+                  <View style={styles.pronounCell}>
+                    <Text style={[styles.pronoun, highlight && styles.highlightPronoun]}>
+                      {label}
+                    </Text>
+                    {highlight && <Text style={styles.colombiaTag}>🇨🇴</Text>}
                   </View>
-                  <View style={styles.tenseCell}>
-                    <Text style={styles.form}>{entry.presente[key]}</Text>
-                  </View>
-                  <View style={styles.tenseCell}>
-                    <Text style={styles.form}>{entry.preterito[key]}</Text>
-                  </View>
-                  <View style={styles.tenseCell}>
-                    <Text style={styles.form}>{entry.futuro[key]}</Text>
-                  </View>
+                  <Text style={styles.verbForm}>
+                    {conjugation[activeTense][key as 'yo' | 'vos' | 'el' | 'nosotros' | 'ustedes']}
+                  </Text>
                 </View>
               ))}
-
-              <View style={styles.tableFooter}>
-                <Text style={styles.footerNote}>
-                  Colombian Spanish · vos replaces tú · ustedes for all plurals
-                </Text>
-              </View>
             </ScrollView>
-          </Pressable>
-        </Pressable>
+
+            {/* Colombia note */}
+            <View style={styles.colombiaNote}>
+              <Text style={styles.colombiaNoteText}>
+                🇨🇴 Uses <Text style={styles.bold}>vos</Text> (not tú) and <Text style={styles.bold}>ustedes</Text> (no vosotros) — authentic Colombian Spanish
+              </Text>
+            </View>
+          </View>
+        </View>
       </Modal>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  trigger: {
+  // Compact button (for inline use)
+  compactButton: {
+    paddingVertical: spacing(1),
+    paddingHorizontal: spacing(2),
+    backgroundColor: colors.surfaceElevated,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignSelf: 'flex-start',
+  },
+  irregularButton: {
+    backgroundColor: colors.warningMuted,
+    borderColor: colors.warning,
+  },
+  compactButtonText: {
+    fontSize: typography.size.sm,
+    color: colors.brand,
+    fontWeight: typography.weight.medium,
+  },
+  irregularButtonText: {
+    color: colors.warning,
+  },
+
+  // Trigger button
+  triggerButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'center',
-    paddingHorizontal: spacing(3),
     paddingVertical: spacing(1.5),
-    borderRadius: radius.full,
-    borderWidth: 1,
-    borderColor: colors.borderActive,
+    paddingHorizontal: spacing(3),
     backgroundColor: colors.surfaceElevated,
-    gap: spacing(1.5),
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignSelf: 'center',
     marginTop: spacing(2),
   },
-  triggerIrregular: {
-    borderColor: colors.warning,
+  irregularTriggerButton: {
     backgroundColor: colors.warningMuted,
+    borderColor: colors.warning,
   },
-  triggerText: {
-    color: colors.textSecondary,
-    fontSize: typography.size.sm,
+  triggerButtonText: {
+    fontSize: typography.size.base,
+    color: colors.brand,
     fontWeight: typography.weight.semibold,
   },
-  triggerTextIrregular: {
+  irregularTriggerText: {
     color: colors.warning,
   },
   irregularBadge: {
-    color: colors.warning,
+    marginLeft: spacing(1.5),
     fontSize: typography.size.xs,
-    fontWeight: typography.weight.semibold,
+    color: colors.warning,
+    fontWeight: typography.weight.bold,
+    textTransform: 'uppercase',
   },
 
   // Modal
-  backdrop: {
+  modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
   },
-  sheet: {
+  modalContent: {
     backgroundColor: colors.surface,
     borderTopLeftRadius: radius['2xl'],
     borderTopRightRadius: radius['2xl'],
-    paddingBottom: spacing(6),
-    maxHeight: '75%',
+    padding: spacing(4),
+    maxHeight: '80%',
   },
-  sheetHeader: {
-    padding: spacing(3),
-    paddingBottom: spacing(2),
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing(3),
   },
-  sheetTitleRow: {
+  headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing(2),
-    marginBottom: spacing(0.5),
-    paddingRight: spacing(8),
   },
-  sheetInfinitive: {
-    color: colors.textPrimary,
-    fontSize: typography.size.xl,
+  modalTitle: {
+    fontSize: typography.size['2xl'],
     fontWeight: typography.weight.bold,
+    color: colors.textPrimary,
   },
   irregularPill: {
     backgroundColor: colors.warningMuted,
-    borderRadius: radius.full,
-    paddingHorizontal: spacing(1.5),
+    paddingHorizontal: spacing(2),
     paddingVertical: spacing(0.5),
+    borderRadius: radius.full,
     borderWidth: 1,
     borderColor: colors.warning,
   },
   irregularPillText: {
+    fontSize: typography.size.xs,
     color: colors.warning,
-    fontSize: typography.size.xs,
-    fontWeight: typography.weight.semibold,
+    fontWeight: typography.weight.bold,
   },
-  irregularNote: {
-    color: colors.textSecondary,
-    fontSize: typography.size.xs,
-    fontStyle: 'italic',
-    marginTop: spacing(0.5),
-  },
-  closeBtn: {
-    position: 'absolute',
-    top: spacing(3),
-    right: spacing(3),
-    width: 32,
-    height: 32,
+  closeButton: {
+    width: 36,
+    height: 36,
     borderRadius: radius.full,
     backgroundColor: colors.surfaceElevated,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  closeBtnText: {
+  closeButtonText: {
+    fontSize: typography.size.lg,
     color: colors.textSecondary,
+    fontWeight: typography.weight.bold,
+  },
+
+  // Note box
+  noteBox: {
+    backgroundColor: colors.infoMuted,
+    padding: spacing(2),
+    borderRadius: radius.lg,
+    marginBottom: spacing(3),
+    borderLeftWidth: 4,
+    borderLeftColor: colors.info,
+  },
+  noteText: {
     fontSize: typography.size.sm,
+    color: colors.textPrimary,
+    fontStyle: 'italic',
+  },
+
+  // Tabs
+  tabContainer: {
+    flexDirection: 'row',
+    marginBottom: spacing(3),
+    borderRadius: radius.lg,
+    backgroundColor: colors.surfaceElevated,
+    padding: spacing(1),
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: spacing(2),
+    alignItems: 'center',
+    borderRadius: radius.md,
+  },
+  activeTab: {
+    backgroundColor: colors.surface,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  tabText: {
+    fontSize: typography.size.sm,
+    color: colors.textSecondary,
+    fontWeight: typography.weight.medium,
+  },
+  activeTabText: {
+    color: colors.brand,
+    fontWeight: typography.weight.bold,
   },
 
   // Table
-  tableScroll: {
-    paddingHorizontal: spacing(2),
-    paddingTop: spacing(1),
+  tableContainer: {
+    maxHeight: 300,
   },
   row: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    minHeight: 36,
-    paddingVertical: spacing(0.5),
-    borderRadius: radius.sm,
-  },
-  rowAlt: {
+    paddingVertical: spacing(2),
+    paddingHorizontal: spacing(3),
     backgroundColor: colors.surfaceElevated,
+    borderRadius: radius.lg,
+    marginBottom: spacing(1),
   },
-  personCell: {
-    width: 68,
-    paddingLeft: spacing(1.5),
+  pronounCell: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing(1),
   },
-  personLabel: {
-    color: colors.textTertiary,
-    fontSize: typography.size.xs,
+  pronoun: {
+    fontSize: typography.size.base,
+    color: colors.textSecondary,
+    fontStyle: 'italic',
+  },
+  highlightPronoun: {
+    color: colors.brand,
     fontWeight: typography.weight.semibold,
   },
-  tenseCell: {
-    flex: 1,
-    paddingHorizontal: spacing(0.5),
-    alignItems: 'center',
+  colombiaTag: {
+    fontSize: 12,
   },
-  tenseHeader: {
-    color: colors.brand,
-    fontSize: typography.size.xs,
+  verbForm: {
+    fontSize: typography.size.lg,
     fontWeight: typography.weight.bold,
-    textAlign: 'center',
-    paddingVertical: spacing(1),
-  },
-  form: {
     color: colors.textPrimary,
+  },
+
+  // Colombia note
+  colombiaNote: {
+    marginTop: spacing(3),
+    padding: spacing(2),
+    backgroundColor: colors.successMuted,
+    borderRadius: radius.lg,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.success,
+  },
+  colombiaNoteText: {
     fontSize: typography.size.sm,
+    color: colors.textPrimary,
     textAlign: 'center',
   },
-  tableFooter: {
-    paddingHorizontal: spacing(1.5),
-    paddingTop: spacing(2),
-    paddingBottom: spacing(2),
-  },
-  footerNote: {
-    color: colors.textTertiary,
-    fontSize: typography.size.xs,
-    textAlign: 'center',
-    fontStyle: 'italic',
+  bold: {
+    fontWeight: typography.weight.bold,
   },
 });
