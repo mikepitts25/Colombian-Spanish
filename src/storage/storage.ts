@@ -41,6 +41,31 @@ export async function removeDeckById(deckId: string) {
   await saveDecks(next);
 }
 
+export async function renameDeckById(deckId: string, name: string) {
+  const decks = await loadDecks();
+  const next = decks.map((d) => (d.id === deckId ? { ...d, name } : d));
+  await saveDecks(next);
+}
+
+export async function resetDeckProgressById(deckId: string) {
+  const decks = await loadDecks();
+  const now = Date.now();
+  const next = decks.map((d) => {
+    if (d.id !== deckId) return d;
+    return {
+      ...d,
+      cards: (d.cards || []).map((c) => ({
+        ...c,
+        due: now,
+        reps: 0,
+        interval: 0,
+        ease: 2.5,
+      })),
+    };
+  });
+  await saveDecks(next);
+}
+
 function todayISO(): string {
   const d = new Date();
   // local midnight boundary
