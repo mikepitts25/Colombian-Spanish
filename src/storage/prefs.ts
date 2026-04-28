@@ -20,7 +20,9 @@ export async function getPrefs(): Promise<Prefs> {
     return {
       autoSpeak: typeof parsed.autoSpeak === 'boolean' ? parsed.autoSpeak : DEFAULTS.autoSpeak,
       speechRate:
-        typeof parsed.speechRate === 'number' && parsed.speechRate >= 0.5 && parsed.speechRate <= 1.5
+        typeof parsed.speechRate === 'number' &&
+        parsed.speechRate >= 0.5 &&
+        parsed.speechRate <= 1.5
           ? parsed.speechRate
           : DEFAULTS.speechRate,
     };
