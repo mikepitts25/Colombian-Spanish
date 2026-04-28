@@ -6,7 +6,6 @@ import HomeScreen from '../screens/HomeScreen';
 import StudyScreen from '../screens/StudyScreen';
 import AddCardScreen from '../screens/AddCardScreen';
 import PhrasebookScreen from '../screens/PhrasebookScreen';
-import ManageDecksScreen from '../screens/ManageDecksScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -62,15 +61,6 @@ export default function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={Tabs} options={{ headerShown: false }} />
-      <Stack.Screen
-        name="ManageDecks"
-        component={ManageDecksScreen}
-        options={{
-          title: 'Manage Decks',
-          headerStyle: { backgroundColor: '#0f172a' },
-          headerTintColor: '#fff',
-        }}
-      />
     </Stack.Navigator>
   );
 }
