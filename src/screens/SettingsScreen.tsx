@@ -131,10 +131,10 @@ export default function SettingsScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2), gap: spacing(2) },
-  h1: { color: colors.text, fontSize: 22, fontWeight: '900' },
-  h2: { color: colors.text, fontSize: 16, fontWeight: '900', marginBottom: 6 },
-  p: { color: colors.sub },
-  sub: { color: colors.sub, marginTop: 8 },
+  h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900' },
+  h2: { color: colors.textPrimary, fontSize: 16, fontWeight: '900', marginBottom: 6 },
+  p: { color: colors.textSecondary },
+  sub: { color: colors.textSecondary, marginTop: 8 },
   card: {
     backgroundColor: '#0e1526',
     borderWidth: 1,

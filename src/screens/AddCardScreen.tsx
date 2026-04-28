@@ -76,7 +76,7 @@ export default function AddCardScreen() {
           value={front}
           onChangeText={setFront}
           placeholder="¿Qué más pues?"
-          placeholderTextColor={colors.sub}
+          placeholderTextColor={colors.textSecondary}
           style={styles.input}
         />
       </View>
@@ -86,7 +86,7 @@ export default function AddCardScreen() {
           value={back}
           onChangeText={setBack}
           placeholder="What’s up?"
-          placeholderTextColor={colors.sub}
+          placeholderTextColor={colors.textSecondary}
           style={styles.input}
         />
       </View>
@@ -96,7 +96,7 @@ export default function AddCardScreen() {
           value={example}
           onChangeText={setExample}
           placeholder="¡Qué chimba de concierto!"
-          placeholderTextColor={colors.sub}
+          placeholderTextColor={colors.textSecondary}
           style={styles.input}
         />
       </View>
@@ -106,7 +106,7 @@ export default function AddCardScreen() {
           value={tags}
           onChangeText={setTags}
           placeholder="slang, Medellín"
-          placeholderTextColor={colors.sub}
+          placeholderTextColor={colors.textSecondary}
           style={styles.input}
         />
       </View>
@@ -174,7 +174,7 @@ export default function AddCardScreen() {
             <Text style={styles.modalTitle}>New deck</Text>
             <TextInput
               placeholder="Name (e.g., Colombianisms)"
-              placeholderTextColor={colors.sub}
+              placeholderTextColor={colors.textSecondary}
               value={newDeckName}
               onChangeText={setNewDeckName}
               style={styles.input}
@@ -199,12 +199,12 @@ export default function AddCardScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  h1: { color: colors.text, fontSize: 22, fontWeight: '800', marginBottom: spacing(2) },
+  h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '800', marginBottom: spacing(2) },
   field: { marginBottom: spacing(1.5) },
-  label: { color: colors.text, fontWeight: '700', marginBottom: 6 },
+  label: { color: colors.textPrimary, fontWeight: '700', marginBottom: 6 },
   input: {
     backgroundColor: '#0b1220',
-    color: colors.text,
+    color: colors.textPrimary,
     borderRadius: 12,
     padding: spacing(1.5),
   },
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1f2937',
   },
-  selectText: { color: colors.text, fontWeight: '700' },
+  selectText: { color: colors.textPrimary, fontWeight: '700' },
 
   modalBackdrop: {
     flex: 1,
@@ -234,14 +234,14 @@ const styles = StyleSheet.create({
     padding: spacing(2),
   },
   modalBody: {
-    backgroundColor: colors.card,
+    backgroundColor: colors.surfaceElevated,
     borderRadius: 14,
     padding: spacing(2),
     maxHeight: '80%',
   },
-  modalTitle: { color: colors.text, fontWeight: '800', marginBottom: spacing(1) },
+  modalTitle: { color: colors.textPrimary, fontWeight: '800', marginBottom: spacing(1) },
   modalRow: { paddingVertical: spacing(1), borderBottomColor: '#1f2937', borderBottomWidth: 1 },
-  modalRowTitle: { color: colors.text, fontWeight: '700' },
-  modalRowSub: { color: colors.sub },
-  modalClose: { color: colors.sub, textAlign: 'center', marginTop: spacing(1.5) },
+  modalRowTitle: { color: colors.textPrimary, fontWeight: '700' },
+  modalRowSub: { color: colors.textSecondary },
+  modalClose: { color: colors.textSecondary, textAlign: 'center', marginTop: spacing(1.5) },
 });

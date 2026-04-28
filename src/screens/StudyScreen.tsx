@@ -154,7 +154,7 @@ export default function StudyScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  h1: { color: colors.text, fontSize: 22, fontWeight: '800', marginBottom: spacing(1) },
+  h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '800', marginBottom: spacing(1) },
   audioRow: { flexDirection: 'row', gap: 8, flexWrap: 'wrap', marginBottom: 8 },
   audioBtn: {
     backgroundColor: '#0b1220',
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   audioBtnText: { color: '#e2e8f0', fontWeight: '900' },
   audioBtnTextOn: { color: '#a7f3d0' },
   rateRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: spacing(1) },
-  rateLabel: { color: colors.sub, fontWeight: '800' },
+  rateLabel: { color: colors.textSecondary, fontWeight: '800' },
   rateBtn: {
     width: 36,
     height: 36,
@@ -180,11 +180,11 @@ const styles = StyleSheet.create({
     borderColor: '#1f2937',
   },
   rateBtnText: { color: '#e2e8f0', fontWeight: '900', fontSize: 18 },
-  sub: { color: colors.sub },
-  meta: { color: colors.sub, textAlign: 'center', marginTop: spacing(1) },
+  sub: { color: colors.textSecondary },
+  meta: { color: colors.textSecondary, textAlign: 'center', marginTop: spacing(1) },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  done: { color: colors.text, fontSize: 20, fontWeight: '800', marginBottom: spacing(1) },
-  progressLabel: { color: colors.sub, textAlign: 'center', marginTop: spacing(0.5) },
+  done: { color: colors.textPrimary, fontSize: 20, fontWeight: '800', marginBottom: spacing(1) },
+  progressLabel: { color: colors.textSecondary, textAlign: 'center', marginTop: spacing(0.5) },
   congratsBox: {
     marginTop: spacing(1),
     backgroundColor: '#052e2b',

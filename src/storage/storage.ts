@@ -111,3 +111,44 @@ export async function setDailyTarget(target: number): Promise<DailyProgress> {
   await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(next));
   return next;
 }
+
+const STREAK_KEY = 'SRS_STREAK_V1';
+
+export async function getStudyStreak(): Promise<number> {
+  const raw = await AsyncStorage.getItem(STREAK_KEY);
+  if (!raw) return 0;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed.streak || 0;
+  } catch {
+    return 0;
+  }
+}
+
+export interface SeenWord {
+  cardId: string;
+  deckId: string;
+  front: string;
+  back: string;
+  spanish: string;
+  english: string;
+  lastSeen: number;
+  correctCount: number;
+  incorrectCount: number;
+}
+
+const SEEN_WORDS_KEY = 'SRS_SEEN_WORDS_V1';
+
+export async function getSeenWords(): Promise<SeenWord[]> {
+  const raw = await AsyncStorage.getItem(SEEN_WORDS_KEY);
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
+export async function saveSeenWords(words: SeenWord[]) {
+  await AsyncStorage.setItem(SEEN_WORDS_KEY, JSON.stringify(words));
+}

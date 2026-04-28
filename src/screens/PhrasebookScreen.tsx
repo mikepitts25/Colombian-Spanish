@@ -44,7 +44,7 @@ export default function PhrasebookScreen() {
         value={q}
         onChangeText={setQ}
         placeholder="Search (es/en/tags)…"
-        placeholderTextColor={colors.sub}
+        placeholderTextColor={colors.textSecondary}
         style={styles.search}
         autoCapitalize="none"
         autoCorrect={false}
@@ -95,31 +95,31 @@ export default function PhrasebookScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  h1: { color: colors.text, fontSize: 22, fontWeight: '900', marginBottom: 4 },
-  sub: { color: colors.sub, marginBottom: spacing(1.5) },
+  h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
+  sub: { color: colors.textSecondary, marginBottom: spacing(1.5) },
   search: {
     backgroundColor: '#0b1220',
     borderWidth: 1,
     borderColor: '#1f2937',
     borderRadius: 12,
     padding: spacing(1.25),
-    color: colors.text,
+    color: colors.textPrimary,
     marginBottom: spacing(1.5),
   },
   row: {
     flexDirection: 'row',
     gap: 12,
-    backgroundColor: colors.card,
+    backgroundColor: colors.surfaceElevated,
     borderWidth: 1,
     borderColor: '#1f2937',
     borderRadius: 12,
     padding: spacing(1.25),
     marginBottom: 10,
   },
-  front: { color: colors.text, fontWeight: '900', fontSize: 16 },
+  front: { color: colors.textPrimary, fontWeight: '900', fontSize: 16 },
   back: { color: '#cbd5e1', marginTop: 2 },
-  example: { color: colors.sub, marginTop: 6, fontStyle: 'italic' },
-  meta: { color: colors.sub, marginTop: 8, fontSize: 12 },
+  example: { color: colors.textSecondary, marginTop: 6, fontStyle: 'italic' },
+  meta: { color: colors.textSecondary, marginTop: 8, fontSize: 12 },
   actions: { gap: 8, justifyContent: 'flex-start' },
   actionBtn: {
     width: 40,
@@ -131,6 +131,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1f2937',
   },
-  actionText: { color: colors.text, fontWeight: '900' },
-  empty: { color: colors.text, fontWeight: '900', fontSize: 16 },
+  actionText: { color: colors.textPrimary, fontWeight: '900' },
+  empty: { color: colors.textPrimary, fontWeight: '900', fontSize: 16 },
 });

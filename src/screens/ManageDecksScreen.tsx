@@ -82,7 +82,7 @@ export default function ManageDecksScreen() {
         value={q}
         onChangeText={setQ}
         placeholder="Search decks…"
-        placeholderTextColor={colors.sub}
+        placeholderTextColor={colors.textSecondary}
         style={styles.search}
         autoCapitalize="none"
         autoCorrect={false}
@@ -128,7 +128,7 @@ export default function ManageDecksScreen() {
               value={renameValue}
               onChangeText={setRenameValue}
               placeholder="Deck name"
-              placeholderTextColor={colors.sub}
+              placeholderTextColor={colors.textSecondary}
               style={styles.input}
               autoFocus
             />
@@ -152,19 +152,19 @@ export default function ManageDecksScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  h1: { color: colors.text, fontSize: 22, fontWeight: '900', marginBottom: 4 },
-  sub: { color: colors.sub, marginBottom: spacing(1.25) },
+  h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
+  sub: { color: colors.textSecondary, marginBottom: spacing(1.25) },
   search: {
     backgroundColor: '#0b1220',
     borderWidth: 1,
     borderColor: '#1f2937',
     borderRadius: 12,
     padding: spacing(1.25),
-    color: colors.text,
+    color: colors.textPrimary,
     marginBottom: spacing(1.5),
   },
   row: {
-    backgroundColor: colors.card,
+    backgroundColor: colors.surfaceElevated,
     borderWidth: 1,
     borderColor: '#1f2937',
     borderRadius: 12,
@@ -172,8 +172,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     gap: 10,
   },
-  name: { color: colors.text, fontWeight: '900', fontSize: 16 },
-  meta: { color: colors.sub, marginTop: 2 },
+  name: { color: colors.textPrimary, fontWeight: '900', fontSize: 16 },
+  meta: { color: colors.textSecondary, marginTop: 2 },
   actions: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
   btn: {
     backgroundColor: '#0b1220',
@@ -207,11 +207,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: spacing(2),
   },
-  modalBody: { backgroundColor: colors.card, borderRadius: 14, padding: spacing(2) },
-  modalTitle: { color: colors.text, fontWeight: '900', marginBottom: spacing(1) },
+  modalBody: { backgroundColor: colors.surfaceElevated, borderRadius: 14, padding: spacing(2) },
+  modalTitle: { color: colors.textPrimary, fontWeight: '900', marginBottom: spacing(1) },
   input: {
     backgroundColor: '#0b1220',
-    color: colors.text,
+    color: colors.textPrimary,
     borderRadius: 12,
     padding: spacing(1.25),
     borderWidth: 1,

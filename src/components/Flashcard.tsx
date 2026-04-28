@@ -152,7 +152,7 @@ export default function Flashcard({ card, onGrade }: Props) {
 const styles = StyleSheet.create({
   cardWrap: { minHeight: 260 },
   card: {
-    backgroundColor: colors.card,
+    backgroundColor: colors.surfaceElevated,
     padding: spacing(3),
     borderRadius: 16,
     minHeight: 230,
@@ -168,10 +168,10 @@ const styles = StyleSheet.create({
   cardFront: {},
   cardBack: {},
   facePressable: { flex: 1, justifyContent: 'center' },
-  frontText: { color: colors.text, fontSize: 28, fontWeight: '700', textAlign: 'center' },
-  backText: { color: colors.text, fontSize: 24, fontWeight: '700', textAlign: 'center' },
-  example: { color: colors.sub, fontSize: 14, marginTop: spacing(1), textAlign: 'center' },
-  hint: { color: colors.sub, fontSize: 12, marginTop: spacing(2), textAlign: 'center' },
-  sub: { color: colors.sub },
-  swipeFooter: { color: colors.sub, textAlign: 'center', marginTop: spacing(1), fontSize: 12 },
+  frontText: { color: colors.textPrimary, fontSize: 28, fontWeight: '700', textAlign: 'center' },
+  backText: { color: colors.textPrimary, fontSize: 24, fontWeight: '700', textAlign: 'center' },
+  example: { color: colors.textSecondary, fontSize: 14, marginTop: spacing(1), textAlign: 'center' },
+  hint: { color: colors.textSecondary, fontSize: 12, marginTop: spacing(2), textAlign: 'center' },
+  sub: { color: colors.textSecondary },
+  swipeFooter: { color: colors.textSecondary, textAlign: 'center', marginTop: spacing(1), fontSize: 12 },
 });
