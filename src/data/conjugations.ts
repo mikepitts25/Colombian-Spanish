@@ -1057,6 +1057,116 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     irregular: true,
     irregularNote: 'colloquial phrase; fixed expression',
   },
+
+  // === ADDITIONAL CONVERSATIONAL VERBS ===
+  bajar: {
+    presente: generateArConjugation('baj'),
+    preterito: { yo: 'bajé', vos: 'bajaste', el: 'bajó', nosotros: 'bajamos', ustedes: 'bajaron' },
+    futuro: generateArConjugation('bajar'),
+  },
+  cenar: {
+    presente: generateArConjugation('cen'),
+    preterito: { yo: 'cené', vos: 'cenaste', el: 'cenó', nosotros: 'cenamos', ustedes: 'cenaron' },
+    futuro: generateArConjugation('cenar'),
+  },
+  contar: {
+    presente: { yo: 'cuento', vos: 'contás', el: 'cuenta', nosotros: 'contamos', ustedes: 'cuentan' },
+    preterito: { yo: 'conté', vos: 'contaste', el: 'contó', nosotros: 'contamos', ustedes: 'contaron' },
+    futuro: generateArConjugation('contar'),
+    irregular: true,
+    irregularNote: 'stem change o→ue (yo, él, ustedes); vos stays regular',
+  },
+  creer: {
+    presente: { yo: 'creo', vos: 'creés', el: 'cree', nosotros: 'creemos', ustedes: 'creen' },
+    preterito: { yo: 'creí', vos: 'creíste', el: 'creyó', nosotros: 'creímos', ustedes: 'creyeron' },
+    futuro: generateErConjugation('creer'),
+    irregular: true,
+    irregularNote: 'preterite i→y (él creyó, ustedes creyeron); accent on yo/vos/nosotros',
+  },
+  dejar: {
+    presente: generateArConjugation('dej'),
+    preterito: { yo: 'dejé', vos: 'dejaste', el: 'dejó', nosotros: 'dejamos', ustedes: 'dejaron' },
+    futuro: generateArConjugation('dejar'),
+  },
+  desayunar: {
+    presente: generateArConjugation('desayun'),
+    preterito: { yo: 'desayuné', vos: 'desayunaste', el: 'desayunó', nosotros: 'desayunamos', ustedes: 'desayunaron' },
+    futuro: generateArConjugation('desayunar'),
+  },
+  entrar: {
+    presente: generateArConjugation('entr'),
+    preterito: { yo: 'entré', vos: 'entraste', el: 'entró', nosotros: 'entramos', ustedes: 'entraron' },
+    futuro: generateArConjugation('entrar'),
+  },
+  explicar: {
+    presente: generateArConjugation('explic'),
+    preterito: { yo: 'expliqué', vos: 'explicaste', el: 'explicó', nosotros: 'explicamos', ustedes: 'explicaron' },
+    futuro: generateArConjugation('explicar'),
+  },
+  ganar: {
+    presente: generateArConjugation('gan'),
+    preterito: { yo: 'gané', vos: 'ganaste', el: 'ganó', nosotros: 'ganamos', ustedes: 'ganaron' },
+    futuro: generateArConjugation('ganar'),
+  },
+  llegar: {
+    presente: generateArConjugation('lleg'),
+    preterito: { yo: 'llegué', vos: 'llegaste', el: 'llegó', nosotros: 'llegamos', ustedes: 'llegaron' },
+    futuro: generateArConjugation('llegar'),
+  },
+  llevar: {
+    presente: generateArConjugation('llev'),
+    preterito: { yo: 'llevé', vos: 'llevaste', el: 'llevó', nosotros: 'llevamos', ustedes: 'llevaron' },
+    futuro: generateArConjugation('llevar'),
+  },
+  llorar: {
+    presente: generateArConjugation('llor'),
+    preterito: { yo: 'lloré', vos: 'lloraste', el: 'lloró', nosotros: 'lloramos', ustedes: 'lloraron' },
+    futuro: generateArConjugation('llorar'),
+  },
+  necesitar: {
+    presente: generateArConjugation('necesit'),
+    preterito: { yo: 'necesité', vos: 'necesitaste', el: 'necesitó', nosotros: 'necesitamos', ustedes: 'necesitaron' },
+    futuro: generateArConjugation('necesitar'),
+  },
+  pasar: {
+    presente: generateArConjugation('pas'),
+    preterito: { yo: 'pasé', vos: 'pasaste', el: 'pasó', nosotros: 'pasamos', ustedes: 'pasaron' },
+    futuro: generateArConjugation('pasar'),
+  },
+  preguntar: {
+    presente: generateArConjugation('pregunt'),
+    preterito: { yo: 'pregunté', vos: 'preguntaste', el: 'preguntó', nosotros: 'preguntamos', ustedes: 'preguntaron' },
+    futuro: generateArConjugation('preguntar'),
+  },
+  probar: {
+    presente: { yo: 'pruebo', vos: 'probás', el: 'prueba', nosotros: 'probamos', ustedes: 'prueban' },
+    preterito: { yo: 'probé', vos: 'probaste', el: 'probó', nosotros: 'probamos', ustedes: 'probaron' },
+    futuro: generateArConjugation('probar'),
+    irregular: true,
+    irregularNote: 'stem change o→ue (yo, él, ustedes); vos stays regular',
+  },
+  'reír': {
+    presente: { yo: 'río', vos: 'reís', el: 'ríe', nosotros: 'reímos', ustedes: 'ríen' },
+    preterito: { yo: 'reí', vos: 'reíste', el: 'rió', nosotros: 'reímos', ustedes: 'rieron' },
+    futuro: generateIrConjugation('reir'),
+    irregular: true,
+    irregularNote: 'accented í in present/preterite yo/vos/nosotros; removes e in stem',
+  },
+  sacar: {
+    presente: generateArConjugation('sac'),
+    preterito: { yo: 'saqué', vos: 'sacaste', el: 'sacó', nosotros: 'sacamos', ustedes: 'sacaron' },
+    futuro: generateArConjugation('sacar'),
+  },
+  terminar: {
+    presente: generateArConjugation('termin'),
+    preterito: { yo: 'terminé', vos: 'terminaste', el: 'terminó', nosotros: 'terminamos', ustedes: 'terminaron' },
+    futuro: generateArConjugation('terminar'),
+  },
+  usar: {
+    presente: generateArConjugation('us'),
+    preterito: { yo: 'usé', vos: 'usaste', el: 'usó', nosotros: 'usamos', ustedes: 'usaron' },
+    futuro: generateArConjugation('usar'),
+  },
 };
 
 // Helper function to check if a card is a verb

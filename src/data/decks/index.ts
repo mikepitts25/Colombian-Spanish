@@ -2,6 +2,7 @@
 import { Deck } from '../../types';
 
 import { ActionsDeck } from './actions';
+import { CoreVerbsDeck } from './core_verbs';
 import { BodyDeck } from './body';
 import { BusinessDeck } from './business';
 import { ClothingDeck } from './clothing';
@@ -39,6 +40,7 @@ import { WeatherDeck } from './weather';
 
 export {
   ActionsDeck,
+  CoreVerbsDeck,
   BodyDeck,
   BusinessDeck,
   ClothingDeck,
@@ -76,6 +78,7 @@ export {
 };
 
 export const ALL_DECKS: Deck[] = [
+  CoreVerbsDeck,
   ActionsDeck,
   BodyDeck,
   BusinessDeck,

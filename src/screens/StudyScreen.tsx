@@ -7,6 +7,8 @@ import ProgressBar from '../components/ProgressBar';
 import { getDailyProgress, incrementDailyProgress } from '../storage/storage';
 import { getPrefs, setPrefs, Prefs } from '../storage/prefs';
 import * as Speech from 'expo-speech';
+import ConjugationPanel from '../components/ConjugationPanel';
+import { isVerb } from '../utils/verbUtils';
 
 export default function StudyScreen() {
   const { ready, activeDeck, getStudyBatch, recordAnswer } = useDeck();
@@ -113,6 +115,9 @@ export default function StudyScreen() {
         <Pressable style={styles.audioBtn} onPress={stop}>
           <Text style={styles.audioBtnText}>Stop</Text>
         </Pressable>
+
+        {/* Conjugation panel — shown for verb cards */}
+        {isVerb(card) && <ConjugationPanel infinitive={card.front} />}
       </View>
 
       <View style={styles.rateRow}>
