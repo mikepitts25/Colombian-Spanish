@@ -4,7 +4,8 @@
 
 export type ConjugationTense = {
   yo: string;
-  vos: string;      // Colombian informal (replaces tú)
+  tu?: string;      // Standard (used in Bogotá, Caribbean coast)
+  vos: string;      // Voseo (Medellín, Cali, and much of Colombia)
   el: string;       // él/ella/usted
   nosotros: string;
   ustedes: string;  // ellos/ellas/ustedes (no vosotros in Colombia)
@@ -22,6 +23,7 @@ export interface ConjugationTable {
 function generateArConjugation(stem: string): ConjugationTense {
   return {
     yo: `${stem}o`,
+    tu: `${stem}as`,
     vos: `${stem}ás`,
     el: `${stem}a`,
     nosotros: `${stem}amos`,
@@ -33,6 +35,7 @@ function generateArConjugation(stem: string): ConjugationTense {
 function generateErConjugation(stem: string): ConjugationTense {
   return {
     yo: `${stem}o`,
+    tu: `${stem}es`,
     vos: `${stem}és`,
     el: `${stem}e`,
     nosotros: `${stem}emos`,
@@ -44,6 +47,7 @@ function generateErConjugation(stem: string): ConjugationTense {
 function generateIrConjugation(stem: string): ConjugationTense {
   return {
     yo: `${stem}o`,
+    tu: `${stem}es`,
     vos: `${stem}ís`,
     el: `${stem}e`,
     nosotros: `${stem}imos`,
@@ -85,7 +89,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     futuro: generateArConjugation('ayudar'),
   },
   buscar: {
-    presente: { yo: 'busco', vos: 'buscás', el: 'busca', nosotros: 'buscamos', ustedes: 'buscan' },
+    presente: { yo: 'busco', tu: 'buscas', vos: 'buscás', el: 'busca', nosotros: 'buscamos', ustedes: 'buscan' },
     preterito: { yo: 'busqué', vos: 'buscaste', el: 'buscó', nosotros: 'buscamos', ustedes: 'buscaron' },
     futuro: generateArConjugation('buscar'),
   },
@@ -215,7 +219,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     futuro: generateArConjugation('revisar'),
   },
   aprobar: {
-    presente: { yo: 'apruebo', vos: 'aprobás', el: 'aprueba', nosotros: 'aprobamos', ustedes: 'aprueban' },
+    presente: { yo: 'apruebo', tu: 'apruebas', vos: 'aprobás', el: 'aprueba', nosotros: 'aprobamos', ustedes: 'aprueban' },
     preterito: { yo: 'aprobé', vos: 'aprobaste', el: 'aprobó', nosotros: 'aprobamos', ustedes: 'aprobaron' },
     futuro: generateArConjugation('aprobar'),
   },
@@ -225,12 +229,12 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     futuro: generateArConjugation('cambiar'),
   },
   probarse: {
-    presente: { yo: 'me pruebo', vos: 'te probás', el: 'se prueba', nosotros: 'nos probamos', ustedes: 'se prueban' },
+    presente: { yo: 'me pruebo', tu: 'te pruebas', vos: 'te probás', el: 'se prueba', nosotros: 'nos probamos', ustedes: 'se prueban' },
     preterito: { yo: 'me probé', vos: 'te probaste', el: 'se probó', nosotros: 'nos probamos', ustedes: 'se probaron' },
     futuro: { yo: 'me probaré', vos: 'te probarás', el: 'se probará', nosotros: 'nos probaremos', ustedes: 'se probarán' },
   },
   devolver: {
-    presente: { yo: 'devuelvo', vos: 'devolvés', el: 'devuelve', nosotros: 'devolvemos', ustedes: 'devuelven' },
+    presente: { yo: 'devuelvo', tu: 'devuelves', vos: 'devolvés', el: 'devuelve', nosotros: 'devolvemos', ustedes: 'devuelven' },
     preterito: { yo: 'devolví', vos: 'devolviste', el: 'devolvió', nosotros: 'devolvimos', ustedes: 'devolvieron' },
     futuro: generateArConjugation('devolver'),
     irregular: true,
@@ -242,19 +246,19 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     futuro: generateArConjugation('planchar'),
   },
   fregar: {
-    presente: { yo: 'friego', vos: 'fregás', el: 'friega', nosotros: 'fregamos', ustedes: 'friegan' },
+    presente: { yo: 'friego', tu: 'friegas', vos: 'fregás', el: 'friega', nosotros: 'fregamos', ustedes: 'friegan' },
     preterito: { yo: 'fregué', vos: 'fregaste', el: 'fregó', nosotros: 'fregamos', ustedes: 'fregaron' },
     futuro: generateArConjugation('fregar'),
     irregular: true,
     irregularNote: 'stem change e→ie (yo, él, ustedes); vos stays regular',
   },
   cargar: {
-    presente: { yo: 'cargo', vos: 'cargás', el: 'carga', nosotros: 'cargamos', ustedes: 'cargan' },
+    presente: { yo: 'cargo', tu: 'cargas', vos: 'cargás', el: 'carga', nosotros: 'cargamos', ustedes: 'cargan' },
     preterito: { yo: 'cargué', vos: 'cargaste', el: 'cargó', nosotros: 'cargamos', ustedes: 'cargaron' },
     futuro: generateArConjugation('cargar'),
   },
   descargar: {
-    presente: { yo: 'descargo', vos: 'descargás', el: 'descarga', nosotros: 'descargamos', ustedes: 'descargan' },
+    presente: { yo: 'descargo', tu: 'descargas', vos: 'descargás', el: 'descarga', nosotros: 'descargamos', ustedes: 'descargan' },
     preterito: { yo: 'descargué', vos: 'descargaste', el: 'descargó', nosotros: 'descargamos', ustedes: 'descargaron' },
     futuro: generateArConjugation('descargar'),
   },
@@ -264,7 +268,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     futuro: generateArConjugation('subir'),
   },
   enviar: {
-    presente: { yo: 'envío', vos: 'enviás', el: 'envía', nosotros: 'enviamos', ustedes: 'envían' },
+    presente: { yo: 'envío', tu: 'envías', vos: 'enviás', el: 'envía', nosotros: 'enviamos', ustedes: 'envían' },
     preterito: { yo: 'envié', vos: 'enviaste', el: 'envió', nosotros: 'enviamos', ustedes: 'enviaron' },
     futuro: generateArConjugation('enviar'),
   },
@@ -279,7 +283,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     futuro: generateArConjugation('actualizar'),
   },
   despertar: {
-    presente: { yo: 'despierto', vos: 'despertás', el: 'despierta', nosotros: 'despertamos', ustedes: 'despiertan' },
+    presente: { yo: 'despierto', tu: 'despiertas', vos: 'despertás', el: 'despierta', nosotros: 'despertamos', ustedes: 'despiertan' },
     preterito: { yo: 'desperté', vos: 'despertaste', el: 'despertó', nosotros: 'despertamos', ustedes: 'despertaron' },
     futuro: generateArConjugation('despertar'),
     irregular: true,
@@ -362,42 +366,42 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
 
   // === STEM-CHANGING VERBS (e→ie) ===
   cerrar: {
-    presente: { yo: 'cierro', vos: 'cerrás', el: 'cierra', nosotros: 'cerramos', ustedes: 'cierran' },
+    presente: { yo: 'cierro', tu: 'cierras', vos: 'cerrás', el: 'cierra', nosotros: 'cerramos', ustedes: 'cierran' },
     preterito: { yo: 'cerré', vos: 'cerraste', el: 'cerró', nosotros: 'cerramos', ustedes: 'cerraron' },
     futuro: generateArConjugation('cerrar'),
     irregular: true,
     irregularNote: 'stem change e→ie (yo, él, ustedes); vos stays regular',
   },
   pensar: {
-    presente: { yo: 'pienso', vos: 'pensás', el: 'piensa', nosotros: 'pensamos', ustedes: 'piensan' },
+    presente: { yo: 'pienso', tu: 'piensas', vos: 'pensás', el: 'piensa', nosotros: 'pensamos', ustedes: 'piensan' },
     preterito: { yo: 'pensé', vos: 'pensaste', el: 'pensó', nosotros: 'pensamos', ustedes: 'pensaron' },
     futuro: generateArConjugation('pensar'),
     irregular: true,
     irregularNote: 'stem change e→ie (yo, él, ustedes); vos stays regular',
   },
   entender: {
-    presente: { yo: 'entiendo', vos: 'entendés', el: 'entiende', nosotros: 'entendemos', ustedes: 'entienden' },
+    presente: { yo: 'entiendo', tu: 'entiendes', vos: 'entendés', el: 'entiende', nosotros: 'entendemos', ustedes: 'entienden' },
     preterito: { yo: 'entendí', vos: 'entendiste', el: 'entendió', nosotros: 'entendimos', ustedes: 'entendieron' },
     futuro: generateErConjugation('entender'),
     irregular: true,
     irregularNote: 'stem change e→ie (yo, él, ustedes); vos stays regular',
   },
   empezar: {
-    presente: { yo: 'empiezo', vos: 'empezás', el: 'empieza', nosotros: 'empezamos', ustedes: 'empiezan' },
+    presente: { yo: 'empiezo', tu: 'empiezas', vos: 'empezás', el: 'empieza', nosotros: 'empezamos', ustedes: 'empiezan' },
     preterito: { yo: 'empecé', vos: 'empezaste', el: 'empezó', nosotros: 'empezamos', ustedes: 'empezaron' },
     futuro: generateArConjugation('empezar'),
     irregular: true,
     irregularNote: 'stem change e→ie (yo, él, ustedes); vos stays regular; z in yo form',
   },
   perder: {
-    presente: { yo: 'pierdo', vos: 'perdés', el: 'pierde', nosotros: 'perdemos', ustedes: 'pierden' },
+    presente: { yo: 'pierdo', tu: 'pierdes', vos: 'perdés', el: 'pierde', nosotros: 'perdemos', ustedes: 'pierden' },
     preterito: { yo: 'perdí', vos: 'perdiste', el: 'perdió', nosotros: 'perdimos', ustedes: 'perdieron' },
     futuro: generateErConjugation('perder'),
     irregular: true,
     irregularNote: 'stem change e→ie (yo, él, ustedes); vos stays regular',
   },
   querer: {
-    presente: { yo: 'quiero', vos: 'querés', el: 'quiere', nosotros: 'queremos', ustedes: 'quieren' },
+    presente: { yo: 'quiero', tu: 'quieres', vos: 'querés', el: 'quiere', nosotros: 'queremos', ustedes: 'quieren' },
     preterito: { yo: 'quise', vos: 'quisiste', el: 'quiso', nosotros: 'quisimos', ustedes: 'quisieron' },
     futuro: { yo: 'querré', vos: 'querrás', el: 'querrá', nosotros: 'querremos', ustedes: 'querrán' },
     irregular: true,
@@ -406,56 +410,56 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
 
   // === STEM-CHANGING VERBS (o→ue) ===
   dormir: {
-    presente: { yo: 'duermo', vos: 'dormís', el: 'duerme', nosotros: 'dormimos', ustedes: 'duermen' },
+    presente: { yo: 'duermo', tu: 'duermes', vos: 'dormís', el: 'duerme', nosotros: 'dormimos', ustedes: 'duermen' },
     preterito: { yo: 'dormí', vos: 'dormiste', el: 'durmió', nosotros: 'dormimos', ustedes: 'durmieron' },
     futuro: generateIrConjugation('dormir'),
     irregular: true,
     irregularNote: 'stem change o→ue (yo, él, ustedes); vos stays regular; u in preterite él/ustedes',
   },
   volver: {
-    presente: { yo: 'vuelvo', vos: 'volvés', el: 'vuelve', nosotros: 'volvemos', ustedes: 'vuelven' },
+    presente: { yo: 'vuelvo', tu: 'vuelves', vos: 'volvés', el: 'vuelve', nosotros: 'volvemos', ustedes: 'vuelven' },
     preterito: { yo: 'volví', vos: 'volviste', el: 'volvió', nosotros: 'volvimos', ustedes: 'volvieron' },
     futuro: generateErConjugation('volver'),
     irregular: true,
     irregularNote: 'stem change o→ue (yo, él, ustedes); vos stays regular',
   },
   poder: {
-    presente: { yo: 'puedo', vos: 'podés', el: 'puede', nosotros: 'podemos', ustedes: 'pueden' },
+    presente: { yo: 'puedo', tu: 'puedes', vos: 'podés', el: 'puede', nosotros: 'podemos', ustedes: 'pueden' },
     preterito: { yo: 'pude', vos: 'pudiste', el: 'pudo', nosotros: 'pudimos', ustedes: 'pudieron' },
     futuro: { yo: 'podré', vos: 'podrás', el: 'podrá', nosotros: 'podremos', ustedes: 'podrán' },
     irregular: true,
     irregularNote: 'stem change o→ue (present); irregular preterite and future',
   },
   jugar: {
-    presente: { yo: 'juego', vos: 'jugás', el: 'juega', nosotros: 'jugamos', ustedes: 'juegan' },
+    presente: { yo: 'juego', tu: 'juegas', vos: 'jugás', el: 'juega', nosotros: 'jugamos', ustedes: 'juegan' },
     preterito: { yo: 'jugué', vos: 'jugaste', el: 'jugó', nosotros: 'jugamos', ustedes: 'jugaron' },
     futuro: generateArConjugation('jugar'),
     irregular: true,
     irregularNote: 'stem change u→ue (yo, él, ustedes); vos stays regular; gu in preterite yo',
   },
   recordar: {
-    presente: { yo: 'recuerdo', vos: 'recordás', el: 'recuerda', nosotros: 'recordamos', ustedes: 'recuerdan' },
+    presente: { yo: 'recuerdo', tu: 'recuerdas', vos: 'recordás', el: 'recuerda', nosotros: 'recordamos', ustedes: 'recuerdan' },
     preterito: { yo: 'recordé', vos: 'recordaste', el: 'recordó', nosotros: 'recordamos', ustedes: 'recordaron' },
     futuro: generateArConjugation('recordar'),
     irregular: true,
     irregularNote: 'stem change o→ue (yo, él, ustedes); vos stays regular',
   },
   encontrar: {
-    presente: { yo: 'encuentro', vos: 'encontrás', el: 'encuentra', nosotros: 'encontramos', ustedes: 'encuentran' },
+    presente: { yo: 'encuentro', tu: 'encuentras', vos: 'encontrás', el: 'encuentra', nosotros: 'encontramos', ustedes: 'encuentran' },
     preterito: { yo: 'encontré', vos: 'encontraste', el: 'encontró', nosotros: 'encontramos', ustedes: 'encontraron' },
     futuro: generateArConjugation('encontrar'),
     irregular: true,
     irregularNote: 'stem change o→ue (yo, él, ustedes); vos stays regular',
   },
   costar: {
-    presente: { yo: 'cuesto', vos: 'costás', el: 'cuesta', nosotros: 'costamos', ustedes: 'cuestan' },
+    presente: { yo: 'cuesto', tu: 'cuestas', vos: 'costás', el: 'cuesta', nosotros: 'costamos', ustedes: 'cuestan' },
     preterito: { yo: 'costé', vos: 'costaste', el: 'costó', nosotros: 'costamos', ustedes: 'costaron' },
     futuro: generateArConjugation('costar'),
     irregular: true,
     irregularNote: 'stem change o→ue (yo, él, ustedes); vos stays regular',
   },
   almorzar: {
-    presente: { yo: 'almuerzo', vos: 'almorzás', el: 'almuerza', nosotros: 'almorzamos', ustedes: 'almuerzan' },
+    presente: { yo: 'almuerzo', tu: 'almuerzas', vos: 'almorzás', el: 'almuerza', nosotros: 'almorzamos', ustedes: 'almuerzan' },
     preterito: { yo: 'almorcé', vos: 'almorzaste', el: 'almorzó', nosotros: 'almorzamos', ustedes: 'almorzaron' },
     futuro: generateArConjugation('almorzar'),
     irregular: true,
@@ -464,42 +468,42 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
 
   // === STEM-CHANGING VERBS (e→i) ===
   sentir: {
-    presente: { yo: 'siento', vos: 'sentís', el: 'siente', nosotros: 'sentimos', ustedes: 'sienten' },
+    presente: { yo: 'siento', tu: 'sientes', vos: 'sentís', el: 'siente', nosotros: 'sentimos', ustedes: 'sienten' },
     preterito: { yo: 'sentí', vos: 'sentiste', el: 'sintió', nosotros: 'sentimos', ustedes: 'sintieron' },
     futuro: generateIrConjugation('sentir'),
     irregular: true,
     irregularNote: 'stem change e→i (yo, él, ustedes); vos stays regular; i in preterite él/ustedes',
   },
   pedir: {
-    presente: { yo: 'pido', vos: 'pedís', el: 'pide', nosotros: 'pedimos', ustedes: 'piden' },
+    presente: { yo: 'pido', tu: 'pides', vos: 'pedís', el: 'pide', nosotros: 'pedimos', ustedes: 'piden' },
     preterito: { yo: 'pedí', vos: 'pediste', el: 'pidió', nosotros: 'pedimos', ustedes: 'pidieron' },
     futuro: generateIrConjugation('pedir'),
     irregular: true,
     irregularNote: 'stem change e→i (yo, él, ustedes); vos stays regular; i in preterite él/ustedes',
   },
   repetir: {
-    presente: { yo: 'repito', vos: 'repetís', el: 'repite', nosotros: 'repetimos', ustedes: 'repiten' },
+    presente: { yo: 'repito', tu: 'repites', vos: 'repetís', el: 'repite', nosotros: 'repetimos', ustedes: 'repiten' },
     preterito: { yo: 'repetí', vos: 'repetiste', el: 'repitió', nosotros: 'repetimos', ustedes: 'repitieron' },
     futuro: generateIrConjugation('repetir'),
     irregular: true,
     irregularNote: 'stem change e→i (yo, él, ustedes); vos stays regular; i in preterite él/ustedes',
   },
   servir: {
-    presente: { yo: 'sirvo', vos: 'servís', el: 'sirve', nosotros: 'servimos', ustedes: 'sirven' },
+    presente: { yo: 'sirvo', tu: 'sirves', vos: 'servís', el: 'sirve', nosotros: 'servimos', ustedes: 'sirven' },
     preterito: { yo: 'serví', vos: 'serviste', el: 'sirvió', nosotros: 'servimos', ustedes: 'sirvieron' },
     futuro: generateIrConjugation('servir'),
     irregular: true,
     irregularNote: 'stem change e→i (yo, él, ustedes); vos stays regular; i in preterite él/ustedes',
   },
   vestirse: {
-    presente: { yo: 'me visto', vos: 'te vestís', el: 'se viste', nosotros: 'nos vestimos', ustedes: 'se visten' },
+    presente: { yo: 'me visto', tu: 'te vistes', vos: 'te vestís', el: 'se viste', nosotros: 'nos vestimos', ustedes: 'se visten' },
     preterito: { yo: 'me vestí', vos: 'te vestiste', el: 'se vistió', nosotros: 'nos vestimos', ustedes: 'se vistieron' },
     futuro: { yo: 'me vestiré', vos: 'te vestirás', el: 'se vestirá', nosotros: 'nos vestiremos', ustedes: 'se vestirán' },
     irregular: true,
     irregularNote: 'stem change e→i (yo, él, ustedes); vos stays regular; i in preterite él/ustedes',
   },
   despedirse: {
-    presente: { yo: 'me despido', vos: 'te despedís', el: 'se despide', nosotros: 'nos despedimos', ustedes: 'se despiden' },
+    presente: { yo: 'me despido', tu: 'te despides', vos: 'te despedís', el: 'se despide', nosotros: 'nos despedimos', ustedes: 'se despiden' },
     preterito: { yo: 'me despedí', vos: 'te despediste', el: 'se despidió', nosotros: 'nos despedimos', ustedes: 'se despidieron' },
     futuro: { yo: 'me despediré', vos: 'te despedirás', el: 'se despedirá', nosotros: 'nos despediremos', ustedes: 'se despedirán' },
     irregular: true,
@@ -508,91 +512,91 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
 
   // === IRREGULAR VERBS ===
   ser: {
-    presente: { yo: 'soy', vos: 'sos', el: 'es', nosotros: 'somos', ustedes: 'son' },
+    presente: { yo: 'soy', tu: 'eres', vos: 'sos', el: 'es', nosotros: 'somos', ustedes: 'son' },
     preterito: { yo: 'fui', vos: 'fuiste', el: 'fue', nosotros: 'fuimos', ustedes: 'fueron' },
     futuro: { yo: 'seré', vos: 'serás', el: 'será', nosotros: 'seremos', ustedes: 'serán' },
     irregular: true,
     irregularNote: 'completely irregular in all tenses',
   },
   ir: {
-    presente: { yo: 'voy', vos: 'vas', el: 'va', nosotros: 'vamos', ustedes: 'van' },
+    presente: { yo: 'voy', tu: 'vas', vos: 'vas', el: 'va', nosotros: 'vamos', ustedes: 'van' },
     preterito: { yo: 'fui', vos: 'fuiste', el: 'fue', nosotros: 'fuimos', ustedes: 'fueron' },
     futuro: { yo: 'iré', vos: 'irás', el: 'irá', nosotros: 'iremos', ustedes: 'irán' },
     irregular: true,
     irregularNote: 'completely irregular; shares preterite with ser',
   },
   tener: {
-    presente: { yo: 'tengo', vos: 'tenés', el: 'tiene', nosotros: 'tenemos', ustedes: 'tienen' },
+    presente: { yo: 'tengo', tu: 'tienes', vos: 'tenés', el: 'tiene', nosotros: 'tenemos', ustedes: 'tienen' },
     preterito: { yo: 'tuve', vos: 'tuviste', el: 'tuvo', nosotros: 'tuvimos', ustedes: 'tuvieron' },
     futuro: { yo: 'tendré', vos: 'tendrás', el: 'tendrá', nosotros: 'tendremos', ustedes: 'tendrán' },
     irregular: true,
     irregularNote: 'g in yo form; stem change e→ie (él, ustedes); irregular preterite and future',
   },
   hacer: {
-    presente: { yo: 'hago', vos: 'hacés', el: 'hace', nosotros: 'hacemos', ustedes: 'hacen' },
+    presente: { yo: 'hago', tu: 'haces', vos: 'hacés', el: 'hace', nosotros: 'hacemos', ustedes: 'hacen' },
     preterito: { yo: 'hice', vos: 'hiciste', el: 'hizo', nosotros: 'hicimos', ustedes: 'hicieron' },
     futuro: { yo: 'haré', vos: 'harás', el: 'hará', nosotros: 'haremos', ustedes: 'harán' },
     irregular: true,
     irregularNote: 'g in yo form; c→z in preterite él; irregular future',
   },
   decir: {
-    presente: { yo: 'digo', vos: 'decís', el: 'dice', nosotros: 'decimos', ustedes: 'dicen' },
+    presente: { yo: 'digo', tu: 'dices', vos: 'decís', el: 'dice', nosotros: 'decimos', ustedes: 'dicen' },
     preterito: { yo: 'dije', vos: 'dijiste', el: 'dijo', nosotros: 'dijimos', ustedes: 'dijeron' },
     futuro: { yo: 'diré', vos: 'dirás', el: 'dirá', nosotros: 'diremos', ustedes: 'dirán' },
     irregular: true,
     irregularNote: 'g in yo form; e→i (él, ustedes); j in preterite and future',
   },
   saber: {
-    presente: { yo: 'sé', vos: 'sabés', el: 'sabe', nosotros: 'sabemos', ustedes: 'saben' },
+    presente: { yo: 'sé', tu: 'sabes', vos: 'sabés', el: 'sabe', nosotros: 'sabemos', ustedes: 'saben' },
     preterito: { yo: 'supe', vos: 'supiste', el: 'supo', nosotros: 'supimos', ustedes: 'supieron' },
     futuro: { yo: 'sabré', vos: 'sabrás', el: 'sabrá', nosotros: 'sabremos', ustedes: 'sabrán' },
     irregular: true,
     irregularNote: 'accented é in yo form; irregular preterite and future',
   },
   ver: {
-    presente: { yo: 'veo', vos: 'ves', el: 've', nosotros: 'vemos', ustedes: 'ven' },
+    presente: { yo: 'veo', tu: 'ves', vos: 'ves', el: 've', nosotros: 'vemos', ustedes: 'ven' },
     preterito: { yo: 'vi', vos: 'viste', el: 'vio', nosotros: 'vimos', ustedes: 'vieron' },
     futuro: { yo: 'veré', vos: 'verás', el: 'verá', nosotros: 'veremos', ustedes: 'verán' },
     irregular: true,
     irregularNote: 'extra -e- in yo form',
   },
   dar: {
-    presente: { yo: 'doy', vos: 'das', el: 'da', nosotros: 'damos', ustedes: 'dan' },
+    presente: { yo: 'doy', tu: 'das', vos: 'das', el: 'da', nosotros: 'damos', ustedes: 'dan' },
     preterito: { yo: 'di', vos: 'diste', el: 'dio', nosotros: 'dimos', ustedes: 'dieron' },
     futuro: { yo: 'daré', vos: 'darás', el: 'dará', nosotros: 'daremos', ustedes: 'darán' },
     irregular: true,
     irregularNote: 'y in yo form; irregular preterite',
   },
   poner: {
-    presente: { yo: 'pongo', vos: 'ponés', el: 'pone', nosotros: 'ponemos', ustedes: 'ponen' },
+    presente: { yo: 'pongo', tu: 'pones', vos: 'ponés', el: 'pone', nosotros: 'ponemos', ustedes: 'ponen' },
     preterito: { yo: 'puse', vos: 'pusiste', el: 'puso', nosotros: 'pusimos', ustedes: 'pusieron' },
     futuro: { yo: 'pondré', vos: 'pondrás', el: 'pondrá', nosotros: 'pondremos', ustedes: 'pondrán' },
     irregular: true,
     irregularNote: 'g in yo form; irregular preterite and future',
   },
   traer: {
-    presente: { yo: 'traigo', vos: 'traés', el: 'trae', nosotros: 'traemos', ustedes: 'traen' },
+    presente: { yo: 'traigo', tu: 'traes', vos: 'traés', el: 'trae', nosotros: 'traemos', ustedes: 'traen' },
     preterito: { yo: 'traje', vos: 'trajiste', el: 'trajo', nosotros: 'trajimos', ustedes: 'trajeron' },
     futuro: { yo: 'traeré', vos: 'traerás', el: 'traerá', nosotros: 'traeremos', ustedes: 'traerán' },
     irregular: true,
     irregularNote: 'g in yo form; j in preterite',
   },
   salir: {
-    presente: { yo: 'salgo', vos: 'salís', el: 'sale', nosotros: 'salimos', ustedes: 'salen' },
+    presente: { yo: 'salgo', tu: 'sales', vos: 'salís', el: 'sale', nosotros: 'salimos', ustedes: 'salen' },
     preterito: { yo: 'salí', vos: 'saliste', el: 'salió', nosotros: 'salimos', ustedes: 'salieron' },
     futuro: { yo: 'saldré', vos: 'saldrás', el: 'saldrá', nosotros: 'saldremos', ustedes: 'saldrán' },
     irregular: true,
     irregularNote: 'g in yo form; irregular future',
   },
   venir: {
-    presente: { yo: 'vengo', vos: 'venís', el: 'viene', nosotros: 'venimos', ustedes: 'vienen' },
+    presente: { yo: 'vengo', tu: 'vienes', vos: 'venís', el: 'viene', nosotros: 'venimos', ustedes: 'vienen' },
     preterito: { yo: 'vine', vos: 'viniste', el: 'vino', nosotros: 'vinimos', ustedes: 'vinieron' },
     futuro: { yo: 'vendré', vos: 'vendrás', el: 'vendrá', nosotros: 'vendremos', ustedes: 'vendrán' },
     irregular: true,
     irregularNote: 'g in yo form; stem change e→ie (él, ustedes); irregular preterite and future',
   },
   conocer: {
-    presente: { yo: 'conozco', vos: 'conocés', el: 'conoce', nosotros: 'conocemos', ustedes: 'conocen' },
+    presente: { yo: 'conozco', tu: 'conoces', vos: 'conocés', el: 'conoce', nosotros: 'conocemos', ustedes: 'conocen' },
     preterito: { yo: 'conocí', vos: 'conociste', el: 'conoció', nosotros: 'conocimos', ustedes: 'conocieron' },
     futuro: generateErConjugation('conocer'),
     irregular: true,
@@ -606,7 +610,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     irregularNote: 'y in preterite él/ustedes',
   },
   oír: {
-    presente: { yo: 'oigo', vos: 'oís', el: 'oye', nosotros: 'oímos', ustedes: 'oyen' },
+    presente: { yo: 'oigo', tu: 'oyes', vos: 'oís', el: 'oye', nosotros: 'oímos', ustedes: 'oyen' },
     preterito: { yo: 'oí', vos: 'oíste', el: 'oyó', nosotros: 'oímos', ustedes: 'oyeron' },
     futuro: { yo: 'oiré', vos: 'oirás', el: 'oirá', nosotros: 'oiremos', ustedes: 'oirán' },
     irregular: true,
@@ -620,14 +624,14 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     irregularNote: 'y in preterite él/ustedes',
   },
   huir: {
-    presente: { yo: 'huyo', vos: 'huís', el: 'huye', nosotros: 'huimos', ustedes: 'huyen' },
+    presente: { yo: 'huyo', tu: 'huyes', vos: 'huís', el: 'huye', nosotros: 'huimos', ustedes: 'huyen' },
     preterito: { yo: 'huí', vos: 'huiste', el: 'huyó', nosotros: 'huimos', ustedes: 'huyeron' },
     futuro: generateIrConjugation('huir'),
     irregular: true,
     irregularNote: 'y in present and preterite él/ustedes',
   },
   influir: {
-    presente: { yo: 'influyo', vos: 'influís', el: 'influye', nosotros: 'influimos', ustedes: 'influyen' },
+    presente: { yo: 'influyo', tu: 'influyes', vos: 'influís', el: 'influye', nosotros: 'influimos', ustedes: 'influyen' },
     preterito: { yo: 'influí', vos: 'influiste', el: 'influyó', nosotros: 'influimos', ustedes: 'influyeron' },
     futuro: generateIrConjugation('influir'),
     irregular: true,
@@ -636,96 +640,96 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
 
   // === REFLEXIVE VERBS ===
   levantarse: {
-    presente: { yo: 'me levanto', vos: 'te levantás', el: 'se levanta', nosotros: 'nos levantamos', ustedes: 'se levantan' },
+    presente: { yo: 'me levanto', tu: 'te levantas', vos: 'te levantás', el: 'se levanta', nosotros: 'nos levantamos', ustedes: 'se levantan' },
     preterito: { yo: 'me levanté', vos: 'te levantaste', el: 'se levantó', nosotros: 'nos levantamos', ustedes: 'se levantaron' },
     futuro: { yo: 'me levantaré', vos: 'te levantarás', el: 'se levantará', nosotros: 'nos levantaremos', ustedes: 'se levantarán' },
   },
   sentarse: {
-    presente: { yo: 'me siento', vos: 'te sentás', el: 'se sienta', nosotros: 'nos sentamos', ustedes: 'se sientan' },
+    presente: { yo: 'me siento', tu: 'te sientas', vos: 'te sentás', el: 'se sienta', nosotros: 'nos sentamos', ustedes: 'se sientan' },
     preterito: { yo: 'me senté', vos: 'te sentaste', el: 'se sentó', nosotros: 'nos sentamos', ustedes: 'se sentaron' },
     futuro: { yo: 'me sentaré', vos: 'te sentarás', el: 'se sentará', nosotros: 'nos sentaremos', ustedes: 'se sentarán' },
     irregular: true,
     irregularNote: 'stem change e→ie (yo, él, ustedes); vos stays regular',
   },
   ducharse: {
-    presente: { yo: 'me ducho', vos: 'te duchás', el: 'se ducha', nosotros: 'nos duchamos', ustedes: 'se duchan' },
+    presente: { yo: 'me ducho', tu: 'te duchas', vos: 'te duchás', el: 'se ducha', nosotros: 'nos duchamos', ustedes: 'se duchan' },
     preterito: { yo: 'me duché', vos: 'te duchaste', el: 'se duchó', nosotros: 'nos duchamos', ustedes: 'se ducharon' },
     futuro: { yo: 'me ducharé', vos: 'te ducharás', el: 'se duchará', nosotros: 'nos ducharemos', ustedes: 'se ducharán' },
   },
   acostarse: {
-    presente: { yo: 'me acuesto', vos: 'te acostás', el: 'se acuesta', nosotros: 'nos acostamos', ustedes: 'se acuestan' },
+    presente: { yo: 'me acuesto', tu: 'te acuestas', vos: 'te acostás', el: 'se acuesta', nosotros: 'nos acostamos', ustedes: 'se acuestan' },
     preterito: { yo: 'me acosté', vos: 'te acostaste', el: 'se acostó', nosotros: 'nos acostamos', ustedes: 'se acostaron' },
     futuro: { yo: 'me acostaré', vos: 'te acostarás', el: 'se acostará', nosotros: 'nos acostaremos', ustedes: 'se acostarán' },
     irregular: true,
     irregularNote: 'stem change o→ue (yo, él, ustedes); vos stays regular',
   },
   despertarse: {
-    presente: { yo: 'me despierto', vos: 'te despertás', el: 'se despierta', nosotros: 'nos despertamos', ustedes: 'se despiertan' },
+    presente: { yo: 'me despierto', tu: 'te despiertas', vos: 'te despertás', el: 'se despierta', nosotros: 'nos despertamos', ustedes: 'se despiertan' },
     preterito: { yo: 'me desperté', vos: 'te despertaste', el: 'se despertó', nosotros: 'nos despertamos', ustedes: 'se despertaron' },
     futuro: { yo: 'me despertaré', vos: 'te despertarás', el: 'se despertará', nosotros: 'nos despertaremos', ustedes: 'se despertarán' },
     irregular: true,
     irregularNote: 'stem change e→ie (yo, él, ustedes); vos stays regular',
   },
   cepillarse: {
-    presente: { yo: 'me cepillo', vos: 'te cepillás', el: 'se cepilla', nosotros: 'nos cepillamos', ustedes: 'se cepillan' },
+    presente: { yo: 'me cepillo', tu: 'te cepillas', vos: 'te cepillás', el: 'se cepilla', nosotros: 'nos cepillamos', ustedes: 'se cepillan' },
     preterito: { yo: 'me cepillé', vos: 'te cepillaste', el: 'se cepilló', nosotros: 'nos cepillamos', ustedes: 'se cepillaron' },
     futuro: { yo: 'me cepillaré', vos: 'te cepillarás', el: 'se cepillará', nosotros: 'nos cepillaremos', ustedes: 'se cepillarán' },
   },
   peinarse: {
-    presente: { yo: 'me peino', vos: 'te peinás', el: 'se peina', nosotros: 'nos peinamos', ustedes: 'se peinan' },
+    presente: { yo: 'me peino', tu: 'te peinas', vos: 'te peinás', el: 'se peina', nosotros: 'nos peinamos', ustedes: 'se peinan' },
     preterito: { yo: 'me peiné', vos: 'te peinaste', el: 'se peinó', nosotros: 'nos peinamos', ustedes: 'se peinaron' },
     futuro: { yo: 'me peinaré', vos: 'te peinarás', el: 'se peinará', nosotros: 'nos peinaremos', ustedes: 'se peinarán' },
   },
   preocuparse: {
-    presente: { yo: 'me preocupo', vos: 'te preocupás', el: 'se preocupa', nosotros: 'nos preocupamos', ustedes: 'se preocupan' },
+    presente: { yo: 'me preocupo', tu: 'te preocupas', vos: 'te preocupás', el: 'se preocupa', nosotros: 'nos preocupamos', ustedes: 'se preocupan' },
     preterito: { yo: 'me preocupé', vos: 'te preocupaste', el: 'se preocupó', nosotros: 'nos preocupamos', ustedes: 'se preocuparon' },
     futuro: { yo: 'me preocuparé', vos: 'te preocuparás', el: 'se preocupará', nosotros: 'nos preocuparemos', ustedes: 'se preocuparán' },
   },
   olvidarse: {
-    presente: { yo: 'me olvido', vos: 'te olvidás', el: 'se olvida', nosotros: 'nos olvidamos', ustedes: 'se olvidan' },
+    presente: { yo: 'me olvido', tu: 'te olvidas', vos: 'te olvidás', el: 'se olvida', nosotros: 'nos olvidamos', ustedes: 'se olvidan' },
     preterito: { yo: 'me olvidé', vos: 'te olvidaste', el: 'se olvidó', nosotros: 'nos olvidamos', ustedes: 'se olvidaron' },
     futuro: { yo: 'me olvidaré', vos: 'te olvidarás', el: 'se olvidará', nosotros: 'nos olvidaremos', ustedes: 'se olvidarán' },
   },
   acordarse: {
-    presente: { yo: 'me acuerdo', vos: 'te acordás', el: 'se acuerda', nosotros: 'nos acordamos', ustedes: 'se acuerdan' },
+    presente: { yo: 'me acuerdo', tu: 'te acuerdas', vos: 'te acordás', el: 'se acuerda', nosotros: 'nos acordamos', ustedes: 'se acuerdan' },
     preterito: { yo: 'me acordé', vos: 'te acordaste', el: 'se acordó', nosotros: 'nos acordamos', ustedes: 'se acordaron' },
     futuro: { yo: 'me acordaré', vos: 'te acordarás', el: 'se acordará', nosotros: 'nos acordaremos', ustedes: 'se acordarán' },
     irregular: true,
     irregularNote: 'stem change o→ue (yo, él, ustedes); vos stays regular',
   },
   quejarse: {
-    presente: { yo: 'me quejo', vos: 'te quejás', el: 'se queja', nosotros: 'nos quejamos', ustedes: 'se quejan' },
+    presente: { yo: 'me quejo', tu: 'te quejas', vos: 'te quejás', el: 'se queja', nosotros: 'nos quejamos', ustedes: 'se quejan' },
     preterito: { yo: 'me quejé', vos: 'te quejaste', el: 'se quejó', nosotros: 'nos quejamos', ustedes: 'se quejaron' },
     futuro: { yo: 'me quejaré', vos: 'te quejarás', el: 'se quejará', nosotros: 'nos quejaremos', ustedes: 'se quejarán' },
   },
   arrepentirse: {
-    presente: { yo: 'me arrepiento', vos: 'te arrepentís', el: 'se arrepiente', nosotros: 'nos arrepentimos', ustedes: 'se arrepienten' },
+    presente: { yo: 'me arrepiento', tu: 'te arrepientes', vos: 'te arrepentís', el: 'se arrepiente', nosotros: 'nos arrepentimos', ustedes: 'se arrepienten' },
     preterito: { yo: 'me arrepentí', vos: 'te arrepentiste', el: 'se arrepintió', nosotros: 'nos arrepentimos', ustedes: 'se arrepintieron' },
     futuro: { yo: 'me arrepentiré', vos: 'te arrepentirás', el: 'se arrepentirá', nosotros: 'nos arrepentiremos', ustedes: 'se arrepentirán' },
     irregular: true,
     irregularNote: 'stem change e→i (yo, él, ustedes); vos stays regular; i in preterite él/ustedes',
   },
   irse: {
-    presente: { yo: 'me voy', vos: 'te vas', el: 'se va', nosotros: 'nos vamos', ustedes: 'se van' },
+    presente: { yo: 'me voy', tu: 'te vas', vos: 'te vas', el: 'se va', nosotros: 'nos vamos', ustedes: 'se van' },
     preterito: { yo: 'me fui', vos: 'te fuiste', el: 'se fue', nosotros: 'nos fuimos', ustedes: 'se fueron' },
     futuro: { yo: 'me iré', vos: 'te irás', el: 'se irá', nosotros: 'nos iremos', ustedes: 'se irán' },
     irregular: true,
     irregularNote: 'completely irregular; shares preterite with ser',
   },
   ponerse: {
-    presente: { yo: 'me pongo', vos: 'te ponés', el: 'se pone', nosotros: 'nos ponemos', ustedes: 'se ponen' },
+    presente: { yo: 'me pongo', tu: 'te pones', vos: 'te ponés', el: 'se pone', nosotros: 'nos ponemos', ustedes: 'se ponen' },
     preterito: { yo: 'me puse', vos: 'te pusiste', el: 'se puso', nosotros: 'nos pusimos', ustedes: 'se pusieron' },
     futuro: { yo: 'me pondré', vos: 'te pondrás', el: 'se pondrá', nosotros: 'nos pondremos', ustedes: 'se pondrán' },
     irregular: true,
     irregularNote: 'g in yo form; irregular preterite and future',
   },
   quedarse: {
-    presente: { yo: 'me quedo', vos: 'te quedás', el: 'se queda', nosotros: 'nos quedamos', ustedes: 'se quedan' },
+    presente: { yo: 'me quedo', tu: 'te quedas', vos: 'te quedás', el: 'se queda', nosotros: 'nos quedamos', ustedes: 'se quedan' },
     preterito: { yo: 'me quedé', vos: 'te quedaste', el: 'se quedó', nosotros: 'nos quedamos', ustedes: 'se quedaron' },
     futuro: { yo: 'me quedaré', vos: 'te quedarás', el: 'se quedará', nosotros: 'nos quedaremos', ustedes: 'se quedarán' },
   },
   fijarse: {
-    presente: { yo: 'me fijo', vos: 'te fijás', el: 'se fija', nosotros: 'nos fijamos', ustedes: 'se fijan' },
+    presente: { yo: 'me fijo', tu: 'te fijas', vos: 'te fijás', el: 'se fija', nosotros: 'nos fijamos', ustedes: 'se fijan' },
     preterito: { yo: 'me fijé', vos: 'te fijaste', el: 'se fijó', nosotros: 'nos fijamos', ustedes: 'se fijaron' },
     futuro: { yo: 'me fijaré', vos: 'te fijarás', el: 'se fijará', nosotros: 'nos fijaremos', ustedes: 'se fijarán' },
   },
@@ -796,7 +800,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     futuro: generateArConjugation('molestar'),
   },
   sonreír: {
-    presente: { yo: 'sonrío', vos: 'sonreís', el: 'sonríe', nosotros: 'sonreímos', ustedes: 'sonríen' },
+    presente: { yo: 'sonrío', tu: 'sonríes', vos: 'sonreís', el: 'sonríe', nosotros: 'sonreímos', ustedes: 'sonríen' },
     preterito: { yo: 'sonreí', vos: 'sonreíste', el: 'sonrió', nosotros: 'sonreímos', ustedes: 'sonrieron' },
     futuro: generateIrConjugation('sonreir'),
     irregular: true,
@@ -865,7 +869,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     futuro: generateArConjugation('montar'),
   },
   hacerse: {
-    presente: { yo: 'me hago', vos: 'te hacés', el: 'se hace', nosotros: 'nos hacemos', ustedes: 'se hacen' },
+    presente: { yo: 'me hago', tu: 'te haces', vos: 'te hacés', el: 'se hace', nosotros: 'nos hacemos', ustedes: 'se hacen' },
     preterito: { yo: 'me hice', vos: 'te hiciste', el: 'se hizo', nosotros: 'nos hicimos', ustedes: 'se hicieron' },
     futuro: { yo: 'me haré', vos: 'te harás', el: 'se hará', nosotros: 'nos haremos', ustedes: 'se harán' },
     irregular: true,
@@ -899,7 +903,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
     irregularNote: 'colloquial phrase; "bolo" is fixed',
   },
   estar: {
-    presente: { yo: 'estoy', vos: 'estás', el: 'está', nosotros: 'estamos', ustedes: 'están' },
+    presente: { yo: 'estoy', tu: 'estás', vos: 'estás', el: 'está', nosotros: 'estamos', ustedes: 'están' },
     preterito: { yo: 'estuve', vos: 'estuviste', el: 'estuvo', nosotros: 'estuvimos', ustedes: 'estuvieron' },
     futuro: { yo: 'estaré', vos: 'estarás', el: 'estará', nosotros: 'estaremos', ustedes: 'estarán' },
     irregular: true,
