@@ -41,3 +41,5 @@ android/local.properties
 # Temporary files
 *.tmp
 *.temp
+/ios
+/android
