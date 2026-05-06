@@ -30,6 +30,8 @@ type Ctx = {
   getStudyBatch: (size?: number) => FlashCard[];
   recordAnswer: (cardId: string, quality: 0 | 1 | 2 | 3 | 4 | 5) => Promise<void>;
   toggleFavorite: (cardId: string) => Promise<void>;
+  flagCard: (cardId: string, flagged: boolean) => Promise<void>;
+  clearAllFlags: () => Promise<void>;
   addCardToDeck: (
     deckId: string,
     card: Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'>,
@@ -108,6 +110,33 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     if (idx === -1) return;
     deck.cards[idx] = gradeCard(deck.cards[idx], quality);
     await setDeck(deck);
+  }
+
+  async function flagCard(cardId: string, flagged: boolean) {
+    const stored = await loadDecks();
+    let changed = false;
+    const next = (stored || []).map((d) => {
+      const cards = (d.cards || []).map((c) => {
+        if (c.id !== cardId) return c;
+        changed = true;
+        return { ...c, flagged };
+      });
+      return { ...d, cards };
+    });
+    if (changed) {
+      await saveDecks(next);
+      setDecks(next);
+    }
+  }
+
+  async function clearAllFlags() {
+    const stored = await loadDecks();
+    const next = (stored || []).map((d) => ({
+      ...d,
+      cards: (d.cards || []).map((c) => ({ ...c, flagged: false })),
+    }));
+    await saveDecks(next);
+    setDecks(next);
   }
 
   async function toggleFavorite(cardId: string) {
@@ -194,6 +223,8 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     getStudyBatch,
     recordAnswer,
     toggleFavorite,
+    flagCard,
+    clearAllFlags,
     addCardToDeck,
     createDeck,
     renameDeck,

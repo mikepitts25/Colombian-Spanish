@@ -10,12 +10,14 @@ import {
   FlatList,
   Pressable,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { Deck } from '../types';
 
 export default function ManageDecksScreen() {
   const { ready, decks, renameDeck, deleteDeck, resetDeckProgress, setActiveDeckId } = useDeck();
+  const nav = useNavigation<any>();
   const [q, setQ] = useState('');
 
   const [renameOpen, setRenameOpen] = useState(false);
@@ -77,6 +79,14 @@ export default function ManageDecksScreen() {
     <SafeAreaView style={styles.wrap}>
       <Text style={styles.h1}>Manage Decks</Text>
       <Text style={styles.sub}>Rename, delete, and reset learning progress.</Text>
+
+      <Pressable style={styles.reviewBanner} onPress={() => nav.navigate('Review')}>
+        <View>
+          <Text style={styles.reviewBannerTitle}>🚩 Review Translations</Text>
+          <Text style={styles.reviewBannerSub}>Flag cards with bad translations for fixing</Text>
+        </View>
+        <Text style={styles.reviewBannerArrow}>→</Text>
+      </Pressable>
 
       <TextInput
         value={q}
@@ -222,4 +232,19 @@ const styles = StyleSheet.create({
   modalBtnGhost: { backgroundColor: '#0b1220', borderWidth: 1, borderColor: '#1f2937' },
   modalBtnPrimary: { backgroundColor: '#2563eb' },
   modalBtnText: { color: 'white', fontWeight: '900' },
+
+  reviewBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'rgba(239,68,68,0.08)',
+    borderWidth: 1,
+    borderColor: 'rgba(239,68,68,0.4)',
+    borderRadius: 12,
+    padding: spacing(1.5),
+    marginBottom: spacing(1.5),
+  },
+  reviewBannerTitle: { color: '#fca5a5', fontWeight: '900', fontSize: 15, marginBottom: 2 },
+  reviewBannerSub: { color: '#64748b', fontSize: 13 },
+  reviewBannerArrow: { color: '#fca5a5', fontWeight: '900', fontSize: 20 },
 });
