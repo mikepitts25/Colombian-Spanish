@@ -15,7 +15,9 @@
         "backgroundColor": "#0f172a"
       }
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mikepitts.colombianspanish",
@@ -32,6 +34,11 @@
     "web": {
       "bundler": "metro",
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7be19314-d592-4ab7-b792-4941c7c08cf6"
+      }
     }
   }
 }
