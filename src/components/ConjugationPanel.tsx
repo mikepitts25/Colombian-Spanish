@@ -8,7 +8,7 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native';
-import { ConjugationTable, lookupConjugation } from '../data/conjugations';
+import { ConjugationTable, ConjugationTense, lookupConjugation } from '../data/conjugations';
 import { colors, spacing, radius, typography } from '../styles/theme';
 
 interface ConjugationPanelProps {
@@ -18,11 +18,21 @@ interface ConjugationPanelProps {
 
 const pronouns = [
   { key: 'yo', label: 'yo' },
-  { key: 'vos', label: 'vos', highlight: true }, // Colombian informal
+  { key: 'tu_vos', label: 'tú / vos', highlight: true },
   { key: 'el', label: 'él/ella' },
   { key: 'nosotros', label: 'nosotros' },
-  { key: 'ustedes', label: 'ustedes', highlight: true }, // Colombian plural (no vosotros)
+  { key: 'ustedes', label: 'ustedes', highlight: true },
 ];
+
+function getVerbForm(tense: ConjugationTense, key: string): string {
+  if (key === 'tu_vos') {
+    const tu = tense.tu;
+    const vos = tense.vos;
+    if (!tu || tu === vos) return vos;
+    return `${tu} / ${vos}`;
+  }
+  return (tense as Record<string, string>)[key] ?? '';
+}
 
 const tenseLabels: Record<string, string> = {
   presente: 'Presente',
@@ -127,7 +137,7 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
                     {highlight && <Text style={styles.colombiaTag}>🇨🇴</Text>}
                   </View>
                   <Text style={styles.verbForm}>
-                    {conjugation[activeTense][key as 'yo' | 'vos' | 'el' | 'nosotros' | 'ustedes']}
+                    {getVerbForm(conjugation[activeTense], key)}
                   </Text>
                 </View>
               ))}
@@ -136,7 +146,7 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
             {/* Colombia note */}
             <View style={styles.colombiaNote}>
               <Text style={styles.colombiaNoteText}>
-                🇨🇴 Uses <Text style={styles.bold}>vos</Text> (not tú) and <Text style={styles.bold}>ustedes</Text> (no vosotros) — authentic Colombian Spanish
+                🇨🇴 Uses <Text style={styles.bold}>tú / vos</Text> and <Text style={styles.bold}>ustedes</Text> — authentic Colombian Spanish
               </Text>
             </View>
           </View>

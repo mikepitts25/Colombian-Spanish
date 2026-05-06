@@ -8,6 +8,8 @@ import AddCardScreen from '../screens/AddCardScreen';
 import BrowseScreen from '../screens/BrowseScreen';
 import PhrasebookScreen from '../screens/PhrasebookScreen';
 import ManageDecksScreen from '../screens/ManageDecksScreen';
+import ReviewScreen from '../screens/ReviewScreen';
+import FlaggedScreen from '../screens/FlaggedScreen';
 import { colors, spacing, radius } from '../styles/theme';
 
 const Tab = createBottomTabNavigator();
@@ -59,29 +61,28 @@ function Tabs() {
         ),
       })}
     >
-      <Tab.Screen name="Home"       component={HomeScreen}      options={{ headerShown: false }} />
-      <Tab.Screen name="Study"      component={StudyScreen}     options={{ title: 'Estudiar' }} />
-      <Tab.Screen name="Add"        component={AddCardScreen}   options={{ title: 'Nueva Tarjeta' }} />
-      <Tab.Screen name="Browse"     component={BrowseScreen}    options={{ title: 'Buscar' }} />
+      <Tab.Screen name="Home"       component={HomeScreen}       options={{ headerShown: false }} />
+      <Tab.Screen name="Study"      component={StudyScreen}      options={{ title: 'Estudiar' }} />
+      <Tab.Screen name="Add"        component={AddCardScreen}    options={{ title: 'Nueva Tarjeta' }} />
+      <Tab.Screen name="Browse"     component={BrowseScreen}     options={{ title: 'Buscar' }} />
       <Tab.Screen name="Phrasebook" component={PhrasebookScreen} options={{ title: 'Frasario' }} />
     </Tab.Navigator>
   );
 }
 
+const stackHeaderOpts = {
+  headerStyle: { backgroundColor: colors.surface },
+  headerTintColor: colors.textPrimary,
+  headerTitleStyle: { fontWeight: '700' as const },
+};
+
 export default function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Root"        component={Tabs}             options={{ headerShown: false }} />
-      <Stack.Screen
-        name="ManageDecks"
-        component={ManageDecksScreen}
-        options={{
-          title: 'Gestionar Decks',
-          headerStyle: { backgroundColor: colors.surface },
-          headerTintColor: colors.textPrimary,
-          headerTitleStyle: { fontWeight: '700' },
-        }}
-      />
+      <Stack.Screen name="Root"        component={Tabs}              options={{ headerShown: false }} />
+      <Stack.Screen name="ManageDecks" component={ManageDecksScreen} options={{ ...stackHeaderOpts, title: 'Gestionar Decks' }} />
+      <Stack.Screen name="Review"      component={ReviewScreen}      options={{ ...stackHeaderOpts, title: 'Revisión de Traducciones' }} />
+      <Stack.Screen name="Flagged"     component={FlaggedScreen}     options={{ ...stackHeaderOpts, title: 'Tarjetas Marcadas' }} />
     </Stack.Navigator>
   );
 }

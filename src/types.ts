@@ -42,6 +42,7 @@ export interface FlashCard {
   tags?: string[]; // e.g., "Bogotá", "Cali", "slang"
   ipa?: string; // pronunciation hint
   favorite?: boolean; // user-starred
+  flagged?: boolean;  // marked for translation review
   createdAt: number;
   due: number; // unix timestamp
   reps: number; // successful repetitions
