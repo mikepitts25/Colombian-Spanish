@@ -1,4 +1,4 @@
-import { gradeCard, nextBatch } from '../../src/utils/srs';
+import { gradeCard, nextBatch, selectDifficultCards } from '../../src/utils/srs';
 import { FlashCard } from '../../src/types';
 
 // ── Test helpers ────────────────────────────────────────────────────────────
@@ -270,5 +270,43 @@ describe('nextBatch', () => {
     const copy = [...cards];
     nextBatch(cards, 15);
     expect(cards).toEqual(copy);
+  });
+});
+
+// ── selectDifficultCards ────────────────────────────────────────────────────
+
+describe('selectDifficultCards', () => {
+  beforeEach(() => {
+    jest.spyOn(Date, 'now').mockReturnValue(NOW);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('returns low-ease cards and excludes untouched new cards', () => {
+    const hard = makeCard({ id: 'hard', ease: 2.0, reps: 2, due: NOW + DAY_MS });
+    const newCard = makeCard({ id: 'new', ease: 2.5, reps: 0, interval: 0, due: NOW });
+
+    expect(selectDifficultCards([newCard, hard])).toEqual([hard]);
+  });
+
+  it('includes due studied cards with short intervals', () => {
+    const relearn = makeCard({ id: 'relearn', ease: 2.5, reps: 1, interval: 0.5, due: NOW - 1000 });
+    const stable = makeCard({ id: 'stable', ease: 2.5, reps: 4, interval: 12, due: NOW - 1000 });
+
+    expect(selectDifficultCards([stable, relearn])).toEqual([relearn]);
+  });
+
+  it('sorts hardest cards first by ease, then due date', () => {
+    const dueLater = makeCard({ id: 'later', ease: 2.0, reps: 3, due: NOW + DAY_MS });
+    const lowestEase = makeCard({ id: 'lowest', ease: 1.7, reps: 3, due: NOW + DAY_MS });
+    const dueSooner = makeCard({ id: 'sooner', ease: 2.0, reps: 3, due: NOW - 1000 });
+
+    expect(selectDifficultCards([dueLater, lowestEase, dueSooner]).map((card) => card.id)).toEqual([
+      'lowest',
+      'sooner',
+      'later',
+    ]);
   });
 });

@@ -112,17 +112,44 @@ export async function setDailyTarget(target: number): Promise<DailyProgress> {
   return next;
 }
 
-const STREAK_KEY = 'SRS_STREAK_V1';
+const STREAK_KEY = 'SRS_STUDY_STREAK_V1';
+const LEGACY_STREAK_KEY = 'SRS_STREAK_V1';
 
 export async function getStudyStreak(): Promise<number> {
-  const raw = await AsyncStorage.getItem(STREAK_KEY);
+  const raw = (await AsyncStorage.getItem(STREAK_KEY)) ?? (await AsyncStorage.getItem(LEGACY_STREAK_KEY));
   if (!raw) return 0;
   try {
     const parsed = JSON.parse(raw);
-    return parsed.streak || 0;
+    if (!parsed?.lastStudyDate) return parsed.streak || 0;
+    const lastStudyDate = new Date(parsed.lastStudyDate);
+    const today = new Date(todayISO());
+    const diffDays = Math.floor((today.getTime() - lastStudyDate.getTime()) / (24 * 60 * 60 * 1000));
+    return diffDays <= 1 ? parsed.streak || 0 : 0;
   } catch {
     return 0;
   }
+}
+
+export async function recordStudySession(): Promise<number> {
+  const raw = await AsyncStorage.getItem(STREAK_KEY);
+  const today = todayISO();
+  let nextStreak = 1;
+
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      const lastStudyDate = parsed?.lastStudyDate ? new Date(parsed.lastStudyDate) : undefined;
+      if (lastStudyDate) {
+        const todayDate = new Date(today);
+        const diffDays = Math.floor((todayDate.getTime() - lastStudyDate.getTime()) / (24 * 60 * 60 * 1000));
+        if (diffDays === 0) nextStreak = parsed.streak || 1;
+        else if (diffDays === 1) nextStreak = (parsed.streak || 0) + 1;
+      }
+    } catch {}
+  }
+
+  await AsyncStorage.setItem(STREAK_KEY, JSON.stringify({ streak: nextStreak, lastStudyDate: today }));
+  return nextStreak;
 }
 
 export interface SeenWord {
@@ -138,6 +165,7 @@ export interface SeenWord {
 }
 
 const SEEN_WORDS_KEY = 'SRS_SEEN_WORDS_V1';
+const QUIZ_HISTORY_KEY = 'SRS_QUIZ_HISTORY_V1';
 
 export async function getSeenWords(): Promise<SeenWord[]> {
   const raw = await AsyncStorage.getItem(SEEN_WORDS_KEY);
@@ -151,4 +179,81 @@ export async function getSeenWords(): Promise<SeenWord[]> {
 
 export async function saveSeenWords(words: SeenWord[]) {
   await AsyncStorage.setItem(SEEN_WORDS_KEY, JSON.stringify(words));
+}
+
+export async function recordSeenWord(params: {
+  cardId: string;
+  deckId: string;
+  front: string;
+  back: string;
+  correct: boolean;
+}): Promise<SeenWord[]> {
+  const words = await getSeenWords();
+  const now = Date.now();
+  const existingIndex = words.findIndex((word) => word.cardId === params.cardId);
+  const existing = existingIndex >= 0 ? words[existingIndex] : undefined;
+  const nextWord: SeenWord = {
+    cardId: params.cardId,
+    deckId: params.deckId,
+    front: params.front,
+    back: params.back,
+    spanish: params.front,
+    english: params.back,
+    lastSeen: now,
+    correctCount: (existing?.correctCount ?? 0) + (params.correct ? 1 : 0),
+    incorrectCount: (existing?.incorrectCount ?? 0) + (params.correct ? 0 : 1),
+  };
+
+  const nextWords =
+    existingIndex >= 0
+      ? words.map((word, index) => (index === existingIndex ? nextWord : word))
+      : [...words, nextWord];
+
+  await saveSeenWords(nextWords);
+  return nextWords;
+}
+
+export interface QuizResult {
+  id: string;
+  createdAt: number;
+  score: number;
+  total: number;
+  missedCardIds: string[];
+  region: string;
+}
+
+export async function getQuizHistory(): Promise<QuizResult[]> {
+  const raw = await AsyncStorage.getItem(QUIZ_HISTORY_KEY);
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function saveQuizHistory(results: QuizResult[]) {
+  await AsyncStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(results.slice(0, 10)));
+}
+
+export async function recordQuizResult(params: {
+  score: number;
+  total: number;
+  missedCardIds: string[];
+  region: string;
+}): Promise<QuizResult[]> {
+  const history = await getQuizHistory();
+  const now = Date.now();
+  const result: QuizResult = {
+    id: `quiz-${now}`,
+    createdAt: now,
+    score: params.score,
+    total: params.total,
+    missedCardIds: params.missedCardIds,
+    region: params.region,
+  };
+  const next = [result, ...history].slice(0, 10);
+  await saveQuizHistory(next);
+  return next;
 }

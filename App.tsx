@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import RootNavigator from './src/navigation';
+import { LanguageProvider } from './src/context/LanguageContext';
 import { DeckProvider } from './src/hooks/useDeck';
 
 export default function App() {
@@ -10,8 +11,10 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <DeckProvider>
-          <StatusBar style="light" />
-          <RootNavigator />
+          <LanguageProvider>
+            <StatusBar style="light" />
+            <RootNavigator />
+          </LanguageProvider>
         </DeckProvider>
       </NavigationContainer>
     </GestureHandlerRootView>

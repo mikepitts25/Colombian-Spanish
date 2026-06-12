@@ -96,3 +96,27 @@ export function nextBatch(cards: FlashCard[], size = 15): FlashCard[] {
 
   return [...ready, ...notYet.slice(0, Math.max(0, size - ready.length))];
 }
+
+export function selectDifficultCards(cards: FlashCard[], size = 30): FlashCard[] {
+  const now = Date.now();
+
+  return [...cards]
+    .filter((card) => {
+      const reps = card.reps ?? 0;
+      const ease = card.ease ?? 2.5;
+      const interval = card.interval ?? 0;
+      const due = card.due ?? 0;
+      const hasStudyHistory = reps > 0 || ease < 2.5 || interval > 0;
+
+      if (!hasStudyHistory) return false;
+      if (ease <= 2.2) return true;
+      return reps > 0 && due <= now && interval <= 1;
+    })
+    .sort(
+      (a, b) =>
+        (a.ease ?? 2.5) - (b.ease ?? 2.5) ||
+        (a.due ?? Number.MAX_SAFE_INTEGER) - (b.due ?? Number.MAX_SAFE_INTEGER) ||
+        a.id.localeCompare(b.id),
+    )
+    .slice(0, size);
+}

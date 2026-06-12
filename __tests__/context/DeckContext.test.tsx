@@ -13,6 +13,7 @@ const SEED_CARD: FlashCard = {
   id: 's001',
   front: 'hola',
   back: 'hello',
+  example: 'Hola, ¿cómo estás? | Hello, how are you?',
   createdAt: 0,
   due: 0,
   reps: 0,
@@ -26,7 +27,27 @@ const SEED_DECK: Deck = {
   cards: [SEED_CARD],
 };
 
-jest.mock('../../src/data/decks', () => ({ ALL_DECKS: [SEED_DECK] }));
+jest.mock('../../src/data/decks', () => ({
+  ALL_DECKS: [
+    {
+      id: 'deck-seed',
+      name: 'Seed Deck',
+      cards: [
+        {
+          id: 's001',
+          front: 'hola',
+          back: 'hello',
+          example: 'Hola, ¿cómo estás? | Hello, how are you?',
+          createdAt: 0,
+          due: 0,
+          reps: 0,
+          interval: 0,
+          ease: 2.5,
+        },
+      ],
+    },
+  ],
+}));
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 
@@ -99,6 +120,72 @@ describe('DeckProvider initialization', () => {
     await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(2), { timeout: 10000 });
   });
 
+  it('refreshes updated seed card content while preserving stored progress', async () => {
+    const oldStoredCard = {
+      ...SEED_CARD,
+      example: 'Hola, ¿cómo estás?',
+      due: 12345,
+      reps: 7,
+      interval: 21,
+      ease: 2.8,
+      favorite: true,
+    };
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', [oldStoredCard])]),
+    );
+
+    const { getByTestId } = renderWithProvider(<Consumer />);
+    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(1), {
+      timeout: 10000,
+    });
+
+    const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
+    expect(stored[0].cards[0]).toEqual(
+      expect.objectContaining({
+        example: 'Hola, ¿cómo estás? | Hello, how are you?',
+        due: 12345,
+        reps: 7,
+        interval: 21,
+        ease: 2.8,
+        favorite: true,
+      }),
+    );
+  });
+
+  it('preserves reviewed translation edits during seed content refreshes', async () => {
+    const reviewedStoredCard = {
+      ...SEED_CARD,
+      back: 'custom hello',
+      example: 'Hola. | Custom hello.',
+      reviewStatus: 'reviewed' as const,
+      reviewedAt: 12345,
+      due: 12345,
+      reps: 7,
+    };
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', [reviewedStoredCard])]),
+    );
+
+    const { getByTestId } = renderWithProvider(<Consumer />);
+    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(1), {
+      timeout: 10000,
+    });
+
+    const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
+    expect(stored[0].cards[0]).toEqual(
+      expect.objectContaining({
+        back: 'custom hello',
+        example: 'Hola. | Custom hello.',
+        reviewStatus: 'reviewed',
+        reviewedAt: 12345,
+        due: 12345,
+        reps: 7,
+      }),
+    );
+  });
+
   it('sets activeDeckId to first deck', async () => {
     const { getByTestId } = renderWithProvider(<Consumer />);
     await waitFor(() => expect(getByTestId('active-deck-id').props.children).toBe('deck-seed'), { timeout: 10000 });
@@ -141,9 +228,52 @@ describe('recordAnswer', () => {
     await act(async () => { await ctx!.recordAnswer('grade-me', 5); });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
-    const updatedCard = stored[0].cards[0];
+    const updatedCard = stored[0].cards.find((card: FlashCard) => card.id === 'grade-me');
     expect(updatedCard.reps).toBe(1);
     expect(updatedCard.due).toBeGreaterThan(Date.now());
+  });
+
+  it('records the reviewed card as a seen word for quiz sessions', async () => {
+    const card = makeCard('quiz-word', {
+      front: 'parce',
+      back: 'friend / buddy',
+    });
+    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+
+    let ctx: ReturnType<typeof useDeckContext> | null = null;
+    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
+
+    await act(async () => { await ctx!.recordAnswer('quiz-word', 4); });
+
+    const stored = JSON.parse((await AsyncStorage.getItem('SRS_SEEN_WORDS_V1'))!);
+    expect(stored).toEqual([
+      expect.objectContaining({
+        cardId: 'quiz-word',
+        deckId: 'deck-seed',
+        front: 'parce',
+        back: 'friend / buddy',
+        spanish: 'parce',
+        english: 'friend / buddy',
+        correctCount: 1,
+        incorrectCount: 0,
+      }),
+    ]);
+  });
+
+  it('updates the study streak when a card is reviewed', async () => {
+    const card = makeCard('streak-word');
+    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+
+    let ctx: ReturnType<typeof useDeckContext> | null = null;
+    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
+
+    await act(async () => { await ctx!.recordAnswer('streak-word', 4); });
+
+    const stored = JSON.parse((await AsyncStorage.getItem('SRS_STUDY_STREAK_V1'))!);
+    expect(stored.streak).toBe(1);
+    expect(stored.lastStudyDate).toBeTruthy();
   });
 
   it('does nothing for an unknown cardId', async () => {
@@ -158,6 +288,28 @@ describe('recordAnswer', () => {
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
     expect(stored[0].cards[0].reps).toBe(0);
+  });
+
+  it('updates a matching card even when it is not in the active deck', async () => {
+    const activeCard = makeCard('active-card');
+    const difficultCard = makeCard('other-card');
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([
+        makeStoredDeck('deck-seed', [activeCard]),
+        makeStoredDeck('deck-other', [difficultCard]),
+      ]),
+    );
+
+    let ctx: ReturnType<typeof useDeckContext> | null = null;
+    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
+
+    await act(async () => { await ctx!.recordAnswer('other-card', 4); });
+
+    const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
+    const otherDeck = stored.find((deck: Deck) => deck.id === 'deck-other');
+    expect(otherDeck.cards[0].reps).toBe(1);
   });
 });
 
@@ -175,7 +327,8 @@ describe('toggleFavorite', () => {
     await act(async () => { await ctx!.toggleFavorite('fav-card'); });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
-    expect(stored[0].cards[0].favorite).toBe(true);
+    const updatedCard = stored[0].cards.find((card: FlashCard) => card.id === 'fav-card');
+    expect(updatedCard.favorite).toBe(true);
   });
 
   it('sets favorite=false on second toggle', async () => {
@@ -189,7 +342,45 @@ describe('toggleFavorite', () => {
     await act(async () => { await ctx!.toggleFavorite('fav-card'); });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
-    expect(stored[0].cards[0].favorite).toBe(false);
+    const updatedCard = stored[0].cards.find((card: FlashCard) => card.id === 'fav-card');
+    expect(updatedCard.favorite).toBe(false);
+  });
+});
+
+// ── updateCardReview ─────────────────────────────────────────────────────────
+
+describe('updateCardReview', () => {
+  it('updates translation fields and review status for a matching card', async () => {
+    const card = makeCard('review-card', {
+      front: 'parce',
+      back: 'dude',
+      example: 'Hola, parce. | Hi, dude.',
+    });
+    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+
+    let ctx: ReturnType<typeof useDeckContext> | null = null;
+    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
+
+    await act(async () => {
+      await ctx!.updateCardReview('review-card', {
+        back: 'buddy / friend',
+        example: 'Hola, parce. | Hi, buddy.',
+        reviewStatus: 'reviewed',
+        reviewedAt: 12345,
+      });
+    });
+
+    const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
+    const updatedCard = stored[0].cards.find((card: FlashCard) => card.id === 'review-card');
+    expect(updatedCard).toEqual(
+      expect.objectContaining({
+        back: 'buddy / friend',
+        example: 'Hola, parce. | Hi, buddy.',
+        reviewStatus: 'reviewed',
+        reviewedAt: 12345,
+      }),
+    );
   });
 });
 

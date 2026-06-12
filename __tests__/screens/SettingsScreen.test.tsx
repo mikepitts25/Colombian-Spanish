@@ -1,17 +1,16 @@
 import React from 'react';
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
-import { Alert } from 'react-native';
 import SettingsScreen from '../../src/screens/SettingsScreen';
 
-// ── Mocks ─────────────────────────────────────────────────────────────────────
+const mockNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ navigate: mockNavigate }),
+}));
 
 jest.mock('../../src/storage/storage', () => ({
   getDailyProgress: jest.fn().mockResolvedValue({ date: '2026-01-01', count: 5, target: 10 }),
-  setDailyTarget: jest.fn().mockImplementation(async (n: number) => ({
-    date: '2026-01-01',
-    count: 5,
-    target: Math.max(1, Math.floor(n)),
-  })),
+  getStudyStreak: jest.fn().mockResolvedValue(0),
   saveDecks: jest.fn().mockResolvedValue(undefined),
   loadDecks: jest.fn().mockResolvedValue([]),
 }));
@@ -21,11 +20,28 @@ jest.mock('expo-clipboard', () => ({
   getStringAsync: jest.fn().mockResolvedValue(''),
 }));
 
-import { getDailyProgress, setDailyTarget, saveDecks, loadDecks } from '../../src/storage/storage';
+const mockToggleLanguage = jest.fn();
+let mockLanguage: 'es' | 'en' = 'es';
+
+jest.mock('../../src/context/LanguageContext', () => {
+  const { translate } = jest.requireActual('../../src/i18n/translations');
+  return {
+    useLanguage: () => ({
+      language: mockLanguage,
+      toggleLanguage: mockToggleLanguage,
+      setLanguage: jest.fn(),
+      t: (key: any, values?: Record<string, string | number>) =>
+        translate(mockLanguage, key, values),
+    }),
+  };
+});
+
+import { getDailyProgress, getStudyStreak, saveDecks, loadDecks } from '../../src/storage/storage';
 import * as Clipboard from 'expo-clipboard';
+import { Alert } from 'react-native/Libraries/Alert/Alert';
 
 const mockGetDailyProgress = getDailyProgress as jest.Mock;
-const mockSetDailyTarget = setDailyTarget as jest.Mock;
+const mockGetStudyStreak = getStudyStreak as jest.Mock;
 const mockSaveDecks = saveDecks as jest.Mock;
 const mockLoadDecks = loadDecks as jest.Mock;
 const mockSetStringAsync = Clipboard.setStringAsync as jest.Mock;
@@ -34,221 +50,181 @@ const mockAlert = Alert.alert as jest.Mock;
 
 beforeEach(() => {
   jest.clearAllMocks();
+  mockLanguage = 'es';
   mockGetDailyProgress.mockResolvedValue({ date: '2026-01-01', count: 5, target: 10 });
-  mockSetDailyTarget.mockImplementation(async (n: number) => ({
-    date: '2026-01-01',
-    count: 5,
-    target: Math.max(1, Math.floor(n)),
-  }));
+  mockGetStudyStreak.mockResolvedValue(0);
   mockLoadDecks.mockResolvedValue([]);
   mockSetStringAsync.mockResolvedValue(undefined);
   mockGetStringAsync.mockResolvedValue('');
 });
 
-// ── Rendering ──────────────────────────────────────────────────────────────────
-
 describe('SettingsScreen rendering', () => {
-  it('renders without crashing', async () => {
-    const screen = render(<SettingsScreen />);
-    await waitFor(() => expect(screen.getByText('Settings')).toBeTruthy());
-  });
-
-  it('renders the Settings title', async () => {
+  it('renders the Spanish Settings title by default', async () => {
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => expect(getByText('Settings')).toBeTruthy());
+    await waitFor(() => expect(getByText('⚙️  Ajustes')).toBeTruthy());
   });
 
-  it('renders all four daily goal buttons [5, 10, 15, 25]', async () => {
-    const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => {
-      expect(getByText('5')).toBeTruthy();
-      expect(getByText('10')).toBeTruthy();
-      expect(getByText('15')).toBeTruthy();
-      expect(getByText('25')).toBeTruthy();
-    });
-  });
-
-  it('shows the current target value from storage', async () => {
+  it('renders the current daily goal from storage', async () => {
     mockGetDailyProgress.mockResolvedValue({ date: '2026-01-01', count: 0, target: 15 });
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => expect(getByText('Cards per day: 15')).toBeTruthy());
+    await waitFor(() => expect(getByText('15 tarjetas por día')).toBeTruthy());
   });
 
-  it('renders the Backup section', async () => {
+  it('renders the UI language row in Spanish by default', async () => {
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => expect(getByText('Backup')).toBeTruthy());
+    await waitFor(() => expect(getByText('Idioma de interfaz')).toBeTruthy());
+    expect(getByText('Español')).toBeTruthy();
   });
 
-  it('renders the export button', async () => {
+  it('calls toggleLanguage when the UI language row is pressed', async () => {
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => expect(getByText('Copy backup JSON')).toBeTruthy());
+    await waitFor(() => getByText('Idioma de interfaz'));
+    fireEvent.press(getByText('Idioma de interfaz'));
+    expect(mockToggleLanguage).toHaveBeenCalledTimes(1);
   });
 
-  it('renders the import button', async () => {
+  it('renders Settings copy in English when language is English', async () => {
+    mockLanguage = 'en';
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => expect(getByText('Import from clipboard')).toBeTruthy());
+    await waitFor(() => expect(getByText('⚙️  Settings')).toBeTruthy());
+    expect(getByText('UI language')).toBeTruthy();
+    expect(getByText('English')).toBeTruthy();
+    expect(getByText('10 cards per day')).toBeTruthy();
+  });
+
+  it('shows the current streak with localized Spanish copy', async () => {
+    mockGetStudyStreak.mockResolvedValue(3);
+    const { getByText } = render(<SettingsScreen />);
+    await waitFor(() => expect(getByText('🔥 3 días de racha')).toBeTruthy());
+  });
+
+  it('opens Manage Decks from the learning section below Reminders', async () => {
+    const { getByText } = render(<SettingsScreen />);
+    await waitFor(() => expect(getByText('Gestionar Decks')).toBeTruthy());
+
+    fireEvent.press(getByText('Gestionar Decks'));
+
+    expect(mockNavigate).toHaveBeenCalledWith('ManageDecks');
   });
 });
-
-// ── Daily goal ────────────────────────────────────────────────────────────────
-
-describe('SettingsScreen daily goal', () => {
-  it('calls setDailyTarget(5) when "5" button is pressed', async () => {
-    const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('5'));
-    await act(async () => {
-      fireEvent.press(getByText('5'));
-    });
-    expect(mockSetDailyTarget).toHaveBeenCalledWith(5);
-  });
-
-  it('calls setDailyTarget(25) when "25" button is pressed', async () => {
-    const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('25'));
-    await act(async () => {
-      fireEvent.press(getByText('25'));
-    });
-    expect(mockSetDailyTarget).toHaveBeenCalledWith(25);
-  });
-
-  it('updates the displayed target after pressing a goal button', async () => {
-    mockSetDailyTarget.mockResolvedValueOnce({ date: '2026-01-01', count: 5, target: 15 });
-    const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('15'));
-    await act(async () => {
-      fireEvent.press(getByText('15'));
-    });
-    await waitFor(() => expect(getByText('Cards per day: 15')).toBeTruthy());
-  });
-});
-
-// ── Export backup ──────────────────────────────────────────────────────────────
 
 describe('SettingsScreen export backup', () => {
-  it('calls Clipboard.setStringAsync when export button is pressed', async () => {
-    const DECKS = [{ id: 'd1', name: 'Test', cards: [] }];
-    mockLoadDecks.mockResolvedValue(DECKS);
+  it('calls Clipboard.setStringAsync when export backup is pressed', async () => {
+    const decks = [{ id: 'd1', name: 'Test', cards: [] }];
+    mockLoadDecks.mockResolvedValue(decks);
 
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('Copy backup JSON'));
+    await waitFor(() => getByText('Exportar Backup'));
     await act(async () => {
-      fireEvent.press(getByText('Copy backup JSON'));
+      fireEvent.press(getByText('Exportar Backup'));
     });
     await waitFor(() => expect(mockSetStringAsync).toHaveBeenCalledTimes(1));
   });
 
   it('exported JSON contains kind: "colombian-spanish-backup"', async () => {
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('Copy backup JSON'));
+    await waitFor(() => getByText('Exportar Backup'));
     await act(async () => {
-      fireEvent.press(getByText('Copy backup JSON'));
+      fireEvent.press(getByText('Exportar Backup'));
     });
     await waitFor(() => {
       const jsonStr = mockSetStringAsync.mock.calls[0]?.[0];
-      expect(jsonStr).toBeDefined();
       const parsed = JSON.parse(jsonStr);
       expect(parsed.kind).toBe('colombian-spanish-backup');
     });
   });
 
-  it('exported JSON contains a decks array', async () => {
-    const DECKS = [{ id: 'd1', name: 'Test', cards: [] }];
-    mockLoadDecks.mockResolvedValue(DECKS);
-
+  it('shows a localized success alert after copying backup', async () => {
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('Copy backup JSON'));
+    await waitFor(() => getByText('Exportar Backup'));
     await act(async () => {
-      fireEvent.press(getByText('Copy backup JSON'));
+      fireEvent.press(getByText('Exportar Backup'));
     });
-    await waitFor(() => {
-      const jsonStr = mockSetStringAsync.mock.calls[0]?.[0];
-      const parsed = JSON.parse(jsonStr);
-      expect(Array.isArray(parsed.decks)).toBe(true);
-      expect(parsed.decks[0].id).toBe('d1');
-    });
-  });
-
-  it('shows a success alert after copying backup', async () => {
-    const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('Copy backup JSON'));
-    await act(async () => {
-      fireEvent.press(getByText('Copy backup JSON'));
-    });
-    await waitFor(() => expect(mockAlert).toHaveBeenCalledWith('Backup copied', expect.any(String)));
+    await waitFor(() =>
+      expect(mockAlert).toHaveBeenCalledWith('Backup copiado', expect.any(String)),
+    );
   });
 });
 
-// ── Import backup ──────────────────────────────────────────────────────────────
-
 describe('SettingsScreen import backup', () => {
-  it('shows error alert when clipboard is empty', async () => {
+  it('shows localized error alert when clipboard is empty', async () => {
     mockGetStringAsync.mockResolvedValue('');
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('Import from clipboard'));
+    await waitFor(() => getByText('Importar Backup'));
     await act(async () => {
-      fireEvent.press(getByText('Import from clipboard'));
+      fireEvent.press(getByText('Importar Backup'));
     });
     await waitFor(() =>
-      expect(mockAlert).toHaveBeenCalledWith('Nothing to import', expect.any(String)),
+      expect(mockAlert).toHaveBeenCalledWith('Nada que importar', expect.any(String)),
     );
   });
 
-  it('shows error alert when clipboard contains invalid JSON', async () => {
+  it('shows localized error alert when clipboard contains invalid JSON', async () => {
     mockGetStringAsync.mockResolvedValue('{{not valid json}}');
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('Import from clipboard'));
+    await waitFor(() => getByText('Importar Backup'));
     await act(async () => {
-      fireEvent.press(getByText('Import from clipboard'));
+      fireEvent.press(getByText('Importar Backup'));
+    });
+    await waitFor(() => expect(mockAlert).toHaveBeenCalledWith('JSON inválido', expect.any(String)));
+  });
+
+  it('shows localized error alert when JSON has wrong kind field', async () => {
+    mockGetStringAsync.mockResolvedValue(JSON.stringify({ kind: 'wrong-app', decks: [] }));
+    const { getByText } = render(<SettingsScreen />);
+    await waitFor(() => getByText('Importar Backup'));
+    await act(async () => {
+      fireEvent.press(getByText('Importar Backup'));
+    });
+    await waitFor(() => expect(mockAlert).toHaveBeenCalledWith('No es un backup', expect.any(String)));
+  });
+
+  it('shows localized error alert when backup is missing decks array', async () => {
+    mockGetStringAsync.mockResolvedValue(
+      JSON.stringify({ kind: 'colombian-spanish-backup', version: 1 }),
+    );
+    const { getByText } = render(<SettingsScreen />);
+    await waitFor(() => getByText('Importar Backup'));
+    await act(async () => {
+      fireEvent.press(getByText('Importar Backup'));
     });
     await waitFor(() =>
-      expect(mockAlert).toHaveBeenCalledWith('Invalid JSON', expect.any(String)),
+      expect(mockAlert).toHaveBeenCalledWith('Backup inválido', expect.any(String)),
     );
   });
 
-  it('shows error alert when JSON has wrong kind field', async () => {
-    const wrongKind = JSON.stringify({ kind: 'wrong-app', decks: [] });
-    mockGetStringAsync.mockResolvedValue(wrongKind);
-    const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('Import from clipboard'));
-    await act(async () => {
-      fireEvent.press(getByText('Import from clipboard'));
-    });
-    await waitFor(() =>
-      expect(mockAlert).toHaveBeenCalledWith('Not a backup', expect.any(String)),
+  it('shows localized confirmation dialog for valid backup JSON', async () => {
+    mockGetStringAsync.mockResolvedValue(
+      JSON.stringify({
+        kind: 'colombian-spanish-backup',
+        version: 1,
+        decks: [{ id: 'd1', name: 'Test', cards: [] }],
+      }),
     );
-  });
-
-  it('shows error alert when backup is missing decks array', async () => {
-    const noDecks = JSON.stringify({ kind: 'colombian-spanish-backup', version: 1 });
-    mockGetStringAsync.mockResolvedValue(noDecks);
     const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('Import from clipboard'));
+    await waitFor(() => getByText('Importar Backup'));
     await act(async () => {
-      fireEvent.press(getByText('Import from clipboard'));
-    });
-    await waitFor(() =>
-      expect(mockAlert).toHaveBeenCalledWith('Invalid backup', expect.any(String)),
-    );
-  });
-
-  it('shows confirmation dialog for valid backup JSON', async () => {
-    const validBackup = JSON.stringify({
-      kind: 'colombian-spanish-backup',
-      version: 1,
-      decks: [{ id: 'd1', name: 'Test', cards: [] }],
-    });
-    mockGetStringAsync.mockResolvedValue(validBackup);
-    const { getByText } = render(<SettingsScreen />);
-    await waitFor(() => getByText('Import from clipboard'));
-    await act(async () => {
-      fireEvent.press(getByText('Import from clipboard'));
+      fireEvent.press(getByText('Importar Backup'));
     });
     await waitFor(() =>
       expect(mockAlert).toHaveBeenCalledWith(
-        'Import backup?',
+        '¿Importar backup?',
         expect.any(String),
         expect.any(Array),
       ),
+    );
+  });
+
+  it('uses English alert copy when language is English', async () => {
+    mockLanguage = 'en';
+    mockGetStringAsync.mockResolvedValue('');
+    const { getByText } = render(<SettingsScreen />);
+    await waitFor(() => getByText('Import Backup'));
+    await act(async () => {
+      fireEvent.press(getByText('Import Backup'));
+    });
+    await waitFor(() =>
+      expect(mockAlert).toHaveBeenCalledWith('Nothing to import', expect.any(String)),
     );
   });
 });

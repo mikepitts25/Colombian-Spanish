@@ -1,56 +1,17 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  ScrollView,
-  LayoutAnimation,
-  UIManager,
-  Platform,
+  SafeAreaView, StyleSheet, Text, View, Pressable, ScrollView,
 } from 'react-native';
-import { colors, spacing, radius, typography } from '../styles/theme';
+import { colors, radius } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
-
-type CategoryKey =
-  | 'Colombianisms'
-  | 'Essentials'
-  | 'People & Relationships'
-  | 'Places & Travel'
-  | 'Home & Daily Life'
-  | 'Food & Drink'
-  | 'Communication'
-  | 'Health'
-  | 'Nature'
-  | 'Work & School'
-  | 'Numbers & Time'
-  | 'Fun & Culture'
-  | 'Tech'
-  | 'Other';
-
-const CATEGORY_META: Record<CategoryKey, { emoji: string; color: string; bg: string }> = {
-  'Colombianisms':        { emoji: '🇨🇴', color: '#FFDA00', bg: 'rgba(255,218,0,0.12)' },
-  'Essentials':           { emoji: '⚡',  color: '#60a5fa', bg: 'rgba(96,165,250,0.12)' },
-  'People & Relationships': { emoji: '👥', color: '#f472b6', bg: 'rgba(244,114,182,0.12)' },
-  'Places & Travel':      { emoji: '🗺️',  color: '#34d399', bg: 'rgba(52,211,153,0.12)' },
-  'Home & Daily Life':    { emoji: '🏠',  color: '#a78bfa', bg: 'rgba(167,139,250,0.12)' },
-  'Food & Drink':         { emoji: '🍳',  color: '#fb923c', bg: 'rgba(251,146,60,0.12)' },
-  'Communication':        { emoji: '💬',  color: '#38bdf8', bg: 'rgba(56,189,248,0.12)' },
-  'Health':               { emoji: '❤️‍🩹', color: '#f87171', bg: 'rgba(248,113,113,0.12)' },
-  'Nature':               { emoji: '🌿',  color: '#4ade80', bg: 'rgba(74,222,128,0.12)' },
-  'Work & School':        { emoji: '💼',  color: '#94a3b8', bg: 'rgba(148,163,184,0.12)' },
-  'Numbers & Time':       { emoji: '🕐',  color: '#c084fc', bg: 'rgba(192,132,252,0.12)' },
-  'Fun & Culture':        { emoji: '🎉',  color: '#fbbf24', bg: 'rgba(251,191,36,0.12)' },
-  'Tech':                 { emoji: '💻',  color: '#22d3ee', bg: 'rgba(34,211,238,0.12)' },
-  'Other':                { emoji: '📦',  color: '#64748b', bg: 'rgba(100,116,139,0.12)' },
-};
+import { getDailyProgress, getStudyStreak } from '../storage/storage';
+import { Deck } from '../types';
 
 const COLOMBIAN_GREETINGS = [
-  { text: '¡Buenos días!',   sub: 'Good morning — listo para aprender hoy?', emoji: '☀️' },
-  { text: '¡Buenas tardes!', sub: 'Good afternoon — keep that racha alive!',  emoji: '🌤️' },
-  { text: '¡Buenas noches!', sub: 'Good evening — una última ronda?',          emoji: '🌙' },
+  { text: '¡Buenos días!',   sub: '¿Listo para aprender hoy?', emoji: '☀️' },
+  { text: '¡Buenas tardes!', sub: '¡Sigue con esa racha!',      emoji: '🌤️' },
+  { text: '¡Buenas noches!', sub: 'Una última ronda, ¿va?',     emoji: '🌙' },
 ];
 
 function getGreeting() {
@@ -60,51 +21,130 @@ function getGreeting() {
   return COLOMBIAN_GREETINGS[2];
 }
 
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
+const CATEGORY_COLORS: Record<string, string> = {
+  'Colombianisms':          '#FFDA00',
+  'Essentials':             '#60a5fa',
+  'People & Relationships': '#f472b6',
+  'Places & Travel':        '#34d399',
+  'Home & Daily Life':      '#a78bfa',
+  'Food & Drink':           '#fb923c',
+  'Communication':          '#38bdf8',
+  'Health':                 '#f87171',
+  'Nature':                 '#4ade80',
+  'Work & School':          '#94a3b8',
+  'Numbers & Time':         '#c084fc',
+  'Fun & Culture':          '#fbbf24',
+  'Tech':                   '#22d3ee',
+  'Other':                  '#64748b',
+};
+
+const CATEGORY_EMOJIS: Record<string, string> = {
+  'Colombianisms':          '🇨🇴',
+  'Essentials':             '⚡',
+  'People & Relationships': '👥',
+  'Places & Travel':        '🗺️',
+  'Home & Daily Life':      '🏠',
+  'Food & Drink':           '🍳',
+  'Communication':          '💬',
+  'Health':                 '❤️‍🩹',
+  'Nature':                 '🌿',
+  'Work & School':          '💼',
+  'Numbers & Time':         '🕐',
+  'Fun & Culture':          '🎉',
+  'Tech':                   '💻',
+  'Other':                  '📦',
+};
+
+type DeckWithDue = Deck & {
+  dueCount: number;
+  cat: string;
+};
+
+function getCategoryForDeck(deck: Deck): string {
+  const name = (deck.name || '').toLowerCase();
+  const tags = (deck.cards?.[0]?.tags || []).map((t: string) => t.toLowerCase());
+  const text = name + ' ' + tags.join(' ');
+  if (/(slang|jerga|coloquial|colombia|colombianism)/.test(text)) return 'Colombianisms';
+  if (/(basic|intro|common|essential)/.test(text)) return 'Essentials';
+  if (/(family|people|professions|body|emotions|relationships)/.test(text)) return 'People & Relationships';
+  if (/(place|travel|transport|city|cali|bogot|medell)/.test(text)) return 'Places & Travel';
+  if (/(house|home|casa|kitchen|bathroom|daily)/.test(text)) return 'Home & Daily Life';
+  if (/(food|drink|comida|bebida|restaurant|market)/.test(text)) return 'Food & Drink';
+  if (/(communicat|message|call|greeting|conversation|talk)/.test(text)) return 'Communication';
+  if (/(health|clinic|pharmacy|medicine|salud)/.test(text)) return 'Health';
+  if (/(weather|clima|nature|animals|outdoor)/.test(text)) return 'Nature';
+  if (/(work|job|school|study|professions|office)/.test(text)) return 'Work & School';
+  if (/(number|date|time|calendar|holidays)/.test(text)) return 'Numbers & Time';
+  if (/(sport|hobby|music|games|culture|art)/.test(text)) return 'Fun & Culture';
+  if (/(tech|technology|computer|phone|apps)/.test(text)) return 'Tech';
+  return 'Other';
 }
 
 export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId } = useDeck();
   const nav = useNavigation<any>();
-  const [openCats, setOpenCats] = useState<Record<string, boolean>>({});
-
   const greeting = useMemo(() => getGreeting(), []);
-  const sections  = useMemo(() => groupIntoCategories(decks || []), [decks]);
+  const [streak, setStreak] = useState(0);
+  const [dailyCount, setDailyCount] = useState(0);
+  const [dailyTarget, setDailyTarget] = useState(10);
 
-  const endOfToday = useMemo(() => {
-    const d = new Date();
-    d.setHours(23, 59, 59, 999);
-    return d.getTime();
+  useEffect(() => {
+    Promise.all([getDailyProgress(), getStudyStreak()]).then(([dp, s]) => {
+      setDailyCount(dp.count);
+      setDailyTarget(dp.target);
+      setStreak(s);
+    });
   }, []);
 
-  const topDueDecks = useMemo(() => {
-    return (decks || [])
-      .map((d: any) => ({
-        ...d,
-        dueCount: (d.cards || []).filter((c: any) => (c?.due ?? 0) <= endOfToday).length,
-      }))
-      .filter((d: any) => d.dueCount > 0)
-      .sort((a: any, b: any) => b.dueCount - a.dueCount)
-      .slice(0, 8);
-  }, [decks, endOfToday]);
+  const endOfToday = useMemo(() => {
+    const d = new Date(); d.setHours(23, 59, 59, 999); return d.getTime();
+  }, []);
 
   const totalCards = useMemo(
-    () => (decks || []).reduce((s: number, d: any) => s + (d.cards?.length ?? 0), 0),
+    () => (decks || []).reduce((s, d) => s + (d.cards?.length ?? 0), 0),
     [decks],
   );
-  const totalDue = topDueDecks.reduce((s, d: any) => s + (d?.dueCount ?? 0), 0);
 
-  const toggleCat = (key: string) => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setOpenCats((prev) => ({ ...prev, [key]: !prev[key] }));
+  const totalDue = useMemo(
+    () => (decks || []).reduce(
+      (s, d) => s + (d.cards || []).filter((c: any) => (c.due ?? 0) <= endOfToday).length, 0,
+    ),
+    [decks, endOfToday],
+  );
+
+  const mastered = useMemo(
+    () => (decks || []).reduce(
+      (s, d) => s + (d.cards || []).filter((c: any) => c.reps >= 3).length, 0,
+    ),
+    [decks],
+  );
+
+  const quickDecks = useMemo<DeckWithDue[]>(() => {
+    return (decks || [])
+      .map((d) => ({
+        ...d,
+        dueCount: (d.cards || []).filter((c: any) => (c.due ?? 0) <= endOfToday).length,
+        cat: getCategoryForDeck(d),
+      }))
+      .filter((d) => d.dueCount > 0)
+      .sort((a, b) => b.dueCount - a.dueCount)
+      .slice(0, 4);
+  }, [decks, endOfToday]);
+
+  const dailyGoalProgress = dailyTarget > 0 ? Math.min(dailyCount / dailyTarget, 1) : 0;
+  const dailyGoalLabel = dailyTarget > 0 ? `${Math.min(dailyCount, dailyTarget)}/${dailyTarget}` : `${dailyCount}`;
+  const dueCardLabel = totalDue === 1 ? '1 card due' : `${totalDue} cards due`;
+
+  const startStudy = (deckId?: string) => {
+    if (deckId) setActiveDeckId(deckId);
+    nav.navigate('Study');
   };
 
   if (!ready) {
     return (
       <SafeAreaView style={styles.wrap}>
         <View style={styles.loadingWrap}>
-          <Text style={styles.loadingEmoji}>🇨🇴</Text>
+          <Text style={styles.loadingFlag}>🇨🇴</Text>
           <Text style={styles.loadingText}>Cargando…</Text>
         </View>
       </SafeAreaView>
@@ -120,379 +160,345 @@ export default function HomeScreen() {
         <View style={[styles.flagBand, { backgroundColor: '#CE1126', flex: 1 }]} />
       </View>
 
-      <ScrollView
-        contentContainerStyle={styles.scroll}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* ── HEADER ── */}
+      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <View style={styles.headerTop}>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.greeting}>
-                {greeting.emoji} {greeting.text}
-              </Text>
-              <Text style={styles.greetingSub}>{greeting.sub}</Text>
+          <View style={styles.greetingWrap}>
+            <Text style={styles.greeting}>{greeting.emoji} {greeting.text}</Text>
+            <Text style={styles.greetingSub}>{greeting.sub}</Text>
+          </View>
+          <Pressable style={styles.avatarBtn} onPress={() => nav.navigate('Settings')}>
+            <Text style={styles.avatarText}>👤</Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.todayCard}>
+          <View style={styles.todayHeader}>
+            <View>
+              <Text style={styles.eyebrow}>Today</Text>
+              <Text style={styles.todayTitle}>{dueCardLabel}</Text>
             </View>
-            <Pressable
-              style={styles.manageBtn}
-              onPress={() => nav.navigate('ManageDecks')}
-            >
-              <Text style={styles.manageBtnText}>⚙️ Decks</Text>
-            </Pressable>
+            <View style={styles.streakPill}>
+              <Text style={styles.streakText}>🔥 {streak}</Text>
+            </View>
           </View>
 
-          {/* Stats row */}
-          <View style={styles.statsRow}>
-            <View style={[styles.statChip, { borderColor: 'rgba(255,218,0,0.4)' }]}>
-              <Text style={styles.statEmoji}>📚</Text>
-              <View>
-                <Text style={styles.statValue}>{totalCards.toLocaleString()}</Text>
-                <Text style={styles.statLabel}>tarjetas</Text>
-              </View>
+          <View style={styles.goalPanel}>
+            <View style={styles.goalHeader}>
+              <Text style={styles.goalLabel}>Daily goal</Text>
+              <Text style={styles.goalValue}>{dailyGoalLabel}</Text>
             </View>
-            <View style={[styles.statChip, { borderColor: 'rgba(248,113,113,0.4)' }]}>
-              <Text style={styles.statEmoji}>🔥</Text>
-              <View>
-                <Text style={[styles.statValue, { color: '#f87171' }]}>{totalDue}</Text>
-                <Text style={styles.statLabel}>para hoy</Text>
-              </View>
+            <View style={styles.goalTrack}>
+              <View style={[styles.goalFill, { width: `${dailyGoalProgress * 100}%` }]} />
             </View>
-            <View style={[styles.statChip, { borderColor: 'rgba(74,222,128,0.4)' }]}>
-              <Text style={styles.statEmoji}>🇨🇴</Text>
-              <View>
-                <Text style={[styles.statValue, { color: '#4ade80' }]}>{(decks || []).length}</Text>
-                <Text style={styles.statLabel}>decks</Text>
-              </View>
-            </View>
+          </View>
+
+          <Pressable
+            style={styles.primaryButton}
+            onPress={() => startStudy(quickDecks[0]?.id)}
+          >
+            <Text style={styles.primaryButtonText}>
+              {totalDue > 0 ? 'Study due cards' : 'Study anyway'}
+            </Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.metricsRow}>
+          <View style={styles.metricItem}>
+            <Text style={styles.metricValue}>{totalCards.toLocaleString()}</Text>
+            <Text style={styles.metricLabel}>cards</Text>
+          </View>
+          <View style={styles.metricDivider} />
+          <View style={styles.metricItem}>
+            <Text style={styles.metricValue}>{mastered}</Text>
+            <Text style={styles.metricLabel}>mastered</Text>
+          </View>
+          <View style={styles.metricDivider} />
+          <View style={styles.metricItem}>
+            <Text style={styles.metricValue}>{(decks || []).length}</Text>
+            <Text style={styles.metricLabel}>decks</Text>
           </View>
         </View>
 
-        {/* ── DUE TODAY ── */}
-        {topDueDecks.length > 0 && (
-          <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>🔥 Para estudiar hoy</Text>
-              <View style={styles.dueTotalBadge}>
-                <Text style={styles.dueTotalText}>{totalDue} cartas</Text>
-              </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Tools</Text>
+          <View style={styles.quickActions}>
+            <Pressable style={styles.quickAction} onPress={() => nav.navigate('Quiz')}>
+              <Text style={styles.quickActionIcon}>🎯</Text>
+              <Text style={styles.quickActionLabel}>Quiz</Text>
+            </Pressable>
+            <Pressable style={styles.quickAction} onPress={() => nav.navigate('DifficultWords')}>
+              <Text style={styles.quickActionIcon}>↻</Text>
+              <Text style={styles.quickActionLabel}>Difficult</Text>
+            </Pressable>
+            <Pressable style={styles.quickAction} onPress={() => nav.navigate('Phrasebook')}>
+              <Text style={styles.quickActionIcon}>★</Text>
+              <Text style={styles.quickActionLabel}>Phrasebook</Text>
+            </Pressable>
+            <Pressable style={styles.quickAction} onPress={() => nav.navigate('AddCard')}>
+              <Text style={styles.quickActionIcon}>＋</Text>
+              <Text style={styles.quickActionLabel}>Add Card</Text>
+            </Pressable>
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <View>
+              <Text style={styles.sectionTitle}>Due decks</Text>
+              <Text style={styles.sectionSub}>
+                {quickDecks.length > 0 ? 'Highest priority decks for today' : 'No decks are due right now'}
+              </Text>
             </View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.dueRow}
-            >
-              {topDueDecks.map((deck: any, i: number) => {
-                const catKey = getCategoryForDeck(deck) as CategoryKey;
-                const meta = CATEGORY_META[catKey] ?? CATEGORY_META['Other'];
+            <Pressable onPress={() => nav.navigate('Browse')}>
+              <Text style={styles.browseLink}>Browse all decks</Text>
+            </Pressable>
+          </View>
+
+          {quickDecks.length > 0 ? (
+            <View style={styles.dueDeckList}>
+              {quickDecks.map((deck) => {
+                const color = CATEGORY_COLORS[deck.cat] ?? '#64748b';
+                const emoji = CATEGORY_EMOJIS[deck.cat] ?? '📦';
+                const isActive = deck.id === activeDeckId;
                 return (
                   <Pressable
                     key={deck.id}
-                    style={[styles.dueTile, { borderColor: meta.color + '55' }]}
-                    onPress={() => {
-                      setActiveDeckId(deck.id);
-                      nav.navigate('Study');
-                    }}
+                    style={[styles.deckRow, isActive && { borderColor: color + '99' }]}
+                    onPress={() => startStudy(deck.id)}
                   >
-                    <View style={[styles.dueBadge, { backgroundColor: meta.color }]}>
-                      <Text style={styles.dueBadgeText}>{deck.dueCount}</Text>
+                    <View style={[styles.deckIconWrap, { backgroundColor: color + '20' }]}>
+                      <Text style={styles.deckEmoji}>{emoji}</Text>
                     </View>
-                    <Text style={styles.dueEmoji}>{meta.emoji}</Text>
-                    <Text style={styles.dueName} numberOfLines={2}>{deck.name}</Text>
-                    <View style={styles.dueGoRow}>
-                      <Text style={[styles.dueGo, { color: meta.color }]}>Estudiar →</Text>
+                    <View style={styles.deckInfo}>
+                      <Text style={styles.deckName} numberOfLines={1}>{deck.name}</Text>
+                      <Text style={styles.deckMeta}>{deck.cards.length} cards</Text>
+                    </View>
+                    <View style={styles.duePill}>
+                      <Text style={styles.duePillText}>{deck.dueCount} due</Text>
                     </View>
                   </Pressable>
                 );
               })}
-            </ScrollView>
-          </View>
-        )}
-
-        {/* ── CATEGORIES ── */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>📂 Todas las categorías</Text>
-          {sections.map((section) => {
-            const isOpen = !!openCats[section.key];
-            const meta = CATEGORY_META[section.key as CategoryKey] ?? CATEGORY_META['Other'];
-            return (
-              <View key={section.key} style={styles.catBlock}>
-                <Pressable
-                  style={[styles.catTile, { borderLeftColor: meta.color, backgroundColor: isOpen ? meta.bg : colors.surfaceElevated }]}
-                  onPress={() => toggleCat(section.key)}
-                >
-                  <View style={styles.catLeft}>
-                    <Text style={styles.catEmoji}>{meta.emoji}</Text>
-                    <View>
-                      <Text style={styles.catTitle}>{section.key}</Text>
-                      <Text style={styles.catSub}>{section.data.length} {section.data.length === 1 ? 'deck' : 'decks'}</Text>
-                    </View>
-                  </View>
-                  <Text style={[styles.catChevron, isOpen && styles.catChevronOpen]}>›</Text>
-                </Pressable>
-
-                {isOpen && (
-                  <View style={styles.grid}>
-                    {section.data.map((deck: any) => {
-                      const isActive = deck.id === activeDeckId;
-                      const due = (deck.cards || []).filter((c: any) => (c?.due ?? 0) <= endOfToday).length;
-                      return (
-                        <Pressable
-                          key={deck.id}
-                          style={[
-                            styles.deckTile,
-                            isActive && { borderColor: meta.color, borderWidth: 2 },
-                          ]}
-                          onPress={() => {
-                            setActiveDeckId(deck.id);
-                            nav.navigate('Study');
-                          }}
-                        >
-                          <View style={[styles.deckColorBar, { backgroundColor: meta.color }]} />
-                          <View style={styles.deckBody}>
-                            <Text style={styles.deckName} numberOfLines={2}>{deck.name}</Text>
-                            <View style={styles.deckMetaRow}>
-                              <Text style={styles.deckCardCount}>{deck.cards.length} cartas</Text>
-                              {due > 0 && (
-                                <View style={styles.deckDuePill}>
-                                  <Text style={styles.deckDueText}>{due} hoy</Text>
-                                </View>
-                              )}
-                            </View>
-                            {isActive && (
-                              <View style={[styles.activePill, { backgroundColor: meta.color + '33', borderColor: meta.color }]}>
-                                <Text style={[styles.activeText, { color: meta.color }]}>✓ Activo</Text>
-                              </View>
-                            )}
-                          </View>
-                        </Pressable>
-                      );
-                    })}
-                  </View>
-                )}
-              </View>
-            );
-          })}
-        </View>
-
-        {/* ── FOOTER ── */}
-        <View style={styles.footer}>
-          <Text style={styles.footerFlag}>🇨🇴</Text>
-          <Text style={styles.footerText}>¡Tú puedes! • You got this!</Text>
+            </View>
+          ) : (
+            <View style={styles.emptyDueState}>
+              <Text style={styles.emptyTitle}>All caught up</Text>
+              <Text style={styles.emptyText}>Browse decks or run a quiz when you want extra practice.</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-// ─── helpers ───────────────────────────────────────────────────────────────
-
-function getCategoryForDeck(deck: any): CategoryKey {
-  const name = (deck.name || '').toLowerCase();
-  const tags = (deck.cards?.[0]?.tags || []).map((t: string) => (t || '').toLowerCase());
-  const text = name + ' ' + tags.join(' ');
-
-  if (/(slang|jerga|coloquial|colombia|colombianism)/.test(text)) return 'Colombianisms';
-  if (/(basic|intro|common|essential)/.test(text)) return 'Essentials';
-  if (/(family|people|professions|body|emotions|relationships)/.test(text)) return 'People & Relationships';
-  if (/(place|travel|transport|city|cali|bogotá|bogota|medellín|medellin)/.test(text)) return 'Places & Travel';
-  if (/(house|home|casa|kitchen|bathroom|daily)/.test(text)) return 'Home & Daily Life';
-  if (/(food|drink|comida|bebida|restaurant|market)/.test(text)) return 'Food & Drink';
-  if (/(communicat|message|call|greeting|conversation|talk)/.test(text)) return 'Communication';
-  if (/(health|clinic|pharmacy|medicine|salud)/.test(text)) return 'Health';
-  if (/(weather|clima|nature|animals|outdoor)/.test(text)) return 'Nature';
-  if (/(work|job|school|study|professions|office)/.test(text)) return 'Work & School';
-  if (/(number|date|time|calendar|holidays)/.test(text)) return 'Numbers & Time';
-  if (/(sport|hobby|music|games|culture|art)/.test(text)) return 'Fun & Culture';
-  if (/(tech|technology|computer|phone|apps)/.test(text)) return 'Tech';
-  return 'Other';
-}
-
-function groupIntoCategories(decks: any[]) {
-  const buckets: Record<CategoryKey, any[]> = {
-    Colombianisms: [], Essentials: [], 'People & Relationships': [],
-    'Places & Travel': [], 'Home & Daily Life': [], 'Food & Drink': [],
-    Communication: [], Health: [], Nature: [], 'Work & School': [],
-    'Numbers & Time': [], 'Fun & Culture': [], Tech: [], Other: [],
-  };
-  for (const d of decks) {
-    buckets[getCategoryForDeck(d)].push(d);
-  }
-  return Object.entries(buckets)
-    .filter(([, arr]) => arr.length > 0)
-    .map(([key, data]) => ({ key, data }));
-}
-
-// ─── styles ────────────────────────────────────────────────────────────────
-
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg },
-
-  // Loading
   loadingWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12 },
-  loadingEmoji: { fontSize: 48 },
-  loadingText: { color: colors.textSecondary, fontSize: typography.size.lg },
+  loadingFlag: { fontSize: 48 },
+  loadingText: { color: colors.textSecondary, fontSize: 16 },
 
-  // Flag stripe
   flagStripe: { flexDirection: 'row', height: 4 },
   flagBand: { height: 4 },
 
-  scroll: { paddingBottom: spacing(4) },
+  scroll: { paddingBottom: 120 },
 
-  // Header
   header: {
-    paddingHorizontal: spacing(2),
-    paddingTop: spacing(2),
-    paddingBottom: spacing(1.5),
-  },
-  headerTop: {
     flexDirection: 'row',
     alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 12,
+  },
+  greetingWrap: { flex: 1, gap: 3 },
+  greeting: { color: colors.textPrimary, fontSize: 24, fontWeight: '800', lineHeight: 28 },
+  greetingSub: { color: colors.textSecondary, fontSize: 13 },
+  avatarBtn: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: '#FFDA00',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarText: { fontSize: 20 },
+
+  todayCard: {
+    marginHorizontal: 16,
+    marginBottom: 12,
+    backgroundColor: colors.surface,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: colors.borderBrand,
+    padding: 16,
+    gap: 14,
+  },
+  todayHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     gap: 12,
-    marginBottom: spacing(1.5),
   },
-  greeting: {
-    color: colors.textPrimary,
-    fontSize: typography.size['2xl'],
+  eyebrow: {
+    color: colors.brand,
+    fontSize: 12,
     fontWeight: '800',
-    lineHeight: 30,
+    textTransform: 'uppercase',
   },
-  greetingSub: {
-    color: colors.textSecondary,
-    fontSize: typography.size.sm,
-    marginTop: 4,
-  },
-  manageBtn: {
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: 'rgba(255,218,0,0.3)',
-    borderRadius: radius.md,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-  manageBtnText: { color: colors.textPrimary, fontWeight: '700', fontSize: 13 },
-
-  // Stats
-  statsRow: { flexDirection: 'row', gap: 10 },
-  statChip: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderRadius: radius.md,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-  },
-  statEmoji: { fontSize: 20 },
-  statValue: { color: colors.textPrimary, fontWeight: '800', fontSize: 16 },
-  statLabel: { color: colors.textSecondary, fontSize: 11 },
-
-  // Sections
-  section: { paddingHorizontal: spacing(2), marginTop: spacing(2) },
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: spacing(1.5),
-  },
-  sectionTitle: {
+  todayTitle: {
     color: colors.textPrimary,
-    fontSize: typography.size.lg,
+    fontSize: 28,
     fontWeight: '800',
+    lineHeight: 34,
   },
-  dueTotalBadge: {
-    backgroundColor: 'rgba(248,113,113,0.2)',
-    borderRadius: radius.full,
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderWidth: 1,
-    borderColor: 'rgba(248,113,113,0.4)',
-  },
-  dueTotalText: { color: '#f87171', fontWeight: '700', fontSize: 12 },
-
-  // Due Today tiles
-  dueRow: { gap: 10, paddingRight: spacing(2) },
-  dueTile: {
-    width: 150,
+  streakPill: {
     backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderRadius: radius.lg,
-    padding: spacing(1.5),
-    gap: 4,
-  },
-  dueBadge: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
     borderRadius: radius.full,
-    marginBottom: 4,
-  },
-  dueBadgeText: { color: '#0f172a', fontWeight: '900', fontSize: 12 },
-  dueEmoji: { fontSize: 22, marginBottom: 2 },
-  dueName: { color: colors.textPrimary, fontWeight: '700', fontSize: 13, flex: 1 },
-  dueGoRow: { marginTop: 4 },
-  dueGo: { fontWeight: '800', fontSize: 12 },
-
-  // Categories
-  catBlock: { marginBottom: spacing(1) },
-  catTile: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: spacing(1.5),
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: 'transparent',
-    borderLeftWidth: 4,
-    marginBottom: 6,
-  },
-  catLeft: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  catEmoji: { fontSize: 26 },
-  catTitle: { color: colors.textPrimary, fontWeight: '800', fontSize: 16 },
-  catSub: { color: colors.textSecondary, fontSize: 12, marginTop: 2 },
-  catChevron: {
-    color: colors.textSecondary,
-    fontSize: 24,
-    fontWeight: '300',
-    transform: [{ rotate: '0deg' }],
-  },
-  catChevronOpen: { transform: [{ rotate: '90deg' }] },
-
-  // Deck grid
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 8 },
-  deckTile: {
-    width: '47.5%',
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: radius.md,
     borderWidth: 1,
     borderColor: colors.border,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  streakText: {
+    color: colors.textPrimary,
+    fontSize: 13,
+    fontWeight: '800',
+  },
+  goalPanel: {
+    backgroundColor: 'rgba(255,255,255,0.04)',
+    borderRadius: 12,
+    padding: 12,
+    gap: 8,
+  },
+  goalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  goalLabel: { color: colors.textSecondary, fontSize: 13, fontWeight: '700' },
+  goalValue: {
+    color: colors.textPrimary,
+    fontSize: 13,
+    fontWeight: '800',
+    fontVariant: ['tabular-nums'],
+  },
+  goalTrack: {
+    height: 8,
+    borderRadius: radius.full,
+    backgroundColor: colors.surfaceElevated,
     overflow: 'hidden',
   },
-  deckColorBar: { height: 3, width: '100%' },
-  deckBody: { padding: spacing(1.5) },
-  deckName: { color: colors.textPrimary, fontWeight: '700', fontSize: 13, marginBottom: 6 },
-  deckMetaRow: { flexDirection: 'row', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
-  deckCardCount: { color: colors.textSecondary, fontSize: 11 },
-  deckDuePill: {
-    backgroundColor: 'rgba(248,113,113,0.2)',
+  goalFill: {
+    height: 8,
     borderRadius: radius.full,
-    paddingHorizontal: 6,
-    paddingVertical: 1,
+    backgroundColor: colors.brand,
   },
-  deckDueText: { color: '#f87171', fontSize: 10, fontWeight: '700' },
-  activePill: {
-    marginTop: 6,
-    alignSelf: 'flex-start',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: radius.full,
-    borderWidth: 1,
+  primaryButton: {
+    minHeight: 52,
+    borderRadius: 14,
+    backgroundColor: colors.brand,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
   },
-  activeText: { fontSize: 11, fontWeight: '700' },
+  primaryButtonText: {
+    color: colors.textInverse,
+    fontSize: 16,
+    fontWeight: '900',
+  },
 
-  // Footer
-  footer: { alignItems: 'center', paddingVertical: spacing(3), gap: 6 },
-  footerFlag: { fontSize: 32 },
-  footerText: { color: colors.textTertiary, fontSize: 13, fontStyle: 'italic' },
+  metricsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 16,
+    marginBottom: 18,
+    backgroundColor: 'rgba(15,23,42,0.72)',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: colors.border,
+    paddingVertical: 12,
+  },
+  metricItem: { flex: 1, alignItems: 'center', gap: 2 },
+  metricValue: {
+    color: colors.textPrimary,
+    fontSize: 18,
+    fontWeight: '800',
+    fontVariant: ['tabular-nums'],
+  },
+  metricLabel: { color: colors.textSecondary, fontSize: 11, fontWeight: '700' },
+  metricDivider: { width: 1, height: 26, backgroundColor: colors.border },
+
+  quickActions: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  quickAction: {
+    flex: 1,
+    minHeight: 62,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 5,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 12,
+  },
+  quickActionIcon: {
+    color: colors.brand,
+    fontSize: 20,
+    fontWeight: '800',
+  },
+  quickActionLabel: {
+    color: colors.textPrimary,
+    fontSize: 11,
+    fontWeight: '800',
+  },
+
+  section: { paddingHorizontal: 16, marginBottom: 20 },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    gap: 12,
+    marginBottom: 12,
+  },
+  sectionTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
+  sectionSub: { color: colors.textSecondary, fontSize: 12, marginTop: 2 },
+  browseLink: { color: colors.brand, fontSize: 12, fontWeight: '800' },
+  dueDeckList: { gap: 8 },
+
+  deckRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 14,
+    padding: 12,
+  },
+  deckIconWrap: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+  deckEmoji: { fontSize: 18 },
+  deckInfo: { flex: 1, gap: 2 },
+  deckName: { color: colors.textPrimary, fontSize: 14, fontWeight: '700' },
+  deckMeta: { color: colors.textSecondary, fontSize: 12 },
+  duePill: {
+    backgroundColor: 'rgba(248,113,113,0.15)',
+    borderRadius: radius.full,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  duePillText: { color: '#f87171', fontSize: 11, fontWeight: '700' },
+  emptyDueState: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 14,
+    padding: 16,
+    gap: 4,
+  },
+  emptyTitle: { color: colors.textPrimary, fontSize: 15, fontWeight: '800' },
+  emptyText: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
+
 });

@@ -7,6 +7,8 @@ import {
   removeDeckById,
   renameDeckById,
   resetDeckProgressById,
+  recordSeenWord,
+  recordStudySession,
 } from '../storage/storage';
 import { Deck, FlashCard } from '../types';
 import { nextBatch, gradeCard } from '../utils/srs';
@@ -31,6 +33,10 @@ type Ctx = {
   recordAnswer: (cardId: string, quality: 0 | 1 | 2 | 3 | 4 | 5) => Promise<void>;
   toggleFavorite: (cardId: string) => Promise<void>;
   flagCard: (cardId: string, flagged: boolean) => Promise<void>;
+  updateCardReview: (
+    cardId: string,
+    patch: Partial<Pick<FlashCard, 'back' | 'example' | 'flagged' | 'reviewStatus' | 'reviewedAt'>>,
+  ) => Promise<void>;
   clearAllFlags: () => Promise<void>;
   addCardToDeck: (
     deckId: string,
@@ -44,6 +50,41 @@ type Ctx = {
 };
 
 const DeckContext = createContext<Ctx | undefined>(undefined);
+
+function mergeSeedDeckContent(storedDeck: Deck, seedDeck: Deck): Deck {
+  const storedCards = (storedDeck.cards || []).filter(Boolean);
+  const seedCards = (seedDeck.cards || []).filter(Boolean);
+  const storedCardsById = new Map(storedCards.map((card) => [card.id, card]));
+  const seedCardIds = new Set(seedCards.map((card) => card.id));
+
+  const mergedSeedCards = seedCards.map((seedCard) => {
+    const storedCard = storedCardsById.get(seedCard.id);
+    if (!storedCard) return seedCard;
+    const hasReviewedTranslation = storedCard.reviewStatus === 'reviewed' || storedCard.reviewStatus === 'needs_native';
+
+    return {
+      ...seedCard,
+      back: hasReviewedTranslation ? storedCard.back : seedCard.back,
+      example: hasReviewedTranslation ? storedCard.example : seedCard.example,
+      createdAt: storedCard.createdAt,
+      due: storedCard.due,
+      reps: storedCard.reps,
+      interval: storedCard.interval,
+      ease: storedCard.ease,
+      favorite: storedCard.favorite,
+      flagged: storedCard.flagged,
+      reviewStatus: storedCard.reviewStatus,
+      reviewedAt: storedCard.reviewedAt,
+    };
+  });
+
+  const storedOnlyCards = storedCards.filter((card) => !seedCardIds.has(card.id));
+
+  return {
+    ...storedDeck,
+    cards: [...mergedSeedCards, ...storedOnlyCards],
+  };
+}
 
 export function DeckProvider({ children }: { children: ReactNode }) {
   const [decks, setDecks] = useState<Deck[]>([]);
@@ -64,7 +105,13 @@ export function DeckProvider({ children }: { children: ReactNode }) {
         working = [];
       }
     } else {
-      // Merge in any new seed decks by id
+      // Merge seed content updates without losing user progress or custom decks.
+      const seedsById = new Map(SEED_DECKS.map((d) => [d.id, d]));
+      working = working.map((deck) => {
+        const seedDeck = seedsById.get(deck.id);
+        return seedDeck ? mergeSeedDeckContent(deck, seedDeck) : deck;
+      });
+
       const present = new Set(working.map((d) => d.id));
       let changed = false;
       for (const d of SEED_DECKS) {
@@ -73,7 +120,7 @@ export function DeckProvider({ children }: { children: ReactNode }) {
           changed = true;
         }
       }
-      if (changed) await saveDecks(working);
+      if (changed || seedsById.size > 0) await saveDecks(working);
     }
     setDecks(working);
     if (!activeDeckId && working.length > 0) setActiveDeckId(working[0].id);
@@ -104,12 +151,36 @@ export function DeckProvider({ children }: { children: ReactNode }) {
   }
 
   async function recordAnswer(cardId: string, quality: 0 | 1 | 2 | 3 | 4 | 5) {
-    if (!activeDeck) return;
-    const deck = { ...activeDeck };
-    const idx = deck.cards.findIndex((c) => c.id === cardId);
-    if (idx === -1) return;
-    deck.cards[idx] = gradeCard(deck.cards[idx], quality);
-    await setDeck(deck);
+    let reviewedCard: FlashCard | undefined;
+    let reviewedDeckId: string | undefined;
+
+    const nextDecks = decks.map((deck) => {
+      const idx = deck.cards.findIndex((card) => card.id === cardId);
+      if (idx === -1) return deck;
+
+      const nextCards = [...deck.cards];
+      reviewedCard = nextCards[idx];
+      reviewedDeckId = deck.id;
+      nextCards[idx] = gradeCard(nextCards[idx], quality);
+
+      return {
+        ...deck,
+        cards: nextCards,
+      };
+    });
+
+    if (!reviewedCard || !reviewedDeckId) return;
+
+    setDecks(nextDecks);
+    await saveDecks(nextDecks);
+    await recordSeenWord({
+      cardId: reviewedCard.id,
+      deckId: reviewedDeckId,
+      front: reviewedCard.front,
+      back: reviewedCard.back,
+      correct: quality >= 3,
+    });
+    await recordStudySession();
   }
 
   async function flagCard(cardId: string, flagged: boolean) {
@@ -150,6 +221,30 @@ export function DeckProvider({ children }: { children: ReactNode }) {
       });
       return { ...d, cards };
     });
+    if (changed) {
+      await saveDecks(next);
+      setDecks(next);
+    }
+  }
+
+  async function updateCardReview(
+    cardId: string,
+    patch: Partial<Pick<FlashCard, 'back' | 'example' | 'flagged' | 'reviewStatus' | 'reviewedAt'>>,
+  ) {
+    const stored = await loadDecks();
+    let changed = false;
+    const next = (stored || []).map((deck) => ({
+      ...deck,
+      cards: (deck.cards || []).map((card) => {
+        if (card.id !== cardId) return card;
+        changed = true;
+        return {
+          ...card,
+          ...patch,
+        };
+      }),
+    }));
+
     if (changed) {
       await saveDecks(next);
       setDecks(next);
@@ -224,6 +319,7 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     recordAnswer,
     toggleFavorite,
     flagCard,
+    updateCardReview,
     clearAllFlags,
     addCardToDeck,
     createDeck,

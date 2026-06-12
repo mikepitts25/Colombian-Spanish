@@ -58,10 +58,18 @@ const DECK_B: Deck = {
   ],
 };
 
+const DECK_PAISA: Deck = {
+  id: 'deck-paisa',
+  name: 'Paisa Slang (Medellín)',
+  cards: [
+    makeCard('p1', { front: 'parce-paisa', back: 'paisa buddy', tags: ['paisa', 'Medellín'] }),
+  ],
+};
+
 function buildContext(overrides = {}) {
   return {
     ready: true,
-    decks: [DECK_A, DECK_B],
+    decks: [DECK_A, DECK_B, DECK_PAISA],
     setActiveDeckId: jest.fn(),
     ...overrides,
   };
@@ -94,19 +102,20 @@ describe('BrowseScreen default state', () => {
 
   it('renders the search input', () => {
     const { getByPlaceholderText } = renderBrowseScreen();
-    expect(getByPlaceholderText('Search cards, phrases, translations...')).toBeTruthy();
+    expect(getByPlaceholderText('Busca palabras, frases o decks...')).toBeTruthy();
   });
 
-  it('shows cards from all decks (up to 80) with no search query', () => {
+  it('shows browse categories and trending words with no search query', () => {
     const { getByText } = renderBrowseScreen();
-    // Cards from both decks should be visible
-    expect(getByText('hola')).toBeTruthy();
-    expect(getByText('arepa')).toBeTruthy();
+    expect(getByText('📂 Categorías')).toBeTruthy();
+    expect(getByText('🔥 Palabras del Día')).toBeTruthy();
+    expect(getByText('chimba')).toBeTruthy();
+    expect(getByText('awesome • Saludos')).toBeTruthy();
   });
 
-  it('shows deck name alongside each card', () => {
+  it('shows category cards in browse mode', () => {
     const { getAllByText } = renderBrowseScreen();
-    expect(getAllByText('Saludos').length).toBeGreaterThan(0);
+    expect(getAllByText('Jerga Colombiana').length).toBeGreaterThan(0);
   });
 });
 
@@ -115,7 +124,7 @@ describe('BrowseScreen default state', () => {
 describe('BrowseScreen search', () => {
   it('filters by front (Spanish word) match', async () => {
     const { getByPlaceholderText, queryByText } = renderBrowseScreen();
-    const input = getByPlaceholderText('Search cards, phrases, translations...');
+    const input = getByPlaceholderText('Busca palabras, frases o decks...');
     fireEvent.changeText(input, 'hola');
     await waitFor(() => expect(queryByText('hola')).toBeTruthy());
     expect(queryByText('arepa')).toBeNull();
@@ -123,7 +132,7 @@ describe('BrowseScreen search', () => {
 
   it('filters by back (English) match', async () => {
     const { getByPlaceholderText, queryByText } = renderBrowseScreen();
-    const input = getByPlaceholderText('Search cards, phrases, translations...');
+    const input = getByPlaceholderText('Busca palabras, frases o decks...');
     fireEvent.changeText(input, 'goodbye');
     await waitFor(() => expect(queryByText('adiós')).toBeTruthy());
     expect(queryByText('hola')).toBeNull();
@@ -131,38 +140,48 @@ describe('BrowseScreen search', () => {
 
   it('filters by tag match', async () => {
     const { getByPlaceholderText, queryByText } = renderBrowseScreen();
-    const input = getByPlaceholderText('Search cards, phrases, translations...');
+    const input = getByPlaceholderText('Busca palabras, frases o decks...');
     fireEvent.changeText(input, 'slang');
     await waitFor(() => expect(queryByText('chimba')).toBeTruthy());
     expect(queryByText('hola')).toBeNull();
   });
 
+  it('filters search results by selected region', async () => {
+    const { getByText, getByPlaceholderText, queryByText } = renderBrowseScreen();
+
+    fireEvent.press(getByText('Paisa'));
+    fireEvent.changeText(getByPlaceholderText('Busca palabras, frases o decks...'), 'paisa');
+
+    await waitFor(() => expect(queryByText('parce-paisa')).toBeTruthy());
+    expect(queryByText('bandeja paisa')).toBeNull();
+  });
+
   it('search is case-insensitive', async () => {
     const { getByPlaceholderText, queryByText } = renderBrowseScreen();
-    const input = getByPlaceholderText('Search cards, phrases, translations...');
+    const input = getByPlaceholderText('Busca palabras, frases o decks...');
     fireEvent.changeText(input, 'HOLA');
     await waitFor(() => expect(queryByText('hola')).toBeTruthy());
   });
 
-  it('shows all cards again when query is cleared', async () => {
+  it('returns to browse mode when query is cleared', async () => {
     const { getByPlaceholderText, queryByText } = renderBrowseScreen();
-    const input = getByPlaceholderText('Search cards, phrases, translations...');
+    const input = getByPlaceholderText('Busca palabras, frases o decks...');
     fireEvent.changeText(input, 'hola');
-    await waitFor(() => expect(queryByText('arepa')).toBeNull());
+    await waitFor(() => expect(queryByText('1 resultado')).toBeTruthy());
     fireEvent.changeText(input, '');
-    await waitFor(() => expect(queryByText('arepa')).toBeTruthy());
+    await waitFor(() => expect(queryByText('📂 Categorías')).toBeTruthy());
   });
 
   it('shows a clear button when query is non-empty', async () => {
     const { getByPlaceholderText, getByText } = renderBrowseScreen();
-    const input = getByPlaceholderText('Search cards, phrases, translations...');
+    const input = getByPlaceholderText('Busca palabras, frases o decks...');
     fireEvent.changeText(input, 'hola');
     await waitFor(() => expect(getByText('✕')).toBeTruthy());
   });
 
   it('clears the query when the clear button is pressed', async () => {
     const { getByPlaceholderText, getByText, queryByText } = renderBrowseScreen();
-    const input = getByPlaceholderText('Search cards, phrases, translations...');
+    const input = getByPlaceholderText('Busca palabras, frases o decks...');
     fireEvent.changeText(input, 'hola');
     await waitFor(() => getByText('✕'));
     fireEvent.press(getByText('✕'));
@@ -173,22 +192,18 @@ describe('BrowseScreen search', () => {
 // ── Deck filter ───────────────────────────────────────────────────────────────
 
 describe('BrowseScreen deck filter', () => {
-  it('shows "All Decks" option in the filter', () => {
+  it('shows the active all filter chip', () => {
     const { getByText } = renderBrowseScreen();
-    // The chip renders '📚 All Decks'
-    expect(getByText(/All Decks/)).toBeTruthy();
+    expect(getByText('Todos')).toBeTruthy();
   });
 
-  it('renders deck names as filter options in the dropdown', async () => {
-    const { getByText, getAllByText } = renderBrowseScreen();
-    // Open the dropdown by pressing the chip
-    const chip = getByText(/All Decks/);
-    fireEvent.press(chip);
-    await waitFor(() => {
-      // Deck names should appear in the modal dropdown
-      const saludosItems = getAllByText('Saludos');
-      expect(saludosItems.length).toBeGreaterThan(0);
-    });
+  it('filters search results with the slang chip', async () => {
+    const { getByPlaceholderText, getByText, queryByText } = renderBrowseScreen();
+    fireEvent.press(getByText('🇨🇴 Jerga'));
+    fireEvent.changeText(getByPlaceholderText('Busca palabras, frases o decks...'), 'a');
+
+    await waitFor(() => expect(queryByText('chimba')).toBeTruthy());
+    expect(queryByText('arepa')).toBeNull();
   });
 });
 
@@ -204,11 +219,10 @@ describe('BrowseScreen audio', () => {
   it('calls Speech.speak with the card front text when 🔊 is pressed', async () => {
     const { getAllByText } = renderBrowseScreen();
     const speakButtons = getAllByText('🔊');
-    // BrowseScreen's onPress calls e.stopPropagation() before speak; pass a mock event
     fireEvent(speakButtons[0], 'press', { stopPropagation: jest.fn() });
     await waitFor(() =>
       expect(mockSpeak).toHaveBeenCalledWith(
-        'hola',
+        'chimba',
         expect.objectContaining({ language: 'es-CO' }),
       ),
     );

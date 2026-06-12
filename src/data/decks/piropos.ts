@@ -57,7 +57,7 @@ export const PiroposDeck: Deck = {
     {
       id: 'pirop-005',
       front: `Qué chimba eres`,
-      back: `You're awesome/amazing (very Colombian)`,
+      back: `You're awesome / amazing`,
       example: `Qué chimba eres, siempre tan divertida. | You're awesome, always so fun.`,
       tags: ['compliments', 'slang'],
       createdAt: 1754759195954,

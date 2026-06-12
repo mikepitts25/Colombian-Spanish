@@ -6,9 +6,9 @@ beforeEach(async () => {
 });
 
 describe('getPrefs', () => {
-  it('returns defaults { autoSpeak: false, speechRate: 0.98 } when storage is empty', async () => {
+  it('returns defaults when storage is empty', async () => {
     const prefs = await getPrefs();
-    expect(prefs).toEqual({ autoSpeak: false, speechRate: 0.98 });
+    expect(prefs).toEqual({ autoSpeak: false, speechRate: 0.98, uiLanguage: 'es' });
   });
 
   it('returns saved preferences', async () => {
@@ -24,7 +24,7 @@ describe('getPrefs', () => {
   it('returns defaults when JSON is corrupted', async () => {
     await AsyncStorage.setItem('SRS_PREFS_V1', '{{bad json}}');
     const prefs = await getPrefs();
-    expect(prefs).toEqual({ autoSpeak: false, speechRate: 0.98 });
+    expect(prefs).toEqual({ autoSpeak: false, speechRate: 0.98, uiLanguage: 'es' });
   });
 
   it('falls back to default speechRate when stored value is below 0.5', async () => {
@@ -59,6 +59,30 @@ describe('getPrefs', () => {
     const prefs = await getPrefs();
     expect(prefs.autoSpeak).toBe(true);
     expect(prefs.speechRate).toBe(0.98);
+    expect(prefs.uiLanguage).toBe('es');
+  });
+
+  it('returns Spanish as the default UI language when storage is empty', async () => {
+    const prefs = await getPrefs();
+    expect(prefs.uiLanguage).toBe('es');
+  });
+
+  it('returns a saved English UI language', async () => {
+    await AsyncStorage.setItem(
+      'SRS_PREFS_V1',
+      JSON.stringify({ autoSpeak: false, speechRate: 1.0, uiLanguage: 'en' }),
+    );
+    const prefs = await getPrefs();
+    expect(prefs.uiLanguage).toBe('en');
+  });
+
+  it('falls back to Spanish when stored UI language is invalid', async () => {
+    await AsyncStorage.setItem(
+      'SRS_PREFS_V1',
+      JSON.stringify({ autoSpeak: false, speechRate: 1.0, uiLanguage: 'fr' }),
+    );
+    const prefs = await getPrefs();
+    expect(prefs.uiLanguage).toBe('es');
   });
 });
 
@@ -76,7 +100,7 @@ describe('setPrefs', () => {
   it('round-trip: set then get returns the same values', async () => {
     await setPrefs({ autoSpeak: true, speechRate: 1.5 });
     const prefs = await getPrefs();
-    expect(prefs).toEqual({ autoSpeak: true, speechRate: 1.5 });
+    expect(prefs).toEqual({ autoSpeak: true, speechRate: 1.5, uiLanguage: 'es' });
   });
 
   it('does not overwrite fields not included in the patch', async () => {
@@ -91,5 +115,12 @@ describe('setPrefs', () => {
     const result = await setPrefs({ speechRate: 0.75 });
     expect(result.autoSpeak).toBe(false); // default
     expect(result.speechRate).toBe(0.75);
+    expect(result.uiLanguage).toBe('es');
+  });
+
+  it('round-trip: set then get persists uiLanguage', async () => {
+    await setPrefs({ uiLanguage: 'en' });
+    const prefs = await getPrefs();
+    expect(prefs.uiLanguage).toBe('en');
   });
 });

@@ -12,6 +12,8 @@ import {
   setDailyTarget,
   getStudyStreak,
   recordStudySession,
+  getQuizHistory,
+  recordQuizResult,
 } from '../../src/storage/storage';
 import { Deck, FlashCard } from '../../src/types';
 
@@ -390,5 +392,36 @@ describe('recordStudySession', () => {
     );
     const streak = await recordStudySession();
     expect(streak).toBe(1);
+  });
+});
+
+// ── quiz history ─────────────────────────────────────────────────────────────
+
+describe('quiz history', () => {
+  it('returns [] when no quiz results exist', async () => {
+    await expect(getQuizHistory()).resolves.toEqual([]);
+  });
+
+  it('stores newest quiz results first and limits history', async () => {
+    for (let i = 0; i < 12; i += 1) {
+      await recordQuizResult({
+        score: i,
+        total: 10,
+        missedCardIds: [`card-${i}`],
+        region: 'all',
+      });
+    }
+
+    const history = await getQuizHistory();
+    expect(history).toHaveLength(10);
+    expect(history[0]).toEqual(
+      expect.objectContaining({
+        score: 11,
+        total: 10,
+        missedCardIds: ['card-11'],
+        region: 'all',
+      }),
+    );
+    expect(history[9].score).toBe(2);
   });
 });

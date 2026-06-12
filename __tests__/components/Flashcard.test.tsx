@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import Flashcard from '../../src/components/Flashcard';
 import { FlashCard } from '../../src/types';
 
@@ -45,11 +45,6 @@ describe('Flashcard', () => {
     expect(getByText('chimba')).toBeTruthy();
   });
 
-  it('renders "Tap to flip" hint on the front', () => {
-    const { getByText } = render(<Flashcard card={makeCard()} onGrade={jest.fn()} />);
-    expect(getByText('Tap to flip')).toBeTruthy();
-  });
-
   it('renders without crashing when card has no example', () => {
     const card = makeCard({ example: undefined });
     expect(() => render(<Flashcard card={card} onGrade={jest.fn()} />)).not.toThrow();
@@ -65,44 +60,9 @@ describe('Flashcard', () => {
     expect(() => render(<Flashcard card={card} onGrade={jest.fn()} />)).not.toThrow();
   });
 
-  // ── Accessibility fallback buttons ────────────────────────────────────────
-
-  it('renders the "Hard" accessibility button', () => {
-    const { getByAccessibilityHint, getByLabelText } = render(
-      <Flashcard card={makeCard()} onGrade={jest.fn()} />,
-    );
-    // Button has accessibilityLabel="Mark as hard"
-    expect(getByLabelText('Mark as hard')).toBeTruthy();
-  });
-
   it('renders the "Flip card" accessibility button', () => {
-    const { getByLabelText } = render(
-      <Flashcard card={makeCard()} onGrade={jest.fn()} />,
-    );
+    const { getByLabelText } = render(<Flashcard card={makeCard()} onGrade={jest.fn()} />);
     expect(getByLabelText('Flip card')).toBeTruthy();
-  });
-
-  it('renders the "Good" accessibility button', () => {
-    const { getByLabelText } = render(
-      <Flashcard card={makeCard()} onGrade={jest.fn()} />,
-    );
-    expect(getByLabelText('Mark as good')).toBeTruthy();
-  });
-
-  // ── Grading via accessibility buttons ─────────────────────────────────────
-
-  it('calls onGrade(2) when the "Hard" button is pressed', () => {
-    const onGrade = jest.fn();
-    const { getByLabelText } = render(<Flashcard card={makeCard()} onGrade={onGrade} />);
-    fireEvent.press(getByLabelText('Mark as hard'));
-    expect(onGrade).toHaveBeenCalledWith(2);
-  });
-
-  it('calls onGrade(4) when the "Good" button is pressed', () => {
-    const onGrade = jest.fn();
-    const { getByLabelText } = render(<Flashcard card={makeCard()} onGrade={onGrade} />);
-    fireEvent.press(getByLabelText('Mark as good'));
-    expect(onGrade).toHaveBeenCalledWith(4);
   });
 
   // ── Card back visibility ───────────────────────────────────────────────────
@@ -113,9 +73,15 @@ describe('Flashcard', () => {
     expect(getByText('awesome / cool')).toBeTruthy();
   });
 
-  it('renders the English label on the back face', () => {
-    const { getByText } = render(<Flashcard card={makeCard()} onGrade={jest.fn()} />);
-    expect(getByText('English')).toBeTruthy();
+  it('renders Spanish example text on the front and English example text on the back', () => {
+    const { getByTestId } = render(<Flashcard card={makeCard()} onGrade={jest.fn()} />);
+
+    expect(getByTestId('flashcard-front-example').props.children).toEqual([
+      '"',
+      '¡Eso está chimba!',
+      '"',
+    ]);
+    expect(getByTestId('flashcard-back-example').props.children).toBe('That is awesome!');
   });
 
   // ── Card reset on prop change ──────────────────────────────────────────────

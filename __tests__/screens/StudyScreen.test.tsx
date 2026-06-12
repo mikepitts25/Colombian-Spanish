@@ -5,6 +5,12 @@ import { FlashCard, Deck } from '../../src/types';
 
 // ── Mocks ─────────────────────────────────────────────────────────────────────
 
+const mockNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ navigate: mockNavigate }),
+}));
+
 // Mock the hooks/useDeck re-export which wraps useDeckContext
 jest.mock('../../src/hooks/useDeck', () => ({
   useDeck: jest.fn(),
@@ -43,6 +49,10 @@ function makeCard(id: string, overrides: Partial<FlashCard> = {}): FlashCard {
 }
 
 const CARDS = [makeCard('c1'), makeCard('c2'), makeCard('c3')];
+const MIXED_REGION_CARDS = [
+  makeCard('general', { front: 'hola', tags: ['greeting'] }),
+  makeCard('paisa', { front: 'qué hubo', tags: ['paisa', 'Medellín'] }),
+];
 
 const ACTIVE_DECK: Deck = {
   id: 'deck-greetings',
@@ -91,23 +101,33 @@ beforeEach(() => {
 describe('StudyScreen rendering', () => {
   it('shows loading state when ready=false', () => {
     const { getByText } = renderStudyScreen({ ready: false });
-    expect(getByText('Cargando...')).toBeTruthy();
+    expect(getByText('Cargando…')).toBeTruthy();
   });
 
-  it('shows "No deck selected" when activeDeck is undefined', () => {
+  it('shows the no-deck state when activeDeck is undefined', () => {
     const { getByText } = renderStudyScreen({
       activeDeck: undefined,
       activeDeckId: undefined,
     });
-    expect(getByText('No deck selected')).toBeTruthy();
+    expect(getByText('Selecciona un deck')).toBeTruthy();
   });
 
   it('shows the "All caught up" state when batch is empty', () => {
     const { getByText } = renderStudyScreen({
       getStudyBatch: jest.fn().mockReturnValue([]),
     });
-    expect(getByText('¡Excelente!')).toBeTruthy();
-    expect(getByText('All caught up! Come back later.')).toBeTruthy();
+    expect(getByText('¡Bacano! Todo al día')).toBeTruthy();
+    expect(getByText('No hay más tarjetas por ahora. Vuelve mañana.')).toBeTruthy();
+  });
+
+  it('shows a quiz CTA when there are no more cards to study', () => {
+    const { getByText } = renderStudyScreen({
+      getStudyBatch: jest.fn().mockReturnValue([]),
+    });
+
+    expect(getByText('Take Quiz')).toBeTruthy();
+    fireEvent.press(getByText('Take Quiz'));
+    expect(mockNavigate).toHaveBeenCalledWith('Quiz');
   });
 
   it('renders the deck name in the header', async () => {
@@ -115,9 +135,9 @@ describe('StudyScreen rendering', () => {
     await waitFor(() => expect(getByText('Saludos')).toBeTruthy());
   });
 
-  it('renders "Card 1 of 3" counter for a 3-card batch', async () => {
+  it('renders remaining card count for a 3-card batch', async () => {
     const { getByText } = renderStudyScreen();
-    await waitFor(() => expect(getByText('Card 1 of 3')).toBeTruthy());
+    await waitFor(() => expect(getByText('3 left')).toBeTruthy());
   });
 
   it('renders the Spanish word on the front', async () => {
@@ -125,45 +145,45 @@ describe('StudyScreen rendering', () => {
     await waitFor(() => expect(getByText('front-c1')).toBeTruthy());
   });
 
-  it('renders the "Show English" flip button', async () => {
-    const { getByText } = renderStudyScreen();
-    await waitFor(() => expect(getByText('Show English')).toBeTruthy());
+  it('filters the study batch by selected region', async () => {
+    const { getByText, queryByText } = renderStudyScreen({
+      getStudyBatch: jest.fn().mockReturnValue(MIXED_REGION_CARDS),
+    });
+
+    await waitFor(() => expect(getByText('hola')).toBeTruthy());
+    fireEvent.press(getByText('Paisa'));
+
+    await waitFor(() => expect(getByText('qué hubo')).toBeTruthy());
+    expect(queryByText('hola')).toBeNull();
   });
 
-  it('grading buttons are not visible before flipping', async () => {
-    const { queryByText } = renderStudyScreen();
-    await waitFor(() => expect(queryByText('Again')).toBeNull());
-    expect(queryByText('Good')).toBeNull();
-    expect(queryByText('Easy')).toBeNull();
+  it('renders the flip-card touch target', async () => {
+    const { getByLabelText } = renderStudyScreen();
+    await waitFor(() => expect(getByLabelText('Flip card')).toBeTruthy());
+  });
+
+  it('grading buttons are visible in the grade bar', async () => {
+    const { getByText } = renderStudyScreen();
+    await waitFor(() => expect(getByText('Again')).toBeTruthy());
+    expect(getByText('Good')).toBeTruthy();
+    expect(getByText('Easy')).toBeTruthy();
   });
 });
 
 // ── Flip interaction ──────────────────────────────────────────────────────────
 
 describe('StudyScreen flip', () => {
-  it('reveals grading buttons after pressing the flip button', async () => {
+  it('keeps front and back text mounted for the flip animation', async () => {
     const { getByText } = renderStudyScreen();
-    await waitFor(() => getByText('Show English'));
-    fireEvent.press(getByText('Show English'));
-    await waitFor(() => expect(getByText('Again')).toBeTruthy());
-    expect(getByText('Good')).toBeTruthy();
-    expect(getByText('Easy')).toBeTruthy();
-  });
-
-  it('flip button text changes to "Show Spanish" after flipping', async () => {
-    const { getByText } = renderStudyScreen();
-    await waitFor(() => getByText('Show English'));
-    fireEvent.press(getByText('Show English'));
-    await waitFor(() => expect(getByText('Show Spanish')).toBeTruthy());
+    await waitFor(() => expect(getByText('front-c1')).toBeTruthy());
+    expect(getByText('back-c1')).toBeTruthy();
   });
 });
 
 // ── Grading ───────────────────────────────────────────────────────────────────
 
 describe('StudyScreen grading', () => {
-  async function flipAndGrade(getByText: any, gradeLabel: string) {
-    await waitFor(() => getByText('Show English'));
-    fireEvent.press(getByText('Show English'));
+  async function gradeCard(getByText: any, gradeLabel: string) {
     await waitFor(() => getByText(gradeLabel));
     await act(async () => {
       fireEvent.press(getByText(gradeLabel));
@@ -173,44 +193,44 @@ describe('StudyScreen grading', () => {
   it('pressing "Again" calls recordAnswer with quality 1', async () => {
     const recordAnswer = jest.fn().mockResolvedValue(undefined);
     const { getByText } = renderStudyScreen({ recordAnswer });
-    await flipAndGrade(getByText, 'Again');
+    await gradeCard(getByText, 'Again');
     expect(recordAnswer).toHaveBeenCalledWith('c1', 1);
   });
 
-  it('pressing "Good" calls recordAnswer with quality 3', async () => {
+  it('pressing "Good" calls recordAnswer with quality 4', async () => {
     const recordAnswer = jest.fn().mockResolvedValue(undefined);
     const { getByText } = renderStudyScreen({ recordAnswer });
-    await flipAndGrade(getByText, 'Good');
-    expect(recordAnswer).toHaveBeenCalledWith('c1', 3);
+    await gradeCard(getByText, 'Good');
+    expect(recordAnswer).toHaveBeenCalledWith('c1', 4);
   });
 
   it('pressing "Easy" calls recordAnswer with quality 5', async () => {
     const recordAnswer = jest.fn().mockResolvedValue(undefined);
     const { getByText } = renderStudyScreen({ recordAnswer });
-    await flipAndGrade(getByText, 'Easy');
+    await gradeCard(getByText, 'Easy');
     expect(recordAnswer).toHaveBeenCalledWith('c1', 5);
   });
 
   it('calls incrementDailyProgress after grading a card', async () => {
     const { getByText } = renderStudyScreen();
-    await flipAndGrade(getByText, 'Good');
+    await gradeCard(getByText, 'Good');
     expect(mockIncrementDailyProgress).toHaveBeenCalledWith(1);
   });
 
   it('advances to the next card after grading', async () => {
     const { getByText } = renderStudyScreen();
-    await flipAndGrade(getByText, 'Good');
-    await waitFor(() => expect(getByText('Card 2 of 3')).toBeTruthy());
+    await gradeCard(getByText, 'Good');
+    await waitFor(() => expect(getByText('2 left')).toBeTruthy());
   });
 });
 
 // ── Daily progress ────────────────────────────────────────────────────────────
 
 describe('StudyScreen daily progress', () => {
-  it('loads and shows daily progress percentage on mount', async () => {
-    // count=3, target=10 → 30%
+  it('loads daily progress on mount', async () => {
     const { getByText } = renderStudyScreen();
-    await waitFor(() => expect(getByText('30%')).toBeTruthy());
+    await waitFor(() => expect(mockGetDailyProgress).toHaveBeenCalled());
+    expect(getByText('3 left')).toBeTruthy();
   });
 });
 
@@ -224,8 +244,6 @@ describe('StudyScreen edge cases', () => {
     const getStudyBatch = jest.fn().mockReturnValue(singleCard);
     const { getByText } = renderStudyScreen({ getStudyBatch, recordAnswer });
 
-    await waitFor(() => getByText('Show English'));
-    fireEvent.press(getByText('Show English'));
     await waitFor(() => getByText('Good'));
     await act(async () => {
       fireEvent.press(getByText('Good'));

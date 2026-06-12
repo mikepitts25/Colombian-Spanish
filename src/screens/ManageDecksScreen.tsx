@@ -68,62 +68,77 @@ export default function ManageDecksScreen() {
     );
   }
 
+  function goHome() {
+    nav.navigate('Root', { screen: 'Home' });
+  }
+
   if (!ready)
     return (
       <SafeAreaView style={styles.wrap}>
-        <Text style={styles.h1}>Cargando…</Text>
+        <View style={styles.content}>
+          <Text style={styles.h1}>Cargando…</Text>
+        </View>
       </SafeAreaView>
     );
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>Manage Decks</Text>
-      <Text style={styles.sub}>Rename, delete, and reset learning progress.</Text>
-
-      <Pressable style={styles.reviewBanner} onPress={() => nav.navigate('Review')}>
-        <View>
-          <Text style={styles.reviewBannerTitle}>🚩 Review Translations</Text>
-          <Text style={styles.reviewBannerSub}>Flag cards with bad translations for fixing</Text>
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <Pressable style={styles.homeBtn} onPress={goHome}>
+            <Text style={styles.homeBtnText}>Home</Text>
+          </Pressable>
+          <Text style={styles.h1} numberOfLines={1} adjustsFontSizeToFit>
+            Manage Decks
+          </Text>
+          <Text style={styles.sub}>Rename, delete, and reset learning progress.</Text>
         </View>
-        <Text style={styles.reviewBannerArrow}>→</Text>
-      </Pressable>
 
-      <TextInput
-        value={q}
-        onChangeText={setQ}
-        placeholder="Search decks…"
-        placeholderTextColor={colors.textSecondary}
-        style={styles.search}
-        autoCapitalize="none"
-        autoCorrect={false}
-      />
-
-      <FlatList
-        data={filtered}
-        keyExtractor={(d) => d.id}
-        contentContainerStyle={{ paddingBottom: spacing(3) }}
-        renderItem={({ item }) => (
-          <View style={styles.row}>
-            <Pressable style={{ flex: 1 }} onPress={() => setActiveDeckId(item.id)}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.meta}>{item.cards.length} cards</Text>
-            </Pressable>
-
-            <View style={styles.actions}>
-              <Pressable style={styles.btn} onPress={() => openRename(item)}>
-                <Text style={styles.btnText}>Rename</Text>
-              </Pressable>
-              <Pressable style={styles.btnWarn} onPress={() => confirmReset(item)}>
-                <Text style={styles.btnText}>Reset</Text>
-              </Pressable>
-              <Pressable style={styles.btnDanger} onPress={() => confirmDelete(item)}>
-                <Text style={styles.btnText}>Delete</Text>
-              </Pressable>
-            </View>
+        <Pressable style={styles.reviewBanner} onPress={() => nav.navigate('Review')}>
+          <View style={styles.reviewBannerText}>
+            <Text style={styles.reviewBannerTitle}>🚩 Review Translations</Text>
+            <Text style={styles.reviewBannerSub}>Flag cards with bad translations for fixing</Text>
           </View>
-        )}
-        ListEmptyComponent={<Text style={styles.sub}>No decks.</Text>}
-      />
+          <Text style={styles.reviewBannerArrow}>→</Text>
+        </Pressable>
+
+        <TextInput
+          value={q}
+          onChangeText={setQ}
+          placeholder="Search decks…"
+          placeholderTextColor={colors.textSecondary}
+          style={styles.search}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+
+        <FlatList
+          data={filtered}
+          keyExtractor={(d) => d.id}
+          contentContainerStyle={{ paddingBottom: spacing(3) }}
+          renderItem={({ item }) => (
+            <View style={styles.row}>
+              <Pressable style={{ flex: 1 }} onPress={() => setActiveDeckId(item.id)}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.meta}>{item.cards.length} cards</Text>
+              </Pressable>
+
+              <View style={styles.actions}>
+                <Pressable style={styles.btn} onPress={() => openRename(item)}>
+                  <Text style={styles.btnText}>Rename</Text>
+                </Pressable>
+                <Pressable style={styles.btnWarn} onPress={() => confirmReset(item)}>
+                  <Text style={styles.btnText}>Reset</Text>
+                </Pressable>
+                <Pressable style={styles.btnDanger} onPress={() => confirmDelete(item)}>
+                  <Text style={styles.btnText}>Delete</Text>
+                </Pressable>
+              </View>
+            </View>
+          )}
+          ListEmptyComponent={<Text style={styles.sub}>No decks.</Text>}
+        />
+      </View>
 
       <Modal
         visible={renameOpen}
@@ -161,9 +176,23 @@ export default function ManageDecksScreen() {
 }
 
 const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
+  wrap: { flex: 1, backgroundColor: colors.bg },
+  content: { flex: 1, padding: spacing(2) },
+  header: { gap: spacing(1), marginBottom: spacing(1.25) },
   h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
-  sub: { color: colors.textSecondary, marginBottom: spacing(1.25) },
+  sub: { color: colors.textSecondary },
+  homeBtn: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#0b1220',
+    borderWidth: 1,
+    borderColor: '#334155',
+    borderRadius: 14,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  homeBtnText: { color: '#e2e8f0', fontWeight: '900', fontSize: 13 },
   search: {
     backgroundColor: '#0b1220',
     borderWidth: 1,
@@ -244,6 +273,7 @@ const styles = StyleSheet.create({
     padding: spacing(1.5),
     marginBottom: spacing(1.5),
   },
+  reviewBannerText: { flex: 1 },
   reviewBannerTitle: { color: '#fca5a5', fontWeight: '900', fontSize: 15, marginBottom: 2 },
   reviewBannerSub: { color: '#64748b', fontSize: 13 },
   reviewBannerArrow: { color: '#fca5a5', fontWeight: '900', fontSize: 20 },

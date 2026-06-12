@@ -1,474 +1,362 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
+  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable,
 } from 'react-native';
-import { colors, spacing, radius, typography } from '../styles/theme';
+import { colors, radius } from '../styles/theme';
 import { getDailyProgress, getStudyStreak } from '../storage/storage';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
+
+function DonutRing({ pct, size = 90 }: { pct: number; size?: number }) {
+  const stroke = 12;
+  const r = (size - stroke) / 2;
+  const circ = 2 * Math.PI * r;
+  const dash = pct * circ;
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      {/* Background ring */}
+      <View
+        style={{
+          position: 'absolute',
+          width: size,
+          height: size,
+          borderRadius: size / 2,
+          borderWidth: stroke,
+          borderColor: '#1e293b',
+        }}
+      />
+      {/* Filled ring — we approximate with a RN View arc at low fidelity */}
+      <View style={{ position: 'absolute', alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ color: '#FFDA00', fontSize: 16, fontWeight: '800' }}>
+          {Math.round(pct * 100)}%
+        </Text>
+      </View>
+    </View>
+  );
+}
 
 export default function ProgressScreen() {
   const { decks, ready } = useDeck();
   const nav = useNavigation<any>();
   const [dailyStats, setDailyStats] = useState({ count: 0, target: 10 });
   const [streak, setStreak] = useState(0);
-  const [totalStats, setTotalStats] = useState({
-    totalCards: 0,
-    studiedCards: 0,
-    masteredCards: 0,
-    dueCards: 0,
-  });
 
   useEffect(() => {
-    (async () => {
-      const [dp, streakDays] = await Promise.all([
-        getDailyProgress(),
-        getStudyStreak(),
-      ]);
+    Promise.all([getDailyProgress(), getStudyStreak()]).then(([dp, s]) => {
       setDailyStats({ count: dp.count, target: dp.target });
-      setStreak(streakDays);
-    })();
+      setStreak(s);
+    });
   }, []);
 
-  useEffect(() => {
-    if (!ready || !decks) return;
-
+  const stats = useMemo(() => {
+    if (!ready || !decks) return { total: 0, studied: 0, mastered: 0, due: 0 };
     const now = Date.now();
-    let total = 0;
-    let studied = 0;
-    let mastered = 0;
-    let due = 0;
-
-    decks.forEach((deck) => {
-      deck.cards.forEach((card) => {
-        total++;
-        if (card.reps > 0) studied++;
-        if (card.reps >= 3) mastered++;
-        if ((card.due || 0) <= now) due++;
-      });
-    });
-
-    setTotalStats({
-      totalCards: total,
-      studiedCards: studied,
-      masteredCards: mastered,
-      dueCards: due,
-    });
+    let total = 0, studied = 0, mastered = 0, due = 0;
+    decks.forEach((d) => d.cards.forEach((c) => {
+      total++;
+      if (c.reps > 0) studied++;
+      if (c.reps >= 3) mastered++;
+      if ((c.due || 0) <= now) due++;
+    }));
+    return { total, studied, mastered, due };
   }, [decks, ready]);
 
-  const dailyProgress = dailyStats.target > 0
-    ? Math.min(1, dailyStats.count / dailyStats.target)
-    : 0;
-
-  const overallProgress = totalStats.totalCards > 0
-    ? totalStats.studiedCards / totalStats.totalCards
-    : 0;
-
-  const masteryProgress = totalStats.totalCards > 0
-    ? totalStats.masteredCards / totalStats.totalCards
-    : 0;
-
-  // Calculate deck progress
   const deckProgress = useMemo(() => {
     if (!decks) return [];
     return decks
-      .map((deck) => {
-        const total = deck.cards.length;
-        const studied = deck.cards.filter((c) => c.reps > 0).length;
-        const due = deck.cards.filter((c) => (c.due || 0) <= Date.now()).length;
-        return {
-          id: deck.id,
-          name: deck.name,
-          total,
-          studied,
-          progress: total > 0 ? studied / total : 0,
-          due,
-        };
+      .map((d) => {
+        const total = d.cards.length;
+        const studied = d.cards.filter((c) => c.reps > 0).length;
+        const due = d.cards.filter((c) => (c.due || 0) <= Date.now()).length;
+        return { id: d.id, name: d.name, total, studied, progress: total > 0 ? studied / total : 0, due };
       })
       .filter((d) => d.total > 0)
       .sort((a, b) => b.progress - a.progress)
       .slice(0, 5);
   }, [decks]);
 
-  // Get motivational message based on progress
-  const getMotivation = () => {
-    if (dailyProgress >= 1) return { emoji: '🎉', title: 'Daily goal crushed!', text: 'You\'re on fire today! Keep the momentum going.' };
-    if (streak >= 7) return { emoji: '🔥', title: `${streak}-day streak!`, text: 'You\'re building an amazing habit. Consistency is key!' };
-    if (streak >= 3) return { emoji: '⚡', title: `${streak}-day streak!`, text: 'Great consistency! You\'re making real progress.' };
-    if (overallProgress >= 0.5) return { emoji: '🚀', title: 'Halfway there!', text: 'You\'ve studied over half the cards. Amazing work!' };
-    if (totalStats.studiedCards > 0) return { emoji: '💪', title: 'Keep going!', text: 'Every card you study brings you closer to fluency.' };
-    return { emoji: '🌟', title: 'Start your journey!', text: 'Begin with just 10 cards today. Small steps lead to big results!' };
-  };
+  const dailyPct = dailyStats.target > 0
+    ? Math.min(1, dailyStats.count / dailyStats.target)
+    : 0;
 
-  const motivation = getMotivation();
+  const motivation = useMemo(() => {
+    if (dailyPct >= 1) return { emoji: '🎉', text: '¡Meta diaria cumplida!' };
+    if (streak >= 7)   return { emoji: '🔥', text: `${streak} días de racha. ¡Impresionante!` };
+    if (streak >= 3)   return { emoji: '⚡', text: `${streak} días seguidos. ¡Sigue así!` };
+    return { emoji: '💪', text: 'Cada tarjeta te acerca más a la fluidez.' };
+  }, [dailyPct, streak]);
 
   if (!ready) {
     return (
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.loading}>Cargando...</Text>
+      <SafeAreaView style={styles.wrap}>
+        <View style={styles.center}>
+          <Text style={{ fontSize: 40 }}>📊</Text>
+          <Text style={styles.loadingText}>Cargando…</Text>
+        </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>My Progress</Text>
-        <Text style={styles.subtitle}>
-          {streak > 0 ? `🔥 ${streak}-day streak` : 'Track your learning journey'}
-        </Text>
-      </View>
+    <SafeAreaView style={styles.wrap}>
+      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
 
-      <ScrollView contentContainerStyle={styles.content}>
-        {/* Motivation Card */}
-        <View style={styles.motivationCard}>
-          <Text style={styles.motivationEmoji}>{motivation.emoji}</Text>
-          <Text style={styles.motivationTitle}>{motivation.title}</Text>
-          <Text style={styles.motivationText}>{motivation.text}</Text>
+        {/* Title row */}
+        <View style={styles.titleRow}>
+          <Text style={styles.pageTitle}>Mi Progreso</Text>
+          <Pressable style={styles.shareBtn}>
+            <Text style={styles.shareBtnText}>🎉 Compartir</Text>
+          </Pressable>
         </View>
 
-        {/* Daily Goal */}
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>📅 Daily Goal</Text>
-            <Text style={styles.cardValue}>
-              {Math.round(dailyProgress * 100)}%
+        {/* Streak hero */}
+        <View style={styles.streakCard}>
+          <View style={styles.streakLeft}>
+            <Text style={styles.streakCaptionTop}>Racha actual</Text>
+            <View style={styles.streakNumRow}>
+              <Text style={styles.streakDays}>{streak}</Text>
+              <Text style={styles.streakUnit}>días</Text>
+            </View>
+            <Text style={styles.streakCaption}>
+              {streak > 0 ? '¡Sigue así — no rompas la racha!' : 'Empieza tu racha hoy 🚀'}
             </Text>
           </View>
-          <View style={styles.progressBar}>
-            <View
-              style={[
-                styles.progressFill,
-                dailyProgress >= 1 && styles.progressFillComplete,
-                { width: `${dailyProgress * 100}%` },
-              ]}
-            />
+          <View style={styles.streakBadge}>
+            <Text style={styles.streakBadgeEmoji}>🔥</Text>
           </View>
-          <Text style={styles.progressText}>
-            {dailyStats.count} of {dailyStats.target} cards studied today
-          </Text>
-          {dailyProgress < 1 && totalStats.dueCards > 0 && (
-            <Pressable
-              style={styles.actionButton}
-              onPress={() => nav.navigate('Learn' as never)}
-            >
-              <Text style={styles.actionButtonText}>
-                📚 Study {totalStats.dueCards} due cards
+        </View>
+
+        {/* Daily goal card */}
+        <View style={styles.dailyCard}>
+          <View style={styles.dailyCardRow}>
+            <View style={styles.dailyDonut}>
+              <DonutRing pct={dailyPct} size={90} />
+            </View>
+            <View style={styles.dailyRight}>
+              <Text style={styles.dailyTitle}>Meta de Hoy</Text>
+              <Text style={styles.dailySub}>
+                {dailyStats.count} de {dailyStats.target} tarjetas estudiadas
               </Text>
-            </Pressable>
-          )}
-        </View>
-
-        {/* Stats Grid */}
-        <View style={styles.statsGrid}>
-          <View style={styles.statBox}>
-            <Text style={styles.statNumber}>{totalStats.totalCards}</Text>
-            <Text style={styles.statLabel}>Total Cards</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statNumber}>{totalStats.studiedCards}</Text>
-            <Text style={styles.statLabel}>Studied</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statNumber}>{totalStats.masteredCards}</Text>
-            <Text style={styles.statLabel}>Mastered</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statNumber}>{decks?.length || 0}</Text>
-            <Text style={styles.statLabel}>Decks</Text>
-          </View>
-        </View>
-
-        {/* Overall Progress */}
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>📊 Overall Progress</Text>
-            <Text style={styles.cardValue}>
-              {Math.round(overallProgress * 100)}%
-            </Text>
-          </View>
-          <View style={styles.progressBar}>
-            <View
-              style={[
-                styles.progressFill,
-                { width: `${overallProgress * 100}%` },
-              ]}
-            />
-          </View>
-          <Text style={styles.progressText}>
-            {totalStats.studiedCards} of {totalStats.totalCards} cards studied
-          </Text>
-        </View>
-
-        {/* Mastery Progress */}
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>🎯 Mastery Level</Text>
-            <Text style={styles.cardValue}>
-              {Math.round(masteryProgress * 100)}%
-            </Text>
-          </View>
-          <View style={styles.progressBar}>
-            <View
-              style={[
-                styles.progressFill,
-                styles.progressFillMastery,
-                { width: `${masteryProgress * 100}%` },
-              ]}
-            />
-          </View>
-          <Text style={styles.progressText}>
-            {totalStats.masteredCards} cards reviewed 3+ times
-          </Text>
-        </View>
-
-        {/* Top Decks */}
-        {deckProgress.length > 0 && (
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>📚 Deck Progress</Text>
-            <View style={styles.deckList}>
-              {deckProgress.map((deck) => (
-                <View key={deck.id} style={styles.deckItem}>
-                  <View style={styles.deckInfo}>
-                    <Text style={styles.deckName} numberOfLines={1}>
-                      {deck.name}
-                    </Text>
-                    <Text style={styles.deckStats}>
-                      {deck.studied}/{deck.total} cards
-                    </Text>
-                  </View>
-                  <View style={styles.deckProgressContainer}>
-                    <View style={styles.deckProgressBar}>
-                      <View
-                        style={[
-                          styles.deckProgressFill,
-                          { width: `${deck.progress * 100}%` },
-                        ]}
-                      />
-                    </View>
-                    {deck.due > 0 && (
-                      <View style={styles.dueBadge}>
-                        <Text style={styles.dueBadgeText}>{deck.due}</Text>
-                      </View>
-                    )}
-                  </View>
-                </View>
-              ))}
+              {/* Mini bar */}
+              <View style={styles.dailyBarTrack}>
+                <View style={[styles.dailyBarFill, { width: `${dailyPct * 100}%` as any }]} />
+              </View>
+              <Pressable style={styles.studyMoreBtn} onPress={() => nav.navigate('Study')}>
+                <Text style={styles.studyMoreText}>📖 Estudiar más</Text>
+              </Pressable>
             </View>
           </View>
+        </View>
+
+        {/* 2×2 stat grid */}
+        <View style={styles.statGrid}>
+          <View style={styles.statRow}>
+            <View style={[styles.statBox, { borderColor: '#FFDA00', backgroundColor: 'rgba(255,218,0,0.08)' }]}>
+              <Text style={[styles.statVal, { color: '#FFDA00' }]}>{stats.total.toLocaleString()}</Text>
+              <Text style={styles.statLabel}>TOTAL CARTAS</Text>
+            </View>
+            <View style={[styles.statBox, { borderColor: '#003893', backgroundColor: 'rgba(0,56,147,0.15)' }]}>
+              <Text style={[styles.statVal, { color: '#60a5fa' }]}>{stats.studied}</Text>
+              <Text style={styles.statLabel}>ESTUDIADAS</Text>
+            </View>
+          </View>
+          <View style={styles.statRow}>
+            <View style={[styles.statBox, { borderColor: '#CE1126', backgroundColor: 'rgba(206,17,38,0.1)' }]}>
+              <Text style={[styles.statVal, { color: '#f87171' }]}>{stats.mastered}</Text>
+              <Text style={styles.statLabel}>DOMINADAS</Text>
+            </View>
+            <View style={[styles.statBox, { borderColor: 'rgba(255,218,0,0.4)', backgroundColor: 'rgba(255,218,0,0.06)' }]}>
+              <Text style={[styles.statVal, { color: '#FFDA00' }]}>{(decks || []).length}</Text>
+              <Text style={styles.statLabel}>DECKS</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Deck progress */}
+        {deckProgress.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>📊 Progreso por Deck</Text>
+            {deckProgress.map((deck) => (
+              <View key={deck.id} style={styles.deckProgressRow}>
+                <View style={styles.deckProgressLeft}>
+                  <Text style={styles.deckProgressName} numberOfLines={1}>{deck.name}</Text>
+                  <Text style={styles.deckProgressSub}>{deck.studied}/{deck.total} cartas</Text>
+                </View>
+                <View style={styles.deckProgressBarWrap}>
+                  <View style={styles.deckProgressTrack}>
+                    <View style={[styles.deckProgressFill, { width: `${deck.progress * 100}%` as any }]} />
+                  </View>
+                </View>
+                {deck.due > 0 && (
+                  <View style={styles.deckDuePill}>
+                    <Text style={styles.deckDueText}>{deck.due}</Text>
+                  </View>
+                )}
+              </View>
+            ))}
+          </View>
         )}
+
+        {/* Motivation card */}
+        <View style={styles.motivCard}>
+          <Text style={styles.motivEmoji}>{motivation.emoji}</Text>
+          <View style={styles.motivRight}>
+            <Text style={styles.motivTitle}>¡Sigue así!</Text>
+            <Text style={styles.motivText}>{motivation.text}</Text>
+          </View>
+        </View>
+
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.bg,
-  },
-  loading: {
-    color: colors.textPrimary,
-    fontSize: typography.size.lg,
-    textAlign: 'center',
-    marginTop: spacing(4),
-  },
-  header: {
-    padding: spacing(3),
-    paddingBottom: spacing(2),
-  },
-  title: {
-    color: colors.textPrimary,
-    fontSize: typography.size['3xl'],
-    fontWeight: typography.weight.extrabold,
-  },
-  subtitle: {
-    color: colors.textSecondary,
-    fontSize: typography.size.base,
-    marginTop: spacing(0.5),
-  },
-  content: {
-    padding: spacing(2),
-    paddingBottom: spacing(4),
-    gap: spacing(2),
-  },
+  wrap: { flex: 1, backgroundColor: colors.bg },
+  scroll: { padding: 16, paddingBottom: 120 },
+  center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10 },
+  loadingText: { color: colors.textSecondary, fontSize: 16 },
 
-  // Motivation Card
-  motivationCard: {
-    backgroundColor: colors.brandMuted,
-    borderRadius: radius.xl,
-    padding: spacing(3),
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.borderBrand,
-  },
-  motivationEmoji: {
-    fontSize: 40,
-    marginBottom: spacing(1),
-  },
-  motivationTitle: {
-    color: colors.brand,
-    fontSize: typography.size.xl,
-    fontWeight: typography.weight.bold,
-    marginBottom: spacing(0.5),
-  },
-  motivationText: {
-    color: colors.textSecondary,
-    fontSize: typography.size.base,
-    textAlign: 'center',
-    lineHeight: 22,
-  },
-
-  // Cards
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    padding: spacing(2.5),
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  cardHeader: {
+  titleRow: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing(1),
+    marginBottom: 16,
   },
-  cardTitle: {
-    color: colors.textPrimary,
-    fontSize: typography.size.base,
-    fontWeight: typography.weight.bold,
-  },
-  cardValue: {
-    color: colors.brand,
-    fontSize: typography.size.lg,
-    fontWeight: typography.weight.extrabold,
-  },
-
-  // Progress Bars
-  progressBar: {
-    height: 10,
-    backgroundColor: colors.border,
-    borderRadius: radius.full,
-    overflow: 'hidden',
-    marginBottom: spacing(1),
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: colors.brand,
-    borderRadius: radius.full,
-  },
-  progressFillComplete: {
-    backgroundColor: colors.success,
-  },
-  progressFillMastery: {
-    backgroundColor: colors.warning,
-  },
-  progressText: {
-    color: colors.textSecondary,
-    fontSize: typography.size.sm,
-  },
-
-  // Action Button
-  actionButton: {
-    backgroundColor: colors.brand,
-    borderRadius: radius.lg,
-    paddingVertical: spacing(1),
-    paddingHorizontal: spacing(2),
-    alignItems: 'center',
-    marginTop: spacing(1.5),
-  },
-  actionButtonText: {
-    color: colors.textInverse,
-    fontWeight: typography.weight.bold,
-    fontSize: typography.size.base,
-  },
-
-  // Stats Grid
-  statsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing(1.5),
-  },
-  statBox: {
-    flex: 1,
-    minWidth: '45%',
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    padding: spacing(2),
-    alignItems: 'center',
+  pageTitle: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
+  shareBtn: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,218,0,0.1)',
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: 'rgba(255,218,0,0.4)',
   },
-  statNumber: {
-    color: colors.brand,
-    fontSize: typography.size['2xl'],
-    fontWeight: typography.weight.extrabold,
-  },
-  statLabel: {
-    color: colors.textSecondary,
-    fontSize: typography.size.xs,
-    marginTop: spacing(0.25),
-    fontWeight: typography.weight.medium,
-  },
+  shareBtnText: { color: colors.brand, fontSize: 12, fontWeight: '700' },
 
-  // Deck List
-  deckList: {
-    gap: spacing(1.5),
-    marginTop: spacing(1),
-  },
-  deckItem: {
+  streakCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing(1.5),
+    gap: 16,
+    backgroundColor: 'rgba(255,218,0,0.06)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(255,218,0,0.5)',
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 12,
+    shadowColor: '#FFDA00',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 8,
   },
-  deckInfo: {
-    width: 100,
-  },
-  deckName: {
-    color: colors.textPrimary,
-    fontSize: typography.size.sm,
-    fontWeight: typography.weight.semibold,
-  },
-  deckStats: {
-    color: colors.textTertiary,
-    fontSize: typography.size.xs,
-    marginTop: 2,
-  },
-  deckProgressContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing(1),
-  },
-  deckProgressBar: {
-    flex: 1,
-    height: 6,
-    backgroundColor: colors.border,
-    borderRadius: radius.full,
-    overflow: 'hidden',
-  },
-  deckProgressFill: {
-    height: '100%',
-    backgroundColor: colors.brand,
-    borderRadius: radius.full,
-  },
-  dueBadge: {
-    backgroundColor: colors.danger,
-    minWidth: 20,
-    height: 20,
-    borderRadius: radius.full,
+  streakLeft: { flex: 1, gap: 2 },
+  streakCaptionTop: { color: colors.textSecondary, fontSize: 12 },
+  streakNumRow: { flexDirection: 'row', alignItems: 'baseline', gap: 6 },
+  streakDays: { color: colors.textPrimary, fontSize: 40, fontWeight: '800' },
+  streakUnit: { color: colors.textSecondary, fontSize: 16, fontWeight: '600' },
+  streakCaption: { color: colors.textTertiary, fontSize: 11 },
+  streakBadge: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: 'rgba(255,218,0,0.12)',
+    borderWidth: 2.5,
+    borderColor: '#FFDA00',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  dueBadgeText: {
-    color: 'white',
-    fontSize: typography.size.xs,
-    fontWeight: typography.weight.bold,
+  streakBadgeEmoji: { fontSize: 36 },
+
+  dailyCard: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 12,
   },
+  dailyCardRow: { flexDirection: 'row', alignItems: 'center', gap: 20 },
+  dailyDonut: { alignItems: 'center', justifyContent: 'center' },
+  dailyRight: { flex: 1, gap: 6 },
+  dailyTitle: { color: colors.textPrimary, fontSize: 14, fontWeight: '800' },
+  dailySub: { color: colors.textSecondary, fontSize: 12 },
+  dailyBarTrack: {
+    height: 6,
+    backgroundColor: '#1e293b',
+    borderRadius: 3,
+    overflow: 'hidden',
+  },
+  dailyBarFill: { height: 6, backgroundColor: '#FFDA00', borderRadius: 3 },
+  studyMoreBtn: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255,218,0,0.1)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(255,218,0,0.4)',
+  },
+  studyMoreText: { color: colors.brand, fontSize: 12, fontWeight: '700' },
+
+  statGrid: { gap: 10, marginBottom: 16 },
+  statRow: { flexDirection: 'row', gap: 10 },
+  statBox: {
+    flex: 1,
+    alignItems: 'center',
+    gap: 4,
+    paddingVertical: 16,
+    borderRadius: 18,
+    borderWidth: 1.5,
+  },
+  statVal: { fontSize: 24, fontWeight: '800' },
+  statLabel: { color: colors.textSecondary, fontSize: 10, fontWeight: '600', letterSpacing: 0.5 },
+
+  section: { marginBottom: 16 },
+  sectionTitle: { color: colors.textPrimary, fontSize: 16, fontWeight: '800', marginBottom: 10 },
+
+  deckProgressRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 8,
+  },
+  deckProgressLeft: { width: 100 },
+  deckProgressName: { color: colors.textPrimary, fontSize: 13, fontWeight: '600' },
+  deckProgressSub: { color: colors.textTertiary, fontSize: 11, marginTop: 2 },
+  deckProgressBarWrap: { flex: 1 },
+  deckProgressTrack: {
+    height: 6,
+    backgroundColor: '#1e293b',
+    borderRadius: 3,
+    overflow: 'hidden',
+  },
+  deckProgressFill: { height: 6, backgroundColor: '#FFDA00', borderRadius: 3 },
+  deckDuePill: {
+    backgroundColor: 'rgba(248,113,113,0.2)',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: radius.full,
+  },
+  deckDueText: { color: '#f87171', fontSize: 11, fontWeight: '700' },
+
+  motivCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: 'rgba(255,218,0,0.06)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,218,0,0.2)',
+    borderRadius: 16,
+    padding: 16,
+  },
+  motivEmoji: { fontSize: 28 },
+  motivRight: { flex: 1, gap: 3 },
+  motivTitle: { color: colors.brand, fontSize: 14, fontWeight: '800' },
+  motivText: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
 });

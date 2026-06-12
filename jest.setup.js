@@ -72,14 +72,20 @@ jest.mock('expo-clipboard', () => ({
 }));
 
 // 7. Silence Alert in tests
-jest.mock('react-native/Libraries/Alert/Alert', () => ({
-  alert: jest.fn(),
-}));
+jest.mock('react-native/Libraries/Alert/Alert', () => {
+  const alert = jest.fn();
+  return {
+    alert,
+    Alert: { alert },
+    default: { alert },
+  };
+});
 
 // 8. AccessibilityInfo mock (used in Flashcard component)
 // jest-expo preset handles the main RN mocks; we just patch isReduceMotionEnabled
 jest.mock('react-native', () => {
   const RN = jest.requireActual('react-native');
   RN.AccessibilityInfo.isReduceMotionEnabled = jest.fn().mockResolvedValue(false);
+  RN.Alert = require('react-native/Libraries/Alert/Alert').Alert;
   return RN;
 });

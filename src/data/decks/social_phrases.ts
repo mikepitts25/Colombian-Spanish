@@ -477,7 +477,7 @@ export const SocialPhrasesDeck: Deck = {
     {
       id: 'social-040',
       front: 'Parce',
-      back: 'Dude/Mate (Colombian slang)',
+      back: 'dude / mate',
       example: 'Parce, ¿vamos a rumbear esta noche? | Dude, are we going out tonight?',
       tags: ['social', 'slang', 'colombian'],
       createdAt: Date.now(),

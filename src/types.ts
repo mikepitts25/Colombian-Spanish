@@ -43,6 +43,8 @@ export interface FlashCard {
   ipa?: string; // pronunciation hint
   favorite?: boolean; // user-starred
   flagged?: boolean;  // marked for translation review
+  reviewStatus?: 'unreviewed' | 'reviewed' | 'needs_native';
+  reviewedAt?: number;
   createdAt: number;
   due: number; // unix timestamp
   reps: number; // successful repetitions
