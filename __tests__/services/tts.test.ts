@@ -131,6 +131,30 @@ describe('speakCard', () => {
     expect(mockSpeak).not.toHaveBeenCalled();
   });
 
+  it('interrupts bundled playback before direct text speech starts', async () => {
+    const player = makePlayer();
+    mockCreateAudioPlayer.mockReturnValue(player);
+
+    await speakCard({ id: '0009', front: 'hola' });
+    jest.clearAllMocks();
+
+    speak('text fallback');
+
+    expect(player.pause).toHaveBeenCalledTimes(1);
+    expect(player.remove).toHaveBeenCalledTimes(1);
+    expect(player.pause.mock.invocationCallOrder[0]).toBeLessThan(
+      mockSpeak.mock.invocationCallOrder[0],
+    );
+    expect(player.remove.mock.invocationCallOrder[0]).toBeLessThan(
+      mockSpeak.mock.invocationCallOrder[0],
+    );
+    expect(mockStop).toHaveBeenCalledTimes(1);
+    expect(mockSpeak).toHaveBeenCalledWith(
+      'text fallback',
+      expect.objectContaining({ language: 'es-CO', pitch: 1.05, rate: 0.98 }),
+    );
+  });
+
   it('does not let a stale async speakCard call play or clean up the newer player', async () => {
     const firstSeek = deferred<void>();
     const firstPlayer = makePlayer({
@@ -156,6 +180,29 @@ describe('speakCard', () => {
     expect(secondPlayer.pause).not.toHaveBeenCalled();
     expect(secondPlayer.remove).not.toHaveBeenCalled();
     expect(mockSpeak).not.toHaveBeenCalled();
+  });
+
+  it('prevents a pending bundled speakCard from playing after direct text speech starts', async () => {
+    const seek = deferred<void>();
+    const player = makePlayer({
+      seekTo: jest.fn(() => seek.promise),
+    });
+    mockCreateAudioPlayer.mockReturnValue(player);
+
+    const pending = speakCard({ id: '0009', front: 'hola' });
+    await Promise.resolve();
+
+    speak('manual fallback');
+    seek.resolve();
+    await pending;
+
+    expect(player.pause).toHaveBeenCalledTimes(1);
+    expect(player.remove).toHaveBeenCalledTimes(1);
+    expect(player.play).not.toHaveBeenCalled();
+    expect(mockSpeak).toHaveBeenCalledWith(
+      'manual fallback',
+      expect.objectContaining({ language: 'es-CO', pitch: 1.05, rate: 0.98 }),
+    );
   });
 
   it('does not resume speech after stop while seekTo is still pending', async () => {
