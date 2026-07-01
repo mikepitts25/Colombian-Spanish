@@ -5,6 +5,7 @@ import { speak, speakCard, stop } from '../../src/services/tts';
 jest.mock('../../src/data/audioManifest', () => ({
   pronunciationAudio: {
     '0009': 1009,
+    '0010': 1010,
   },
 }));
 
@@ -20,6 +21,14 @@ function makePlayer(overrides = {}) {
     remove: jest.fn(),
     ...overrides,
   };
+}
+
+function deferred<T = void>() {
+  let resolve!: (value: T | PromiseLike<T>) => void;
+  const promise = new Promise<T>((res) => {
+    resolve = res;
+  });
+  return { promise, resolve };
 }
 
 beforeEach(() => {
@@ -46,9 +55,21 @@ describe('speakCard', () => {
   });
 
   it('falls back to Expo Speech when the card id is missing from the manifest', async () => {
+    const player = makePlayer();
+    mockCreateAudioPlayer.mockReturnValue(player);
+    await speakCard({ id: '0009', front: 'hola' });
+    jest.clearAllMocks();
+
     await speakCard({ id: 'missing-card', front: 'parcero' });
 
-    expect(mockCreateAudioPlayer).not.toHaveBeenCalled();
+    expect(player.pause).toHaveBeenCalledTimes(1);
+    expect(player.remove).toHaveBeenCalledTimes(1);
+    expect(player.pause.mock.invocationCallOrder[0]).toBeLessThan(
+      mockSpeak.mock.invocationCallOrder[0],
+    );
+    expect(player.remove.mock.invocationCallOrder[0]).toBeLessThan(
+      mockSpeak.mock.invocationCallOrder[0],
+    );
     expect(mockSpeak).toHaveBeenCalledWith(
       'parcero',
       expect.objectContaining({ language: 'es-CO', pitch: 1.05, rate: 0.98 }),
@@ -70,6 +91,33 @@ describe('speakCard', () => {
       'hola',
       expect.objectContaining({ language: 'es-CO' }),
     );
+  });
+
+  it('does not let a stale async speakCard call play or clean up the newer player', async () => {
+    const firstSeek = deferred<void>();
+    const firstPlayer = makePlayer({
+      seekTo: jest.fn(() => firstSeek.promise),
+    });
+    const secondPlayer = makePlayer();
+    mockCreateAudioPlayer
+      .mockReturnValueOnce(firstPlayer)
+      .mockReturnValueOnce(secondPlayer);
+
+    const firstCall = speakCard({ id: '0009', front: 'hola' });
+    await Promise.resolve();
+    const secondCall = speakCard({ id: '0010', front: 'adios' });
+    await secondCall;
+    firstSeek.resolve();
+    await firstCall;
+
+    expect(firstPlayer.seekTo).toHaveBeenCalledWith(0);
+    expect(secondPlayer.seekTo).toHaveBeenCalledWith(0);
+    expect(firstPlayer.play).not.toHaveBeenCalled();
+    expect(firstPlayer.remove).toHaveBeenCalledTimes(1);
+    expect(secondPlayer.play).toHaveBeenCalledTimes(1);
+    expect(secondPlayer.pause).not.toHaveBeenCalled();
+    expect(secondPlayer.remove).not.toHaveBeenCalled();
+    expect(mockSpeak).not.toHaveBeenCalled();
   });
 });
 

@@ -10,23 +10,30 @@ const DEFAULT_PITCH = 1.05;
 const DEFAULT_RATE = 0.98;
 
 let currentPlayer: AudioPlayer | null = null;
+let activeRequestId = 0;
 
-function releaseCurrentPlayer() {
-  if (!currentPlayer) return;
+function releasePlayer(player: AudioPlayer | null) {
+  if (!player) return;
 
   try {
-    currentPlayer.pause();
+    player.pause();
   } catch {
     // Ignore cleanup failures so fallback speech can still run.
   }
 
   try {
-    currentPlayer.remove();
+    player.remove();
   } catch {
     // Ignore cleanup failures so the next playback can continue.
   }
 
-  currentPlayer = null;
+  if (currentPlayer === player) {
+    currentPlayer = null;
+  }
+}
+
+function releaseCurrentPlayer() {
+  releasePlayer(currentPlayer);
 }
 
 function speakWithFallback(text: string, lang: string = DEFAULT_LANGUAGE) {
@@ -41,17 +48,32 @@ export async function speakCard(card: PronunciationCard) {
   const source = pronunciationAudio[card.id];
 
   if (source) {
+    const requestId = ++activeRequestId;
+    const player = createAudioPlayer(source);
+    releaseCurrentPlayer();
+    currentPlayer = player;
+
     try {
-      releaseCurrentPlayer();
-      currentPlayer = createAudioPlayer(source);
-      await currentPlayer.seekTo(0);
-      currentPlayer.play();
+      await player.seekTo(0);
+
+      if (requestId !== activeRequestId || currentPlayer !== player) {
+        return;
+      }
+
+      player.play();
       return;
     } catch {
-      releaseCurrentPlayer();
+      if (requestId === activeRequestId && currentPlayer === player) {
+        releaseCurrentPlayer();
+        speakWithFallback(card.front);
+        return;
+      }
+
+      return;
     }
   }
 
+  releaseCurrentPlayer();
   speakWithFallback(card.front);
 }
 
