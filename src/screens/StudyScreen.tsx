@@ -110,16 +110,13 @@ export default function StudyScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      {/* Thin daily progress bar */}
-      <View style={styles.progressTrack}>
-        <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
-      </View>
-
-      {/* Study header */}
-      <View style={styles.studyHeader}>
-        <View style={styles.deckPill}>
-          <Text style={styles.deckPillFlag}>🇨🇴</Text>
-          <Text style={styles.deckPillName} numberOfLines={1}>{activeDeck.name}</Text>
+      <View style={styles.sessionHeader}>
+        <View style={styles.sessionTitleBlock}>
+          <Text style={styles.sessionEyebrow}>{t('tabs.study')}</Text>
+          <View style={styles.deckTitleRow}>
+            <Text style={styles.deckPillFlag}>🇨🇴</Text>
+            <Text style={styles.deckTitle} numberOfLines={1}>{activeDeck.name}</Text>
+          </View>
         </View>
         <View style={styles.studyHeaderActions}>
           {card && (
@@ -137,23 +134,40 @@ export default function StudyScreen() {
         </View>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.regionRow}
-      >
-        {REGION_FILTERS.map((region) => (
-          <Pressable
-            key={region.id}
-            style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
-            onPress={() => changeRegion(region.id)}
-          >
-            <Text style={[styles.regionChipText, activeRegion === region.id && styles.regionChipTextActive]}>
-              {t(REGION_LABEL_KEYS[region.id])}
-            </Text>
-          </Pressable>
-        ))}
-      </ScrollView>
+      <View style={styles.progressTrack}>
+        <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
+      </View>
+
+      <View style={styles.regionFilterWrap}>
+        <ScrollView
+          testID="region-filter-scroll"
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.regionScroller}
+          contentContainerStyle={styles.regionRow}
+        >
+          {REGION_FILTERS.map((region) => (
+            <Pressable
+              key={region.id}
+              style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
+              onPress={() => changeRegion(region.id)}
+            >
+              <Text style={[styles.regionChipText, activeRegion === region.id && styles.regionChipTextActive]}>
+                {t(REGION_LABEL_KEYS[region.id])}
+              </Text>
+            </Pressable>
+          ))}
+        </ScrollView>
+        <View
+          testID="region-filter-overflow-cue"
+          pointerEvents="none"
+          style={styles.regionOverflowCue}
+        >
+          <View style={styles.regionOverflowFadeWide} />
+          <View style={styles.regionOverflowFadeTight} />
+          <Text style={styles.regionOverflowChevron}>›</Text>
+        </View>
+      </View>
 
       {/* Swipe hints */}
       <View style={styles.swipeHints}>
@@ -229,22 +243,43 @@ const styles = StyleSheet.create({
   goHomeBtnText: { color: '#020617', fontWeight: '800', fontSize: 14 },
 
   progressTrack: {
-    height: 4,
-    backgroundColor: '#1e293b',
-    width: '100%',
+    height: 8,
+    backgroundColor: 'rgba(148,163,184,0.16)',
+    borderRadius: 999,
+    marginHorizontal: 18,
+    marginBottom: 12,
+    overflow: 'hidden',
   },
   progressFill: {
-    height: 4,
+    height: '100%',
     backgroundColor: colors.brand,
-    borderRadius: 2,
+    borderRadius: 999,
   },
 
-  studyHeader: {
+  sessionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 18,
+    paddingTop: 12,
+    paddingBottom: 10,
+    gap: 12,
+  },
+  sessionTitleBlock: {
+    minWidth: 0,
+    flex: 1,
+  },
+  sessionEyebrow: {
+    color: colors.textTertiary,
+    fontSize: 10,
+    fontWeight: '800',
+    textTransform: 'uppercase',
+  },
+  deckTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 7,
+    marginTop: 3,
   },
   studyHeaderActions: {
     flexDirection: 'row',
@@ -267,24 +302,16 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     lineHeight: 24,
   },
-  deckPill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    backgroundColor: colors.accentBlue,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
+  deckPillFlag: { fontSize: 17 },
+  deckTitle: {
+    color: colors.textPrimary,
+    fontSize: 18,
+    fontWeight: '900',
     flexShrink: 1,
-    maxWidth: '75%',
   },
-  deckPillFlag: { fontSize: 16 },
-  deckPillName: { color: colors.textPrimary, fontSize: 13, fontWeight: '800', flexShrink: 1 },
   cardsLeftPill: {
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingVertical: 7,
     borderRadius: 20,
     backgroundColor: 'rgba(255,218,0,0.15)',
     borderWidth: 1.5,
@@ -292,41 +319,79 @@ const styles = StyleSheet.create({
   },
   cardsLeftText: { color: colors.brand, fontSize: 13, fontWeight: '800' },
 
+  regionFilterWrap: {
+    position: 'relative',
+    minHeight: 44,
+    marginBottom: 8,
+  },
+  regionScroller: {
+    flexGrow: 0,
+    maxHeight: 44,
+  },
   regionRow: {
+    alignItems: 'center',
     gap: 8,
-    paddingHorizontal: 16,
-    paddingBottom: 10,
+    paddingHorizontal: 18,
+    paddingRight: 52,
   },
   regionChip: {
-    paddingHorizontal: 12,
-    paddingVertical: 7,
-    borderRadius: 18,
+    minHeight: 34,
+    justifyContent: 'center',
+    paddingHorizontal: 13,
+    borderRadius: 17,
     backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: 'rgba(148,163,184,0.18)',
   },
   regionChipActive: {
     backgroundColor: '#047857',
-    borderColor: '#047857',
+    borderColor: '#10b981',
   },
-  regionChipText: { color: colors.textSecondary, fontSize: 12, fontWeight: '700' },
+  regionChipText: { color: colors.textSecondary, fontSize: 12, fontWeight: '800' },
   regionChipTextActive: { color: '#ffffff', fontWeight: '900' },
+  regionOverflowCue: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    width: 52,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  regionOverflowFadeWide: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(2,6,23,0.55)',
+  },
+  regionOverflowFadeTight: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: 30,
+    backgroundColor: colors.bg,
+  },
+  regionOverflowChevron: {
+    color: colors.brand,
+    fontSize: 22,
+    fontWeight: '900',
+    paddingRight: 16,
+  },
 
   swipeHints: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginBottom: 12,
+    marginBottom: 10,
   },
-  swipeHard: { color: 'rgba(248,113,113,0.6)', fontSize: 12, fontWeight: '600' },
-  swipeTap: { color: colors.textTertiary, fontSize: 12 },
-  swipeEasy: { color: 'rgba(16,185,129,0.6)', fontSize: 12, fontWeight: '600' },
+  swipeHard: { color: 'rgba(248,113,113,0.72)', fontSize: 12, fontWeight: '800' },
+  swipeTap: { color: colors.textSecondary, fontSize: 12, fontWeight: '700' },
+  swipeEasy: { color: 'rgba(16,185,129,0.72)', fontSize: 12, fontWeight: '800' },
 
   cardArea: {
     flex: 1,
-    paddingHorizontal: 20,
-    gap: 14,
+    paddingHorizontal: 18,
+    gap: 10,
   },
   quizCta: {
     marginTop: 6,
@@ -349,27 +414,28 @@ const styles = StyleSheet.create({
   dotActive: { backgroundColor: colors.brand },
 
   gradeBar: {
-    backgroundColor: '#0f172a',
+    backgroundColor: colors.surface,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255,218,0,0.12)',
+    borderTopColor: 'rgba(148,163,184,0.12)',
     paddingHorizontal: 16,
     paddingTop: 12,
     paddingBottom: 16,
     gap: 10,
   },
   gradeLabel: {
-    color: colors.textTertiary,
+    color: colors.textSecondary,
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '800',
     textAlign: 'center',
   },
   gradeButtons: { flexDirection: 'row', gap: 8 },
   gradeBtn: {
     flex: 1,
+    minHeight: 54,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 2,
-    paddingVertical: 10,
+    paddingVertical: 9,
     borderRadius: 16,
     borderWidth: 1.5,
   },

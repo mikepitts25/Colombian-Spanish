@@ -161,6 +161,22 @@ describe('StudyScreen rendering', () => {
     expect(queryByText('hola')).toBeNull();
   });
 
+  it('renders compact region filters with an overflow affordance', async () => {
+    const { getByTestId, getByText } = renderStudyScreen();
+
+    await waitFor(() => expect(getByTestId('region-filter-scroll')).toBeTruthy());
+    expect(getByTestId('region-filter-overflow-cue')).toBeTruthy();
+    expect(getByText('Todo')).toBeTruthy();
+    expect(getByText('Paisa')).toBeTruthy();
+    expect(getByText('Valluno')).toBeTruthy();
+  });
+
+  it('uses clear tap-to-answer copy for the flashcard hint', async () => {
+    const { getByText } = renderStudyScreen();
+
+    await waitFor(() => expect(getByText('Toca para ver respuesta')).toBeTruthy());
+  });
+
   it('renders the flip-card touch target', async () => {
     const { getByLabelText } = renderStudyScreen();
     await waitFor(() => expect(getByLabelText('Flip card')).toBeTruthy());
