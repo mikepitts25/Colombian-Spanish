@@ -9,6 +9,16 @@ jest.mock('expo-speech', () => ({
   stop: jest.fn(),
 }));
 
+// 2b. expo-audio mock
+jest.mock('expo-audio', () => ({
+  createAudioPlayer: jest.fn(() => ({
+    play: jest.fn(),
+    pause: jest.fn(),
+    seekTo: jest.fn(),
+    release: jest.fn(),
+  })),
+}));
+
 // 3. react-native-reanimated mock
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
