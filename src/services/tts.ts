@@ -49,11 +49,11 @@ export async function speakCard(card: PronunciationCard) {
 
   if (source) {
     const requestId = ++activeRequestId;
-    const player = createAudioPlayer(source);
-    releaseCurrentPlayer();
-    currentPlayer = player;
-
     try {
+      const player = createAudioPlayer(source);
+      releaseCurrentPlayer();
+      currentPlayer = player;
+
       await player.seekTo(0);
 
       if (requestId !== activeRequestId || currentPlayer !== player) {
@@ -63,12 +63,12 @@ export async function speakCard(card: PronunciationCard) {
       player.play();
       return;
     } catch {
-      if (requestId === activeRequestId && currentPlayer === player) {
-        releaseCurrentPlayer();
-        speakWithFallback(card.front);
+      if (requestId !== activeRequestId) {
         return;
       }
 
+      releaseCurrentPlayer();
+      speakWithFallback(card.front);
       return;
     }
   }
