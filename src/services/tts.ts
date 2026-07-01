@@ -36,6 +36,11 @@ function releaseCurrentPlayer() {
   releasePlayer(currentPlayer);
 }
 
+function cancelQueuedSpeech() {
+  activeRequestId += 1;
+  Speech.stop();
+}
+
 function speakWithFallback(text: string, lang: string = DEFAULT_LANGUAGE) {
   Speech.speak(text, {
     language: lang,
@@ -45,10 +50,11 @@ function speakWithFallback(text: string, lang: string = DEFAULT_LANGUAGE) {
 }
 
 export async function speakCard(card: PronunciationCard) {
+  cancelQueuedSpeech();
   const source = pronunciationAudio[card.id];
 
   if (source) {
-    const requestId = ++activeRequestId;
+    const requestId = activeRequestId;
     try {
       const player = createAudioPlayer(source);
       releaseCurrentPlayer();
@@ -82,6 +88,6 @@ export function speak(text: string, lang: string = DEFAULT_LANGUAGE) {
 }
 
 export function stop() {
+  cancelQueuedSpeech();
   releaseCurrentPlayer();
-  Speech.stop();
 }

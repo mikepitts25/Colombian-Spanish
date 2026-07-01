@@ -25,10 +25,12 @@ function makePlayer(overrides = {}) {
 
 function deferred<T = void>() {
   let resolve!: (value: T | PromiseLike<T>) => void;
-  const promise = new Promise<T>((res) => {
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((res, rej) => {
     resolve = res;
+    reject = rej;
   });
-  return { promise, resolve };
+  return { promise, resolve, reject };
 }
 
 beforeEach(() => {
@@ -112,6 +114,23 @@ describe('speakCard', () => {
     );
   });
 
+  it('stops queued speech before bundled playback starts', async () => {
+    speak('old speech');
+    jest.clearAllMocks();
+
+    const player = makePlayer();
+    mockCreateAudioPlayer.mockReturnValue(player);
+
+    await speakCard({ id: '0009', front: 'hola' });
+
+    expect(mockStop).toHaveBeenCalledTimes(1);
+    expect(mockStop.mock.invocationCallOrder[0]).toBeLessThan(
+      player.play.mock.invocationCallOrder[0],
+    );
+    expect(player.play).toHaveBeenCalledTimes(1);
+    expect(mockSpeak).not.toHaveBeenCalled();
+  });
+
   it('does not let a stale async speakCard call play or clean up the newer player', async () => {
     const firstSeek = deferred<void>();
     const firstPlayer = makePlayer({
@@ -136,6 +155,25 @@ describe('speakCard', () => {
     expect(secondPlayer.play).toHaveBeenCalledTimes(1);
     expect(secondPlayer.pause).not.toHaveBeenCalled();
     expect(secondPlayer.remove).not.toHaveBeenCalled();
+    expect(mockSpeak).not.toHaveBeenCalled();
+  });
+
+  it('does not resume speech after stop while seekTo is still pending', async () => {
+    const seek = deferred<void>();
+    const player = makePlayer({
+      seekTo: jest.fn(() => seek.promise),
+    });
+    mockCreateAudioPlayer.mockReturnValue(player);
+
+    const pending = speakCard({ id: '0009', front: 'hola' });
+    await Promise.resolve();
+
+    stop();
+    seek.reject(new Error('seek failed'));
+    await pending;
+
+    expect(player.pause).toHaveBeenCalledTimes(1);
+    expect(player.remove).toHaveBeenCalledTimes(1);
     expect(mockSpeak).not.toHaveBeenCalled();
   });
 });
@@ -165,6 +203,7 @@ describe('stop', () => {
     const player = makePlayer();
     mockCreateAudioPlayer.mockReturnValue(player);
     await speakCard({ id: '0009', front: 'hola' });
+    jest.clearAllMocks();
 
     stop();
 
