@@ -2,8 +2,8 @@ import React, { useMemo, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextInput, View, FlatList, Pressable } from 'react-native';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
-import * as Speech from 'expo-speech';
 import { useLanguage } from '../context/LanguageContext';
+import { speakCard } from '../services/tts';
 
 export default function PhrasebookScreen() {
   const { ready, decks, setActiveDeckId, toggleFavorite } = useDeck();
@@ -25,10 +25,6 @@ export default function PhrasebookScreen() {
       return hay.includes(query);
     });
   }, [decks, q]);
-
-  function speak(text: string) {
-    Speech.speak(text, { language: 'es-CO', pitch: 1.03, rate: 0.98 });
-  }
 
   if (!ready)
     return (
@@ -73,7 +69,7 @@ export default function PhrasebookScreen() {
                 style={styles.actionBtn}
                 onPress={() => {
                   setActiveDeckId(item.deckId);
-                  speak(item.card.front);
+                  void speakCard(item.card);
                 }}
               >
                 <Text style={styles.actionText}>🔊</Text>

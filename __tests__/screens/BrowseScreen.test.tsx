@@ -10,16 +10,15 @@ jest.mock('../../src/hooks/useDeck', () => ({
   DeckProvider: ({ children }: any) => children,
 }));
 
-jest.mock('expo-speech', () => ({
-  speak: jest.fn(),
-  stop: jest.fn(),
+jest.mock('../../src/services/tts', () => ({
+  speakCard: jest.fn(),
 }));
 
 import { useDeck } from '../../src/hooks/useDeck';
-import * as Speech from 'expo-speech';
+import { speakCard } from '../../src/services/tts';
 
 const mockUseDeck = useDeck as jest.Mock;
-const mockSpeak = Speech.speak as jest.Mock;
+const mockSpeakCard = speakCard as jest.Mock;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -216,15 +215,10 @@ describe('BrowseScreen audio', () => {
     expect(speakButtons.length).toBeGreaterThan(0);
   });
 
-  it('calls Speech.speak with the card front text when 🔊 is pressed', async () => {
+  it('calls speakCard with the row card when 🔊 is pressed', async () => {
     const { getAllByText } = renderBrowseScreen();
     const speakButtons = getAllByText('🔊');
     fireEvent(speakButtons[0], 'press', { stopPropagation: jest.fn() });
-    await waitFor(() =>
-      expect(mockSpeak).toHaveBeenCalledWith(
-        'chimba',
-        expect.objectContaining({ language: 'es-CO' }),
-      ),
-    );
+    await waitFor(() => expect(mockSpeakCard).toHaveBeenCalledWith(DECK_A.cards[2]));
   });
 });
