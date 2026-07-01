@@ -12,7 +12,7 @@ Use the approved Focused Stack direction. The screen remains a single vertical s
 
 - Header: deck context on the left, favorite and remaining-count actions on the right.
 - Daily progress: a compact progress bar near the header, using Colombian yellow/blue/red as a restrained accent.
-- Region filters: a horizontal chip row that sizes to its content and never consumes the main card area.
+- Region filters: a horizontal chip row that sizes to its content, never consumes the main card area, and clearly indicates when more categories are available offscreen.
 - Study hint: one concise row explaining the swipe/tap actions.
 - Flashcard: the visual center of the screen, with the Spanish prompt, example, and audio button clearly grouped.
 - Rating: a bottom recall panel with the four existing SRS options and intervals.
@@ -23,7 +23,7 @@ This is preferred over a card-first layout because the intervals and remaining-c
 
 The first viewport should communicate what is happening without reading every label. The deck title and remaining count identify the session, the filter chips read as optional narrowing controls, and the card dominates the screen.
 
-The region filter chips should look like chips, not columns. They should remain horizontally scrollable when labels do not fit, with a clear active state.
+The region filter chips should look like chips, not columns. They should remain horizontally scrollable when labels do not fit, with a clear active state and a subtle right-edge affordance that signals more categories are available. Use a trailing fade and small chevron cue rather than a separate instructional label, so the control stays compact.
 
 The flashcard should feel tappable. The prompt copy should use action-oriented language such as "Tap card for answer" rather than ambiguous instructional text. The audio button stays available but should not visually compete with the card text.
 
@@ -65,7 +65,7 @@ Use focused regression tests around existing behavior:
 - Grade buttons still call `recordAnswer` with the same SRS quality values.
 - Flashcard still renders front/back text, example splits, flip target accessibility label, and audio playback trigger.
 
-Manual verification should include an iPhone simulator pass to confirm the region row is compact, the flashcard is central, the bottom rating panel is reachable, and the tab bar does not crowd the study controls.
+Manual verification should include an iPhone simulator pass to confirm the region row is compact, the overflow cue is visible when categories continue offscreen, the flashcard is central, the bottom rating panel is reachable, and the tab bar does not crowd the study controls.
 
 ## Scope
 
