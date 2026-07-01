@@ -83,9 +83,24 @@ function fileNameForCardId(cardId) {
   return `${cardId.replace(/[^a-zA-Z0-9._-]/g, '_')}.mp3`;
 }
 
+function normalizeLimit(rawLimit) {
+  if (rawLimit == null) return 0;
+  if (typeof rawLimit === 'string' && rawLimit.trim() === '') {
+    throw new Error('--limit must be a non-negative integer');
+  }
+
+  const limit = Number(rawLimit);
+
+  if (!Number.isSafeInteger(limit) || limit < 0) {
+    throw new Error('--limit must be a non-negative integer');
+  }
+
+  return limit;
+}
+
 function buildGenerationPlan(cards, audioDir, options) {
   const force = Boolean(options.force);
-  const limit = Number(options.limit || 0);
+  const limit = normalizeLimit(options.limit);
   const skipped = [];
   let toGenerate = cards.map((card) => ({
     ...card,
@@ -123,7 +138,7 @@ function renderManifest(cards) {
     .sort((a, b) => a.id.localeCompare(b.id))
     .forEach((card) => {
       lines.push(
-        `  '${card.id}': require('../../assets/audio/pronunciation/${fileNameForCardId(card.id)}'),`,
+        `  ${JSON.stringify(card.id)}: require('../../assets/audio/pronunciation/${fileNameForCardId(card.id)}'),`,
       );
     });
 
@@ -148,7 +163,7 @@ function parseArgs(argv) {
     (acc, arg) => {
       if (arg === '--force') acc.force = true;
       if (arg === '--dry-run') acc.dryRun = true;
-      if (arg.startsWith('--limit=')) acc.limit = Number(arg.slice('--limit='.length));
+      if (arg.startsWith('--limit=')) acc.limit = normalizeLimit(arg.slice('--limit='.length));
       return acc;
     },
     { force: false, limit: 0, dryRun: false },
@@ -219,6 +234,11 @@ async function main(argv = process.argv.slice(2), env = process.env) {
     fs.existsSync(path.join(AUDIO_DIR, fileNameForCardId(card.id))),
   );
 
+  if (options.dryRun) {
+    console.log(`Manifest entries: ${generatedCards.length} (dry run; not written)`);
+    return;
+  }
+
   fs.writeFileSync(MANIFEST_PATH, renderManifest(generatedCards));
   console.log(`Manifest entries: ${generatedCards.length}`);
 }
@@ -237,6 +257,8 @@ module.exports = {
   extractCardsFromSource,
   fileNameForCardId,
   generateAudioFile,
+  main,
+  normalizeLimit,
   parseArgs,
   renderManifest,
   requireApiKey,
