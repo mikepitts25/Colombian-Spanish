@@ -101,7 +101,7 @@ beforeEach(() => {
 describe('StudyScreen rendering', () => {
   it('shows loading state when ready=false', () => {
     const { getByText } = renderStudyScreen({ ready: false });
-    expect(getByText('Cargando…')).toBeTruthy();
+    expect(getByText('Cargando...')).toBeTruthy();
   });
 
   it('shows the no-deck state when activeDeck is undefined', () => {
@@ -125,8 +125,8 @@ describe('StudyScreen rendering', () => {
       getStudyBatch: jest.fn().mockReturnValue([]),
     });
 
-    expect(getByText('Take Quiz')).toBeTruthy();
-    fireEvent.press(getByText('Take Quiz'));
+    expect(getByText('Hacer quiz')).toBeTruthy();
+    fireEvent.press(getByText('Hacer quiz'));
     expect(mockNavigate).toHaveBeenCalledWith('Quiz');
   });
 
@@ -137,7 +137,7 @@ describe('StudyScreen rendering', () => {
 
   it('renders remaining card count for a 3-card batch', async () => {
     const { getByText } = renderStudyScreen();
-    await waitFor(() => expect(getByText('3 left')).toBeTruthy());
+    await waitFor(() => expect(getByText('3 restantes')).toBeTruthy());
   });
 
   it('renders the Spanish word on the front', async () => {
@@ -164,9 +164,9 @@ describe('StudyScreen rendering', () => {
 
   it('grading buttons are visible in the grade bar', async () => {
     const { getByText } = renderStudyScreen();
-    await waitFor(() => expect(getByText('Again')).toBeTruthy());
-    expect(getByText('Good')).toBeTruthy();
-    expect(getByText('Easy')).toBeTruthy();
+    await waitFor(() => expect(getByText('Otra vez')).toBeTruthy());
+    expect(getByText('Bien')).toBeTruthy();
+    expect(getByText('Fácil')).toBeTruthy();
   });
 });
 
@@ -193,34 +193,34 @@ describe('StudyScreen grading', () => {
   it('pressing "Again" calls recordAnswer with quality 1', async () => {
     const recordAnswer = jest.fn().mockResolvedValue(undefined);
     const { getByText } = renderStudyScreen({ recordAnswer });
-    await gradeCard(getByText, 'Again');
+    await gradeCard(getByText, 'Otra vez');
     expect(recordAnswer).toHaveBeenCalledWith('c1', 1);
   });
 
   it('pressing "Good" calls recordAnswer with quality 4', async () => {
     const recordAnswer = jest.fn().mockResolvedValue(undefined);
     const { getByText } = renderStudyScreen({ recordAnswer });
-    await gradeCard(getByText, 'Good');
+    await gradeCard(getByText, 'Bien');
     expect(recordAnswer).toHaveBeenCalledWith('c1', 4);
   });
 
   it('pressing "Easy" calls recordAnswer with quality 5', async () => {
     const recordAnswer = jest.fn().mockResolvedValue(undefined);
     const { getByText } = renderStudyScreen({ recordAnswer });
-    await gradeCard(getByText, 'Easy');
+    await gradeCard(getByText, 'Fácil');
     expect(recordAnswer).toHaveBeenCalledWith('c1', 5);
   });
 
   it('calls incrementDailyProgress after grading a card', async () => {
     const { getByText } = renderStudyScreen();
-    await gradeCard(getByText, 'Good');
+    await gradeCard(getByText, 'Bien');
     expect(mockIncrementDailyProgress).toHaveBeenCalledWith(1);
   });
 
   it('advances to the next card after grading', async () => {
     const { getByText } = renderStudyScreen();
-    await gradeCard(getByText, 'Good');
-    await waitFor(() => expect(getByText('2 left')).toBeTruthy());
+    await gradeCard(getByText, 'Bien');
+    await waitFor(() => expect(getByText('2 restantes')).toBeTruthy());
   });
 });
 
@@ -230,7 +230,7 @@ describe('StudyScreen daily progress', () => {
   it('loads daily progress on mount', async () => {
     const { getByText } = renderStudyScreen();
     await waitFor(() => expect(mockGetDailyProgress).toHaveBeenCalled());
-    expect(getByText('3 left')).toBeTruthy();
+    expect(getByText('3 restantes')).toBeTruthy();
   });
 });
 
@@ -244,9 +244,9 @@ describe('StudyScreen edge cases', () => {
     const getStudyBatch = jest.fn().mockReturnValue(singleCard);
     const { getByText } = renderStudyScreen({ getStudyBatch, recordAnswer });
 
-    await waitFor(() => getByText('Good'));
+    await waitFor(() => getByText('Bien'));
     await act(async () => {
-      fireEvent.press(getByText('Good'));
+      fireEvent.press(getByText('Bien'));
     });
 
     // After last card graded, seed increments and batch reloads empty

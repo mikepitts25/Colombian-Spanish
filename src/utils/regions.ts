@@ -1,8 +1,9 @@
 import { FlashCard } from '../types';
+import { type TranslationKey } from '../i18n/translations';
 
 export type RegionFilterId = 'all' | 'general' | 'paisa' | 'rolo' | 'costeno' | 'valluno';
 
-export const REGION_FILTERS: Array<{ id: RegionFilterId; label: string }> = [
+export const REGION_FILTERS: { id: RegionFilterId; label: string }[] = [
   { id: 'all', label: 'All' },
   { id: 'general', label: 'General' },
   { id: 'paisa', label: 'Paisa' },
@@ -10,6 +11,15 @@ export const REGION_FILTERS: Array<{ id: RegionFilterId; label: string }> = [
   { id: 'costeno', label: 'Costeño' },
   { id: 'valluno', label: 'Valluno' },
 ];
+
+export const REGION_LABEL_KEYS: Record<RegionFilterId, TranslationKey> = {
+  all: 'region.all',
+  general: 'region.general',
+  paisa: 'region.paisa',
+  rolo: 'region.rolo',
+  costeno: 'region.costeno',
+  valluno: 'region.valluno',
+};
 
 const REGION_PATTERNS: Record<Exclude<RegionFilterId, 'all' | 'general'>, RegExp> = {
   paisa: /\b(paisa|medellin|antioquia)\b/,
@@ -38,10 +48,10 @@ function cardText(card: FlashCard, deckName?: string) {
 
 export function getCardRegionId(card: FlashCard, deckName?: string): RegionFilterId {
   const text = cardText(card, deckName);
-  for (const [region, pattern] of Object.entries(REGION_PATTERNS) as Array<[
+  for (const [region, pattern] of Object.entries(REGION_PATTERNS) as [
     Exclude<RegionFilterId, 'all' | 'general'>,
     RegExp,
-  ]>) {
+  ][]) {
     if (pattern.test(text)) return region;
   }
   return 'general';

@@ -9,18 +9,25 @@ import Flashcard from '../components/Flashcard';
 import { getDailyProgress, incrementDailyProgress } from '../storage/storage';
 import ConjugationPanel from '../components/ConjugationPanel';
 import { isVerb } from '../utils/verbUtils';
-import { cardMatchesRegion, REGION_FILTERS, RegionFilterId } from '../utils/regions';
+import {
+  cardMatchesRegion,
+  REGION_FILTERS,
+  REGION_LABEL_KEYS,
+  RegionFilterId,
+} from '../utils/regions';
+import { useLanguage } from '../context/LanguageContext';
 
 const GRADES = [
-  { label: 'Again', interval: '<1d', color: '#f87171',  bg: 'rgba(206,17,38,0.3)',   border: '#CE1126', q: 1 as const },
-  { label: 'Hard',  interval: '1d',  color: '#fb923c',  bg: 'rgba(251,146,60,0.25)', border: '#fb923c', q: 2 as const },
-  { label: 'Good',  interval: '3d',  color: '#FFDA00',  bg: 'rgba(255,218,0,0.22)',  border: '#FFDA00', q: 4 as const },
-  { label: 'Easy',  interval: '7d',  color: '#10b981',  bg: 'rgba(16,185,129,0.25)', border: '#10b981', q: 5 as const },
-];
+  { labelKey: 'grades.again', interval: '<1d', color: '#f87171',  bg: 'rgba(206,17,38,0.3)',   border: '#CE1126', q: 1 as const },
+  { labelKey: 'grades.hard',  interval: '1d',  color: '#fb923c',  bg: 'rgba(251,146,60,0.25)', border: '#fb923c', q: 2 as const },
+  { labelKey: 'grades.good',  interval: '3d',  color: '#FFDA00',  bg: 'rgba(255,218,0,0.22)',  border: '#FFDA00', q: 4 as const },
+  { labelKey: 'grades.easy',  interval: '7d',  color: '#10b981',  bg: 'rgba(16,185,129,0.25)', border: '#10b981', q: 5 as const },
+] as const;
 
 export default function StudyScreen() {
   const { ready, activeDeck, getStudyBatch, recordAnswer, toggleFavorite } = useDeck();
   const nav = useNavigation<any>();
+  const { t } = useLanguage();
   const [seed, setSeed] = useState(0);
   const [activeRegion, setActiveRegion] = useState<RegionFilterId>('all');
 
@@ -70,7 +77,7 @@ export default function StudyScreen() {
       <SafeAreaView style={styles.wrap}>
         <View style={styles.center}>
           <Text style={styles.loadingEmoji}>📖</Text>
-          <Text style={styles.loadingText}>Cargando…</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -81,10 +88,10 @@ export default function StudyScreen() {
       <SafeAreaView style={styles.wrap}>
         <View style={styles.center}>
           <Text style={styles.noDeckEmoji}>🇨🇴</Text>
-          <Text style={styles.noDeckTitle}>Selecciona un deck</Text>
-          <Text style={styles.noDeckSub}>Ve a Inicio y elige un deck para estudiar.</Text>
+          <Text style={styles.noDeckTitle}>{t('study.noDeck.title')}</Text>
+          <Text style={styles.noDeckSub}>{t('study.noDeck.sub')}</Text>
           <Pressable style={styles.goHomeBtn} onPress={() => nav.navigate('Home')}>
-            <Text style={styles.goHomeBtnText}>← Ir al Inicio</Text>
+            <Text style={styles.goHomeBtnText}>{t('study.goHome')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -110,14 +117,14 @@ export default function StudyScreen() {
           {card && (
             <Pressable
               style={styles.favoriteBtn}
-              accessibilityLabel={card.favorite ? 'Remove from phrasebook' : 'Save to phrasebook'}
+              accessibilityLabel={card.favorite ? t('study.favorite.remove') : t('study.favorite.save')}
               onPress={() => toggleFavorite(card.id)}
             >
               <Text style={styles.favoriteBtnText}>{card.favorite ? '★' : '☆'}</Text>
             </Pressable>
           )}
           <View style={styles.cardsLeftPill}>
-            <Text style={styles.cardsLeftText}>{remaining} left</Text>
+            <Text style={styles.cardsLeftText}>{t('study.cardsLeft', { count: remaining })}</Text>
           </View>
         </View>
       </View>
@@ -134,7 +141,7 @@ export default function StudyScreen() {
             onPress={() => changeRegion(region.id)}
           >
             <Text style={[styles.regionChipText, activeRegion === region.id && styles.regionChipTextActive]}>
-              {region.label}
+              {t(REGION_LABEL_KEYS[region.id])}
             </Text>
           </Pressable>
         ))}
@@ -142,9 +149,9 @@ export default function StudyScreen() {
 
       {/* Swipe hints */}
       <View style={styles.swipeHints}>
-        <Text style={styles.swipeHard}>← Hard</Text>
-        <Text style={styles.swipeTap}>Toca para voltear</Text>
-        <Text style={styles.swipeEasy}>Fácil →</Text>
+        <Text style={styles.swipeHard}>{t('study.hint.hard')}</Text>
+        <Text style={styles.swipeTap}>{t('study.hint.flip')}</Text>
+        <Text style={styles.swipeEasy}>{t('study.hint.easy')}</Text>
       </View>
 
       {/* Card or empty state */}
@@ -165,26 +172,26 @@ export default function StudyScreen() {
       ) : (
         <View style={[styles.cardArea, styles.center]}>
           <Text style={{ fontSize: 48 }}>🎉</Text>
-          <Text style={styles.noDeckTitle}>¡Bacano! Todo al día</Text>
-          <Text style={styles.noDeckSub}>No hay más tarjetas por ahora. Vuelve mañana.</Text>
+          <Text style={styles.noDeckTitle}>{t('study.caughtUp.title')}</Text>
+          <Text style={styles.noDeckSub}>{t('study.caughtUp.sub')}</Text>
           <Pressable style={styles.quizCta} onPress={() => nav.navigate('Quiz')}>
-            <Text style={styles.quizCtaText}>Take Quiz</Text>
+            <Text style={styles.quizCtaText}>{t('study.takeQuiz')}</Text>
           </Pressable>
         </View>
       )}
 
       {/* Grade bar — fixed at bottom */}
       <View style={styles.gradeBar}>
-        <Text style={styles.gradeLabel}>¿Qué tan bien lo sabías?</Text>
+        <Text style={styles.gradeLabel}>{t('study.gradePrompt')}</Text>
         <View style={styles.gradeButtons}>
           {GRADES.map((g) => (
             <Pressable
-              key={g.label}
+              key={g.labelKey}
               style={[styles.gradeBtn, { backgroundColor: g.bg, borderColor: g.border }]}
               onPress={() => grade(g.q)}
               disabled={!card}
             >
-              <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{g.label}</Text>
+              <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
               <Text style={[styles.gradeBtnInterval, { color: g.color + 'b3' }]}>{g.interval}</Text>
             </Pressable>
           ))}

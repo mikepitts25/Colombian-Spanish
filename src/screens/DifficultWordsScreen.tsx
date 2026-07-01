@@ -6,13 +6,14 @@ import { useDeck } from '../hooks/useDeck';
 import { selectDifficultCards } from '../utils/srs';
 import { incrementDailyProgress } from '../storage/storage';
 import { FlashCard } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 const GRADES = [
-  { label: 'Again', interval: '<1d', color: '#f87171',  bg: 'rgba(206,17,38,0.3)',   border: '#CE1126', q: 1 as const },
-  { label: 'Hard',  interval: '1d',  color: '#fb923c',  bg: 'rgba(251,146,60,0.25)', border: '#fb923c', q: 2 as const },
-  { label: 'Good',  interval: '3d',  color: '#FFDA00',  bg: 'rgba(255,218,0,0.22)',  border: '#FFDA00', q: 4 as const },
-  { label: 'Easy',  interval: '7d',  color: '#10b981',  bg: 'rgba(16,185,129,0.25)', border: '#10b981', q: 5 as const },
-];
+  { labelKey: 'grades.again', interval: '<1d', color: '#f87171',  bg: 'rgba(206,17,38,0.3)',   border: '#CE1126', q: 1 as const },
+  { labelKey: 'grades.hard',  interval: '1d',  color: '#fb923c',  bg: 'rgba(251,146,60,0.25)', border: '#fb923c', q: 2 as const },
+  { labelKey: 'grades.good',  interval: '3d',  color: '#FFDA00',  bg: 'rgba(255,218,0,0.22)',  border: '#FFDA00', q: 4 as const },
+  { labelKey: 'grades.easy',  interval: '7d',  color: '#10b981',  bg: 'rgba(16,185,129,0.25)', border: '#10b981', q: 5 as const },
+] as const;
 
 type DifficultRow = {
   deckId: string;
@@ -22,6 +23,7 @@ type DifficultRow = {
 
 export default function DifficultWordsScreen() {
   const { ready, decks, recordAnswer } = useDeck();
+  const { t } = useLanguage();
   const [idx, setIdx] = useState(0);
 
   const difficultRows = useMemo<DifficultRow[]>(() => {
@@ -54,7 +56,7 @@ export default function DifficultWordsScreen() {
     return (
       <SafeAreaView style={styles.wrap}>
         <View style={styles.center}>
-          <Text style={styles.loadingText}>Cargando…</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -65,8 +67,8 @@ export default function DifficultWordsScreen() {
       <SafeAreaView style={styles.wrap}>
         <View style={styles.center}>
           <Text style={styles.emptyEmoji}>🎉</Text>
-          <Text style={styles.emptyTitle}>No difficult words</Text>
-          <Text style={styles.emptySub}>Cards you miss or struggle with will show up here.</Text>
+          <Text style={styles.emptyTitle}>{t('difficult.emptyTitle')}</Text>
+          <Text style={styles.emptySub}>{t('difficult.emptySub')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -76,9 +78,13 @@ export default function DifficultWordsScreen() {
     <SafeAreaView style={styles.wrap}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.title}>Difficult Words</Text>
+          <Text style={styles.title}>{t('difficult.title')}</Text>
           <Text style={styles.sub}>
-            {count} difficult word{count === 1 ? '' : 's'}
+            {t('difficult.count', {
+              count,
+              wordPlural: count === 1 ? '' : 's',
+              adjectivePlural: count === 1 ? '' : 'es',
+            })}
           </Text>
         </View>
         <View style={styles.counterPill}>
@@ -95,15 +101,15 @@ export default function DifficultWordsScreen() {
       </View>
 
       <View style={styles.gradeBar}>
-        <Text style={styles.gradeLabel}>Review this trouble spot</Text>
+        <Text style={styles.gradeLabel}>{t('difficult.reviewPrompt')}</Text>
         <View style={styles.gradeButtons}>
           {GRADES.map((g) => (
             <Pressable
-              key={g.label}
+              key={g.labelKey}
               style={[styles.gradeBtn, { backgroundColor: g.bg, borderColor: g.border }]}
               onPress={() => grade(g.q)}
             >
-              <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{g.label}</Text>
+              <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
               <Text style={[styles.gradeBtnInterval, { color: g.color + 'b3' }]}>{g.interval}</Text>
             </Pressable>
           ))}

@@ -19,7 +19,14 @@ import {
   SeenWord,
 } from '../storage/storage';
 import { FlashCard } from '../types';
-import { cardMatchesRegion, getCardRegion, REGION_FILTERS, RegionFilterId } from '../utils/regions';
+import {
+  cardMatchesRegion,
+  getCardRegionId,
+  REGION_FILTERS,
+  REGION_LABEL_KEYS,
+  RegionFilterId,
+} from '../utils/regions';
+import { useLanguage } from '../context/LanguageContext';
 
 interface QuizQuestion {
   cardId: string;
@@ -52,6 +59,7 @@ function shuffle<T>(items: T[]) {
 export default function QuizScreen() {
   const { decks, ready, recordAnswer } = useDeck();
   const nav = useNavigation<any>();
+  const { t } = useLanguage();
   const [seenWords, setSeenWords] = useState<SeenWord[]>([]);
   const [quizHistory, setQuizHistory] = useState<QuizResult[]>([]);
   const [activeRegion, setActiveRegion] = useState<RegionFilterId>('all');
@@ -101,7 +109,7 @@ export default function QuizScreen() {
     return quizHistory.filter((result) => result.region === activeRegion);
   }, [activeRegion, quizHistory]);
 
-  function makeQuestion(row: CardRow, answerText?: string): QuizQuestion {
+  const makeQuestion = useCallback((row: CardRow, answerText?: string): QuizQuestion => {
     const otherCards = allCards.filter((item) => item.card.id !== row.card.id);
     const distractors = shuffle(otherCards).slice(0, 3).map((item) => item.card.back);
     const correctAnswer = answerText || row.card.back;
@@ -112,9 +120,9 @@ export default function QuizScreen() {
       correctAnswer,
       options: shuffle([correctAnswer, ...distractors]),
       deckId: row.deckId,
-      regionLabel: getCardRegion(row.card, row.deckName),
+      regionLabel: t(REGION_LABEL_KEYS[getCardRegionId(row.card, row.deckName)]),
     };
-  }
+  }, [allCards, t]);
 
   const generateQuestions = useCallback((words: SeenWord[]) => {
     const due = words.filter((word) => {
@@ -134,9 +142,9 @@ export default function QuizScreen() {
         return row ? makeQuestion(row, word.english) : null;
       })
       .filter(Boolean) as QuizQuestion[];
-  }, [cardRowsById, allCards]);
+  }, [cardRowsById, makeQuestion]);
 
-  function startQuestions(questions: QuizQuestion[]) {
+  const startQuestions = useCallback((questions: QuizQuestion[]) => {
     if (questions.length === 0) return;
     setSession({
       questions,
@@ -147,19 +155,19 @@ export default function QuizScreen() {
     setQuizComplete(false);
     setSelectedOption(null);
     setShowFeedback(false);
-  }
+  }, []);
 
   const startQuiz = useCallback(() => {
     startQuestions(generateQuestions(availableSeenWords));
-  }, [availableSeenWords, generateQuestions]);
+  }, [availableSeenWords, generateQuestions, startQuestions]);
 
-  function startMissedReview(result: QuizResult) {
+  const startMissedReview = useCallback((result: QuizResult) => {
     const questions = result.missedCardIds
       .map((cardId) => cardRowsById.get(cardId))
       .filter(Boolean)
       .map((row) => makeQuestion(row as CardRow));
     startQuestions(questions);
-  }
+  }, [cardRowsById, makeQuestion, startQuestions]);
 
   function changeRegion(region: RegionFilterId) {
     setActiveRegion(region);
@@ -169,7 +177,7 @@ export default function QuizScreen() {
     setShowFeedback(false);
   }
 
-  async function finishQuiz(nextSession: QuizSession) {
+  const finishQuiz = useCallback(async (nextSession: QuizSession) => {
     const missedCardIds = nextSession.questions
       .filter((_, index) => !nextSession.answers[index])
       .map((question) => question.cardId);
@@ -182,9 +190,9 @@ export default function QuizScreen() {
     setQuizHistory(nextHistory);
     setQuizComplete(true);
     setSession(nextSession);
-  }
+  }, [activeRegion]);
 
-  async function handleNext(wasCorrect: boolean) {
+  const handleNext = useCallback(async (wasCorrect: boolean) => {
     if (!session) return;
     const nextAnswers = [...session.answers, wasCorrect];
     const nextScore = wasCorrect ? session.score + 1 : session.score;
@@ -203,7 +211,7 @@ export default function QuizScreen() {
       setSelectedOption(null);
       setShowFeedback(false);
     }
-  }
+  }, [finishQuiz, session]);
 
   const handleSelectOption = useCallback(async (option: string) => {
     if (!currentQuestion || showFeedback) return;
@@ -220,30 +228,29 @@ export default function QuizScreen() {
   }, [currentQuestion, showFeedback, recordAnswer, handleNext]);
 
   const renderRegionChips = () => (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.regionRow}
-    >
-      {REGION_FILTERS.map((region) => (
-        <Pressable
-          key={region.id}
-          style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
-          onPress={() => changeRegion(region.id)}
-        >
-          <Text style={[styles.regionChipText, activeRegion === region.id && styles.regionChipTextActive]}>
-            {region.label}
-          </Text>
-        </Pressable>
-      ))}
-    </ScrollView>
+    <View style={styles.regionPanel}>
+      <Text style={styles.regionLabel}>{t('quiz.region')}</Text>
+      <View style={styles.regionRow}>
+        {REGION_FILTERS.map((region) => (
+          <Pressable
+            key={region.id}
+            style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
+            onPress={() => changeRegion(region.id)}
+          >
+            <Text style={[styles.regionChipText, activeRegion === region.id && styles.regionChipTextActive]}>
+              {t(REGION_LABEL_KEYS[region.id])}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
+    </View>
   );
 
   const renderHistory = () => {
     if (filteredHistory.length === 0) return null;
     return (
       <View style={styles.historyPanel}>
-        <Text style={styles.historyTitle}>Recent scores</Text>
+        <Text style={styles.historyTitle}>{t('quiz.recentScores')}</Text>
         {filteredHistory.slice(0, 3).map((result) => {
           const percent = Math.round((result.score / Math.max(1, result.total)) * 100);
           return (
@@ -251,15 +258,15 @@ export default function QuizScreen() {
               <View>
                 <Text style={styles.historyScore}>{percent}%</Text>
                 <Text style={styles.historyMeta}>
-                  {result.score}/{result.total} correct
+                  {t('quiz.history.correct', { score: result.score, total: result.total })}
                 </Text>
               </View>
               {result.missedCardIds.length > 0 ? (
                 <Pressable style={styles.reviewMissedBtn} onPress={() => startMissedReview(result)}>
-                  <Text style={styles.reviewMissedText}>Review missed cards</Text>
+                  <Text style={styles.reviewMissedText}>{t('quiz.reviewMissed')}</Text>
                 </Pressable>
               ) : (
-                <Text style={styles.perfectText}>Clean run</Text>
+                <Text style={styles.perfectText}>{t('quiz.cleanRun')}</Text>
               )}
             </View>
           );
@@ -272,7 +279,7 @@ export default function QuizScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.center}>
-          <Text style={styles.loadingText}>Cargando...</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -284,29 +291,33 @@ export default function QuizScreen() {
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.emptyScroll}>
           {renderRegionChips()}
-          <View style={styles.centerPanel}>
-            <Text style={styles.emoji}>🎯</Text>
-            <Text style={styles.emptyTitle}>Quiz unlocks after a little study</Text>
-            <Text style={styles.emptyNeed}>Study {needed} more word{needed !== 1 ? 's' : ''}</Text>
-            <Text style={styles.emptySub}>
-              Study cards first so Quiz can use words you have actually seen.
-            </Text>
-            <View style={styles.progressContainer}>
-              <View style={styles.progressBar}>
-                <View
-                  style={[
-                    styles.progressFill,
-                    { width: `${Math.min(100, (availableSeenWords.length / MIN_QUIZ_WORDS) * 100)}%` },
-                  ]}
-                />
-              </View>
-              <Text style={styles.progressText}>
-                {availableSeenWords.length} / {MIN_QUIZ_WORDS} words
+          <View style={styles.emptyBody}>
+            <View style={styles.centerPanel}>
+              <Text style={styles.emoji}>🎯</Text>
+              <Text style={styles.emptyTitle}>{t('quiz.locked.title')}</Text>
+              <Text style={styles.emptyNeed}>
+                {t('quiz.locked.need', { count: needed, plural: needed !== 1 ? 's' : '' })}
               </Text>
+              <Text style={styles.emptySub}>
+                {t('quiz.locked.sub')}
+              </Text>
+              <View style={styles.progressContainer}>
+                <View style={styles.progressBar}>
+                  <View
+                    style={[
+                      styles.progressFill,
+                      { width: `${Math.min(100, (availableSeenWords.length / MIN_QUIZ_WORDS) * 100)}%` },
+                    ]}
+                  />
+                </View>
+                <Text style={styles.progressText}>
+                  {t('quiz.progress.words', { count: availableSeenWords.length, target: MIN_QUIZ_WORDS })}
+                </Text>
+              </View>
+              <Pressable style={styles.primaryButton} onPress={() => nav.navigate('Study')}>
+                <Text style={styles.primaryButtonText}>{t('quiz.studyNow')}</Text>
+              </Pressable>
             </View>
-            <Pressable style={styles.primaryButton} onPress={() => nav.navigate('Study')}>
-              <Text style={styles.primaryButtonText}>Study now</Text>
-            </Pressable>
           </View>
           {renderHistory()}
         </ScrollView>
@@ -319,17 +330,17 @@ export default function QuizScreen() {
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.startScroll}>
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>Vocabulary Quiz</Text>
+            <Text style={styles.headerTitle}>{t('quiz.title')}</Text>
             <Text style={styles.headerSub}>
-              Practice words from your seen-word pool, with due cards first.
+              {t('quiz.startSub')}
             </Text>
           </View>
           {renderRegionChips()}
           <View style={styles.startCard}>
             <Text style={styles.startCount}>{availableSeenWords.length}</Text>
-            <Text style={styles.startLabel}>available words</Text>
+            <Text style={styles.startLabel}>{t('quiz.availableWords')}</Text>
             <Pressable style={styles.primaryButton} onPress={startQuiz}>
-              <Text style={styles.primaryButtonText}>Start Quiz</Text>
+              <Text style={styles.primaryButtonText}>{t('quiz.start')}</Text>
             </Pressable>
           </View>
           {renderHistory()}
@@ -345,12 +356,12 @@ export default function QuizScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.completeContainer}>
-          <Text style={styles.completeTitle}>Quiz Complete</Text>
+          <Text style={styles.completeTitle}>{t('quiz.complete.title')}</Text>
           <Text style={styles.completeMessage}>
-            {percentage >= 80 ? 'Strong recall. Keep it moving.' : 'Good reps. Review the misses next.'}
+            {percentage >= 80 ? t('quiz.complete.strong') : t('quiz.complete.review')}
           </Text>
           <View style={styles.scoreCard}>
-            <Text style={styles.scoreLabel}>Your Score</Text>
+            <Text style={styles.scoreLabel}>{t('quiz.score.label')}</Text>
             <Text style={styles.scoreValue}>
               {session.score} / {session.questions.length}
             </Text>
@@ -359,21 +370,21 @@ export default function QuizScreen() {
           <View style={styles.statsContainer}>
             <View style={styles.statItem}>
               <Text style={styles.statNumber}>{session.score}</Text>
-              <Text style={styles.statLabel}>Correct</Text>
+              <Text style={styles.statLabel}>{t('quiz.correct')}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
               <Text style={styles.statNumber}>{missedCount}</Text>
-              <Text style={styles.statLabel}>Missed</Text>
+              <Text style={styles.statLabel}>{t('quiz.missed')}</Text>
             </View>
           </View>
           {latestResult?.missedCardIds.length ? (
             <Pressable style={styles.secondaryButton} onPress={() => startMissedReview(latestResult)}>
-              <Text style={styles.secondaryButtonText}>Review missed cards</Text>
+              <Text style={styles.secondaryButtonText}>{t('quiz.reviewMissed')}</Text>
             </Pressable>
           ) : null}
           <Pressable style={styles.primaryButton} onPress={startQuiz}>
-            <Text style={styles.primaryButtonText}>Try Again</Text>
+            <Text style={styles.primaryButtonText}>{t('quiz.tryAgain')}</Text>
           </Pressable>
         </ScrollView>
       </SafeAreaView>
@@ -385,13 +396,13 @@ export default function QuizScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Vocabulary Quiz</Text>
+        <Text style={styles.headerTitle}>{t('quiz.title')}</Text>
         <Text style={styles.progressText}>{progressText}</Text>
       </View>
 
       {currentQuestion && (
         <View style={styles.questionCard}>
-          <Text style={styles.questionLabel}>What does this mean?</Text>
+          <Text style={styles.questionLabel}>{t('quiz.questionLabel')}</Text>
           <Text style={styles.spanishWord}>{currentQuestion.spanish}</Text>
           <Text style={styles.regionBadge}>{currentQuestion.regionLabel}</Text>
         </View>
@@ -421,7 +432,9 @@ export default function QuizScreen() {
       {showFeedback && currentQuestion && (
         <View style={[styles.feedbackContainer, isCorrect ? styles.feedbackCorrect : styles.feedbackIncorrect]}>
           <Text style={styles.feedbackText}>
-            {isCorrect ? 'Correct' : `Answer: ${currentQuestion.correctAnswer}`}
+            {isCorrect
+              ? t('quiz.feedback.correct')
+              : t('quiz.feedback.answer', { answer: currentQuestion.correctAnswer })}
           </Text>
         </View>
       )}
@@ -434,18 +447,34 @@ const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: spacing(4) },
   loadingText: { color: colors.textSecondary, fontSize: typography.size.lg },
 
-  emptyScroll: { flexGrow: 1, padding: spacing(2), paddingBottom: spacing(8) },
+  emptyScroll: {
+    flexGrow: 1,
+    paddingHorizontal: spacing(2),
+    paddingTop: spacing(1.5),
+    paddingBottom: spacing(8),
+    gap: spacing(2),
+  },
   startScroll: { flexGrow: 1, padding: spacing(2), paddingBottom: spacing(8), gap: spacing(2) },
+  emptyBody: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    minHeight: 440,
+  },
   centerPanel: {
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    borderWidth: 1,
+    borderColor: colors.border,
     alignItems: 'center',
     justifyContent: 'center',
     padding: spacing(3),
-    gap: spacing(1.5),
+    gap: spacing(1.25),
+    ...elevation.sm,
   },
-  emoji: { fontSize: 56 },
+  emoji: { fontSize: 44, marginBottom: spacing(0.5) },
   emptyTitle: {
     color: colors.textPrimary,
-    fontSize: typography.size['2xl'],
+    fontSize: typography.size.xl,
     fontWeight: typography.weight.bold,
     textAlign: 'center',
   },
@@ -456,7 +485,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: spacing(2),
   },
-  progressContainer: { width: '100%', maxWidth: 280, marginTop: spacing(1) },
+  progressContainer: { width: '100%', maxWidth: 280, marginTop: spacing(0.5) },
   progressBar: {
     height: 10,
     backgroundColor: colors.border,
@@ -470,14 +499,31 @@ const styles = StyleSheet.create({
   headerTitle: { color: colors.textPrimary, fontSize: typography.size.xl, fontWeight: typography.weight.bold },
   headerSub: { color: colors.textSecondary, fontSize: typography.size.sm, lineHeight: 19 },
 
-  regionRow: { gap: 8, paddingHorizontal: spacing(1), paddingVertical: spacing(1) },
+  regionPanel: {
+    gap: spacing(1),
+  },
+  regionLabel: {
+    color: colors.textTertiary,
+    fontSize: typography.size.xs,
+    fontWeight: '800',
+    letterSpacing: 0,
+    textTransform: 'uppercase',
+  },
+  regionRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
   regionChip: {
-    paddingHorizontal: 13,
+    minHeight: 36,
+    paddingHorizontal: 14,
     paddingVertical: 8,
-    borderRadius: radius.full,
+    borderRadius: radius.lg,
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   regionChipActive: { backgroundColor: '#047857', borderColor: '#047857' },
   regionChipText: { color: colors.textSecondary, fontSize: 12, fontWeight: '700' },

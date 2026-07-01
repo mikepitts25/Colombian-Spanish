@@ -1,10 +1,12 @@
 import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { ScrollView } from 'react-native';
 import QuizScreen from '../../src/screens/QuizScreen';
 import { Deck, FlashCard } from '../../src/types';
 import { SeenWord } from '../../src/storage/storage';
 
 const mockNavigate = jest.fn();
+let mockLanguage: 'es' | 'en' = 'en';
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
@@ -20,6 +22,19 @@ jest.mock('../../src/storage/storage', () => ({
   recordQuizResult: jest.fn(),
   incrementDailyProgress: jest.fn().mockResolvedValue({ count: 1, target: 10 }),
 }));
+
+jest.mock('../../src/context/LanguageContext', () => {
+  const { translate } = jest.requireActual('../../src/i18n/translations');
+  return {
+    useLanguage: () => ({
+      language: mockLanguage,
+      setLanguage: jest.fn(),
+      toggleLanguage: jest.fn(),
+      t: (key: any, values?: Record<string, string | number>) =>
+        translate(mockLanguage, key, values),
+    }),
+  };
+});
 
 import { useDeck } from '../../src/hooks/useDeck';
 import { getSeenWords, getQuizHistory } from '../../src/storage/storage';
@@ -76,6 +91,7 @@ function renderQuiz(overrides = {}) {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  mockLanguage = 'en';
   mockGetSeenWords.mockResolvedValue(CARDS.map(makeSeenWord));
   mockGetQuizHistory.mockResolvedValue([]);
 });
@@ -89,6 +105,18 @@ describe('QuizScreen integration polish', () => {
     await waitFor(() => expect(getByText('Study 8 more words')).toBeTruthy());
     fireEvent.press(getByText('Study now'));
     expect(mockNavigate).toHaveBeenCalledWith('Study');
+  });
+
+  it('renders quiz region filters without horizontal scrolling', async () => {
+    mockGetSeenWords.mockResolvedValue(CARDS.slice(0, 2).map(makeSeenWord));
+
+    const { UNSAFE_getAllByType, getByText } = renderQuiz();
+
+    await waitFor(() => expect(getByText('Study 8 more words')).toBeTruthy());
+    const horizontalScrollViews = UNSAFE_getAllByType(ScrollView).filter(
+      (scrollView) => scrollView.props.horizontal,
+    );
+    expect(horizontalScrollViews).toHaveLength(0);
   });
 
   it('shows recent score history before starting a quiz', async () => {
@@ -128,5 +156,16 @@ describe('QuizScreen integration polish', () => {
     fireEvent.press(getByText('Review missed cards'));
 
     await waitFor(() => expect(getByText('front-c3')).toBeTruthy());
+  });
+
+  it('renders locked quiz copy in Spanish when UI language is Spanish', async () => {
+    mockLanguage = 'es';
+    mockGetSeenWords.mockResolvedValue(CARDS.slice(0, 2).map(makeSeenWord));
+
+    const { getByText } = renderQuiz();
+
+    await waitFor(() => expect(getByText('Estudia 8 palabras más')).toBeTruthy());
+    expect(getByText('El quiz se desbloquea después de estudiar un poco')).toBeTruthy();
+    expect(getByText('Estudiar ahora')).toBeTruthy();
   });
 });

@@ -3,9 +3,11 @@ import { SafeAreaView, StyleSheet, Text, TextInput, View, FlatList, Pressable } 
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import * as Speech from 'expo-speech';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function PhrasebookScreen() {
   const { ready, decks, setActiveDeckId, toggleFavorite } = useDeck();
+  const { t } = useLanguage();
   const [q, setQ] = useState('');
 
   const items = useMemo(() => {
@@ -31,19 +33,19 @@ export default function PhrasebookScreen() {
   if (!ready)
     return (
       <SafeAreaView style={styles.wrap}>
-        <Text style={styles.h1}>Cargando…</Text>
+        <Text style={styles.h1}>{t('common.loading')}</Text>
       </SafeAreaView>
     );
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>Phrasebook</Text>
-      <Text style={styles.sub}>Your starred cards across all decks (offline + private).</Text>
+      <Text style={styles.h1}>{t('phrasebook.title')}</Text>
+      <Text style={styles.sub}>{t('phrasebook.sub')}</Text>
 
       <TextInput
         value={q}
         onChangeText={setQ}
-        placeholder="Search (es/en/tags)…"
+        placeholder={t('phrasebook.searchPlaceholder')}
         placeholderTextColor={colors.textSecondary}
         style={styles.search}
         autoCapitalize="none"
@@ -84,8 +86,8 @@ export default function PhrasebookScreen() {
         )}
         ListEmptyComponent={
           <View style={{ marginTop: spacing(2) }}>
-            <Text style={styles.empty}>No favorites yet.</Text>
-            <Text style={styles.sub}>In Study, tap ★ to save a card here.</Text>
+            <Text style={styles.empty}>{t('phrasebook.empty')}</Text>
+            <Text style={styles.sub}>{t('phrasebook.emptySub')}</Text>
           </View>
         }
       />

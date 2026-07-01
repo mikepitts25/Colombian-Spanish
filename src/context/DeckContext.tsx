@@ -139,12 +139,6 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     [decks, activeDeckId],
   );
 
-  async function setDeck(updated: Deck) {
-    const arr = decks.map((d) => (d.id === updated.id ? updated : d));
-    setDecks(arr);
-    await saveDecks(arr);
-  }
-
   function getStudyBatch(size = 15) {
     if (!activeDeck) return [] as FlashCard[];
     return nextBatch(activeDeck.cards, size);

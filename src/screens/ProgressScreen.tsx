@@ -6,12 +6,10 @@ import { colors, radius } from '../styles/theme';
 import { getDailyProgress, getStudyStreak } from '../storage/storage';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
+import { useLanguage } from '../context/LanguageContext';
 
 function DonutRing({ pct, size = 90 }: { pct: number; size?: number }) {
   const stroke = 12;
-  const r = (size - stroke) / 2;
-  const circ = 2 * Math.PI * r;
-  const dash = pct * circ;
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
       {/* Background ring */}
@@ -38,6 +36,7 @@ function DonutRing({ pct, size = 90 }: { pct: number; size?: number }) {
 export default function ProgressScreen() {
   const { decks, ready } = useDeck();
   const nav = useNavigation<any>();
+  const { t } = useLanguage();
   const [dailyStats, setDailyStats] = useState({ count: 0, target: 10 });
   const [streak, setStreak] = useState(0);
 
@@ -80,18 +79,18 @@ export default function ProgressScreen() {
     : 0;
 
   const motivation = useMemo(() => {
-    if (dailyPct >= 1) return { emoji: '🎉', text: '¡Meta diaria cumplida!' };
-    if (streak >= 7)   return { emoji: '🔥', text: `${streak} días de racha. ¡Impresionante!` };
-    if (streak >= 3)   return { emoji: '⚡', text: `${streak} días seguidos. ¡Sigue así!` };
-    return { emoji: '💪', text: 'Cada tarjeta te acerca más a la fluidez.' };
-  }, [dailyPct, streak]);
+    if (dailyPct >= 1) return { emoji: '🎉', text: t('progress.motivation.done') };
+    if (streak >= 7)   return { emoji: '🔥', text: t('progress.motivation.week', { count: streak }) };
+    if (streak >= 3)   return { emoji: '⚡', text: t('progress.motivation.threeDays', { count: streak }) };
+    return { emoji: '💪', text: t('progress.motivation.default') };
+  }, [dailyPct, streak, t]);
 
   if (!ready) {
     return (
       <SafeAreaView style={styles.wrap}>
         <View style={styles.center}>
           <Text style={{ fontSize: 40 }}>📊</Text>
-          <Text style={styles.loadingText}>Cargando…</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -103,22 +102,22 @@ export default function ProgressScreen() {
 
         {/* Title row */}
         <View style={styles.titleRow}>
-          <Text style={styles.pageTitle}>Mi Progreso</Text>
+          <Text style={styles.pageTitle}>{t('progress.title')}</Text>
           <Pressable style={styles.shareBtn}>
-            <Text style={styles.shareBtnText}>🎉 Compartir</Text>
+            <Text style={styles.shareBtnText}>{t('progress.share')}</Text>
           </Pressable>
         </View>
 
         {/* Streak hero */}
         <View style={styles.streakCard}>
           <View style={styles.streakLeft}>
-            <Text style={styles.streakCaptionTop}>Racha actual</Text>
+            <Text style={styles.streakCaptionTop}>{t('progress.currentStreak')}</Text>
             <View style={styles.streakNumRow}>
               <Text style={styles.streakDays}>{streak}</Text>
-              <Text style={styles.streakUnit}>días</Text>
+              <Text style={styles.streakUnit}>{t('progress.days')}</Text>
             </View>
             <Text style={styles.streakCaption}>
-              {streak > 0 ? '¡Sigue así — no rompas la racha!' : 'Empieza tu racha hoy 🚀'}
+              {streak > 0 ? t('progress.streak.keep') : t('progress.streak.start')}
             </Text>
           </View>
           <View style={styles.streakBadge}>
@@ -133,16 +132,19 @@ export default function ProgressScreen() {
               <DonutRing pct={dailyPct} size={90} />
             </View>
             <View style={styles.dailyRight}>
-              <Text style={styles.dailyTitle}>Meta de Hoy</Text>
+              <Text style={styles.dailyTitle}>{t('progress.todayGoal')}</Text>
               <Text style={styles.dailySub}>
-                {dailyStats.count} de {dailyStats.target} tarjetas estudiadas
+                {t('progress.dailySub', {
+                  count: dailyStats.count,
+                  target: dailyStats.target,
+                })}
               </Text>
               {/* Mini bar */}
               <View style={styles.dailyBarTrack}>
                 <View style={[styles.dailyBarFill, { width: `${dailyPct * 100}%` as any }]} />
               </View>
               <Pressable style={styles.studyMoreBtn} onPress={() => nav.navigate('Study')}>
-                <Text style={styles.studyMoreText}>📖 Estudiar más</Text>
+                <Text style={styles.studyMoreText}>{t('progress.studyMore')}</Text>
               </Pressable>
             </View>
           </View>
@@ -153,21 +155,21 @@ export default function ProgressScreen() {
           <View style={styles.statRow}>
             <View style={[styles.statBox, { borderColor: '#FFDA00', backgroundColor: 'rgba(255,218,0,0.08)' }]}>
               <Text style={[styles.statVal, { color: '#FFDA00' }]}>{stats.total.toLocaleString()}</Text>
-              <Text style={styles.statLabel}>TOTAL CARTAS</Text>
+              <Text style={styles.statLabel}>{t('progress.totalCards')}</Text>
             </View>
             <View style={[styles.statBox, { borderColor: '#003893', backgroundColor: 'rgba(0,56,147,0.15)' }]}>
               <Text style={[styles.statVal, { color: '#60a5fa' }]}>{stats.studied}</Text>
-              <Text style={styles.statLabel}>ESTUDIADAS</Text>
+              <Text style={styles.statLabel}>{t('progress.studied')}</Text>
             </View>
           </View>
           <View style={styles.statRow}>
             <View style={[styles.statBox, { borderColor: '#CE1126', backgroundColor: 'rgba(206,17,38,0.1)' }]}>
               <Text style={[styles.statVal, { color: '#f87171' }]}>{stats.mastered}</Text>
-              <Text style={styles.statLabel}>DOMINADAS</Text>
+              <Text style={styles.statLabel}>{t('progress.mastered')}</Text>
             </View>
             <View style={[styles.statBox, { borderColor: 'rgba(255,218,0,0.4)', backgroundColor: 'rgba(255,218,0,0.06)' }]}>
               <Text style={[styles.statVal, { color: '#FFDA00' }]}>{(decks || []).length}</Text>
-              <Text style={styles.statLabel}>DECKS</Text>
+              <Text style={styles.statLabel}>{t('progress.decks')}</Text>
             </View>
           </View>
         </View>
@@ -175,12 +177,14 @@ export default function ProgressScreen() {
         {/* Deck progress */}
         {deckProgress.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>📊 Progreso por Deck</Text>
+            <Text style={styles.sectionTitle}>{t('progress.byDeck')}</Text>
             {deckProgress.map((deck) => (
               <View key={deck.id} style={styles.deckProgressRow}>
                 <View style={styles.deckProgressLeft}>
                   <Text style={styles.deckProgressName} numberOfLines={1}>{deck.name}</Text>
-                  <Text style={styles.deckProgressSub}>{deck.studied}/{deck.total} cartas</Text>
+                  <Text style={styles.deckProgressSub}>
+                    {t('progress.deckSub', { studied: deck.studied, total: deck.total })}
+                  </Text>
                 </View>
                 <View style={styles.deckProgressBarWrap}>
                   <View style={styles.deckProgressTrack}>
@@ -201,7 +205,7 @@ export default function ProgressScreen() {
         <View style={styles.motivCard}>
           <Text style={styles.motivEmoji}>{motivation.emoji}</Text>
           <View style={styles.motivRight}>
-            <Text style={styles.motivTitle}>¡Sigue así!</Text>
+            <Text style={styles.motivTitle}>{t('progress.keepGoing')}</Text>
             <Text style={styles.motivText}>{motivation.text}</Text>
           </View>
         </View>

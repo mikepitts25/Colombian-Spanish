@@ -9,33 +9,35 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, radius } from '../styles/theme';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ExploreScreen() {
   const nav = useNavigation<any>();
+  const { t } = useLanguage();
 
   const options = [
     {
       id: 'browse',
-      title: '📚 Browse All Decks',
-      description: 'Explore 30+ Colombian Spanish decks by category',
+      title: t('explore.browseDecks'),
+      description: t('explore.browseDecksSub'),
       onPress: () => nav.navigate('Browse'),
     },
     {
       id: 'phrasebook',
-      title: '⭐ My Phrasebook',
-      description: 'Your saved favorite cards for quick review',
+      title: t('explore.phrasebook'),
+      description: t('explore.phrasebookSub'),
       onPress: () => nav.navigate('Phrasebook'),
     },
     {
       id: 'add',
-      title: '➕ Add Custom Card',
-      description: 'Create your own flashcards',
+      title: t('explore.addCard'),
+      description: t('explore.addCardSub'),
       onPress: () => nav.navigate('AddCard'),
     },
     {
       id: 'manage',
-      title: '🗂️ Manage Decks',
-      description: 'Organize, rename, or reset deck progress',
+      title: t('explore.manageDecks'),
+      description: t('explore.manageDecksSub'),
       onPress: () => nav.navigate('ManageDecks'),
     },
   ];
@@ -43,8 +45,8 @@ export default function ExploreScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Explore</Text>
-        <Text style={styles.subtitle}>Discover and manage your learning</Text>
+        <Text style={styles.title}>{t('explore.title')}</Text>
+        <Text style={styles.subtitle}>{t('explore.sub')}</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>

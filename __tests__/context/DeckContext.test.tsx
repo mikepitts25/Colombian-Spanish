@@ -73,7 +73,7 @@ function Consumer({ onReady }: { onReady?: (ctx: ReturnType<typeof useDeckContex
   const ctx = useDeckContext();
   React.useEffect(() => {
     if (ctx.ready && onReady) onReady(ctx);
-  }, [ctx.ready]);
+  }, [ctx, onReady]);
   return (
     <>
       <Text testID="ready">{String(ctx.ready)}</Text>

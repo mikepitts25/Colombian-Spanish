@@ -10,7 +10,17 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['status-server/**/*.js'],
+      files: ['__tests__/**/*.{js,jsx,ts,tsx}', 'jest.setup.js'],
+      env: {
+        jest: true,
+      },
+      rules: {
+        // Jest mocks are intentionally declared before some imports in existing tests.
+        'import/first': 'off',
+      },
+    },
+    {
+      files: ['scripts/**/*.js', 'status-server/**/*.js'],
       env: {
         node: true,
       },

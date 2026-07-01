@@ -10,12 +10,14 @@ import {
   Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { colors, radius } from '../styles/theme';
+import { colors } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function EditProfileScreen() {
   const nav = useNavigation<any>();
   const { decks } = useDeck();
+  const { t } = useLanguage();
 
   const [name, setName] = useState('Mike Pitts');
   const [username, setUsername] = useState('@mikepitts');
@@ -28,7 +30,7 @@ export default function EditProfileScreen() {
   );
 
   function handleSave() {
-    Alert.alert('Perfil guardado', '¡Tus cambios fueron guardados!');
+    Alert.alert(t('profile.saved.title'), t('profile.saved.message'));
     nav.goBack();
   }
 
@@ -38,11 +40,11 @@ export default function EditProfileScreen() {
       <View style={styles.navBar}>
         <Pressable style={styles.backBtn} onPress={() => nav.goBack()}>
           <Text style={styles.backArrow}>←</Text>
-          <Text style={styles.backLabel}>Ajustes</Text>
+          <Text style={styles.backLabel}>{t('profile.back')}</Text>
         </Pressable>
-        <Text style={styles.navTitle}>Editar Perfil</Text>
+        <Text style={styles.navTitle}>{t('profile.title')}</Text>
         <Pressable style={styles.saveBtn} onPress={handleSave}>
-          <Text style={styles.saveBtnText}>Guardar</Text>
+          <Text style={styles.saveBtnText}>{t('profile.save')}</Text>
         </Pressable>
       </View>
 
@@ -53,14 +55,14 @@ export default function EditProfileScreen() {
             <Text style={styles.avatarText}>MP</Text>
           </View>
           <Pressable style={styles.changePhotoBtn}>
-            <Text style={styles.changePhotoText}>📷  Cambiar Foto</Text>
+            <Text style={styles.changePhotoText}>{t('profile.changePhoto')}</Text>
           </Pressable>
         </View>
 
         {/* Form fields */}
         <View style={styles.fieldsSection}>
           <View style={styles.fieldGroup}>
-            <Text style={styles.fieldLabel}>NOMBRE</Text>
+            <Text style={styles.fieldLabel}>{t('profile.name')}</Text>
             <TextInput
               value={name}
               onChangeText={setName}
@@ -71,7 +73,7 @@ export default function EditProfileScreen() {
           </View>
 
           <View style={styles.fieldGroup}>
-            <Text style={styles.fieldLabel}>USUARIO</Text>
+            <Text style={styles.fieldLabel}>{t('profile.username')}</Text>
             <TextInput
               value={username}
               onChangeText={setUsername}
@@ -83,16 +85,16 @@ export default function EditProfileScreen() {
           </View>
 
           <View style={styles.fieldGroup}>
-            <Text style={styles.fieldLabel}>CORREO</Text>
+            <Text style={styles.fieldLabel}>{t('profile.email')}</Text>
             <View style={[styles.fieldInput, styles.fieldInputDisabled]}>
               <Text style={styles.fieldInputText}>{email}</Text>
             </View>
           </View>
 
           <View style={styles.fieldGroup}>
-            <Text style={styles.fieldLabel}>IDIOMA NATIVO</Text>
+            <Text style={styles.fieldLabel}>{t('profile.nativeLanguage')}</Text>
             <Pressable style={[styles.fieldInput, styles.fieldInputRow]}>
-              <Text style={styles.fieldInputText}>🇺🇸  English</Text>
+              <Text style={styles.fieldInputText}>{t('profile.nativeLanguageValue')}</Text>
               <Text style={styles.fieldChevron}>›</Text>
             </Pressable>
           </View>
@@ -102,15 +104,15 @@ export default function EditProfileScreen() {
         <View style={styles.statsRow}>
           <View style={[styles.statBox, { borderColor: colors.brand, backgroundColor: 'rgba(255,218,0,0.08)' }]}>
             <Text style={[styles.statVal, { color: colors.brand }]}>{totalCards.toLocaleString()}</Text>
-            <Text style={styles.statLabel}>Tarjetas</Text>
+            <Text style={styles.statLabel}>{t('profile.cards')}</Text>
           </View>
           <View style={[styles.statBox, { borderColor: colors.accentBlue, backgroundColor: 'rgba(0,56,147,0.12)' }]}>
             <Text style={[styles.statVal, { color: '#60a5fa' }]}>{(decks || []).length}</Text>
-            <Text style={styles.statLabel}>Decks</Text>
+            <Text style={styles.statLabel}>{t('profile.decks')}</Text>
           </View>
           <View style={[styles.statBox, { borderColor: colors.accentRed, backgroundColor: 'rgba(206,17,38,0.1)' }]}>
             <Text style={[styles.statVal, { color: '#f87171' }]}>{mastered}</Text>
-            <Text style={styles.statLabel}>Dominadas</Text>
+            <Text style={styles.statLabel}>{t('profile.mastered')}</Text>
           </View>
         </View>
       </ScrollView>

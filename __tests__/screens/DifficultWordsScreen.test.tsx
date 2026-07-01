@@ -60,7 +60,7 @@ describe('DifficultWordsScreen', () => {
   it('renders difficult cards and excludes untouched cards', async () => {
     const { getByText, queryByText } = render(<DifficultWordsScreen />);
 
-    await waitFor(() => expect(getByText('1 difficult word')).toBeTruthy());
+    await waitFor(() => expect(getByText('1 palabra difícil')).toBeTruthy());
     expect(getByText('parce')).toBeTruthy();
     expect(queryByText('hola')).toBeNull();
   });
@@ -74,10 +74,10 @@ describe('DifficultWordsScreen', () => {
     });
 
     const { getByText } = render(<DifficultWordsScreen />);
-    await waitFor(() => getByText('Good'));
+    await waitFor(() => getByText('Bien'));
 
     await act(async () => {
-      fireEvent.press(getByText('Good'));
+      fireEvent.press(getByText('Bien'));
     });
 
     expect(recordAnswer).toHaveBeenCalledWith('parce', 4);

@@ -1,4 +1,12 @@
-import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { translate, TranslationKey } from '../i18n/translations';
 import { getPrefs, setPrefs, UiLanguage } from '../storage/prefs';
 
@@ -11,6 +19,13 @@ type LanguageContextValue = {
 
 const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
 
+const fallbackLanguageContext: LanguageContextValue = {
+  language: 'es',
+  setLanguage: async () => {},
+  toggleLanguage: async () => {},
+  t: (key, values) => translate('es', key, values),
+};
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<UiLanguage>('es');
 
@@ -21,24 +36,29 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     })();
   }, []);
 
-  async function setLanguage(nextLanguage: UiLanguage) {
+  const setLanguage = useCallback(async (nextLanguage: UiLanguage) => {
     setLanguageState(nextLanguage);
     await setPrefs({ uiLanguage: nextLanguage });
-  }
+  }, []);
 
-  async function toggleLanguage() {
+  const toggleLanguage = useCallback(async () => {
     await setLanguage(language === 'es' ? 'en' : 'es');
-  }
+  }, [language, setLanguage]);
+
+  const t = useCallback(
+    (key: TranslationKey, values?: Record<string, string | number>) =>
+      translate(language, key, values),
+    [language],
+  );
 
   const value = useMemo(
     () => ({
       language,
       setLanguage,
       toggleLanguage,
-      t: (key: TranslationKey, values?: Record<string, string | number>) =>
-        translate(language, key, values),
+      t,
     }),
-    [language],
+    [language, setLanguage, toggleLanguage, t],
   );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
@@ -46,6 +66,5 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
 export function useLanguage() {
   const ctx = useContext(LanguageContext);
-  if (!ctx) throw new Error('useLanguage must be used within LanguageProvider');
-  return ctx;
+  return ctx ?? fallbackLanguageContext;
 }

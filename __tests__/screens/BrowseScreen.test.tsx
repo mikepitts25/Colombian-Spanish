@@ -89,7 +89,7 @@ beforeEach(() => {
 describe('BrowseScreen loading', () => {
   it('shows loading text when ready=false', () => {
     const { getByText } = renderBrowseScreen({ ready: false });
-    expect(getByText('Cargando…')).toBeTruthy();
+    expect(getByText('Cargando...')).toBeTruthy();
   });
 });
 

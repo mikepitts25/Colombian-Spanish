@@ -2,11 +2,14 @@ import React from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { spacing } from '../styles/theme';
 import { speak } from '../services/tts';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AudioButton({ text }: { text: string }) {
+  const { t } = useLanguage();
+
   return (
     <Pressable style={styles.btn} onPress={() => speak(text)}>
-      <Text style={styles.txt}>🔊 Escuchar</Text>
+      <Text style={styles.txt}>🔊 {t('common.listen')}</Text>
     </Pressable>
   );
 }

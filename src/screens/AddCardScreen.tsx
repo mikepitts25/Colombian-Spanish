@@ -13,9 +13,11 @@ import {
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { Deck, FlashCard } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AddCardScreen() {
   const { decks, activeDeckId, addCardToDeck, createDeck } = useDeck();
+  const { t } = useLanguage();
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
   const [example, setExample] = useState('');
@@ -33,9 +35,11 @@ export default function AddCardScreen() {
   );
 
   async function save() {
-    if (!front.trim() || !back.trim()) return Alert.alert('Missing', 'Front and back are required');
+    if (!front.trim() || !back.trim()) {
+      return Alert.alert(t('addCard.alert.missing.title'), t('addCard.alert.missing.message'));
+    }
     if (!selectedDeckId)
-      return Alert.alert('Pick a deck', 'Please choose a deck to add this card to.');
+      return Alert.alert(t('addCard.alert.pickDeck.title'), t('addCard.alert.pickDeck.message'));
     const newCard: Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'> = {
       id: String(Date.now()),
       front,
@@ -48,7 +52,10 @@ export default function AddCardScreen() {
     setBack('');
     setExample('');
     setTags('');
-    Alert.alert('Added', 'Card added to ' + (selectedDeck?.name ?? 'deck'));
+    Alert.alert(
+      t('addCard.alert.added.title'),
+      t('addCard.alert.added.message', { deck: selectedDeck?.name ?? 'deck' }),
+    );
   }
 
   async function createNewDeck() {
@@ -64,55 +71,55 @@ export default function AddCardScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>Add new card</Text>
-      <Text style={styles.label}>Deck</Text>
+      <Text style={styles.h1}>{t('addCard.title')}</Text>
+      <Text style={styles.label}>{t('addCard.deck')}</Text>
       <Pressable style={styles.select} onPress={() => setPickerOpen(true)}>
-        <Text style={styles.selectText}>{selectedDeck?.name ?? 'Select a deck'}</Text>
+        <Text style={styles.selectText}>{selectedDeck?.name ?? t('addCard.selectDeck')}</Text>
       </Pressable>
 
       <View style={styles.field}>
-        <Text style={styles.label}>Front (🇨🇴 Español)</Text>
+        <Text style={styles.label}>{t('addCard.front')}</Text>
         <TextInput
           value={front}
           onChangeText={setFront}
-          placeholder="¿Qué más pues?"
+          placeholder={t('addCard.frontPlaceholder')}
           placeholderTextColor={colors.textSecondary}
           style={styles.input}
         />
       </View>
       <View style={styles.field}>
-        <Text style={styles.label}>Back (English)</Text>
+        <Text style={styles.label}>{t('addCard.back')}</Text>
         <TextInput
           value={back}
           onChangeText={setBack}
-          placeholder="What’s up?"
+          placeholder={t('addCard.backPlaceholder')}
           placeholderTextColor={colors.textSecondary}
           style={styles.input}
         />
       </View>
       <View style={styles.field}>
-        <Text style={styles.label}>Example sentence (optional)</Text>
+        <Text style={styles.label}>{t('addCard.example')}</Text>
         <TextInput
           value={example}
           onChangeText={setExample}
-          placeholder="¡Qué chimba de concierto!"
+          placeholder={t('addCard.examplePlaceholder')}
           placeholderTextColor={colors.textSecondary}
           style={styles.input}
         />
       </View>
       <View style={styles.field}>
-        <Text style={styles.label}>Tags (comma-separated)</Text>
+        <Text style={styles.label}>{t('addCard.tags')}</Text>
         <TextInput
           value={tags}
           onChangeText={setTags}
-          placeholder="slang, Medellín"
+          placeholder={t('addCard.tagsPlaceholder')}
           placeholderTextColor={colors.textSecondary}
           style={styles.input}
         />
       </View>
 
       <Text onPress={save} style={styles.save}>
-        Save card ✓
+        {t('addCard.save')}
       </Text>
 
       {/* Deck picker modal */}
@@ -124,7 +131,7 @@ export default function AddCardScreen() {
       >
         <View style={styles.modalBackdrop}>
           <View style={styles.modalBody}>
-            <Text style={styles.modalTitle}>Choose a deck</Text>
+            <Text style={styles.modalTitle}>{t('addCard.chooseDeck')}</Text>
             <FlatList
               data={decks}
               keyExtractor={(d: Deck) => d.id}
@@ -137,7 +144,12 @@ export default function AddCardScreen() {
                   }}
                 >
                   <Text style={styles.modalRowTitle}>{item.name}</Text>
-                  <Text style={styles.modalRowSub}>{item.cards.length} cards</Text>
+                  <Text style={styles.modalRowSub}>
+                    {t('addCard.cardCount', {
+                      count: item.cards.length,
+                      plural: item.cards.length === 1 ? '' : 's',
+                    })}
+                  </Text>
                 </Pressable>
               )}
               ListFooterComponent={
@@ -148,15 +160,17 @@ export default function AddCardScreen() {
                     setNewDeckOpen(true);
                   }}
                 >
-                  <Text style={[styles.modalRowTitle, { color: '#a7f3d0' }]}>➕ New deck</Text>
+                  <Text style={[styles.modalRowTitle, { color: '#a7f3d0' }]}>
+                    {t('addCard.newDeck')}
+                  </Text>
                   <Text style={[styles.modalRowSub, { color: '#6ee7b7' }]}>
-                    Create & use immediately
+                    {t('addCard.newDeckSub')}
                   </Text>
                 </Pressable>
               }
             />
             <Text onPress={() => setPickerOpen(false)} style={styles.modalClose}>
-              Close
+              {t('common.close')}
             </Text>
           </View>
         </View>
@@ -171,9 +185,9 @@ export default function AddCardScreen() {
       >
         <View style={styles.modalBackdrop}>
           <View style={styles.modalBody}>
-            <Text style={styles.modalTitle}>New deck</Text>
+            <Text style={styles.modalTitle}>{t('addCard.newDeckTitle')}</Text>
             <TextInput
-              placeholder="Name (e.g., Colombianisms)"
+              placeholder={t('addCard.newDeckPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               value={newDeckName}
               onChangeText={setNewDeckName}
@@ -184,10 +198,10 @@ export default function AddCardScreen() {
                 onPress={() => setNewDeckOpen(false)}
                 style={[styles.modalClose, { flex: 1, textAlign: 'center' }]}
               >
-                Cancel
+                {t('common.cancel')}
               </Text>
               <Text onPress={createNewDeck} style={[styles.save, { flex: 1 }]}>
-                Create
+                {t('common.create')}
               </Text>
             </View>
           </View>

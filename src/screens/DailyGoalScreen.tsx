@@ -11,16 +11,18 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
 import { getDailyProgress, setDailyTarget } from '../storage/storage';
+import { useLanguage } from '../context/LanguageContext';
 
 const GOAL_PRESETS = [
-  { value: 5,  label: 'Casual',  description: '~5 min/día' },
-  { value: 10, label: 'Regular', description: '~10 min/día' },
-  { value: 20, label: 'Serio',   description: '~20 min/día' },
-  { value: 50, label: 'Intenso', description: '~45 min/día' },
-];
+  { value: 5,  labelKey: 'dailyGoal.preset.casual' },
+  { value: 10, labelKey: 'dailyGoal.preset.regular' },
+  { value: 20, labelKey: 'dailyGoal.preset.serious' },
+  { value: 50, labelKey: 'dailyGoal.preset.intense' },
+] as const;
 
 export default function DailyGoalScreen() {
   const nav = useNavigation<any>();
+  const { t } = useLanguage();
   const [goal, setGoal] = useState(10);
   const [newCards, setNewCards] = useState(20);
   const [saving, setSaving] = useState(false);
@@ -33,9 +35,18 @@ export default function DailyGoalScreen() {
     setSaving(true);
     await setDailyTarget(goal);
     setSaving(false);
-    Alert.alert('¡Guardado!', `Tu meta diaria es ${goal} tarjetas.`);
+    Alert.alert(t('dailyGoal.saved.title'), t('dailyGoal.saved.message', { count: goal }));
     nav.goBack();
   }
+
+  const fluencyTime =
+    goal >= 50
+      ? t('dailyGoal.time.oneMonth')
+      : goal >= 20
+      ? t('dailyGoal.time.twoMonths')
+      : goal >= 10
+      ? t('dailyGoal.time.threeMonths')
+      : t('dailyGoal.time.sixMonths');
 
   return (
     <SafeAreaView style={styles.wrap}>
@@ -43,11 +54,11 @@ export default function DailyGoalScreen() {
       <View style={styles.navBar}>
         <Pressable style={styles.backBtn} onPress={() => nav.goBack()}>
           <Text style={styles.backArrow}>←</Text>
-          <Text style={styles.backLabel}>Ajustes</Text>
+          <Text style={styles.backLabel}>{t('dailyGoal.back')}</Text>
         </Pressable>
-        <Text style={styles.navTitle}>Meta Diaria</Text>
+        <Text style={styles.navTitle}>{t('dailyGoal.title')}</Text>
         <Pressable style={styles.saveBtn} onPress={handleSave} disabled={saving}>
-          <Text style={styles.saveBtnText}>{saving ? '…' : 'Guardar'}</Text>
+          <Text style={styles.saveBtnText}>{saving ? '…' : t('common.save')}</Text>
         </Pressable>
       </View>
 
@@ -56,7 +67,7 @@ export default function DailyGoalScreen() {
         <View style={styles.goalHero}>
           <Text style={styles.goalEmoji}>🎯</Text>
           <Text style={styles.goalNumber}>{goal}</Text>
-          <Text style={styles.goalUnit}>tarjetas por día</Text>
+          <Text style={styles.goalUnit}>{t('dailyGoal.unit')}</Text>
         </View>
 
         {/* Preset buttons */}
@@ -71,19 +82,19 @@ export default function DailyGoalScreen() {
                 {preset.value}
               </Text>
               <Text style={[styles.presetLabel, goal === preset.value && styles.presetLabelActive]}>
-                {preset.label}
+                {t(preset.labelKey)}
               </Text>
             </Pressable>
           ))}
         </View>
 
         {/* New cards section */}
-        <Text style={styles.groupLabel}>TARJETAS NUEVAS POR DÍA</Text>
+        <Text style={styles.groupLabel}>{t('dailyGoal.newPerDay')}</Text>
         <View style={styles.groupCard}>
           <View style={styles.stepperRow}>
             <View style={styles.stepperInfo}>
-              <Text style={styles.stepperTitle}>Nuevas por sesión</Text>
-              <Text style={styles.stepperSub}>Máx de tarjetas nuevas al día</Text>
+              <Text style={styles.stepperTitle}>{t('dailyGoal.newPerSession')}</Text>
+              <Text style={styles.stepperSub}>{t('dailyGoal.newPerSessionSub')}</Text>
             </View>
             <View style={styles.stepper}>
               <Pressable
@@ -105,9 +116,9 @@ export default function DailyGoalScreen() {
           <View style={styles.divider} />
 
           <View style={styles.orderRow}>
-            <Text style={styles.stepperTitle}>Orden de presentación</Text>
+            <Text style={styles.stepperTitle}>{t('dailyGoal.order')}</Text>
             <View style={styles.orderPill}>
-              <Text style={styles.orderPillText}>Mixto ›</Text>
+              <Text style={styles.orderPillText}>{t('dailyGoal.mixed')}</Text>
             </View>
           </View>
         </View>
@@ -116,10 +127,9 @@ export default function DailyGoalScreen() {
         <View style={styles.motivationCard}>
           <Text style={styles.motivIcon}>💪</Text>
           <View style={styles.motivInfo}>
-            <Text style={styles.motivTitle}>¡Cada tarjeta cuenta!</Text>
+            <Text style={styles.motivTitle}>{t('dailyGoal.motivation')}</Text>
             <Text style={styles.motivText}>
-              Estudiar {goal} tarjetas al día te hace fluido en{' '}
-              {goal >= 50 ? '1 mes' : goal >= 20 ? '2 meses' : goal >= 10 ? '3 meses' : '6 meses'}.
+              {t('dailyGoal.motivationText', { count: goal, time: fluencyTime })}
             </Text>
           </View>
         </View>

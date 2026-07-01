@@ -4,6 +4,7 @@ import HomeScreen from '../../src/screens/HomeScreen';
 import { Deck, FlashCard } from '../../src/types';
 
 const mockNavigate = jest.fn();
+let mockLanguage: 'es' | 'en' = 'en';
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
@@ -17,6 +18,19 @@ jest.mock('../../src/storage/storage', () => ({
   getDailyProgress: jest.fn().mockResolvedValue({ count: 0, target: 10 }),
   getStudyStreak: jest.fn().mockResolvedValue(0),
 }));
+
+jest.mock('../../src/context/LanguageContext', () => {
+  const { translate } = jest.requireActual('../../src/i18n/translations');
+  return {
+    useLanguage: () => ({
+      language: mockLanguage,
+      setLanguage: jest.fn(),
+      toggleLanguage: jest.fn(),
+      t: (key: any, values?: Record<string, string | number>) =>
+        translate(mockLanguage, key, values),
+    }),
+  };
+});
 
 import { useDeck } from '../../src/hooks/useDeck';
 
@@ -55,6 +69,7 @@ const RESTED_DECK: Deck = {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  mockLanguage = 'en';
   mockUseDeck.mockReturnValue({
     ready: true,
     decks: [DECK],
@@ -114,5 +129,25 @@ describe('HomeScreen quick actions', () => {
     const { getByText } = render(<HomeScreen />);
 
     await waitFor(() => expect(getByText('Study due cards')).toBeTruthy());
+  });
+
+  it('does not render the standalone summary stats strip', async () => {
+    const { getByText, queryByText } = render(<HomeScreen />);
+
+    await waitFor(() => expect(getByText('Study due cards')).toBeTruthy());
+
+    expect(queryByText('mastered')).toBeNull();
+    expect(queryByText('decks')).toBeNull();
+  });
+
+  it('renders key Home labels in Spanish when UI language is Spanish', async () => {
+    mockLanguage = 'es';
+
+    const { getByText } = render(<HomeScreen />);
+
+    await waitFor(() => expect(getByText('Estudiar tarjetas pendientes')).toBeTruthy());
+    expect(getByText('Herramientas')).toBeTruthy();
+    expect(getByText('Decks pendientes')).toBeTruthy();
+    expect(getByText('Ver todos los decks')).toBeTruthy();
   });
 });

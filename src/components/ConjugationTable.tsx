@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 // Sample conjugation data for "hablar"
 const sampleConjugation = {
@@ -29,7 +29,7 @@ export default function ConjugationTable() {
     <View style={styles.container}>
       {/* Tense selector tabs */}
       <View style={styles.tabContainer}>
-        {(Object.keys(tenseLabels) as Array<keyof typeof tenseLabels>).map((tense) => (
+        {(Object.keys(tenseLabels) as (keyof typeof tenseLabels)[]).map((tense) => (
           <TouchableOpacity
             key={tense}
             style={[styles.tab, activeTense === tense && styles.activeTab]}

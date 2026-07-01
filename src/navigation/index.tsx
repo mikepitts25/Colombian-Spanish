@@ -19,14 +19,14 @@ import PhrasebookScreen from '../screens/PhrasebookScreen';
 import AddCardScreen from '../screens/AddCardScreen';
 import ExploreScreen from '../screens/ExploreScreen';
 import DifficultWordsScreen from '../screens/DifficultWordsScreen';
-import { colors, radius } from '../styles/theme';
+import { colors } from '../styles/theme';
 import { TranslationKey } from '../i18n/translations';
 import { useLanguage } from '../context/LanguageContext';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const TABS: Array<{ name: string; labelKey: TranslationKey; icon: string }> = [
+const TABS: { name: string; labelKey: TranslationKey; icon: string }[] = [
   { name: 'Home', labelKey: 'tabs.home', icon: '🏠' },
   { name: 'Study', labelKey: 'tabs.study', icon: '📖' },
   { name: 'Browse', labelKey: 'tabs.browse', icon: '🔍' },
@@ -98,11 +98,11 @@ export default function RootNavigator() {
       <Stack.Screen name="ManageDecks"  component={ManageDecksScreen}  options={{ ...stackHeaderOpts, title: t('nav.manageDecks') }} />
       <Stack.Screen name="Review"       component={ReviewScreen}       options={{ ...stackHeaderOpts, title: t('nav.review') }} />
       <Stack.Screen name="Flagged"      component={FlaggedScreen}      options={{ ...stackHeaderOpts, title: t('nav.flagged') }} />
-      <Stack.Screen name="Quiz"         component={QuizScreen}         options={{ ...stackHeaderOpts, title: 'Quiz' }} />
-      <Stack.Screen name="Phrasebook"   component={PhrasebookScreen}   options={{ ...stackHeaderOpts, title: 'Phrasebook' }} />
-      <Stack.Screen name="AddCard"      component={AddCardScreen}      options={{ ...stackHeaderOpts, title: 'Add Card' }} />
-      <Stack.Screen name="Explore"      component={ExploreScreen}      options={{ ...stackHeaderOpts, title: 'Explore' }} />
-      <Stack.Screen name="DifficultWords" component={DifficultWordsScreen} options={{ ...stackHeaderOpts, title: 'Difficult Words' }} />
+      <Stack.Screen name="Quiz"         component={QuizScreen}         options={{ ...stackHeaderOpts, title: t('nav.quiz') }} />
+      <Stack.Screen name="Phrasebook"   component={PhrasebookScreen}   options={{ ...stackHeaderOpts, title: t('nav.phrasebook') }} />
+      <Stack.Screen name="AddCard"      component={AddCardScreen}      options={{ ...stackHeaderOpts, title: t('nav.addCard') }} />
+      <Stack.Screen name="Explore"      component={ExploreScreen}      options={{ ...stackHeaderOpts, title: t('nav.explore') }} />
+      <Stack.Screen name="DifficultWords" component={DifficultWordsScreen} options={{ ...stackHeaderOpts, title: t('nav.difficultWords') }} />
     </Stack.Navigator>
   );
 }

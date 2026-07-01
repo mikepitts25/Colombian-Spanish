@@ -7,14 +7,15 @@ import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
 import { getDailyProgress, getStudyStreak } from '../storage/storage';
 import { Deck } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 const COLOMBIAN_GREETINGS = [
-  { text: '¡Buenos días!',   sub: '¿Listo para aprender hoy?', emoji: '☀️' },
-  { text: '¡Buenas tardes!', sub: '¡Sigue con esa racha!',      emoji: '🌤️' },
-  { text: '¡Buenas noches!', sub: 'Una última ronda, ¿va?',     emoji: '🌙' },
+  { textKey: 'home.greeting.morning' as const, subKey: 'home.greeting.morningSub' as const, emoji: '☀️' },
+  { textKey: 'home.greeting.afternoon' as const, subKey: 'home.greeting.afternoonSub' as const, emoji: '🌤️' },
+  { textKey: 'home.greeting.night' as const, subKey: 'home.greeting.nightSub' as const, emoji: '🌙' },
 ];
 
-function getGreeting() {
+function getGreetingKey() {
   const h = new Date().getHours();
   if (h < 12) return COLOMBIAN_GREETINGS[0];
   if (h < 19) return COLOMBIAN_GREETINGS[1];
@@ -83,7 +84,8 @@ function getCategoryForDeck(deck: Deck): string {
 export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId } = useDeck();
   const nav = useNavigation<any>();
-  const greeting = useMemo(() => getGreeting(), []);
+  const { t } = useLanguage();
+  const greeting = useMemo(() => getGreetingKey(), []);
   const [streak, setStreak] = useState(0);
   const [dailyCount, setDailyCount] = useState(0);
   const [dailyTarget, setDailyTarget] = useState(10);
@@ -100,23 +102,11 @@ export default function HomeScreen() {
     const d = new Date(); d.setHours(23, 59, 59, 999); return d.getTime();
   }, []);
 
-  const totalCards = useMemo(
-    () => (decks || []).reduce((s, d) => s + (d.cards?.length ?? 0), 0),
-    [decks],
-  );
-
   const totalDue = useMemo(
     () => (decks || []).reduce(
       (s, d) => s + (d.cards || []).filter((c: any) => (c.due ?? 0) <= endOfToday).length, 0,
     ),
     [decks, endOfToday],
-  );
-
-  const mastered = useMemo(
-    () => (decks || []).reduce(
-      (s, d) => s + (d.cards || []).filter((c: any) => c.reps >= 3).length, 0,
-    ),
-    [decks],
   );
 
   const quickDecks = useMemo<DeckWithDue[]>(() => {
@@ -133,7 +123,11 @@ export default function HomeScreen() {
 
   const dailyGoalProgress = dailyTarget > 0 ? Math.min(dailyCount / dailyTarget, 1) : 0;
   const dailyGoalLabel = dailyTarget > 0 ? `${Math.min(dailyCount, dailyTarget)}/${dailyTarget}` : `${dailyCount}`;
-  const dueCardLabel = totalDue === 1 ? '1 card due' : `${totalDue} cards due`;
+  const dueCardLabel = t('home.dueLabel', {
+    count: totalDue.toLocaleString(),
+    plural: totalDue === 1 ? '' : 's',
+  });
+  const dueCardSub = t(totalDue === 1 ? 'home.dueSubOne' : 'home.dueSubMany');
 
   const startStudy = (deckId?: string) => {
     if (deckId) setActiveDeckId(deckId);
@@ -145,7 +139,7 @@ export default function HomeScreen() {
       <SafeAreaView style={styles.wrap}>
         <View style={styles.loadingWrap}>
           <Text style={styles.loadingFlag}>🇨🇴</Text>
-          <Text style={styles.loadingText}>Cargando…</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -163,8 +157,8 @@ export default function HomeScreen() {
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.greetingWrap}>
-            <Text style={styles.greeting}>{greeting.emoji} {greeting.text}</Text>
-            <Text style={styles.greetingSub}>{greeting.sub}</Text>
+            <Text style={styles.greeting}>{greeting.emoji} {t(greeting.textKey)}</Text>
+            <Text style={styles.greetingSub}>{t(greeting.subKey)}</Text>
           </View>
           <Pressable style={styles.avatarBtn} onPress={() => nav.navigate('Settings')}>
             <Text style={styles.avatarText}>👤</Text>
@@ -174,8 +168,9 @@ export default function HomeScreen() {
         <View style={styles.todayCard}>
           <View style={styles.todayHeader}>
             <View>
-              <Text style={styles.eyebrow}>Today</Text>
+              <Text style={styles.eyebrow}>{t('home.today')}</Text>
               <Text style={styles.todayTitle}>{dueCardLabel}</Text>
+              <Text style={styles.todaySub}>{dueCardSub}</Text>
             </View>
             <View style={styles.streakPill}>
               <Text style={styles.streakText}>🔥 {streak}</Text>
@@ -184,7 +179,7 @@ export default function HomeScreen() {
 
           <View style={styles.goalPanel}>
             <View style={styles.goalHeader}>
-              <Text style={styles.goalLabel}>Daily goal</Text>
+              <Text style={styles.goalLabel}>{t('home.dailyGoal')}</Text>
               <Text style={styles.goalValue}>{dailyGoalLabel}</Text>
             </View>
             <View style={styles.goalTrack}>
@@ -197,46 +192,29 @@ export default function HomeScreen() {
             onPress={() => startStudy(quickDecks[0]?.id)}
           >
             <Text style={styles.primaryButtonText}>
-              {totalDue > 0 ? 'Study due cards' : 'Study anyway'}
+              {totalDue > 0 ? t('home.studyDueCards') : t('home.studyAnyway')}
             </Text>
           </Pressable>
         </View>
 
-        <View style={styles.metricsRow}>
-          <View style={styles.metricItem}>
-            <Text style={styles.metricValue}>{totalCards.toLocaleString()}</Text>
-            <Text style={styles.metricLabel}>cards</Text>
-          </View>
-          <View style={styles.metricDivider} />
-          <View style={styles.metricItem}>
-            <Text style={styles.metricValue}>{mastered}</Text>
-            <Text style={styles.metricLabel}>mastered</Text>
-          </View>
-          <View style={styles.metricDivider} />
-          <View style={styles.metricItem}>
-            <Text style={styles.metricValue}>{(decks || []).length}</Text>
-            <Text style={styles.metricLabel}>decks</Text>
-          </View>
-        </View>
-
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Tools</Text>
+          <Text style={styles.sectionTitle}>{t('home.tools')}</Text>
           <View style={styles.quickActions}>
             <Pressable style={styles.quickAction} onPress={() => nav.navigate('Quiz')}>
               <Text style={styles.quickActionIcon}>🎯</Text>
-              <Text style={styles.quickActionLabel}>Quiz</Text>
+              <Text style={styles.quickActionLabel}>{t('home.tool.quiz')}</Text>
             </Pressable>
             <Pressable style={styles.quickAction} onPress={() => nav.navigate('DifficultWords')}>
               <Text style={styles.quickActionIcon}>↻</Text>
-              <Text style={styles.quickActionLabel}>Difficult</Text>
+              <Text style={styles.quickActionLabel}>{t('home.tool.difficult')}</Text>
             </Pressable>
             <Pressable style={styles.quickAction} onPress={() => nav.navigate('Phrasebook')}>
               <Text style={styles.quickActionIcon}>★</Text>
-              <Text style={styles.quickActionLabel}>Phrasebook</Text>
+              <Text style={styles.quickActionLabel}>{t('home.tool.phrasebook')}</Text>
             </Pressable>
             <Pressable style={styles.quickAction} onPress={() => nav.navigate('AddCard')}>
               <Text style={styles.quickActionIcon}>＋</Text>
-              <Text style={styles.quickActionLabel}>Add Card</Text>
+              <Text style={styles.quickActionLabel}>{t('home.tool.addCard')}</Text>
             </Pressable>
           </View>
         </View>
@@ -244,13 +222,13 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <View>
-              <Text style={styles.sectionTitle}>Due decks</Text>
+              <Text style={styles.sectionTitle}>{t('home.dueDecks')}</Text>
               <Text style={styles.sectionSub}>
-                {quickDecks.length > 0 ? 'Highest priority decks for today' : 'No decks are due right now'}
+                {quickDecks.length > 0 ? t('home.dueDecksSub') : t('home.noDueDecksSub')}
               </Text>
             </View>
             <Pressable onPress={() => nav.navigate('Browse')}>
-              <Text style={styles.browseLink}>Browse all decks</Text>
+              <Text style={styles.browseLink}>{t('home.browseAllDecks')}</Text>
             </Pressable>
           </View>
 
@@ -271,10 +249,20 @@ export default function HomeScreen() {
                     </View>
                     <View style={styles.deckInfo}>
                       <Text style={styles.deckName} numberOfLines={1}>{deck.name}</Text>
-                      <Text style={styles.deckMeta}>{deck.cards.length} cards</Text>
+                      <Text style={styles.deckMeta}>
+                        {t('addCard.cardCount', {
+                          count: deck.cards.length,
+                          plural: deck.cards.length === 1 ? '' : 's',
+                        })}
+                      </Text>
                     </View>
                     <View style={styles.duePill}>
-                      <Text style={styles.duePillText}>{deck.dueCount} due</Text>
+                      <Text style={styles.duePillText}>
+                        {t('home.dueLabel', {
+                          count: deck.dueCount,
+                          plural: deck.dueCount === 1 ? '' : 's',
+                        })}
+                      </Text>
                     </View>
                   </Pressable>
                 );
@@ -282,8 +270,8 @@ export default function HomeScreen() {
             </View>
           ) : (
             <View style={styles.emptyDueState}>
-              <Text style={styles.emptyTitle}>All caught up</Text>
-              <Text style={styles.emptyText}>Browse decks or run a quiz when you want extra practice.</Text>
+              <Text style={styles.emptyTitle}>{t('home.allCaughtUp')}</Text>
+              <Text style={styles.emptyText}>{t('home.emptyDueText')}</Text>
             </View>
           )}
         </View>
@@ -298,8 +286,8 @@ const styles = StyleSheet.create({
   loadingFlag: { fontSize: 48 },
   loadingText: { color: colors.textSecondary, fontSize: 16 },
 
-  flagStripe: { flexDirection: 'row', height: 4 },
-  flagBand: { height: 4 },
+  flagStripe: { flexDirection: 'row', height: 3 },
+  flagBand: { height: 3 },
 
   scroll: { paddingBottom: 120 },
 
@@ -308,31 +296,31 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 12,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   greetingWrap: { flex: 1, gap: 3 },
-  greeting: { color: colors.textPrimary, fontSize: 24, fontWeight: '800', lineHeight: 28 },
+  greeting: { color: colors.textPrimary, fontSize: 21, fontWeight: '800', lineHeight: 25 },
   greetingSub: { color: colors.textSecondary, fontSize: 13 },
   avatarBtn: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
     backgroundColor: '#FFDA00',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  avatarText: { fontSize: 20 },
+  avatarText: { fontSize: 18 },
 
   todayCard: {
     marginHorizontal: 16,
-    marginBottom: 12,
+    marginBottom: 14,
     backgroundColor: colors.surface,
-    borderRadius: 18,
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: colors.borderBrand,
-    padding: 16,
-    gap: 14,
+    borderColor: colors.border,
+    padding: 14,
+    gap: 12,
   },
   todayHeader: {
     flexDirection: 'row',
@@ -348,10 +336,12 @@ const styles = StyleSheet.create({
   },
   todayTitle: {
     color: colors.textPrimary,
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: '800',
     lineHeight: 34,
+    fontVariant: ['tabular-nums'],
   },
+  todaySub: { color: colors.textSecondary, fontSize: 13, marginTop: 1 },
   streakPill: {
     backgroundColor: colors.surfaceElevated,
     borderRadius: radius.full,
@@ -395,8 +385,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.brand,
   },
   primaryButton: {
-    minHeight: 52,
-    borderRadius: 14,
+    minHeight: 48,
+    borderRadius: 13,
     backgroundColor: colors.brand,
     alignItems: 'center',
     justifyContent: 'center',
@@ -408,60 +398,41 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
 
-  metricsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 16,
-    marginBottom: 18,
-    backgroundColor: 'rgba(15,23,42,0.72)',
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: colors.border,
-    paddingVertical: 12,
-  },
-  metricItem: { flex: 1, alignItems: 'center', gap: 2 },
-  metricValue: {
-    color: colors.textPrimary,
-    fontSize: 18,
-    fontWeight: '800',
-    fontVariant: ['tabular-nums'],
-  },
-  metricLabel: { color: colors.textSecondary, fontSize: 11, fontWeight: '700' },
-  metricDivider: { width: 1, height: 26, backgroundColor: colors.border },
-
   quickActions: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 10,
   },
   quickAction: {
-    flex: 1,
-    minHeight: 62,
+    flexBasis: '48%',
+    flexGrow: 1,
+    minHeight: 54,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 5,
+    gap: 8,
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: 12,
+    borderRadius: 11,
   },
   quickActionIcon: {
     color: colors.brand,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '800',
   },
   quickActionLabel: {
     color: colors.textPrimary,
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: '800',
   },
 
-  section: { paddingHorizontal: 16, marginBottom: 20 },
+  section: { paddingHorizontal: 16, marginBottom: 18, gap: 10 },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     gap: 12,
-    marginBottom: 12,
   },
   sectionTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
   sectionSub: { color: colors.textSecondary, fontSize: 12, marginTop: 2 },
@@ -475,16 +446,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: 14,
-    padding: 12,
+    borderRadius: 12,
+    padding: 10,
   },
-  deckIconWrap: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+  deckIconWrap: { width: 38, height: 38, borderRadius: 11, alignItems: 'center', justifyContent: 'center' },
   deckEmoji: { fontSize: 18 },
   deckInfo: { flex: 1, gap: 2 },
   deckName: { color: colors.textPrimary, fontSize: 14, fontWeight: '700' },
   deckMeta: { color: colors.textSecondary, fontSize: 12 },
   duePill: {
-    backgroundColor: 'rgba(248,113,113,0.15)',
+    backgroundColor: 'rgba(248,113,113,0.12)',
     borderRadius: radius.full,
     paddingHorizontal: 8,
     paddingVertical: 3,

@@ -8,8 +8,9 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native';
-import { ConjugationTable, ConjugationTense, lookupConjugation } from '../data/conjugations';
+import { ConjugationTense, lookupConjugation } from '../data/conjugations';
 import { colors, spacing, radius, typography } from '../styles/theme';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ConjugationPanelProps {
   infinitive: string;
@@ -34,13 +35,14 @@ function getVerbForm(tense: ConjugationTense, key: string): string {
   return (tense as Record<string, string>)[key] ?? '';
 }
 
-const tenseLabels: Record<string, string> = {
-  presente: 'Presente',
-  preterito: 'Pretérito',
-  futuro: 'Futuro',
-};
+const tenseLabelKeys = {
+  presente: 'conjugation.presente',
+  preterito: 'conjugation.preterito',
+  futuro: 'conjugation.futuro',
+} as const;
 
 export default function ConjugationPanel({ infinitive, compact = false }: ConjugationPanelProps) {
+  const { t } = useLanguage();
   const [modalVisible, setModalVisible] = useState(false);
   const [activeTense, setActiveTense] = useState<'presente' | 'preterito' | 'futuro'>('presente');
 
@@ -59,7 +61,7 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
         onPress={() => setModalVisible(true)}
       >
         <Text style={[styles.compactButtonText, isIrregular && styles.irregularButtonText]}>
-          {isIrregular ? '⚠ ' : ''}Conjugar ▾
+          {isIrregular ? '⚠ ' : ''}{t('conjugation.conjugate')}
         </Text>
       </TouchableOpacity>
     );
@@ -73,10 +75,10 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
         onPress={() => setModalVisible(true)}
       >
         <Text style={[styles.triggerButtonText, isIrregular && styles.irregularTriggerText]}>
-          {isIrregular ? '⚠ ' : ''}Conjugar ▾
+          {isIrregular ? '⚠ ' : ''}{t('conjugation.conjugate')}
         </Text>
         {isIrregular && (
-          <Text style={styles.irregularBadge}>irregular</Text>
+          <Text style={styles.irregularBadge}>{t('conjugation.irregular')}</Text>
         )}
       </TouchableOpacity>
 
@@ -95,7 +97,7 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
                 <Text style={styles.modalTitle}>{infinitive}</Text>
                 {isIrregular && (
                   <View style={styles.irregularPill}>
-                    <Text style={styles.irregularPillText}>⚠ irregular</Text>
+                    <Text style={styles.irregularPillText}>⚠ {t('conjugation.irregular')}</Text>
                   </View>
                 )}
               </View>
@@ -113,14 +115,14 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
 
             {/* Tense selector */}
             <View style={styles.tabContainer}>
-              {(Object.keys(tenseLabels) as Array<'presente' | 'preterito' | 'futuro'>).map((tense) => (
+              {(Object.keys(tenseLabelKeys) as ('presente' | 'preterito' | 'futuro')[]).map((tense) => (
                 <TouchableOpacity
                   key={tense}
                   style={[styles.tab, activeTense === tense && styles.activeTab]}
                   onPress={() => setActiveTense(tense)}
                 >
                   <Text style={[styles.tabText, activeTense === tense && styles.activeTabText]}>
-                    {tenseLabels[tense]}
+                    {t(tenseLabelKeys[tense])}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -145,9 +147,7 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
 
             {/* Colombia note */}
             <View style={styles.colombiaNote}>
-              <Text style={styles.colombiaNoteText}>
-                🇨🇴 Uses <Text style={styles.bold}>tú / vos</Text> and <Text style={styles.bold}>ustedes</Text> — authentic Colombian Spanish
-              </Text>
+              <Text style={styles.colombiaNoteText}>{t('conjugation.colombiaNote')}</Text>
             </View>
           </View>
         </View>

@@ -7,7 +7,6 @@ import {
   ScrollView,
   Pressable,
   Switch,
-  Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
@@ -17,6 +16,7 @@ import {
   getNotificationPreferences,
   saveAndScheduleNotificationPreferences,
 } from '../services/notifications';
+import { useLanguage } from '../context/LanguageContext';
 
 function Toggle({
   value,
@@ -66,6 +66,7 @@ function Divider() {
 
 export default function NotificationsScreen() {
   const nav = useNavigation<any>();
+  const { t } = useLanguage();
   const [prefs, setPrefs] = useState<NotificationPreferences>(DEFAULT_NOTIFICATION_PREFS);
 
   useEffect(() => {
@@ -93,9 +94,9 @@ export default function NotificationsScreen() {
       <View style={styles.navBar}>
         <Pressable style={styles.backBtn} onPress={() => nav.goBack()}>
           <Text style={styles.backArrow}>←</Text>
-          <Text style={styles.backLabel}>Ajustes</Text>
+          <Text style={styles.backLabel}>{t('notifications.back')}</Text>
         </Pressable>
-        <Text style={styles.navTitle}>Notificaciones</Text>
+        <Text style={styles.navTitle}>{t('notifications.title')}</Text>
         <View style={styles.navSpacer} />
       </View>
 
@@ -103,8 +104,8 @@ export default function NotificationsScreen() {
         {/* Master toggle */}
         <View style={styles.masterCard}>
           <View style={styles.masterInfo}>
-            <Text style={styles.masterTitle}>🔔 Notificaciones</Text>
-            <Text style={styles.masterSubtitle}>Recibe recordatorios de estudio</Text>
+            <Text style={styles.masterTitle}>{t('notifications.masterTitle')}</Text>
+            <Text style={styles.masterSubtitle}>{t('notifications.masterSub')}</Text>
           </View>
           <Toggle
             testID="notification-master-toggle"
@@ -114,11 +115,11 @@ export default function NotificationsScreen() {
         </View>
 
         {/* Reminder times */}
-        <Text style={styles.groupLabel}>RECORDATORIOS</Text>
+        <Text style={styles.groupLabel}>{t('notifications.reminders')}</Text>
         <View style={[styles.groupCard, !prefs.masterOn && styles.groupCardDisabled]}>
           <NotifRow
             emoji="🌅"
-            title="Recordatorio Mañana"
+            title={t('notifications.morningReminder')}
             subtitle="8:00 AM"
             value={prefs.masterOn && prefs.morningOn}
             onValueChange={(value) => updatePreference('morningOn', value)}
@@ -127,7 +128,7 @@ export default function NotificationsScreen() {
           <Divider />
           <NotifRow
             emoji="🌃"
-            title="Recordatorio Noche"
+            title={t('notifications.nightReminder')}
             subtitle="9:00 PM"
             value={prefs.masterOn && prefs.nightOn}
             onValueChange={(value) => updatePreference('nightOn', value)}
@@ -136,19 +137,19 @@ export default function NotificationsScreen() {
           <Divider />
           <NotifRow
             emoji="📆"
-            title="Días de Estudio"
-            subtitle="Lun • Mar • Mié • Jue • Vie"
+            title={t('notifications.studyDays')}
+            subtitle={t('notifications.weekdays')}
             chevron
           />
         </View>
 
         {/* Alerts */}
-        <Text style={styles.groupLabel}>ALERTAS</Text>
+        <Text style={styles.groupLabel}>{t('notifications.alerts')}</Text>
         <View style={[styles.groupCard, !prefs.masterOn && styles.groupCardDisabled]}>
           <NotifRow
             emoji="🔥"
-            title="Alerta de Racha"
-            subtitle="Cuando estés a punto de perder tu racha"
+            title={t('notifications.streakAlert')}
+            subtitle={t('notifications.streakSub')}
             value={prefs.masterOn && prefs.streakOn}
             onValueChange={(value) => updatePreference('streakOn', value)}
             testID="notification-streak-toggle"
@@ -156,8 +157,8 @@ export default function NotificationsScreen() {
           <Divider />
           <NotifRow
             emoji="🏆"
-            title="Logros Desbloqueados"
-            subtitle="Celebra cada meta alcanzada"
+            title={t('notifications.achievements')}
+            subtitle={t('notifications.achieveSub')}
             value={prefs.masterOn && prefs.achieveOn}
             onValueChange={(value) => updatePreference('achieveOn', value)}
             testID="notification-achievements-toggle"
@@ -165,9 +166,7 @@ export default function NotificationsScreen() {
         </View>
 
         <View style={styles.noteCard}>
-          <Text style={styles.noteText}>
-            💡 Las notificaciones te ayudan a mantener tu racha de estudio. ¡No las desactives!
-          </Text>
+          <Text style={styles.noteText}>{t('notifications.note')}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

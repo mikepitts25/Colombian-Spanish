@@ -5,15 +5,20 @@ import {
   Text,
   TextInput,
   View,
-  FlatList,
   Pressable,
   ScrollView,
 } from 'react-native';
 import * as Speech from 'expo-speech';
-import { colors, radius, typography } from '../styles/theme';
+import { colors } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
-import { cardMatchesRegion, REGION_FILTERS, RegionFilterId } from '../utils/regions';
+import {
+  cardMatchesRegion,
+  REGION_FILTERS,
+  REGION_LABEL_KEYS,
+  RegionFilterId,
+} from '../utils/regions';
+import { useLanguage } from '../context/LanguageContext';
 
 type CategoryKey =
   | 'Colombianisms'
@@ -32,20 +37,20 @@ type CategoryKey =
   | 'Other';
 
 const CATEGORY_DISPLAY = [
-  { key: 'Food & Drink',       emoji: '🍺', label: 'Comida & Bebida', color: '#fb923c', bg: 'rgba(251,146,60,0.12)'    },
-  { key: 'Colombianisms',      emoji: '🇨🇴', label: 'Jerga Colombiana', color: '#FFDA00', bg: 'rgba(255,218,0,0.08)'   },
-  { key: 'Work & School',      emoji: '💼', label: 'Negocios',        color: '#94a3b8', bg: 'rgba(148,163,184,0.12)'   },
-  { key: 'People & Relationships', emoji: '👨‍👩‍👧', label: 'Familia',  color: '#10b981', bg: 'rgba(16,185,129,0.12)'   },
-  { key: 'Fun & Culture',      emoji: '🎵', label: 'Música & Cultura', color: '#a855f7', bg: 'rgba(168,85,247,0.12)'   },
-  { key: 'Places & Travel',    emoji: '🚌', label: 'Transporte',      color: '#f97316', bg: 'rgba(249,115,22,0.12)'    },
-];
+  { key: 'Food & Drink',       emoji: '🍺', labelKey: 'browse.category.food', color: '#fb923c', bg: 'rgba(251,146,60,0.12)'    },
+  { key: 'Colombianisms',      emoji: '🇨🇴', labelKey: 'browse.category.colombianisms', color: '#FFDA00', bg: 'rgba(255,218,0,0.08)'   },
+  { key: 'Work & School',      emoji: '💼', labelKey: 'browse.category.work', color: '#94a3b8', bg: 'rgba(148,163,184,0.12)'   },
+  { key: 'People & Relationships', emoji: '👨‍👩‍👧', labelKey: 'browse.category.people',  color: '#10b981', bg: 'rgba(16,185,129,0.12)'   },
+  { key: 'Fun & Culture',      emoji: '🎵', labelKey: 'browse.category.culture', color: '#a855f7', bg: 'rgba(168,85,247,0.12)'   },
+  { key: 'Places & Travel',    emoji: '🚌', labelKey: 'browse.category.travel', color: '#f97316', bg: 'rgba(249,115,22,0.12)'    },
+] as const;
 
 const FILTER_CHIPS = [
-  { id: 'all',     label: 'Todos' },
-  { id: 'slang',   label: '🇨🇴 Jerga' },
-  { id: 'phrases', label: '🗣 Frases' },
-  { id: 'basic',   label: '📖 Básico' },
-];
+  { id: 'all',     labelKey: 'browse.filter.all' },
+  { id: 'slang',   labelKey: 'browse.filter.slang' },
+  { id: 'phrases', labelKey: 'browse.filter.phrases' },
+  { id: 'basic',   labelKey: 'browse.filter.basic' },
+] as const;
 
 function getCategoryForDeck(deck: any): CategoryKey {
   const name = (deck.name || '').toLowerCase();
@@ -72,6 +77,7 @@ type Row = { deckId: string; deckName: string; card: any };
 export default function BrowseScreen() {
   const { ready, decks, setActiveDeckId } = useDeck();
   const nav = useNavigation<any>();
+  const { t } = useLanguage();
   const [q, setQ] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
   const [activeRegion, setActiveRegion] = useState<RegionFilterId>('all');
@@ -132,7 +138,7 @@ export default function BrowseScreen() {
       <SafeAreaView style={styles.wrap}>
         <View style={styles.loadingWrap}>
           <Text style={styles.loadingEmoji}>🔍</Text>
-          <Text style={styles.loadingText}>Cargando…</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -149,9 +155,9 @@ export default function BrowseScreen() {
       >
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>🔍  Buscar</Text>
+          <Text style={styles.title}>{t('browse.title')}</Text>
           <View style={styles.filterPill}>
-            <Text style={styles.filterPillText}>⚙️ Filtros</Text>
+            <Text style={styles.filterPillText}>{t('browse.filters')}</Text>
           </View>
         </View>
 
@@ -160,10 +166,10 @@ export default function BrowseScreen() {
           <Text style={styles.searchIcon}>🔍</Text>
           <TextInput
             value={q}
-            onChangeText={(t) => { setQ(t); setSearching(true); }}
+            onChangeText={(text) => { setQ(text); setSearching(true); }}
             onFocus={() => setSearching(true)}
             onBlur={() => { if (!q.trim()) setSearching(false); }}
-            placeholder="Busca palabras, frases o decks..."
+            placeholder={t('browse.searchPlaceholder')}
             placeholderTextColor={colors.textTertiary}
             style={styles.searchInput}
             autoCapitalize="none"
@@ -186,7 +192,7 @@ export default function BrowseScreen() {
                 onPress={() => setActiveFilter(chip.id)}
               >
                 <Text style={[styles.chipText, activeFilter === chip.id && styles.chipTextActive]}>
-                  {chip.label}
+                  {t(chip.labelKey)}
                 </Text>
               </Pressable>
             ))}
@@ -202,7 +208,7 @@ export default function BrowseScreen() {
                 onPress={() => setActiveRegion(region.id)}
               >
                 <Text style={[styles.chipText, activeRegion === region.id && styles.regionChipTextActive]}>
-                  {region.label}
+                  {t(REGION_LABEL_KEYS[region.id])}
                 </Text>
               </Pressable>
             ))}
@@ -213,12 +219,15 @@ export default function BrowseScreen() {
           /* ── SEARCH RESULTS ── */
           <>
             <Text style={styles.sectionTitle}>
-              {searchResults.length} resultado{searchResults.length !== 1 ? 's' : ''}
+              {t('browse.results', {
+                count: searchResults.length,
+                plural: searchResults.length === 1 ? '' : 's',
+              })}
             </Text>
             {searchResults.length === 0 ? (
               <View style={styles.emptyWrap}>
                 <Text style={styles.emptyEmoji}>🤔</Text>
-                <Text style={styles.emptyText}>No encontramos resultados para "{q}"</Text>
+                <Text style={styles.emptyText}>{t('browse.emptySearch', { query: q })}</Text>
               </View>
             ) : (
               searchResults.map((item) => (
@@ -246,8 +255,8 @@ export default function BrowseScreen() {
           <>
             {/* Categories grid */}
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>📂 Categorías</Text>
-              <Text style={styles.seeAll}>Ver todos →</Text>
+              <Text style={styles.sectionTitle}>{t('browse.categories')}</Text>
+              <Text style={styles.seeAll}>{t('browse.seeAll')}</Text>
             </View>
             <View style={styles.catGrid}>
               {CATEGORY_DISPLAY.map((cat) => (
@@ -258,7 +267,7 @@ export default function BrowseScreen() {
                 >
                   <Text style={styles.catEmoji}>{cat.emoji}</Text>
                   <Text style={[styles.catLabel, { color: cat.color }]} numberOfLines={2}>
-                    {cat.label}
+                    {t(cat.labelKey)}
                   </Text>
                 </Pressable>
               ))}
@@ -266,8 +275,8 @@ export default function BrowseScreen() {
 
             {/* Trending words */}
             <View style={[styles.sectionHeader, { marginTop: 8 }]}>
-              <Text style={styles.sectionTitle}>🔥 Palabras del Día</Text>
-              <Text style={styles.seeAll}>Ver más →</Text>
+              <Text style={styles.sectionTitle}>{t('browse.wordsOfDay')}</Text>
+              <Text style={styles.seeAll}>{t('browse.seeMore')}</Text>
             </View>
             {trendingWords.map((item, i) => (
               <View key={item.card.id} style={styles.trendRow}>

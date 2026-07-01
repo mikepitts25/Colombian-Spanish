@@ -36,13 +36,12 @@ jest.mock('../../src/context/LanguageContext', () => {
   };
 });
 
-import { getDailyProgress, getStudyStreak, saveDecks, loadDecks } from '../../src/storage/storage';
+import { getDailyProgress, getStudyStreak, loadDecks } from '../../src/storage/storage';
 import * as Clipboard from 'expo-clipboard';
 import { Alert } from 'react-native/Libraries/Alert/Alert';
 
 const mockGetDailyProgress = getDailyProgress as jest.Mock;
 const mockGetStudyStreak = getStudyStreak as jest.Mock;
-const mockSaveDecks = saveDecks as jest.Mock;
 const mockLoadDecks = loadDecks as jest.Mock;
 const mockSetStringAsync = Clipboard.setStringAsync as jest.Mock;
 const mockGetStringAsync = Clipboard.getStringAsync as jest.Mock;
