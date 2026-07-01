@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import * as Speech from 'expo-speech';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
+import { speakCard } from '../services/tts';
 import { FlashCard } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -109,7 +109,7 @@ export default function ReviewScreen() {
   }
 
   function speak() {
-    if (current) Speech.speak(current.card.front, { language: 'es-CO', pitch: 1.03, rate: 0.92 });
+    if (current) void speakCard(current.card);
   }
 
   function leaveReview() {

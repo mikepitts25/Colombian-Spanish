@@ -8,7 +8,6 @@ import {
   ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import * as Speech from 'expo-speech';
 import { colors } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +18,7 @@ import {
   RegionFilterId,
 } from '../utils/regions';
 import { useLanguage } from '../context/LanguageContext';
+import { speakCard } from '../services/tts';
 
 type CategoryKey =
   | 'Colombianisms'
@@ -120,10 +120,6 @@ export default function BrowseScreen() {
       })
       .slice(0, 80);
   }, [allCards, q, activeFilter, activeRegion]);
-
-  function speak(text: string) {
-    Speech.speak(text, { language: 'es-CO', pitch: 1.03, rate: 0.98 });
-  }
 
   function handleCategoryPress(catKey: string) {
     const decksInCat = (decks || []).filter((d) => getCategoryForDeck(d) === catKey);
@@ -243,7 +239,7 @@ export default function BrowseScreen() {
                       {item.card.tags?.length ? ` • ${item.card.tags.slice(0, 2).join(', ')}` : ''}
                     </Text>
                   </View>
-                  <Pressable style={styles.speakBtn} onPress={() => speak(item.card.front)}>
+                  <Pressable style={styles.speakBtn} onPress={() => void speakCard(item.card)}>
                     <Text style={styles.speakIcon}>🔊</Text>
                   </Pressable>
                 </View>
@@ -299,7 +295,7 @@ export default function BrowseScreen() {
                 </View>
                 <Pressable
                   style={styles.trendSpeakBtn}
-                  onPress={() => speak(item.card.front)}
+                  onPress={() => void speakCard(item.card)}
                 >
                   <Text>🔊</Text>
                 </Pressable>

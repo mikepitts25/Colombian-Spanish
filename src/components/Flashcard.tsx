@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Animated, Easing, PanResponder, Pressable, StyleSheet, Text } from 'react-native';
-import * as Speech from 'expo-speech';
 import { colors } from '../styles/theme';
 import { FlashCard } from '../types';
 import { splitExampleText } from '../utils/exampleText';
+import { speakCard } from '../services/tts';
 
 interface Props {
   card: FlashCard;
@@ -25,7 +25,7 @@ export default function Flashcard({ card, onGrade }: Props) {
   });
 
   function say() {
-    Speech.speak(card.front, { language: 'es-CO', pitch: 1.03, rate: 0.98 });
+    void speakCard(card);
   }
 
   function flip(to?: 'front' | 'back') {

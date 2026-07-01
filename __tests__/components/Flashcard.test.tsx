@@ -1,13 +1,17 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import Flashcard from '../../src/components/Flashcard';
 import { FlashCard } from '../../src/types';
 
-// Mock TTS so the component's long-press doesn't fail
-jest.mock('expo-speech', () => ({
+jest.mock('../../src/services/tts', () => ({
+  speakCard: jest.fn(),
   speak: jest.fn(),
   stop: jest.fn(),
 }));
+
+import { speakCard } from '../../src/services/tts';
+
+const mockSpeakCard = speakCard as jest.Mock;
 
 // ── Test helpers ──────────────────────────────────────────────────────────────
 
@@ -30,6 +34,10 @@ function makeCard(overrides: Partial<FlashCard> = {}): FlashCard {
 }
 
 // ── Tests ─────────────────────────────────────────────────────────────────────
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('Flashcard', () => {
   // ── Rendering ──────────────────────────────────────────────────────────────
@@ -94,5 +102,14 @@ describe('Flashcard', () => {
     expect(getByText('hola')).toBeTruthy();
     rerender(<Flashcard card={card2} onGrade={onGrade} />);
     expect(getByText('gracias')).toBeTruthy();
+  });
+
+  it('calls speakCard with the current card when the speaker button is pressed', () => {
+    const card = makeCard({ id: '0009', front: 'hola' });
+    const { getByText } = render(<Flashcard card={card} onGrade={jest.fn()} />);
+
+    fireEvent.press(getByText('🔊'));
+
+    expect(mockSpeakCard).toHaveBeenCalledWith(card);
   });
 });
