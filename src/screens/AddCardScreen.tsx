@@ -3,13 +3,13 @@ import {
   Alert,
   Modal,
   Pressable,
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   View,
   FlatList,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { Deck, FlashCard } from '../types';

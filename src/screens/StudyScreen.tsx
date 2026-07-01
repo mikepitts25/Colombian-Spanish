@@ -1,7 +1,8 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import {
-  SafeAreaView, StyleSheet, Text, View, Pressable, ScrollView,
+  StyleSheet, Text, View, Pressable, ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
@@ -47,8 +48,15 @@ export default function StudyScreen() {
   const [daily, setDaily] = useState({ count: 0, target: 10 });
 
   useEffect(() => {
-    getDailyProgress().then((dp) => setDaily({ count: dp.count, target: dp.target }));
-  }, []);
+    if (!ready || !activeDeck) return undefined;
+    let mounted = true;
+    getDailyProgress().then((dp) => {
+      if (mounted) setDaily({ count: dp.count, target: dp.target });
+    });
+    return () => {
+      mounted = false;
+    };
+  }, [activeDeck, ready]);
 
   const progress = daily.target > 0 ? Math.min(1, daily.count / daily.target) : 0;
   const remaining = batch.length - idx;

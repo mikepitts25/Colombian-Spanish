@@ -3,19 +3,21 @@ import {
   Alert,
   FlatList,
   Pressable,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
+import { useLanguage } from '../context/LanguageContext';
 
 type FlaggedRow = { deckName: string; card: any };
 
 export default function FlaggedScreen() {
   const { ready, decks, clearAllFlags } = useDeck();
+  const { t } = useLanguage();
 
   const flagged = useMemo<FlaggedRow[]>(() => {
     return (decks || []).flatMap((d) =>
@@ -40,19 +42,25 @@ export default function FlaggedScreen() {
     });
     await Clipboard.setStringAsync([header, ...rows].join('\n'));
     Alert.alert(
-      'Copied!',
-      `${flagged.length} flagged card${flagged.length !== 1 ? 's' : ''} copied as CSV. Paste into Google Sheets or Notes.`,
+      t('flagged.copied.title'),
+      t('flagged.copied.message', {
+        count: flagged.length,
+        plural: flagged.length === 1 ? '' : 's',
+      }),
     );
   }
 
   function confirmClear() {
     Alert.alert(
-      'Clear all flags?',
-      `This will unflag all ${flagged.length} cards. You can't undo this.`,
+      t('flagged.clear.title'),
+      t('flagged.clear.message', {
+        count: flagged.length,
+        plural: flagged.length === 1 ? '' : 's',
+      }),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('common.cancel'), style: 'cancel' },
         {
-          text: 'Clear All',
+          text: t('flagged.clearAll'),
           style: 'destructive',
           onPress: () => clearAllFlags(),
         },
@@ -63,36 +71,37 @@ export default function FlaggedScreen() {
   if (!ready) {
     return (
       <SafeAreaView style={styles.wrap}>
-        <Text style={styles.h1}>Cargando…</Text>
+        <Text style={styles.h1}>{t('common.loading')}</Text>
       </SafeAreaView>
     );
   }
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>🚩 Flagged Cards</Text>
+      <Text style={styles.h1}>{t('flagged.title')}</Text>
       <Text style={styles.sub}>
         {flagged.length === 0
-          ? 'No cards flagged yet.'
-          : `${flagged.length} card${flagged.length !== 1 ? 's' : ''} need translation review.`}
+          ? t('flagged.emptySub')
+          : t('flagged.countSub', {
+            count: flagged.length,
+            plural: flagged.length === 1 ? '' : 's',
+            verbPlural: flagged.length === 1 ? '' : 'n',
+          })}
       </Text>
 
       {flagged.length > 0 && (
         <View style={styles.actions}>
           <Pressable style={styles.exportBtn} onPress={copyCSV}>
-            <Text style={styles.exportBtnText}>📋 Copy as CSV</Text>
+            <Text style={styles.exportBtnText}>{t('flagged.copyCsv')}</Text>
           </Pressable>
           <Pressable style={styles.clearBtn} onPress={confirmClear}>
-            <Text style={styles.clearBtnText}>Clear All</Text>
+            <Text style={styles.clearBtnText}>{t('flagged.clearAll')}</Text>
           </Pressable>
         </View>
       )}
 
       <View style={styles.hint}>
-        <Text style={styles.hintText}>
-          CSV columns: Deck · Card ID · Spanish · English · Example{'\n'}
-          Paste into Google Sheets, fix translations, then update the deck files.
-        </Text>
+        <Text style={styles.hintText}>{t('flagged.hint')}</Text>
       </View>
 
       <FlatList
@@ -102,7 +111,7 @@ export default function FlaggedScreen() {
         ListEmptyComponent={
           <View style={styles.emptyWrap}>
             <Text style={styles.emptyEmoji}>✅</Text>
-            <Text style={styles.emptyText}>Nothing flagged — all translations look good!</Text>
+            <Text style={styles.emptyText}>{t('flagged.empty')}</Text>
           </View>
         }
         renderItem={({ item, index }) => (

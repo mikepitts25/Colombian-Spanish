@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable,
+  StyleSheet, Text, View, ScrollView, Pressable,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
 import { getDailyProgress, getStudyStreak } from '../storage/storage';
 import { useDeck } from '../hooks/useDeck';

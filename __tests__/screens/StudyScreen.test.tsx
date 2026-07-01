@@ -102,6 +102,7 @@ describe('StudyScreen rendering', () => {
   it('shows loading state when ready=false', () => {
     const { getByText } = renderStudyScreen({ ready: false });
     expect(getByText('Cargando...')).toBeTruthy();
+    expect(mockGetDailyProgress).not.toHaveBeenCalled();
   });
 
   it('shows the no-deck state when activeDeck is undefined', () => {
@@ -110,17 +111,19 @@ describe('StudyScreen rendering', () => {
       activeDeckId: undefined,
     });
     expect(getByText('Selecciona un deck')).toBeTruthy();
+    expect(mockGetDailyProgress).not.toHaveBeenCalled();
   });
 
-  it('shows the "All caught up" state when batch is empty', () => {
+  it('shows the "All caught up" state when batch is empty', async () => {
     const { getByText } = renderStudyScreen({
       getStudyBatch: jest.fn().mockReturnValue([]),
     });
     expect(getByText('¡Bacano! Todo al día')).toBeTruthy();
     expect(getByText('No hay más tarjetas por ahora. Vuelve mañana.')).toBeTruthy();
+    await waitFor(() => expect(mockGetDailyProgress).toHaveBeenCalled());
   });
 
-  it('shows a quiz CTA when there are no more cards to study', () => {
+  it('shows a quiz CTA when there are no more cards to study', async () => {
     const { getByText } = renderStudyScreen({
       getStudyBatch: jest.fn().mockReturnValue([]),
     });
@@ -128,6 +131,7 @@ describe('StudyScreen rendering', () => {
     expect(getByText('Hacer quiz')).toBeTruthy();
     fireEvent.press(getByText('Hacer quiz'));
     expect(mockNavigate).toHaveBeenCalledWith('Quiz');
+    await waitFor(() => expect(mockGetDailyProgress).toHaveBeenCalled());
   });
 
   it('renders the deck name in the header', async () => {

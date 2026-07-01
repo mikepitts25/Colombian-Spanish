@@ -31,7 +31,7 @@ describe('ManageDecksScreen navigation', () => {
   it('navigates directly to the Home tab', () => {
     const { getByText } = render(<ManageDecksScreen />);
 
-    fireEvent.press(getByText('Home'));
+    fireEvent.press(getByText('Inicio'));
 
     expect(mockNavigate).toHaveBeenCalledWith('Root', { screen: 'Home' });
   });
@@ -39,7 +39,7 @@ describe('ManageDecksScreen navigation', () => {
   it('opens the translation review screen', () => {
     const { getByText } = render(<ManageDecksScreen />);
 
-    fireEvent.press(getByText('🚩 Review Translations'));
+    fireEvent.press(getByText('🚩 Revisar Traducciones'));
 
     expect(mockNavigate).toHaveBeenCalledWith('Review');
   });

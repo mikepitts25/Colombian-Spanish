@@ -63,11 +63,11 @@ describe('ReviewScreen review queue', () => {
   it('saves inline edits as reviewed', async () => {
     const { getByPlaceholderText, getByText, updateCardReview } = renderReviewScreen();
 
-    fireEvent.changeText(getByPlaceholderText('English translation'), 'buddy / friend');
-    fireEvent.changeText(getByPlaceholderText('Example with English after |'), 'Hola, parce. | Hi, buddy.');
+    fireEvent.changeText(getByPlaceholderText('Traducción en inglés'), 'buddy / friend');
+    fireEvent.changeText(getByPlaceholderText('Ejemplo con inglés después de |'), 'Hola, parce. | Hi, buddy.');
 
     await act(async () => {
-      fireEvent.press(getByText('Save & Next'));
+      fireEvent.press(getByText('Guardar y seguir'));
     });
 
     expect(updateCardReview).toHaveBeenCalledWith('parce', {
@@ -83,7 +83,7 @@ describe('ReviewScreen review queue', () => {
     const { getByText, updateCardReview } = renderReviewScreen();
 
     await act(async () => {
-      fireEvent.press(getByText('Needs Native Check'));
+      fireEvent.press(getByText('Necesita revisión nativa'));
     });
 
     expect(updateCardReview).toHaveBeenCalledWith('parce', {
@@ -114,7 +114,7 @@ describe('ReviewScreen review queue', () => {
 
     const { getByText, queryByText } = renderReviewScreen({ decks: [missingExampleDeck] });
 
-    fireEvent.press(getByText('Missing Example EN'));
+    fireEvent.press(getByText('Falta ejemplo EN'));
 
     await waitFor(() => expect(getByText('listo')).toBeTruthy());
     expect(queryByText('chévere')).toBeNull();

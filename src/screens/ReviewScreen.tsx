@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
@@ -10,22 +9,25 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { FlashCard } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 type CardRow = { deckId: string; deckName: string; card: FlashCard };
-type ReviewFilter = 'all' | 'unreviewed' | 'flagged' | 'needs_native' | 'missing_example_en';
 
-const REVIEW_FILTERS: { id: ReviewFilter; name: string }[] = [
-  { id: 'all', name: 'All' },
-  { id: 'unreviewed', name: 'Unreviewed' },
-  { id: 'flagged', name: 'Flagged' },
-  { id: 'needs_native', name: 'Needs Native' },
-  { id: 'missing_example_en', name: 'Missing Example EN' },
-];
+const REVIEW_FILTERS = [
+  { id: 'all', labelKey: 'review.all' },
+  { id: 'unreviewed', labelKey: 'review.unreviewed' },
+  { id: 'flagged', labelKey: 'review.flagged' },
+  { id: 'needs_native', labelKey: 'review.needsNative' },
+  { id: 'missing_example_en', labelKey: 'review.missingExampleEn' },
+] as const;
+
+type ReviewFilter = typeof REVIEW_FILTERS[number]['id'];
 
 function missingEnglishExample(card: FlashCard) {
   if (!card.example?.trim()) return true;
@@ -44,6 +46,7 @@ function matchesReviewFilter(card: FlashCard, filter: ReviewFilter) {
 export default function ReviewScreen() {
   const { ready, decks, updateCardReview } = useDeck();
   const nav = useNavigation<any>();
+  const { t } = useLanguage();
 
   const [deckFilter, setDeckFilter] = useState<string>('all');
   const [reviewFilter, setReviewFilter] = useState<ReviewFilter>('all');
@@ -69,14 +72,14 @@ export default function ReviewScreen() {
   );
 
   const deckOptions = useMemo(
-    () => [{ id: 'all', name: 'All Decks' }, ...(decks || []).map((deck) => ({ id: deck.id, name: deck.name }))],
-    [decks],
+    () => [{ id: 'all', name: t('review.allDecks') }, ...(decks || []).map((deck) => ({ id: deck.id, name: deck.name }))],
+    [decks, t],
   );
 
   const current = allCards[index] ?? null;
   const total = allCards.length;
-  const selectedDeckName = deckOptions.find((deck) => deck.id === deckFilter)?.name ?? 'All Decks';
-  const selectedReviewFilterName = REVIEW_FILTERS.find((filter) => filter.id === reviewFilter)?.name ?? 'All';
+  const selectedDeckName = deckOptions.find((deck) => deck.id === deckFilter)?.name ?? t('review.allDecks');
+  const selectedReviewFilterName = t(REVIEW_FILTERS.find((filter) => filter.id === reviewFilter)?.labelKey ?? 'review.all');
 
   useEffect(() => {
     setDraftBack(current?.card.back ?? '');
@@ -133,7 +136,7 @@ export default function ReviewScreen() {
   if (!ready) {
     return (
       <SafeAreaView style={styles.wrap}>
-        <Text style={styles.h1}>Cargando...</Text>
+        <Text style={styles.h1}>{t('common.loading')}</Text>
       </SafeAreaView>
     );
   }
@@ -153,22 +156,22 @@ export default function ReviewScreen() {
           <View style={styles.header}>
             <View style={styles.headerActions}>
               <Pressable style={styles.backBtn} onPress={leaveReview}>
-                <Text style={styles.backBtnText}>‹ Back</Text>
+                <Text style={styles.backBtnText}>{t('review.back')}</Text>
               </Pressable>
               <Pressable
                 style={[styles.flaggedBtn, flaggedCount > 0 && styles.flaggedBtnActive]}
                 onPress={() => nav.navigate('Flagged')}
               >
-                <Text style={styles.flaggedBtnText}>Flagged {flaggedCount}</Text>
+                <Text style={styles.flaggedBtnText}>{t('review.flaggedCount', { count: flaggedCount })}</Text>
               </Pressable>
             </View>
-            <Text style={styles.h1}>Translation Review</Text>
-            <Text style={styles.sub}>Edit translations, examples, and review status from one queue.</Text>
+            <Text style={styles.h1}>{t('review.title')}</Text>
+            <Text style={styles.sub}>{t('review.sub')}</Text>
           </View>
 
           <View style={styles.filterBlock}>
             <View style={styles.filterHeader}>
-              <Text style={styles.filterLabel}>Deck</Text>
+              <Text style={styles.filterLabel}>{t('review.deck')}</Text>
               <Text style={styles.filterValue} numberOfLines={1}>{selectedDeckName}</Text>
             </View>
             <ScrollView
@@ -196,7 +199,7 @@ export default function ReviewScreen() {
 
           <View style={styles.filterBlock}>
             <View style={styles.filterHeader}>
-              <Text style={styles.filterLabel}>Queue</Text>
+              <Text style={styles.filterLabel}>{t('review.queue')}</Text>
               <Text style={styles.filterValue} numberOfLines={1}>{selectedReviewFilterName}</Text>
             </View>
             <ScrollView
@@ -215,7 +218,7 @@ export default function ReviewScreen() {
                     style={[styles.chipText, reviewFilter === filter.id && styles.chipTextActive]}
                     numberOfLines={1}
                   >
-                    {filter.name}
+                    {t(filter.labelKey)}
                   </Text>
                 </Pressable>
               ))}
@@ -223,7 +226,7 @@ export default function ReviewScreen() {
           </View>
 
           <View style={styles.queueSummary}>
-            <Text style={styles.queueSummaryLabel}>Current card</Text>
+            <Text style={styles.queueSummaryLabel}>{t('review.currentCard')}</Text>
             <Text style={styles.progress}>
               {total > 0 ? `${index + 1} / ${total}` : '0 / 0'}
             </Text>
@@ -244,14 +247,14 @@ export default function ReviewScreen() {
 
               {current.card.flagged && (
                 <View style={styles.flagBanner}>
-                  <Text style={styles.flagBannerText}>Flagged for review</Text>
+                  <Text style={styles.flagBannerText}>{t('review.flaggedBanner')}</Text>
                 </View>
               )}
 
               <View style={styles.wordRow}>
                 <Text style={styles.spanish} selectable>{current.card.front}</Text>
                 <Pressable style={styles.speakBtn} onPress={speak}>
-                  <Text style={styles.speakBtnText}>Escuchar</Text>
+                  <Text style={styles.speakBtnText}>{t('common.listen')}</Text>
                 </Pressable>
               </View>
 
@@ -259,21 +262,21 @@ export default function ReviewScreen() {
                 <Text style={styles.ipa} selectable>[{current.card.ipa}]</Text>
               ) : null}
 
-              <Text style={styles.label}>English</Text>
+              <Text style={styles.label}>{t('review.english')}</Text>
               <TextInput
                 style={styles.input}
                 value={draftBack}
                 onChangeText={setDraftBack}
-                placeholder="English translation"
+                placeholder={t('review.englishPlaceholder')}
                 placeholderTextColor="#64748b"
               />
 
-              <Text style={styles.label}>Example</Text>
+              <Text style={styles.label}>{t('review.example')}</Text>
               <TextInput
                 style={[styles.input, styles.exampleInput]}
                 value={draftExample}
                 onChangeText={setDraftExample}
-                placeholder="Example with English after |"
+                placeholder={t('review.examplePlaceholder')}
                 placeholderTextColor="#64748b"
                 multiline
               />
@@ -290,7 +293,7 @@ export default function ReviewScreen() {
             </View>
           ) : (
             <View style={styles.empty}>
-              <Text style={styles.emptyText}>No cards match this queue.</Text>
+              <Text style={styles.emptyText}>{t('review.empty')}</Text>
             </View>
           )}
         </ScrollView>
@@ -302,10 +305,10 @@ export default function ReviewScreen() {
               onPress={() => go(-1)}
               disabled={index === 0}
             >
-              <Text style={styles.navBtnText}>Prev</Text>
+              <Text style={styles.navBtnText}>{t('review.prev')}</Text>
             </Pressable>
             <Pressable style={styles.navBtn} onPress={goNext} disabled={!current}>
-              <Text style={styles.navBtnText}>Skip</Text>
+              <Text style={styles.navBtnText}>{t('review.skip')}</Text>
             </Pressable>
           </View>
 
@@ -315,14 +318,14 @@ export default function ReviewScreen() {
               onPress={() => saveReview('needs_native')}
               disabled={!current}
             >
-              <Text style={styles.actionBtnText}>Needs Native Check</Text>
+              <Text style={styles.actionBtnText}>{t('review.needsNativeCheck')}</Text>
             </Pressable>
             <Pressable
               style={[styles.actionBtn, styles.saveBtn, !current && styles.actionBtnDisabled]}
               onPress={() => saveReview('reviewed')}
               disabled={!current}
             >
-              <Text style={styles.actionBtnText}>Save & Next</Text>
+              <Text style={styles.actionBtnText}>{t('review.saveNext')}</Text>
             </Pressable>
           </View>
         </View>

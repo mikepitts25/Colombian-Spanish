@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react';
 import {
   Alert,
   Modal,
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
@@ -10,14 +9,17 @@ import {
   FlatList,
   Pressable,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { Deck } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ManageDecksScreen() {
   const { ready, decks, renameDeck, deleteDeck, resetDeckProgress, setActiveDeckId } = useDeck();
   const nav = useNavigation<any>();
+  const { t } = useLanguage();
   const [q, setQ] = useState('');
 
   const [renameOpen, setRenameOpen] = useState(false);
@@ -39,7 +41,7 @@ export default function ManageDecksScreen() {
   async function submitRename() {
     const next = renameValue.trim();
     if (!renameDeckId) return;
-    if (!next) return Alert.alert('Missing name', 'Please enter a deck name.');
+    if (!next) return Alert.alert(t('manage.alert.missingName.title'), t('manage.alert.missingName.message'));
     await renameDeck(renameDeckId, next);
     setRenameOpen(false);
     setRenameDeckId(null);
@@ -48,22 +50,22 @@ export default function ManageDecksScreen() {
 
   function confirmDelete(deck: Deck) {
     Alert.alert(
-      'Delete deck?',
-      `This will permanently remove "${deck.name}" and its cards from this device.`,
+      t('manage.alert.delete.title'),
+      t('manage.alert.delete.message', { deck: deck.name }),
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete', style: 'destructive', onPress: () => deleteDeck(deck.id) },
+        { text: t('common.cancel'), style: 'cancel' },
+        { text: t('manage.delete'), style: 'destructive', onPress: () => deleteDeck(deck.id) },
       ],
     );
   }
 
   function confirmReset(deck: Deck) {
     Alert.alert(
-      'Reset progress?',
-      `This resets SRS stats (reps/interval/ease) for all cards in "${deck.name}". Cards will become due now.`,
+      t('manage.alert.reset.title'),
+      t('manage.alert.reset.message', { deck: deck.name }),
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Reset', style: 'destructive', onPress: () => resetDeckProgress(deck.id) },
+        { text: t('common.cancel'), style: 'cancel' },
+        { text: t('manage.reset'), style: 'destructive', onPress: () => resetDeckProgress(deck.id) },
       ],
     );
   }
@@ -76,7 +78,7 @@ export default function ManageDecksScreen() {
     return (
       <SafeAreaView style={styles.wrap}>
         <View style={styles.content}>
-          <Text style={styles.h1}>Cargando…</Text>
+          <Text style={styles.h1}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -86,18 +88,18 @@ export default function ManageDecksScreen() {
       <View style={styles.content}>
         <View style={styles.header}>
           <Pressable style={styles.homeBtn} onPress={goHome}>
-            <Text style={styles.homeBtnText}>Home</Text>
+            <Text style={styles.homeBtnText}>{t('manage.home')}</Text>
           </Pressable>
           <Text style={styles.h1} numberOfLines={1} adjustsFontSizeToFit>
-            Manage Decks
+            {t('manage.title')}
           </Text>
-          <Text style={styles.sub}>Rename, delete, and reset learning progress.</Text>
+          <Text style={styles.sub}>{t('manage.sub')}</Text>
         </View>
 
         <Pressable style={styles.reviewBanner} onPress={() => nav.navigate('Review')}>
           <View style={styles.reviewBannerText}>
-            <Text style={styles.reviewBannerTitle}>🚩 Review Translations</Text>
-            <Text style={styles.reviewBannerSub}>Flag cards with bad translations for fixing</Text>
+            <Text style={styles.reviewBannerTitle}>{t('manage.reviewTitle')}</Text>
+            <Text style={styles.reviewBannerSub}>{t('manage.reviewSub')}</Text>
           </View>
           <Text style={styles.reviewBannerArrow}>→</Text>
         </Pressable>
@@ -105,7 +107,7 @@ export default function ManageDecksScreen() {
         <TextInput
           value={q}
           onChangeText={setQ}
-          placeholder="Search decks…"
+          placeholder={t('manage.searchPlaceholder')}
           placeholderTextColor={colors.textSecondary}
           style={styles.search}
           autoCapitalize="none"
@@ -120,23 +122,28 @@ export default function ManageDecksScreen() {
             <View style={styles.row}>
               <Pressable style={{ flex: 1 }} onPress={() => setActiveDeckId(item.id)}>
                 <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.meta}>{item.cards.length} cards</Text>
+                <Text style={styles.meta}>
+                  {t('manage.cardCount', {
+                    count: item.cards.length,
+                    plural: item.cards.length === 1 ? '' : 's',
+                  })}
+                </Text>
               </Pressable>
 
               <View style={styles.actions}>
                 <Pressable style={styles.btn} onPress={() => openRename(item)}>
-                  <Text style={styles.btnText}>Rename</Text>
+                  <Text style={styles.btnText}>{t('manage.rename')}</Text>
                 </Pressable>
                 <Pressable style={styles.btnWarn} onPress={() => confirmReset(item)}>
-                  <Text style={styles.btnText}>Reset</Text>
+                  <Text style={styles.btnText}>{t('manage.reset')}</Text>
                 </Pressable>
                 <Pressable style={styles.btnDanger} onPress={() => confirmDelete(item)}>
-                  <Text style={styles.btnText}>Delete</Text>
+                  <Text style={styles.btnText}>{t('manage.delete')}</Text>
                 </Pressable>
               </View>
             </View>
           )}
-          ListEmptyComponent={<Text style={styles.sub}>No decks.</Text>}
+          ListEmptyComponent={<Text style={styles.sub}>{t('manage.empty')}</Text>}
         />
       </View>
 
@@ -148,11 +155,11 @@ export default function ManageDecksScreen() {
       >
         <View style={styles.modalBackdrop}>
           <View style={styles.modalBody}>
-            <Text style={styles.modalTitle}>Rename deck</Text>
+            <Text style={styles.modalTitle}>{t('manage.renameDeck')}</Text>
             <TextInput
               value={renameValue}
               onChangeText={setRenameValue}
-              placeholder="Deck name"
+              placeholder={t('manage.deckNamePlaceholder')}
               placeholderTextColor={colors.textSecondary}
               style={styles.input}
               autoFocus
@@ -162,10 +169,10 @@ export default function ManageDecksScreen() {
                 style={[styles.modalBtn, styles.modalBtnGhost]}
                 onPress={() => setRenameOpen(false)}
               >
-                <Text style={[styles.modalBtnText, { color: '#cbd5e1' }]}>Cancel</Text>
+                <Text style={[styles.modalBtnText, { color: '#cbd5e1' }]}>{t('common.cancel')}</Text>
               </Pressable>
               <Pressable style={[styles.modalBtn, styles.modalBtnPrimary]} onPress={submitRename}>
-                <Text style={styles.modalBtnText}>Save</Text>
+                <Text style={styles.modalBtnText}>{t('common.save')}</Text>
               </Pressable>
             </View>
           </View>
