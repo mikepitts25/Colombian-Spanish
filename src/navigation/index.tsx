@@ -28,8 +28,8 @@ const Stack = createNativeStackNavigator();
 
 const TABS: { name: string; labelKey: TranslationKey; icon: string }[] = [
   { name: 'Home', labelKey: 'tabs.home', icon: '🏠' },
-  { name: 'Study', labelKey: 'tabs.study', icon: '📖' },
   { name: 'Browse', labelKey: 'tabs.browse', icon: '🔍' },
+  { name: 'Study', labelKey: 'tabs.study', icon: '📖' },
   { name: 'Progress', labelKey: 'tabs.progress', icon: '📊' },
   { name: 'Settings', labelKey: 'tabs.settings', icon: '⚙️' },
 ];
@@ -71,8 +71,8 @@ function Tabs() {
       screenOptions={{ headerShown: false }}
     >
       <Tab.Screen name="Home"     component={HomeScreen} />
-      <Tab.Screen name="Study"    component={StudyScreen} />
       <Tab.Screen name="Browse"   component={BrowseScreen} />
+      <Tab.Screen name="Study"    component={StudyScreen} />
       <Tab.Screen name="Progress" component={ProgressScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>

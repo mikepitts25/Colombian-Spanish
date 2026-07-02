@@ -5,6 +5,12 @@ import { Deck, FlashCard } from '../../src/types';
 
 // ── Mocks ─────────────────────────────────────────────────────────────────────
 
+const mockNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ navigate: mockNavigate }),
+}));
+
 jest.mock('../../src/hooks/useDeck', () => ({
   useDeck: jest.fn(),
   DeckProvider: ({ children }: any) => children,
@@ -65,10 +71,34 @@ const DECK_PAISA: Deck = {
   ],
 };
 
+const DECK_TECH: Deck = {
+  id: 'deck-tech',
+  name: 'Tecnología',
+  cards: [
+    makeCard('t1', { front: 'celular', back: 'cell phone', tags: ['tech'] }),
+  ],
+};
+
+const DECK_HEALTH: Deck = {
+  id: 'deck-health',
+  name: 'Salud',
+  cards: [
+    makeCard('h1', { front: 'cita médica', back: 'medical appointment', tags: ['health'] }),
+  ],
+};
+
+const DECK_NUMBERS: Deck = {
+  id: 'deck-numbers',
+  name: 'Numbers',
+  cards: [
+    makeCard('n1', { front: 'quincena', back: 'paycheck every 15 days', tags: ['number'] }),
+  ],
+};
+
 function buildContext(overrides = {}) {
   return {
     ready: true,
-    decks: [DECK_A, DECK_B, DECK_PAISA],
+    decks: [DECK_A, DECK_B, DECK_PAISA, DECK_TECH, DECK_HEALTH, DECK_NUMBERS],
     setActiveDeckId: jest.fn(),
     ...overrides,
   };
@@ -113,8 +143,23 @@ describe('BrowseScreen default state', () => {
   });
 
   it('shows category cards in browse mode', () => {
-    const { getAllByText } = renderBrowseScreen();
-    expect(getAllByText('Jerga Colombiana').length).toBeGreaterThan(0);
+    const { getByText } = renderBrowseScreen();
+
+    expect(getByText('Jerga Colombiana')).toBeTruthy();
+    expect(getByText('Comida & Bebida')).toBeTruthy();
+    expect(getByText('Comunicación')).toBeTruthy();
+    expect(getByText('Tecnología')).toBeTruthy();
+    expect(getByText('Salud')).toBeTruthy();
+    expect(getByText('Números & Tiempo')).toBeTruthy();
+  });
+
+  it('does not render the old filter controls', () => {
+    const { queryByText } = renderBrowseScreen();
+
+    expect(queryByText('⚙️ Filtros')).toBeNull();
+    expect(queryByText('Todos')).toBeNull();
+    expect(queryByText('🇨🇴 Jerga')).toBeNull();
+    expect(queryByText('Paisa')).toBeNull();
   });
 });
 
@@ -145,14 +190,22 @@ describe('BrowseScreen search', () => {
     expect(queryByText('hola')).toBeNull();
   });
 
-  it('filters search results by selected region', async () => {
-    const { getByText, getByPlaceholderText, queryByText } = renderBrowseScreen();
+  it('searches across all loaded cards without region or deck-type filters', async () => {
+    const { getByPlaceholderText, queryByText } = renderBrowseScreen();
 
-    fireEvent.press(getByText('Paisa'));
     fireEvent.changeText(getByPlaceholderText('Busca palabras, frases o decks...'), 'paisa');
 
     await waitFor(() => expect(queryByText('parce-paisa')).toBeTruthy());
-    expect(queryByText('bandeja paisa')).toBeNull();
+    expect(queryByText('bandeja paisa')).toBeTruthy();
+  });
+
+  it('searches by deck name', async () => {
+    const { getByPlaceholderText, queryByText } = renderBrowseScreen();
+
+    fireEvent.changeText(getByPlaceholderText('Busca palabras, frases o decks...'), 'Tecnología');
+
+    await waitFor(() => expect(queryByText('celular')).toBeTruthy());
+    expect(queryByText('hola')).toBeNull();
   });
 
   it('search is case-insensitive', async () => {
@@ -188,21 +241,17 @@ describe('BrowseScreen search', () => {
   });
 });
 
-// ── Deck filter ───────────────────────────────────────────────────────────────
+// ── Categories ────────────────────────────────────────────────────────────────
 
-describe('BrowseScreen deck filter', () => {
-  it('shows the active all filter chip', () => {
-    const { getByText } = renderBrowseScreen();
-    expect(getByText('Todos')).toBeTruthy();
-  });
+describe('BrowseScreen categories', () => {
+  it('activates the first matching category deck and navigates to Study', () => {
+    const setActiveDeckId = jest.fn();
+    const { getByText } = renderBrowseScreen({ setActiveDeckId });
 
-  it('filters search results with the slang chip', async () => {
-    const { getByPlaceholderText, getByText, queryByText } = renderBrowseScreen();
-    fireEvent.press(getByText('🇨🇴 Jerga'));
-    fireEvent.changeText(getByPlaceholderText('Busca palabras, frases o decks...'), 'a');
+    fireEvent.press(getByText('Tecnología'));
 
-    await waitFor(() => expect(queryByText('chimba')).toBeTruthy());
-    expect(queryByText('arepa')).toBeNull();
+    expect(setActiveDeckId).toHaveBeenCalledWith('deck-tech');
+    expect(mockNavigate).toHaveBeenCalledWith('Study');
   });
 });
 

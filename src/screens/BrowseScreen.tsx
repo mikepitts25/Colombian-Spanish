@@ -11,12 +11,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
-import {
-  cardMatchesRegion,
-  REGION_FILTERS,
-  REGION_LABEL_KEYS,
-  RegionFilterId,
-} from '../utils/regions';
 import { useLanguage } from '../context/LanguageContext';
 import { speakCard } from '../services/tts';
 
@@ -37,19 +31,20 @@ type CategoryKey =
   | 'Other';
 
 const CATEGORY_DISPLAY = [
-  { key: 'Food & Drink',       emoji: '🍺', labelKey: 'browse.category.food', color: '#fb923c', bg: 'rgba(251,146,60,0.12)'    },
-  { key: 'Colombianisms',      emoji: '🇨🇴', labelKey: 'browse.category.colombianisms', color: '#FFDA00', bg: 'rgba(255,218,0,0.08)'   },
-  { key: 'Work & School',      emoji: '💼', labelKey: 'browse.category.work', color: '#94a3b8', bg: 'rgba(148,163,184,0.12)'   },
-  { key: 'People & Relationships', emoji: '👨‍👩‍👧', labelKey: 'browse.category.people',  color: '#10b981', bg: 'rgba(16,185,129,0.12)'   },
-  { key: 'Fun & Culture',      emoji: '🎵', labelKey: 'browse.category.culture', color: '#a855f7', bg: 'rgba(168,85,247,0.12)'   },
-  { key: 'Places & Travel',    emoji: '🚌', labelKey: 'browse.category.travel', color: '#f97316', bg: 'rgba(249,115,22,0.12)'    },
-] as const;
-
-const FILTER_CHIPS = [
-  { id: 'all',     labelKey: 'browse.filter.all' },
-  { id: 'slang',   labelKey: 'browse.filter.slang' },
-  { id: 'phrases', labelKey: 'browse.filter.phrases' },
-  { id: 'basic',   labelKey: 'browse.filter.basic' },
+  { key: 'Colombianisms', emoji: '🇨🇴', labelKey: 'browse.category.colombianisms', color: '#FFDA00', bg: 'rgba(255,218,0,0.08)' },
+  { key: 'Essentials', emoji: '⭐', labelKey: 'browse.category.essentials', color: '#facc15', bg: 'rgba(250,204,21,0.1)' },
+  { key: 'People & Relationships', emoji: '👥', labelKey: 'browse.category.people', color: '#10b981', bg: 'rgba(16,185,129,0.12)' },
+  { key: 'Places & Travel', emoji: '🚌', labelKey: 'browse.category.travel', color: '#f97316', bg: 'rgba(249,115,22,0.12)' },
+  { key: 'Home & Daily Life', emoji: '🏠', labelKey: 'browse.category.home', color: '#38bdf8', bg: 'rgba(56,189,248,0.1)' },
+  { key: 'Food & Drink', emoji: '🍺', labelKey: 'browse.category.food', color: '#fb923c', bg: 'rgba(251,146,60,0.12)' },
+  { key: 'Communication', emoji: '💬', labelKey: 'browse.category.communication', color: '#60a5fa', bg: 'rgba(96,165,250,0.1)' },
+  { key: 'Health', emoji: '🩺', labelKey: 'browse.category.health', color: '#f43f5e', bg: 'rgba(244,63,94,0.1)' },
+  { key: 'Nature', emoji: '🌿', labelKey: 'browse.category.nature', color: '#22c55e', bg: 'rgba(34,197,94,0.1)' },
+  { key: 'Work & School', emoji: '💼', labelKey: 'browse.category.work', color: '#94a3b8', bg: 'rgba(148,163,184,0.12)' },
+  { key: 'Numbers & Time', emoji: '🔢', labelKey: 'browse.category.numbers', color: '#c084fc', bg: 'rgba(192,132,252,0.1)' },
+  { key: 'Fun & Culture', emoji: '🎵', labelKey: 'browse.category.culture', color: '#a855f7', bg: 'rgba(168,85,247,0.12)' },
+  { key: 'Tech', emoji: '📱', labelKey: 'browse.category.tech', color: '#2dd4bf', bg: 'rgba(45,212,191,0.1)' },
+  { key: 'Other', emoji: '🧩', labelKey: 'browse.category.other', color: '#e2e8f0', bg: 'rgba(226,232,240,0.08)' },
 ] as const;
 
 function getCategoryForDeck(deck: any): CategoryKey {
@@ -79,8 +74,6 @@ export default function BrowseScreen() {
   const nav = useNavigation<any>();
   const { t } = useLanguage();
   const [q, setQ] = useState('');
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [activeRegion, setActiveRegion] = useState<RegionFilterId>('all');
   const [searching, setSearching] = useState(false);
 
   const allCards = useMemo<Row[]>(
@@ -91,35 +84,42 @@ export default function BrowseScreen() {
     [decks],
   );
 
+  const visibleCategories = useMemo(
+    () =>
+      CATEGORY_DISPLAY.filter((cat) =>
+        (decks || []).some((deck) => getCategoryForDeck(deck) === cat.key),
+      ),
+    [decks],
+  );
+
   const trendingWords = useMemo(() => {
     const slangRows = allCards.filter((x) => {
-      if (!cardMatchesRegion(x.card, activeRegion, x.deckName)) return false;
-      const text = (x.card.tags || []).join(' ').toLowerCase() + x.deckName.toLowerCase();
+      const text = `${(x.card.tags || []).join(' ')} ${x.deckName}`.toLowerCase();
       return /(slang|jerga|coloquial|colombia)/.test(text);
     });
     return slangRows.slice(0, 5);
-  }, [allCards, activeRegion]);
+  }, [allCards]);
 
   const searchResults = useMemo(() => {
     const query = q.trim().toLowerCase();
     if (!query) return [];
-    const filtered = allCards
-      .filter((x) => cardMatchesRegion(x.card, activeRegion, x.deckName))
+
+    return allCards
       .filter((x) => {
-        const text = (x.card.tags || []).join(' ').toLowerCase() + x.deckName.toLowerCase();
-        if (activeFilter === 'slang') return /(slang|jerga|coloquial|colombia)/.test(text);
-        if (activeFilter === 'phrases') return /(phrase|frase|expression|conversaci)/.test(text);
-        if (activeFilter === 'basic') return /(basic|intro|common|essential)/.test(text);
-        return true;
-      });
-    return filtered
-      .filter((x) => {
-        const hay = [x.card.front, x.card.back, x.card.example, (x.card.tags || []).join(' ')]
-          .filter(Boolean).join(' ').toLowerCase();
+        const hay = [
+          x.card.front,
+          x.card.back,
+          x.card.example,
+          x.deckName,
+          (x.card.tags || []).join(' '),
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase();
         return hay.includes(query);
       })
       .slice(0, 80);
-  }, [allCards, q, activeFilter, activeRegion]);
+  }, [allCards, q]);
 
   function handleCategoryPress(catKey: string) {
     const decksInCat = (decks || []).filter((d) => getCategoryForDeck(d) === catKey);
@@ -152,9 +152,6 @@ export default function BrowseScreen() {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>{t('browse.title')}</Text>
-          <View style={styles.filterPill}>
-            <Text style={styles.filterPillText}>{t('browse.filters')}</Text>
-          </View>
         </View>
 
         {/* Search bar */}
@@ -177,39 +174,6 @@ export default function BrowseScreen() {
             </Pressable>
           )}
         </View>
-
-        {/* Filter chips */}
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.chipsScroll}>
-          <View style={styles.chipsRow}>
-            {FILTER_CHIPS.map((chip) => (
-              <Pressable
-                key={chip.id}
-                style={[styles.chip, activeFilter === chip.id && styles.chipActive]}
-                onPress={() => setActiveFilter(chip.id)}
-              >
-                <Text style={[styles.chipText, activeFilter === chip.id && styles.chipTextActive]}>
-                  {t(chip.labelKey)}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
-        </ScrollView>
-
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.regionChipsScroll}>
-          <View style={styles.chipsRow}>
-            {REGION_FILTERS.map((region) => (
-              <Pressable
-                key={region.id}
-                style={[styles.chip, activeRegion === region.id && styles.regionChipActive]}
-                onPress={() => setActiveRegion(region.id)}
-              >
-                <Text style={[styles.chipText, activeRegion === region.id && styles.regionChipTextActive]}>
-                  {t(REGION_LABEL_KEYS[region.id])}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
-        </ScrollView>
 
         {showResults ? (
           /* ── SEARCH RESULTS ── */
@@ -252,10 +216,9 @@ export default function BrowseScreen() {
             {/* Categories grid */}
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>{t('browse.categories')}</Text>
-              <Text style={styles.seeAll}>{t('browse.seeAll')}</Text>
             </View>
             <View style={styles.catGrid}>
-              {CATEGORY_DISPLAY.map((cat) => (
+              {visibleCategories.map((cat) => (
                 <Pressable
                   key={cat.key}
                   style={[styles.catCard, { backgroundColor: cat.bg, borderColor: cat.color + '66' }]}
@@ -319,19 +282,9 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     marginBottom: 14,
   },
   title: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
-  filterPill: {
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255,218,0,0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,218,0,0.4)',
-  },
-  filterPillText: { color: colors.brand, fontSize: 12, fontWeight: '700' },
 
   searchBar: {
     flexDirection: 'row',
@@ -353,23 +306,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   clearBtn: { color: colors.textSecondary, fontSize: 14, paddingHorizontal: 4 },
-
-  chipsScroll: { marginBottom: 20 },
-  regionChipsScroll: { marginBottom: 20, marginTop: -10 },
-  chipsRow: { flexDirection: 'row', gap: 8 },
-  chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  chipActive: { backgroundColor: colors.brand, borderColor: colors.brand },
-  regionChipActive: { backgroundColor: '#047857', borderColor: '#047857' },
-  chipText: { color: colors.textSecondary, fontSize: 12, fontWeight: '600' },
-  chipTextActive: { color: '#020617', fontWeight: '800' },
-  regionChipTextActive: { color: '#ffffff', fontWeight: '800' },
 
   sectionHeader: {
     flexDirection: 'row',
