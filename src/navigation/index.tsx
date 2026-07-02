@@ -8,7 +8,6 @@ import StudyScreen from '../screens/StudyScreen';
 import BrowseScreen from '../screens/BrowseScreen';
 import ProgressScreen from '../screens/ProgressScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import EditProfileScreen from '../screens/EditProfileScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import DailyGoalScreen from '../screens/DailyGoalScreen';
 import ManageDecksScreen from '../screens/ManageDecksScreen';
@@ -92,7 +91,6 @@ export default function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root"         component={Tabs}              options={{ headerShown: false }} />
-      <Stack.Screen name="EditProfile"  component={EditProfileScreen} options={{ ...stackHeaderOpts, headerShown: false }} />
       <Stack.Screen name="Notifications"component={NotificationsScreen}options={{ ...stackHeaderOpts, headerShown: false }} />
       <Stack.Screen name="DailyGoal"    component={DailyGoalScreen}   options={{ ...stackHeaderOpts, headerShown: false }} />
       <Stack.Screen name="ManageDecks"  component={ManageDecksScreen}  options={{ ...stackHeaderOpts, title: t('nav.manageDecks') }} />

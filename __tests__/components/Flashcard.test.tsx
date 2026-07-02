@@ -9,6 +9,21 @@ jest.mock('../../src/services/tts', () => ({
   stop: jest.fn(),
 }));
 
+let mockLanguage: 'es' | 'en' = 'es';
+
+jest.mock('../../src/context/LanguageContext', () => {
+  const { translate } = jest.requireActual('../../src/i18n/translations');
+  return {
+    useLanguage: () => ({
+      language: mockLanguage,
+      toggleLanguage: jest.fn(),
+      setLanguage: jest.fn(),
+      t: (key: any, values?: Record<string, string | number>) =>
+        translate(mockLanguage, key, values),
+    }),
+  };
+});
+
 import { speakCard } from '../../src/services/tts';
 
 const mockSpeakCard = speakCard as jest.Mock;
@@ -37,6 +52,7 @@ function makeCard(overrides: Partial<FlashCard> = {}): FlashCard {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  mockLanguage = 'es';
 });
 
 describe('Flashcard', () => {
@@ -68,7 +84,13 @@ describe('Flashcard', () => {
     expect(() => render(<Flashcard card={card} onGrade={jest.fn()} />)).not.toThrow();
   });
 
-  it('renders the "Flip card" accessibility button', () => {
+  it('renders the localized Spanish flip accessibility button by default', () => {
+    const { getByLabelText } = render(<Flashcard card={makeCard()} onGrade={jest.fn()} />);
+    expect(getByLabelText('Voltear tarjeta')).toBeTruthy();
+  });
+
+  it('renders the English flip accessibility button when UI language is English', () => {
+    mockLanguage = 'en';
     const { getByLabelText } = render(<Flashcard card={makeCard()} onGrade={jest.fn()} />);
     expect(getByLabelText('Flip card')).toBeTruthy();
   });

@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Alert } from 'react-native/Libraries/Alert/Alert';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
-import { getDailyProgress, getStudyStreak, saveDecks, loadDecks } from '../storage/storage';
+import { getDailyProgress, saveDecks, loadDecks } from '../storage/storage';
 import * as Clipboard from 'expo-clipboard';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -38,14 +38,12 @@ function Divider() {
 export default function SettingsScreen() {
   const nav = useNavigation<any>();
   const { t, toggleLanguage } = useLanguage();
-  const [streak, setStreak] = useState(0);
   const [target, setTarget] = useState(10);
 
   useEffect(() => {
     (async () => {
-      const [dp, s] = await Promise.all([getDailyProgress(), getStudyStreak()]);
+      const dp = await getDailyProgress();
       setTarget(dp.target ?? 10);
-      setStreak(s);
     })();
   }, []);
 
@@ -94,25 +92,6 @@ export default function SettingsScreen() {
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <Text style={styles.pageTitle}>⚙️  {t('settings.title')}</Text>
 
-        {/* Profile card */}
-        <Pressable style={styles.profileCard} onPress={() => nav.navigate('EditProfile')}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>MP</Text>
-          </View>
-          <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>Mike Pitts</Text>
-            <Text style={styles.profileEmail}>mikepitts25@gmail.com</Text>
-            {streak > 0 && (
-              <View style={styles.streakBadge}>
-                <Text style={styles.streakBadgeText}>
-                  🔥 {t('settings.streak', { count: streak, plural: streak !== 1 ? 's' : '' })}
-                </Text>
-              </View>
-            )}
-          </View>
-          <Text style={styles.chevron}>›</Text>
-        </Pressable>
-
         {/* Aprendizaje */}
         <Text style={styles.groupLabel}>{t('settings.section.learning')}</Text>
         <View style={styles.groupCard}>
@@ -145,16 +124,9 @@ export default function SettingsScreen() {
           />
         </View>
 
-        {/* Cuenta */}
-        <Text style={styles.groupLabel}>{t('settings.section.account')}</Text>
+        {/* App */}
+        <Text style={styles.groupLabel}>{t('settings.section.app')}</Text>
         <View style={styles.groupCard}>
-          <SettingsRow
-            emoji="👤"
-            title={t('settings.profile.title')}
-            subtitle={t('settings.profile.subtitle')}
-            onPress={() => nav.navigate('EditProfile')}
-          />
-          <Divider />
           <SettingsRow
             emoji="🌐"
             title={t('settings.language.title')}
@@ -194,14 +166,6 @@ export default function SettingsScreen() {
             chevron={false}
           />
         </View>
-
-        {/* Sign out / reset */}
-        <Pressable
-          style={styles.signOutBtn}
-          onPress={() => Alert.alert(t('settings.alert.signOut.title'), t('settings.alert.signOut.message'))}
-        >
-          <Text style={styles.signOutText}>🚪 {t('settings.signOut')}</Text>
-        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
@@ -217,41 +181,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     marginBottom: 20,
   },
-
-  profileCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-    backgroundColor: colors.surface,
-    borderWidth: 1.5,
-    borderColor: 'rgba(255,218,0,0.4)',
-    borderRadius: 20,
-    padding: 16,
-    marginBottom: 24,
-  },
-  avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: colors.accentBlue,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarText: { color: colors.brand, fontSize: 20, fontWeight: '800' },
-  profileInfo: { flex: 1, gap: 2 },
-  profileName: { color: colors.textPrimary, fontSize: 16, fontWeight: '800' },
-  profileEmail: { color: colors.textSecondary, fontSize: 12 },
-  streakBadge: {
-    alignSelf: 'flex-start',
-    marginTop: 4,
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255,218,0,0.1)',
-    borderWidth: 1,
-    borderColor: colors.brand,
-  },
-  streakBadgeText: { color: colors.brand, fontSize: 11, fontWeight: '700' },
 
   groupLabel: {
     color: colors.textTertiary,
@@ -283,16 +212,4 @@ const styles = StyleSheet.create({
   rowSubtitle: { color: colors.textSecondary, fontSize: 12 },
   chevron: { color: colors.textSecondary, fontSize: 22, fontWeight: '300' },
   divider: { height: 1, backgroundColor: colors.border, marginLeft: 46 },
-
-  signOutBtn: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 14,
-    borderRadius: 16,
-    backgroundColor: 'rgba(206,17,38,0.1)',
-    borderWidth: 1.5,
-    borderColor: colors.accentRed,
-    marginTop: 8,
-  },
-  signOutText: { color: '#f87171', fontSize: 15, fontWeight: '800' },
 });

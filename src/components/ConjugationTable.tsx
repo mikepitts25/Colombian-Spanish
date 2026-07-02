@@ -21,7 +21,7 @@ export default function ConjugationTable() {
 
   const tenseLabels = {
     present: 'Presente',
-    past: 'Pretérito',
+    past: 'Pretérito / Pasado',
     future: 'Futuro',
   };
 

@@ -179,7 +179,7 @@ describe('StudyScreen rendering', () => {
 
   it('renders the flip-card touch target', async () => {
     const { getByLabelText } = renderStudyScreen();
-    await waitFor(() => expect(getByLabelText('Flip card')).toBeTruthy());
+    await waitFor(() => expect(getByLabelText('Voltear tarjeta')).toBeTruthy());
   });
 
   it('grading buttons are visible in the grade bar', async () => {

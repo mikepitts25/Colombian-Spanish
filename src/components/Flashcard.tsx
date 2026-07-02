@@ -4,6 +4,7 @@ import { colors } from '../styles/theme';
 import { FlashCard } from '../types';
 import { splitExampleText } from '../utils/exampleText';
 import { speakCard } from '../services/tts';
+import { useLanguage } from '../context/LanguageContext';
 
 interface Props {
   card: FlashCard;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function Flashcard({ card, onGrade }: Props) {
+  const { t } = useLanguage();
   const [isFront, setIsFront] = useState(true);
   const exampleText = splitExampleText(card.example);
 
@@ -100,7 +102,7 @@ export default function Flashcard({ card, onGrade }: Props) {
         pointerEvents={isFront ? 'auto' : 'none'}
       >
         <Pressable
-          accessibilityLabel="Flip card"
+          accessibilityLabel={t('common.flipCard')}
           style={styles.face}
           onPress={() => flip('back')}
           onLongPress={say}
