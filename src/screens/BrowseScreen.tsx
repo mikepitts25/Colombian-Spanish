@@ -92,14 +92,6 @@ export default function BrowseScreen() {
     [decks],
   );
 
-  const trendingWords = useMemo(() => {
-    const slangRows = allCards.filter((x) => {
-      const text = `${(x.card.tags || []).join(' ')} ${x.deckName}`.toLowerCase();
-      return /(slang|jerga|coloquial|colombia)/.test(text);
-    });
-    return slangRows.slice(0, 5);
-  }, [allCards]);
-
   const searchResults = useMemo(() => {
     const query = q.trim().toLowerCase();
     if (!query) return [];
@@ -231,39 +223,6 @@ export default function BrowseScreen() {
                 </Pressable>
               ))}
             </View>
-
-            {/* Trending words */}
-            <View style={[styles.sectionHeader, { marginTop: 8 }]}>
-              <Text style={styles.sectionTitle}>{t('browse.wordsOfDay')}</Text>
-              <Text style={styles.seeAll}>{t('browse.seeMore')}</Text>
-            </View>
-            {trendingWords.map((item, i) => (
-              <View key={item.card.id} style={styles.trendRow}>
-                <View style={[styles.trendRank, i === 0
-                  ? { backgroundColor: 'rgba(255,218,0,0.12)', borderColor: '#FFDA00' }
-                  : i === 1
-                  ? { backgroundColor: 'rgba(0,56,147,0.15)', borderColor: '#003893' }
-                  : { backgroundColor: 'rgba(206,17,38,0.12)', borderColor: '#CE1126' }
-                ]}>
-                  <Text style={[styles.trendRankText, {
-                    color: i === 0 ? '#FFDA00' : i === 1 ? '#60a5fa' : '#f87171',
-                  }]}>{i + 1}</Text>
-                </View>
-                <View style={styles.trendInfo}>
-                  <Text style={styles.trendWord}>{item.card.front}</Text>
-                  <Text style={styles.trendBack}>
-                    {item.card.back}
-                    {item.deckName ? ` • ${item.deckName}` : ''}
-                  </Text>
-                </View>
-                <Pressable
-                  style={styles.trendSpeakBtn}
-                  onPress={() => void speakCard(item.card)}
-                >
-                  <Text>🔊</Text>
-                </Pressable>
-              </View>
-            ))}
           </>
         )}
       </ScrollView>
@@ -314,7 +273,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   sectionTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
-  seeAll: { color: colors.textSecondary, fontSize: 12, fontWeight: '700' },
 
   catGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 24 },
   catCard: {
@@ -333,38 +291,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     lineHeight: 13,
-  },
-
-  trendRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 14,
-    padding: 14,
-    marginBottom: 8,
-  },
-  trendRank: {
-    width: 32,
-    height: 32,
-    borderRadius: 10,
-    borderWidth: 1.5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  trendRankText: { fontSize: 14, fontWeight: '800' },
-  trendInfo: { flex: 1, gap: 2 },
-  trendWord: { color: colors.textPrimary, fontSize: 16, fontWeight: '800' },
-  trendBack: { color: colors.textSecondary, fontSize: 12 },
-  trendSpeakBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.accentBlue,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 
   emptyWrap: { alignItems: 'center', paddingVertical: 40, gap: 10 },

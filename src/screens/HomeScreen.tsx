@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { getDailyProgress, getStudyStreak } from '../storage/storage';
 import { Deck } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { speakCard } from '../services/tts';
 
 const COLOMBIAN_GREETINGS = [
   { textKey: 'home.greeting.morning' as const, subKey: 'home.greeting.morningSub' as const, emoji: '☀️' },
@@ -60,6 +61,11 @@ const CATEGORY_EMOJIS: Record<string, string> = {
 type DeckWithDue = Deck & {
   dueCount: number;
   cat: string;
+};
+
+type WordOfDayRow = {
+  deckName: string;
+  card: any;
 };
 
 function getCategoryForDeck(deck: Deck): string {
@@ -121,6 +127,17 @@ export default function HomeScreen() {
       .sort((a, b) => b.dueCount - a.dueCount)
       .slice(0, 4);
   }, [decks, endOfToday]);
+
+  const wordOfDay = useMemo<WordOfDayRow | undefined>(() => {
+    const rows = (decks || []).flatMap((deck) =>
+      (deck.cards || []).map((card: any) => ({ deckName: deck.name, card })),
+    );
+
+    return rows.find((row) => {
+      const text = `${(row.card.tags || []).join(' ')} ${row.deckName}`.toLowerCase();
+      return /(slang|jerga|coloquial|colombia)/.test(text);
+    });
+  }, [decks]);
 
   const dailyGoalProgress = dailyTarget > 0 ? Math.min(dailyCount / dailyTarget, 1) : 0;
   const dailyGoalLabel = dailyTarget > 0 ? `${Math.min(dailyCount, dailyTarget)}/${dailyTarget}` : `${dailyCount}`;
@@ -197,6 +214,25 @@ export default function HomeScreen() {
             </Text>
           </Pressable>
         </View>
+
+        {wordOfDay ? (
+          <View style={styles.wordCard}>
+            <View style={styles.wordHeader}>
+              <Text style={styles.wordEyebrow}>{t('home.wordOfDay')}</Text>
+              <Pressable
+                style={styles.wordAudioButton}
+                onPress={() => void speakCard(wordOfDay.card)}
+              >
+                <Text style={styles.wordAudioIcon}>🔊</Text>
+              </Pressable>
+            </View>
+            <Text style={styles.wordFront}>{wordOfDay.card.front}</Text>
+            <Text style={styles.wordBack}>
+              {wordOfDay.card.back}
+              {wordOfDay.deckName ? ` • ${wordOfDay.deckName}` : ''}
+            </Text>
+          </View>
+        ) : null}
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('home.tools')}</Text>
@@ -398,6 +434,40 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '900',
   },
+
+  wordCard: {
+    marginHorizontal: 16,
+    marginBottom: 14,
+    backgroundColor: colors.surface,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255,218,0,0.28)',
+    padding: 14,
+    gap: 6,
+  },
+  wordHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  wordEyebrow: {
+    color: colors.brand,
+    fontSize: 12,
+    fontWeight: '800',
+    textTransform: 'uppercase',
+  },
+  wordAudioButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: colors.accentBlue,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wordAudioIcon: { fontSize: 15 },
+  wordFront: { color: colors.textPrimary, fontSize: 22, fontWeight: '900' },
+  wordBack: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
 
   quickActions: {
     flexDirection: 'row',

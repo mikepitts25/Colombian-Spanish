@@ -19,6 +19,10 @@ jest.mock('../../src/storage/storage', () => ({
   getStudyStreak: jest.fn().mockResolvedValue(0),
 }));
 
+jest.mock('../../src/services/tts', () => ({
+  speakCard: jest.fn(),
+}));
+
 jest.mock('../../src/context/LanguageContext', () => {
   const { translate } = jest.requireActual('../../src/i18n/translations');
   return {
@@ -33,11 +37,13 @@ jest.mock('../../src/context/LanguageContext', () => {
 });
 
 import { useDeck } from '../../src/hooks/useDeck';
+import { speakCard } from '../../src/services/tts';
 
 const mockUseDeck = useDeck as jest.Mock;
+const mockSpeakCard = speakCard as jest.Mock;
 const NOW = Date.now();
 
-function makeCard(id: string): FlashCard {
+function makeCard(id: string, overrides: Partial<FlashCard> = {}): FlashCard {
   return {
     id,
     front: 'hola',
@@ -47,6 +53,7 @@ function makeCard(id: string): FlashCard {
     reps: 0,
     interval: 0,
     ease: 2.5,
+    ...overrides,
   };
 }
 
@@ -54,6 +61,15 @@ const DECK: Deck = {
   id: 'deck-greetings',
   name: 'Saludos',
   cards: [makeCard('c1')],
+};
+
+const SLANG_DECK: Deck = {
+  id: 'deck-slang',
+  name: 'Jerga Colombiana',
+  cards: [
+    makeCard('slang-1', { front: 'chimba', back: 'awesome', tags: ['slang'] }),
+    makeCard('slang-2', { front: 'parce', back: 'buddy', tags: ['slang'] }),
+  ],
 };
 
 const RESTED_DECK: Deck = {
@@ -72,7 +88,7 @@ beforeEach(() => {
   mockLanguage = 'en';
   mockUseDeck.mockReturnValue({
     ready: true,
-    decks: [DECK],
+    decks: [DECK, SLANG_DECK],
     activeDeckId: DECK.id,
     activeDeck: DECK,
     setActiveDeckId: jest.fn(),
@@ -149,5 +165,42 @@ describe('HomeScreen quick actions', () => {
     expect(getByText('Herramientas')).toBeTruthy();
     expect(getByText('Decks pendientes')).toBeTruthy();
     expect(getByText('Ver todos los decks')).toBeTruthy();
+  });
+
+  it('renders one Word of the Day card from slang content', async () => {
+    const { getByText, queryByText } = render(<HomeScreen />);
+
+    await waitFor(() => expect(getByText('Word of the Day')).toBeTruthy());
+
+    expect(getByText('chimba')).toBeTruthy();
+    expect(getByText('awesome • Jerga Colombiana')).toBeTruthy();
+    expect(queryByText('parce')).toBeNull();
+  });
+
+  it('omits Word of the Day when no slang content exists', async () => {
+    mockUseDeck.mockReturnValue({
+      ready: true,
+      decks: [DECK],
+      activeDeckId: DECK.id,
+      activeDeck: DECK,
+      setActiveDeckId: jest.fn(),
+    });
+
+    const { getByText, queryByText } = render(<HomeScreen />);
+
+    await waitFor(() => expect(getByText('Study due cards')).toBeTruthy());
+
+    expect(queryByText('Word of the Day')).toBeNull();
+    expect(queryByText('chimba')).toBeNull();
+  });
+
+  it('plays the Word of the Day audio', async () => {
+    const { getByText } = render(<HomeScreen />);
+
+    await waitFor(() => expect(getByText('Word of the Day')).toBeTruthy());
+
+    fireEvent.press(getByText('🔊'));
+
+    expect(mockSpeakCard).toHaveBeenCalledWith(SLANG_DECK.cards[0]);
   });
 });

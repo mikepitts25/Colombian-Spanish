@@ -134,12 +134,12 @@ describe('BrowseScreen default state', () => {
     expect(getByPlaceholderText('Busca palabras, frases o decks...')).toBeTruthy();
   });
 
-  it('shows browse categories and trending words with no search query', () => {
-    const { getByText } = renderBrowseScreen();
+  it('shows browse categories without the old Words of the Day feed', () => {
+    const { getByText, queryByText } = renderBrowseScreen();
+
     expect(getByText('📂 Categorías')).toBeTruthy();
-    expect(getByText('🔥 Palabras del Día')).toBeTruthy();
-    expect(getByText('chimba')).toBeTruthy();
-    expect(getByText('awesome • Saludos')).toBeTruthy();
+    expect(queryByText('🔥 Palabras del Día')).toBeNull();
+    expect(queryByText('awesome • Saludos')).toBeNull();
   });
 
   it('shows category cards in browse mode', () => {
@@ -258,16 +258,22 @@ describe('BrowseScreen categories', () => {
 // ── Audio ─────────────────────────────────────────────────────────────────────
 
 describe('BrowseScreen audio', () => {
-  it('renders speak buttons for each card row', () => {
-    const { getAllByText } = renderBrowseScreen();
-    const speakButtons = getAllByText('🔊');
-    expect(speakButtons.length).toBeGreaterThan(0);
+  it('renders speak buttons for search result rows', async () => {
+    const { getAllByText, getByPlaceholderText } = renderBrowseScreen();
+
+    fireEvent.changeText(getByPlaceholderText('Busca palabras, frases o decks...'), 'chimba');
+
+    await waitFor(() => expect(getAllByText('🔊').length).toBeGreaterThan(0));
   });
 
-  it('calls speakCard with the row card when 🔊 is pressed', async () => {
-    const { getAllByText } = renderBrowseScreen();
-    const speakButtons = getAllByText('🔊');
-    fireEvent(speakButtons[0], 'press', { stopPropagation: jest.fn() });
-    await waitFor(() => expect(mockSpeakCard).toHaveBeenCalledWith(DECK_A.cards[2]));
+  it('calls speakCard with the row card when a search result 🔊 is pressed', async () => {
+    const { getAllByText, getByPlaceholderText } = renderBrowseScreen();
+
+    fireEvent.changeText(getByPlaceholderText('Busca palabras, frases o decks...'), 'chimba');
+
+    await waitFor(() => expect(getAllByText('🔊').length).toBeGreaterThan(0));
+    fireEvent.press(getAllByText('🔊')[0]);
+
+    expect(mockSpeakCard).toHaveBeenCalledWith(DECK_A.cards[2]);
   });
 });
