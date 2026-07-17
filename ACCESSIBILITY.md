@@ -37,7 +37,6 @@
 - ProgressScreen.tsx
 - ManageDecksScreen.tsx
 - SettingsScreen.tsx
-- BrowseScreen.tsx
 - Components: Flashcard, navigation
 
 ## Testing Recommendations

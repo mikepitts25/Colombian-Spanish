@@ -9,9 +9,12 @@ import {
   resetDeckProgressById,
   recordSeenWord,
   recordStudySession,
+  getDailyProgress,
+  incrementDailyNewCount,
 } from '../storage/storage';
+import { getPrefs } from '../storage/prefs';
 import { Deck, FlashCard } from '../types';
-import { nextBatch, gradeCard } from '../utils/srs';
+import { buildSessionQueue, gradeCard, isNewCard } from '../utils/srs';
 
 // Try to import ALL_DECKS from src/data/decks (static build-time import)
 let SEED_DECKS: Deck[] = [];
@@ -60,7 +63,8 @@ function mergeSeedDeckContent(storedDeck: Deck, seedDeck: Deck): Deck {
   const mergedSeedCards = seedCards.map((seedCard) => {
     const storedCard = storedCardsById.get(seedCard.id);
     if (!storedCard) return seedCard;
-    const hasReviewedTranslation = storedCard.reviewStatus === 'reviewed' || storedCard.reviewStatus === 'needs_native';
+    const hasReviewedTranslation =
+      storedCard.reviewStatus === 'reviewed' || storedCard.reviewStatus === 'needs_native';
 
     return {
       ...seedCard,
@@ -90,6 +94,8 @@ export function DeckProvider({ children }: { children: ReactNode }) {
   const [decks, setDecks] = useState<Deck[]>([]);
   const [ready, setReady] = useState(false);
   const [activeDeckId, setActiveDeckId] = useState<string | undefined>(undefined);
+  const [newCardsPerDay, setNewCardsPerDay] = useState(10);
+  const [newIntroducedToday, setNewIntroducedToday] = useState(0);
 
   async function seedOrMerge() {
     const stored = await loadDecks();
@@ -129,6 +135,11 @@ export function DeckProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     (async () => {
       await seedOrMerge();
+      try {
+        const [prefs, daily] = await Promise.all([getPrefs(), getDailyProgress()]);
+        setNewCardsPerDay(prefs.newCardsPerDay);
+        setNewIntroducedToday(daily.newCount ?? 0);
+      } catch {}
       setReady(true);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -141,7 +152,10 @@ export function DeckProvider({ children }: { children: ReactNode }) {
 
   function getStudyBatch(size = 15) {
     if (!activeDeck) return [] as FlashCard[];
-    return nextBatch(activeDeck.cards, size);
+    return buildSessionQueue(activeDeck.cards, {
+      size,
+      newLimit: Math.max(0, newCardsPerDay - newIntroducedToday),
+    });
   }
 
   async function recordAnswer(cardId: string, quality: 0 | 1 | 2 | 3 | 4 | 5) {
@@ -167,6 +181,10 @@ export function DeckProvider({ children }: { children: ReactNode }) {
 
     setDecks(nextDecks);
     await saveDecks(nextDecks);
+    if (isNewCard(reviewedCard)) {
+      const daily = await incrementDailyNewCount(1);
+      setNewIntroducedToday(daily.newCount ?? 0);
+    }
     await recordSeenWord({
       cardId: reviewedCard.id,
       deckId: reviewedDeckId,
@@ -301,6 +319,11 @@ export function DeckProvider({ children }: { children: ReactNode }) {
   async function reload() {
     const stored = await loadDecks();
     setDecks(stored);
+    try {
+      const [prefs, daily] = await Promise.all([getPrefs(), getDailyProgress()]);
+      setNewCardsPerDay(prefs.newCardsPerDay);
+      setNewIntroducedToday(daily.newCount ?? 0);
+    } catch {}
   }
 
   const value: Ctx = {

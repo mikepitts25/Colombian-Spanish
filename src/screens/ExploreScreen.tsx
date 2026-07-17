@@ -20,7 +20,7 @@ export default function ExploreScreen() {
       id: 'browse',
       title: t('explore.browseDecks'),
       description: t('explore.browseDecksSub'),
-      onPress: () => nav.navigate('Browse'),
+      onPress: () => nav.navigate('Study'),
     },
     {
       id: 'phrasebook',

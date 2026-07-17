@@ -6,10 +6,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
-import { getDailyProgress, getStudyStreak } from '../storage/storage';
+import { getDailyProgress, getStreakState } from '../storage/storage';
 import { Deck } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { speakCard } from '../services/tts';
+import { getCategoryForDeck, getDeckDisplayName } from '../utils/deckCategories';
+import { pickWordOfDay } from '../utils/wordOfDay';
 
 const COLOMBIAN_GREETINGS = [
   { textKey: 'home.greeting.morning' as const, subKey: 'home.greeting.morningSub' as const, emoji: '☀️' },
@@ -63,45 +65,22 @@ type DeckWithDue = Deck & {
   cat: string;
 };
 
-type WordOfDayRow = {
-  deckName: string;
-  card: any;
-};
-
-function getCategoryForDeck(deck: Deck): string {
-  const name = (deck.name || '').toLowerCase();
-  const tags = (deck.cards?.[0]?.tags || []).map((t: string) => t.toLowerCase());
-  const text = name + ' ' + tags.join(' ');
-  if (/(slang|jerga|coloquial|colombia|colombianism)/.test(text)) return 'Colombianisms';
-  if (/(basic|intro|common|essential)/.test(text)) return 'Essentials';
-  if (/(family|people|professions|body|emotions|relationships)/.test(text)) return 'People & Relationships';
-  if (/(place|travel|transport|city|cali|bogot|medell)/.test(text)) return 'Places & Travel';
-  if (/(house|home|casa|kitchen|bathroom|daily)/.test(text)) return 'Home & Daily Life';
-  if (/(food|drink|comida|bebida|restaurant|market)/.test(text)) return 'Food & Drink';
-  if (/(communicat|message|call|greeting|conversation|talk)/.test(text)) return 'Communication';
-  if (/(health|clinic|pharmacy|medicine|salud)/.test(text)) return 'Health';
-  if (/(weather|clima|nature|animals|outdoor)/.test(text)) return 'Nature';
-  if (/(work|job|school|study|professions|office)/.test(text)) return 'Work & School';
-  if (/(number|date|time|calendar|holidays)/.test(text)) return 'Numbers & Time';
-  if (/(sport|hobby|music|games|culture|art)/.test(text)) return 'Fun & Culture';
-  if (/(tech|technology|computer|phone|apps)/.test(text)) return 'Tech';
-  return 'Other';
-}
-
 export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
   const greeting = useMemo(() => getGreetingKey(), []);
   const [streak, setStreak] = useState(0);
+  const [freezes, setFreezes] = useState(0);
   const [dailyCount, setDailyCount] = useState(0);
   const [dailyTarget, setDailyTarget] = useState(10);
 
   useEffect(() => {
-    Promise.all([getDailyProgress(), getStudyStreak()]).then(([dp, s]) => {
+    Promise.all([getDailyProgress(), getStreakState()]).then(([dp, s]) => {
       setDailyCount(dp.count);
       setDailyTarget(dp.target);
-      setStreak(s);
+      setStreak(s.streak);
+      setFreezes(s.freezes);
     });
   }, []);
 
@@ -128,16 +107,10 @@ export default function HomeScreen() {
       .slice(0, 4);
   }, [decks, endOfToday]);
 
-  const wordOfDay = useMemo<WordOfDayRow | undefined>(() => {
-    const rows = (decks || []).flatMap((deck) =>
-      (deck.cards || []).map((card: any) => ({ deckName: deck.name, card })),
-    );
-
-    return rows.find((row) => {
-      const text = `${(row.card.tags || []).join(' ')} ${row.deckName}`.toLowerCase();
-      return /(slang|jerga|coloquial|colombia)/.test(text);
-    });
-  }, [decks]);
+  const wordOfDay = useMemo(
+    () => pickWordOfDay(decks || [], new Date(), getDeckDisplayName),
+    [decks],
+  );
 
   const dailyGoalProgress = dailyTarget > 0 ? Math.min(dailyCount / dailyTarget, 1) : 0;
   const dailyGoalLabel = dailyTarget > 0 ? `${Math.min(dailyCount, dailyTarget)}/${dailyTarget}` : `${dailyCount}`;
@@ -191,7 +164,10 @@ export default function HomeScreen() {
               <Text style={styles.todaySub}>{dueCardSub}</Text>
             </View>
             <View style={styles.streakPill}>
-              <Text style={styles.streakText}>🔥 {streak}</Text>
+              <Text style={styles.streakText}>
+                🔥 {streak}
+                {freezes > 0 ? `  🧊${freezes}` : ''}
+              </Text>
             </View>
           </View>
 
@@ -245,9 +221,9 @@ export default function HomeScreen() {
               <Text style={styles.quickActionIcon}>↻</Text>
               <Text style={styles.quickActionLabel}>{t('home.tool.difficult')}</Text>
             </Pressable>
-            <Pressable style={styles.quickAction} onPress={() => nav.navigate('Phrasebook')}>
-              <Text style={styles.quickActionIcon}>★</Text>
-              <Text style={styles.quickActionLabel}>{t('home.tool.phrasebook')}</Text>
+            <Pressable style={styles.quickAction} onPress={() => nav.navigate('Phrases')}>
+              <Text style={styles.quickActionIcon}>🗣️</Text>
+              <Text style={styles.quickActionLabel}>{t('home.tool.phrases')}</Text>
             </Pressable>
             <Pressable style={styles.quickAction} onPress={() => nav.navigate('AddCard')}>
               <Text style={styles.quickActionIcon}>＋</Text>
@@ -264,7 +240,7 @@ export default function HomeScreen() {
                 {quickDecks.length > 0 ? t('home.dueDecksSub') : t('home.noDueDecksSub')}
               </Text>
             </View>
-            <Pressable onPress={() => nav.navigate('Browse')}>
+            <Pressable onPress={() => nav.navigate('Study')}>
               <Text style={styles.browseLink}>{t('home.browseAllDecks')}</Text>
             </Pressable>
           </View>
@@ -285,7 +261,7 @@ export default function HomeScreen() {
                       <Text style={styles.deckEmoji}>{emoji}</Text>
                     </View>
                     <View style={styles.deckInfo}>
-                      <Text style={styles.deckName} numberOfLines={1}>{deck.name}</Text>
+                      <Text style={styles.deckName} numberOfLines={1}>{getDeckDisplayName(deck)}</Text>
                       <Text style={styles.deckMeta}>
                         {t('addCard.cardCount', {
                           count: deck.cards.length,

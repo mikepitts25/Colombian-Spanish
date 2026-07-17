@@ -5,10 +5,20 @@ beforeEach(async () => {
   await AsyncStorage.clear();
 });
 
+const DEFAULT_PREFS = {
+  autoSpeak: false,
+  speechRate: 0.98,
+  uiLanguage: 'es',
+  newCardsPerDay: 10,
+  onboardingDone: false,
+  learningReason: null,
+  homeRegion: null,
+};
+
 describe('getPrefs', () => {
   it('returns defaults when storage is empty', async () => {
     const prefs = await getPrefs();
-    expect(prefs).toEqual({ autoSpeak: false, speechRate: 0.98, uiLanguage: 'es' });
+    expect(prefs).toEqual(DEFAULT_PREFS);
   });
 
   it('returns saved preferences', async () => {
@@ -24,7 +34,7 @@ describe('getPrefs', () => {
   it('returns defaults when JSON is corrupted', async () => {
     await AsyncStorage.setItem('SRS_PREFS_V1', '{{bad json}}');
     const prefs = await getPrefs();
-    expect(prefs).toEqual({ autoSpeak: false, speechRate: 0.98, uiLanguage: 'es' });
+    expect(prefs).toEqual(DEFAULT_PREFS);
   });
 
   it('falls back to default speechRate when stored value is below 0.5', async () => {
@@ -84,6 +94,33 @@ describe('getPrefs', () => {
     const prefs = await getPrefs();
     expect(prefs.uiLanguage).toBe('es');
   });
+
+  it('rejects out-of-range newCardsPerDay values', async () => {
+    await AsyncStorage.setItem('SRS_PREFS_V1', JSON.stringify({ newCardsPerDay: 0 }));
+    expect((await getPrefs()).newCardsPerDay).toBe(10);
+    await AsyncStorage.setItem('SRS_PREFS_V1', JSON.stringify({ newCardsPerDay: 500 }));
+    expect((await getPrefs()).newCardsPerDay).toBe(10);
+    await AsyncStorage.setItem('SRS_PREFS_V1', JSON.stringify({ newCardsPerDay: 25 }));
+    expect((await getPrefs()).newCardsPerDay).toBe(25);
+  });
+
+  it('rejects invalid learningReason/homeRegion values', async () => {
+    await AsyncStorage.setItem(
+      'SRS_PREFS_V1',
+      JSON.stringify({ learningReason: 'aliens', homeRegion: 'mars' }),
+    );
+    const prefs = await getPrefs();
+    expect(prefs.learningReason).toBeNull();
+    expect(prefs.homeRegion).toBeNull();
+  });
+
+  it('round-trips onboarding state', async () => {
+    await setPrefs({ onboardingDone: true, learningReason: 'love', homeRegion: 'paisa' });
+    const prefs = await getPrefs();
+    expect(prefs.onboardingDone).toBe(true);
+    expect(prefs.learningReason).toBe('love');
+    expect(prefs.homeRegion).toBe('paisa');
+  });
 });
 
 describe('setPrefs', () => {
@@ -100,7 +137,7 @@ describe('setPrefs', () => {
   it('round-trip: set then get returns the same values', async () => {
     await setPrefs({ autoSpeak: true, speechRate: 1.5 });
     const prefs = await getPrefs();
-    expect(prefs).toEqual({ autoSpeak: true, speechRate: 1.5, uiLanguage: 'es' });
+    expect(prefs).toEqual({ ...DEFAULT_PREFS, autoSpeak: true, speechRate: 1.5 });
   });
 
   it('does not overwrite fields not included in the patch', async () => {

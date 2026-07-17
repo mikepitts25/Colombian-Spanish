@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Animated, Easing, PanResponder, Pressable, StyleSheet, Text } from 'react-native';
+import { Animated, Easing, PanResponder, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../styles/theme';
-import { FlashCard } from '../types';
+import { CardRegister, FlashCard } from '../types';
 import { splitExampleText } from '../utils/exampleText';
+import { getCardRegister, REGISTER_LABEL_KEYS } from '../utils/register';
 import { speakCard } from '../services/tts';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -11,10 +12,36 @@ interface Props {
   onGrade: (q: 1 | 2 | 3 | 4 | 5) => void;
 }
 
+const REGISTER_COLORS: Record<CardRegister, { bg: string; border: string; text: string }> = {
+  formal: { bg: 'rgba(148,163,184,0.15)', border: 'rgba(148,163,184,0.5)', text: '#cbd5e1' },
+  casual: { bg: 'rgba(96,165,250,0.15)', border: 'rgba(96,165,250,0.5)', text: '#93c5fd' },
+  vulgar: { bg: 'rgba(206,17,38,0.2)', border: '#CE1126', text: '#f87171' },
+  flirty: { bg: 'rgba(244,114,182,0.15)', border: 'rgba(244,114,182,0.5)', text: '#f9a8d4' },
+};
+
 export default function Flashcard({ card, onGrade }: Props) {
   const { t } = useLanguage();
   const [isFront, setIsFront] = useState(true);
   const exampleText = splitExampleText(card.example);
+  const register = getCardRegister(card);
+
+  const registerBadge = register ? (
+    <View
+      testID="flashcard-register-badge"
+      style={[
+        styles.registerBadge,
+        {
+          backgroundColor: REGISTER_COLORS[register].bg,
+          borderColor: REGISTER_COLORS[register].border,
+        },
+      ]}
+    >
+      <Text style={[styles.registerText, { color: REGISTER_COLORS[register].text }]}>
+        {register === 'vulgar' ? '⚠️ ' : ''}
+        {t(REGISTER_LABEL_KEYS[register])}
+      </Text>
+    </View>
+  ) : null;
 
   const rot = useRef(new Animated.Value(0)).current;
   const frontDeg = rot.interpolate({ inputRange: [0, 180], outputRange: ['0deg', '180deg'] });
@@ -107,6 +134,7 @@ export default function Flashcard({ card, onGrade }: Props) {
           onPress={() => flip('back')}
           onLongPress={say}
         >
+          {registerBadge}
           <Text style={styles.frontWord}>{card.front}</Text>
           {exampleText?.spanish ? (
             <Text testID="flashcard-front-example" style={styles.example}>
@@ -129,6 +157,7 @@ export default function Flashcard({ card, onGrade }: Props) {
         pointerEvents={isFront ? 'none' : 'auto'}
       >
         <Pressable style={styles.face} onPress={() => flip('front')}>
+          {registerBadge}
           <Text style={styles.backWord}>{card.back}</Text>
           {exampleText?.english ? (
             <Text testID="flashcard-back-example" style={styles.exampleBack}>
@@ -222,4 +251,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   speakerIcon: { fontSize: 17 },
+
+  registerBadge: {
+    position: 'absolute',
+    top: 14,
+    alignSelf: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  registerText: {
+    fontSize: 11,
+    fontWeight: '800',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
 });

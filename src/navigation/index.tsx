@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeScreen from '../screens/HomeScreen';
 import StudyScreen from '../screens/StudyScreen';
-import BrowseScreen from '../screens/BrowseScreen';
 import ProgressScreen from '../screens/ProgressScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
@@ -15,19 +15,27 @@ import ReviewScreen from '../screens/ReviewScreen';
 import FlaggedScreen from '../screens/FlaggedScreen';
 import QuizScreen from '../screens/QuizScreen';
 import PhrasebookScreen from '../screens/PhrasebookScreen';
+import PhrasesScreen from '../screens/PhrasesScreen';
 import AddCardScreen from '../screens/AddCardScreen';
 import ExploreScreen from '../screens/ExploreScreen';
 import DifficultWordsScreen from '../screens/DifficultWordsScreen';
+import OnboardingScreen from '../screens/OnboardingScreen';
 import { colors } from '../styles/theme';
 import { TranslationKey } from '../i18n/translations';
 import { useLanguage } from '../context/LanguageContext';
+import { getPrefs } from '../storage/prefs';
+import { SHOW_REVIEW_TOOLS } from '../config';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+const smoothStackTransition: NativeStackNavigationOptions = {
+  animation: 'fade',
+  animationDuration: 220,
+};
+
 const TABS: { name: string; labelKey: TranslationKey; icon: string }[] = [
   { name: 'Home', labelKey: 'tabs.home', icon: '🏠' },
-  { name: 'Browse', labelKey: 'tabs.browse', icon: '🔍' },
   { name: 'Study', labelKey: 'tabs.study', icon: '📖' },
   { name: 'Progress', labelKey: 'tabs.progress', icon: '📊' },
   { name: 'Settings', labelKey: 'tabs.settings', icon: '⚙️' },
@@ -70,7 +78,6 @@ function Tabs() {
       screenOptions={{ headerShown: false }}
     >
       <Tab.Screen name="Home"     component={HomeScreen} />
-      <Tab.Screen name="Browse"   component={BrowseScreen} />
       <Tab.Screen name="Study"    component={StudyScreen} />
       <Tab.Screen name="Progress" component={ProgressScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
@@ -87,17 +94,39 @@ const stackHeaderOpts = {
 
 export default function RootNavigator() {
   const { t } = useLanguage();
+  const [onboarded, setOnboarded] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    getPrefs()
+      .then((p) => setOnboarded(p.onboardingDone))
+      .catch(() => setOnboarded(true));
+  }, []);
+
+  // Hold rendering one frame until we know whether to show onboarding —
+  // avoids flashing Home before redirecting first-run users.
+  if (onboarded === null) {
+    return <View style={styles.bootWrap} />;
+  }
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={smoothStackTransition}
+      initialRouteName={onboarded ? 'Root' : 'Onboarding'}
+    >
+      <Stack.Screen name="Onboarding"   component={OnboardingScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Root"         component={Tabs}              options={{ headerShown: false }} />
       <Stack.Screen name="Notifications"component={NotificationsScreen}options={{ ...stackHeaderOpts, headerShown: false }} />
       <Stack.Screen name="DailyGoal"    component={DailyGoalScreen}   options={{ ...stackHeaderOpts, headerShown: false }} />
       <Stack.Screen name="ManageDecks"  component={ManageDecksScreen}  options={{ ...stackHeaderOpts, title: t('nav.manageDecks') }} />
-      <Stack.Screen name="Review"       component={ReviewScreen}       options={{ ...stackHeaderOpts, title: t('nav.review') }} />
-      <Stack.Screen name="Flagged"      component={FlaggedScreen}      options={{ ...stackHeaderOpts, title: t('nav.flagged') }} />
+      {SHOW_REVIEW_TOOLS && (
+        <>
+          <Stack.Screen name="Review"  component={ReviewScreen}  options={{ ...stackHeaderOpts, title: t('nav.review') }} />
+          <Stack.Screen name="Flagged" component={FlaggedScreen} options={{ ...stackHeaderOpts, title: t('nav.flagged') }} />
+        </>
+      )}
       <Stack.Screen name="Quiz"         component={QuizScreen}         options={{ ...stackHeaderOpts, title: t('nav.quiz') }} />
       <Stack.Screen name="Phrasebook"   component={PhrasebookScreen}   options={{ ...stackHeaderOpts, title: t('nav.phrasebook') }} />
+      <Stack.Screen name="Phrases"      component={PhrasesScreen}      options={{ ...stackHeaderOpts, title: t('nav.phrases') }} />
       <Stack.Screen name="AddCard"      component={AddCardScreen}      options={{ ...stackHeaderOpts, title: t('nav.addCard') }} />
       <Stack.Screen name="Explore"      component={ExploreScreen}      options={{ ...stackHeaderOpts, title: t('nav.explore') }} />
       <Stack.Screen name="DifficultWords" component={DifficultWordsScreen} options={{ ...stackHeaderOpts, title: t('nav.difficultWords') }} />
@@ -106,6 +135,7 @@ export default function RootNavigator() {
 }
 
 const styles = StyleSheet.create({
+  bootWrap: { flex: 1, backgroundColor: colors.bg },
   tabBarOuter: {
     backgroundColor: colors.surface,
     paddingHorizontal: 20,

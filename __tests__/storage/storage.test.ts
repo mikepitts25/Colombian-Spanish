@@ -11,7 +11,10 @@ import {
   incrementDailyProgress,
   setDailyTarget,
   getStudyStreak,
+  getStreakState,
   recordStudySession,
+  getLastStudySession,
+  saveLastStudySession,
   getQuizHistory,
   recordQuizResult,
 } from '../../src/storage/storage';
@@ -233,7 +236,10 @@ describe('resetDeckProgressById', () => {
 
   it('does not affect other decks', async () => {
     const studiedCard = makeCard('c1', { reps: 7 });
-    await saveDecks([makeDeck('target', { cards: [studiedCard] }), makeDeck('other', { cards: [makeCard('c2', { reps: 3 })] })]);
+    await saveDecks([
+      makeDeck('target', { cards: [studiedCard] }),
+      makeDeck('other', { cards: [makeCard('c2', { reps: 3 })] }),
+    ]);
     await resetDeckProgressById('target');
     const loaded = await loadDecks();
     const other = loaded.find((d) => d.id === 'other')!;
@@ -392,6 +398,106 @@ describe('recordStudySession', () => {
     );
     const streak = await recordStudySession();
     expect(streak).toBe(1);
+  });
+});
+
+// ── streak freezes ────────────────────────────────────────────────────────────
+
+describe('streak freezes', () => {
+  async function storedStreak() {
+    return JSON.parse((await AsyncStorage.getItem('SRS_STUDY_STREAK_V1')) as string);
+  }
+
+  it('consumes a freeze to survive a single missed day', async () => {
+    await AsyncStorage.setItem(
+      'SRS_STUDY_STREAK_V1',
+      JSON.stringify({ streak: 9, lastStudyDate: twoDaysAgoISO(), freezes: 1 }),
+    );
+    const streak = await recordStudySession();
+    expect(streak).toBe(10);
+    expect((await storedStreak()).freezes).toBe(0);
+  });
+
+  it('resets when a day is missed and no freeze is banked', async () => {
+    await AsyncStorage.setItem(
+      'SRS_STUDY_STREAK_V1',
+      JSON.stringify({ streak: 9, lastStudyDate: twoDaysAgoISO(), freezes: 0 }),
+    );
+    expect(await recordStudySession()).toBe(1);
+  });
+
+  it('earns a freeze every 7 consecutive days, capped at 2', async () => {
+    await AsyncStorage.setItem(
+      'SRS_STUDY_STREAK_V1',
+      JSON.stringify({ streak: 6, lastStudyDate: yesterdayISO(), freezes: 0 }),
+    );
+    await recordStudySession(); // day 7 → earn one
+    expect((await storedStreak()).freezes).toBe(1);
+
+    await AsyncStorage.setItem(
+      'SRS_STUDY_STREAK_V1',
+      JSON.stringify({ streak: 13, lastStudyDate: yesterdayISO(), freezes: 2 }),
+    );
+    await recordStudySession(); // day 14 → already at cap
+    expect((await storedStreak()).freezes).toBe(2);
+  });
+
+  it('does not earn a freeze for repeat study on the same day', async () => {
+    await AsyncStorage.setItem(
+      'SRS_STUDY_STREAK_V1',
+      JSON.stringify({ streak: 7, lastStudyDate: todayISO(), freezes: 0 }),
+    );
+    await recordStudySession();
+    expect((await storedStreak()).freezes).toBe(0);
+  });
+
+  it('getStreakState keeps the streak alive for one missed day while a freeze is banked', async () => {
+    await AsyncStorage.setItem(
+      'SRS_STUDY_STREAK_V1',
+      JSON.stringify({ streak: 8, lastStudyDate: twoDaysAgoISO(), freezes: 1 }),
+    );
+    const state = await getStreakState();
+    expect(state).toEqual({ streak: 8, freezes: 1 });
+  });
+
+  it('getStreakState reports 0 streak after a missed day with no freezes', async () => {
+    await AsyncStorage.setItem(
+      'SRS_STUDY_STREAK_V1',
+      JSON.stringify({ streak: 8, lastStudyDate: twoDaysAgoISO(), freezes: 0 }),
+    );
+    expect((await getStreakState()).streak).toBe(0);
+  });
+});
+
+// ── last study session ───────────────────────────────────────────────────────
+
+describe('last study session', () => {
+  it('returns undefined when no last session exists', async () => {
+    await expect(getLastStudySession()).resolves.toBeUndefined();
+  });
+
+  it('saves the deck and card identifiers with an updated timestamp', async () => {
+    const saved = await saveLastStudySession({ deckId: 'deck-greetings', cardId: 'card-1' });
+
+    expect(saved).toEqual({
+      deckId: 'deck-greetings',
+      cardId: 'card-1',
+      updatedAt: expect.any(Number),
+    });
+
+    await expect(getLastStudySession()).resolves.toEqual(saved);
+  });
+
+  it('ignores corrupted last session JSON', async () => {
+    await AsyncStorage.setItem('SRS_LAST_STUDY_SESSION_V1', '{bad json');
+
+    await expect(getLastStudySession()).resolves.toBeUndefined();
+  });
+
+  it('ignores malformed last session records', async () => {
+    await AsyncStorage.setItem('SRS_LAST_STUDY_SESSION_V1', JSON.stringify({ cardId: 'card-1' }));
+
+    await expect(getLastStudySession()).resolves.toBeUndefined();
   });
 });
 

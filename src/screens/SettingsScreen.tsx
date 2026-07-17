@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Alert } from 'react-native/Libraries/Alert/Alert';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
 import { getDailyProgress, saveDecks, loadDecks } from '../storage/storage';
+import { getPrefs } from '../storage/prefs';
 import * as Clipboard from 'expo-clipboard';
 import { useLanguage } from '../context/LanguageContext';
 
 function SettingsRow({
-  emoji, title, subtitle, onPress, chevron = true,
+  emoji,
+  title,
+  subtitle,
+  onPress,
+  chevron = true,
 }: {
-  emoji: string; title: string; subtitle?: string; onPress?: () => void; chevron?: boolean;
+  emoji: string;
+  title: string;
+  subtitle?: string;
+  onPress?: () => void;
+  chevron?: boolean;
 }) {
   return (
     <Pressable style={styles.settingsRow} onPress={onPress}>
@@ -39,17 +42,25 @@ export default function SettingsScreen() {
   const nav = useNavigation<any>();
   const { t, toggleLanguage } = useLanguage();
   const [target, setTarget] = useState(10);
+  const [newPerDay, setNewPerDay] = useState(10);
 
   useEffect(() => {
     (async () => {
       const dp = await getDailyProgress();
       setTarget(dp.target ?? 10);
+      const prefs = await getPrefs();
+      setNewPerDay(prefs.newCardsPerDay);
     })();
   }, []);
 
   async function exportBackup() {
     const decks = await loadDecks();
-    const payload = { kind: 'colombian-spanish-backup', version: 1, exportedAt: new Date().toISOString(), decks };
+    const payload = {
+      kind: 'colombian-spanish-backup',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      decks,
+    };
     await Clipboard.setStringAsync(JSON.stringify(payload));
     Alert.alert(t('settings.alert.backupCopied.title'), t('settings.alert.backupCopied.message'));
   }
@@ -66,31 +77,44 @@ export default function SettingsScreen() {
     try {
       parsed = JSON.parse(raw);
     } catch {
-      return Alert.alert(t('settings.alert.invalidJson.title'), t('settings.alert.invalidJson.message'));
+      return Alert.alert(
+        t('settings.alert.invalidJson.title'),
+        t('settings.alert.invalidJson.message'),
+      );
     }
     if (!parsed || parsed.kind !== 'colombian-spanish-backup') {
-      return Alert.alert(t('settings.alert.notBackup.title'), t('settings.alert.notBackup.message'));
+      return Alert.alert(
+        t('settings.alert.notBackup.title'),
+        t('settings.alert.notBackup.message'),
+      );
     }
     if (!Array.isArray(parsed.decks)) {
-      return Alert.alert(t('settings.alert.invalidBackup.title'), t('settings.alert.invalidBackup.message'));
+      return Alert.alert(
+        t('settings.alert.invalidBackup.title'),
+        t('settings.alert.invalidBackup.message'),
+      );
     }
-    Alert.alert(t('settings.alert.importConfirm.title'), t('settings.alert.importConfirm.message'), [
-      { text: t('settings.alert.cancel'), style: 'cancel' },
-      {
-        text: t('settings.alert.import'),
-        style: 'destructive',
-        onPress: async () => {
-          await saveDecks(parsed.decks);
-          Alert.alert(t('settings.alert.imported.title'), t('settings.alert.imported.message'));
+    Alert.alert(
+      t('settings.alert.importConfirm.title'),
+      t('settings.alert.importConfirm.message'),
+      [
+        { text: t('settings.alert.cancel'), style: 'cancel' },
+        {
+          text: t('settings.alert.import'),
+          style: 'destructive',
+          onPress: async () => {
+            await saveDecks(parsed.decks);
+            Alert.alert(t('settings.alert.imported.title'), t('settings.alert.imported.message'));
+          },
         },
-      },
-    ]);
+      ],
+    );
   }
 
   return (
     <SafeAreaView style={styles.wrap}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <Text style={styles.pageTitle}>⚙️  {t('settings.title')}</Text>
+        <Text style={styles.pageTitle}>⚙️ {t('settings.title')}</Text>
 
         {/* Aprendizaje */}
         <Text style={styles.groupLabel}>{t('settings.section.learning')}</Text>
@@ -105,7 +129,7 @@ export default function SettingsScreen() {
           <SettingsRow
             emoji="🃏"
             title={t('settings.newCards.title')}
-            subtitle={t('settings.newCards.subtitle')}
+            subtitle={t('settings.newCards.subtitle', { count: newPerDay })}
             onPress={() => nav.navigate('DailyGoal')}
           />
           <Divider />

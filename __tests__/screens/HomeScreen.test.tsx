@@ -15,8 +15,9 @@ jest.mock('../../src/hooks/useDeck', () => ({
 }));
 
 jest.mock('../../src/storage/storage', () => ({
-  getDailyProgress: jest.fn().mockResolvedValue({ count: 0, target: 10 }),
+  getDailyProgress: jest.fn().mockResolvedValue({ count: 0, target: 10, newCount: 0 }),
   getStudyStreak: jest.fn().mockResolvedValue(0),
+  getStreakState: jest.fn().mockResolvedValue({ streak: 0, freezes: 0 }),
 }));
 
 jest.mock('../../src/services/tts', () => ({
@@ -96,19 +97,19 @@ beforeEach(() => {
 });
 
 describe('HomeScreen quick actions', () => {
-  it('navigates to quiz, difficult words, phrasebook, and add-card flows', async () => {
+  it('navigates to quiz, difficult words, phrases, and add-card flows', async () => {
     const { getByText } = render(<HomeScreen />);
 
     await waitFor(() => expect(getByText('Quiz')).toBeTruthy());
 
     fireEvent.press(getByText('Quiz'));
     fireEvent.press(getByText('Difficult'));
-    fireEvent.press(getByText('Phrasebook'));
+    fireEvent.press(getByText('Phrases'));
     fireEvent.press(getByText('Add Card'));
 
     expect(mockNavigate).toHaveBeenCalledWith('Quiz');
     expect(mockNavigate).toHaveBeenCalledWith('DifficultWords');
-    expect(mockNavigate).toHaveBeenCalledWith('Phrasebook');
+    expect(mockNavigate).toHaveBeenCalledWith('Phrases');
     expect(mockNavigate).toHaveBeenCalledWith('AddCard');
   });
 
@@ -120,7 +121,7 @@ describe('HomeScreen quick actions', () => {
     expect(queryByText('+')).toBeNull();
   });
 
-  it('keeps full deck browsing out of Home and links to Browse instead', async () => {
+  it('keeps full deck browsing out of Home and links to Study instead', async () => {
     mockUseDeck.mockReturnValue({
       ready: true,
       decks: [DECK, RESTED_DECK],
@@ -138,7 +139,7 @@ describe('HomeScreen quick actions', () => {
 
     fireEvent.press(getByText('Browse all decks'));
 
-    expect(mockNavigate).toHaveBeenCalledWith('Browse');
+    expect(mockNavigate).toHaveBeenCalledWith('Study');
   });
 
   it('shows one primary study action for due cards', async () => {
@@ -167,17 +168,29 @@ describe('HomeScreen quick actions', () => {
     expect(getByText('Ver todos los decks')).toBeTruthy();
   });
 
-  it('renders one Word of the Day card from slang content', async () => {
+  it('renders exactly one Word of the Day card from slang content', async () => {
     const { getByText, queryByText } = render(<HomeScreen />);
 
     await waitFor(() => expect(getByText('Word of the Day')).toBeTruthy());
 
-    expect(getByText('chimba')).toBeTruthy();
-    expect(getByText('awesome • Jerga Colombiana')).toBeTruthy();
-    expect(queryByText('parce')).toBeNull();
+    // The pick is date-seeded, so exactly one of the slang cards is shown.
+    const showsChimba = queryByText('chimba') !== null;
+    const showsParce = queryByText('parce') !== null;
+    expect(showsChimba !== showsParce).toBe(true);
   });
 
-  it('omits Word of the Day when no slang content exists', async () => {
+  it('is stable across re-renders on the same day', async () => {
+    const first = render(<HomeScreen />);
+    await waitFor(() => expect(first.getByText('Word of the Day')).toBeTruthy());
+    const firstShowsChimba = first.queryByText('chimba') !== null;
+    first.unmount();
+
+    const second = render(<HomeScreen />);
+    await waitFor(() => expect(second.getByText('Word of the Day')).toBeTruthy());
+    expect(second.queryByText('chimba') !== null).toBe(firstShowsChimba);
+  });
+
+  it('falls back to general content when no slang content exists', async () => {
     mockUseDeck.mockReturnValue({
       ready: true,
       decks: [DECK],
@@ -186,12 +199,11 @@ describe('HomeScreen quick actions', () => {
       setActiveDeckId: jest.fn(),
     });
 
-    const { getByText, queryByText } = render(<HomeScreen />);
+    const { getByText } = render(<HomeScreen />);
 
-    await waitFor(() => expect(getByText('Study due cards')).toBeTruthy());
+    await waitFor(() => expect(getByText('Word of the Day')).toBeTruthy());
 
-    expect(queryByText('Word of the Day')).toBeNull();
-    expect(queryByText('chimba')).toBeNull();
+    expect(getByText('hola')).toBeTruthy();
   });
 
   it('plays the Word of the Day audio', async () => {
@@ -201,6 +213,8 @@ describe('HomeScreen quick actions', () => {
 
     fireEvent.press(getByText('🔊'));
 
-    expect(mockSpeakCard).toHaveBeenCalledWith(SLANG_DECK.cards[0]);
+    expect(mockSpeakCard).toHaveBeenCalledTimes(1);
+    const spoken = mockSpeakCard.mock.calls[0][0];
+    expect(SLANG_DECK.cards.map((c) => c.id)).toContain(spoken.id);
   });
 });

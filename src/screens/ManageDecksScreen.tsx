@@ -1,20 +1,12 @@
 import React, { useMemo, useState } from 'react';
-import {
-  Alert,
-  Modal,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  FlatList,
-  Pressable,
-} from 'react-native';
+import { Alert, Modal, StyleSheet, Text, TextInput, View, FlatList, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { Deck } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { SHOW_REVIEW_TOOLS } from '../config';
 
 export default function ManageDecksScreen() {
   const { ready, decks, renameDeck, deleteDeck, resetDeckProgress, setActiveDeckId } = useDeck();
@@ -41,7 +33,11 @@ export default function ManageDecksScreen() {
   async function submitRename() {
     const next = renameValue.trim();
     if (!renameDeckId) return;
-    if (!next) return Alert.alert(t('manage.alert.missingName.title'), t('manage.alert.missingName.message'));
+    if (!next)
+      return Alert.alert(
+        t('manage.alert.missingName.title'),
+        t('manage.alert.missingName.message'),
+      );
     await renameDeck(renameDeckId, next);
     setRenameOpen(false);
     setRenameDeckId(null);
@@ -65,7 +61,11 @@ export default function ManageDecksScreen() {
       t('manage.alert.reset.message', { deck: deck.name }),
       [
         { text: t('common.cancel'), style: 'cancel' },
-        { text: t('manage.reset'), style: 'destructive', onPress: () => resetDeckProgress(deck.id) },
+        {
+          text: t('manage.reset'),
+          style: 'destructive',
+          onPress: () => resetDeckProgress(deck.id),
+        },
       ],
     );
   }
@@ -96,13 +96,15 @@ export default function ManageDecksScreen() {
           <Text style={styles.sub}>{t('manage.sub')}</Text>
         </View>
 
-        <Pressable style={styles.reviewBanner} onPress={() => nav.navigate('Review')}>
-          <View style={styles.reviewBannerText}>
-            <Text style={styles.reviewBannerTitle}>{t('manage.reviewTitle')}</Text>
-            <Text style={styles.reviewBannerSub}>{t('manage.reviewSub')}</Text>
-          </View>
-          <Text style={styles.reviewBannerArrow}>→</Text>
-        </Pressable>
+        {SHOW_REVIEW_TOOLS && (
+          <Pressable style={styles.reviewBanner} onPress={() => nav.navigate('Review')}>
+            <View style={styles.reviewBannerText}>
+              <Text style={styles.reviewBannerTitle}>{t('manage.reviewTitle')}</Text>
+              <Text style={styles.reviewBannerSub}>{t('manage.reviewSub')}</Text>
+            </View>
+            <Text style={styles.reviewBannerArrow}>→</Text>
+          </Pressable>
+        )}
 
         <TextInput
           value={q}
@@ -169,7 +171,9 @@ export default function ManageDecksScreen() {
                 style={[styles.modalBtn, styles.modalBtnGhost]}
                 onPress={() => setRenameOpen(false)}
               >
-                <Text style={[styles.modalBtnText, { color: '#cbd5e1' }]}>{t('common.cancel')}</Text>
+                <Text style={[styles.modalBtnText, { color: '#cbd5e1' }]}>
+                  {t('common.cancel')}
+                </Text>
               </Pressable>
               <Pressable style={[styles.modalBtn, styles.modalBtnPrimary]} onPress={submitRename}>
                 <Text style={styles.modalBtnText}>{t('common.save')}</Text>

@@ -1,4 +1,11 @@
-import { gradeCard, nextBatch, selectDifficultCards } from '../../src/utils/srs';
+import {
+  gradeCard,
+  buildSessionQueue,
+  selectDifficultCards,
+  isNewCard,
+  previewInterval,
+  formatIntervalShort,
+} from '../../src/utils/srs';
 import { FlashCard } from '../../src/types';
 
 // ── Test helpers ────────────────────────────────────────────────────────────
@@ -189,9 +196,59 @@ describe('gradeCard', () => {
   });
 });
 
-// ── nextBatch ───────────────────────────────────────────────────────────────
+// ── isNewCard ───────────────────────────────────────────────────────────────
 
-describe('nextBatch', () => {
+describe('isNewCard', () => {
+  it('is true for a card that was never graded', () => {
+    expect(isNewCard(makeCard())).toBe(true);
+  });
+
+  it('is false after any grade (passing)', () => {
+    jest.spyOn(Date, 'now').mockReturnValue(NOW);
+    expect(isNewCard(gradeCard(makeCard(), 4))).toBe(false);
+    jest.restoreAllMocks();
+  });
+
+  it('is false after any grade (failing)', () => {
+    jest.spyOn(Date, 'now').mockReturnValue(NOW);
+    expect(isNewCard(gradeCard(makeCard(), 1))).toBe(false);
+    jest.restoreAllMocks();
+  });
+});
+
+// ── previewInterval / formatIntervalShort ───────────────────────────────────
+
+describe('previewInterval', () => {
+  it('matches the interval gradeCard would assign', () => {
+    jest.spyOn(Date, 'now').mockReturnValue(NOW);
+    const card = makeCard({ reps: 3, interval: 10, ease: 2.5 });
+    expect(previewInterval(card, 4)).toBeCloseTo(gradeCard(card, 4).interval, 5);
+    expect(previewInterval(card, 1)).toBe(0);
+    jest.restoreAllMocks();
+  });
+
+  it('does not mutate the card', () => {
+    const card = makeCard({ reps: 3, interval: 10 });
+    previewInterval(card, 5);
+    expect(card.interval).toBe(10);
+    expect(card.reps).toBe(3);
+  });
+});
+
+describe('formatIntervalShort', () => {
+  it('formats sub-day, day, month, and year scales', () => {
+    expect(formatIntervalShort(0)).toBe('15m');
+    expect(formatIntervalShort(0.5)).toBe('12h');
+    expect(formatIntervalShort(3)).toBe('3d');
+    expect(formatIntervalShort(36)).toBe('1.2mo');
+    expect(formatIntervalShort(90)).toBe('3mo');
+    expect(formatIntervalShort(365)).toBe('1y');
+  });
+});
+
+// ── buildSessionQueue ───────────────────────────────────────────────────────
+
+describe('buildSessionQueue', () => {
   beforeEach(() => {
     jest.spyOn(Date, 'now').mockReturnValue(NOW);
   });
@@ -200,75 +257,76 @@ describe('nextBatch', () => {
     jest.restoreAllMocks();
   });
 
+  // helper: a studied (non-new) card
+  const studied = (overrides: Partial<FlashCard> = {}) =>
+    makeCard({ reps: 1, interval: 1, ease: 2.36, ...overrides });
+
   it('returns empty array for empty input', () => {
-    expect(nextBatch([])).toEqual([]);
+    expect(buildSessionQueue([])).toEqual([]);
   });
 
   it('returns empty array when size=0', () => {
-    const cards = [makeCard()];
-    expect(nextBatch(cards, 0)).toEqual([]);
+    expect(buildSessionQueue([makeCard()], { size: 0 })).toEqual([]);
   });
 
-  it('returns a single card when the array has one element', () => {
-    const card = makeCard({ due: NOW - 1000 });
-    expect(nextBatch([card], 15)).toEqual([card]);
+  it('returns due reviews first, sorted by due ascending', () => {
+    const older = studied({ id: 'old', due: NOW - 5000 });
+    const newer = studied({ id: 'new', due: NOW - 500 });
+    const result = buildSessionQueue([newer, older]);
+    expect(result.map((c) => c.id)).toEqual(['old', 'new']);
   });
 
-  it('returns only due cards (due ≤ now) when enough exist', () => {
-    const due1 = makeCard({ id: 'a', due: NOW - 2000 });
-    const due2 = makeCard({ id: 'b', due: NOW - 1000 });
-    const future = makeCard({ id: 'c', due: NOW + DAY_MS });
-    const result = nextBatch([due1, due2, future], 2);
-    expect(result).toHaveLength(2);
-    expect(result.map((c) => c.id)).toEqual(['a', 'b']);
+  it('breaks due ties by id alphabetical order', () => {
+    const a = studied({ id: 'aaa', due: NOW - 1000 });
+    const b = studied({ id: 'bbb', due: NOW - 1000 });
+    expect(buildSessionQueue([b, a])[0].id).toBe('aaa');
   });
 
-  it('sorts due cards by due timestamp ascending', () => {
-    const older = makeCard({ id: 'old', due: NOW - 5000 });
-    const newer = makeCard({ id: 'new', due: NOW - 500 });
-    const result = nextBatch([newer, older], 15);
-    expect(result[0].id).toBe('old');
-    expect(result[1].id).toBe('new');
+  it('never includes scheduled cards that are not yet due', () => {
+    const due = studied({ id: 'due', due: NOW - 1000 });
+    const future = studied({ id: 'future', due: NOW + DAY_MS });
+    const result = buildSessionQueue([due, future], { size: 5 });
+    expect(result.map((c) => c.id)).toEqual(['due']);
   });
 
-  it('breaks ties by id alphabetical order', () => {
-    const a = makeCard({ id: 'aaa', due: NOW - 1000 });
-    const b = makeCard({ id: 'bbb', due: NOW - 1000 });
-    const result = nextBatch([b, a], 15);
-    expect(result[0].id).toBe('aaa');
+  it('fills remaining slots with new cards, oldest created first', () => {
+    const due = studied({ id: 'due', due: NOW - 1000 });
+    const newA = makeCard({ id: 'newA', createdAt: NOW - 2000 });
+    const newB = makeCard({ id: 'newB', createdAt: NOW - 5000 });
+    const result = buildSessionQueue([newA, due, newB], { size: 3 });
+    expect(result.map((c) => c.id)).toEqual(['due', 'newB', 'newA']);
   });
 
-  it('fills with future cards when fewer than size cards are due', () => {
-    const due = makeCard({ id: 'due', due: NOW - 1000 });
-    const soon = makeCard({ id: 'soon', due: NOW + DAY_MS });
-    const later = makeCard({ id: 'later', due: NOW + DAY_MS * 7 });
-    const result = nextBatch([due, later, soon], 3);
+  it('caps new cards at newLimit', () => {
+    const news = Array.from({ length: 10 }, (_, i) => makeCard({ id: `n${i}` }));
+    const result = buildSessionQueue(news, { size: 15, newLimit: 3 });
     expect(result).toHaveLength(3);
-    expect(result[0].id).toBe('due');    // due first
-    expect(result[1].id).toBe('soon');  // nearest future next
+  });
+
+  it('newLimit=0 introduces no new cards', () => {
+    const due = studied({ id: 'due', due: NOW - 1000 });
+    const fresh = makeCard({ id: 'fresh' });
+    const result = buildSessionQueue([due, fresh], { newLimit: 0 });
+    expect(result.map((c) => c.id)).toEqual(['due']);
+  });
+
+  it('due reviews take priority over new cards when size is tight', () => {
+    const dues = Array.from({ length: 5 }, (_, i) => studied({ id: `d${i}`, due: NOW - 1000 - i }));
+    const fresh = makeCard({ id: 'fresh' });
+    const result = buildSessionQueue([fresh, ...dues], { size: 5 });
+    expect(result.map((c) => c.id)).not.toContain('fresh');
+    expect(result).toHaveLength(5);
   });
 
   it('caps result at the requested size', () => {
-    const cards = Array.from({ length: 20 }, (_, i) =>
-      makeCard({ id: `c${i}`, due: NOW - 1000 }),
-    );
-    const result = nextBatch(cards, 15);
-    expect(result).toHaveLength(15);
-  });
-
-  it('returns all cards when count < size', () => {
-    const cards = [
-      makeCard({ id: 'a', due: NOW - 1000 }),
-      makeCard({ id: 'b', due: NOW + DAY_MS }),
-    ];
-    const result = nextBatch(cards, 15);
-    expect(result).toHaveLength(2);
+    const cards = Array.from({ length: 20 }, (_, i) => studied({ id: `c${i}`, due: NOW - 1000 }));
+    expect(buildSessionQueue(cards, { size: 15 })).toHaveLength(15);
   });
 
   it('does not mutate the original array', () => {
     const cards = [makeCard({ id: 'a' }), makeCard({ id: 'b' })];
     const copy = [...cards];
-    nextBatch(cards, 15);
+    buildSessionQueue(cards, { size: 15 });
     expect(cards).toEqual(copy);
   });
 });

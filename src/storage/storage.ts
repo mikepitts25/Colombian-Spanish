@@ -3,7 +3,14 @@ import { Deck, FlashCard } from '../types';
 
 const KEY = 'SRS_DECKS_V3';
 const DAILY_KEY = 'SRS_DAILY_PROGRESS_V1';
-type DailyProgress = { date: string; count: number; target: number };
+const LAST_STUDY_SESSION_KEY = 'SRS_LAST_STUDY_SESSION_V1';
+type DailyProgress = { date: string; count: number; target: number; newCount: number };
+
+export interface LastStudySession {
+  deckId: string;
+  cardId?: string;
+  updatedAt: number;
+}
 
 export async function loadDecks(): Promise<Deck[]> {
   const raw = await AsyncStorage.getItem(KEY);
@@ -17,6 +24,29 @@ export async function loadDecks(): Promise<Deck[]> {
 
 export async function saveDecks(decks: Deck[]) {
   await AsyncStorage.setItem(KEY, JSON.stringify(decks));
+}
+
+export async function getLastStudySession(): Promise<LastStudySession | undefined> {
+  const raw = await AsyncStorage.getItem(LAST_STUDY_SESSION_KEY);
+  if (!raw) return undefined;
+  try {
+    const parsed = JSON.parse(raw) as LastStudySession;
+    if (!parsed?.deckId || typeof parsed.updatedAt !== 'number') return undefined;
+    return parsed;
+  } catch {
+    return undefined;
+  }
+}
+
+export async function saveLastStudySession(
+  session: Omit<LastStudySession, 'updatedAt'>,
+): Promise<LastStudySession> {
+  const next = {
+    ...session,
+    updatedAt: Date.now(),
+  };
+  await AsyncStorage.setItem(LAST_STUDY_SESSION_KEY, JSON.stringify(next));
+  return next;
 }
 
 export async function upsertDeck(deck: Deck) {
@@ -77,7 +107,7 @@ export async function getDailyProgress(): Promise<DailyProgress> {
   const raw = await AsyncStorage.getItem(DAILY_KEY);
   const today = todayISO();
   if (!raw) {
-    const fresh: DailyProgress = { date: today, count: 0, target: 10 };
+    const fresh: DailyProgress = { date: today, count: 0, target: 10, newCount: 0 };
     await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(fresh));
     return fresh;
   }
@@ -85,14 +115,20 @@ export async function getDailyProgress(): Promise<DailyProgress> {
     const parsed = JSON.parse(raw) as DailyProgress;
     if (!parsed || !parsed.date) throw new Error('bad');
     if (parsed.date !== today) {
-      const fresh: DailyProgress = { date: today, count: 0, target: parsed.target ?? 10 };
+      const fresh: DailyProgress = {
+        date: today,
+        count: 0,
+        target: parsed.target ?? 10,
+        newCount: 0,
+      };
       await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(fresh));
       return fresh;
     }
     if (!parsed.target) parsed.target = 10;
+    if (typeof parsed.newCount !== 'number') parsed.newCount = 0;
     return parsed;
   } catch {
-    const fresh: DailyProgress = { date: today, count: 0, target: 10 };
+    const fresh: DailyProgress = { date: today, count: 0, target: 10, newCount: 0 };
     await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(fresh));
     return fresh;
   }
@@ -101,6 +137,13 @@ export async function getDailyProgress(): Promise<DailyProgress> {
 export async function incrementDailyProgress(delta: number = 1): Promise<DailyProgress> {
   const current = await getDailyProgress();
   const next: DailyProgress = { ...current, count: current.count + delta };
+  await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(next));
+  return next;
+}
+
+export async function incrementDailyNewCount(delta: number = 1): Promise<DailyProgress> {
+  const current = await getDailyProgress();
+  const next: DailyProgress = { ...current, newCount: (current.newCount ?? 0) + delta };
   await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(next));
   return next;
 }
@@ -115,40 +158,82 @@ export async function setDailyTarget(target: number): Promise<DailyProgress> {
 const STREAK_KEY = 'SRS_STUDY_STREAK_V1';
 const LEGACY_STREAK_KEY = 'SRS_STREAK_V1';
 
-export async function getStudyStreak(): Promise<number> {
-  const raw = (await AsyncStorage.getItem(STREAK_KEY)) ?? (await AsyncStorage.getItem(LEGACY_STREAK_KEY));
-  if (!raw) return 0;
+// Streak freezes: earn one per 7 consecutive study days (bank up to MAX_FREEZES).
+// Missing a single day consumes a freeze instead of resetting the streak.
+const MAX_FREEZES = 2;
+const FREEZE_EARN_EVERY = 7;
+
+export type StreakState = { streak: number; freezes: number };
+
+type StoredStreak = { streak?: number; lastStudyDate?: string; freezes?: number };
+
+function daysSince(lastStudyDate: string | undefined): number | undefined {
+  if (!lastStudyDate) return undefined;
+  const last = new Date(lastStudyDate);
+  if (Number.isNaN(last.getTime())) return undefined;
+  const today = new Date(todayISO());
+  return Math.round((today.getTime() - last.getTime()) / (24 * 60 * 60 * 1000));
+}
+
+async function readStoredStreak(): Promise<StoredStreak | undefined> {
+  const raw =
+    (await AsyncStorage.getItem(STREAK_KEY)) ?? (await AsyncStorage.getItem(LEGACY_STREAK_KEY));
+  if (!raw) return undefined;
   try {
-    const parsed = JSON.parse(raw);
-    if (!parsed?.lastStudyDate) return parsed.streak || 0;
-    const lastStudyDate = new Date(parsed.lastStudyDate);
-    const today = new Date(todayISO());
-    const diffDays = Math.floor((today.getTime() - lastStudyDate.getTime()) / (24 * 60 * 60 * 1000));
-    return diffDays <= 1 ? parsed.streak || 0 : 0;
+    return JSON.parse(raw) as StoredStreak;
   } catch {
-    return 0;
+    return undefined;
   }
 }
 
-export async function recordStudySession(): Promise<number> {
-  const raw = await AsyncStorage.getItem(STREAK_KEY);
-  const today = todayISO();
-  let nextStreak = 1;
+export async function getStreakState(): Promise<StreakState> {
+  const parsed = await readStoredStreak();
+  if (!parsed) return { streak: 0, freezes: 0 };
 
-  if (raw) {
-    try {
-      const parsed = JSON.parse(raw);
-      const lastStudyDate = parsed?.lastStudyDate ? new Date(parsed.lastStudyDate) : undefined;
-      if (lastStudyDate) {
-        const todayDate = new Date(today);
-        const diffDays = Math.floor((todayDate.getTime() - lastStudyDate.getTime()) / (24 * 60 * 60 * 1000));
-        if (diffDays === 0) nextStreak = parsed.streak || 1;
-        else if (diffDays === 1) nextStreak = (parsed.streak || 0) + 1;
-      }
-    } catch {}
+  const streak = parsed.streak || 0;
+  const freezes = parsed.freezes ?? 0;
+  if (!parsed.lastStudyDate) return { streak, freezes };
+
+  const diffDays = daysSince(parsed.lastStudyDate);
+  if (diffDays === undefined) return { streak, freezes };
+  if (diffDays <= 1) return { streak, freezes };
+  // A single missed day is survivable while a freeze is banked.
+  if (diffDays === 2 && freezes > 0) return { streak, freezes };
+  return { streak: 0, freezes };
+}
+
+export async function getStudyStreak(): Promise<number> {
+  return (await getStreakState()).streak;
+}
+
+export async function recordStudySession(): Promise<number> {
+  const parsed = (await readStoredStreak()) ?? {};
+  const today = todayISO();
+  const prevStreak = parsed.streak || 0;
+  let freezes = parsed.freezes ?? 0;
+  const diffDays = daysSince(parsed.lastStudyDate);
+
+  let nextStreak = 1;
+  let advanced = true;
+  if (diffDays === 0) {
+    nextStreak = prevStreak || 1;
+    advanced = false;
+  } else if (diffDays === 1) {
+    nextStreak = prevStreak + 1;
+  } else if (diffDays === 2 && freezes > 0) {
+    // Consume a freeze to cover the missed day.
+    freezes -= 1;
+    nextStreak = prevStreak + 1;
   }
 
-  await AsyncStorage.setItem(STREAK_KEY, JSON.stringify({ streak: nextStreak, lastStudyDate: today }));
+  if (advanced && nextStreak > 0 && nextStreak % FREEZE_EARN_EVERY === 0) {
+    freezes = Math.min(MAX_FREEZES, freezes + 1);
+  }
+
+  await AsyncStorage.setItem(
+    STREAK_KEY,
+    JSON.stringify({ streak: nextStreak, lastStudyDate: today, freezes }),
+  );
   return nextStreak;
 }
 

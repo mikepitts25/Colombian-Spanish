@@ -71,30 +71,67 @@ export function gradeCard(card: FlashCard, quality: Quality): FlashCard {
 }
 
 /**
- * nextBatch:
- * - Return ready/overdue cards first (due <= now)
- * - If not enough, include a few “new” or not-yet-due cards
- * - Stable order by due ascending, then id
+ * isNewCard:
+ * A card is "new" until it has been graded at least once.
+ * gradeCard always changes ease (any quality) or reps/interval (passing),
+ * so untouched SRS state means the card was never studied.
  */
-export function nextBatch(cards: FlashCard[], size = 15): FlashCard[] {
-  const now = Date.now();
-  const copy = [...cards];
+export function isNewCard(card: FlashCard): boolean {
+  return (card.reps ?? 0) === 0 && (card.interval ?? 0) === 0 && (card.ease ?? 2.5) === 2.5;
+}
 
-  const ready = copy
-    .filter((c) => (c.due ?? 0) <= now)
+/**
+ * previewInterval:
+ * The interval (in days) a card would get if graded with `quality` right now.
+ * Used to show honest scheduling info on the grade buttons (like Anki).
+ */
+export function previewInterval(card: FlashCard, quality: Quality): number {
+  return gradeCard(card, quality).interval;
+}
+
+/**
+ * formatIntervalShort:
+ * Compact human label for an interval in days: 15m / 12h / 3d / 1.2mo / 1y+.
+ */
+export function formatIntervalShort(days: number): string {
+  if (days <= 0) return '15m';
+  if (days < 1) return `${Math.max(1, Math.round(days * 24))}h`;
+  if (days < 30) return `${Math.round(days)}d`;
+  if (days < 60) return `${(days / 30).toFixed(1)}mo`;
+  if (days < 365) return `${Math.round(days / 30)}mo`;
+  return '1y';
+}
+
+export type SessionQueueOptions = {
+  size?: number;
+  /** Max never-studied cards to introduce in this batch (after due reviews). */
+  newLimit?: number;
+  now?: number;
+};
+
+/**
+ * buildSessionQueue:
+ * - Due reviews first (studied cards with due <= now), oldest due first
+ * - Then new cards (never studied), capped by newLimit, oldest created first
+ * - Never includes scheduled cards that are not yet due — reviewing early
+ *   without adjusting for the shorter gap would corrupt the SRS intervals.
+ */
+export function buildSessionQueue(cards: FlashCard[], opts: SessionQueueOptions = {}): FlashCard[] {
+  const { size = 15, newLimit = 10, now = Date.now() } = opts;
+  if (size <= 0) return [];
+
+  const dueReviews = cards
+    .filter((c) => !isNewCard(c) && (c.due ?? 0) <= now)
     .sort((a, b) => (a.due ?? 0) - (b.due ?? 0) || a.id.localeCompare(b.id));
 
-  if (ready.length >= size) return ready.slice(0, size);
+  if (dueReviews.length >= size) return dueReviews.slice(0, size);
 
-  const notYet = copy
-    .filter((c) => (c.due ?? 0) > now || c.due == null)
-    .sort(
-      (a, b) =>
-        (a.due ?? Number.MAX_SAFE_INTEGER) - (b.due ?? Number.MAX_SAFE_INTEGER) ||
-        a.id.localeCompare(b.id),
-    );
+  const fresh = cards
+    .filter((c) => isNewCard(c))
+    .sort((a, b) => (a.createdAt ?? 0) - (b.createdAt ?? 0) || a.id.localeCompare(b.id))
+    .slice(0, Math.max(0, Math.min(newLimit, size - dueReviews.length)));
 
-  return [...ready, ...notYet.slice(0, Math.max(0, size - ready.length))];
+  return [...dueReviews, ...fresh];
 }
 
 export function selectDifficultCards(cards: FlashCard[], size = 30): FlashCard[] {

@@ -2,6 +2,7 @@
 import { Deck } from '../../types';
 
 import { ActionsDeck } from './actions';
+import { AccommodationPhrasesDeck } from './accommodation_phrases';
 import { CoreVerbsDeck } from './core_verbs';
 import { BodyDeck } from './body';
 import { BusinessDeck } from './business';
@@ -22,24 +23,30 @@ import { GreetingsDeck } from './greetings';
 import { HealthDeck } from './health';
 import { HolidaysDeck } from './holidays';
 import { HouseDeck } from './house';
+import { MedicalPhrasesDeck } from './medical_phrases';
 import { NatureDeck } from './nature';
 import { NumbersDeck } from './numbers';
 import { PaisaDeck } from './paisa';
 import { PlacesDeck } from './places';
 import { ProfessionsDeck } from './professions';
 import { RoloDeck } from './rolo';
+import { RestaurantPhrasesDeck } from './restaurant_phrases';
 import { RoutinesDeck } from './routines';
 import { SchoolDeck } from './school';
 import { ShoppingDeck } from './shopping';
 import { SlangDeck } from './slang';
+import { SocialPhrasesDeck } from './social_phrases';
 import { SportsDeck } from './sports';
 import { TechnologyDeck } from './technology';
 import { TransportDeck } from './transport';
+import { TransportPhrasesDeck } from './transport_phrases';
 import { TravelDeck } from './travel';
+import { UsefulPhrasesDeck } from './useful_phrases';
 import { WeatherDeck } from './weather';
 
 export {
   ActionsDeck,
+  AccommodationPhrasesDeck,
   CoreVerbsDeck,
   BodyDeck,
   BusinessDeck,
@@ -60,26 +67,32 @@ export {
   HealthDeck,
   HolidaysDeck,
   HouseDeck,
+  MedicalPhrasesDeck,
   NatureDeck,
   NumbersDeck,
   PaisaDeck,
   PlacesDeck,
   ProfessionsDeck,
   RoloDeck,
+  RestaurantPhrasesDeck,
   RoutinesDeck,
   SchoolDeck,
   ShoppingDeck,
   SlangDeck,
+  SocialPhrasesDeck,
   SportsDeck,
   TechnologyDeck,
   TransportDeck,
+  TransportPhrasesDeck,
   TravelDeck,
+  UsefulPhrasesDeck,
   WeatherDeck,
 };
 
 export const ALL_DECKS: Deck[] = [
   CoreVerbsDeck,
   ActionsDeck,
+  AccommodationPhrasesDeck,
   BodyDeck,
   BusinessDeck,
   ClothingDeck,
@@ -99,19 +112,24 @@ export const ALL_DECKS: Deck[] = [
   HealthDeck,
   HolidaysDeck,
   HouseDeck,
+  MedicalPhrasesDeck,
   NatureDeck,
   NumbersDeck,
   PaisaDeck,
   PlacesDeck,
   ProfessionsDeck,
   RoloDeck,
+  RestaurantPhrasesDeck,
   RoutinesDeck,
   SchoolDeck,
   ShoppingDeck,
   SlangDeck,
+  SocialPhrasesDeck,
   SportsDeck,
   TechnologyDeck,
   TransportDeck,
+  TransportPhrasesDeck,
   TravelDeck,
+  UsefulPhrasesDeck,
   WeatherDeck,
 ];

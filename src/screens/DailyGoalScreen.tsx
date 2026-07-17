@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  Alert,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
 import { getDailyProgress, setDailyTarget } from '../storage/storage';
+import { getPrefs, setPrefs } from '../storage/prefs';
 import { useLanguage } from '../context/LanguageContext';
+import { useDeck } from '../hooks/useDeck';
 
 const GOAL_PRESETS = [
-  { value: 5,  labelKey: 'dailyGoal.preset.casual' },
+  { value: 5, labelKey: 'dailyGoal.preset.casual' },
   { value: 10, labelKey: 'dailyGoal.preset.regular' },
   { value: 20, labelKey: 'dailyGoal.preset.serious' },
   { value: 50, labelKey: 'dailyGoal.preset.intense' },
@@ -23,17 +18,21 @@ const GOAL_PRESETS = [
 export default function DailyGoalScreen() {
   const nav = useNavigation<any>();
   const { t } = useLanguage();
+  const { reload } = useDeck();
   const [goal, setGoal] = useState(10);
-  const [newCards, setNewCards] = useState(20);
+  const [newCards, setNewCards] = useState(10);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     getDailyProgress().then((dp) => setGoal(dp.target ?? 10));
+    getPrefs().then((p) => setNewCards(p.newCardsPerDay));
   }, []);
 
   async function handleSave() {
     setSaving(true);
     await setDailyTarget(goal);
+    await setPrefs({ newCardsPerDay: newCards });
+    await reload();
     setSaving(false);
     Alert.alert(t('dailyGoal.saved.title'), t('dailyGoal.saved.message', { count: goal }));
     nav.goBack();
@@ -43,10 +42,10 @@ export default function DailyGoalScreen() {
     goal >= 50
       ? t('dailyGoal.time.oneMonth')
       : goal >= 20
-      ? t('dailyGoal.time.twoMonths')
-      : goal >= 10
-      ? t('dailyGoal.time.threeMonths')
-      : t('dailyGoal.time.sixMonths');
+        ? t('dailyGoal.time.twoMonths')
+        : goal >= 10
+          ? t('dailyGoal.time.threeMonths')
+          : t('dailyGoal.time.sixMonths');
 
   return (
     <SafeAreaView style={styles.wrap}>
@@ -148,11 +147,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
   },
-  backBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, padding: 8, borderRadius: 20, backgroundColor: colors.surface },
+  backBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: colors.surface,
+  },
   backArrow: { color: colors.brand, fontSize: 16, fontWeight: '700' },
   backLabel: { color: colors.brand, fontSize: 14, fontWeight: '600' },
   navTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
-  saveBtn: { paddingHorizontal: 16, paddingVertical: 8, borderRadius: 20, backgroundColor: colors.brand },
+  saveBtn: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: colors.brand,
+  },
   saveBtnText: { color: '#020617', fontSize: 14, fontWeight: '800' },
 
   scroll: { padding: 16, paddingBottom: 40 },
@@ -225,7 +236,13 @@ const styles = StyleSheet.create({
   },
   stepperBtnAdd: { backgroundColor: colors.brand },
   stepperBtnText: { color: colors.textPrimary, fontSize: 18, fontWeight: '700', lineHeight: 22 },
-  stepperValue: { color: colors.brand, fontSize: 18, fontWeight: '800', minWidth: 28, textAlign: 'center' },
+  stepperValue: {
+    color: colors.brand,
+    fontSize: 18,
+    fontWeight: '800',
+    minWidth: 28,
+    textAlign: 'center',
+  },
   divider: { height: 1, backgroundColor: colors.border },
   orderRow: {
     flexDirection: 'row',
