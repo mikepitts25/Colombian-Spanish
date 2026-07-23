@@ -24,6 +24,7 @@ import { GreetingsDeck } from './greetings';
 import { HealthDeck } from './health';
 import { HolidaysDeck } from './holidays';
 import { HouseDeck } from './house';
+import { LlaneroDeck } from './llanero_slang';
 import { MedicalPhrasesDeck } from './medical_phrases';
 import { NatureDeck } from './nature';
 import { NumbersDeck } from './numbers';
@@ -72,6 +73,7 @@ export {
   HealthDeck,
   HolidaysDeck,
   HouseDeck,
+  LlaneroDeck,
   MedicalPhrasesDeck,
   NatureDeck,
   NumbersDeck,
@@ -121,6 +123,7 @@ export const ALL_DECKS: Deck[] = [
   HealthDeck,
   HolidaysDeck,
   HouseDeck,
+  LlaneroDeck,
   MedicalPhrasesDeck,
   NatureDeck,
   NumbersDeck,

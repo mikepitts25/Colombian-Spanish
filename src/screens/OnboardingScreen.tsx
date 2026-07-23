@@ -49,6 +49,12 @@ const REGIONS: {
     subKey: 'onboarding.region.vallunoSub',
     emoji: '💃',
   },
+  {
+    id: 'llanero',
+    labelKey: 'onboarding.region.llanero',
+    subKey: 'onboarding.region.llaneroSub',
+    emoji: '🐎',
+  },
   { id: 'all', labelKey: 'onboarding.region.all', subKey: 'onboarding.region.allSub', emoji: '🇨🇴' },
 ];
 
@@ -73,6 +79,7 @@ const REGION_DECKS: Record<HomeRegion, string> = {
   rolo: 'deck-rolo',
   costeno: 'deck-costeno',
   valluno: 'deck-valluno',
+  llanero: 'deck-llanero',
   all: 'deck-slang',
 };
 

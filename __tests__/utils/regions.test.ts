@@ -26,6 +26,7 @@ describe('region filters', () => {
       'rolo',
       'costeno',
       'valluno',
+      'llanero',
     ]);
   });
 
@@ -34,6 +35,7 @@ describe('region filters', () => {
     expect(cardMatchesRegion(makeCard({ tags: ['Bogotá'] }), 'rolo', 'Any deck')).toBe(true);
     expect(cardMatchesRegion(makeCard({ tags: ['Caribe'] }), 'costeno', 'Any deck')).toBe(true);
     expect(cardMatchesRegion(makeCard({ tags: ['Cali'] }), 'valluno', 'Any deck')).toBe(true);
+    expect(cardMatchesRegion(makeCard({ tags: ['Llanos'] }), 'llanero', 'Any deck')).toBe(true);
     expect(cardMatchesRegion(makeCard(), 'paisa', 'Paisa Slang (Medellín)')).toBe(true);
   });
 

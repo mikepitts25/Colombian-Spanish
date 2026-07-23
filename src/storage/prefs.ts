@@ -5,7 +5,7 @@ const KEY = 'SRS_PREFS_V1';
 export type UiLanguage = 'es' | 'en';
 
 export type LearningReason = 'travel' | 'move' | 'love' | 'work' | 'culture' | 'general';
-export type HomeRegion = 'all' | 'paisa' | 'rolo' | 'costeno' | 'valluno';
+export type HomeRegion = 'all' | 'paisa' | 'rolo' | 'costeno' | 'valluno' | 'llanero';
 
 export type Prefs = {
   autoSpeak: boolean;
@@ -28,7 +28,7 @@ const DEFAULTS: Prefs = {
 };
 
 const LEARNING_REASONS: LearningReason[] = ['travel', 'move', 'love', 'work', 'culture', 'general'];
-const HOME_REGIONS: HomeRegion[] = ['all', 'paisa', 'rolo', 'costeno', 'valluno'];
+const HOME_REGIONS: HomeRegion[] = ['all', 'paisa', 'rolo', 'costeno', 'valluno', 'llanero'];
 
 function normalizeUiLanguage(value: unknown): UiLanguage {
   return value === 'en' || value === 'es' ? value : DEFAULTS.uiLanguage;

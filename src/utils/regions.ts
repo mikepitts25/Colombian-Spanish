@@ -1,7 +1,14 @@
 import { FlashCard } from '../types';
 import { type TranslationKey } from '../i18n/translations';
 
-export type RegionFilterId = 'all' | 'general' | 'paisa' | 'rolo' | 'costeno' | 'valluno';
+export type RegionFilterId =
+  | 'all'
+  | 'general'
+  | 'paisa'
+  | 'rolo'
+  | 'costeno'
+  | 'valluno'
+  | 'llanero';
 
 export const REGION_FILTERS: { id: RegionFilterId; label: string }[] = [
   { id: 'all', label: 'All' },
@@ -10,6 +17,7 @@ export const REGION_FILTERS: { id: RegionFilterId; label: string }[] = [
   { id: 'rolo', label: 'Rolo' },
   { id: 'costeno', label: 'Costeño' },
   { id: 'valluno', label: 'Valluno' },
+  { id: 'llanero', label: 'Llanero' },
 ];
 
 export const REGION_LABEL_KEYS: Record<RegionFilterId, TranslationKey> = {
@@ -19,6 +27,7 @@ export const REGION_LABEL_KEYS: Record<RegionFilterId, TranslationKey> = {
   rolo: 'region.rolo',
   costeno: 'region.costeno',
   valluno: 'region.valluno',
+  llanero: 'region.llanero',
 };
 
 const REGION_PATTERNS: Record<Exclude<RegionFilterId, 'all' | 'general'>, RegExp> = {
@@ -26,6 +35,7 @@ const REGION_PATTERNS: Record<Exclude<RegionFilterId, 'all' | 'general'>, RegExp
   rolo: /\b(rolo|cachaco|bogota)\b/,
   costeno: /\b(costeno|costena|caribe|barranquilla|cartagena|santa marta|costa)\b/,
   valluno: /\b(valluno|valle|cali|caleno|calena)\b/,
+  llanero: /\b(llanero|llanera|llanos|llano|meta|casanare|arauca|vichada)\b/,
 };
 
 function normalize(value: string) {

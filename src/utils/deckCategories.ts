@@ -147,6 +147,7 @@ const CATEGORY_BY_DECK_ID: Record<string, CategoryKey> = {
   'deck-health': 'Health',
   'deck-holidays': 'Numbers & Time',
   'deck-house': 'Home & Daily Life',
+  'deck-llanero': 'Colombianisms',
   'deck-medical-phrases': 'Health',
   'deck-nature': 'Nature',
   'deck-numbers': 'Numbers & Time',
@@ -173,7 +174,14 @@ const CATEGORY_BY_DECK_ID: Record<string, CategoryKey> = {
 };
 
 const PREFERRED_DECK_IDS: Partial<Record<CategoryKey, string[]>> = {
-  Colombianisms: ['deck-slang', 'deck-paisa', 'deck-rolo', 'deck-costeno', 'deck-valluno'],
+  Colombianisms: [
+    'deck-slang',
+    'deck-paisa',
+    'deck-rolo',
+    'deck-costeno',
+    'deck-valluno',
+    'deck-llanero',
+  ],
   Essentials: ['deck-core-verbs', 'deck-useful-phrases', 'deck-actions'],
   'People & Relationships': ['deck-family', 'deck-dating', 'deck-piropos'],
   'Places & Travel': ['deck-transport', 'deck-travel', 'deck-places'],
@@ -212,6 +220,7 @@ const DISPLAY_NAME_BY_DECK_ID: Record<string, string> = {
   'deck-health': 'Health',
   'deck-holidays': 'Holidays',
   'deck-house': 'House',
+  'deck-llanero': 'Llanero Slang',
   'deck-medical-phrases': 'Medical & Emergency Phrases',
   'deck-nature': 'Nature',
   'deck-numbers': 'Numbers',
