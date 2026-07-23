@@ -142,7 +142,7 @@ export const RoloSlangDeck: Deck = {
       id: 'rolo-012',
       front: `boba`,
       back: `silly / foolish`,
-      example: `No seas boba, eso es obvio. | Don't be silly, that"s obvious.`,
+      example: `No seas boba, eso es obvio. | Don't be silly, that's obvious.`,
       tags: ['rolo', 'Bogotá', 'slang'],
       createdAt: 1754759195954,
       due: 1754759195954,

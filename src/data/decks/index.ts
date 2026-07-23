@@ -11,6 +11,7 @@ import { ColombianFoodDeck } from './colombian_food';
 import { ColorsDeck } from './colors';
 import { CommunicationDeck } from './communication';
 import { ConversationDeck } from './conversation';
+import { CostenoDeck } from './costeno_slang';
 import { CultureDeck } from './culture';
 import { Daily_lifeDeck } from './daily_life';
 import { DatingDeck } from './dating';
@@ -27,9 +28,11 @@ import { MedicalPhrasesDeck } from './medical_phrases';
 import { NatureDeck } from './nature';
 import { NumbersDeck } from './numbers';
 import { PaisaDeck } from './paisa';
+import { PiroposDeck } from './piropos';
 import { PlacesDeck } from './places';
 import { ProfessionsDeck } from './professions';
 import { RoloDeck } from './rolo';
+import { RoloSlangDeck } from './rolo_slang';
 import { RestaurantPhrasesDeck } from './restaurant_phrases';
 import { RoutinesDeck } from './routines';
 import { SchoolDeck } from './school';
@@ -42,6 +45,7 @@ import { TransportDeck } from './transport';
 import { TransportPhrasesDeck } from './transport_phrases';
 import { TravelDeck } from './travel';
 import { UsefulPhrasesDeck } from './useful_phrases';
+import { VallunoDeck } from './valluno_slang';
 import { WeatherDeck } from './weather';
 
 export {
@@ -55,6 +59,7 @@ export {
   ColorsDeck,
   CommunicationDeck,
   ConversationDeck,
+  CostenoDeck,
   CultureDeck,
   Daily_lifeDeck,
   DatingDeck,
@@ -71,9 +76,11 @@ export {
   NatureDeck,
   NumbersDeck,
   PaisaDeck,
+  PiroposDeck,
   PlacesDeck,
   ProfessionsDeck,
   RoloDeck,
+  RoloSlangDeck,
   RestaurantPhrasesDeck,
   RoutinesDeck,
   SchoolDeck,
@@ -86,6 +93,7 @@ export {
   TransportPhrasesDeck,
   TravelDeck,
   UsefulPhrasesDeck,
+  VallunoDeck,
   WeatherDeck,
 };
 
@@ -100,6 +108,7 @@ export const ALL_DECKS: Deck[] = [
   ColorsDeck,
   CommunicationDeck,
   ConversationDeck,
+  CostenoDeck,
   CultureDeck,
   Daily_lifeDeck,
   DatingDeck,
@@ -116,9 +125,11 @@ export const ALL_DECKS: Deck[] = [
   NatureDeck,
   NumbersDeck,
   PaisaDeck,
+  PiroposDeck,
   PlacesDeck,
   ProfessionsDeck,
   RoloDeck,
+  RoloSlangDeck,
   RestaurantPhrasesDeck,
   RoutinesDeck,
   SchoolDeck,
@@ -131,5 +142,6 @@ export const ALL_DECKS: Deck[] = [
   TransportPhrasesDeck,
   TravelDeck,
   UsefulPhrasesDeck,
+  VallunoDeck,
   WeatherDeck,
 ];

@@ -154,7 +154,7 @@ export const VallunoDeck: Deck = {
       id: 'val-013',
       front: `sapo/sapa`,
       back: `nosy person / snitch`,
-      example: `No seas sapo, no cuentes nada. | Don't be a snitch, don"t tell anyone.`,
+      example: `No seas sapo, no cuentes nada. | Don't be a snitch, don't tell anyone.`,
       tags: ['valluno', 'Cali', 'slang'],
       createdAt: 1754759195954,
       due: 1754759195954,

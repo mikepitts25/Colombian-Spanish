@@ -1,9 +1,9 @@
 # 🇨🇴 Colombian Spanish SRS
 
-Learn real Colombian Spanish with 1,000+ flashcards covering slang, expressions, food, culture, and more!
+Learn real Colombian Spanish with 1,300+ flashcards covering slang, expressions, food, culture, and more!
 
-[![Cards](https://img.shields.io/badge/Cards-1,016-blue)](./src/data/decks)
-[![Decks](https://img.shields.io/badge/Decks-35-green)](./src/data/decks)
+[![Cards](https://img.shields.io/badge/Cards-1,372-blue)](./src/data/decks)
+[![Decks](https://img.shields.io/badge/Decks-46-green)](./src/data/decks)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 ## 📱 Screenshots
@@ -12,7 +12,7 @@ _(Coming soon - app is in development)_
 
 ## ✨ Features
 
-- **1,016 flashcards** across 35 themed decks
+- **1,372 flashcards** across 46 themed decks
 - **Spaced Repetition System (SRS)** for efficient learning
 - **Text-to-speech** pronunciation with Colombian accent
 - **Offline-first** — learn anywhere, no internet needed
@@ -25,6 +25,10 @@ _(Coming soon - app is in development)_
 
 - Jerga Colombiana (general slang)
 - Paisa slang (Medellín-specific)
+- Rolo slang (Bogotá-specific)
+- Costeño slang (Caribbean coast)
+- Valluno/Caleño slang (Cali-specific)
+- Piropos & compliments
 - Colombian expressions & sayings
 - Dating & relationship phrases
 
@@ -93,7 +97,7 @@ eas build --platform android
 src/
 ├── components/       # Reusable UI components
 ├── context/         # React context providers
-├── data/decks/      # Flashcard content (35 decks, 1,016 cards)
+├── data/decks/      # Flashcard content (46 decks, 1,372 cards)
 ├── hooks/           # Custom React hooks
 ├── navigation/      # Navigation configuration
 ├── screens/         # App screens

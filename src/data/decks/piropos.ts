@@ -114,7 +114,7 @@ export const PiroposDeck: Deck = {
       id: 'pirop-009',
       front: `Eres única/único`,
       back: `You're unique/one of a kind`,
-      example: `Eres única, no hay nadie como tú. | You're unique, there"s no one like you.`,
+      example: `Eres única, no hay nadie como tú. | You're unique, there's no one like you.`,
       tags: ['compliments', 'romance'],
       register: 'casual',
       createdAt: 1754759195954,
