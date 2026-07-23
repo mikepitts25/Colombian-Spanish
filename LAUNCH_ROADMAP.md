@@ -20,7 +20,7 @@ Legend: 🟢 done · 🟡 in progress · 🔴 not started · ⏸️ deferred
 | 1.3 | **Split new vs. review queues**              | 🟢     | `nextBatch` backfilled sessions with not-yet-due cards, inflating intervals on early reviews. New-card daily cap (default 10, configurable) + due-only reviews. |
 | 1.4 | **Hide translation-review tooling in prod**  | 🟢     | Flagged/reviewStatus workflow is internal QA; gate behind `__DEV__`.                                                                                            |
 | 1.5 | **App-level ErrorBoundary**                  | 🟢     | No crash guard existed. Friendly bilingual fallback + recovery.                                                                                                 |
-| 1.6 | Crash reporting (Sentry) + product analytics | 🔴     | Needs an account/DSN — set up before store submission. ErrorBoundary is the in-app half.                                                                        |
+| 1.6 | Crash reporting (Sentry) + product analytics | 🟡     | Sentry wired via `@sentry/react-native`, DSN in `.env` (gitignored), init in `App.tsx`, feeds from `ErrorBoundary`. Product analytics still not started.        |
 
 ## Phase 2 — Launch-makers (Weeks 2–3)
 

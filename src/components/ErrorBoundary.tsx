@@ -1,6 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../styles/theme';
+import { reportError } from '../services/crashReporting';
 
 interface Props {
   children: ReactNode;
@@ -20,8 +21,8 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: { componentStack?: string | null }) {
-    // Hook point for crash reporting (Sentry etc.) once configured.
     console.error('Unhandled error in component tree:', error, info?.componentStack);
+    reportError(error, { componentStack: info?.componentStack });
   }
 
   handleRetry = () => {

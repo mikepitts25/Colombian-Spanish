@@ -7,6 +7,9 @@ import { LanguageProvider } from './src/context/LanguageContext';
 import { DeckProvider } from './src/hooks/useDeck';
 import ErrorBoundary from './src/components/ErrorBoundary';
 import { refreshScheduledNotifications } from './src/services/notifications';
+import { initCrashReporting } from './src/services/crashReporting';
+
+initCrashReporting();
 
 export default function App() {
   useEffect(() => {
