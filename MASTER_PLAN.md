@@ -10,7 +10,7 @@
 
 **Brief:** Product assessment and user request in this chat on October 14, 2026. Major new subsystems get a focused design and implementation plan when selected; do not predesign the entire roadmap or invent future interfaces now.
 
-**Last updated:** 2026-10-14. **Status:** Planning complete; implementation and release validation remain open.
+**Last updated:** 2026-10-14. **Status:** First AI implementation batch in progress; verified items and remaining human/device gates are tracked below.
 
 ## How to use this checklist
 
@@ -90,12 +90,17 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 **Package:** development environment + meaningful checks + reproducible simulator launch. **Main files:** `package.json`, `jest.config.js`, `.github/workflows/ci.yml`, `app.json`, `eas.json`, `__tests__/`.
 
-- [ ] **B01.1 [AI]** Record current `npm run typecheck`, `npm run lint`, `npm run format:check`, and `npm test -- --runInBand` results; separate existing failures from new failures. Check asset validity and audio-file references.
-- [ ] **B01.2 [AI]** Add the Jest suite to CI; make data validation reproducible without changing the lockfile during CI.
-- [ ] **B01.3 [AI]** Replace the fake successful build check with a real appropriately scoped native validation/build job; report skipped/unavailable builds honestly in PR summaries.
+- [x] **B01.1 [AI]** Record current `npm run typecheck`, `npm run lint`, `npm run format:check`, and `npm test -- --runInBand` results; separate existing failures from new failures. Check asset validity and audio-file references.
+- [x] **B01.2 [AI]** Add the Jest suite to CI; make data validation reproducible without changing the lockfile during CI.
+- [x] **B01.3 [AI]** Replace the fake successful build check with a real appropriately scoped native validation/build job; report skipped/unavailable builds honestly in PR summaries.
 - [ ] **B01.4 [AI, SIM]** Establish a dedicated iOS simulator workflow and capture launch, onboarding, study, quiz, phrases, settings, and restart evidence.
 - [ ] **B01.5 [AI, SIM]** Locate/install supported Android tooling if available, document the actual environment constraint if not, and establish an emulator workflow without treating iOS success as Android success.
-- [ ] **B01.6 [AI]** Document repeatable commands, fixture reset, screenshots, and build artifacts. Preserve user data and unrelated simulator sessions.
+- [x] **B01.6 [AI]** Document repeatable commands, fixture reset, screenshots, and build artifacts. Preserve user data and unrelated simulator sessions.
+
+- [x] **B01.7 [AI]** Record the dependency audit and apply compatible locked dependency updates without a forced major upgrade. See the dated foundation report for before/after counts.
+- [ ] **B01.8 [AI]** Triage remaining dependency advisory paths and implement a separately verified SDK/navigation upgrade where required; the current audit still has high/moderate findings.
+
+**Current evidence:** [Foundation report](docs/qa/2026-10-14-foundation/REPORT.md), [development commands](DEVELOPMENT.md). B01.4: dedicated simulator created/booted, Expo Go installed; opening the app stopped at a confirmation while Mac UI control was locked. Full screen/restart evidence remains open. B01.5: Android Studio found, but SDK/ADB/emulator setup is missing; emulator workflow remains open.
 
 **Exit:** checks have recorded results, CI no longer claims an unperformed build passed, and platform launch evidence or a specific tooling blocker is recorded.
 
@@ -106,6 +111,10 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 **Main files:** `src/data/conjugations.ts`, `src/types.ts`, `src/utils/srs.ts`, `src/context/DeckContext.tsx`, `src/storage/storage.ts`, study/quiz/progress/home screens, relevant tests.
 
 - [ ] **B02.1 [AI, H-LANGUAGE]** Correct future-tense generation and audit the remaining tense/pronoun tables. Add independent expected-form fixtures including `hablaré`, `comeré`, irregular futures, and region-sensitive forms; have an editor validate the reference set.
+  - [x] **B02.1-A [AI]** Correct 127 generated future-tense entries and the plancharon typo, with independently specified regression fixtures for regular/irregular forms and present tú/vos.
+  - [x] **B02.1-B [AI]** Structurally audit all 187 entries and record missing independent tú forms in the dated QA report.
+  - [ ] **B02.1-C [AI]** Correct the panel's tú/vos fallback and remaining independently verified tense/pronoun defects; add relevant regression tests.
+  - [ ] **B02.1-D [H-LANGUAGE]** Have a qualified editor accept the reference set and remaining grammar guidance. AI tests do not establish native acceptance.
 - [ ] **B02.2 [AI]** Define and persist versioned learning events with card/mission ID, modality, timestamp, outcome, hints, and duration where measurable. Make event writes retry-safe and bound history growth.
 - [ ] **B02.3 [AI]** Separate recognition, recall, listening, and speaking evidence; prevent an easy multiple-choice success from automatically asserting unaided recall mastery. Preserve old progress without inventing missing historical evidence.
 - [ ] **B02.4 [AI]** Audit session queue stability, grading during rapid interactions, daily new-card caps, relearning, resume, and cross-deck behavior. Pin actual failures with regression tests.
@@ -119,10 +128,14 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 **Package:** machine validation and review workflow first; human review batches follow independently. **Main files:** `src/data/decks/`, `src/utils/register.ts`, `src/utils/regions.ts`, review screens, audio manifest/generation script, new editorial artifacts.
 
 - [ ] **B03.1 [AI]** Export a review inventory with stable IDs, text, examples, translations, tags, register, regional claims, audio provenance, and review status. Prioritize the first mission and the 20 `needs_native` cards.
+  - [x] **B03.1-A [AI]** Export the complete deterministic 1,392-card inventory; prioritize explicit native-review requests and vulgar/flirty material, with source/audio provenance.
+  - [ ] **B03.1-B [AI]** Prioritize the exact first-mission card set when its script is selected; this inventory does not invent a selected pilot script.
 - [ ] **B03.2 [AI]** Add explicit regional metadata supporting shared/multiple regions rather than relying solely on inferred deck/tag matches; retain compatible filtering and migrations.
 - [ ] **B03.3 [AI]** Define reviewed/draft/needs-correction states, reviewer attribution, content versions, and a release filter. Automated validation checks completeness and contradictions; it does not certify authenticity.
 - [ ] **B03.4 [H-LANGUAGE, AI]** Review the first mission, grammar fixtures, common phrases, slang/register, and regional claims; AI applies reviewed corrections and adds regression fixtures.
 - [ ] **B03.5 [AI, H-LANGUAGE]** Prepare recording scripts and speaker briefs; recruit/record through human-led arrangements, obtain appropriate rights/consent, and review pronunciation. Maintain generated versus human audio provenance.
+  - [x] **B03.5-A [AI]** Prepare the recording/review handoff brief and provenance guidance in `docs/editorial/README.md`.
+  - [ ] **B03.5-B [AI, H-LANGUAGE]** Select exact pilot scripts, obtain human performance/rights and editorial acceptance, then integrate accepted recordings.
 - [ ] **B03.6 [AI, H-LANGUAGE]** Review the remaining library in batches, prioritizing usage and risk. Quarantine unresolved teaching content from the release rather than marking it approved.
 
 **Exit:** released teaching content has traceable editorial status; pilot content and audio are accepted; unresolved content is excluded or explicitly gated. Do not block unrelated UI coding while waiting for recordings.
@@ -313,3 +326,7 @@ Append one row per completed package; link longer evidence from the row. Keep im
 | Date       | Bundle/task IDs | Status           | Commit / artifact | Verification and platform                                                                     | Human/device work still open                      |
 | ---------- | --------------- | ---------------- | ----------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------- |
 | 2026-10-14 | Master plan     | Document created | `MASTER_PLAN.md`  | Source/config/test inventory and local tooling inspected; no implementation or app QA claimed | All implementation and release checks remain open |
+
+### First AI implementation batch — 2026-10-14
+
+B01.1/B01.2/B01.3/B01.6/B01.7 are verified locally; B02.1-A/B, B03.1-A, and B03.5-A are complete subpackages with their parent human/editorial tasks still open. See `docs/qa/2026-10-14-foundation/REPORT.md` and `docs/qa/2026-10-14-foundation/final-checks.txt`. Code review found no blockers; the minor stale-inventory concern was addressed by regenerating and comparing the checked-in inventory in CI. Native project generation/JS bundling is not native compilation or device testing. Remote CI and merge/push results are recorded below once available.

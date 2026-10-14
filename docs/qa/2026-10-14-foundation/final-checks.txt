@@ -1,0 +1,28 @@
+Foundation batch, 2026-10-14
+Worktree: codex/checklist-foundation
+Local environment: Node 24.5.0, Xcode 27.0; remote CI uses Node 22.
+
+npm ci: exit 0, compatible updated lockfile installed.
+npm run typecheck: exit 0.
+npm run lint: exit 0.
+npm run format:check: exit 0, all matched files formatted.
+npm test -- --runInBand: exit 0, 36 suites / 334 tests passed.
+npm run validate:data: exit 0, 47 decks / 1392 cards / 1392 audio entries.
+npm run content:review: exit 0, 1392 entries; native-review acceptance remains unknown.
+CI=1 npx expo prebuild --platform all --no-install: exit 0, iOS/Android projects generated.
+CI=1 npx expo export --platform all --output-dir dist/validation: exit 0, iOS/Android Hermes JS bundles and assets exported.
+git diff --check: exit 0.
+
+Regression evidence:
+- New validator CLI tests failed before implementation, then 7/7 passed.
+- Four future-form fixtures failed against prior generator; corrected suite passed.
+- plancharon fixture failed against prior typo, then passed.
+- Editorial export tests failed before implementation, then 2/2 passed.
+- Independent review: no blockers; inventory regeneration consistency was added to CI after a minor comment.
+
+Known local tooling warnings:
+- Watchman reported a recrawl during some Jest runs; all suites completed.
+- Sentry prebuild plugin reported absent organization/project configuration.
+- Android prebuild recommends expo-system-ui for userInterfaceStyle behavior; no Android theme/device behavior is claimed here.
+
+Not established: app UI after Expo Go confirmation, complete interactive simulator regression, Android emulator launch, native compilation/signing, physical-device QA, linguistic/recording acceptance, learner effectiveness.

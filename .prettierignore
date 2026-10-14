@@ -1,3 +1,6 @@
 node_modules
 .expo
 package-lock.json
+
+# Deterministic generated editorial inventory; regenerate with npm run content:review
+docs/editorial/content-review.json

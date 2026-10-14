@@ -1,5 +1,5 @@
 // Colombian Spanish verb conjugations
-// Uses vos (not tú) and excludes vosotros - authentic Colombian conventions
+// Includes tuteo and voseo; usage varies by region and relationship. No vosotros.
 // Pretérito simple for past tense (not compound perfect)
 
 export type ConjugationTense = {
@@ -55,6 +55,19 @@ function generateIrConjugation(stem: string): ConjugationTense {
   };
 }
 
+// Simple-future endings are shared by all three verb classes.
+// Irregular future stems remain explicit in the database below.
+function generateFutureConjugation(infinitive: string): ConjugationTense {
+  return {
+    yo: `${infinitive}é`,
+    tu: `${infinitive}ás`,
+    vos: `${infinitive}ás`,
+    el: `${infinitive}á`,
+    nosotros: `${infinitive}emos`,
+    ustedes: `${infinitive}án`,
+  };
+}
+
 // Main conjugation database
 export const CONJUGATIONS: Record<string, ConjugationTable> = {
   // === REGULAR -AR VERBS ===
@@ -67,7 +80,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'hablamos',
       ustedes: 'hablaron',
     },
-    futuro: generateArConjugation('hablar'),
+    futuro: generateFutureConjugation('hablar'),
   },
   saltar: {
     presente: generateArConjugation('salt'),
@@ -78,7 +91,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'saltamos',
       ustedes: 'saltaron',
     },
-    futuro: generateArConjugation('saltar'),
+    futuro: generateFutureConjugation('saltar'),
   },
   bailar: {
     presente: generateArConjugation('bail'),
@@ -89,7 +102,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'bailamos',
       ustedes: 'bailaron',
     },
-    futuro: generateArConjugation('bailar'),
+    futuro: generateFutureConjugation('bailar'),
   },
   cantar: {
     presente: generateArConjugation('cant'),
@@ -100,7 +113,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'cantamos',
       ustedes: 'cantaron',
     },
-    futuro: generateArConjugation('cantar'),
+    futuro: generateFutureConjugation('cantar'),
   },
   dibujar: {
     presente: generateArConjugation('dibuj'),
@@ -111,7 +124,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'dibujamos',
       ustedes: 'dibujaron',
     },
-    futuro: generateArConjugation('dibujar'),
+    futuro: generateFutureConjugation('dibujar'),
   },
   ayudar: {
     presente: generateArConjugation('ayud'),
@@ -122,7 +135,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'ayudamos',
       ustedes: 'ayudaron',
     },
-    futuro: generateArConjugation('ayudar'),
+    futuro: generateFutureConjugation('ayudar'),
   },
   buscar: {
     presente: {
@@ -140,7 +153,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'buscamos',
       ustedes: 'buscaron',
     },
-    futuro: generateArConjugation('buscar'),
+    futuro: generateFutureConjugation('buscar'),
   },
   olvidar: {
     presente: generateArConjugation('olvid'),
@@ -151,7 +164,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'olvidamos',
       ustedes: 'olvidaron',
     },
-    futuro: generateArConjugation('olvidar'),
+    futuro: generateFutureConjugation('olvidar'),
   },
   visitar: {
     presente: generateArConjugation('visit'),
@@ -162,12 +175,12 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'visitamos',
       ustedes: 'visitaron',
     },
-    futuro: generateArConjugation('visitar'),
+    futuro: generateFutureConjugation('visitar'),
   },
   mirar: {
     presente: generateArConjugation('mir'),
     preterito: { yo: 'miré', vos: 'miraste', el: 'miró', nosotros: 'miramos', ustedes: 'miraron' },
-    futuro: generateArConjugation('mirar'),
+    futuro: generateFutureConjugation('mirar'),
   },
   pintar: {
     presente: generateArConjugation('pint'),
@@ -178,7 +191,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'pintamos',
       ustedes: 'pintaron',
     },
-    futuro: generateArConjugation('pintar'),
+    futuro: generateFutureConjugation('pintar'),
   },
   trabajar: {
     presente: generateArConjugation('trabaj'),
@@ -189,7 +202,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'trabajamos',
       ustedes: 'trabajaron',
     },
-    futuro: generateArConjugation('trabajar'),
+    futuro: generateFutureConjugation('trabajar'),
   },
   estudiar: {
     presente: generateArConjugation('estudi'),
@@ -200,7 +213,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'estudiamos',
       ustedes: 'estudiaron',
     },
-    futuro: generateArConjugation('estudiar'),
+    futuro: generateFutureConjugation('estudiar'),
   },
   caminar: {
     presente: generateArConjugation('camin'),
@@ -211,7 +224,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'caminamos',
       ustedes: 'caminaron',
     },
-    futuro: generateArConjugation('caminar'),
+    futuro: generateFutureConjugation('caminar'),
   },
   llamar: {
     presente: generateArConjugation('llam'),
@@ -222,7 +235,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'llamamos',
       ustedes: 'llamaron',
     },
-    futuro: generateArConjugation('llamar'),
+    futuro: generateFutureConjugation('llamar'),
   },
   esperar: {
     presente: generateArConjugation('esper'),
@@ -233,22 +246,22 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'esperamos',
       ustedes: 'esperaron',
     },
-    futuro: generateArConjugation('esperar'),
+    futuro: generateFutureConjugation('esperar'),
   },
   tomar: {
     presente: generateArConjugation('tom'),
     preterito: { yo: 'tomé', vos: 'tomaste', el: 'tomó', nosotros: 'tomamos', ustedes: 'tomaron' },
-    futuro: generateArConjugation('tomar'),
+    futuro: generateFutureConjugation('tomar'),
   },
   nadar: {
     presente: generateArConjugation('nad'),
     preterito: { yo: 'nadé', vos: 'nadaste', el: 'nadó', nosotros: 'nadamos', ustedes: 'nadaron' },
-    futuro: generateArConjugation('nadar'),
+    futuro: generateFutureConjugation('nadar'),
   },
   lavar: {
     presente: generateArConjugation('lav'),
     preterito: { yo: 'lavé', vos: 'lavaste', el: 'lavó', nosotros: 'lavamos', ustedes: 'lavaron' },
-    futuro: generateArConjugation('lavar'),
+    futuro: generateFutureConjugation('lavar'),
   },
   cocinar: {
     presente: generateArConjugation('cocin'),
@@ -259,7 +272,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'cocinamos',
       ustedes: 'cocinaron',
     },
-    futuro: generateArConjugation('cocinar'),
+    futuro: generateFutureConjugation('cocinar'),
   },
   comprar: {
     presente: generateArConjugation('compr'),
@@ -270,12 +283,12 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'compramos',
       ustedes: 'compraron',
     },
-    futuro: generateArConjugation('comprar'),
+    futuro: generateFutureConjugation('comprar'),
   },
   pagar: {
     presente: { yo: 'pago', vos: 'pagás', el: 'paga', nosotros: 'pagamos', ustedes: 'pagan' },
     preterito: { yo: 'pagué', vos: 'pagaste', el: 'pagó', nosotros: 'pagamos', ustedes: 'pagaron' },
-    futuro: generateArConjugation('pagar'),
+    futuro: generateFutureConjugation('pagar'),
   },
   enseñar: {
     presente: generateArConjugation('enseñ'),
@@ -286,7 +299,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'enseñamos',
       ustedes: 'enseñaron',
     },
-    futuro: generateArConjugation('enseñar'),
+    futuro: generateFutureConjugation('enseñar'),
   },
   limpiar: {
     presente: generateArConjugation('limpi'),
@@ -297,7 +310,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'limpiamos',
       ustedes: 'limpiaron',
     },
-    futuro: generateArConjugation('limpiar'),
+    futuro: generateFutureConjugation('limpiar'),
   },
   descansar: {
     presente: generateArConjugation('descans'),
@@ -308,7 +321,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'descansamos',
       ustedes: 'descansaron',
     },
-    futuro: generateArConjugation('descansar'),
+    futuro: generateFutureConjugation('descansar'),
   },
   viajar: {
     presente: generateArConjugation('viaj'),
@@ -319,7 +332,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'viajamos',
       ustedes: 'viajaron',
     },
-    futuro: generateArConjugation('viajar'),
+    futuro: generateFutureConjugation('viajar'),
   },
   escuchar: {
     presente: generateArConjugation('escuch'),
@@ -330,7 +343,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'escuchamos',
       ustedes: 'escucharon',
     },
-    futuro: generateArConjugation('escuchar'),
+    futuro: generateFutureConjugation('escuchar'),
   },
   practicar: {
     presente: {
@@ -347,7 +360,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'practicamos',
       ustedes: 'practicaron',
     },
-    futuro: generateArConjugation('practicar'),
+    futuro: generateFutureConjugation('practicar'),
   },
   contestar: {
     presente: generateArConjugation('contest'),
@@ -358,7 +371,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'contestamos',
       ustedes: 'contestaron',
     },
-    futuro: generateArConjugation('contestar'),
+    futuro: generateFutureConjugation('contestar'),
   },
   charlar: {
     presente: generateArConjugation('charl'),
@@ -369,7 +382,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'charlamos',
       ustedes: 'charlaron',
     },
-    futuro: generateArConjugation('charlar'),
+    futuro: generateFutureConjugation('charlar'),
   },
   entregar: {
     presente: generateArConjugation('entreg'),
@@ -380,7 +393,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'entregamos',
       ustedes: 'entregaron',
     },
-    futuro: generateArConjugation('entregar'),
+    futuro: generateFutureConjugation('entregar'),
   },
   revisar: {
     presente: generateArConjugation('revis'),
@@ -391,7 +404,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'revisamos',
       ustedes: 'revisaron',
     },
-    futuro: generateArConjugation('revisar'),
+    futuro: generateFutureConjugation('revisar'),
   },
   aprobar: {
     presente: {
@@ -409,7 +422,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'aprobamos',
       ustedes: 'aprobaron',
     },
-    futuro: generateArConjugation('aprobar'),
+    futuro: generateFutureConjugation('aprobar'),
   },
   cambiar: {
     presente: generateArConjugation('cambi'),
@@ -420,7 +433,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'cambiamos',
       ustedes: 'cambiaron',
     },
-    futuro: generateArConjugation('cambiar'),
+    futuro: generateFutureConjugation('cambiar'),
   },
   probarse: {
     presente: {
@@ -462,7 +475,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'devolvimos',
       ustedes: 'devolvieron',
     },
-    futuro: generateArConjugation('devolver'),
+    futuro: generateFutureConjugation('devolver'),
     irregular: true,
     irregularNote:
       'Present to watch: yo devuelvo, él devuelve, ustedes devuelven. Vos stays regular.',
@@ -474,9 +487,9 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       vos: 'planchaste',
       el: 'planchó',
       nosotros: 'planchamos',
-      ustedes: 'planchron',
+      ustedes: 'plancharon',
     },
-    futuro: generateArConjugation('planchar'),
+    futuro: generateFutureConjugation('planchar'),
   },
   fregar: {
     presente: {
@@ -494,7 +507,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'fregamos',
       ustedes: 'fregaron',
     },
-    futuro: generateArConjugation('fregar'),
+    futuro: generateFutureConjugation('fregar'),
     irregular: true,
     irregularNote: 'Present to watch: yo friego, él friega, ustedes friegan. Vos stays regular.',
   },
@@ -514,7 +527,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'cargamos',
       ustedes: 'cargaron',
     },
-    futuro: generateArConjugation('cargar'),
+    futuro: generateFutureConjugation('cargar'),
   },
   descargar: {
     presente: {
@@ -532,7 +545,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'descargamos',
       ustedes: 'descargaron',
     },
-    futuro: generateArConjugation('descargar'),
+    futuro: generateFutureConjugation('descargar'),
   },
   subir: {
     presente: generateIrConjugation('sub'),
@@ -543,7 +556,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'subimos',
       ustedes: 'subieron',
     },
-    futuro: generateArConjugation('subir'),
+    futuro: generateFutureConjugation('subir'),
   },
   enviar: {
     presente: {
@@ -561,7 +574,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'enviamos',
       ustedes: 'enviaron',
     },
-    futuro: generateArConjugation('enviar'),
+    futuro: generateFutureConjugation('enviar'),
   },
   buscar_online: {
     presente: generateArConjugation('busc'),
@@ -572,7 +585,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'buscamos',
       ustedes: 'buscaron',
     },
-    futuro: generateArConjugation('buscar'),
+    futuro: generateFutureConjugation('buscar'),
   },
   actualizar: {
     presente: generateArConjugation('actualiz'),
@@ -583,7 +596,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'actualizamos',
       ustedes: 'actualizaron',
     },
-    futuro: generateArConjugation('actualizar'),
+    futuro: generateFutureConjugation('actualizar'),
   },
   despertar: {
     presente: {
@@ -601,7 +614,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'despertamos',
       ustedes: 'despertaron',
     },
-    futuro: generateArConjugation('despertar'),
+    futuro: generateFutureConjugation('despertar'),
     irregular: true,
     irregularNote:
       'Present to watch: yo despierto, él despierta, ustedes despiertan. Vos stays regular.',
@@ -617,7 +630,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'comimos',
       ustedes: 'comieron',
     },
-    futuro: generateErConjugation('comer'),
+    futuro: generateFutureConjugation('comer'),
   },
   beber: {
     presente: generateErConjugation('beb'),
@@ -628,7 +641,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'bebimos',
       ustedes: 'bebieron',
     },
-    futuro: generateErConjugation('beber'),
+    futuro: generateFutureConjugation('beber'),
   },
   aprender: {
     presente: generateErConjugation('aprend'),
@@ -639,7 +652,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'aprendimos',
       ustedes: 'aprendieron',
     },
-    futuro: generateErConjugation('aprender'),
+    futuro: generateFutureConjugation('aprender'),
   },
   correr: {
     presente: generateErConjugation('corr'),
@@ -650,7 +663,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'corrimos',
       ustedes: 'corrieron',
     },
-    futuro: generateErConjugation('correr'),
+    futuro: generateFutureConjugation('correr'),
   },
   vender: {
     presente: generateErConjugation('vend'),
@@ -661,7 +674,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'vendimos',
       ustedes: 'vendieron',
     },
-    futuro: generateErConjugation('vender'),
+    futuro: generateFutureConjugation('vender'),
   },
   responder: {
     presente: generateErConjugation('respond'),
@@ -672,7 +685,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'respondimos',
       ustedes: 'respondieron',
     },
-    futuro: generateErConjugation('responder'),
+    futuro: generateFutureConjugation('responder'),
   },
   deber: {
     presente: generateErConjugation('deb'),
@@ -683,7 +696,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'debimos',
       ustedes: 'debieron',
     },
-    futuro: generateErConjugation('deber'),
+    futuro: generateFutureConjugation('deber'),
   },
 
   // === REGULAR -IR VERBS ===
@@ -696,7 +709,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'vivimos',
       ustedes: 'vivieron',
     },
-    futuro: generateIrConjugation('vivir'),
+    futuro: generateFutureConjugation('vivir'),
   },
   escribir: {
     presente: generateIrConjugation('escrib'),
@@ -707,7 +720,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'escribimos',
       ustedes: 'escribieron',
     },
-    futuro: generateIrConjugation('escribir'),
+    futuro: generateFutureConjugation('escribir'),
   },
   abrir: {
     presente: generateIrConjugation('abr'),
@@ -718,7 +731,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'abrimos',
       ustedes: 'abrieron',
     },
-    futuro: generateIrConjugation('abrir'),
+    futuro: generateFutureConjugation('abrir'),
   },
   recibir: {
     presente: generateIrConjugation('recib'),
@@ -729,7 +742,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'recibimos',
       ustedes: 'recibieron',
     },
-    futuro: generateIrConjugation('recibir'),
+    futuro: generateFutureConjugation('recibir'),
   },
   compartir: {
     presente: generateIrConjugation('compart'),
@@ -740,7 +753,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'compartimos',
       ustedes: 'compartieron',
     },
-    futuro: generateIrConjugation('compartir'),
+    futuro: generateFutureConjugation('compartir'),
   },
   discutir: {
     presente: generateIrConjugation('discut'),
@@ -751,7 +764,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'discutimos',
       ustedes: 'discutieron',
     },
-    futuro: generateIrConjugation('discutir'),
+    futuro: generateFutureConjugation('discutir'),
   },
   cumplir: {
     presente: generateIrConjugation('cumpl'),
@@ -762,7 +775,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'cumplimos',
       ustedes: 'cumplieron',
     },
-    futuro: generateIrConjugation('cumplir'),
+    futuro: generateFutureConjugation('cumplir'),
   },
 
   // === STEM-CHANGING VERBS (e→ie) ===
@@ -782,7 +795,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'cerramos',
       ustedes: 'cerraron',
     },
-    futuro: generateArConjugation('cerrar'),
+    futuro: generateFutureConjugation('cerrar'),
     irregular: true,
     irregularNote: 'Present to watch: yo cierro, él cierra, ustedes cierran. Vos stays regular.',
   },
@@ -802,7 +815,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'pensamos',
       ustedes: 'pensaron',
     },
-    futuro: generateArConjugation('pensar'),
+    futuro: generateFutureConjugation('pensar'),
     irregular: true,
     irregularNote: 'Present to watch: yo pienso, él piensa, ustedes piensan. Vos stays regular.',
   },
@@ -822,7 +835,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'entendimos',
       ustedes: 'entendieron',
     },
-    futuro: generateErConjugation('entender'),
+    futuro: generateFutureConjugation('entender'),
     irregular: true,
     irregularNote:
       'Present to watch: yo entiendo, él entiende, ustedes entienden. Vos stays regular.',
@@ -843,7 +856,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'empezamos',
       ustedes: 'empezaron',
     },
-    futuro: generateArConjugation('empezar'),
+    futuro: generateFutureConjugation('empezar'),
     irregular: true,
     irregularNote: 'Present to watch: yo empiezo, él empieza, ustedes empiezan. Past yo is empecé.',
   },
@@ -863,7 +876,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'perdimos',
       ustedes: 'perdieron',
     },
-    futuro: generateErConjugation('perder'),
+    futuro: generateFutureConjugation('perder'),
     irregular: true,
     irregularNote: 'Present to watch: yo pierdo, él pierde, ustedes pierden. Vos stays regular.',
   },
@@ -911,7 +924,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'dormimos',
       ustedes: 'durmieron',
     },
-    futuro: generateIrConjugation('dormir'),
+    futuro: generateFutureConjugation('dormir'),
     irregular: true,
     irregularNote: 'Present uses duermo/duerme/duermen. Past él/ustedes are durmió/durmieron.',
   },
@@ -931,7 +944,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'volvimos',
       ustedes: 'volvieron',
     },
-    futuro: generateErConjugation('volver'),
+    futuro: generateFutureConjugation('volver'),
     irregular: true,
     irregularNote: 'Present to watch: yo vuelvo, él vuelve, ustedes vuelven. Vos stays regular.',
   },
@@ -959,7 +972,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       ustedes: 'juegan',
     },
     preterito: { yo: 'jugué', vos: 'jugaste', el: 'jugó', nosotros: 'jugamos', ustedes: 'jugaron' },
-    futuro: generateArConjugation('jugar'),
+    futuro: generateFutureConjugation('jugar'),
     irregular: true,
     irregularNote: 'Present to watch: yo juego, él juega, ustedes juegan. Past yo is jugué.',
   },
@@ -979,7 +992,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'recordamos',
       ustedes: 'recordaron',
     },
-    futuro: generateArConjugation('recordar'),
+    futuro: generateFutureConjugation('recordar'),
     irregular: true,
     irregularNote:
       'Present to watch: yo recuerdo, él recuerda, ustedes recuerdan. Vos stays regular.',
@@ -1000,7 +1013,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'encontramos',
       ustedes: 'encontraron',
     },
-    futuro: generateArConjugation('encontrar'),
+    futuro: generateFutureConjugation('encontrar'),
     irregular: true,
     irregularNote:
       'Present to watch: yo encuentro, él encuentra, ustedes encuentran. Vos stays regular.',
@@ -1021,7 +1034,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'costamos',
       ustedes: 'costaron',
     },
-    futuro: generateArConjugation('costar'),
+    futuro: generateFutureConjugation('costar'),
     irregular: true,
     irregularNote: 'Present to watch: yo cuesto, él cuesta, ustedes cuestan. Vos stays regular.',
   },
@@ -1041,7 +1054,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'almorzamos',
       ustedes: 'almorzaron',
     },
-    futuro: generateArConjugation('almorzar'),
+    futuro: generateFutureConjugation('almorzar'),
     irregular: true,
     irregularNote: 'Present uses almuerzo/almuerza/almuerzan. Past yo is almorcé.',
   },
@@ -1063,7 +1076,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'sentimos',
       ustedes: 'sintieron',
     },
-    futuro: generateIrConjugation('sentir'),
+    futuro: generateFutureConjugation('sentir'),
     irregular: true,
     irregularNote: 'Present uses siento/siente/sienten. Past él/ustedes are sintió/sintieron.',
   },
@@ -1083,7 +1096,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'pedimos',
       ustedes: 'pidieron',
     },
-    futuro: generateIrConjugation('pedir'),
+    futuro: generateFutureConjugation('pedir'),
     irregular: true,
     irregularNote:
       'Present to watch: yo pido, él pide, ustedes piden. Past él/ustedes are pidió/pidieron.',
@@ -1104,7 +1117,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'repetimos',
       ustedes: 'repitieron',
     },
-    futuro: generateIrConjugation('repetir'),
+    futuro: generateFutureConjugation('repetir'),
     irregular: true,
     irregularNote:
       'Present to watch: yo repito, él repite, ustedes repiten. Past él/ustedes are repitió/repitieron.',
@@ -1125,7 +1138,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'servimos',
       ustedes: 'sirvieron',
     },
-    futuro: generateIrConjugation('servir'),
+    futuro: generateFutureConjugation('servir'),
     irregular: true,
     irregularNote:
       'Present to watch: yo sirvo, él sirve, ustedes sirven. Past él/ustedes are sirvió/sirvieron.',
@@ -1386,14 +1399,14 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'conocimos',
       ustedes: 'conocieron',
     },
-    futuro: generateErConjugation('conocer'),
+    futuro: generateFutureConjugation('conocer'),
     irregular: true,
     irregularNote: 'Yo is conozco.',
   },
   leer: {
     presente: generateErConjugation('le'),
     preterito: { yo: 'leí', vos: 'leíste', el: 'leyó', nosotros: 'leímos', ustedes: 'leyeron' },
-    futuro: generateErConjugation('leer'),
+    futuro: generateFutureConjugation('leer'),
     irregular: true,
     irregularNote: 'Past él/ustedes add y: leyó/leyeron.',
   },
@@ -1413,7 +1426,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'construimos',
       ustedes: 'construyeron',
     },
-    futuro: generateIrConjugation('construir'),
+    futuro: generateFutureConjugation('construir'),
     irregular: true,
     irregularNote: 'Past él/ustedes add y: construyó/construyeron.',
   },
@@ -1427,7 +1440,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       ustedes: 'huyen',
     },
     preterito: { yo: 'huí', vos: 'huiste', el: 'huyó', nosotros: 'huimos', ustedes: 'huyeron' },
-    futuro: generateIrConjugation('huir'),
+    futuro: generateFutureConjugation('huir'),
     irregular: true,
     irregularNote: 'Present and past él/ustedes use y: huye/huyen and huyó/huyeron.',
   },
@@ -1447,7 +1460,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'influimos',
       ustedes: 'influyeron',
     },
-    futuro: generateIrConjugation('influir'),
+    futuro: generateFutureConjugation('influir'),
     irregular: true,
     irregularNote: 'Present and past él/ustedes use y: influye/influyen and influyó/influyeron.',
   },
@@ -2037,7 +2050,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
   tocar: {
     presente: { yo: 'toco', vos: 'tocás', el: 'toca', nosotros: 'tocamos', ustedes: 'tocan' },
     preterito: { yo: 'toqué', vos: 'tocaste', el: 'tocó', nosotros: 'tocamos', ustedes: 'tocaron' },
-    futuro: generateArConjugation('tocar'),
+    futuro: generateFutureConjugation('tocar'),
   },
   joder: {
     presente: generateErConjugation('jod'),
@@ -2048,7 +2061,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'jodimos',
       ustedes: 'jodieron',
     },
-    futuro: generateErConjugation('joder'),
+    futuro: generateFutureConjugation('joder'),
   },
   molestar: {
     presente: generateArConjugation('molest'),
@@ -2059,7 +2072,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'molestamos',
       ustedes: 'molestaron',
     },
-    futuro: generateArConjugation('molestar'),
+    futuro: generateFutureConjugation('molestar'),
   },
   sonreír: {
     presente: {
@@ -2077,7 +2090,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'sonreímos',
       ustedes: 'sonrieron',
     },
-    futuro: generateIrConjugation('sonreir'),
+    futuro: generateFutureConjugation('sonreir'),
     irregular: true,
     irregularNote:
       'Keep the í sound in present: sonrío, sonríe, sonríen. Past él/ustedes are sonrió/sonrieron.',
@@ -2091,12 +2104,12 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'vacilamos',
       ustedes: 'vacilaron',
     },
-    futuro: generateArConjugation('vacilar'),
+    futuro: generateFutureConjugation('vacilar'),
   },
   pelar: {
     presente: generateArConjugation('pel'),
     preterito: { yo: 'pelé', vos: 'pelaste', el: 'peló', nosotros: 'pelamos', ustedes: 'pelaron' },
-    futuro: generateArConjugation('pelar'),
+    futuro: generateFutureConjugation('pelar'),
   },
   embarrar: {
     presente: generateArConjugation('embarr'),
@@ -2107,12 +2120,12 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'embarramos',
       ustedes: 'embarraron',
     },
-    futuro: generateArConjugation('embarrar'),
+    futuro: generateFutureConjugation('embarrar'),
   },
   parar: {
     presente: generateArConjugation('par'),
     preterito: { yo: 'paré', vos: 'paraste', el: 'paró', nosotros: 'paramos', ustedes: 'pararon' },
-    futuro: generateArConjugation('parar'),
+    futuro: generateFutureConjugation('parar'),
   },
   embolatar: {
     presente: generateArConjugation('embolat'),
@@ -2123,7 +2136,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'embolatamos',
       ustedes: 'embolataron',
     },
-    futuro: generateArConjugation('embolatar'),
+    futuro: generateFutureConjugation('embolatar'),
   },
   enterar: {
     presente: generateArConjugation('enter'),
@@ -2134,7 +2147,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'enteramos',
       ustedes: 'enteraron',
     },
-    futuro: generateArConjugation('enterar'),
+    futuro: generateFutureConjugation('enterar'),
   },
   cortar: {
     presente: generateArConjugation('cort'),
@@ -2145,7 +2158,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'cortamos',
       ustedes: 'cortaron',
     },
-    futuro: generateArConjugation('cortar'),
+    futuro: generateFutureConjugation('cortar'),
   },
   meter: {
     presente: generateErConjugation('met'),
@@ -2156,7 +2169,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'metimos',
       ustedes: 'metieron',
     },
-    futuro: generateErConjugation('meter'),
+    futuro: generateFutureConjugation('meter'),
   },
   parrandear: {
     presente: generateArConjugation('parrande'),
@@ -2167,7 +2180,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'parrandeamos',
       ustedes: 'parrandearon',
     },
-    futuro: generateArConjugation('parrandear'),
+    futuro: generateFutureConjugation('parrandear'),
   },
   rumbear: {
     presente: generateArConjugation('rumbe'),
@@ -2178,7 +2191,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'rumbeamos',
       ustedes: 'rumbearon',
     },
-    futuro: generateArConjugation('rumbear'),
+    futuro: generateFutureConjugation('rumbear'),
   },
   pasarla: {
     presente: {
@@ -2214,7 +2227,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'montamos',
       ustedes: 'montaron',
     },
-    futuro: generateArConjugation('montar'),
+    futuro: generateFutureConjugation('montar'),
   },
   hacerse: {
     presente: {
@@ -2245,7 +2258,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
   pegar: {
     presente: { yo: 'pego', vos: 'pegás', el: 'pega', nosotros: 'pegamos', ustedes: 'pegan' },
     preterito: { yo: 'pegué', vos: 'pegaste', el: 'pegó', nosotros: 'pegamos', ustedes: 'pegaron' },
-    futuro: generateArConjugation('pegar'),
+    futuro: generateFutureConjugation('pegar'),
   },
   camellar: {
     presente: generateArConjugation('camell'),
@@ -2256,7 +2269,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'camellamos',
       ustedes: 'camellaron',
     },
-    futuro: generateArConjugation('camellar'),
+    futuro: generateFutureConjugation('camellar'),
   },
   guerrear: {
     presente: generateArConjugation('guerre'),
@@ -2267,12 +2280,12 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'guerreamos',
       ustedes: 'guerrieron',
     },
-    futuro: generateArConjugation('guerrear'),
+    futuro: generateFutureConjugation('guerrear'),
   },
   armar: {
     presente: generateArConjugation('arm'),
     preterito: { yo: 'armé', vos: 'armaste', el: 'armó', nosotros: 'armamos', ustedes: 'armaron' },
-    futuro: generateArConjugation('armar'),
+    futuro: generateFutureConjugation('armar'),
   },
   pelar_bolo: {
     presente: {
@@ -2340,7 +2353,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'despedimos',
       ustedes: 'despidieron',
     },
-    futuro: generateIrConjugation('despedir'),
+    futuro: generateFutureConjugation('despedir'),
     irregular: true,
     irregularNote:
       'Present to watch: yo despido, él despide, ustedes despiden. Past él/ustedes are despidió/despidieron.',
@@ -2354,7 +2367,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'renunciamos',
       ustedes: 'renunciaron',
     },
-    futuro: generateArConjugation('renunciar'),
+    futuro: generateFutureConjugation('renunciar'),
   },
   mandar: {
     presente: generateArConjugation('mand'),
@@ -2365,7 +2378,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'mandamos',
       ustedes: 'mandaron',
     },
-    futuro: generateArConjugation('mandar'),
+    futuro: generateFutureConjugation('mandar'),
   },
   hacer_mandado: {
     presente: {
@@ -2678,7 +2691,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'chineamos',
       ustedes: 'chinearon',
     },
-    futuro: generateArConjugation('chinear'),
+    futuro: generateFutureConjugation('chinear'),
   },
   pelar_el_diente: {
     presente: {
@@ -2740,7 +2753,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'rumbeamos',
       ustedes: 'rumbearon',
     },
-    futuro: generateArConjugation('rumbear'),
+    futuro: generateFutureConjugation('rumbear'),
   },
   parchear: {
     presente: generateArConjugation('parche'),
@@ -2751,7 +2764,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'parcheamos',
       ustedes: 'parchearon',
     },
-    futuro: generateArConjugation('parchear'),
+    futuro: generateFutureConjugation('parchear'),
   },
   rochear: {
     presente: generateArConjugation('roche'),
@@ -2762,7 +2775,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'rocheamos',
       ustedes: 'rochearon',
     },
-    futuro: generateArConjugation('rochear'),
+    futuro: generateFutureConjugation('rochear'),
   },
   chatear: {
     presente: generateArConjugation('chate'),
@@ -2773,7 +2786,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'chateamos',
       ustedes: 'chatearon',
     },
-    futuro: generateArConjugation('chatear'),
+    futuro: generateFutureConjugation('chatear'),
   },
   golear: {
     presente: generateArConjugation('gole'),
@@ -2784,7 +2797,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'goleamos',
       ustedes: 'golearon',
     },
-    futuro: generateArConjugation('golear'),
+    futuro: generateFutureConjugation('golear'),
   },
   golear_mucho: {
     presente: {
@@ -2816,12 +2829,12 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
   bajar: {
     presente: generateArConjugation('baj'),
     preterito: { yo: 'bajé', vos: 'bajaste', el: 'bajó', nosotros: 'bajamos', ustedes: 'bajaron' },
-    futuro: generateArConjugation('bajar'),
+    futuro: generateFutureConjugation('bajar'),
   },
   cenar: {
     presente: generateArConjugation('cen'),
     preterito: { yo: 'cené', vos: 'cenaste', el: 'cenó', nosotros: 'cenamos', ustedes: 'cenaron' },
-    futuro: generateArConjugation('cenar'),
+    futuro: generateFutureConjugation('cenar'),
   },
   contar: {
     presente: {
@@ -2838,7 +2851,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'contamos',
       ustedes: 'contaron',
     },
-    futuro: generateArConjugation('contar'),
+    futuro: generateFutureConjugation('contar'),
     irregular: true,
     irregularNote: 'Present to watch: yo cuento, él cuenta, ustedes cuentan. Vos stays regular.',
   },
@@ -2851,14 +2864,14 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'creímos',
       ustedes: 'creyeron',
     },
-    futuro: generateErConjugation('creer'),
+    futuro: generateFutureConjugation('creer'),
     irregular: true,
     irregularNote: 'Past él/ustedes add y: creyó/creyeron. Yo, vos, and nosotros keep í.',
   },
   dejar: {
     presente: generateArConjugation('dej'),
     preterito: { yo: 'dejé', vos: 'dejaste', el: 'dejó', nosotros: 'dejamos', ustedes: 'dejaron' },
-    futuro: generateArConjugation('dejar'),
+    futuro: generateFutureConjugation('dejar'),
   },
   desayunar: {
     presente: generateArConjugation('desayun'),
@@ -2869,7 +2882,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'desayunamos',
       ustedes: 'desayunaron',
     },
-    futuro: generateArConjugation('desayunar'),
+    futuro: generateFutureConjugation('desayunar'),
   },
   entrar: {
     presente: generateArConjugation('entr'),
@@ -2880,7 +2893,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'entramos',
       ustedes: 'entraron',
     },
-    futuro: generateArConjugation('entrar'),
+    futuro: generateFutureConjugation('entrar'),
   },
   explicar: {
     presente: generateArConjugation('explic'),
@@ -2891,12 +2904,12 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'explicamos',
       ustedes: 'explicaron',
     },
-    futuro: generateArConjugation('explicar'),
+    futuro: generateFutureConjugation('explicar'),
   },
   ganar: {
     presente: generateArConjugation('gan'),
     preterito: { yo: 'gané', vos: 'ganaste', el: 'ganó', nosotros: 'ganamos', ustedes: 'ganaron' },
-    futuro: generateArConjugation('ganar'),
+    futuro: generateFutureConjugation('ganar'),
   },
   llegar: {
     presente: generateArConjugation('lleg'),
@@ -2907,7 +2920,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'llegamos',
       ustedes: 'llegaron',
     },
-    futuro: generateArConjugation('llegar'),
+    futuro: generateFutureConjugation('llegar'),
   },
   llevar: {
     presente: generateArConjugation('llev'),
@@ -2918,7 +2931,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'llevamos',
       ustedes: 'llevaron',
     },
-    futuro: generateArConjugation('llevar'),
+    futuro: generateFutureConjugation('llevar'),
   },
   llorar: {
     presente: generateArConjugation('llor'),
@@ -2929,7 +2942,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'lloramos',
       ustedes: 'lloraron',
     },
-    futuro: generateArConjugation('llorar'),
+    futuro: generateFutureConjugation('llorar'),
   },
   necesitar: {
     presente: generateArConjugation('necesit'),
@@ -2940,12 +2953,12 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'necesitamos',
       ustedes: 'necesitaron',
     },
-    futuro: generateArConjugation('necesitar'),
+    futuro: generateFutureConjugation('necesitar'),
   },
   pasar: {
     presente: generateArConjugation('pas'),
     preterito: { yo: 'pasé', vos: 'pasaste', el: 'pasó', nosotros: 'pasamos', ustedes: 'pasaron' },
-    futuro: generateArConjugation('pasar'),
+    futuro: generateFutureConjugation('pasar'),
   },
   preguntar: {
     presente: generateArConjugation('pregunt'),
@@ -2956,7 +2969,7 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'preguntamos',
       ustedes: 'preguntaron',
     },
-    futuro: generateArConjugation('preguntar'),
+    futuro: generateFutureConjugation('preguntar'),
   },
   probar: {
     presente: {
@@ -2973,21 +2986,21 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'probamos',
       ustedes: 'probaron',
     },
-    futuro: generateArConjugation('probar'),
+    futuro: generateFutureConjugation('probar'),
     irregular: true,
     irregularNote: 'Present to watch: yo pruebo, él prueba, ustedes prueban. Vos stays regular.',
   },
   reír: {
     presente: { yo: 'río', vos: 'reís', el: 'ríe', nosotros: 'reímos', ustedes: 'ríen' },
     preterito: { yo: 'reí', vos: 'reíste', el: 'rió', nosotros: 'reímos', ustedes: 'rieron' },
-    futuro: generateIrConjugation('reir'),
+    futuro: generateFutureConjugation('reir'),
     irregular: true,
     irregularNote: 'Keep the í sound in present and past: río, reís, reímos.',
   },
   sacar: {
     presente: generateArConjugation('sac'),
     preterito: { yo: 'saqué', vos: 'sacaste', el: 'sacó', nosotros: 'sacamos', ustedes: 'sacaron' },
-    futuro: generateArConjugation('sacar'),
+    futuro: generateFutureConjugation('sacar'),
   },
   terminar: {
     presente: generateArConjugation('termin'),
@@ -2998,12 +3011,12 @@ export const CONJUGATIONS: Record<string, ConjugationTable> = {
       nosotros: 'terminamos',
       ustedes: 'terminaron',
     },
-    futuro: generateArConjugation('terminar'),
+    futuro: generateFutureConjugation('terminar'),
   },
   usar: {
     presente: generateArConjugation('us'),
     preterito: { yo: 'usé', vos: 'usaste', el: 'usó', nosotros: 'usamos', ustedes: 'usaron' },
-    futuro: generateArConjugation('usar'),
+    futuro: generateFutureConjugation('usar'),
   },
 };
 

@@ -1,7 +1,7 @@
 export type CardQuality = 0 | 1 | 2 | 3 | 4 | 5; // SM-2 scale
 
 // Colombian Spanish conjugation structure
-// Uses vos (not tú) and ustedes (no vosotros) - authentic Colombian conventions
+// Regional usage includes tú, vos, and usted; Colombia uses ustedes rather than vosotros.
 export interface ConjugationTense {
   yo: string;
   vos: string; // Colombian informal (replaces tú)

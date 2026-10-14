@@ -1,0 +1,43 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand
+
+PASS __tests__/storage/storage.test.ts
+PASS __tests__/context/DeckContext.test.tsx
+PASS __tests__/utils/srs.test.ts
+PASS __tests__/screens/StudyScreen.test.tsx
+PASS __tests__/screens/SettingsScreen.test.tsx
+PASS __tests__/services/tts.test.ts
+PASS __tests__/screens/HomeScreen.test.tsx
+PASS __tests__/storage/prefs.test.ts
+PASS __tests__/components/Flashcard.test.tsx
+PASS __tests__/screens/QuizScreen.test.tsx
+PASS __tests__/services/notifications.test.ts
+PASS __tests__/navigation/RootNavigator.test.tsx
+PASS __tests__/scripts/generate-elevenlabs-audio.test.js
+PASS __tests__/screens/PhrasesScreen.test.tsx
+PASS __tests__/screens/ReviewScreen.test.tsx
+PASS __tests__/utils/wordOfDay.test.ts
+PASS __tests__/components/ProgressBar.test.tsx
+PASS __tests__/utils/deckCategories.test.ts
+PASS __tests__/screens/DifficultWordsScreen.test.tsx
+PASS __tests__/components/AudioButton.test.tsx
+PASS __tests__/screens/AddCardScreen.test.tsx
+PASS __tests__/screens/OnboardingScreen.test.tsx
+PASS __tests__/utils/regions.test.ts
+PASS __tests__/utils/shuffle.test.ts
+PASS __tests__/data/conjugationCopy.test.ts
+PASS __tests__/screens/NotificationsScreen.test.tsx
+PASS __tests__/utils/phraseTopics.test.ts
+PASS __tests__/utils/register.test.ts
+PASS __tests__/screens/ManageDecksScreen.test.tsx
+PASS __tests__/data/phraseContent.test.ts
+PASS __tests__/lint/noDeprecatedSafeAreaView.test.ts
+PASS __tests__/utils/exampleText.test.ts
+PASS __tests__/data/exampleTranslations.test.ts
+
+Test Suites: 33 passed, 33 total
+Tests:       310 passed, 310 total
+Snapshots:   0 total
+Time:        10.734 s
+Ran all test suites.

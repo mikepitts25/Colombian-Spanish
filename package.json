@@ -15,7 +15,9 @@
     "format:check": "prettier --check .",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "validate:data": "node scripts/validate-project.js",
+    "content:review": "node scripts/export-content-review.js --output docs/editorial/content-review.json"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",

@@ -1,0 +1,158 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand __tests__/data/conjugationForms.test.ts
+
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/checklist-foundation/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/checklist-foundation/Colombian-Spanish'`
+
+FAIL __tests__/data/conjugationForms.test.ts
+  conjugation teaching forms
+    ✕ teaches the simple future of hablar instead of present endings (4 ms)
+    ✕ teaches the simple future of comer instead of present endings
+    ✕ teaches the simple future of vivir instead of present endings
+    ✕ teaches the simple future of reír instead of present endings (1 ms)
+    ✓ preserves the irregular future of tener
+    ✓ preserves the irregular future of venir
+    ✓ preserves the irregular future of decir
+    ✓ preserves the irregular future of hacer
+    ✓ preserves the irregular future of poder
+    ✓ preserves the irregular future of poner
+    ✓ preserves the irregular future of querer
+    ✓ preserves the irregular future of saber
+    ✓ preserves the irregular future of salir (1 ms)
+    ✓ preserves distinct tuteo and voseo in the present
+
+  ● conjugation teaching forms › teaches the simple future of hablar instead of present endings
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 5
+
+      Object {
+    -   "el": "hablará",
+    -   "nosotros": "hablaremos",
+    -   "tu": "hablarás",
+    -   "ustedes": "hablarán",
+    +   "el": "hablara",
+    +   "nosotros": "hablaramos",
+    +   "tu": "hablaras",
+    +   "ustedes": "hablaran",
+        "vos": "hablarás",
+    -   "yo": "hablaré",
+    +   "yo": "hablaro",
+      }
+
+       8 |     ['reír', { yo: 'reiré', tu: 'reirás', vos: 'reirás', el: 'reirá', nosotros: 'reiremos', ustedes: 'reirán' }],
+       9 |   ])('teaches the simple future of %s instead of present endings', (verb, expected) => {
+    > 10 |     expect(lookupConjugation(verb as string)?.futuro).toEqual(expected);
+         |                                                       ^
+      11 |   });
+      12 |
+      13 |   it.each([
+
+      at toEqual (__tests__/data/conjugationForms.test.ts:10:55)
+
+  ● conjugation teaching forms › teaches the simple future of comer instead of present endings
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 5
+
+      Object {
+    -   "el": "comerá",
+    +   "el": "comere",
+        "nosotros": "comeremos",
+    -   "tu": "comerás",
+    -   "ustedes": "comerán",
+    -   "vos": "comerás",
+    -   "yo": "comeré",
+    +   "tu": "comeres",
+    +   "ustedes": "comeren",
+    +   "vos": "comerés",
+    +   "yo": "comero",
+      }
+
+       8 |     ['reír', { yo: 'reiré', tu: 'reirás', vos: 'reirás', el: 'reirá', nosotros: 'reiremos', ustedes: 'reirán' }],
+       9 |   ])('teaches the simple future of %s instead of present endings', (verb, expected) => {
+    > 10 |     expect(lookupConjugation(verb as string)?.futuro).toEqual(expected);
+         |                                                       ^
+      11 |   });
+      12 |
+      13 |   it.each([
+
+      at toEqual (__tests__/data/conjugationForms.test.ts:10:55)
+
+  ● conjugation teaching forms › teaches the simple future of vivir instead of present endings
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 6
+    + Received  + 6
+
+      Object {
+    -   "el": "vivirá",
+    -   "nosotros": "viviremos",
+    -   "tu": "vivirás",
+    -   "ustedes": "vivirán",
+    -   "vos": "vivirás",
+    -   "yo": "viviré",
+    +   "el": "vivire",
+    +   "nosotros": "vivirimos",
+    +   "tu": "vivires",
+    +   "ustedes": "viviren",
+    +   "vos": "vivirís",
+    +   "yo": "viviro",
+      }
+
+       8 |     ['reír', { yo: 'reiré', tu: 'reirás', vos: 'reirás', el: 'reirá', nosotros: 'reiremos', ustedes: 'reirán' }],
+       9 |   ])('teaches the simple future of %s instead of present endings', (verb, expected) => {
+    > 10 |     expect(lookupConjugation(verb as string)?.futuro).toEqual(expected);
+         |                                                       ^
+      11 |   });
+      12 |
+      13 |   it.each([
+
+      at toEqual (__tests__/data/conjugationForms.test.ts:10:55)
+
+  ● conjugation teaching forms › teaches the simple future of reír instead of present endings
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 6
+    + Received  + 6
+
+      Object {
+    -   "el": "reirá",
+    -   "nosotros": "reiremos",
+    -   "tu": "reirás",
+    -   "ustedes": "reirán",
+    -   "vos": "reirás",
+    -   "yo": "reiré",
+    +   "el": "reire",
+    +   "nosotros": "reirimos",
+    +   "tu": "reires",
+    +   "ustedes": "reiren",
+    +   "vos": "reirís",
+    +   "yo": "reiro",
+      }
+
+       8 |     ['reír', { yo: 'reiré', tu: 'reirás', vos: 'reirás', el: 'reirá', nosotros: 'reiremos', ustedes: 'reirán' }],
+       9 |   ])('teaches the simple future of %s instead of present endings', (verb, expected) => {
+    > 10 |     expect(lookupConjugation(verb as string)?.futuro).toEqual(expected);
+         |                                                       ^
+      11 |   });
+      12 |
+      13 |   it.each([
+
+      at toEqual (__tests__/data/conjugationForms.test.ts:10:55)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 10 passed, 14 total
+Snapshots:   0 total
+Time:        0.662 s
+Ran all test suites matching /__tests__\/data\/conjugationForms.test.ts/i.
