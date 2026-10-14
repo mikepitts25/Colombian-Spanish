@@ -1,5 +1,7 @@
 # 🚀 Colombian Spanish SRS - Project Hub
 
+> **Current roadmap:** [Master Plan and Checklist](./MASTER_PLAN.md) is the authoritative source for priorities, task bundles, AI/human ownership, device validation, and completion tracking as of October 14, 2026. The status, counts, architecture, and backlog below are historical and must not override that plan.
+
 **Project Status:** 🟢 Active Development  
 **Last Updated:** `2026-02-04`  
 **Version:** 1.0.0 (Pre-Release)

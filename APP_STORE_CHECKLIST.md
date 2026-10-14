@@ -1,5 +1,7 @@
 # 🚀 App Store Launch Checklist
 
+> **Current release plan:** Follow [MASTER_PLAN.md](./MASTER_PLAN.md), especially B12–B14. This older checklist contains unverified or outdated counts, positioning, privacy/pricing assumptions, age ratings, and screenshot requirements. Revalidate those against the actual candidate and current store requirements before use; unchecked or checked items here are not release evidence.
+
 ## App Information
 
 - **App Name**: Colombian Spanish
