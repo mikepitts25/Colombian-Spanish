@@ -99,7 +99,12 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 - [x] **B01.7 [AI]** Record the dependency audit and apply compatible locked dependency updates without a forced major upgrade. See the dated foundation report for before/after counts.
 - [ ] **B01.8 [AI]** Triage remaining dependency advisory paths and implement a separately verified SDK/navigation upgrade where required; the current audit still has high/moderate findings.
+  - [x] **B01.8-A [AI]** Trace remaining advisory roots and consumer/input paths; document compatible fixes, no-patch paths, and separately testable migration packages. See the dependency-triage report.
+  - [x] **B01.8-B [AI]** Apply the compatible brace-expansion 5.0.12 lockfile patch without changing product dependency ranges; audit now reports 66 total / 43 production-tree findings, zero critical.
+  - [ ] **B01.8-C [AI, SIM]** Complete supported Navigation/Expo/test-tooling migrations or upstream backports, re-audit, and verify native flows. No-patch findings remain tracked rather than assumed resolved.
 - [ ] **B01.9 [AI, H-PRODUCT, H-ACCOUNT]** Decide whether to restore or retire the historical Kanban Pages deployment. Its existing workflow fails because repository Pages is not configured; enabling publication requires an explicit product/account decision.
+
+- [ ] **B01.10 [AI]** Replace deprecated action runtimes in app CI with official Node 24 actions pinned to release SHAs; keep npm checks on Node 22 and pin Ubuntu 24.04. Verify the actual GitHub Actions run after push.
 
 **Current evidence:** [Foundation report](docs/qa/2026-10-14-foundation/REPORT.md), [development commands](DEVELOPMENT.md). B01.4: dedicated simulator created/booted, Expo Go installed; opening the app stopped at a confirmation while Mac UI control was locked. Full screen/restart evidence remains open. B01.5: Android Studio found, but SDK/ADB/emulator setup is missing; emulator workflow remains open.
 
@@ -352,3 +357,7 @@ B02.1-C, B02.2, B02.5, B02.3-A, B02.6-A, B04.1-A, and B11.1-A were merged and pu
 ### iOS simulator retry — 2026-10-14
 
 The owner confirmed the Mac was unlocked. CoreSimulator boot, Metro startup, Expo URL dispatch, and screenshot capture worked, but interactive UI control remains blocked by a missing `Simulator.app` in the installed Xcode bundle. The display still showed the first-open Expo Go confirmation. B01.4 and screen/restart checks remain open; no app-flow acceptance is claimed. See the foundation QA report for the exact retry evidence.
+
+### Dependency triage and CI maintenance — 2026-10-14
+
+B01.8-A/B delivered in a bounded maintenance package; B01.10 implementation awaits remote CI verification; B01.8-C remains open. See [the dependency report](docs/qa/2026-10-14-dependency-triage/REPORT.md) and its exact audit snapshot. Full tests remain 40 suites / 372 tests. No simulator, physical-device, native signing, or editorial acceptance is claimed.
