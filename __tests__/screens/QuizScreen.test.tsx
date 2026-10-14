@@ -1,7 +1,7 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getLearningEvents } from '../../src/storage/learningEvents';
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { fireEvent, render, waitFor, within } from '@testing-library/react-native';
 import { ScrollView } from 'react-native';
 import QuizScreen from '../../src/screens/QuizScreen';
 import { Deck, FlashCard } from '../../src/types';
@@ -101,12 +101,12 @@ beforeEach(async () => {
 });
 
 describe('QuizScreen integration polish', () => {
-  it('shows a study CTA when there are not enough seen words', async () => {
-    mockGetSeenWords.mockResolvedValue(CARDS.slice(0, 2).map(makeSeenWord));
+  it('shows a study CTA when no words have been studied', async () => {
+    mockGetSeenWords.mockResolvedValue([]);
 
     const { getByText } = renderQuiz();
 
-    await waitFor(() => expect(getByText('Study 8 more words')).toBeTruthy());
+    await waitFor(() => expect(getByText('Study 1 more word')).toBeTruthy());
     fireEvent.press(getByText('Study now'));
     expect(mockNavigate).toHaveBeenCalledWith('Study');
   });
@@ -116,7 +116,7 @@ describe('QuizScreen integration polish', () => {
 
     const { UNSAFE_getAllByType, getByText } = renderQuiz();
 
-    await waitFor(() => expect(getByText('Study 8 more words')).toBeTruthy());
+    await waitFor(() => expect(getByText('Start Quiz')).toBeTruthy());
     const horizontalScrollViews = UNSAFE_getAllByType(ScrollView).filter(
       (scrollView) => scrollView.props.horizontal,
     );
@@ -164,12 +164,12 @@ describe('QuizScreen integration polish', () => {
 
   it('renders locked quiz copy in Spanish when UI language is Spanish', async () => {
     mockLanguage = 'es';
-    mockGetSeenWords.mockResolvedValue(CARDS.slice(0, 2).map(makeSeenWord));
+    mockGetSeenWords.mockResolvedValue([]);
 
     const { getByText } = renderQuiz();
 
-    await waitFor(() => expect(getByText('Estudia 8 palabras más')).toBeTruthy());
-    expect(getByText('El quiz se desbloquea después de estudiar un poco')).toBeTruthy();
+    await waitFor(() => expect(getByText('Estudia 1 palabra más')).toBeTruthy());
+    expect(getByText('Empieza con una palabra')).toBeTruthy();
     expect(getByText('Estudiar ahora')).toBeTruthy();
   });
 });
@@ -276,4 +276,77 @@ it('does not score a quiz with only one distinct answer meaning', async () => {
     await screen.findByText('Add more words with different meanings to start a quiz.'),
   ).toBeTruthy();
   expect(await getLearningEvents()).toEqual([]);
+});
+
+describe('early quiz practice', () => {
+  it('finishes a one-word round and records only checked recognition', async () => {
+    mockGetSeenWords.mockResolvedValue([makeSeenWord(CARDS[0])]);
+    (recordQuizResult as jest.Mock).mockImplementation(async (params) => [
+      { ...params, createdAt: NOW },
+    ]);
+    const recordAnswer = jest.fn();
+    const screen = renderQuiz({ recordAnswer });
+    expect(await screen.findByText('Up to 1 question in this round.')).toBeTruthy();
+    fireEvent.press(screen.getByText('Start Quiz'));
+    expect(screen.getByText('1 / 1')).toBeTruthy();
+    fireEvent.press(screen.getByText('back-c0'));
+    await screen.findByText('See results');
+    const scroll = screen.getByTestId('quiz-question-scroll');
+    fireEvent.press(within(scroll).getByText('See results'));
+    expect(await screen.findByText('Quiz Complete')).toBeTruthy();
+    expect(screen.getByText('Nice work recognizing these words.')).toBeTruthy();
+    expect(recordQuizResult).toHaveBeenLastCalledWith(
+      expect.objectContaining({ score: 1, total: 1, missedCardIds: [] }),
+    );
+    expect(await getLearningEvents()).toEqual([
+      expect.objectContaining({
+        cardId: 'c0',
+        modality: 'recognition',
+        evidence: 'answer-checked',
+        outcome: 'correct',
+      }),
+    ]);
+    expect(recordAnswer).not.toHaveBeenCalled();
+  });
+
+  it('builds a short round from only studied words, without repeating duplicate history IDs', async () => {
+    mockGetSeenWords.mockResolvedValue([
+      makeSeenWord(CARDS[0]),
+      makeSeenWord(CARDS[1]),
+      makeSeenWord(CARDS[0]),
+    ]);
+    const screen = renderQuiz();
+    fireEvent.press(await screen.findByText('Start Quiz'));
+    expect(screen.getByText('1 / 2')).toBeTruthy();
+    const first = screen.getByText(/^front-c/).props.children as string;
+    expect(['front-c0', 'front-c1']).toContain(first);
+    fireEvent.press(screen.getByText(first.replace('front-', 'back-')));
+    fireEvent.press(await screen.findByText('Next question'));
+    expect(screen.getByText('2 / 2')).toBeTruthy();
+    const second = screen.getByText(/^front-c/).props.children as string;
+    expect(second).not.toBe(first);
+    expect(['front-c0', 'front-c1']).toContain(second);
+  });
+
+  it('supports a single studied word in a region and an empty-region fallback', async () => {
+    const cards = [makeCard(0, { tags: ['paisa'] }), makeCard(1)];
+    mockGetSeenWords.mockResolvedValue(cards.map(makeSeenWord));
+    const screen = renderQuiz({ decks: [{ ...DECK, cards }] });
+    await screen.findByText('Start Quiz');
+    fireEvent.press(screen.getByText('Rolo'));
+    expect(await screen.findByText('Study now')).toBeTruthy();
+    fireEvent.press(screen.getByText('Paisa'));
+    fireEvent.press(await screen.findByText('Start Quiz'));
+    expect(screen.getByText('front-c0')).toBeTruthy();
+    expect(screen.getByText('1 / 1')).toBeTruthy();
+    expect(screen.getAllByText(/^back-c/)).toHaveLength(2);
+  });
+
+  it('still caps a larger studied pool at ten questions', async () => {
+    const cards = Array.from({ length: 12 }, (_, i) => makeCard(i));
+    mockGetSeenWords.mockResolvedValue(cards.map(makeSeenWord));
+    const screen = renderQuiz({ decks: [{ ...DECK, cards }] });
+    fireEvent.press(await screen.findByText('Start Quiz'));
+    expect(screen.getByText('1 / 10')).toBeTruthy();
+  });
 });

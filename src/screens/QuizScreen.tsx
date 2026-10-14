@@ -51,7 +51,8 @@ type CardRow = {
   card: FlashCard;
 };
 
-const MIN_QUIZ_WORDS = 10;
+const MIN_QUIZ_WORDS = 1;
+const MAX_QUIZ_QUESTIONS = 10;
 
 export default function QuizScreen() {
   const { decks, ready } = useDeck();
@@ -104,10 +105,13 @@ export default function QuizScreen() {
   }, [allCards]);
 
   const availableSeenWords = useMemo(() => {
+    const included = new Set<string>();
     return seenWords.filter((word) => {
       const row = cardRowsById.get(word.cardId);
-      if (!row) return false;
-      return cardMatchesRegion(row.card, activeRegion, row.deckName);
+      if (!row || included.has(word.cardId)) return false;
+      if (!cardMatchesRegion(row.card, activeRegion, row.deckName)) return false;
+      included.add(word.cardId);
+      return true;
     });
   }, [activeRegion, cardRowsById, seenWords]);
 
@@ -155,10 +159,10 @@ export default function QuizScreen() {
         return row ? (row.card.due ?? 0) <= Date.now() : false;
       });
       const notDue = words.filter((word) => !due.some((dueWord) => dueWord.cardId === word.cardId));
-      const selectedDue = shuffle(due).slice(0, MIN_QUIZ_WORDS);
+      const selectedDue = shuffle(due).slice(0, MAX_QUIZ_QUESTIONS);
       const selected = [
         ...selectedDue,
-        ...shuffle(notDue).slice(0, Math.max(0, MIN_QUIZ_WORDS - selectedDue.length)),
+        ...shuffle(notDue).slice(0, Math.max(0, MAX_QUIZ_QUESTIONS - selectedDue.length)),
       ];
 
       return selected
@@ -441,6 +445,12 @@ export default function QuizScreen() {
           <View style={styles.startCard}>
             <Text style={styles.startCount}>{availableSeenWords.length}</Text>
             <Text style={styles.startLabel}>{t('quiz.availableWords')}</Text>
+            <Text style={styles.headerSub}>
+              {t('quiz.roundSize', {
+                count: Math.min(MAX_QUIZ_QUESTIONS, availableSeenWords.length),
+                plural: availableSeenWords.length === 1 ? '' : 's',
+              })}
+            </Text>
             <Pressable style={styles.primaryButton} onPress={startQuiz}>
               <Text style={styles.primaryButtonText}>{t('quiz.start')}</Text>
             </Pressable>
@@ -510,84 +520,93 @@ export default function QuizScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>{t('quiz.title')}</Text>
-        <Text style={styles.progressText}>{progressText}</Text>
-      </View>
-
-      {currentQuestion && (
-        <View style={styles.questionCard}>
-          <Text style={styles.questionLabel}>{t('quiz.questionLabel')}</Text>
-          <Text style={styles.spanishWord}>{currentQuestion.spanish}</Text>
-          <Text style={styles.regionBadge}>{currentQuestion.regionLabel}</Text>
+      <ScrollView
+        key={`${session.id}:${session.currentIndex}`}
+        testID="quiz-question-scroll"
+        contentContainerStyle={styles.questionScroll}
+      >
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>{t('quiz.title')}</Text>
+          <Text style={styles.progressText}>{progressText}</Text>
         </View>
-      )}
 
-      <View style={styles.optionsContainer}>
-        {currentQuestion?.options.map((option, index) => {
-          const isSelected = selectedOption === option;
-          const isCorrectOption = option === currentQuestion.correctAnswer;
-          return (
+        {currentQuestion && (
+          <View style={styles.questionCard}>
+            <Text style={styles.questionLabel}>{t('quiz.questionLabel')}</Text>
+            <Text style={styles.spanishWord}>{currentQuestion.spanish}</Text>
+            <Text style={styles.regionBadge}>{currentQuestion.regionLabel}</Text>
+          </View>
+        )}
+
+        <View style={styles.optionsContainer}>
+          {currentQuestion?.options.map((option, index) => {
+            const isSelected = selectedOption === option;
+            const isCorrectOption = option === currentQuestion.correctAnswer;
+            return (
+              <Pressable
+                key={`${option}-${index}`}
+                style={[
+                  styles.optionButton,
+                  showFeedback && isCorrectOption && styles.optionCorrect,
+                  showFeedback && isSelected && !isCorrectOption && styles.optionIncorrect,
+                ]}
+                onPress={() => handleSelectOption(option)}
+                disabled={showFeedback || saving || !!pending.current}
+              >
+                <Text style={styles.optionText}>{option}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        {saveError && (
+          <View style={styles.feedbackContainer}>
+            <Text accessibilityRole="alert" style={styles.feedbackText}>
+              {t('quiz.saveError')}
+            </Text>
             <Pressable
-              key={`${option}-${index}`}
-              style={[
-                styles.optionButton,
-                showFeedback && isCorrectOption && styles.optionCorrect,
-                showFeedback && isSelected && !isCorrectOption && styles.optionIncorrect,
-              ]}
-              onPress={() => handleSelectOption(option)}
-              disabled={showFeedback || saving || !!pending.current}
+              onPress={() => (answered.current ? void handleNext(isCorrect) : void persistAnswer())}
+              disabled={saving}
             >
-              <Text style={styles.optionText}>{option}</Text>
+              <Text style={styles.optionText}>{t('quiz.retrySave')}</Text>
             </Pressable>
-          );
-        })}
-      </View>
-
-      {saveError && (
-        <View style={styles.feedbackContainer}>
-          <Text accessibilityRole="alert" style={styles.feedbackText}>
-            {t('quiz.saveError')}
-          </Text>
+          </View>
+        )}
+        {showFeedback && currentQuestion && (
+          <View
+            style={[
+              styles.feedbackContainer,
+              isCorrect ? styles.feedbackCorrect : styles.feedbackIncorrect,
+            ]}
+          >
+            <Text style={styles.feedbackText}>
+              {isCorrect
+                ? t('quiz.feedback.correct')
+                : t('quiz.feedback.answer', { answer: currentQuestion.correctAnswer })}
+            </Text>
+          </View>
+        )}
+        {showFeedback && (
           <Pressable
-            onPress={() => (answered.current ? void handleNext(isCorrect) : void persistAnswer())}
+            style={styles.primaryButton}
+            onPress={() => void handleNext(isCorrect)}
             disabled={saving}
           >
-            <Text style={styles.optionText}>{t('quiz.retrySave')}</Text>
+            <Text style={styles.primaryButtonText}>
+              {t(
+                session.currentIndex + 1 === session.questions.length ? 'quiz.finish' : 'quiz.next',
+              )}
+            </Text>
           </Pressable>
-        </View>
-      )}
-      {showFeedback && currentQuestion && (
-        <View
-          style={[
-            styles.feedbackContainer,
-            isCorrect ? styles.feedbackCorrect : styles.feedbackIncorrect,
-          ]}
-        >
-          <Text style={styles.feedbackText}>
-            {isCorrect
-              ? t('quiz.feedback.correct')
-              : t('quiz.feedback.answer', { answer: currentQuestion.correctAnswer })}
-          </Text>
-        </View>
-      )}
-      {showFeedback && (
-        <Pressable
-          style={styles.primaryButton}
-          onPress={() => void handleNext(isCorrect)}
-          disabled={saving}
-        >
-          <Text style={styles.primaryButtonText}>
-            {t(session.currentIndex + 1 === session.questions.length ? 'quiz.finish' : 'quiz.next')}
-          </Text>
-        </Pressable>
-      )}
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
+  questionScroll: { paddingBottom: spacing(3) },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: spacing(4) },
   loadingText: { color: colors.textSecondary, fontSize: typography.size.lg },
 
