@@ -33,4 +33,4 @@ Date: October 14, 2026. Base: `da9dcc0`. Scope is defined in [the batch plan](..
 
 ## Integration evidence
 
-Commit, main push, and remote CI evidence are recorded in the master plan's work log. The batch is not a claim that all B02 or release work is complete.
+Functional commit `e6bbc56` was fast-forward merged and pushed to `main`. [CI run 38528081242](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38528081242) passed all quality/content checks and iOS/Android project generation and production JS bundle jobs on Linux/Node 22. The merged main checkout also passed all 372 tests, types, lint, formatting, and data checks locally. Evidence is also recorded in the master plan work log. The batch is not a claim that all B02 or release work is complete.

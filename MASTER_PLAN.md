@@ -10,7 +10,7 @@
 
 **Brief:** Product assessment and user request in this chat on October 14, 2026. Major new subsystems get a focused design and implementation plan when selected; do not predesign the entire roadmap or invent future interfaces now.
 
-**Last updated:** 2026-10-14. **Status:** First AI batch merged; second AI correctness batch verified locally. Remaining implementation and human/device gates are tracked below.
+**Last updated:** 2026-10-14. **Status:** First two AI batches merged and pushed; second batch CI passed. Remaining implementation and human/device gates are tracked below.
 
 ## How to use this checklist
 
@@ -347,4 +347,4 @@ B01.1/B01.2/B01.3/B01.6/B01.7 are verified locally; B02.1-A/B, B03.1-A, and B03.
 
 ### Second AI correctness batch — 2026-10-14
 
-B02.1-C, B02.2, B02.5, B02.3-A, B02.6-A, B04.1-A, and B11.1-A have local verification. See [the report](docs/qa/2026-10-14-learning-correctness/REPORT.md) for the event schema, regression evidence, and explicit limits. The full suite passed 372 tests across 40 suites. Recognition is now separate from flashcard scheduling; flashcard event production and broader session/transaction safety remain open.
+B02.1-C, B02.2, B02.5, B02.3-A, B02.6-A, B04.1-A, and B11.1-A were merged and pushed to `main` at `e6bbc56`. [GitHub Actions run 38528081242](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38528081242) passed on Linux/Node 22, including all quality/content checks and independent iOS/Android native project generation and production JS bundles. Main was also retested locally after merging. See [the report](docs/qa/2026-10-14-learning-correctness/REPORT.md) for the event schema, regression evidence, and explicit limits. The full suite passed 372 tests across 40 suites. Recognition is now separate from flashcard scheduling; flashcard event production and broader session/transaction safety remain open.

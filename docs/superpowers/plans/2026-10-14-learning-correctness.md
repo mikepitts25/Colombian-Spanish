@@ -37,6 +37,6 @@
 
 - [x] Full tests, types, lint, formatting, data/inventory checks, production platform JS bundles.
 - [x] Independent read-only code review, update master checklist with precise partial/full completion.
-- [ ] Merge and push main under the user's standing instruction; verify GitHub CI. Keep device/human tasks open.
+- [x] Merge and push main under the user's standing instruction; verify GitHub CI. Keep device/human tasks open.
 
 **Execution record:** Targeted failures were observed before each correction; the final suite passed 372 tests. Review found duplicate answer meanings; regression tests and a text-level deduplication/unusable-pool fix resolved it. An additional delayed-write regression closed the newly focused-screen read race. Wider semantic distractor quality, transactional study grading, and physical/native validation remain outside this bounded batch. See the dated QA report for exact guarantees and limits.
