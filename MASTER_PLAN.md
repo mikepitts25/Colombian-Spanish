@@ -10,7 +10,7 @@
 
 **Brief:** Product assessment and user request in this chat on October 14, 2026. Major new subsystems get a focused design and implementation plan when selected; do not predesign the entire roadmap or invent future interfaces now.
 
-**Last updated:** 2026-10-14. **Status:** First AI implementation batch in progress; verified items and remaining human/device gates are tracked below.
+**Last updated:** 2026-10-14. **Status:** First AI implementation batch merged and pushed; remaining implementation and human/device gates are tracked below.
 
 ## How to use this checklist
 
@@ -99,6 +99,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 - [x] **B01.7 [AI]** Record the dependency audit and apply compatible locked dependency updates without a forced major upgrade. See the dated foundation report for before/after counts.
 - [ ] **B01.8 [AI]** Triage remaining dependency advisory paths and implement a separately verified SDK/navigation upgrade where required; the current audit still has high/moderate findings.
+- [ ] **B01.9 [AI, H-PRODUCT, H-ACCOUNT]** Decide whether to restore or retire the historical Kanban Pages deployment. Its existing workflow fails because repository Pages is not configured; enabling publication requires an explicit product/account decision.
 
 **Current evidence:** [Foundation report](docs/qa/2026-10-14-foundation/REPORT.md), [development commands](DEVELOPMENT.md). B01.4: dedicated simulator created/booted, Expo Go installed; opening the app stopped at a confirmation while Mac UI control was locked. Full screen/restart evidence remains open. B01.5: Android Studio found, but SDK/ADB/emulator setup is missing; emulator workflow remains open.
 
@@ -329,4 +330,8 @@ Append one row per completed package; link longer evidence from the row. Keep im
 
 ### First AI implementation batch — 2026-10-14
 
-B01.1/B01.2/B01.3/B01.6/B01.7 are verified locally; B02.1-A/B, B03.1-A, and B03.5-A are complete subpackages with their parent human/editorial tasks still open. See `docs/qa/2026-10-14-foundation/REPORT.md` and `docs/qa/2026-10-14-foundation/final-checks.txt`. Code review found no blockers; the minor stale-inventory concern was addressed by regenerating and comparing the checked-in inventory in CI. Native project generation/JS bundling is not native compilation or device testing. Remote CI and merge/push results are recorded below once available.
+B01.1/B01.2/B01.3/B01.6/B01.7 are verified locally; B02.1-A/B, B03.1-A, and B03.5-A are complete subpackages with their parent human/editorial tasks still open. See `docs/qa/2026-10-14-foundation/REPORT.md` and `docs/qa/2026-10-14-foundation/final-checks.txt`. Code review found no blockers; the minor stale-inventory concern was addressed by regenerating and comparing the checked-in inventory in CI. Native project generation/JS bundling is not native compilation or device testing. Functional changes were fast-forward merged and pushed to `main` at `76c399e`. [GitHub Actions run 38524675722](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38524675722) passed on Linux/Node 22, including quality/content checks and independent iOS/Android project generation and JS bundles. Main was retested locally after merging: 36 suites / 334 tests passed, plus types/lint/format/data checks. The historical Kanban Pages deployment failed independently due to missing repository Pages configuration; see B01.9. No website publication was enabled.
+
+| Date       | Bundle/task IDs                            | Status                    | Commit / artifact                                    | Verification and platform                                                                           | Human/device work still open                                                                                                      |
+| ---------- | ------------------------------------------ | ------------------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-10-14 | B01.1/2/3/6/7; B02.1-A/B; B03.1-A; B03.5-A | Merged and pushed to main | `76c399e` (functional batch), `ad3ffff` (formatting) | 334 tests; local checks; Linux/Node 22 CI run 38524675722 passed; production iOS/Android JS bundles | Interactive iOS QA, Android SDK/emulator setup, native/editorial acceptance, physical-device checks; remaining AI tasks stay open |

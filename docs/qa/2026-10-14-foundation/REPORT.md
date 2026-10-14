@@ -38,3 +38,11 @@ Android Studio exists, but no standard SDK directory or usable `adb`/`emulator`/
 ## Final local checks
 
 Final results are recorded in `final-checks.txt` after running all checks on the implementation. CLI/unit evidence does not close the human/device rows of the master plan.
+
+## Integration and remote validation
+
+Functional commit `76c399e` was fast-forward merged into main, retested there (334 tests and all quality/data checks passed), and pushed. [GitHub Actions run 38524675722](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38524675722) passed all four jobs on Linux/Node 22, including both platform production bundles.
+
+The separate [historical Kanban Pages workflow](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38524675860) failed at configure-pages with “Pages site failed / Not Found.” The same workflow had failed before this batch. App CI is independent. No Pages settings were changed or publishing enabled; the follow-up is B01.9.
+
+GitHub also annotated the passing CI with action Node-runtime deprecations and an upcoming ubuntu-latest image migration. These did not fail the run; future workflow maintenance should account for them.
