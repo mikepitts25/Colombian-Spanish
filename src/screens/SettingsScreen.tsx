@@ -5,6 +5,11 @@ import { Alert } from 'react-native/Libraries/Alert/Alert';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
 import { getDailyProgress, saveDecks, loadDecks } from '../storage/storage';
+import {
+  getLearningEvents,
+  mergeLearningEvents,
+  validateLearningEvents,
+} from '../storage/learningEvents';
 import { getPrefs } from '../storage/prefs';
 import * as Clipboard from 'expo-clipboard';
 import { useLanguage } from '../context/LanguageContext';
@@ -54,15 +59,20 @@ export default function SettingsScreen() {
   }, []);
 
   async function exportBackup() {
-    const decks = await loadDecks();
-    const payload = {
-      kind: 'colombian-spanish-backup',
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      decks,
-    };
-    await Clipboard.setStringAsync(JSON.stringify(payload));
-    Alert.alert(t('settings.alert.backupCopied.title'), t('settings.alert.backupCopied.message'));
+    try {
+      const [decks, learningEvents] = await Promise.all([loadDecks(), getLearningEvents()]);
+      const payload = {
+        kind: 'colombian-spanish-backup',
+        version: 2,
+        exportedAt: new Date().toISOString(),
+        decks,
+        learningEvents,
+      };
+      await Clipboard.setStringAsync(JSON.stringify(payload));
+      Alert.alert(t('settings.alert.backupCopied.title'), t('settings.alert.backupCopied.message'));
+    } catch {
+      Alert.alert(t('settings.alert.backupError.title'), t('settings.alert.backupError.message'));
+    }
   }
 
   async function importBackup() {
@@ -88,11 +98,21 @@ export default function SettingsScreen() {
         t('settings.alert.notBackup.message'),
       );
     }
-    if (!Array.isArray(parsed.decks)) {
+    if (!Array.isArray(parsed.decks) || ![undefined, 1, 2].includes(parsed.version)) {
       return Alert.alert(
         t('settings.alert.invalidBackup.title'),
         t('settings.alert.invalidBackup.message'),
       );
+    }
+    if (parsed.version === 2) {
+      try {
+        validateLearningEvents(parsed.learningEvents);
+      } catch {
+        return Alert.alert(
+          t('settings.alert.invalidBackup.title'),
+          t('settings.alert.invalidBackup.message'),
+        );
+      }
     }
     Alert.alert(
       t('settings.alert.importConfirm.title'),
@@ -103,8 +123,16 @@ export default function SettingsScreen() {
           text: t('settings.alert.import'),
           style: 'destructive',
           onPress: async () => {
-            await saveDecks(parsed.decks);
-            Alert.alert(t('settings.alert.imported.title'), t('settings.alert.imported.message'));
+            try {
+              if (parsed.version === 2) await mergeLearningEvents(parsed.learningEvents);
+              await saveDecks(parsed.decks);
+              Alert.alert(t('settings.alert.imported.title'), t('settings.alert.imported.message'));
+            } catch {
+              Alert.alert(
+                t('settings.alert.backupError.title'),
+                t('settings.alert.backupError.message'),
+              );
+            }
           },
         },
       ],

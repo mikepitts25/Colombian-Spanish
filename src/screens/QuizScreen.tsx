@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -7,12 +7,17 @@ import { useDeck } from '../hooks/useDeck';
 import {
   getQuizHistory,
   getSeenWords,
-  incrementDailyProgress,
+  recordStudySession,
   QuizResult,
   recordQuizResult,
   SeenWord,
 } from '../storage/storage';
 import { FlashCard } from '../types';
+import {
+  appendLearningEvent,
+  createLearningSessionId,
+  LearningEvent,
+} from '../storage/learningEvents';
 import {
   cardMatchesRegion,
   getCardRegionId,
@@ -20,6 +25,7 @@ import {
   REGION_LABEL_KEYS,
   RegionFilterId,
 } from '../utils/regions';
+import { shuffle } from '../utils/shuffle';
 import { useLanguage } from '../context/LanguageContext';
 
 interface QuizQuestion {
@@ -32,6 +38,7 @@ interface QuizQuestion {
 }
 
 interface QuizSession {
+  id: string;
   questions: QuizQuestion[];
   currentIndex: number;
   score: number;
@@ -46,12 +53,8 @@ type CardRow = {
 
 const MIN_QUIZ_WORDS = 10;
 
-function shuffle<T>(items: T[]) {
-  return [...items].sort(() => Math.random() - 0.5);
-}
-
 export default function QuizScreen() {
-  const { decks, ready, recordAnswer } = useDeck();
+  const { decks, ready } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
   const [seenWords, setSeenWords] = useState<SeenWord[]>([]);
@@ -62,6 +65,21 @@ export default function QuizScreen() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [quizComplete, setQuizComplete] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const [questionsUnavailable, setQuestionsUnavailable] = useState(false);
+  const submitting = useRef(false);
+  const advancing = useRef(false);
+  const pending = useRef<{ event: LearningEvent; correct: boolean } | null>(null);
+  const answered = useRef(false);
+  const startedAt = useRef(Date.now());
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (!ready) return;
@@ -104,12 +122,19 @@ export default function QuizScreen() {
   }, [activeRegion, quizHistory]);
 
   const makeQuestion = useCallback(
-    (row: CardRow, answerText?: string): QuizQuestion => {
-      const otherCards = allCards.filter((item) => item.card.id !== row.card.id);
-      const distractors = shuffle(otherCards)
-        .slice(0, 3)
-        .map((item) => item.card.back);
-      const correctAnswer = answerText || row.card.back;
+    (row: CardRow): QuizQuestion | null => {
+      const correctAnswer = row.card.back;
+      const key = (text: string) => text.normalize('NFKC').trim().toLowerCase();
+      const meanings = new Map<string, string>();
+      for (const item of allCards) {
+        const answer = item.card.back;
+        const meaning = key(answer);
+        if (meaning && meaning !== key(correctAnswer) && !meanings.has(meaning)) {
+          meanings.set(meaning, answer);
+        }
+      }
+      const distractors = shuffle([...meanings.values()]).slice(0, 3);
+      if (!distractors.length) return null;
 
       return {
         cardId: row.card.id,
@@ -139,7 +164,7 @@ export default function QuizScreen() {
       return selected
         .map((word) => {
           const row = cardRowsById.get(word.cardId);
-          return row ? makeQuestion(row, word.english) : null;
+          return row ? makeQuestion(row) : null;
         })
         .filter(Boolean) as QuizQuestion[];
     },
@@ -147,8 +172,14 @@ export default function QuizScreen() {
   );
 
   const startQuestions = useCallback((questions: QuizQuestion[]) => {
+    setQuestionsUnavailable(questions.length === 0);
     if (questions.length === 0) return;
+    pending.current = null;
+    answered.current = false;
+    startedAt.current = Date.now();
+    setSaveError(false);
     setSession({
+      id: createLearningSessionId(),
       questions,
       currentIndex: 0,
       score: 0,
@@ -169,7 +200,7 @@ export default function QuizScreen() {
         .map((cardId) => cardRowsById.get(cardId))
         .filter(Boolean)
         .map((row) => makeQuestion(row as CardRow));
-      startQuestions(questions);
+      startQuestions(questions.filter((question): question is QuizQuestion => question !== null));
     },
     [cardRowsById, makeQuestion, startQuestions],
   );
@@ -188,11 +219,13 @@ export default function QuizScreen() {
         .filter((_, index) => !nextSession.answers[index])
         .map((question) => question.cardId);
       const nextHistory = await recordQuizResult({
+        id: nextSession.id,
         score: nextSession.score,
         total: nextSession.questions.length,
         missedCardIds,
         region: activeRegion,
       });
+      if (!mounted.current) return;
       setQuizHistory(nextHistory);
       setQuizComplete(true);
       setSession(nextSession);
@@ -202,7 +235,8 @@ export default function QuizScreen() {
 
   const handleNext = useCallback(
     async (wasCorrect: boolean) => {
-      if (!session) return;
+      if (!session || !answered.current || advancing.current) return;
+      advancing.current = true;
       const nextAnswers = [...session.answers, wasCorrect];
       const nextScore = wasCorrect ? session.score + 1 : session.score;
       const nextIndex = session.currentIndex + 1;
@@ -213,32 +247,75 @@ export default function QuizScreen() {
         currentIndex: nextIndex,
       };
 
-      if (nextIndex >= session.questions.length) {
-        await finishQuiz(nextSession);
-      } else {
-        setSession(nextSession);
-        setSelectedOption(null);
-        setShowFeedback(false);
+      try {
+        if (nextIndex >= session.questions.length) {
+          await finishQuiz(nextSession);
+        } else {
+          setSession(nextSession);
+          setSelectedOption(null);
+          setShowFeedback(false);
+          startedAt.current = Date.now();
+        }
+        pending.current = null;
+        answered.current = false;
+        if (mounted.current) setSaveError(false);
+      } catch {
+        if (mounted.current) setSaveError(true);
+      } finally {
+        advancing.current = false;
       }
     },
     [finishQuiz, session],
   );
 
-  const handleSelectOption = useCallback(
-    async (option: string) => {
-      if (!currentQuestion || showFeedback) return;
+  const persistAnswer = useCallback(async () => {
+    if (!pending.current || submitting.current) return;
+    submitting.current = true;
+    setSaving(true);
+    setSaveError(false);
+    const attempt = pending.current;
+    try {
+      await appendLearningEvent(attempt.event);
+      await recordStudySession();
+      if (mounted.current) {
+        answered.current = true;
+        setIsCorrect(attempt.correct);
+        setShowFeedback(true);
+      }
+    } catch {
+      if (mounted.current) setSaveError(true);
+    } finally {
+      submitting.current = false;
+      if (mounted.current) setSaving(false);
+    }
+  }, []);
 
-      setSelectedOption(option);
+  const handleSelectOption = useCallback(
+    (option: string) => {
+      if (!currentQuestion || !session || showFeedback || submitting.current || pending.current)
+        return;
       const correct = option === currentQuestion.correctAnswer;
-      setIsCorrect(correct);
-      setShowFeedback(true);
-      await recordAnswer(currentQuestion.cardId, correct ? 4 : 1);
-      await incrementDailyProgress(1);
-      setTimeout(() => {
-        void handleNext(correct);
-      }, 800);
+      const now = Date.now();
+      pending.current = {
+        correct,
+        event: {
+          schemaVersion: 1,
+          id: `${session.id}:${session.currentIndex}`,
+          sessionId: session.id,
+          cardId: currentQuestion.cardId,
+          deckId: currentQuestion.deckId,
+          modality: 'recognition',
+          outcome: correct ? 'correct' : 'incorrect',
+          evidence: 'answer-checked',
+          occurredAt: now,
+          hintsUsed: 0,
+          durationMs: Math.max(0, now - startedAt.current),
+        },
+      };
+      setSelectedOption(option);
+      void persistAnswer();
     },
-    [currentQuestion, showFeedback, recordAnswer, handleNext],
+    [currentQuestion, session, showFeedback, persistAnswer],
   );
 
   const renderRegionChips = () => (
@@ -341,6 +418,11 @@ export default function QuizScreen() {
               </Pressable>
             </View>
           </View>
+          {questionsUnavailable && (
+            <Text accessibilityRole="alert" style={styles.emptySub}>
+              {t('quiz.notEnoughChoices')}
+            </Text>
+          )}
           {renderHistory()}
         </ScrollView>
       </SafeAreaView>
@@ -363,6 +445,11 @@ export default function QuizScreen() {
               <Text style={styles.primaryButtonText}>{t('quiz.start')}</Text>
             </Pressable>
           </View>
+          {questionsUnavailable && (
+            <Text accessibilityRole="alert" style={styles.emptySub}>
+              {t('quiz.notEnoughChoices')}
+            </Text>
+          )}
           {renderHistory()}
         </ScrollView>
       </SafeAreaView>
@@ -406,6 +493,11 @@ export default function QuizScreen() {
               <Text style={styles.secondaryButtonText}>{t('quiz.reviewMissed')}</Text>
             </Pressable>
           ) : null}
+          {questionsUnavailable && (
+            <Text accessibilityRole="alert" style={styles.emptySub}>
+              {t('quiz.notEnoughChoices')}
+            </Text>
+          )}
           <Pressable style={styles.primaryButton} onPress={startQuiz}>
             <Text style={styles.primaryButtonText}>{t('quiz.tryAgain')}</Text>
           </Pressable>
@@ -444,7 +536,7 @@ export default function QuizScreen() {
                 showFeedback && isSelected && !isCorrectOption && styles.optionIncorrect,
               ]}
               onPress={() => handleSelectOption(option)}
-              disabled={showFeedback}
+              disabled={showFeedback || saving || !!pending.current}
             >
               <Text style={styles.optionText}>{option}</Text>
             </Pressable>
@@ -452,6 +544,19 @@ export default function QuizScreen() {
         })}
       </View>
 
+      {saveError && (
+        <View style={styles.feedbackContainer}>
+          <Text accessibilityRole="alert" style={styles.feedbackText}>
+            {t('quiz.saveError')}
+          </Text>
+          <Pressable
+            onPress={() => (answered.current ? void handleNext(isCorrect) : void persistAnswer())}
+            disabled={saving}
+          >
+            <Text style={styles.optionText}>{t('quiz.retrySave')}</Text>
+          </Pressable>
+        </View>
+      )}
       {showFeedback && currentQuestion && (
         <View
           style={[
@@ -465,6 +570,17 @@ export default function QuizScreen() {
               : t('quiz.feedback.answer', { answer: currentQuestion.correctAnswer })}
           </Text>
         </View>
+      )}
+      {showFeedback && (
+        <Pressable
+          style={styles.primaryButton}
+          onPress={() => void handleNext(isCorrect)}
+          disabled={saving}
+        >
+          <Text style={styles.primaryButtonText}>
+            {t(session.currentIndex + 1 === session.questions.length ? 'quiz.finish' : 'quiz.next')}
+          </Text>
+        </Pressable>
       )}
     </SafeAreaView>
   );

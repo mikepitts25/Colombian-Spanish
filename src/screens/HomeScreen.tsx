@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
@@ -6,6 +6,7 @@ import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
 import { getDailyProgress, getStreakState } from '../storage/storage';
 import { Deck } from '../types';
+import { useFocusedAsync } from '../hooks/useFocusedAsync';
 import { useLanguage } from '../context/LanguageContext';
 import { speakCard } from '../services/tts';
 import { getCategoryForDeck, getDeckDisplayName } from '../utils/deckCategories';
@@ -75,30 +76,39 @@ type DeckWithDue = Deck & {
   cat: string;
 };
 
+async function loadHomeProgress() {
+  const [daily, streak] = await Promise.all([getDailyProgress(), getStreakState()]);
+  return {
+    count: daily.count,
+    target: daily.target,
+    streak: streak.streak,
+    freezes: streak.freezes,
+    now: Date.now(),
+  };
+}
+
 export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
-  const greeting = useMemo(() => getGreetingKey(), []);
-  const [streak, setStreak] = useState(0);
-  const [freezes, setFreezes] = useState(0);
-  const [dailyCount, setDailyCount] = useState(0);
-  const [dailyTarget, setDailyTarget] = useState(10);
-
-  useEffect(() => {
-    Promise.all([getDailyProgress(), getStreakState()]).then(([dp, s]) => {
-      setDailyCount(dp.count);
-      setDailyTarget(dp.target);
-      setStreak(s.streak);
-      setFreezes(s.freezes);
-    });
-  }, []);
+  const { value: activity, error } = useFocusedAsync(loadHomeProgress, {
+    count: 0,
+    target: 10,
+    streak: 0,
+    freezes: 0,
+    now: Date.now(),
+  });
+  const { count: dailyCount, target: dailyTarget, streak, freezes } = activity;
+  const greeting = useMemo(() => {
+    void activity.now;
+    return getGreetingKey();
+  }, [activity.now]);
 
   const endOfToday = useMemo(() => {
-    const d = new Date();
+    const d = new Date(activity.now);
     d.setHours(23, 59, 59, 999);
     return d.getTime();
-  }, []);
+  }, [activity.now]);
 
   const totalDue = useMemo(
     () =>
@@ -122,8 +132,8 @@ export default function HomeScreen() {
   }, [decks, endOfToday]);
 
   const wordOfDay = useMemo(
-    () => pickWordOfDay(decks || [], new Date(), getDeckDisplayName),
-    [decks],
+    () => pickWordOfDay(decks || [], new Date(activity.now), getDeckDisplayName),
+    [decks, activity.now],
   );
 
   const dailyGoalProgress = dailyTarget > 0 ? Math.min(dailyCount / dailyTarget, 1) : 0;
@@ -173,6 +183,11 @@ export default function HomeScreen() {
           </Pressable>
         </View>
 
+        {error && (
+          <Text accessibilityRole="alert" style={styles.todaySub}>
+            {t('home.progressUnavailable')}
+          </Text>
+        )}
         <View style={styles.todayCard}>
           <View style={styles.todayHeader}>
             <View>

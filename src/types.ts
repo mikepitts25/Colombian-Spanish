@@ -4,7 +4,7 @@ export type CardQuality = 0 | 1 | 2 | 3 | 4 | 5; // SM-2 scale
 // Regional usage includes tú, vos, and usted; Colombia uses ustedes rather than vosotros.
 export interface ConjugationTense {
   yo: string;
-  vos: string; // Colombian informal (replaces tú)
+  vos: string; // Voseo; usage depends on region and relationship
   el: string; // él/ella/usted
   nosotros: string;
   ustedes: string; // ellos/ellas/ustedes (no vosotros in Colombia)

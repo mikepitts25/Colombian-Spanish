@@ -1,4 +1,6 @@
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getLearningEvents } from '../../src/storage/learningEvents';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { ScrollView } from 'react-native';
 import QuizScreen from '../../src/screens/QuizScreen';
@@ -21,6 +23,7 @@ jest.mock('../../src/storage/storage', () => ({
   getQuizHistory: jest.fn(),
   recordQuizResult: jest.fn(),
   incrementDailyProgress: jest.fn().mockResolvedValue({ count: 1, target: 10 }),
+  recordStudySession: jest.fn().mockResolvedValue(1),
 }));
 
 jest.mock('../../src/context/LanguageContext', () => {
@@ -37,7 +40,7 @@ jest.mock('../../src/context/LanguageContext', () => {
 });
 
 import { useDeck } from '../../src/hooks/useDeck';
-import { getSeenWords, getQuizHistory } from '../../src/storage/storage';
+import { getSeenWords, getQuizHistory, recordQuizResult } from '../../src/storage/storage';
 
 const mockUseDeck = useDeck as jest.Mock;
 const mockGetSeenWords = getSeenWords as jest.Mock;
@@ -89,7 +92,8 @@ function renderQuiz(overrides = {}) {
   return render(<QuizScreen />);
 }
 
-beforeEach(() => {
+beforeEach(async () => {
+  await AsyncStorage.clear();
   jest.clearAllMocks();
   mockLanguage = 'en';
   mockGetSeenWords.mockResolvedValue(CARDS.map(makeSeenWord));
@@ -168,4 +172,108 @@ describe('QuizScreen integration polish', () => {
     expect(getByText('El quiz se desbloquea después de estudiar un poco')).toBeTruthy();
     expect(getByText('Estudiar ahora')).toBeTruthy();
   });
+});
+
+describe('recognition evidence', () => {
+  async function start() {
+    const recordAnswer = jest.fn().mockResolvedValue(undefined);
+    const screen = renderQuiz({ recordAnswer });
+    fireEvent.press(await screen.findByText('Start Quiz'));
+    const prompt = screen.getByText(/^front-c/).props.children as string;
+    return { screen, recordAnswer, correctAnswer: prompt.replace('front-', 'back-') };
+  }
+
+  it('records recognition without changing existing flashcard scheduling or double-counting taps', async () => {
+    const original = JSON.stringify([DECK]);
+    await AsyncStorage.setItem('SRS_DECKS_V3', original);
+    const { screen, recordAnswer, correctAnswer } = await start();
+    fireEvent.press(screen.getByText(correctAnswer));
+    fireEvent.press(screen.getByText(correctAnswer));
+    await waitFor(async () => expect(await getLearningEvents()).toHaveLength(1));
+    expect(recordAnswer).not.toHaveBeenCalled();
+    expect(await AsyncStorage.getItem('SRS_DECKS_V3')).toBe(original);
+    expect((await getLearningEvents())[0]).toMatchObject({
+      modality: 'recognition',
+      evidence: 'answer-checked',
+      outcome: 'correct',
+      hintsUsed: 0,
+    });
+    expect(await screen.findByText('Next question')).toBeTruthy();
+    fireEvent.press(screen.getByText('Next question'));
+    expect(screen.getByText('2 / 10')).toBeTruthy();
+  });
+
+  it('records incorrect recognition as incorrect instead of a failed flashcard review', async () => {
+    const { screen, recordAnswer, correctAnswer } = await start();
+    const wrong = screen
+      .getAllByText(/^back-c/)
+      .find((node) => node.props.children !== correctAnswer)!;
+    fireEvent.press(wrong);
+    await waitFor(async () => expect(await getLearningEvents()).toHaveLength(1));
+    expect((await getLearningEvents())[0].outcome).toBe('incorrect');
+    expect(recordAnswer).not.toHaveBeenCalled();
+  });
+
+  it('keeps an unsaved answer recoverable and retries the same observation', async () => {
+    const { screen, correctAnswer } = await start();
+    (AsyncStorage.setItem as jest.Mock).mockRejectedValueOnce(new Error('disk full'));
+    fireEvent.press(screen.getByText(correctAnswer));
+    expect(await screen.findByText('Try saving again')).toBeTruthy();
+    expect(await getLearningEvents()).toEqual([]);
+    expect(screen.queryByText('Next question')).toBeNull();
+    fireEvent.press(screen.getByText('Try saving again'));
+    expect(await screen.findByText('Next question')).toBeTruthy();
+    expect(await getLearningEvents()).toHaveLength(1);
+  });
+
+  it('uses the current translation rather than stale seen-word text', async () => {
+    mockGetSeenWords.mockResolvedValue(
+      CARDS.map((card) => ({ ...makeSeenWord(card), english: 'old translation' })),
+    );
+    const { screen, correctAnswer } = await start();
+    expect(screen.queryByText('old translation')).toBeNull();
+    expect(screen.getByText(correctAnswer)).toBeTruthy();
+  });
+});
+
+it('can retry completion without losing the score or creating another recognition attempt', async () => {
+  mockGetQuizHistory.mockResolvedValue([
+    { id: 'previous', score: 0, total: 1, createdAt: NOW, missedCardIds: ['c3'], region: 'all' },
+  ]);
+  (recordQuizResult as jest.Mock)
+    .mockRejectedValueOnce(new Error('disk full'))
+    .mockImplementationOnce(async (params) => [{ ...params, createdAt: NOW }]);
+  const screen = renderQuiz();
+  fireEvent.press(await screen.findByText('Review missed cards'));
+  fireEvent.press(screen.getByText('back-c3'));
+  fireEvent.press(await screen.findByText('See results'));
+  fireEvent.press(await screen.findByText('Try saving again'));
+  expect(await screen.findByText('Quiz Complete')).toBeTruthy();
+  expect(await getLearningEvents()).toHaveLength(1);
+  expect((recordQuizResult as jest.Mock).mock.calls).toHaveLength(2);
+  const [first, retry] = (recordQuizResult as jest.Mock).mock.calls;
+  expect(first[0].id).toEqual(expect.any(String));
+  expect(retry[0]).toEqual(first[0]);
+  expect(retry[0].score).toBe(1);
+});
+
+it('shows unique answer meanings even when many cards share one translation', async () => {
+  const cards = CARDS.map((card, index) => ({
+    ...card,
+    back: index === 0 ? 'meaning-b' : 'meaning-a',
+  }));
+  const screen = renderQuiz({ decks: [{ ...DECK, cards }] });
+  fireEvent.press(await screen.findByText('Start Quiz'));
+  expect(screen.getAllByText('meaning-a')).toHaveLength(1);
+  expect(screen.getAllByText('meaning-b')).toHaveLength(1);
+});
+
+it('does not score a quiz with only one distinct answer meaning', async () => {
+  const cards = CARDS.map((card) => ({ ...card, back: 'same meaning' }));
+  const screen = renderQuiz({ decks: [{ ...DECK, cards }] });
+  fireEvent.press(await screen.findByText('Start Quiz'));
+  expect(
+    await screen.findByText('Add more words with different meanings to start a quiz.'),
+  ).toBeTruthy();
+  expect(await getLearningEvents()).toEqual([]);
 });

@@ -531,3 +531,12 @@ describe('quiz history', () => {
     expect(history[9].score).toBe(2);
   });
 });
+
+it('does not duplicate a quiz summary when the same completed session is retried', async () => {
+  const result = { id: 'quiz-retry', score: 1, total: 2, missedCardIds: ['c2'], region: 'all' };
+  await recordQuizResult(result);
+  await recordQuizResult(result);
+  const history = await getQuizHistory();
+  expect(history).toHaveLength(1);
+  expect(history[0].id).toBe('quiz-retry');
+});

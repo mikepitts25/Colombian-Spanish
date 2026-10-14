@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
@@ -6,6 +6,20 @@ import { getDailyProgress, getStudyStreak } from '../storage/storage';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
 import { useLanguage } from '../context/LanguageContext';
+import { getLearningEvents } from '../storage/learningEvents';
+import { useFocusedAsync } from '../hooks/useFocusedAsync';
+import { isNewCard } from '../utils/srs';
+
+async function loadProgress() {
+  const [daily, streak, history] = await Promise.all([
+    getDailyProgress(),
+    getStudyStreak(),
+    getLearningEvents()
+      .then((events) => ({ events, unavailable: false }))
+      .catch(() => ({ events: [], unavailable: true })),
+  ]);
+  return { daily: { count: daily.count, target: daily.target }, streak, history, now: Date.now() };
+}
 
 function DonutRing({ pct, size = 90 }: { pct: number; size?: number }) {
   const stroke = 12;
@@ -36,41 +50,42 @@ export default function ProgressScreen() {
   const { decks, ready } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
-  const [dailyStats, setDailyStats] = useState({ count: 0, target: 10 });
-  const [streak, setStreak] = useState(0);
-
-  useEffect(() => {
-    Promise.all([getDailyProgress(), getStudyStreak()]).then(([dp, s]) => {
-      setDailyStats({ count: dp.count, target: dp.target });
-      setStreak(s);
-    });
-  }, []);
+  const { value: snapshot, error } = useFocusedAsync(loadProgress, {
+    daily: { count: 0, target: 10 },
+    streak: 0,
+    history: { events: [], unavailable: false },
+    now: Date.now(),
+  });
+  const dailyStats = snapshot.daily;
+  const streak = snapshot.streak;
+  const recognition = snapshot.history.events.filter(
+    (event) => event.modality === 'recognition' && event.evidence === 'answer-checked',
+  );
+  const recognitionCorrect = recognition.filter((event) => event.outcome === 'correct').length;
 
   const stats = useMemo(() => {
-    if (!ready || !decks) return { total: 0, studied: 0, mastered: 0, due: 0 };
-    const now = Date.now();
+    if (!ready || !decks) return { total: 0, studied: 0, due: 0 };
+    const now = snapshot.now;
     let total = 0,
       studied = 0,
-      mastered = 0,
       due = 0;
     decks.forEach((d) =>
       d.cards.forEach((c) => {
         total++;
-        if (c.reps > 0) studied++;
-        if (c.reps >= 3) mastered++;
-        if ((c.due || 0) <= now) due++;
+        if (!isNewCard(c)) studied++;
+        if (!isNewCard(c) && (c.due || 0) <= now) due++;
       }),
     );
-    return { total, studied, mastered, due };
-  }, [decks, ready]);
+    return { total, studied, due };
+  }, [decks, ready, snapshot.now]);
 
   const deckProgress = useMemo(() => {
     if (!decks) return [];
     return decks
       .map((d) => {
         const total = d.cards.length;
-        const studied = d.cards.filter((c) => c.reps > 0).length;
-        const due = d.cards.filter((c) => (c.due || 0) <= Date.now()).length;
+        const studied = d.cards.filter((c) => !isNewCard(c)).length;
+        const due = d.cards.filter((c) => !isNewCard(c) && (c.due || 0) <= snapshot.now).length;
         return {
           id: d.id,
           name: d.name,
@@ -83,7 +98,7 @@ export default function ProgressScreen() {
       .filter((d) => d.total > 0)
       .sort((a, b) => b.progress - a.progress)
       .slice(0, 5);
-  }, [decks]);
+  }, [decks, snapshot.now]);
 
   const dailyPct = dailyStats.target > 0 ? Math.min(1, dailyStats.count / dailyStats.target) : 0;
 
@@ -179,7 +194,9 @@ export default function ProgressScreen() {
                 { borderColor: '#003893', backgroundColor: 'rgba(0,56,147,0.15)' },
               ]}
             >
-              <Text style={[styles.statVal, { color: '#60a5fa' }]}>{stats.studied}</Text>
+              <Text style={[styles.statVal, { color: '#60a5fa' }]} testID="progress-in-review">
+                {stats.studied}
+              </Text>
               <Text style={styles.statLabel}>{t('progress.studied')}</Text>
             </View>
           </View>
@@ -190,8 +207,10 @@ export default function ProgressScreen() {
                 { borderColor: '#CE1126', backgroundColor: 'rgba(206,17,38,0.1)' },
               ]}
             >
-              <Text style={[styles.statVal, { color: '#f87171' }]}>{stats.mastered}</Text>
-              <Text style={styles.statLabel}>{t('progress.mastered')}</Text>
+              <Text style={[styles.statVal, { color: '#f87171' }]} testID="progress-due-reviews">
+                {stats.due}
+              </Text>
+              <Text style={styles.statLabel}>{t('progress.dueReviews')}</Text>
             </View>
             <View
               style={[
@@ -203,6 +222,22 @@ export default function ProgressScreen() {
               <Text style={styles.statLabel}>{t('progress.decks')}</Text>
             </View>
           </View>
+        </View>
+
+        <View style={styles.dailyCard}>
+          <Text style={styles.dailyTitle}>{t('progress.recognition')}</Text>
+          <Text style={styles.dailySub}>
+            {snapshot.history.unavailable || error
+              ? t('progress.recognitionUnavailable')
+              : recognition.length
+                ? t('progress.recognitionScore', {
+                    correct: recognitionCorrect,
+                    total: recognition.length,
+                  })
+                : t('progress.recognitionEmpty')}
+          </Text>
+          <Text style={styles.dailySub}>{t('progress.recognitionNote')}</Text>
+          <Text style={styles.dailySub}>{t('progress.reviewNote')}</Text>
         </View>
 
         {/* Deck progress */}

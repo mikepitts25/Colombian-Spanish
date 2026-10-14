@@ -323,15 +323,17 @@ export async function saveQuizHistory(results: QuizResult[]) {
 }
 
 export async function recordQuizResult(params: {
+  id?: string;
   score: number;
   total: number;
   missedCardIds: string[];
   region: string;
 }): Promise<QuizResult[]> {
   const history = await getQuizHistory();
+  if (params.id && history.some((result) => result.id === params.id)) return history;
   const now = Date.now();
   const result: QuizResult = {
-    id: `quiz-${now}`,
+    id: params.id ?? `quiz-${now}`,
     createdAt: now,
     score: params.score,
     total: params.total,

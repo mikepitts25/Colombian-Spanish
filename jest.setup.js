@@ -66,8 +66,8 @@ jest.mock('@react-navigation/native', () => {
     }),
     useRoute: () => ({ params: {}, name: 'MockScreen', key: 'mock' }),
     useFocusEffect: (cb) => {
-      const cleanup = cb();
-      return cleanup;
+      const React = require('react');
+      React.useEffect(cb, [cb]);
     },
     NavigationContainer: ({ children }) => children,
   };

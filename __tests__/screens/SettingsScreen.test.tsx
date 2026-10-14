@@ -1,4 +1,10 @@
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  appendLearningEvent,
+  getLearningEvents,
+  LearningEvent,
+} from '../../src/storage/learningEvents';
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
 import SettingsScreen from '../../src/screens/SettingsScreen';
 
@@ -35,7 +41,7 @@ jest.mock('../../src/context/LanguageContext', () => {
   };
 });
 
-import { getDailyProgress, loadDecks } from '../../src/storage/storage';
+import { getDailyProgress, loadDecks, saveDecks } from '../../src/storage/storage';
 import * as Clipboard from 'expo-clipboard';
 import { Alert } from 'react-native/Libraries/Alert/Alert';
 
@@ -45,7 +51,8 @@ const mockSetStringAsync = Clipboard.setStringAsync as jest.Mock;
 const mockGetStringAsync = Clipboard.getStringAsync as jest.Mock;
 const mockAlert = Alert.alert as jest.Mock;
 
-beforeEach(() => {
+beforeEach(async () => {
+  await AsyncStorage.clear();
   jest.clearAllMocks();
   mockLanguage = 'es';
   mockGetDailyProgress.mockResolvedValue({ date: '2026-01-01', count: 5, target: 10 });
@@ -110,7 +117,7 @@ describe('SettingsScreen rendering', () => {
       'Idioma de interfaz',
       'Español',
       'Exportar respaldo',
-      'Copia tus decks al portapapeles',
+      'Copia tus decks y resultados de práctica al portapapeles',
       'Importar respaldo',
       'Restaurar desde portapapeles',
       'SOBRE LA APP',
@@ -145,7 +152,7 @@ describe('SettingsScreen rendering', () => {
       'UI language',
       'English',
       'Export Backup',
-      'Copy your decks to the clipboard',
+      'Copy your decks and practice results to the clipboard',
       'Import Backup',
       'Restore from clipboard',
       'ABOUT THE APP',
@@ -316,5 +323,72 @@ describe('SettingsScreen import backup', () => {
     await waitFor(() =>
       expect(mockAlert).toHaveBeenCalledWith('Nothing to import', expect.any(String)),
     );
+  });
+});
+
+const observation: LearningEvent = {
+  schemaVersion: 1,
+  id: 'attempt-1',
+  sessionId: 'quiz-1',
+  cardId: 'c1',
+  deckId: 'd1',
+  modality: 'recognition',
+  outcome: 'correct',
+  evidence: 'answer-checked',
+  occurredAt: 1000,
+  hintsUsed: 0,
+  durationMs: 2000,
+};
+
+describe('learning-history backup compatibility', () => {
+  it('includes recorded observations in the new backup format', async () => {
+    await appendLearningEvent(observation);
+    const screen = render(<SettingsScreen />);
+    fireEvent.press(await screen.findByText('Exportar respaldo'));
+    await waitFor(() => expect(mockSetStringAsync).toHaveBeenCalled());
+    const payload = JSON.parse(mockSetStringAsync.mock.calls[0][0]);
+    expect(payload.version).toBe(2);
+    expect(payload.learningEvents).toEqual([observation]);
+  });
+
+  it('restores observations and still accepts a legacy backup without erasing newer evidence', async () => {
+    const screen = render(<SettingsScreen />);
+    await screen.findByText('Importar respaldo');
+    for (const payload of [{ version: 2, learningEvents: [observation] }, { version: 1 }]) {
+      mockAlert.mockClear();
+      mockGetStringAsync.mockResolvedValue(
+        JSON.stringify({ kind: 'colombian-spanish-backup', decks: [], ...payload }),
+      );
+      await act(async () => {
+        fireEvent.press(screen.getByText('Importar respaldo'));
+      });
+      const confirm = mockAlert.mock.calls.find(([title]) => title === '¿Importar respaldo?');
+      await act(async () => {
+        await confirm[2].find((button: any) => button.style === 'destructive').onPress();
+      });
+    }
+    expect(await getLearningEvents()).toEqual([observation]);
+    expect(saveDecks).toHaveBeenCalledTimes(2);
+  });
+
+  it('rejects invalid history or an unsupported backup version before changing data', async () => {
+    await appendLearningEvent(observation);
+    const screen = render(<SettingsScreen />);
+    await screen.findByText('Importar respaldo');
+    for (const payload of [
+      { version: 2, learningEvents: [{ id: 'broken' }] },
+      { version: 2 },
+      { version: 99 },
+    ]) {
+      mockGetStringAsync.mockResolvedValue(
+        JSON.stringify({ kind: 'colombian-spanish-backup', decks: [], ...payload }),
+      );
+      await act(async () => {
+        fireEvent.press(screen.getByText('Importar respaldo'));
+      });
+      expect(mockAlert).toHaveBeenLastCalledWith('Respaldo inválido', expect.any(String));
+    }
+    expect(saveDecks).not.toHaveBeenCalled();
+    expect(await getLearningEvents()).toEqual([observation]);
   });
 });

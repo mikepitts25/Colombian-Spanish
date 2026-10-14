@@ -8,7 +8,7 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native';
-import { ConjugationTense, lookupConjugation } from '../data/conjugations';
+import { lookupConjugation } from '../data/conjugations';
 import { colors, spacing, radius, typography } from '../styles/theme';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -18,22 +18,13 @@ interface ConjugationPanelProps {
 }
 
 const pronouns = [
-  { key: 'yo', label: 'yo' },
-  { key: 'tu_vos', label: 'tú / vos', highlight: true },
-  { key: 'el', label: 'él/ella' },
-  { key: 'nosotros', label: 'nosotros' },
-  { key: 'ustedes', label: 'ustedes', highlight: true },
-];
-
-function getVerbForm(tense: ConjugationTense, key: string): string {
-  if (key === 'tu_vos') {
-    const tu = tense.tu;
-    const vos = tense.vos;
-    if (!tu || tu === vos) return vos;
-    return `${tu} / ${vos}`;
-  }
-  return (tense as Record<string, string>)[key] ?? '';
-}
+  { key: 'yo', label: 'yo', highlight: false },
+  { key: 'tu', label: 'tú', highlight: false },
+  { key: 'vos', label: 'vos', highlight: true },
+  { key: 'el', label: 'él / ella / usted', highlight: false },
+  { key: 'nosotros', label: 'nosotros', highlight: false },
+  { key: 'ustedes', label: 'ellos / ellas / ustedes', highlight: true },
+] as const;
 
 const tenseLabelKeys = {
   presente: 'conjugation.presente',
@@ -54,32 +45,28 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
 
   const isIrregular = conjugation.irregular;
 
-  if (compact) {
-    return (
-      <TouchableOpacity
-        style={[styles.compactButton, isIrregular && styles.irregularButton]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={[styles.compactButtonText, isIrregular && styles.irregularButtonText]}>
-          {isIrregular ? '⚠ ' : ''}
-          {t('conjugation.conjugate')}
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-
   return (
     <>
       {/* Compact trigger button */}
       <TouchableOpacity
-        style={[styles.triggerButton, isIrregular && styles.irregularTriggerButton]}
+        style={[
+          compact ? styles.compactButton : styles.triggerButton,
+          isIrregular && (compact ? styles.irregularButton : styles.irregularTriggerButton),
+        ]}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={[styles.triggerButtonText, isIrregular && styles.irregularTriggerText]}>
+        <Text
+          style={[
+            compact ? styles.compactButtonText : styles.triggerButtonText,
+            isIrregular && (compact ? styles.irregularButtonText : styles.irregularTriggerText),
+          ]}
+        >
           {isIrregular ? '⚠ ' : ''}
           {t('conjugation.conjugate')}
         </Text>
-        {isIrregular && <Text style={styles.irregularBadge}>{t('conjugation.irregular')}</Text>}
+        {isIrregular && !compact && (
+          <Text style={styles.irregularBadge}>{t('conjugation.irregular')}</Text>
+        )}
       </TouchableOpacity>
 
       {/* Modal */}
@@ -133,14 +120,16 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
             {/* Conjugation table */}
             <ScrollView style={styles.tableContainer}>
               {pronouns.map(({ key, label, highlight }) => (
-                <View key={key} style={styles.row}>
+                <View key={key} style={styles.row} testID={`conjugation-row-${key}`}>
                   <View style={styles.pronounCell}>
                     <Text style={[styles.pronoun, highlight && styles.highlightPronoun]}>
                       {label}
                     </Text>
                     {highlight && <Text style={styles.colombiaTag}>🇨🇴</Text>}
                   </View>
-                  <Text style={styles.verbForm}>{getVerbForm(conjugation[activeTense], key)}</Text>
+                  <Text style={styles.verbForm}>
+                    {conjugation[activeTense][key] ?? t('conjugation.unavailable')}
+                  </Text>
                 </View>
               ))}
             </ScrollView>

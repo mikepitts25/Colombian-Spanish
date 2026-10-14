@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import { AppState, AppStateStatus } from 'react-native';
 import HomeScreen from '../../src/screens/HomeScreen';
 import { Deck, FlashCard } from '../../src/types';
 
@@ -8,6 +9,9 @@ let mockLanguage: 'es' | 'en' = 'en';
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
+  useFocusEffect: (callback: () => void) => {
+    require('react').useEffect(callback, [callback]);
+  },
 }));
 
 jest.mock('../../src/hooks/useDeck', () => ({
@@ -217,4 +221,29 @@ describe('HomeScreen quick actions', () => {
     const spoken = mockSpeakCard.mock.calls[0][0];
     expect(SLANG_DECK.cards.map((c) => c.id)).toContain(spoken.id);
   });
+});
+
+it('refreshes daily progress and streak when the app returns to the foreground', async () => {
+  const { getDailyProgress, getStreakState } = require('../../src/storage/storage');
+  let listener: (state: AppStateStatus) => void = () => {};
+  const subscription = jest
+    .spyOn(AppState, 'addEventListener')
+    .mockImplementation((_, callback) => {
+      listener = callback;
+      return { remove: jest.fn() };
+    });
+  try {
+    getDailyProgress.mockResolvedValue({ count: 0, target: 10, newCount: 0 });
+    const screen = render(<HomeScreen />);
+    await screen.findByText('0/10');
+    getDailyProgress.mockResolvedValue({ count: 7, target: 10, newCount: 0 });
+    getStreakState.mockResolvedValue({ streak: 3, freezes: 0 });
+    await act(async () => {
+      listener('active');
+    });
+    expect(screen.getByText('7/10')).toBeTruthy();
+    expect(screen.getByText(/🔥 3/)).toBeTruthy();
+  } finally {
+    subscription.mockRestore();
+  }
 });
