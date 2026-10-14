@@ -10,7 +10,7 @@
 
 **Brief:** Product assessment and user request in this chat on October 14, 2026. Major new subsystems get a focused design and implementation plan when selected; do not predesign the entire roadmap or invent future interfaces now.
 
-**Last updated:** 2026-10-14. **Status:** First two AI batches merged and pushed; second batch CI passed. Remaining implementation and human/device gates are tracked below.
+**Last updated:** 2026-10-14. **Status:** Foundation, learning correctness, dependency maintenance, and iOS smoke batches merged and pushed; implementation CI passed. Remaining implementation and human/device gates are tracked below.
 
 ## How to use this checklist
 
@@ -367,3 +367,5 @@ B01.8-A/B and B01.10 delivered in `306f114`, merged and pushed to main. [GitHub 
 ### iOS smoke and study-queue corrections — 2026-10-14
 
 B01.4 and B02.4-A passed 40 suites / 376 tests, static/data checks, independent follow-up review (29 Study-screen tests), and corrected iOS single-grade/restart checks. They have dated screenshots and regression evidence in [the iOS smoke report](docs/qa/2026-10-14-ios-smoke/REPORT.md). The Xcode 27 setup guidance now correctly uses Device Hub. Broader study persistence, daily-cap/planner behavior, actual audio acceptance, Android, and physical-device checks remain open.
+
+Implementation `0f9811e` was merged and pushed to main. [GitHub Actions run 38620447936](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38620447936) passed all quality/content checks and iOS/Android project generation and production JS bundles. Interactive evidence remains specifically iOS 26.0 / Expo Go through Device Hub; Android bundling is not Android emulator coverage.
