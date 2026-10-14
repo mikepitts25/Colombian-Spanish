@@ -104,7 +104,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [ ] **B01.8-C [AI, SIM]** Complete supported Navigation/Expo/test-tooling migrations or upstream backports, re-audit, and verify native flows. No-patch findings remain tracked rather than assumed resolved.
 - [ ] **B01.9 [AI, H-PRODUCT, H-ACCOUNT]** Decide whether to restore or retire the historical Kanban Pages deployment. Its existing workflow fails because repository Pages is not configured; enabling publication requires an explicit product/account decision.
 
-- [ ] **B01.10 [AI]** Replace deprecated action runtimes in app CI with official Node 24 actions pinned to release SHAs; keep npm checks on Node 22 and pin Ubuntu 24.04. Verify the actual GitHub Actions run after push.
+- [x] **B01.10 [AI]** Replace deprecated action runtimes in app CI with official Node 24 actions pinned to release SHAs; keep npm checks on Node 22 and pin Ubuntu 24.04. Verify the actual GitHub Actions run after push.
 
 **Current evidence:** [Foundation report](docs/qa/2026-10-14-foundation/REPORT.md), [development commands](DEVELOPMENT.md). B01.4: dedicated simulator created/booted, Expo Go installed; opening the app stopped at a confirmation while Mac UI control was locked. Full screen/restart evidence remains open. B01.5: Android Studio found, but SDK/ADB/emulator setup is missing; emulator workflow remains open.
 
@@ -360,4 +360,4 @@ The owner confirmed the Mac was unlocked. CoreSimulator boot, Metro startup, Exp
 
 ### Dependency triage and CI maintenance — 2026-10-14
 
-B01.8-A/B delivered in a bounded maintenance package; B01.10 implementation awaits remote CI verification; B01.8-C remains open. See [the dependency report](docs/qa/2026-10-14-dependency-triage/REPORT.md) and its exact audit snapshot. Full tests remain 40 suites / 372 tests. No simulator, physical-device, native signing, or editorial acceptance is claimed.
+B01.8-A/B and B01.10 delivered in `306f114`, merged and pushed to main. [GitHub Actions run 38594812008](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38594812008) passed all quality/content, iOS/Android project generation, production JS bundle, and artifact-upload jobs; B01.8-C remains open. See [the dependency report](docs/qa/2026-10-14-dependency-triage/REPORT.md) and its exact audit snapshot. Full tests remain 40 suites / 372 tests. No simulator, physical-device, native signing, or editorial acceptance is claimed.
