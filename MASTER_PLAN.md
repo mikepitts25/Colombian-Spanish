@@ -348,3 +348,7 @@ B01.1/B01.2/B01.3/B01.6/B01.7 are verified locally; B02.1-A/B, B03.1-A, and B03.
 ### Second AI correctness batch — 2026-10-14
 
 B02.1-C, B02.2, B02.5, B02.3-A, B02.6-A, B04.1-A, and B11.1-A were merged and pushed to `main` at `e6bbc56`. [GitHub Actions run 38528081242](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38528081242) passed on Linux/Node 22, including all quality/content checks and independent iOS/Android native project generation and production JS bundles. Main was also retested locally after merging. See [the report](docs/qa/2026-10-14-learning-correctness/REPORT.md) for the event schema, regression evidence, and explicit limits. The full suite passed 372 tests across 40 suites. Recognition is now separate from flashcard scheduling; flashcard event production and broader session/transaction safety remain open.
+
+### iOS simulator retry — 2026-10-14
+
+The owner confirmed the Mac was unlocked. CoreSimulator boot, Metro startup, Expo URL dispatch, and screenshot capture worked, but interactive UI control remains blocked by a missing `Simulator.app` in the installed Xcode bundle. The display still showed the first-open Expo Go confirmation. B01.4 and screen/restart checks remain open; no app-flow acceptance is claimed. See the foundation QA report for the exact retry evidence.

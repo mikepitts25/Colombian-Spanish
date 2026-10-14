@@ -53,6 +53,8 @@ npx expo start --localhost --port 8094
 
 Install an SDK-54-compatible Expo Go from the official Expo source for development smoke testing, or use the app's native development build. Open `exp://127.0.0.1:8094` on the dedicated simulator for Expo Go. Keep the Metro terminal running. A first-open confirmation may need interaction; do not claim a launched app from an unaccepted prompt.
 
+An unlocked-Mac retry on October 14 confirmed that `Simulator.app` is missing from the installed Xcode bundle and no alternate copy was found in the searched application/developer locations. CoreSimulator and `simctl` can boot the dedicated device and capture its display, but the available UI controller cannot select a Simulator app. Restore the Simulator application through the Xcode installation before retrying interactive checks; unlocking alone does not resolve this toolchain gap.
+
 With UI control available, verify and capture: onboarding → first study → Home → Quiz (including the insufficient-seen-words state) → Phrases → Settings/language → restart/resume. Exercise card grading and audio replay. Store evidence under a dated `docs/qa/` directory with app/build identity. Do not label an Expo Go smoke test as a signed native-release test.
 
 ### Reset and fixture safety

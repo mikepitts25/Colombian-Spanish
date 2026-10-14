@@ -33,6 +33,8 @@ Production-dependency audit counts changed from 53 findings (including 2 critica
 
 A new dedicated iPhone 16 Pro simulator on iOS 26.0 was created and booted. Cached SDK-54 Expo Go was installed and the local Metro URL was opened. The captured result was the iOS “Open in Expo Go?” confirmation, not the application UI. Native UI automation reported that the Mac was locked and could not unlock automatically. Consequently no onboarding/study/quiz/phrases/settings/restart UI coverage is claimed; B01.4 stays open.
 
+After the owner confirmed the Mac was unlocked, UI checks were retried on main `c32bfde`. Metro started on port 8094 and the dedicated simulator accepted the Expo URL. A fresh `simctl` screenshot still showed the “Open in Expo Go?” confirmation. UI control returned `Invalid app: com.apple.iphonesimulator`; both app-name launch and the standard Xcode Simulator app path failed. The installed Xcode bundle has no `Contents/Developer/Applications/Simulator.app`; searches of `/Applications`, `/Library/Developer`, and the user Applications directory found no alternate copy. No UI navigation or restart/persistence result is claimed. Restore the missing Simulator application/toolchain component before retrying. Metro was stopped after this attempt.
+
 Android Studio exists, but no standard SDK directory or usable `adb`/`emulator`/`sdkmanager` was found. Android emulator coverage stays open. No physical-device testing, native-speaker acceptance, learner pilot, account actions, or publication was performed.
 
 ## Final local checks
