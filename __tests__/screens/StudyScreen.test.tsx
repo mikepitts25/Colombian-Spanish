@@ -201,7 +201,9 @@ describe('StudyScreen landing', () => {
     const { getByText } = renderStudyScreen();
 
     await waitFor(() => {
-      expect(getByText('Empieza una categoría o busca una palabra para crear tu primera sesión.')).toBeTruthy();
+      expect(
+        getByText('Empieza una categoría o busca una palabra para crear tu primera sesión.'),
+      ).toBeTruthy();
     });
   });
 
@@ -218,7 +220,10 @@ describe('StudyScreen landing', () => {
   it('starts a session from a search result and activates the result deck', async () => {
     const screen = renderStudyScreen();
 
-    fireEvent.changeText(screen.getByPlaceholderText('Busca palabras, frases o decks...'), 'celular');
+    fireEvent.changeText(
+      screen.getByPlaceholderText('Busca palabras, frases o decks...'),
+      'celular',
+    );
     fireEvent.press(await screen.findByText('celular'));
 
     await waitFor(() => expect(screen.getByText('cell phone')).toBeTruthy());

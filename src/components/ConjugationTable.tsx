@@ -5,7 +5,13 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 const sampleConjugation = {
   present: { yo: 'hablo', tu: 'hablas', el: 'habla', nosotros: 'hablamos', ellos: 'hablan' },
   past: { yo: 'hablé', tu: 'hablaste', el: 'habló', nosotros: 'hablamos', ellos: 'hablaron' },
-  future: { yo: 'hablaré', tu: 'hablarás', el: 'hablará', nosotros: 'hablaremos', ellos: 'hablarán' },
+  future: {
+    yo: 'hablaré',
+    tu: 'hablarás',
+    el: 'hablará',
+    nosotros: 'hablaremos',
+    ellos: 'hablarán',
+  },
 };
 
 const pronouns = [

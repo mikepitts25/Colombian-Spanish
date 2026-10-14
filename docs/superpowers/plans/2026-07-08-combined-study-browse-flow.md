@@ -31,10 +31,12 @@
 ### Task 1: Persist Last Study Session
 
 **Files:**
+
 - Modify: `src/storage/storage.ts`
 - Test through: `__tests__/screens/StudyScreen.test.tsx`
 
 **Interfaces:**
+
 - Produces: `LastStudySession`, `getLastStudySession(): Promise<LastStudySession | undefined>`, `saveLastStudySession(session: Omit<LastStudySession, 'updatedAt'>): Promise<LastStudySession>`.
 - Consumes: AsyncStorage.
 
@@ -101,11 +103,13 @@ Expected: tests still fail until the StudyScreen behavior is implemented.
 ### Task 2: Build Study Landing and Session Transitions
 
 **Files:**
+
 - Modify: `src/screens/StudyScreen.tsx`
 - Modify: `src/i18n/translations.ts`
 - Test: `__tests__/screens/StudyScreen.test.tsx`
 
 **Interfaces:**
+
 - Consumes: `getLastStudySession()`, `saveLastStudySession()`, `getPreferredDeckForCategory()`, `CATEGORY_DISPLAY`.
 - Produces: landing mode UI, session mode UI, search/category/resume transitions.
 
@@ -171,10 +175,12 @@ Expected: PASS.
 ### Task 3: Remove Browse from Bottom Navigation
 
 **Files:**
+
 - Modify: `src/navigation/index.tsx`
 - Test: `__tests__/navigation/RootNavigator.test.tsx`
 
 **Interfaces:**
+
 - Consumes: `StudyScreen`.
 - Produces: bottom tabs `Home`, `Study`, `Progress`, `Settings`.
 
@@ -195,11 +201,13 @@ Expected: PASS.
 ### Task 4: Remove Dead Browse Screen
 
 **Files:**
+
 - Delete: `src/screens/BrowseScreen.tsx`
 - Delete: `__tests__/screens/BrowseScreen.test.tsx`
 - Modify: `ACCESSIBILITY.md`
 
 **Interfaces:**
+
 - Consumes: Study landing behavior from Task 2.
 - Produces: no user-facing or tested `BrowseScreen` duplicate.
 
@@ -216,9 +224,11 @@ Remove `BrowseScreen.tsx` from `ACCESSIBILITY.md` because it is no longer a scre
 ### Task 5: Final Verification
 
 **Files:**
+
 - No direct edits unless verification finds a defect.
 
 **Interfaces:**
+
 - Consumes: all previous tasks.
 - Produces: verified implementation.
 

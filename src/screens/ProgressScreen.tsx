@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  StyleSheet, Text, View, ScrollView, Pressable,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
 import { getDailyProgress, getStudyStreak } from '../storage/storage';
@@ -51,13 +49,18 @@ export default function ProgressScreen() {
   const stats = useMemo(() => {
     if (!ready || !decks) return { total: 0, studied: 0, mastered: 0, due: 0 };
     const now = Date.now();
-    let total = 0, studied = 0, mastered = 0, due = 0;
-    decks.forEach((d) => d.cards.forEach((c) => {
-      total++;
-      if (c.reps > 0) studied++;
-      if (c.reps >= 3) mastered++;
-      if ((c.due || 0) <= now) due++;
-    }));
+    let total = 0,
+      studied = 0,
+      mastered = 0,
+      due = 0;
+    decks.forEach((d) =>
+      d.cards.forEach((c) => {
+        total++;
+        if (c.reps > 0) studied++;
+        if (c.reps >= 3) mastered++;
+        if ((c.due || 0) <= now) due++;
+      }),
+    );
     return { total, studied, mastered, due };
   }, [decks, ready]);
 
@@ -68,21 +71,27 @@ export default function ProgressScreen() {
         const total = d.cards.length;
         const studied = d.cards.filter((c) => c.reps > 0).length;
         const due = d.cards.filter((c) => (c.due || 0) <= Date.now()).length;
-        return { id: d.id, name: d.name, total, studied, progress: total > 0 ? studied / total : 0, due };
+        return {
+          id: d.id,
+          name: d.name,
+          total,
+          studied,
+          progress: total > 0 ? studied / total : 0,
+          due,
+        };
       })
       .filter((d) => d.total > 0)
       .sort((a, b) => b.progress - a.progress)
       .slice(0, 5);
   }, [decks]);
 
-  const dailyPct = dailyStats.target > 0
-    ? Math.min(1, dailyStats.count / dailyStats.target)
-    : 0;
+  const dailyPct = dailyStats.target > 0 ? Math.min(1, dailyStats.count / dailyStats.target) : 0;
 
   const motivation = useMemo(() => {
     if (dailyPct >= 1) return { emoji: '🎉', text: t('progress.motivation.done') };
-    if (streak >= 7)   return { emoji: '🔥', text: t('progress.motivation.week', { count: streak }) };
-    if (streak >= 3)   return { emoji: '⚡', text: t('progress.motivation.threeDays', { count: streak }) };
+    if (streak >= 7) return { emoji: '🔥', text: t('progress.motivation.week', { count: streak }) };
+    if (streak >= 3)
+      return { emoji: '⚡', text: t('progress.motivation.threeDays', { count: streak }) };
     return { emoji: '💪', text: t('progress.motivation.default') };
   }, [dailyPct, streak, t]);
 
@@ -100,7 +109,6 @@ export default function ProgressScreen() {
   return (
     <SafeAreaView style={styles.wrap}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-
         {/* Title row */}
         <View style={styles.titleRow}>
           <Text style={styles.pageTitle}>{t('progress.title')}</Text>
@@ -154,21 +162,43 @@ export default function ProgressScreen() {
         {/* 2×2 stat grid */}
         <View style={styles.statGrid}>
           <View style={styles.statRow}>
-            <View style={[styles.statBox, { borderColor: '#FFDA00', backgroundColor: 'rgba(255,218,0,0.08)' }]}>
-              <Text style={[styles.statVal, { color: '#FFDA00' }]}>{stats.total.toLocaleString()}</Text>
+            <View
+              style={[
+                styles.statBox,
+                { borderColor: '#FFDA00', backgroundColor: 'rgba(255,218,0,0.08)' },
+              ]}
+            >
+              <Text style={[styles.statVal, { color: '#FFDA00' }]}>
+                {stats.total.toLocaleString()}
+              </Text>
               <Text style={styles.statLabel}>{t('progress.totalCards')}</Text>
             </View>
-            <View style={[styles.statBox, { borderColor: '#003893', backgroundColor: 'rgba(0,56,147,0.15)' }]}>
+            <View
+              style={[
+                styles.statBox,
+                { borderColor: '#003893', backgroundColor: 'rgba(0,56,147,0.15)' },
+              ]}
+            >
               <Text style={[styles.statVal, { color: '#60a5fa' }]}>{stats.studied}</Text>
               <Text style={styles.statLabel}>{t('progress.studied')}</Text>
             </View>
           </View>
           <View style={styles.statRow}>
-            <View style={[styles.statBox, { borderColor: '#CE1126', backgroundColor: 'rgba(206,17,38,0.1)' }]}>
+            <View
+              style={[
+                styles.statBox,
+                { borderColor: '#CE1126', backgroundColor: 'rgba(206,17,38,0.1)' },
+              ]}
+            >
               <Text style={[styles.statVal, { color: '#f87171' }]}>{stats.mastered}</Text>
               <Text style={styles.statLabel}>{t('progress.mastered')}</Text>
             </View>
-            <View style={[styles.statBox, { borderColor: 'rgba(255,218,0,0.4)', backgroundColor: 'rgba(255,218,0,0.06)' }]}>
+            <View
+              style={[
+                styles.statBox,
+                { borderColor: 'rgba(255,218,0,0.4)', backgroundColor: 'rgba(255,218,0,0.06)' },
+              ]}
+            >
               <Text style={[styles.statVal, { color: '#FFDA00' }]}>{(decks || []).length}</Text>
               <Text style={styles.statLabel}>{t('progress.decks')}</Text>
             </View>
@@ -182,14 +212,18 @@ export default function ProgressScreen() {
             {deckProgress.map((deck) => (
               <View key={deck.id} style={styles.deckProgressRow}>
                 <View style={styles.deckProgressLeft}>
-                  <Text style={styles.deckProgressName} numberOfLines={1}>{deck.name}</Text>
+                  <Text style={styles.deckProgressName} numberOfLines={1}>
+                    {deck.name}
+                  </Text>
                   <Text style={styles.deckProgressSub}>
                     {t('progress.deckSub', { studied: deck.studied, total: deck.total })}
                   </Text>
                 </View>
                 <View style={styles.deckProgressBarWrap}>
                   <View style={styles.deckProgressTrack}>
-                    <View style={[styles.deckProgressFill, { width: `${deck.progress * 100}%` as any }]} />
+                    <View
+                      style={[styles.deckProgressFill, { width: `${deck.progress * 100}%` as any }]}
+                    />
                   </View>
                 </View>
                 {deck.due > 0 && (
@@ -210,7 +244,6 @@ export default function ProgressScreen() {
             <Text style={styles.motivText}>{motivation.text}</Text>
           </View>
         </View>
-
       </ScrollView>
     </SafeAreaView>
   );

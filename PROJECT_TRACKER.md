@@ -4,18 +4,19 @@ Use this with the CSV import file and setup guide to track all your app ideas.
 
 ## Current Status Summary
 
-| App | Ideas | To Do | Doing | Done |
-|-----|-------|-------|-------|------|
-| SpiceSync | 4 | 0 | 0 | 6 |
-| Colombian Spanish | 3 | 3 | 0 | 2 |
-| New Apps | 3 | 0 | 0 | 0 |
+| App               | Ideas | To Do | Doing | Done |
+| ----------------- | ----- | ----- | ----- | ---- |
+| SpiceSync         | 4     | 0     | 0     | 6    |
+| Colombian Spanish | 3     | 3     | 0     | 2    |
+| New Apps          | 3     | 0     | 0     | 0    |
 
 ---
 
 ## 🟢 Ready to Build (High Priority)
 
 ### Colombian Spanish - Launch Blockers
-1. **App icon 1024x1024** 
+
+1. **App icon 1024x1024**
    - Create Colombian flag themed icon
    - Status: To Do | Priority: 🔥 High
 
@@ -38,17 +39,20 @@ _None currently_
 ## 🔵 Ideas (Not Yet Approved)
 
 ### SpiceSync
+
 - Couples matching algorithm
 - E2E encrypted sync
 - Partner invitation system
 - Cloud backup
 
 ### Colombian Spanish
+
 - Native speaker audio recordings
 - Study streak counter
 - Achievement badges
 
 ### New App Ideas
+
 - Budget tracker for couples
 - Shared todo with partner
 - Date night idea generator
@@ -82,4 +86,4 @@ _None currently_
 
 ---
 
-*Last updated: 2026-03-05*
+_Last updated: 2026-03-05_

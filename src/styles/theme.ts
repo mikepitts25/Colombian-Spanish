@@ -9,15 +9,15 @@ const palette = {
   yellow: '#FFDA00',
   yellowLight: '#FFE94D',
   yellowDark: '#E6C400',
-  
+
   blue: '#003893',
   blueLight: '#1A5BBF',
   blueDark: '#002966',
-  
+
   red: '#CE1126',
   redLight: '#E63950',
   redDark: '#A3001C',
-  
+
   // Base neutrals
   slate: {
     950: '#020617',
@@ -43,23 +43,23 @@ export const colors = {
   surface: palette.slate[900],
   surfaceElevated: palette.slate[800],
   surfacePressed: palette.slate[700],
-  
+
   // Text
   textPrimary: palette.slate[50],
   textSecondary: palette.slate[400],
   textTertiary: palette.slate[500],
   textInverse: palette.slate[950],
-  
+
   // Brand - Colombian yellow
   brand: palette.yellow,
   brandLight: palette.yellowLight,
   brandDark: palette.yellowDark,
   brandMuted: 'rgba(255, 218, 0, 0.15)',
-  
+
   // Accents
   accentBlue: palette.blue,
   accentRed: palette.red,
-  
+
   // Semantic
   success: '#10b981',
   successMuted: 'rgba(16, 185, 129, 0.15)',
@@ -69,12 +69,12 @@ export const colors = {
   dangerMuted: 'rgba(206, 17, 38, 0.15)',
   info: palette.blue,
   infoMuted: 'rgba(0, 56, 147, 0.15)',
-  
+
   // Borders
   border: palette.slate[800],
   borderActive: palette.slate[600],
   borderBrand: 'rgba(255, 218, 0, 0.3)',
-  
+
   // Gradients
   gradient: {
     colombia: ['#FFDA00', '#003893', '#CE1126'] as const,

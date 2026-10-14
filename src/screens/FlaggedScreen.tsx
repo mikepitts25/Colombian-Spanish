@@ -1,12 +1,5 @@
 import React, { useMemo } from 'react';
-import {
-  Alert,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Alert, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
 import { colors, spacing } from '../styles/theme';
@@ -83,10 +76,10 @@ export default function FlaggedScreen() {
         {flagged.length === 0
           ? t('flagged.emptySub')
           : t('flagged.countSub', {
-            count: flagged.length,
-            plural: flagged.length === 1 ? '' : 's',
-            verbPlural: flagged.length === 1 ? '' : 'n',
-          })}
+              count: flagged.length,
+              plural: flagged.length === 1 ? '' : 's',
+              verbPlural: flagged.length === 1 ? '' : 'n',
+            })}
       </Text>
 
       {flagged.length > 0 && (
@@ -125,9 +118,7 @@ export default function FlaggedScreen() {
               </View>
               <Text style={styles.spanish}>{item.card.front}</Text>
               <Text style={styles.english}>{item.card.back}</Text>
-              {item.card.example ? (
-                <Text style={styles.example}>"{item.card.example}"</Text>
-              ) : null}
+              {item.card.example ? <Text style={styles.example}>"{item.card.example}"</Text> : null}
               <Text style={styles.cardId}>ID: {item.card.id}</Text>
             </View>
           </View>

@@ -1,11 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, radius, typography, elevation } from '../styles/theme';
@@ -109,40 +103,48 @@ export default function QuizScreen() {
     return quizHistory.filter((result) => result.region === activeRegion);
   }, [activeRegion, quizHistory]);
 
-  const makeQuestion = useCallback((row: CardRow, answerText?: string): QuizQuestion => {
-    const otherCards = allCards.filter((item) => item.card.id !== row.card.id);
-    const distractors = shuffle(otherCards).slice(0, 3).map((item) => item.card.back);
-    const correctAnswer = answerText || row.card.back;
+  const makeQuestion = useCallback(
+    (row: CardRow, answerText?: string): QuizQuestion => {
+      const otherCards = allCards.filter((item) => item.card.id !== row.card.id);
+      const distractors = shuffle(otherCards)
+        .slice(0, 3)
+        .map((item) => item.card.back);
+      const correctAnswer = answerText || row.card.back;
 
-    return {
-      cardId: row.card.id,
-      spanish: row.card.front,
-      correctAnswer,
-      options: shuffle([correctAnswer, ...distractors]),
-      deckId: row.deckId,
-      regionLabel: t(REGION_LABEL_KEYS[getCardRegionId(row.card, row.deckName)]),
-    };
-  }, [allCards, t]);
+      return {
+        cardId: row.card.id,
+        spanish: row.card.front,
+        correctAnswer,
+        options: shuffle([correctAnswer, ...distractors]),
+        deckId: row.deckId,
+        regionLabel: t(REGION_LABEL_KEYS[getCardRegionId(row.card, row.deckName)]),
+      };
+    },
+    [allCards, t],
+  );
 
-  const generateQuestions = useCallback((words: SeenWord[]) => {
-    const due = words.filter((word) => {
-      const row = cardRowsById.get(word.cardId);
-      return row ? (row.card.due ?? 0) <= Date.now() : false;
-    });
-    const notDue = words.filter((word) => !due.some((dueWord) => dueWord.cardId === word.cardId));
-    const selectedDue = shuffle(due).slice(0, MIN_QUIZ_WORDS);
-    const selected = [
-      ...selectedDue,
-      ...shuffle(notDue).slice(0, Math.max(0, MIN_QUIZ_WORDS - selectedDue.length)),
-    ];
-
-    return selected
-      .map((word) => {
+  const generateQuestions = useCallback(
+    (words: SeenWord[]) => {
+      const due = words.filter((word) => {
         const row = cardRowsById.get(word.cardId);
-        return row ? makeQuestion(row, word.english) : null;
-      })
-      .filter(Boolean) as QuizQuestion[];
-  }, [cardRowsById, makeQuestion]);
+        return row ? (row.card.due ?? 0) <= Date.now() : false;
+      });
+      const notDue = words.filter((word) => !due.some((dueWord) => dueWord.cardId === word.cardId));
+      const selectedDue = shuffle(due).slice(0, MIN_QUIZ_WORDS);
+      const selected = [
+        ...selectedDue,
+        ...shuffle(notDue).slice(0, Math.max(0, MIN_QUIZ_WORDS - selectedDue.length)),
+      ];
+
+      return selected
+        .map((word) => {
+          const row = cardRowsById.get(word.cardId);
+          return row ? makeQuestion(row, word.english) : null;
+        })
+        .filter(Boolean) as QuizQuestion[];
+    },
+    [cardRowsById, makeQuestion],
+  );
 
   const startQuestions = useCallback((questions: QuizQuestion[]) => {
     if (questions.length === 0) return;
@@ -161,13 +163,16 @@ export default function QuizScreen() {
     startQuestions(generateQuestions(availableSeenWords));
   }, [availableSeenWords, generateQuestions, startQuestions]);
 
-  const startMissedReview = useCallback((result: QuizResult) => {
-    const questions = result.missedCardIds
-      .map((cardId) => cardRowsById.get(cardId))
-      .filter(Boolean)
-      .map((row) => makeQuestion(row as CardRow));
-    startQuestions(questions);
-  }, [cardRowsById, makeQuestion, startQuestions]);
+  const startMissedReview = useCallback(
+    (result: QuizResult) => {
+      const questions = result.missedCardIds
+        .map((cardId) => cardRowsById.get(cardId))
+        .filter(Boolean)
+        .map((row) => makeQuestion(row as CardRow));
+      startQuestions(questions);
+    },
+    [cardRowsById, makeQuestion, startQuestions],
+  );
 
   function changeRegion(region: RegionFilterId) {
     setActiveRegion(region);
@@ -177,55 +182,64 @@ export default function QuizScreen() {
     setShowFeedback(false);
   }
 
-  const finishQuiz = useCallback(async (nextSession: QuizSession) => {
-    const missedCardIds = nextSession.questions
-      .filter((_, index) => !nextSession.answers[index])
-      .map((question) => question.cardId);
-    const nextHistory = await recordQuizResult({
-      score: nextSession.score,
-      total: nextSession.questions.length,
-      missedCardIds,
-      region: activeRegion,
-    });
-    setQuizHistory(nextHistory);
-    setQuizComplete(true);
-    setSession(nextSession);
-  }, [activeRegion]);
-
-  const handleNext = useCallback(async (wasCorrect: boolean) => {
-    if (!session) return;
-    const nextAnswers = [...session.answers, wasCorrect];
-    const nextScore = wasCorrect ? session.score + 1 : session.score;
-    const nextIndex = session.currentIndex + 1;
-    const nextSession = {
-      ...session,
-      score: nextScore,
-      answers: nextAnswers,
-      currentIndex: nextIndex,
-    };
-
-    if (nextIndex >= session.questions.length) {
-      await finishQuiz(nextSession);
-    } else {
+  const finishQuiz = useCallback(
+    async (nextSession: QuizSession) => {
+      const missedCardIds = nextSession.questions
+        .filter((_, index) => !nextSession.answers[index])
+        .map((question) => question.cardId);
+      const nextHistory = await recordQuizResult({
+        score: nextSession.score,
+        total: nextSession.questions.length,
+        missedCardIds,
+        region: activeRegion,
+      });
+      setQuizHistory(nextHistory);
+      setQuizComplete(true);
       setSession(nextSession);
-      setSelectedOption(null);
-      setShowFeedback(false);
-    }
-  }, [finishQuiz, session]);
+    },
+    [activeRegion],
+  );
 
-  const handleSelectOption = useCallback(async (option: string) => {
-    if (!currentQuestion || showFeedback) return;
+  const handleNext = useCallback(
+    async (wasCorrect: boolean) => {
+      if (!session) return;
+      const nextAnswers = [...session.answers, wasCorrect];
+      const nextScore = wasCorrect ? session.score + 1 : session.score;
+      const nextIndex = session.currentIndex + 1;
+      const nextSession = {
+        ...session,
+        score: nextScore,
+        answers: nextAnswers,
+        currentIndex: nextIndex,
+      };
 
-    setSelectedOption(option);
-    const correct = option === currentQuestion.correctAnswer;
-    setIsCorrect(correct);
-    setShowFeedback(true);
-    await recordAnswer(currentQuestion.cardId, correct ? 4 : 1);
-    await incrementDailyProgress(1);
-    setTimeout(() => {
-      void handleNext(correct);
-    }, 800);
-  }, [currentQuestion, showFeedback, recordAnswer, handleNext]);
+      if (nextIndex >= session.questions.length) {
+        await finishQuiz(nextSession);
+      } else {
+        setSession(nextSession);
+        setSelectedOption(null);
+        setShowFeedback(false);
+      }
+    },
+    [finishQuiz, session],
+  );
+
+  const handleSelectOption = useCallback(
+    async (option: string) => {
+      if (!currentQuestion || showFeedback) return;
+
+      setSelectedOption(option);
+      const correct = option === currentQuestion.correctAnswer;
+      setIsCorrect(correct);
+      setShowFeedback(true);
+      await recordAnswer(currentQuestion.cardId, correct ? 4 : 1);
+      await incrementDailyProgress(1);
+      setTimeout(() => {
+        void handleNext(correct);
+      }, 800);
+    },
+    [currentQuestion, showFeedback, recordAnswer, handleNext],
+  );
 
   const renderRegionChips = () => (
     <View style={styles.regionPanel}>
@@ -237,7 +251,12 @@ export default function QuizScreen() {
             style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
             onPress={() => changeRegion(region.id)}
           >
-            <Text style={[styles.regionChipText, activeRegion === region.id && styles.regionChipTextActive]}>
+            <Text
+              style={[
+                styles.regionChipText,
+                activeRegion === region.id && styles.regionChipTextActive,
+              ]}
+            >
               {t(REGION_LABEL_KEYS[region.id])}
             </Text>
           </Pressable>
@@ -298,20 +317,23 @@ export default function QuizScreen() {
               <Text style={styles.emptyNeed}>
                 {t('quiz.locked.need', { count: needed, plural: needed !== 1 ? 's' : '' })}
               </Text>
-              <Text style={styles.emptySub}>
-                {t('quiz.locked.sub')}
-              </Text>
+              <Text style={styles.emptySub}>{t('quiz.locked.sub')}</Text>
               <View style={styles.progressContainer}>
                 <View style={styles.progressBar}>
                   <View
                     style={[
                       styles.progressFill,
-                      { width: `${Math.min(100, (availableSeenWords.length / MIN_QUIZ_WORDS) * 100)}%` },
+                      {
+                        width: `${Math.min(100, (availableSeenWords.length / MIN_QUIZ_WORDS) * 100)}%`,
+                      },
                     ]}
                   />
                 </View>
                 <Text style={styles.progressText}>
-                  {t('quiz.progress.words', { count: availableSeenWords.length, target: MIN_QUIZ_WORDS })}
+                  {t('quiz.progress.words', {
+                    count: availableSeenWords.length,
+                    target: MIN_QUIZ_WORDS,
+                  })}
                 </Text>
               </View>
               <Pressable style={styles.primaryButton} onPress={() => nav.navigate('Study')}>
@@ -331,9 +353,7 @@ export default function QuizScreen() {
         <ScrollView contentContainerStyle={styles.startScroll}>
           <View style={styles.header}>
             <Text style={styles.headerTitle}>{t('quiz.title')}</Text>
-            <Text style={styles.headerSub}>
-              {t('quiz.startSub')}
-            </Text>
+            <Text style={styles.headerSub}>{t('quiz.startSub')}</Text>
           </View>
           {renderRegionChips()}
           <View style={styles.startCard}>
@@ -379,7 +399,10 @@ export default function QuizScreen() {
             </View>
           </View>
           {latestResult?.missedCardIds.length ? (
-            <Pressable style={styles.secondaryButton} onPress={() => startMissedReview(latestResult)}>
+            <Pressable
+              style={styles.secondaryButton}
+              onPress={() => startMissedReview(latestResult)}
+            >
               <Text style={styles.secondaryButtonText}>{t('quiz.reviewMissed')}</Text>
             </Pressable>
           ) : null}
@@ -430,7 +453,12 @@ export default function QuizScreen() {
       </View>
 
       {showFeedback && currentQuestion && (
-        <View style={[styles.feedbackContainer, isCorrect ? styles.feedbackCorrect : styles.feedbackIncorrect]}>
+        <View
+          style={[
+            styles.feedbackContainer,
+            isCorrect ? styles.feedbackCorrect : styles.feedbackIncorrect,
+          ]}
+        >
           <Text style={styles.feedbackText}>
             {isCorrect
               ? t('quiz.feedback.correct')
@@ -478,7 +506,11 @@ const styles = StyleSheet.create({
     fontWeight: typography.weight.bold,
     textAlign: 'center',
   },
-  emptyNeed: { color: colors.brand, fontSize: typography.size.lg, fontWeight: typography.weight.extrabold },
+  emptyNeed: {
+    color: colors.brand,
+    fontSize: typography.size.lg,
+    fontWeight: typography.weight.extrabold,
+  },
   emptySub: {
     color: colors.textSecondary,
     fontSize: typography.size.base,
@@ -496,7 +528,11 @@ const styles = StyleSheet.create({
   progressText: { color: colors.textSecondary, fontSize: typography.size.sm, fontWeight: '800' },
 
   header: { padding: spacing(3), paddingBottom: spacing(1.5), gap: 4 },
-  headerTitle: { color: colors.textPrimary, fontSize: typography.size.xl, fontWeight: typography.weight.bold },
+  headerTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.size.xl,
+    fontWeight: typography.weight.bold,
+  },
   headerSub: { color: colors.textSecondary, fontSize: typography.size.sm, lineHeight: 19 },
 
   regionPanel: {
@@ -553,7 +589,11 @@ const styles = StyleSheet.create({
     minHeight: 48,
     ...elevation.base,
   },
-  primaryButtonText: { color: colors.textInverse, fontSize: typography.size.base, fontWeight: typography.weight.bold },
+  primaryButtonText: {
+    color: colors.textInverse,
+    fontSize: typography.size.base,
+    fontWeight: typography.weight.bold,
+  },
   secondaryButton: {
     backgroundColor: colors.surfaceElevated,
     borderWidth: 1,
@@ -565,7 +605,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  secondaryButtonText: { color: colors.brand, fontSize: typography.size.base, fontWeight: typography.weight.bold },
+  secondaryButtonText: {
+    color: colors.brand,
+    fontSize: typography.size.base,
+    fontWeight: typography.weight.bold,
+  },
 
   historyPanel: {
     backgroundColor: colors.surface,
@@ -575,7 +619,11 @@ const styles = StyleSheet.create({
     padding: spacing(2),
     gap: spacing(1),
   },
-  historyTitle: { color: colors.textPrimary, fontSize: typography.size.base, fontWeight: typography.weight.bold },
+  historyTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.size.base,
+    fontWeight: typography.weight.bold,
+  },
   historyRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -583,7 +631,11 @@ const styles = StyleSheet.create({
     gap: spacing(2),
     paddingVertical: spacing(1),
   },
-  historyScore: { color: colors.brand, fontSize: typography.size.xl, fontWeight: typography.weight.bold },
+  historyScore: {
+    color: colors.brand,
+    fontSize: typography.size.xl,
+    fontWeight: typography.weight.bold,
+  },
   historyMeta: { color: colors.textTertiary, fontSize: typography.size.xs },
   reviewMissedBtn: {
     borderRadius: radius.full,
@@ -636,7 +688,11 @@ const styles = StyleSheet.create({
   },
   optionCorrect: { borderColor: colors.success, backgroundColor: colors.successMuted },
   optionIncorrect: { borderColor: colors.danger, backgroundColor: colors.dangerMuted },
-  optionText: { color: colors.textPrimary, fontSize: typography.size.base, fontWeight: typography.weight.medium },
+  optionText: {
+    color: colors.textPrimary,
+    fontSize: typography.size.base,
+    fontWeight: typography.weight.medium,
+  },
 
   feedbackContainer: {
     marginHorizontal: spacing(3),
@@ -645,9 +701,21 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     alignItems: 'center',
   },
-  feedbackCorrect: { backgroundColor: colors.successMuted, borderWidth: 1, borderColor: colors.success },
-  feedbackIncorrect: { backgroundColor: colors.dangerMuted, borderWidth: 1, borderColor: colors.danger },
-  feedbackText: { color: colors.textPrimary, fontSize: typography.size.base, fontWeight: typography.weight.bold },
+  feedbackCorrect: {
+    backgroundColor: colors.successMuted,
+    borderWidth: 1,
+    borderColor: colors.success,
+  },
+  feedbackIncorrect: {
+    backgroundColor: colors.dangerMuted,
+    borderWidth: 1,
+    borderColor: colors.danger,
+  },
+  feedbackText: {
+    color: colors.textPrimary,
+    fontSize: typography.size.base,
+    fontWeight: typography.weight.bold,
+  },
 
   completeContainer: {
     flexGrow: 1,
@@ -656,7 +724,11 @@ const styles = StyleSheet.create({
     padding: spacing(4),
     gap: spacing(2),
   },
-  completeTitle: { color: colors.textPrimary, fontSize: typography.size['3xl'], fontWeight: typography.weight.bold },
+  completeTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.size['3xl'],
+    fontWeight: typography.weight.bold,
+  },
   completeMessage: {
     color: colors.textSecondary,
     fontSize: typography.size.base,
@@ -672,13 +744,21 @@ const styles = StyleSheet.create({
     borderColor: colors.brand,
     ...elevation.lg,
   },
-  scoreLabel: { color: colors.textSecondary, fontSize: typography.size.sm, fontWeight: typography.weight.medium },
+  scoreLabel: {
+    color: colors.textSecondary,
+    fontSize: typography.size.sm,
+    fontWeight: typography.weight.medium,
+  },
   scoreValue: {
     color: colors.textPrimary,
     fontSize: typography.size['4xl'],
     fontWeight: typography.weight.extrabold,
   },
-  scorePercent: { color: colors.brand, fontSize: typography.size.xl, fontWeight: typography.weight.bold },
+  scorePercent: {
+    color: colors.brand,
+    fontSize: typography.size.xl,
+    fontWeight: typography.weight.bold,
+  },
   statsContainer: {
     flexDirection: 'row',
     backgroundColor: colors.surfaceElevated,
@@ -687,7 +767,11 @@ const styles = StyleSheet.create({
     minWidth: 220,
   },
   statItem: { flex: 1, alignItems: 'center' },
-  statNumber: { color: colors.textPrimary, fontSize: typography.size['2xl'], fontWeight: typography.weight.bold },
+  statNumber: {
+    color: colors.textPrimary,
+    fontSize: typography.size['2xl'],
+    fontWeight: typography.weight.bold,
+  },
   statLabel: {
     color: colors.textTertiary,
     fontSize: typography.size.xs,

@@ -32,6 +32,7 @@
 ### Task 1: Add Audio Dependency And Test Mock
 
 **Files:**
+
 - Modify: `package.json`
 - Modify: `package-lock.json`
 - Modify: `jest.setup.js`
@@ -111,6 +112,7 @@ git commit -m "chore: add Expo audio playback dependency"
 ### Task 2: Add Manifest And Central Audio Service
 
 **Files:**
+
 - Create: `src/data/audioManifest.ts`
 - Modify: `src/services/tts.ts`
 - Modify: `__tests__/services/tts.test.ts`
@@ -198,10 +200,7 @@ describe('speakCard', () => {
     await speakCard({ id: '0009', front: 'hola' });
 
     expect(player.release).toHaveBeenCalledTimes(1);
-    expect(mockSpeak).toHaveBeenCalledWith(
-      'hola',
-      expect.objectContaining({ language: 'es-CO' }),
-    );
+    expect(mockSpeak).toHaveBeenCalledWith('hola', expect.objectContaining({ language: 'es-CO' }));
   });
 });
 
@@ -218,10 +217,7 @@ describe('speak', () => {
   it('uses a custom language when provided', () => {
     speak('hello', 'en-US');
 
-    expect(mockSpeak).toHaveBeenCalledWith(
-      'hello',
-      expect.objectContaining({ language: 'en-US' }),
-    );
+    expect(mockSpeak).toHaveBeenCalledWith('hello', expect.objectContaining({ language: 'en-US' }));
   });
 });
 
@@ -354,6 +350,7 @@ git commit -m "feat: add pronunciation audio service"
 ### Task 3: Migrate Components And Screens To The Audio Service
 
 **Files:**
+
 - Modify: `src/components/Flashcard.tsx`
 - Modify: `src/components/AudioButton.tsx`
 - Modify: `src/screens/BrowseScreen.tsx`
@@ -671,6 +668,7 @@ git commit -m "refactor: route pronunciation through audio service"
 ### Task 4: Add ElevenLabs Generation Script
 
 **Files:**
+
 - Create: `scripts/generate-elevenlabs-audio.js`
 - Create: `__tests__/scripts/generate-elevenlabs-audio.test.js`
 - Create: `assets/audio/pronunciation/.gitkeep`
@@ -797,7 +795,8 @@ function readStringLiteral(node) {
 
 function propertyNameText(name) {
   if (!name) return null;
-  if (ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name)) return name.text;
+  if (ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name))
+    return name.text;
   return null;
 }
 
@@ -976,7 +975,9 @@ async function main(argv = process.argv.slice(2), env = process.env) {
     }
 
     if (failures.length > 0) {
-      throw new Error(`${failures.length} audio files failed to generate. Re-run after fixing the errors.`);
+      throw new Error(
+        `${failures.length} audio files failed to generate. Re-run after fixing the errors.`,
+      );
     }
   }
 
@@ -1045,6 +1046,7 @@ git commit -m "feat: add ElevenLabs pronunciation generator"
 ### Task 5: Generate A Small Audio Sample
 
 **Files:**
+
 - Modify: `assets/audio/pronunciation/*.mp3`
 - Modify: `src/data/audioManifest.ts`
 
@@ -1103,6 +1105,7 @@ If the voice sounds wrong, remove the generated MP3s and reset the manifest to t
 ### Task 6: Final Verification
 
 **Files:**
+
 - No new files.
 
 - [ ] **Step 1: Run full automated checks**

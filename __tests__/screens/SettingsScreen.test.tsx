@@ -252,7 +252,9 @@ describe('SettingsScreen import backup', () => {
     await act(async () => {
       fireEvent.press(getByText('Importar respaldo'));
     });
-    await waitFor(() => expect(mockAlert).toHaveBeenCalledWith('JSON inválido', expect.any(String)));
+    await waitFor(() =>
+      expect(mockAlert).toHaveBeenCalledWith('JSON inválido', expect.any(String)),
+    );
   });
 
   it('shows localized error alert when JSON has wrong kind field', async () => {

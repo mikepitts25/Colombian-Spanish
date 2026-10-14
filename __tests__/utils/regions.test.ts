@@ -40,7 +40,9 @@ describe('region filters', () => {
   });
 
   it('treats general Colombian Spanish as cards without a specific region marker', () => {
-    expect(cardMatchesRegion(makeCard({ tags: ['slang', 'Colombia'] }), 'general', 'Slang')).toBe(true);
+    expect(cardMatchesRegion(makeCard({ tags: ['slang', 'Colombia'] }), 'general', 'Slang')).toBe(
+      true,
+    );
     expect(cardMatchesRegion(makeCard({ tags: ['paisa'] }), 'general', 'Slang')).toBe(false);
   });
 

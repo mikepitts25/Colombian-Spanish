@@ -55,4 +55,3 @@ Use TDD for the implementation:
 - Add prefs tests proving `uiLanguage` defaults to Spanish, persists valid language values, and rejects invalid values.
 - Add Settings tests proving the language row renders and toggles to English.
 - Run focused Jest tests for prefs and Settings, then run typecheck.
-

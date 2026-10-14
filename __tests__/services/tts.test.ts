@@ -89,10 +89,7 @@ describe('speakCard', () => {
     await speakCard({ id: '0009', front: 'hola' });
 
     expect(player.remove).toHaveBeenCalledTimes(1);
-    expect(mockSpeak).toHaveBeenCalledWith(
-      'hola',
-      expect.objectContaining({ language: 'es-CO' }),
-    );
+    expect(mockSpeak).toHaveBeenCalledWith('hola', expect.objectContaining({ language: 'es-CO' }));
   });
 
   it('falls back to Expo Speech when bundled player creation throws after a player is active', async () => {
@@ -161,9 +158,7 @@ describe('speakCard', () => {
       seekTo: jest.fn(() => firstSeek.promise),
     });
     const secondPlayer = makePlayer();
-    mockCreateAudioPlayer
-      .mockReturnValueOnce(firstPlayer)
-      .mockReturnValueOnce(secondPlayer);
+    mockCreateAudioPlayer.mockReturnValueOnce(firstPlayer).mockReturnValueOnce(secondPlayer);
 
     const firstCall = speakCard({ id: '0009', front: 'hola' });
     await Promise.resolve();
@@ -238,10 +233,7 @@ describe('speak', () => {
   it('uses a custom language when provided', () => {
     speak('hello', 'en-US');
 
-    expect(mockSpeak).toHaveBeenCalledWith(
-      'hello',
-      expect.objectContaining({ language: 'en-US' }),
-    );
+    expect(mockSpeak).toHaveBeenCalledWith('hello', expect.objectContaining({ language: 'en-US' }));
   });
 });
 

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, radius } from '../styles/theme';
@@ -53,10 +47,7 @@ export default function ExploreScreen() {
         {options.map((option) => (
           <Pressable
             key={option.id}
-            style={({ pressed }) => [
-              styles.card,
-              pressed && styles.cardPressed,
-            ]}
+            style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
             onPress={option.onPress}
           >
             <Text style={styles.cardTitle}>{option.title}</Text>

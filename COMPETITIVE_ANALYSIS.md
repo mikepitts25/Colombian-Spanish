@@ -17,12 +17,14 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 ## 1. Market Overview
 
 ### Market Size & Growth
+
 - **Global Language Learning Market:** $19.38B projected by 2025
 - **CAGR:** 7.8% (2021-2025)
 - **Spanish Speakers Worldwide:** 460+ million
 - **Colombian Spanish Learners:** Growing segment due to Colombia's popularity as a travel/expat destination
 
 ### Key Market Trends
+
 1. **AI-Powered Learning:** Personalized tutoring and speech recognition
 2. **Regional Specialization:** Learners want location-specific language skills
 3. **Cultural Immersion:** Language + culture combined learning
@@ -31,6 +33,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 6. **Microlearning:** Short, digestible lessons for busy lifestyles
 
 ### Why Colombian Spanish?
+
 - Colombia is a top destination for digital nomads and retirees
 - Colombian Spanish is considered one of the clearest/cleanest accents
 - Regional variations (Paisa, Costeno, Caleno) create rich learning opportunities
@@ -43,6 +46,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 ### Tier 1: Major Language Learning Platforms
 
 #### 1. Duolingo
+
 - **Platform:** iOS, Android, Web
 - **Pricing:** Free (ads) / $6.99/month Super Duolingo
 - **User Base:** 500M+ users, 60M+ monthly active
@@ -59,6 +63,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 - **User Sentiment:** Loved for accessibility, criticized for lack of depth
 
 #### 2. Babbel
+
 - **Platform:** iOS, Android, Web
 - **Pricing:** $13.95/month (discounts for longer subscriptions)
 - **User Base:** 10M+ subscribers
@@ -74,6 +79,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 - **User Sentiment:** Praised for effectiveness, criticized for price
 
 #### 3. Busuu
+
 - **Platform:** iOS, Android, Web
 - **Pricing:** Free (limited) / $12.99/month Premium
 - **User Base:** 120M+ registered users
@@ -90,6 +96,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 ### Tier 2: Specialized Spanish Apps
 
 #### 4. Memrise
+
 - **Platform:** iOS, Android, Web
 - **Pricing:** Free / $8.49/month Pro
 - **Spanish Features:**
@@ -102,6 +109,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 - **User Sentiment:** Loved for video content, want more advanced material
 
 #### 5. FluentU
+
 - **Platform:** iOS, Android, Web
 - **Pricing:** $29.99/month (or $19.99/month annual)
 - **Spanish Features:**
@@ -114,6 +122,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 - **User Sentiment:** Praised for authentic materials, too pricey for many
 
 #### 6. Rosetta Stone
+
 - **Platform:** iOS, Android, Web
 - **Pricing:** $11.99-14.99/month
 - **Spanish Features:**
@@ -128,6 +137,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 ### Tier 3: Flashcard/SRS Apps
 
 #### 7. Anki
+
 - **Platform:** iOS, Android, Desktop
 - **Pricing:** Free (Android/Desktop) / $24.99 (iOS)
 - **Features:**
@@ -140,6 +150,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 - **User Sentiment:** Loved by power users, intimidating for beginners
 
 #### 8. Quizlet
+
 - **Platform:** iOS, Android, Web
 - **Pricing:** Free / $7.99/month Plus
 - **Features:**
@@ -154,6 +165,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 ### Tier 4: Conversation Practice Apps
 
 #### 9. HelloTalk
+
 - **Platform:** iOS, Android
 - **Pricing:** Free / $6.99/month VIP
 - **Features:**
@@ -166,6 +178,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 - **User Sentiment:** Great for practice, inconsistent partner quality
 
 #### 10. Tandem
+
 - **Platform:** iOS, Android
 - **Pricing:** Free / $6.99/month Pro
 - **Features:**
@@ -180,22 +193,22 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 
 ## 3. Feature Comparison Matrix
 
-| Feature | Duolingo | Babbel | Busuu | Memrise | Anki | Colombian Spanish SRS |
-|---------|----------|--------|-------|---------|------|----------------------|
-| **Structured Curriculum** | ✅ | ✅ | ✅ | ⚠️ | ❌ | ✅ |
-| **SRS/Flashcards** | ⚠️ | ✅ | ✅ | ✅ | ✅✅ | ✅✅ |
-| **Speech Recognition** | ✅ | ✅ | ✅ | ⚠️ | ❌ | ⚠️ |
-| **Regional Colombian Content** | ❌ | ❌ | ❌ | ⚠️ | ⚠️ | ✅✅ |
-| **Colombian Slang** | ❌ | ❌ | ❌ | ❌ | ⚠️ | ✅✅ |
-| **Cultural Context** | ⚠️ | ✅ | ⚠️ | ⚠️ | ❌ | ✅ |
-| **Offline Mode** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Gamification** | ✅✅ | ⚠️ | ⚠️ | ⚠️ | ❌ | ✅ |
-| **Community Features** | ⚠️ | ❌ | ✅ | ❌ | ❌ | ❌ |
-| **Native Speaker Audio** | ⚠️ | ✅ | ✅ | ✅✅ | ⚠️ | ⚠️ |
-| **Custom Cards** | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Progress Tracking** | ✅ | ✅ | ✅ | ✅ | ⚠️ | ✅ |
-| **Affordable Pricing** | ✅ | ⚠️ | ⚠️ | ⚠️ | ✅ | ✅ |
-| **Text-to-Speech** | ✅ | ✅ | ✅ | ✅ | ⚠️ | ✅ |
+| Feature                        | Duolingo | Babbel | Busuu | Memrise | Anki | Colombian Spanish SRS |
+| ------------------------------ | -------- | ------ | ----- | ------- | ---- | --------------------- |
+| **Structured Curriculum**      | ✅       | ✅     | ✅    | ⚠️      | ❌   | ✅                    |
+| **SRS/Flashcards**             | ⚠️       | ✅     | ✅    | ✅      | ✅✅ | ✅✅                  |
+| **Speech Recognition**         | ✅       | ✅     | ✅    | ⚠️      | ❌   | ⚠️                    |
+| **Regional Colombian Content** | ❌       | ❌     | ❌    | ⚠️      | ⚠️   | ✅✅                  |
+| **Colombian Slang**            | ❌       | ❌     | ❌    | ❌      | ⚠️   | ✅✅                  |
+| **Cultural Context**           | ⚠️       | ✅     | ⚠️    | ⚠️      | ❌   | ✅                    |
+| **Offline Mode**               | ✅       | ✅     | ✅    | ✅      | ✅   | ✅                    |
+| **Gamification**               | ✅✅     | ⚠️     | ⚠️    | ⚠️      | ❌   | ✅                    |
+| **Community Features**         | ⚠️       | ❌     | ✅    | ❌      | ❌   | ❌                    |
+| **Native Speaker Audio**       | ⚠️       | ✅     | ✅    | ✅✅    | ⚠️   | ⚠️                    |
+| **Custom Cards**               | ❌       | ❌     | ❌    | ❌      | ✅   | ✅                    |
+| **Progress Tracking**          | ✅       | ✅     | ✅    | ✅      | ⚠️   | ✅                    |
+| **Affordable Pricing**         | ✅       | ⚠️     | ⚠️    | ⚠️      | ✅   | ✅                    |
+| **Text-to-Speech**             | ✅       | ✅     | ✅    | ✅      | ⚠️   | ✅                    |
 
 **Legend:** ✅✅ = Differentiated | ✅ = Competitive | ⚠️ = Partial | ❌ = Missing
 
@@ -204,6 +217,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 ## 4. User Sentiment Analysis
 
 ### Common Praise Across Language Apps
+
 1. **"Fun and engaging"** - Gamification keeps users coming back
 2. **"Easy to fit into my day"** - Short lessons work for busy schedules
 3. **"Actually learned useful phrases"** - Practical vocabulary appreciated
@@ -211,6 +225,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 5. **"Great for beginners"** - Low barrier to entry
 
 ### Common Complaints
+
 1. **"Not enough speaking practice"** - Most apps focus on reading/writing
 2. **"Too generic"** - Latin American Spanish doesn't help in specific countries
 3. **"Doesn't teach real conversation"** - Formal language vs everyday speech
@@ -220,6 +235,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 7. **"Doesn't explain grammar"** - Rules not taught explicitly
 
 ### Feature Requests (from app reviews)
+
 1. More speaking/conversation practice
 2. Regional dialect options
 3. Slang and informal language
@@ -238,10 +254,12 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 ### Underserved Niches
 
 #### 1. Colombian Regional Spanish
+
 **Gap:** No major app teaches Colombian-specific Spanish  
 **Opportunity:** Focus exclusively on Colombian vocabulary, slang, and expressions
 
 **Regional Variations to Cover:**
+
 - **Paisa** (Medellin/Antioquia): "Parce," "Que mas?," "Chimba"
 - **Costeno** (Caribbean Coast): "Como asi?," "Pollo," "Ñato"
 - **Caleno** (Cali): "Vaina," "Parche," "Chévere"
@@ -250,10 +268,12 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 - **Llanero** (Eastern Plains): Plains-specific vocabulary
 
 #### 2. Slang & Informal Language
+
 **Gap:** Apps teach formal Spanish, not how people actually talk  
 **Opportunity:** Comprehensive slang coverage with context and appropriateness
 
 **Key Categories:**
+
 - Dating/relationship slang
 - Party/nightlife vocabulary
 - Food and ordering expressions
@@ -262,10 +282,12 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 - Age-appropriate usage (formal vs friends)
 
 #### 3. Cultural Context Integration
+
 **Gap:** Language without culture is incomplete  
 **Opportunity:** Teach language through cultural lens
 
 **Content Areas:**
+
 - Festival vocabulary (Feria de las Flores, Carnaval de Barranquilla)
 - Food culture (arepas, bandeja paisa, aguardiente)
 - Music genres (vallenato, salsa, reggaeton)
@@ -273,20 +295,24 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 - Regional history and identity
 
 #### 4. SRS + Structured Learning
+
 **Gap:** Anki has SRS but no structure; Duolingo has structure but weak SRS  
 **Opportunity:** Combine best of both approaches
 
 **Implementation:**
+
 - SM-2 or similar algorithm
 - Themed decks with progression
 - Daily goals and streaks
 - Difficulty adaptation
 
 #### 5. Practical Conversation Focus
+
 **Gap:** Apps teach vocabulary, not how to have conversations  
 **Opportunity:** Scenario-based learning
 
 **Scenarios to Cover:**
+
 - Meeting someone for the first time
 - Ordering at a restaurant
 - Negotiating at a market
@@ -296,6 +322,7 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 - Workplace interactions
 
 ### Pain Points Not Being Solved
+
 1. **Accent Confusion** - Different regions sound completely different
 2. **Appropriateness** - When is slang appropriate vs offensive?
 3. **Speed** - Colombians speak fast; apps don't prepare learners
@@ -310,27 +337,32 @@ The language learning app market is projected to reach $19.38 billion by 2025, w
 ### Differentiation Strategy
 
 #### Primary Differentiator: "The Only Authentic Colombian Spanish App"
+
 - 100% Colombian content (not generic Latin American)
 - Regional variations covered
 - Slang and informal language included
 - Cultural context for every phrase
 
 #### Secondary Differentiator: "SRS That Actually Works"
+
 - Proven spaced repetition algorithm
 - Optimized for language retention
 - Offline-first design
 - Custom card creation
 
 #### Tertiary Differentiator: "Learn Real Conversation"
+
 - Practical phrases you'll actually use
 - Scenario-based learning
 - Dating and social focus
 - Safety and emergency language
 
 ### Unique Value Proposition
+
 > "Learn the Spanish Colombians actually speak. From Paisa slang to Costeno expressions, master authentic Colombian Spanish with 1,000+ flashcards, proven SRS technology, and cultural context you won't find anywhere else."
 
 ### Positioning Statement
+
 For travelers, expats, and partners of Colombians who need to communicate authentically, Colombian Spanish SRS is the only app that teaches real Colombian Spanish - complete with regional slang, cultural context, and practical conversation skills. Unlike Duolingo or Babbel, we don't teach generic Spanish; we teach you how to connect with Colombians in their own words.
 
 ---
@@ -338,6 +370,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 ## 7. Feature Roadmap Recommendations
 
 ### Phase 1: MVP (Current State)
+
 - [x] 1,000+ flashcards
 - [x] 35 themed decks
 - [x] SRS algorithm (SM-2 based)
@@ -347,6 +380,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 - [x] Custom cards
 
 ### Phase 2: Competitive Differentiation
+
 - [ ] Native speaker audio recordings
 - [ ] Regional dialect selector
 - [ ] Cultural notes on cards
@@ -357,6 +391,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 - [ ] Dark mode
 
 ### Phase 3: Market Leadership
+
 - [ ] AI conversation practice
 - [ ] Speech recognition for pronunciation
 - [ ] Listening comprehension exercises
@@ -366,6 +401,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 - [ ] Cloud sync across devices
 
 ### Phase 4: Innovation
+
 - [ ] Video content with native speakers
 - [ ] Live tutor marketplace
 - [ ] Community features (optional)
@@ -374,6 +410,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 - [ ] Certification program
 
 ### Features to AVOID
+
 1. **Generic Spanish Content** - Dilutes the Colombian focus
 2. **Overly Formal Language** - Not how people actually talk
 3. **Complex Grammar Lessons** - Keep it practical
@@ -386,6 +423,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 ## 8. Pricing Strategy Recommendations
 
 ### Market Pricing Analysis
+
 - **Duolingo:** Free / $6.99/month
 - **Babbel:** $13.95/month
 - **Busuu:** Free / $12.99/month
@@ -395,12 +433,12 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 ### Recommended Pricing Model
 
 #### Option A: Freemium (Recommended)
+
 - **Free Tier:**
   - 200 cards (sample decks)
   - Basic SRS
   - Daily goals
   - Text-to-speech
-  
 - **Premium Tier ($4.99/month or $29.99/year):**
   - All 1,000+ cards
   - All 35 decks
@@ -412,11 +450,13 @@ For travelers, expats, and partners of Colombians who need to communicate authen
   - Achievement system
 
 #### Option B: One-Time Purchase
+
 - **Basic:** Free (200 cards)
 - **Full Unlock:** $14.99 one-time
 - **Audio Pack:** $4.99 (native speaker recordings)
 
 ### Pricing Psychology
+
 - Position as more affordable than Babbel/Busuu
 - Annual pricing shows 50% savings
 - One-time option appeals to commitment-phobes
@@ -428,27 +468,30 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 
 ### Competitor Messaging Analysis
 
-| App | Primary Message | Tone |
-|-----|-----------------|------|
-| Duolingo | "Free. Fun. Effective." | Playful, friendly |
-| Babbel | "Learn a language in 3 weeks" | Confident, results-focused |
-| Busuu | "The language learning community" | Social, collaborative |
-| Memrise | "Learn from real natives" | Authentic, immersive |
+| App      | Primary Message                   | Tone                       |
+| -------- | --------------------------------- | -------------------------- |
+| Duolingo | "Free. Fun. Effective."           | Playful, friendly          |
+| Babbel   | "Learn a language in 3 weeks"     | Confident, results-focused |
+| Busuu    | "The language learning community" | Social, collaborative      |
+| Memrise  | "Learn from real natives"         | Authentic, immersive       |
 
 ### Recommended Messaging for Colombian Spanish SRS
 
 #### Primary Taglines
+
 - "Learn Colombian Spanish, not textbook Spanish"
 - "The Spanish they actually speak in Colombia"
 - "From parce to chimba - master Colombian slang"
 
 #### Tone Guidelines
+
 - **Authentic** - Real Colombians, real expressions
 - **Approachable** - Not academic, not intimidating
 - **Enthusiastic** - Love for Colombian culture shines through
 - **Practical** - Focus on usable language
 
 ### Keyword Opportunities
+
 - Colombian Spanish app
 - Learn Colombian slang
 - Paisa Spanish
@@ -458,6 +501,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 - Regional Spanish variations
 
 ### Content Marketing Ideas
+
 1. **Regional Spotlights** - Blog posts about each Colombian region
 2. **Slang Series** - "Word of the Day" Colombian slang
 3. **Cultural Guides** - Festivals, food, music context
@@ -472,6 +516,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 ### Deck Categories to Expand
 
 #### High Priority
+
 1. **Dating & Relationships** - Meeting partners, family introductions
 2. **Paisa Slang** - Medellin-specific (most popular region)
 3. **Costeno Expressions** - Coastal culture vocabulary
@@ -479,6 +524,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 5. **Safety & Emergencies** - Critical for travelers
 
 #### Medium Priority
+
 6. **Business Spanish** - Work-appropriate language
 7. **Caleno Slang** - Cali-specific expressions
 8. **Festival Vocabulary** - Feria de las Flores, Carnaval
@@ -486,6 +532,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 10. **Transportation** - Getting around, directions
 
 #### Future Expansion
+
 11. **Pastuso Dialect** - Highland region
 12. **Llanero Expressions** - Plains region
 13. **Island Spanish** - San Andres, Providencia
@@ -493,6 +540,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 15. **Historical Terms** - Colombian history vocabulary
 
 ### Card Quality Guidelines
+
 - Include context notes (when/where to use)
 - Mark formality level (formal/casual/vulgar)
 - Add pronunciation tips
@@ -506,6 +554,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 ### Key Performance Indicators
 
 #### Engagement
+
 - Day 1/7/30 retention rates
 - Cards reviewed per session
 - Session frequency
@@ -513,24 +562,28 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 - Deck completion rate
 
 #### Growth
+
 - User acquisition cost (CAC)
 - Organic vs paid growth
 - App store conversion rate
 - Referral rate
 
 #### Monetization
+
 - Free-to-paid conversion rate
 - Average revenue per user (ARPU)
 - Lifetime value (LTV)
 - Churn rate
 
 #### Learning Outcomes
+
 - Cards mastered per user
 - Retention rate (SRS effectiveness)
 - User-reported satisfaction
 - Testimonials and success stories
 
 ### Target Benchmarks (Based on Competitors)
+
 - **Retention:** 45% Day 1, 25% Day 7, 12% Day 30
 - **Conversion:** 2-4% free-to-paid
 - **Rating:** 4.6+ stars
@@ -541,21 +594,25 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 ## 12. Risk Analysis
 
 ### Market Risks
+
 1. **Niche Market** - Colombian Spanish is specific; limits total addressable market
 2. **Competition from Giants** - Duolingo could add regional content
 3. **Free Alternatives** - Anki decks, YouTube videos
 
 ### Mitigation Strategies
+
 1. **Expand to Related Markets** - Other Andean Spanish variations
 2. **Deep Specialization** - Be the definitive Colombian Spanish resource
 3. **Superior UX** - Better experience than free alternatives
 
 ### Technical Risks
+
 1. **Text-to-Speech Quality** - May not sound authentically Colombian
 2. **SRS Algorithm Issues** - Poor retention hurts credibility
 3. **Offline Sync** - Data loss concerns
 
 ### Mitigation Strategies
+
 1. **Native Speaker Audio** - Priority for premium tier
 2. **Proven Algorithm** - SM-2 is well-established
 3. **Robust Backup** - Export/import functionality
@@ -565,6 +622,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 ## 13. Conclusion & Next Steps
 
 ### Key Takeaways
+
 1. **Market is large and growing** - $19.38B by 2025
 2. **Niche is underserved** - No app focuses on Colombian Spanish
 3. **Regional focus is a differentiator** - Generic apps don't serve this need
@@ -572,6 +630,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 5. **SRS is proven** - Retention-focused approach works
 
 ### Immediate Action Items
+
 1. [ ] Record native speaker audio for priority decks
 2. [ ] Add cultural context notes to existing cards
 3. [ ] Implement regional dialect selector
@@ -580,6 +639,7 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 6. [ ] Develop content marketing plan
 
 ### Competitive Advantages to Emphasize
+
 1. Only authentic Colombian Spanish app
 2. 1,000+ cards with regional specificity
 3. Proven SRS algorithm
@@ -591,36 +651,40 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 ## Appendix A: Regional Spanish Comparison
 
 ### Paisa (Medellin/Antioquia)
-| Expression | Meaning | Usage |
-|------------|---------|-------|
-| Parce | Friend/Dude | Very common, casual |
-| Que mas? | What's up? | Greeting |
-| Chimba | Cool/Awesome | Very informal |
-| A la orden | At your service | Polite |
-| Parche | Plan/Group of friends | Casual |
+
+| Expression | Meaning               | Usage               |
+| ---------- | --------------------- | ------------------- |
+| Parce      | Friend/Dude           | Very common, casual |
+| Que mas?   | What's up?            | Greeting            |
+| Chimba     | Cool/Awesome          | Very informal       |
+| A la orden | At your service       | Polite              |
+| Parche     | Plan/Group of friends | Casual              |
 
 ### Costeno (Caribbean Coast)
-| Expression | Meaning | Usage |
-|------------|---------|-------|
-| Como asi? | What do you mean? | Common |
-| Pollo/a | Young person | Casual |
-| Ñato | Flat nose (nickname) | Friendly |
-| Bacano | Cool | Very common |
-| Chévere | Great | Universal but common |
+
+| Expression | Meaning              | Usage                |
+| ---------- | -------------------- | -------------------- |
+| Como asi?  | What do you mean?    | Common               |
+| Pollo/a    | Young person         | Casual               |
+| Ñato       | Flat nose (nickname) | Friendly             |
+| Bacano     | Cool                 | Very common          |
+| Chévere    | Great                | Universal but common |
 
 ### Caleno (Cali)
-| Expression | Meaning | Usage |
-|------------|---------|-------|
-| Vaina | Thing/Stuff | Very common filler |
-| Parche | Hangout/Plan | Daily usage |
-| Chévere | Good/Cool | Universal |
-| Calidoso | Warm/Friendly | Describing people |
+
+| Expression | Meaning       | Usage              |
+| ---------- | ------------- | ------------------ |
+| Vaina      | Thing/Stuff   | Very common filler |
+| Parche     | Hangout/Plan  | Daily usage        |
+| Chévere    | Good/Cool     | Universal          |
+| Calidoso   | Warm/Friendly | Describing people  |
 
 ---
 
 ## Appendix B: Content Expansion Priorities
 
 ### Decks to Add (Ranked by User Need)
+
 1. Dating & Romance (100 cards)
 2. Paisa Slang Deep Dive (150 cards)
 3. Restaurant & Food Ordering (75 cards)
@@ -636,5 +700,5 @@ For travelers, expats, and partners of Colombians who need to communicate authen
 
 ---
 
-*Report compiled from web research, app store analysis, and competitive intelligence.*
-*For questions or updates, contact the Colombian Spanish SRS product team.*
+_Report compiled from web research, app store analysis, and competitive intelligence._
+_For questions or updates, contact the Colombian Spanish SRS product team._

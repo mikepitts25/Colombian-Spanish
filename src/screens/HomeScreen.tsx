@@ -1,7 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import {
-  StyleSheet, Text, View, Pressable, ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
@@ -14,9 +12,21 @@ import { getCategoryForDeck, getDeckDisplayName } from '../utils/deckCategories'
 import { pickWordOfDay } from '../utils/wordOfDay';
 
 const COLOMBIAN_GREETINGS = [
-  { textKey: 'home.greeting.morning' as const, subKey: 'home.greeting.morningSub' as const, emoji: '☀️' },
-  { textKey: 'home.greeting.afternoon' as const, subKey: 'home.greeting.afternoonSub' as const, emoji: '🌤️' },
-  { textKey: 'home.greeting.night' as const, subKey: 'home.greeting.nightSub' as const, emoji: '🌙' },
+  {
+    textKey: 'home.greeting.morning' as const,
+    subKey: 'home.greeting.morningSub' as const,
+    emoji: '☀️',
+  },
+  {
+    textKey: 'home.greeting.afternoon' as const,
+    subKey: 'home.greeting.afternoonSub' as const,
+    emoji: '🌤️',
+  },
+  {
+    textKey: 'home.greeting.night' as const,
+    subKey: 'home.greeting.nightSub' as const,
+    emoji: '🌙',
+  },
 ];
 
 function getGreetingKey() {
@@ -27,37 +37,37 @@ function getGreetingKey() {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  'Colombianisms':          '#FFDA00',
-  'Essentials':             '#60a5fa',
+  Colombianisms: '#FFDA00',
+  Essentials: '#60a5fa',
   'People & Relationships': '#f472b6',
-  'Places & Travel':        '#34d399',
-  'Home & Daily Life':      '#a78bfa',
-  'Food & Drink':           '#fb923c',
-  'Communication':          '#38bdf8',
-  'Health':                 '#f87171',
-  'Nature':                 '#4ade80',
-  'Work & School':          '#94a3b8',
-  'Numbers & Time':         '#c084fc',
-  'Fun & Culture':          '#fbbf24',
-  'Tech':                   '#22d3ee',
-  'Other':                  '#64748b',
+  'Places & Travel': '#34d399',
+  'Home & Daily Life': '#a78bfa',
+  'Food & Drink': '#fb923c',
+  Communication: '#38bdf8',
+  Health: '#f87171',
+  Nature: '#4ade80',
+  'Work & School': '#94a3b8',
+  'Numbers & Time': '#c084fc',
+  'Fun & Culture': '#fbbf24',
+  Tech: '#22d3ee',
+  Other: '#64748b',
 };
 
 const CATEGORY_EMOJIS: Record<string, string> = {
-  'Colombianisms':          '🇨🇴',
-  'Essentials':             '⚡',
+  Colombianisms: '🇨🇴',
+  Essentials: '⚡',
   'People & Relationships': '👥',
-  'Places & Travel':        '🗺️',
-  'Home & Daily Life':      '🏠',
-  'Food & Drink':           '🍳',
-  'Communication':          '💬',
-  'Health':                 '❤️‍🩹',
-  'Nature':                 '🌿',
-  'Work & School':          '💼',
-  'Numbers & Time':         '🕐',
-  'Fun & Culture':          '🎉',
-  'Tech':                   '💻',
-  'Other':                  '📦',
+  'Places & Travel': '🗺️',
+  'Home & Daily Life': '🏠',
+  'Food & Drink': '🍳',
+  Communication: '💬',
+  Health: '❤️‍🩹',
+  Nature: '🌿',
+  'Work & School': '💼',
+  'Numbers & Time': '🕐',
+  'Fun & Culture': '🎉',
+  Tech: '💻',
+  Other: '📦',
 };
 
 type DeckWithDue = Deck & {
@@ -85,13 +95,17 @@ export default function HomeScreen() {
   }, []);
 
   const endOfToday = useMemo(() => {
-    const d = new Date(); d.setHours(23, 59, 59, 999); return d.getTime();
+    const d = new Date();
+    d.setHours(23, 59, 59, 999);
+    return d.getTime();
   }, []);
 
   const totalDue = useMemo(
-    () => (decks || []).reduce(
-      (s, d) => s + (d.cards || []).filter((c: any) => (c.due ?? 0) <= endOfToday).length, 0,
-    ),
+    () =>
+      (decks || []).reduce(
+        (s, d) => s + (d.cards || []).filter((c: any) => (c.due ?? 0) <= endOfToday).length,
+        0,
+      ),
     [decks, endOfToday],
   );
 
@@ -113,7 +127,8 @@ export default function HomeScreen() {
   );
 
   const dailyGoalProgress = dailyTarget > 0 ? Math.min(dailyCount / dailyTarget, 1) : 0;
-  const dailyGoalLabel = dailyTarget > 0 ? `${Math.min(dailyCount, dailyTarget)}/${dailyTarget}` : `${dailyCount}`;
+  const dailyGoalLabel =
+    dailyTarget > 0 ? `${Math.min(dailyCount, dailyTarget)}/${dailyTarget}` : `${dailyCount}`;
   const dueCardLabel = t('home.dueLabel', {
     count: totalDue.toLocaleString(),
     plural: totalDue === 1 ? '' : 's',
@@ -148,7 +163,9 @@ export default function HomeScreen() {
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.greetingWrap}>
-            <Text style={styles.greeting}>{greeting.emoji} {t(greeting.textKey)}</Text>
+            <Text style={styles.greeting}>
+              {greeting.emoji} {t(greeting.textKey)}
+            </Text>
             <Text style={styles.greetingSub}>{t(greeting.subKey)}</Text>
           </View>
           <Pressable style={styles.avatarBtn} onPress={() => nav.navigate('Settings')}>
@@ -181,10 +198,7 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          <Pressable
-            style={styles.primaryButton}
-            onPress={() => startStudy(quickDecks[0]?.id)}
-          >
+          <Pressable style={styles.primaryButton} onPress={() => startStudy(quickDecks[0]?.id)}>
             <Text style={styles.primaryButtonText}>
               {totalDue > 0 ? t('home.studyDueCards') : t('home.studyAnyway')}
             </Text>
@@ -261,7 +275,9 @@ export default function HomeScreen() {
                       <Text style={styles.deckEmoji}>{emoji}</Text>
                     </View>
                     <View style={styles.deckInfo}>
-                      <Text style={styles.deckName} numberOfLines={1}>{getDeckDisplayName(deck)}</Text>
+                      <Text style={styles.deckName} numberOfLines={1}>
+                        {getDeckDisplayName(deck)}
+                      </Text>
                       <Text style={styles.deckMeta}>
                         {t('addCard.cardCount', {
                           count: deck.cards.length,
@@ -496,7 +512,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 10,
   },
-  deckIconWrap: { width: 38, height: 38, borderRadius: 11, alignItems: 'center', justifyContent: 'center' },
+  deckIconWrap: {
+    width: 38,
+    height: 38,
+    borderRadius: 11,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   deckEmoji: { fontSize: 18 },
   deckInfo: { flex: 1, gap: 2 },
   deckName: { color: colors.textPrimary, fontSize: 14, fontWeight: '700' },
@@ -518,5 +540,4 @@ const styles = StyleSheet.create({
   },
   emptyTitle: { color: colors.textPrimary, fontSize: 15, fontWeight: '800' },
   emptyText: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
-
 });

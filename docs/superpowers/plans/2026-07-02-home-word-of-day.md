@@ -13,6 +13,7 @@
 ### Task 1: Update Home Tests For One Word Of The Day
 
 **Files:**
+
 - Modify: `__tests__/screens/HomeScreen.test.tsx`
 - Test: `__tests__/screens/HomeScreen.test.tsx`
 
@@ -144,6 +145,7 @@ Expected before implementation: FAIL because Home does not render Word of the Da
 ### Task 2: Update Browse Tests For Removed Words Section
 
 **Files:**
+
 - Modify: `__tests__/screens/BrowseScreen.test.tsx`
 - Test: `__tests__/screens/BrowseScreen.test.tsx`
 
@@ -213,6 +215,7 @@ Expected before implementation: FAIL because Browse still renders Words of the D
 ### Task 3: Implement Home Word Of The Day
 
 **Files:**
+
 - Modify: `src/screens/HomeScreen.tsx`
 - Modify: `src/i18n/translations.ts`
 - Test: `__tests__/screens/HomeScreen.test.tsx`
@@ -258,21 +261,23 @@ const wordOfDay = useMemo<WordOfDayRow | undefined>(() => {
 Add this JSX immediately after the closing `</View>` for `styles.todayCard`:
 
 ```tsx
-{wordOfDay ? (
-  <View style={styles.wordCard}>
-    <View style={styles.wordHeader}>
-      <Text style={styles.wordEyebrow}>{t('home.wordOfDay')}</Text>
-      <Pressable style={styles.wordAudioButton} onPress={() => void speakCard(wordOfDay.card)}>
-        <Text style={styles.wordAudioIcon}>🔊</Text>
-      </Pressable>
+{
+  wordOfDay ? (
+    <View style={styles.wordCard}>
+      <View style={styles.wordHeader}>
+        <Text style={styles.wordEyebrow}>{t('home.wordOfDay')}</Text>
+        <Pressable style={styles.wordAudioButton} onPress={() => void speakCard(wordOfDay.card)}>
+          <Text style={styles.wordAudioIcon}>🔊</Text>
+        </Pressable>
+      </View>
+      <Text style={styles.wordFront}>{wordOfDay.card.front}</Text>
+      <Text style={styles.wordBack}>
+        {wordOfDay.card.back}
+        {wordOfDay.deckName ? ` • ${wordOfDay.deckName}` : ''}
+      </Text>
     </View>
-    <Text style={styles.wordFront}>{wordOfDay.card.front}</Text>
-    <Text style={styles.wordBack}>
-      {wordOfDay.card.back}
-      {wordOfDay.deckName ? ` • ${wordOfDay.deckName}` : ''}
-    </Text>
-  </View>
-) : null}
+  ) : null;
+}
 ```
 
 - [ ] **Step 5: Add Home card styles**
@@ -344,6 +349,7 @@ Expected: PASS.
 ### Task 4: Remove Browse Words Of The Day
 
 **Files:**
+
 - Modify: `src/screens/BrowseScreen.tsx`
 - Test: `__tests__/screens/BrowseScreen.test.tsx`
 
@@ -366,7 +372,9 @@ const trendingWords = useMemo(() => {
 Remove the section beginning with:
 
 ```tsx
-{/* Trending words */}
+{
+  /* Trending words */
+}
 ```
 
 through the closing `trendingWords.map` block.
@@ -402,6 +410,7 @@ Expected: PASS.
 ### Task 5: Final Verification And Commit
 
 **Files:**
+
 - Verify: `src/screens/HomeScreen.tsx`
 - Verify: `src/screens/BrowseScreen.tsx`
 - Verify: `src/i18n/translations.ts`

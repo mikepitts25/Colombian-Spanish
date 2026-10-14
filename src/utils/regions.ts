@@ -46,14 +46,7 @@ function normalize(value: string) {
 }
 
 function cardText(card: FlashCard, deckName?: string) {
-  return normalize(
-    [
-      deckName,
-      ...(card.tags || []),
-    ]
-      .filter(Boolean)
-      .join(' '),
-  );
+  return normalize([deckName, ...(card.tags || [])].filter(Boolean).join(' '));
 }
 
 export function getCardRegionId(card: FlashCard, deckName?: string): RegionFilterId {

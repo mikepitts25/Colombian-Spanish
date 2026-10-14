@@ -16,7 +16,9 @@ describe('deprecated React Native imports', () => {
   it('does not import SafeAreaView from react-native', () => {
     const offenders = listSourceFiles(SRC_DIR).filter((file) => {
       const source = fs.readFileSync(file, 'utf8');
-      return /import\s*\{[\s\S]*\bSafeAreaView\b[\s\S]*\}\s*from\s*['"]react-native['"]/.test(source);
+      return /import\s*\{[\s\S]*\bSafeAreaView\b[\s\S]*\}\s*from\s*['"]react-native['"]/.test(
+        source,
+      );
     });
 
     expect(offenders.map((file) => path.relative(SRC_DIR, file))).toEqual([]);

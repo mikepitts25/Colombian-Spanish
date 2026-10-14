@@ -1,12 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Pressable,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { colors } from '../styles/theme';
@@ -40,25 +33,42 @@ import { speakCard } from '../services/tts';
 import { formatIntervalShort, previewInterval } from '../utils/srs';
 
 const GRADES = [
-  { labelKey: 'grades.again', color: '#f87171', bg: 'rgba(206,17,38,0.3)', border: '#CE1126', q: 1 as const },
-  { labelKey: 'grades.hard', color: '#fb923c', bg: 'rgba(251,146,60,0.25)', border: '#fb923c', q: 2 as const },
-  { labelKey: 'grades.good', color: '#FFDA00', bg: 'rgba(255,218,0,0.22)', border: '#FFDA00', q: 4 as const },
-  { labelKey: 'grades.easy', color: '#10b981', bg: 'rgba(16,185,129,0.25)', border: '#10b981', q: 5 as const },
+  {
+    labelKey: 'grades.again',
+    color: '#f87171',
+    bg: 'rgba(206,17,38,0.3)',
+    border: '#CE1126',
+    q: 1 as const,
+  },
+  {
+    labelKey: 'grades.hard',
+    color: '#fb923c',
+    bg: 'rgba(251,146,60,0.25)',
+    border: '#fb923c',
+    q: 2 as const,
+  },
+  {
+    labelKey: 'grades.good',
+    color: '#FFDA00',
+    bg: 'rgba(255,218,0,0.22)',
+    border: '#FFDA00',
+    q: 4 as const,
+  },
+  {
+    labelKey: 'grades.easy',
+    color: '#10b981',
+    bg: 'rgba(16,185,129,0.25)',
+    border: '#10b981',
+    q: 5 as const,
+  },
 ] as const;
 
 type StudyMode = 'landing' | 'session';
 type SearchRow = { deckId: string; deckName: string; card: FlashCard };
 
 export default function StudyScreen() {
-  const {
-    ready,
-    decks,
-    activeDeck,
-    getStudyBatch,
-    recordAnswer,
-    toggleFavorite,
-    setActiveDeckId,
-  } = useDeck();
+  const { ready, decks, activeDeck, getStudyBatch, recordAnswer, toggleFavorite, setActiveDeckId } =
+    useDeck();
   const nav = useNavigation<any>();
   const route = useRoute<any>();
   const { t } = useLanguage();
@@ -129,16 +139,12 @@ export default function StudyScreen() {
 
     const preferredCard =
       activeDeck.cards.find(
-        (card) =>
-          card.id === startCardId && cardMatchesRegion(card, activeRegion, activeDeck.name),
+        (card) => card.id === startCardId && cardMatchesRegion(card, activeRegion, activeDeck.name),
       ) || filtered.find((card) => card.id === startCardId);
 
     if (!preferredCard) return filtered.slice(0, 15);
 
-    return [
-      preferredCard,
-      ...filtered.filter((card) => card.id !== preferredCard.id),
-    ].slice(0, 15);
+    return [preferredCard, ...filtered.filter((card) => card.id !== preferredCard.id)].slice(0, 15);
   }, [activeDeck, activeRegion, rawBatch, startCardId]);
 
   const progress = daily.target > 0 ? Math.min(1, daily.count / daily.target) : 0;
@@ -291,10 +297,12 @@ export default function StudyScreen() {
               autoCorrect={false}
             />
             {q.length > 0 && (
-              <Pressable onPress={() => {
-                setQ('');
-                setSearching(false);
-              }}>
+              <Pressable
+                onPress={() => {
+                  setQ('');
+                  setSearching(false);
+                }}
+              >
                 <Text style={styles.clearBtn}>✕</Text>
               </Pressable>
             )}
@@ -401,14 +409,18 @@ export default function StudyScreen() {
           <Text style={styles.sessionEyebrow}>{t('tabs.study')}</Text>
           <View style={styles.deckTitleRow}>
             <Text style={styles.deckPillFlag}>🇨🇴</Text>
-            <Text style={styles.deckTitle} numberOfLines={1}>{deckTitle}</Text>
+            <Text style={styles.deckTitle} numberOfLines={1}>
+              {deckTitle}
+            </Text>
           </View>
         </View>
         <View style={styles.studyHeaderActions}>
           {card && (
             <Pressable
               style={styles.favoriteBtn}
-              accessibilityLabel={card.favorite ? t('study.favorite.remove') : t('study.favorite.save')}
+              accessibilityLabel={
+                card.favorite ? t('study.favorite.remove') : t('study.favorite.save')
+              }
               onPress={() => toggleFavorite(card.id)}
             >
               <Text style={styles.favoriteBtnText}>{card.favorite ? '★' : '☆'}</Text>
@@ -438,7 +450,12 @@ export default function StudyScreen() {
               style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
               onPress={() => changeRegion(region.id)}
             >
-              <Text style={[styles.regionChipText, activeRegion === region.id && styles.regionChipTextActive]}>
+              <Text
+                style={[
+                  styles.regionChipText,
+                  activeRegion === region.id && styles.regionChipTextActive,
+                ]}
+              >
                 {t(REGION_LABEL_KEYS[region.id])}
               </Text>
             </Pressable>

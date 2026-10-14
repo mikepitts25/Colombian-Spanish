@@ -20,9 +20,7 @@ jest.mock('expo-audio', () => ({
 }));
 
 // 3. react-native-reanimated mock
-jest.mock('react-native-reanimated', () =>
-  require('react-native-reanimated/mock'),
-);
+jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
 
 // 4. react-native-gesture-handler mock
 jest.mock('react-native-gesture-handler', () => {

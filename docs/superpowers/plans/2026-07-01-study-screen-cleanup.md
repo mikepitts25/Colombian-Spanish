@@ -24,6 +24,7 @@
 ## Task 1: Add Failing Study Screen Regression Tests
 
 **Files:**
+
 - Modify: `__tests__/screens/StudyScreen.test.tsx`
 
 - [ ] **Step 1: Add tests for filter overflow affordance and clearer hint copy**
@@ -31,21 +32,21 @@
 Insert these tests inside `describe('StudyScreen rendering', () => { ... })`, after the existing region filter test:
 
 ```tsx
-  it('renders compact region filters with an overflow affordance', async () => {
-    const { getByTestId, getByText } = renderStudyScreen();
+it('renders compact region filters with an overflow affordance', async () => {
+  const { getByTestId, getByText } = renderStudyScreen();
 
-    await waitFor(() => expect(getByTestId('region-filter-scroll')).toBeTruthy());
-    expect(getByTestId('region-filter-overflow-cue')).toBeTruthy();
-    expect(getByText('Todos')).toBeTruthy();
-    expect(getByText('Paisa')).toBeTruthy();
-    expect(getByText('Valluno')).toBeTruthy();
-  });
+  await waitFor(() => expect(getByTestId('region-filter-scroll')).toBeTruthy());
+  expect(getByTestId('region-filter-overflow-cue')).toBeTruthy();
+  expect(getByText('Todos')).toBeTruthy();
+  expect(getByText('Paisa')).toBeTruthy();
+  expect(getByText('Valluno')).toBeTruthy();
+});
 
-  it('uses clear tap-to-answer copy for the flashcard hint', async () => {
-    const { getByText } = renderStudyScreen();
+it('uses clear tap-to-answer copy for the flashcard hint', async () => {
+  const { getByText } = renderStudyScreen();
 
-    await waitFor(() => expect(getByText('Toca para ver respuesta')).toBeTruthy());
-  });
+  await waitFor(() => expect(getByText('Toca para ver respuesta')).toBeTruthy());
+});
 ```
 
 - [ ] **Step 2: Run the focused Study screen test and confirm it fails**
@@ -61,6 +62,7 @@ Expected: FAIL because `region-filter-scroll`, `region-filter-overflow-cue`, and
 ## Task 2: Implement the Focused Study Layout and Filter Cue
 
 **Files:**
+
 - Modify: `src/screens/StudyScreen.tsx`
 - Modify: `src/i18n/translations.ts`
 
@@ -313,6 +315,7 @@ Expected: PASS.
 ## Task 3: Tighten the Flashcard Presentation
 
 **Files:**
+
 - Modify: `src/components/Flashcard.tsx`
 
 - [ ] **Step 1: Update card container and face styles**
@@ -421,6 +424,7 @@ Expected: PASS.
 ## Task 4: Final Verification and Commit
 
 **Files:**
+
 - Verify: `src/screens/StudyScreen.tsx`
 - Verify: `src/components/Flashcard.tsx`
 - Verify: `src/i18n/translations.ts`

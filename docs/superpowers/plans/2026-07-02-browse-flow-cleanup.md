@@ -13,6 +13,7 @@
 ### Task 1: Update Browse Tests For Simplified Flow
 
 **Files:**
+
 - Modify: `__tests__/screens/BrowseScreen.test.tsx`
 - Test: `__tests__/screens/BrowseScreen.test.tsx`
 
@@ -44,25 +45,19 @@ Add these fixtures after `DECK_PAISA`:
 const DECK_TECH: Deck = {
   id: 'deck-tech',
   name: 'Tecnología',
-  cards: [
-    makeCard('t1', { front: 'celular', back: 'cell phone', tags: ['tech'] }),
-  ],
+  cards: [makeCard('t1', { front: 'celular', back: 'cell phone', tags: ['tech'] })],
 };
 
 const DECK_HEALTH: Deck = {
   id: 'deck-health',
   name: 'Salud',
-  cards: [
-    makeCard('h1', { front: 'cita médica', back: 'medical appointment', tags: ['health'] }),
-  ],
+  cards: [makeCard('h1', { front: 'cita médica', back: 'medical appointment', tags: ['health'] })],
 };
 
 const DECK_NUMBERS: Deck = {
   id: 'deck-numbers',
   name: 'Numbers',
-  cards: [
-    makeCard('n1', { front: 'quincena', back: 'paycheck every 15 days', tags: ['number'] }),
-  ],
+  cards: [makeCard('n1', { front: 'quincena', back: 'paycheck every 15 days', tags: ['number'] })],
 };
 ```
 
@@ -161,6 +156,7 @@ Expected before implementation: FAIL because the old filter controls still rende
 ### Task 2: Simplify Browse Screen
 
 **Files:**
+
 - Modify: `src/screens/BrowseScreen.tsx`
 - Modify: `src/i18n/translations.ts`
 - Test: `__tests__/screens/BrowseScreen.test.tsx`
@@ -186,20 +182,104 @@ Replace the current `CATEGORY_DISPLAY` value with:
 
 ```ts
 const CATEGORY_DISPLAY = [
-  { key: 'Colombianisms', emoji: '🇨🇴', labelKey: 'browse.category.colombianisms', color: '#FFDA00', bg: 'rgba(255,218,0,0.08)' },
-  { key: 'Essentials', emoji: '⭐', labelKey: 'browse.category.essentials', color: '#facc15', bg: 'rgba(250,204,21,0.1)' },
-  { key: 'People & Relationships', emoji: '👥', labelKey: 'browse.category.people', color: '#10b981', bg: 'rgba(16,185,129,0.12)' },
-  { key: 'Places & Travel', emoji: '🚌', labelKey: 'browse.category.travel', color: '#f97316', bg: 'rgba(249,115,22,0.12)' },
-  { key: 'Home & Daily Life', emoji: '🏠', labelKey: 'browse.category.home', color: '#38bdf8', bg: 'rgba(56,189,248,0.1)' },
-  { key: 'Food & Drink', emoji: '🍺', labelKey: 'browse.category.food', color: '#fb923c', bg: 'rgba(251,146,60,0.12)' },
-  { key: 'Communication', emoji: '💬', labelKey: 'browse.category.communication', color: '#60a5fa', bg: 'rgba(96,165,250,0.1)' },
-  { key: 'Health', emoji: '🩺', labelKey: 'browse.category.health', color: '#f43f5e', bg: 'rgba(244,63,94,0.1)' },
-  { key: 'Nature', emoji: '🌿', labelKey: 'browse.category.nature', color: '#22c55e', bg: 'rgba(34,197,94,0.1)' },
-  { key: 'Work & School', emoji: '💼', labelKey: 'browse.category.work', color: '#94a3b8', bg: 'rgba(148,163,184,0.12)' },
-  { key: 'Numbers & Time', emoji: '🔢', labelKey: 'browse.category.numbers', color: '#c084fc', bg: 'rgba(192,132,252,0.1)' },
-  { key: 'Fun & Culture', emoji: '🎵', labelKey: 'browse.category.culture', color: '#a855f7', bg: 'rgba(168,85,247,0.12)' },
-  { key: 'Tech', emoji: '📱', labelKey: 'browse.category.tech', color: '#2dd4bf', bg: 'rgba(45,212,191,0.1)' },
-  { key: 'Other', emoji: '🧩', labelKey: 'browse.category.other', color: '#e2e8f0', bg: 'rgba(226,232,240,0.08)' },
+  {
+    key: 'Colombianisms',
+    emoji: '🇨🇴',
+    labelKey: 'browse.category.colombianisms',
+    color: '#FFDA00',
+    bg: 'rgba(255,218,0,0.08)',
+  },
+  {
+    key: 'Essentials',
+    emoji: '⭐',
+    labelKey: 'browse.category.essentials',
+    color: '#facc15',
+    bg: 'rgba(250,204,21,0.1)',
+  },
+  {
+    key: 'People & Relationships',
+    emoji: '👥',
+    labelKey: 'browse.category.people',
+    color: '#10b981',
+    bg: 'rgba(16,185,129,0.12)',
+  },
+  {
+    key: 'Places & Travel',
+    emoji: '🚌',
+    labelKey: 'browse.category.travel',
+    color: '#f97316',
+    bg: 'rgba(249,115,22,0.12)',
+  },
+  {
+    key: 'Home & Daily Life',
+    emoji: '🏠',
+    labelKey: 'browse.category.home',
+    color: '#38bdf8',
+    bg: 'rgba(56,189,248,0.1)',
+  },
+  {
+    key: 'Food & Drink',
+    emoji: '🍺',
+    labelKey: 'browse.category.food',
+    color: '#fb923c',
+    bg: 'rgba(251,146,60,0.12)',
+  },
+  {
+    key: 'Communication',
+    emoji: '💬',
+    labelKey: 'browse.category.communication',
+    color: '#60a5fa',
+    bg: 'rgba(96,165,250,0.1)',
+  },
+  {
+    key: 'Health',
+    emoji: '🩺',
+    labelKey: 'browse.category.health',
+    color: '#f43f5e',
+    bg: 'rgba(244,63,94,0.1)',
+  },
+  {
+    key: 'Nature',
+    emoji: '🌿',
+    labelKey: 'browse.category.nature',
+    color: '#22c55e',
+    bg: 'rgba(34,197,94,0.1)',
+  },
+  {
+    key: 'Work & School',
+    emoji: '💼',
+    labelKey: 'browse.category.work',
+    color: '#94a3b8',
+    bg: 'rgba(148,163,184,0.12)',
+  },
+  {
+    key: 'Numbers & Time',
+    emoji: '🔢',
+    labelKey: 'browse.category.numbers',
+    color: '#c084fc',
+    bg: 'rgba(192,132,252,0.1)',
+  },
+  {
+    key: 'Fun & Culture',
+    emoji: '🎵',
+    labelKey: 'browse.category.culture',
+    color: '#a855f7',
+    bg: 'rgba(168,85,247,0.12)',
+  },
+  {
+    key: 'Tech',
+    emoji: '📱',
+    labelKey: 'browse.category.tech',
+    color: '#2dd4bf',
+    bg: 'rgba(45,212,191,0.1)',
+  },
+  {
+    key: 'Other',
+    emoji: '🧩',
+    labelKey: 'browse.category.other',
+    color: '#e2e8f0',
+    bg: 'rgba(226,232,240,0.08)',
+  },
 ] as const;
 ```
 
@@ -376,6 +456,7 @@ Expected: PASS.
 ### Task 3: Swap Browse And Study In Bottom Navigation
 
 **Files:**
+
 - Modify: `src/navigation/index.tsx`
 - Test: TypeScript compile
 
@@ -418,6 +499,7 @@ Expected: PASS.
 ### Task 4: Final Verification
 
 **Files:**
+
 - Verify: `src/screens/BrowseScreen.tsx`
 - Verify: `src/navigation/index.tsx`
 - Verify: `__tests__/screens/BrowseScreen.test.tsx`

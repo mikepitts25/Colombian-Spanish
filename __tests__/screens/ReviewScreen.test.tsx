@@ -64,7 +64,10 @@ describe('ReviewScreen review queue', () => {
     const { getByPlaceholderText, getByText, updateCardReview } = renderReviewScreen();
 
     fireEvent.changeText(getByPlaceholderText('Traducción en inglés'), 'buddy / friend');
-    fireEvent.changeText(getByPlaceholderText('Ejemplo con inglés después de |'), 'Hola, parce. | Hi, buddy.');
+    fireEvent.changeText(
+      getByPlaceholderText('Ejemplo con inglés después de |'),
+      'Hola, parce. | Hi, buddy.',
+    );
 
     await act(async () => {
       fireEvent.press(getByText('Guardar y seguir'));

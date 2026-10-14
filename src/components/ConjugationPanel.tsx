@@ -61,7 +61,8 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
         onPress={() => setModalVisible(true)}
       >
         <Text style={[styles.compactButtonText, isIrregular && styles.irregularButtonText]}>
-          {isIrregular ? '⚠ ' : ''}{t('conjugation.conjugate')}
+          {isIrregular ? '⚠ ' : ''}
+          {t('conjugation.conjugate')}
         </Text>
       </TouchableOpacity>
     );
@@ -75,11 +76,10 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
         onPress={() => setModalVisible(true)}
       >
         <Text style={[styles.triggerButtonText, isIrregular && styles.irregularTriggerText]}>
-          {isIrregular ? '⚠ ' : ''}{t('conjugation.conjugate')}
+          {isIrregular ? '⚠ ' : ''}
+          {t('conjugation.conjugate')}
         </Text>
-        {isIrregular && (
-          <Text style={styles.irregularBadge}>{t('conjugation.irregular')}</Text>
-        )}
+        {isIrregular && <Text style={styles.irregularBadge}>{t('conjugation.irregular')}</Text>}
       </TouchableOpacity>
 
       {/* Modal */}
@@ -115,17 +115,19 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
 
             {/* Tense selector */}
             <View style={styles.tabContainer}>
-              {(Object.keys(tenseLabelKeys) as ('presente' | 'preterito' | 'futuro')[]).map((tense) => (
-                <TouchableOpacity
-                  key={tense}
-                  style={[styles.tab, activeTense === tense && styles.activeTab]}
-                  onPress={() => setActiveTense(tense)}
-                >
-                  <Text style={[styles.tabText, activeTense === tense && styles.activeTabText]}>
-                    {t(tenseLabelKeys[tense])}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+              {(Object.keys(tenseLabelKeys) as ('presente' | 'preterito' | 'futuro')[]).map(
+                (tense) => (
+                  <TouchableOpacity
+                    key={tense}
+                    style={[styles.tab, activeTense === tense && styles.activeTab]}
+                    onPress={() => setActiveTense(tense)}
+                  >
+                    <Text style={[styles.tabText, activeTense === tense && styles.activeTabText]}>
+                      {t(tenseLabelKeys[tense])}
+                    </Text>
+                  </TouchableOpacity>
+                ),
+              )}
             </View>
 
             {/* Conjugation table */}
@@ -138,9 +140,7 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
                     </Text>
                     {highlight && <Text style={styles.colombiaTag}>🇨🇴</Text>}
                   </View>
-                  <Text style={styles.verbForm}>
-                    {getVerbForm(conjugation[activeTense], key)}
-                  </Text>
+                  <Text style={styles.verbForm}>{getVerbForm(conjugation[activeTense], key)}</Text>
                 </View>
               ))}
             </ScrollView>

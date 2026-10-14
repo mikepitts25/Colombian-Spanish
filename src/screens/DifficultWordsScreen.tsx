@@ -10,10 +10,38 @@ import { FlashCard } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 
 const GRADES = [
-  { labelKey: 'grades.again', interval: '<1d', color: '#f87171',  bg: 'rgba(206,17,38,0.3)',   border: '#CE1126', q: 1 as const },
-  { labelKey: 'grades.hard',  interval: '1d',  color: '#fb923c',  bg: 'rgba(251,146,60,0.25)', border: '#fb923c', q: 2 as const },
-  { labelKey: 'grades.good',  interval: '3d',  color: '#FFDA00',  bg: 'rgba(255,218,0,0.22)',  border: '#FFDA00', q: 4 as const },
-  { labelKey: 'grades.easy',  interval: '7d',  color: '#10b981',  bg: 'rgba(16,185,129,0.25)', border: '#10b981', q: 5 as const },
+  {
+    labelKey: 'grades.again',
+    interval: '<1d',
+    color: '#f87171',
+    bg: 'rgba(206,17,38,0.3)',
+    border: '#CE1126',
+    q: 1 as const,
+  },
+  {
+    labelKey: 'grades.hard',
+    interval: '1d',
+    color: '#fb923c',
+    bg: 'rgba(251,146,60,0.25)',
+    border: '#fb923c',
+    q: 2 as const,
+  },
+  {
+    labelKey: 'grades.good',
+    interval: '3d',
+    color: '#FFDA00',
+    bg: 'rgba(255,218,0,0.22)',
+    border: '#FFDA00',
+    q: 4 as const,
+  },
+  {
+    labelKey: 'grades.easy',
+    interval: '7d',
+    color: '#10b981',
+    bg: 'rgba(16,185,129,0.25)',
+    border: '#10b981',
+    q: 5 as const,
+  },
 ] as const;
 
 type DifficultRow = {
@@ -89,7 +117,9 @@ export default function DifficultWordsScreen() {
           </Text>
         </View>
         <View style={styles.counterPill}>
-          <Text style={styles.counterText}>{idx + 1}/{count}</Text>
+          <Text style={styles.counterText}>
+            {idx + 1}/{count}
+          </Text>
         </View>
       </View>
 

@@ -13,7 +13,7 @@ let currentStatus = {
   activity: 'Processing...',
   lastUpdate: Date.now(),
   tasksCompleted: 0,
-  currentTask: null
+  currentTask: null,
 };
 
 // Connected clients
@@ -23,19 +23,21 @@ const clients = new Set();
 wss.on('connection', (ws) => {
   console.log('New client connected');
   clients.add(ws);
-  
+
   // Send current status immediately
-  ws.send(JSON.stringify({
-    type: 'status',
-    data: currentStatus
-  }));
-  
+  ws.send(
+    JSON.stringify({
+      type: 'status',
+      data: currentStatus,
+    }),
+  );
+
   // Handle messages from clients (if needed)
   ws.on('message', (message) => {
     try {
       const data = JSON.parse(message);
       console.log('Received:', data);
-      
+
       // Handle different message types
       if (data.type === 'ping') {
         ws.send(JSON.stringify({ type: 'pong' }));
@@ -44,12 +46,12 @@ wss.on('connection', (ws) => {
       console.error('Invalid message:', e);
     }
   });
-  
+
   ws.on('close', () => {
     console.log('Client disconnected');
     clients.delete(ws);
   });
-  
+
   ws.on('error', (err) => {
     console.error('WebSocket error:', err);
     clients.delete(ws);
@@ -60,10 +62,10 @@ wss.on('connection', (ws) => {
 function broadcastStatus() {
   const message = JSON.stringify({
     type: 'status',
-    data: currentStatus
+    data: currentStatus,
   });
-  
-  clients.forEach(client => {
+
+  clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(message);
     }
@@ -81,12 +83,12 @@ app.get('/api/status', (req, res) => {
 // Update status (called by your automation/scripts)
 app.post('/api/status', (req, res) => {
   const { state, activity, currentTask } = req.body;
-  
+
   if (state) currentStatus.state = state;
   if (activity) currentStatus.activity = activity;
   if (currentTask) currentStatus.currentTask = currentTask;
   currentStatus.lastUpdate = Date.now();
-  
+
   broadcastStatus();
   res.json({ success: true, status: currentStatus });
 });
@@ -105,7 +107,7 @@ app.get('/api/stats', (req, res) => {
     tasksCompleted: currentStatus.tasksCompleted,
     uptime: process.uptime(),
     connectedClients: clients.size,
-    lastUpdate: currentStatus.lastUpdate
+    lastUpdate: currentStatus.lastUpdate,
   });
 });
 
@@ -129,7 +131,7 @@ const activities = [
   { state: 'working', activity: 'Merging PRs...' },
   { state: 'thinking', activity: 'Analyzing code...' },
   { state: 'active', activity: 'Writing documentation...' },
-  { state: 'working', activity: 'Running tests...' }
+  { state: 'working', activity: 'Running tests...' },
 ];
 
 // Auto-update status (optional - can be disabled)

@@ -1,6 +1,7 @@
 # 📋 App Ideas Tracker - Notion Setup Guide
 
 ## Step 1: Create Your Notion Account
+
 1. Go to https://notion.so
 2. Sign up (free personal plan)
 3. Download mobile apps (iOS/Android) for on-the-go ideas
@@ -10,6 +11,7 @@
 ## Step 2: Import the CSV
 
 ### Method A: Full Import (Recommended)
+
 1. In Notion, click **+ New Page**
 2. Name it "🚀 App Ideas & Features"
 3. Type `/database` and select **"Table"**
@@ -18,6 +20,7 @@
 6. Notion will auto-detect column types
 
 ### Method B: Manual (If import fails)
+
 1. Create new database: `/database` → **Table**
 2. Add these columns exactly:
    - **Name** (Title)
@@ -37,24 +40,28 @@
 ## Step 3: Create Views
 
 ### View 1: Kanban Board (By Status)
+
 1. Click **"+ New"** next to views
 2. Select **Board**
 3. Group by: **Status**
 4. Card preview: Show **Name + Priority + App**
 
 ### View 2: By App
+
 1. Click **"+ New"**
 2. Select **Table**
 3. Filter: **App** = "SpiceSync" (save as "SpiceSync Only")
 4. Repeat for Colombian Spanish
 
 ### View 3: Priority View
+
 1. Click **"+ New"**
 2. Select **Table**
 3. Sort: **Priority** → 🔥 High first
 4. Filter: **Status** is not "Done"
 
 ### View 4: Ready for Gatsby
+
 1. Click **"+ New"**
 2. Select **Table**
 3. Filter: **Status** = "To Do" AND **Priority** = "🔥 High"
@@ -89,18 +96,21 @@ I can see exactly what to build in priority order.
 ## 🎯 How to Use Daily
 
 ### Adding New Ideas
+
 1. Open Notion mobile app
 2. Tap **+** on your database
 3. Fill: Name, App, Status = "Idea", Priority
 4. Add any notes/screenshots
 
 ### Weekly Review (You + Wife)
+
 1. Open Kanban view
 2. Drag ideas from "Idea" → "To Do" (approved)
 3. Set priorities
 4. Tag with effort level
 
 ### When Ready to Build
+
 1. Move card to **"To Do"** + set **🔥 High priority**
 2. Share view-only link with me
 3. I build it, mark **"Done"**
@@ -110,6 +120,7 @@ I can see exactly what to build in priority order.
 ## 📱 Mobile Quick Add
 
 **On the go:**
+
 1. Open Notion app
 2. Tap **+** in bottom right
 3. Select your database
@@ -121,6 +132,7 @@ I can see exactly what to build in priority order.
 ## 🏷️ Tag Suggestions
 
 **Types:**
+
 - Feature (new functionality)
 - Bug (something broken)
 - Content (cards, decks, translations)
@@ -131,6 +143,7 @@ I can see exactly what to build in priority order.
 - Visual Asset (icons, screenshots)
 
 **Apps:**
+
 - SpiceSync
 - Colombian Spanish
 - New App (for future ideas)
@@ -158,16 +171,19 @@ I can see exactly what to build in priority order.
 ## Example Workflow
 
 **You (at coffee shop):**
+
 > "We should add a streak counter to Colombian Spanish"
-→ Open Notion app → Add idea → Tag as "Gamification"
+> → Open Notion app → Add idea → Tag as "Gamification"
 
 **You + Wife (weekly review):**
+
 > "That streak idea is good, let's do it"
-→ Drag to "To Do" → Set 🔥 High priority
+> → Drag to "To Do" → Set 🔥 High priority
 
 **Me (when you share link):**
+
 > See "Add streak counter" in "Ready for Gatsby" view
-→ Build it → Mark Done
+> → Build it → Mark Done
 
 ---
 

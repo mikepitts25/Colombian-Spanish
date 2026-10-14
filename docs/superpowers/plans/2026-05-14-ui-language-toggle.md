@@ -26,6 +26,7 @@
 ### Task 1: Persist UI Language In Prefs
 
 **Files:**
+
 - Modify: `__tests__/storage/prefs.test.ts`
 - Modify: `src/storage/prefs.ts`
 
@@ -107,6 +108,7 @@ Expected: PASS.
 ### Task 2: Add Translation Dictionary And Language Provider
 
 **Files:**
+
 - Create: `src/i18n/translations.ts`
 - Create: `src/context/LanguageContext.tsx`
 - Modify: `App.tsx`
@@ -315,6 +317,7 @@ import { LanguageProvider } from './src/context/LanguageContext';
 ### Task 3: Localize Settings And Navigation
 
 **Files:**
+
 - Modify: `__tests__/screens/SettingsScreen.test.tsx`
 - Modify: `src/screens/SettingsScreen.tsx`
 - Modify: `src/navigation/index.tsx`
@@ -391,7 +394,7 @@ const { t, toggleLanguage } = useLanguage();
 Replace hard-coded labels with `t(...)`, including:
 
 ```tsx
-<Text style={styles.pageTitle}>⚙️  {t('settings.title')}</Text>
+<Text style={styles.pageTitle}>⚙️ {t('settings.title')}</Text>
 ```
 
 Add the row after profile:
@@ -412,7 +415,9 @@ subtitle={t('settings.dailyGoal.subtitle', { count: target })}
 ```
 
 ```tsx
-{t('settings.streak', { count: streak, plural: streak !== 1 ? 's' : '' })}
+{
+  t('settings.streak', { count: streak, plural: streak !== 1 ? 's' : '' });
+}
 ```
 
 Replace `Alert.alert(...)` strings with translation keys from `translations.ts`.
@@ -441,7 +446,9 @@ const { t } = useLanguage();
 ```
 
 ```tsx
-{t(tab.labelKey)}
+{
+  t(tab.labelKey);
+}
 ```
 
 Use `t('nav.manageDecks')`, `t('nav.review')`, and `t('nav.flagged')` in `RootNavigator`.
@@ -457,6 +464,7 @@ Expected: PASS.
 ### Task 4: Verify Integration
 
 **Files:**
+
 - All files changed by Tasks 1-3.
 
 - [ ] **Step 1: Run focused tests**
@@ -476,4 +484,3 @@ Expected: PASS.
 Run: `git diff -- src/storage/prefs.ts src/i18n/translations.ts src/context/LanguageContext.tsx App.tsx src/navigation/index.tsx src/screens/SettingsScreen.tsx __tests__/storage/prefs.test.ts __tests__/screens/SettingsScreen.test.tsx`
 
 Expected: Diff only contains UI language persistence, provider, dictionary, Settings toggle, navigation label updates, and focused tests.
-

@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  Switch,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
@@ -40,22 +33,42 @@ function Toggle({
 }
 
 function NotifRow({
-  emoji, title, subtitle, value, onValueChange, chevron, testID,
+  emoji,
+  title,
+  subtitle,
+  value,
+  onValueChange,
+  chevron,
+  testID,
 }: {
-  emoji: string; title: string; subtitle?: string;
-  value?: boolean; onValueChange?: (v: boolean) => void; chevron?: boolean; testID?: string;
+  emoji: string;
+  title: string;
+  subtitle?: string;
+  value?: boolean;
+  onValueChange?: (v: boolean) => void;
+  chevron?: boolean;
+  testID?: string;
 }) {
   return (
     <View style={styles.notifRow}>
       <Text style={styles.rowEmoji}>{emoji}</Text>
       <View style={styles.rowInfo}>
         <Text style={styles.rowTitle}>{title}</Text>
-        {subtitle ? <Text style={styles.rowSubtitle} numberOfLines={2}>{subtitle}</Text> : null}
+        {subtitle ? (
+          <Text style={styles.rowSubtitle} numberOfLines={2}>
+            {subtitle}
+          </Text>
+        ) : null}
       </View>
-      {chevron
-        ? <Text style={styles.chevron}>›</Text>
-        : <Toggle testID={testID} value={value ?? false} onValueChange={onValueChange ?? (() => {})} />
-      }
+      {chevron ? (
+        <Text style={styles.chevron}>›</Text>
+      ) : (
+        <Toggle
+          testID={testID}
+          value={value ?? false}
+          onValueChange={onValueChange ?? (() => {})}
+        />
+      )}
     </View>
   );
 }
@@ -183,7 +196,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
   },
-  backBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, padding: 8, borderRadius: 20, backgroundColor: colors.surface },
+  backBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: colors.surface,
+  },
   backArrow: { color: colors.brand, fontSize: 16, fontWeight: '700' },
   backLabel: { color: colors.brand, fontSize: 14, fontWeight: '600' },
   navTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },

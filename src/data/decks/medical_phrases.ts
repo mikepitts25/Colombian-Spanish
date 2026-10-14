@@ -4,7 +4,8 @@ import { Deck } from '../../types';
 export const MedicalPhrasesDeck: Deck = {
   id: 'deck-medical-phrases',
   name: 'Medical & Emergency Phrases',
-  description: 'Essential phrases for pharmacy visits, doctor appointments, symptoms, and emergencies in Colombia.',
+  description:
+    'Essential phrases for pharmacy visits, doctor appointments, symptoms, and emergencies in Colombia.',
   cards: [
     {
       id: 'med-001',
@@ -34,7 +35,8 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-003',
       front: '¿Hay una farmacia cerca?',
       back: 'Is there a pharmacy nearby?',
-      example: '¿Hay una farmacia cerca que esté abierta? | Is there a pharmacy nearby that\'s open?',
+      example:
+        "¿Hay una farmacia cerca que esté abierta? | Is there a pharmacy nearby that's open?",
       tags: ['medical', 'pharmacy', 'location'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -46,7 +48,8 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-004',
       front: '¿Necesito receta?',
       back: 'Do I need a prescription?',
-      example: '¿Necesito receta para este medicamento? | Do I need a prescription for this medication?',
+      example:
+        '¿Necesito receta para este medicamento? | Do I need a prescription for this medication?',
       tags: ['medical', 'pharmacy', 'question'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -94,7 +97,7 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-008',
       front: 'Me duele el estómago',
       back: 'I have a stomachache',
-      example: 'Me duele el estómago desde ayer. | I\'ve had a stomachache since yesterday.',
+      example: "Me duele el estómago desde ayer. | I've had a stomachache since yesterday.",
       tags: ['medical', 'symptom', 'pain'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -130,7 +133,7 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-011',
       front: 'Tengo tos',
       back: 'I have a cough',
-      example: 'Tengo tos seca desde hace tres días. | I\'ve had a dry cough for three days.',
+      example: "Tengo tos seca desde hace tres días. | I've had a dry cough for three days.",
       tags: ['medical', 'symptom'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -153,7 +156,7 @@ export const MedicalPhrasesDeck: Deck = {
     {
       id: 'med-013',
       front: 'Estoy resfriado/a',
-      back: "I have a cold",
+      back: 'I have a cold',
       example: 'Estoy resfriado y me pica la nariz. | I have a cold and my nose is itchy.',
       tags: ['medical', 'symptom'],
       createdAt: Date.now(),
@@ -166,7 +169,7 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-014',
       front: 'No me siento bien',
       back: "I don't feel well",
-      example: 'No me siento bien. Necesito sentarme. | I don\'t feel well. I need to sit down.',
+      example: "No me siento bien. Necesito sentarme. | I don't feel well. I need to sit down.",
       tags: ['medical', 'symptom'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -250,7 +253,8 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-021',
       front: '¿Dónde hay una clínica?',
       back: 'Where is there a clinic?',
-      example: '¿Dónde hay una clínica que atienda sin cita? | Where is there a clinic that sees patients without an appointment?',
+      example:
+        '¿Dónde hay una clínica que atienda sin cita? | Where is there a clinic that sees patients without an appointment?',
       tags: ['medical', 'clinic', 'location'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -262,7 +266,8 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-022',
       front: 'Tengo cita con el doctor...',
       back: 'I have an appointment with Dr....',
-      example: 'Tengo cita con el doctor García a las 3. | I have an appointment with Dr. García at 3.',
+      example:
+        'Tengo cita con el doctor García a las 3. | I have an appointment with Dr. García at 3.',
       tags: ['medical', 'doctor', 'appointment'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -310,7 +315,7 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-026',
       front: 'Soy alérgico/a a la penicilina',
       back: "I'm allergic to penicillin",
-      example: 'Soy alérgico a la penicilina. | I\'m allergic to penicillin.',
+      example: "Soy alérgico a la penicilina. | I'm allergic to penicillin.",
       tags: ['medical', 'allergy'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -358,7 +363,8 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-030',
       front: '¿Dónde está la sala de emergencias?',
       back: 'Where is the emergency room?',
-      example: '¿Dónde está la sala de emergencias más cercana? | Where is the nearest emergency room?',
+      example:
+        '¿Dónde está la sala de emergencias más cercana? | Where is the nearest emergency room?',
       tags: ['medical', 'emergency', 'location'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -382,7 +388,8 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-032',
       front: 'Perdí mi pasaporte',
       back: 'I lost my passport',
-      example: 'Perdí mi pasaporte. ¿Dónde está la embajada? | I lost my passport. Where is the embassy?',
+      example:
+        'Perdí mi pasaporte. ¿Dónde está la embajada? | I lost my passport. Where is the embassy?',
       tags: ['medical', 'emergency', 'travel'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -418,7 +425,8 @@ export const MedicalPhrasesDeck: Deck = {
       id: 'med-035',
       front: '¿Cuánto cuesta la consulta?',
       back: 'How much is the consultation?',
-      example: '¿Cuánto cuesta la consulta sin seguro? | How much is the consultation without insurance?',
+      example:
+        '¿Cuánto cuesta la consulta sin seguro? | How much is the consultation without insurance?',
       tags: ['medical', 'doctor', 'price'],
       createdAt: Date.now(),
       due: Date.now(),

@@ -96,12 +96,16 @@ beforeEach(async () => {
 describe('DeckProvider initialization', () => {
   it('sets ready=true after mounting', async () => {
     const { getByTestId } = renderWithProvider(<Consumer />);
-    await waitFor(() => expect(getByTestId('ready').props.children).toBe('true'), { timeout: 10000 });
+    await waitFor(() => expect(getByTestId('ready').props.children).toBe('true'), {
+      timeout: 10000,
+    });
   });
 
   it('seeds from ALL_DECKS when storage is empty', async () => {
     const { getByTestId } = renderWithProvider(<Consumer />);
-    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(1), { timeout: 10000 });
+    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(1), {
+      timeout: 10000,
+    });
     const stored = await AsyncStorage.getItem('SRS_DECKS_V3');
     const parsed = JSON.parse(stored!);
     expect(parsed[0].id).toBe('deck-seed');
@@ -110,14 +114,18 @@ describe('DeckProvider initialization', () => {
   it('does not duplicate existing seed decks on re-mount', async () => {
     await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([SEED_DECK]));
     const { getByTestId } = renderWithProvider(<Consumer />);
-    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(1), { timeout: 10000 });
+    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(1), {
+      timeout: 10000,
+    });
   });
 
   it('merges a new seed deck without removing existing user data', async () => {
     const userDeck = makeStoredDeck('user-custom', [makeCard('uc1')]);
     await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([userDeck, SEED_DECK]));
     const { getByTestId } = renderWithProvider(<Consumer />);
-    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(2), { timeout: 10000 });
+    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(2), {
+      timeout: 10000,
+    });
   });
 
   it('refreshes updated seed card content while preserving stored progress', async () => {
@@ -188,7 +196,9 @@ describe('DeckProvider initialization', () => {
 
   it('sets activeDeckId to first deck', async () => {
     const { getByTestId } = renderWithProvider(<Consumer />);
-    await waitFor(() => expect(getByTestId('active-deck-id').props.children).toBe('deck-seed'), { timeout: 10000 });
+    await waitFor(() => expect(getByTestId('active-deck-id').props.children).toBe('deck-seed'), {
+      timeout: 10000,
+    });
   });
 });
 
@@ -197,19 +207,37 @@ describe('DeckProvider initialization', () => {
 describe('getStudyBatch', () => {
   it('returns due cards from the active deck', async () => {
     const cards = [makeCard('c1'), makeCard('c2'), makeCard('c3')];
-    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', cards)]));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', cards)]),
+    );
 
     let batch: FlashCard[] = [];
-    renderWithProvider(<Consumer onReady={(ctx) => { batch = ctx.getStudyBatch(); }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(ctx) => {
+          batch = ctx.getStudyBatch();
+        }}
+      />,
+    );
     await waitFor(() => expect(batch.length).toBeGreaterThan(0), { timeout: 10000 });
   });
 
   it('respects size parameter', async () => {
     const cards = Array.from({ length: 10 }, (_, i) => makeCard(`c${i}`));
-    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', cards)]));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', cards)]),
+    );
 
     let batch: FlashCard[] = [];
-    renderWithProvider(<Consumer onReady={(ctx) => { batch = ctx.getStudyBatch(3); }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(ctx) => {
+          batch = ctx.getStudyBatch(3);
+        }}
+      />,
+    );
     await waitFor(() => expect(batch).toHaveLength(3), { timeout: 10000 });
   });
 });
@@ -219,13 +247,24 @@ describe('getStudyBatch', () => {
 describe('recordAnswer', () => {
   it('updates card progress fields after grading', async () => {
     const card = makeCard('grade-me', { reps: 0, ease: 2.5 });
-    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+    );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
-    await act(async () => { await ctx!.recordAnswer('grade-me', 5); });
+    await act(async () => {
+      await ctx!.recordAnswer('grade-me', 5);
+    });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
     const updatedCard = stored[0].cards.find((card: FlashCard) => card.id === 'grade-me');
@@ -238,13 +277,24 @@ describe('recordAnswer', () => {
       front: 'parce',
       back: 'friend / buddy',
     });
-    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+    );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
-    await act(async () => { await ctx!.recordAnswer('quiz-word', 4); });
+    await act(async () => {
+      await ctx!.recordAnswer('quiz-word', 4);
+    });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_SEEN_WORDS_V1'))!);
     expect(stored).toEqual([
@@ -263,13 +313,24 @@ describe('recordAnswer', () => {
 
   it('updates the study streak when a card is reviewed', async () => {
     const card = makeCard('streak-word');
-    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+    );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
-    await act(async () => { await ctx!.recordAnswer('streak-word', 4); });
+    await act(async () => {
+      await ctx!.recordAnswer('streak-word', 4);
+    });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_STUDY_STREAK_V1'))!);
     expect(stored.streak).toBe(1);
@@ -278,13 +339,24 @@ describe('recordAnswer', () => {
 
   it('does nothing for an unknown cardId', async () => {
     const card = makeCard('real-id');
-    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+    );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
-    await act(async () => { await ctx!.recordAnswer('does-not-exist', 5); });
+    await act(async () => {
+      await ctx!.recordAnswer('does-not-exist', 5);
+    });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
     expect(stored[0].cards[0].reps).toBe(0);
@@ -302,10 +374,18 @@ describe('recordAnswer', () => {
     );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
-    await act(async () => { await ctx!.recordAnswer('other-card', 4); });
+    await act(async () => {
+      await ctx!.recordAnswer('other-card', 4);
+    });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
     const otherDeck = stored.find((deck: Deck) => deck.id === 'deck-other');
@@ -318,13 +398,24 @@ describe('recordAnswer', () => {
 describe('toggleFavorite', () => {
   it('sets favorite=true on first toggle', async () => {
     const card = makeCard('fav-card', { favorite: false });
-    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+    );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
-    await act(async () => { await ctx!.toggleFavorite('fav-card'); });
+    await act(async () => {
+      await ctx!.toggleFavorite('fav-card');
+    });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
     const updatedCard = stored[0].cards.find((card: FlashCard) => card.id === 'fav-card');
@@ -333,13 +424,24 @@ describe('toggleFavorite', () => {
 
   it('sets favorite=false on second toggle', async () => {
     const card = makeCard('fav-card', { favorite: true });
-    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+    );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
-    await act(async () => { await ctx!.toggleFavorite('fav-card'); });
+    await act(async () => {
+      await ctx!.toggleFavorite('fav-card');
+    });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
     const updatedCard = stored[0].cards.find((card: FlashCard) => card.id === 'fav-card');
@@ -356,10 +458,19 @@ describe('updateCardReview', () => {
       back: 'dude',
       example: 'Hola, parce. | Hi, dude.',
     });
-    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+    );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
     await act(async () => {
@@ -389,11 +500,19 @@ describe('updateCardReview', () => {
 describe('createDeck', () => {
   it('adds a new deck with an empty cards array', async () => {
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
     let newDeck: Deck | undefined;
-    await act(async () => { newDeck = await ctx!.createDeck('Mi Vocabulario', 'Custom deck'); });
+    await act(async () => {
+      newDeck = await ctx!.createDeck('Mi Vocabulario', 'Custom deck');
+    });
 
     expect(newDeck).toBeDefined();
     expect(newDeck!.cards).toHaveLength(0);
@@ -402,10 +521,18 @@ describe('createDeck', () => {
 
   it('persists the new deck to AsyncStorage', async () => {
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
-    await act(async () => { await ctx!.createDeck('Saved Deck'); });
+    await act(async () => {
+      await ctx!.createDeck('Saved Deck');
+    });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
     expect(stored.some((d: Deck) => d.name === 'Saved Deck')).toBe(true);
@@ -420,12 +547,24 @@ describe('deleteDeck', () => {
     await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([SEED_DECK, extraDeck]));
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    const { getByTestId } = renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
-    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(2), { timeout: 10000 });
+    const { getByTestId } = renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
+    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(2), {
+      timeout: 10000,
+    });
 
-    await act(async () => { await ctx!.deleteDeck('extra'); });
+    await act(async () => {
+      await ctx!.deleteDeck('extra');
+    });
 
-    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(1), { timeout: 10000 });
+    await waitFor(() => expect(getByTestId('deck-count').props.children).toBe(1), {
+      timeout: 10000,
+    });
   });
 });
 
@@ -434,13 +573,24 @@ describe('deleteDeck', () => {
 describe('resetDeckProgress', () => {
   it('resets all card progress in the target deck', async () => {
     const studiedCard = makeCard('studied', { reps: 5, interval: 14, ease: 2.9 });
-    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [studiedCard])]));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([makeStoredDeck('deck-seed', [studiedCard])]),
+    );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
-    renderWithProvider(<Consumer onReady={(c) => { ctx = c; }} />);
+    renderWithProvider(
+      <Consumer
+        onReady={(c) => {
+          ctx = c;
+        }}
+      />,
+    );
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
-    await act(async () => { await ctx!.resetDeckProgress('deck-seed'); });
+    await act(async () => {
+      await ctx!.resetDeckProgress('deck-seed');
+    });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
     const card = stored[0].cards[0];

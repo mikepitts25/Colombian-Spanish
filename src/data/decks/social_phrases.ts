@@ -4,7 +4,8 @@ import { Deck } from '../../types';
 export const SocialPhrasesDeck: Deck = {
   id: 'deck-social-phrases',
   name: 'Social & Going Out Phrases',
-  description: 'Essential phrases for making plans, nightlife, invitations, and socializing in Colombia.',
+  description:
+    'Essential phrases for making plans, nightlife, invitations, and socializing in Colombia.',
   cards: [
     {
       id: 'social-001',
@@ -58,7 +59,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-005',
       front: '¿Estás libre este finde?',
       back: 'Are you free this weekend?',
-      example: '¿Estás libre este finde? Hay un concierto. | Are you free this weekend? There\'s a concert.',
+      example:
+        "¿Estás libre este finde? Hay un concierto. | Are you free this weekend? There's a concert.",
       tags: ['social', 'plans', 'weekend'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -94,7 +96,7 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-008',
       front: 'Vamos a rumbear',
       back: "Let's go party",
-      example: 'Vamos a rumbear esta noche. | Let\'s go party tonight.',
+      example: "Vamos a rumbear esta noche. | Let's go party tonight.",
       tags: ['social', 'nightlife', 'colombian'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -106,7 +108,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-009',
       front: '¿Hay cover?',
       back: 'Is there a cover charge?',
-      example: '¿Hay cover para entrar a la discoteca? | Is there a cover charge to enter the club?',
+      example:
+        '¿Hay cover para entrar a la discoteca? | Is there a cover charge to enter the club?',
       tags: ['social', 'nightlife', 'price'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -130,7 +133,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-011',
       front: 'Dos cervezas, por favor',
       back: 'Two beers, please',
-      example: 'Dos cervezas, por favor. ¿Tienen Club Colombia? | Two beers, please. Do you have Club Colombia?',
+      example:
+        'Dos cervezas, por favor. ¿Tienen Club Colombia? | Two beers, please. Do you have Club Colombia?',
       tags: ['social', 'nightlife', 'ordering'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -142,7 +146,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-012',
       front: '¿Qué recomienda el bartender?',
       back: 'What does the bartender recommend?',
-      example: '¿Qué recomienda el bartender? Quiero algo fuerte. | What does the bartender recommend? I want something strong.',
+      example:
+        '¿Qué recomienda el bartender? Quiero algo fuerte. | What does the bartender recommend? I want something strong.',
       tags: ['social', 'nightlife', 'drinks'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -202,7 +207,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-017',
       front: 'No sé bailar salsa',
       back: "I don't know how to dance salsa",
-      example: 'No sé bailar salsa. ¿Me enseñas? | I don\'t know how to dance salsa. Will you teach me?',
+      example:
+        "No sé bailar salsa. ¿Me enseñas? | I don't know how to dance salsa. Will you teach me?",
       tags: ['social', 'nightlife', 'dance'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -226,7 +232,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-019',
       front: '¿Estás libre el sábado?',
       back: 'Are you free Saturday?',
-      example: '¿Estás libre el sábado? Hay una parrilla en mi casa. | Are you free Saturday? There\'s a BBQ at my house.',
+      example:
+        "¿Estás libre el sábado? Hay una parrilla en mi casa. | Are you free Saturday? There's a BBQ at my house.",
       tags: ['social', 'invitation', 'plans'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -286,7 +293,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-024',
       front: 'Me gustaría verte de nuevo',
       back: 'I would like to see you again',
-      example: 'Me gustaría verte de nuevo. ¿Te parece? | I would like to see you again. Does that sound good?',
+      example:
+        'Me gustaría verte de nuevo. ¿Te parece? | I would like to see you again. Does that sound good?',
       tags: ['social', 'flirt', 'invitation'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -298,7 +306,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-025',
       front: '¿Me das tu número?',
       back: 'Can you give me your number?',
-      example: '¿Me das tu número? Te escribo luego. | Can you give me your number? I\'ll text you later.',
+      example:
+        "¿Me das tu número? Te escribo luego. | Can you give me your number? I'll text you later.",
       tags: ['social', 'flirt', 'contact'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -310,7 +319,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-026',
       front: '¿Tienes WhatsApp?',
       back: 'Do you have WhatsApp?',
-      example: '¿Tienes WhatsApp? Es más fácil para escribir. | Do you have WhatsApp? It\'s easier to write.',
+      example:
+        "¿Tienes WhatsApp? Es más fácil para escribir. | Do you have WhatsApp? It's easier to write.",
       tags: ['social', 'contact'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -334,7 +344,7 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-028',
       front: 'Me gusta tu sonrisa',
       back: 'I like your smile',
-      example: 'Me gusta tu sonrisa. Es muy linda. | I like your smile. It\'s very pretty.',
+      example: "Me gusta tu sonrisa. Es muy linda. | I like your smile. It's very pretty.",
       tags: ['social', 'flirt', 'compliment'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -346,7 +356,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-029',
       front: '¿Vienes seguido por aquí?',
       back: 'Do you come here often?',
-      example: '¿Vienes seguido por aquí? No te había visto. | Do you come here often? I hadn\'t seen you before.',
+      example:
+        "¿Vienes seguido por aquí? No te había visto. | Do you come here often? I hadn't seen you before.",
       tags: ['social', 'flirt', 'conversation'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -358,7 +369,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-030',
       front: '¿Eres de por aquí?',
       back: 'Are you from around here?',
-      example: '¿Eres de por aquí? Tu acento me parece diferente. | Are you from around here? Your accent seems different.',
+      example:
+        '¿Eres de por aquí? Tu acento me parece diferente. | Are you from around here? Your accent seems different.',
       tags: ['social', 'conversation'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -369,8 +381,8 @@ export const SocialPhrasesDeck: Deck = {
     {
       id: 'social-031',
       front: '¿Cómo te llamas?',
-      back: 'What\'s your name?',
-      example: '¿Cómo te llamas? Me llamo Mike. | What\'s your name? My name is Mike.',
+      back: "What's your name?",
+      example: "¿Cómo te llamas? Me llamo Mike. | What's your name? My name is Mike.",
       tags: ['social', 'introduction'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -394,7 +406,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-033',
       front: '¿Qué haces en tu tiempo libre?',
       back: 'What do you do in your free time?',
-      example: '¿Qué haces en tu tiempo libre? Me gusta bailar. | What do you do in your free time? I like to dance.',
+      example:
+        '¿Qué haces en tu tiempo libre? Me gusta bailar. | What do you do in your free time? I like to dance.',
       tags: ['social', 'conversation'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -406,7 +419,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-034',
       front: '¿Te gusta la música?',
       back: 'Do you like music?',
-      example: '¿Te gusta la música? ¿Qué tipo escuchas? | Do you like music? What kind do you listen to?',
+      example:
+        '¿Te gusta la música? ¿Qué tipo escuchas? | Do you like music? What kind do you listen to?',
       tags: ['social', 'conversation'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -418,7 +432,8 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-035',
       front: '¿Tienes planes para mañana?',
       back: 'Do you have plans for tomorrow?',
-      example: '¿Tienes planes para mañana? Podríamos salir. | Do you have plans for tomorrow? We could go out.',
+      example:
+        '¿Tienes planes para mañana? Podríamos salir. | Do you have plans for tomorrow? We could go out.',
       tags: ['social', 'plans', 'invitation'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -442,7 +457,7 @@ export const SocialPhrasesDeck: Deck = {
       id: 'social-037',
       front: 'Cuídate mucho',
       back: 'Take care',
-      example: 'Cuídate mucho. Nos hablamos pronto. | Take care. We\'ll talk soon.',
+      example: "Cuídate mucho. Nos hablamos pronto. | Take care. We'll talk soon.",
       tags: ['social', 'farewell'],
       createdAt: Date.now(),
       due: Date.now(),
@@ -465,8 +480,9 @@ export const SocialPhrasesDeck: Deck = {
     {
       id: 'social-039',
       front: '¡Qué bacano!',
-      back: 'That\'s awesome!',
-      example: '¡Qué bacano! Vamos a pasarla bien. | That\'s awesome! We\'re going to have a good time.',
+      back: "That's awesome!",
+      example:
+        "¡Qué bacano! Vamos a pasarla bien. | That's awesome! We're going to have a good time.",
       tags: ['social', 'expression', 'colombian'],
       createdAt: Date.now(),
       due: Date.now(),

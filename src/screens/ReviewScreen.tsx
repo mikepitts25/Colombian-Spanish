@@ -27,7 +27,7 @@ const REVIEW_FILTERS = [
   { id: 'missing_example_en', labelKey: 'review.missingExampleEn' },
 ] as const;
 
-type ReviewFilter = typeof REVIEW_FILTERS[number]['id'];
+type ReviewFilter = (typeof REVIEW_FILTERS)[number]['id'];
 
 function missingEnglishExample(card: FlashCard) {
   if (!card.example?.trim()) return true;
@@ -55,9 +55,8 @@ export default function ReviewScreen() {
   const [draftExample, setDraftExample] = useState('');
 
   const allCards = useMemo<CardRow[]>(() => {
-    const source = deckFilter === 'all'
-      ? (decks || [])
-      : (decks || []).filter((deck) => deck.id === deckFilter);
+    const source =
+      deckFilter === 'all' ? decks || [] : (decks || []).filter((deck) => deck.id === deckFilter);
 
     return source.flatMap((deck) =>
       (deck.cards || [])
@@ -72,14 +71,20 @@ export default function ReviewScreen() {
   );
 
   const deckOptions = useMemo(
-    () => [{ id: 'all', name: t('review.allDecks') }, ...(decks || []).map((deck) => ({ id: deck.id, name: deck.name }))],
+    () => [
+      { id: 'all', name: t('review.allDecks') },
+      ...(decks || []).map((deck) => ({ id: deck.id, name: deck.name })),
+    ],
     [decks, t],
   );
 
   const current = allCards[index] ?? null;
   const total = allCards.length;
-  const selectedDeckName = deckOptions.find((deck) => deck.id === deckFilter)?.name ?? t('review.allDecks');
-  const selectedReviewFilterName = t(REVIEW_FILTERS.find((filter) => filter.id === reviewFilter)?.labelKey ?? 'review.all');
+  const selectedDeckName =
+    deckOptions.find((deck) => deck.id === deckFilter)?.name ?? t('review.allDecks');
+  const selectedReviewFilterName = t(
+    REVIEW_FILTERS.find((filter) => filter.id === reviewFilter)?.labelKey ?? 'review.all',
+  );
 
   useEffect(() => {
     setDraftBack(current?.card.back ?? '');
@@ -162,7 +167,9 @@ export default function ReviewScreen() {
                 style={[styles.flaggedBtn, flaggedCount > 0 && styles.flaggedBtnActive]}
                 onPress={() => nav.navigate('Flagged')}
               >
-                <Text style={styles.flaggedBtnText}>{t('review.flaggedCount', { count: flaggedCount })}</Text>
+                <Text style={styles.flaggedBtnText}>
+                  {t('review.flaggedCount', { count: flaggedCount })}
+                </Text>
               </Pressable>
             </View>
             <Text style={styles.h1}>{t('review.title')}</Text>
@@ -172,7 +179,9 @@ export default function ReviewScreen() {
           <View style={styles.filterBlock}>
             <View style={styles.filterHeader}>
               <Text style={styles.filterLabel}>{t('review.deck')}</Text>
-              <Text style={styles.filterValue} numberOfLines={1}>{selectedDeckName}</Text>
+              <Text style={styles.filterValue} numberOfLines={1}>
+                {selectedDeckName}
+              </Text>
             </View>
             <ScrollView
               horizontal
@@ -200,7 +209,9 @@ export default function ReviewScreen() {
           <View style={styles.filterBlock}>
             <View style={styles.filterHeader}>
               <Text style={styles.filterLabel}>{t('review.queue')}</Text>
-              <Text style={styles.filterValue} numberOfLines={1}>{selectedReviewFilterName}</Text>
+              <Text style={styles.filterValue} numberOfLines={1}>
+                {selectedReviewFilterName}
+              </Text>
             </View>
             <ScrollView
               horizontal
@@ -227,20 +238,22 @@ export default function ReviewScreen() {
 
           <View style={styles.queueSummary}>
             <Text style={styles.queueSummaryLabel}>{t('review.currentCard')}</Text>
-            <Text style={styles.progress}>
-              {total > 0 ? `${index + 1} / ${total}` : '0 / 0'}
-            </Text>
+            <Text style={styles.progress}>{total > 0 ? `${index + 1} / ${total}` : '0 / 0'}</Text>
           </View>
 
           {current ? (
             <View style={[styles.card, current.card.flagged && styles.cardFlagged]}>
               <View style={styles.cardTopRow}>
                 <View style={styles.deckBadge}>
-                  <Text style={styles.deckBadgeText} numberOfLines={1}>{current.deckName}</Text>
+                  <Text style={styles.deckBadgeText} numberOfLines={1}>
+                    {current.deckName}
+                  </Text>
                 </View>
                 {current.card.reviewStatus ? (
                   <View style={styles.statusBadge}>
-                    <Text style={styles.statusBadgeText}>{current.card.reviewStatus.replace('_', ' ')}</Text>
+                    <Text style={styles.statusBadgeText}>
+                      {current.card.reviewStatus.replace('_', ' ')}
+                    </Text>
                   </View>
                 ) : null}
               </View>
@@ -252,14 +265,18 @@ export default function ReviewScreen() {
               )}
 
               <View style={styles.wordRow}>
-                <Text style={styles.spanish} selectable>{current.card.front}</Text>
+                <Text style={styles.spanish} selectable>
+                  {current.card.front}
+                </Text>
                 <Pressable style={styles.speakBtn} onPress={speak}>
                   <Text style={styles.speakBtnText}>{t('common.listen')}</Text>
                 </Pressable>
               </View>
 
               {current.card.ipa ? (
-                <Text style={styles.ipa} selectable>[{current.card.ipa}]</Text>
+                <Text style={styles.ipa} selectable>
+                  [{current.card.ipa}]
+                </Text>
               ) : null}
 
               <Text style={styles.label}>{t('review.english')}</Text>
@@ -340,7 +357,12 @@ const styles = StyleSheet.create({
   content: { flex: 1 },
   contentBody: { padding: spacing(2), paddingBottom: spacing(2), gap: spacing(1.5) },
   header: { gap: spacing(1) },
-  headerActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
   h1: { color: colors.textPrimary, fontSize: 24, fontWeight: '900', marginBottom: 4 },
   sub: { color: colors.textSecondary, fontSize: 14, lineHeight: 20 },
 
@@ -377,7 +399,12 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     padding: 10,
   },
-  filterHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
+  filterHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
   filterLabel: { color: '#64748b', fontSize: 11, fontWeight: '900', textTransform: 'uppercase' },
   filterValue: { flex: 1, color: '#e2e8f0', fontSize: 12, fontWeight: '800', textAlign: 'right' },
   filterScroller: { flexGrow: 0, height: 38 },
@@ -410,7 +437,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  queueSummaryLabel: { color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' },
+  queueSummaryLabel: {
+    color: '#94a3b8',
+    fontSize: 12,
+    fontWeight: '800',
+    textTransform: 'uppercase',
+  },
   progress: {
     color: '#e2e8f0',
     fontWeight: '900',
@@ -426,7 +458,12 @@ const styles = StyleSheet.create({
     gap: spacing(1),
   },
   cardFlagged: { borderColor: '#ef4444', borderWidth: 2 },
-  cardTopRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
+  cardTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
 
   flagBanner: {
     backgroundColor: 'rgba(239,68,68,0.15)',
@@ -452,7 +489,12 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 10,
   },
-  statusBadgeText: { color: '#99f6e4', fontSize: 12, fontWeight: '800', textTransform: 'capitalize' },
+  statusBadgeText: {
+    color: '#99f6e4',
+    fontSize: 12,
+    fontWeight: '800',
+    textTransform: 'capitalize',
+  },
 
   wordRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   spanish: {
