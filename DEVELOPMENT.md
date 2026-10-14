@@ -53,7 +53,13 @@ npx expo start --localhost --port 8094
 
 Install an SDK-54-compatible Expo Go from the official Expo source for development smoke testing, or use the app's native development build. Open `exp://127.0.0.1:8094` on the dedicated simulator for Expo Go. Keep the Metro terminal running. A first-open confirmation may need interaction; do not claim a launched app from an unaccepted prompt.
 
-An unlocked-Mac retry on October 14 confirmed that `Simulator.app` is missing from the installed Xcode bundle and no alternate copy was found in the searched application/developer locations. CoreSimulator and `simctl` can boot the dedicated device and capture its display, but the available UI controller cannot select a Simulator app. Restore the Simulator application through the Xcode installation before retrying interactive checks; unlocking alone does not resolve this toolchain gap.
+### Xcode 27: use Device Hub
+
+Xcode 27 uses **Device Hub** for simulator interaction. The absence of the older `Simulator.app` is not by itself an installation fault. Open **Xcode → Open Developer Tool → Device Hub**, select **Colombian Spanish QA**, and interact with the device display. On this installation the app is `/Applications/Xcode.app/Contents/Applications/DeviceHub.app`. `simctl` commands and the dedicated simulator ID above still apply. See [Apple's Device Hub documentation](https://developer.apple.com/documentation/xcode/device-hub).
+
+The earlier October 14 setup diagnosis incorrectly treated the absent old app as a blocker. Device Hub successfully displayed the dedicated iOS 26.0 simulator and supported onboarding, study, phrases, Settings, and process-restart checks. See [iOS smoke evidence](docs/qa/2026-10-14-ios-smoke/REPORT.md).
+
+If Metro reports missing files that exist after a clean install and Watchman reports recrawls, stop Metro, reset only this project's watch with `watchman watch-del <project-path>` then `watchman watch-project <project-path>`, and restart with `npx expo start --clear --localhost --port 8094`. Do not reset unrelated projects' watches.
 
 With UI control available, verify and capture: onboarding → first study → Home → Quiz (including the insufficient-seen-words state) → Phrases → Settings/language → restart/resume. Exercise card grading and audio replay. Store evidence under a dated `docs/qa/` directory with app/build identity. Do not label an Expo Go smoke test as a signed native-release test.
 

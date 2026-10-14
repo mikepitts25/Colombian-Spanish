@@ -306,6 +306,7 @@ describe('StudyScreen session', () => {
 
   it('filters the study batch by selected region', async () => {
     const screen = renderStudyScreen({
+      activeDeck: { ...GREETINGS_DECK, cards: MIXED_REGION_CARDS },
       getStudyBatch: jest.fn().mockReturnValue(MIXED_REGION_CARDS),
     });
 
@@ -397,7 +398,7 @@ describe('StudyScreen session', () => {
     expect(screen.recordAnswer).toHaveBeenCalledWith('c1', 5);
   });
 
-  it('calls incrementDailyProgress and saves resume state after grading', async () => {
+  it('calls incrementDailyProgress and saves the next card for resume', async () => {
     const screen = renderStudyScreen();
 
     await openCommunicationSession(screen);
@@ -408,7 +409,7 @@ describe('StudyScreen session', () => {
     expect(mockIncrementDailyProgress).toHaveBeenCalledWith(1);
     expect(mockSaveLastStudySession).toHaveBeenLastCalledWith({
       deckId: 'deck-greetings',
-      cardId: 'c1',
+      cardId: 'c2',
     });
   });
 
@@ -440,4 +441,84 @@ describe('StudyScreen session', () => {
 
     expect(toggleFavorite).toHaveBeenCalledWith('c1');
   });
+});
+
+describe('StudyScreen queue stability', () => {
+  it('does not skip the next card when grading changes the provider queue', async () => {
+    let eligible = [...GREETING_CARDS];
+    const context = {
+      activeDeck: GREETINGS_DECK,
+      getStudyBatch: jest.fn(() => eligible),
+      recordAnswer: jest.fn(async (id: string) => {
+        eligible = eligible.filter((card) => card.id !== id);
+        context.activeDeck = {
+          ...GREETINGS_DECK,
+          cards: GREETING_CARDS.map((card) =>
+            card.id === id ? { ...card, reps: 1, due: NOW + 86400000 } : card,
+          ),
+        };
+      }),
+    };
+    const screen = renderStudyScreen(context);
+    await openCommunicationSession(screen);
+    await act(async () => {
+      fireEvent.press(screen.getByText('Bien'));
+    });
+    await waitFor(() => expect(screen.getByText('adios')).toBeTruthy());
+    expect(screen.getByText('2 restantes')).toBeTruthy();
+    expect(mockSaveLastStudySession).toHaveBeenLastCalledWith({
+      deckId: GREETINGS_DECK.id,
+      cardId: 'c2',
+    });
+  });
+
+  it('submits only once while a grade is still saving', async () => {
+    let finish!: () => void;
+    const recordAnswer = jest.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          finish = resolve;
+        }),
+    );
+    const screen = renderStudyScreen({ recordAnswer });
+    await openCommunicationSession(screen);
+    fireEvent.press(screen.getByText('Bien'));
+    fireEvent.press(screen.getByText('Fácil'));
+    expect(recordAnswer).toHaveBeenCalledTimes(1);
+    await act(async () => {
+      finish();
+    });
+    await waitFor(() => expect(screen.getByText('adios')).toBeTruthy());
+    expect(mockIncrementDailyProgress).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not save the just-graded card as resume when the batch ends', async () => {
+    let eligible = [GREETING_CARDS[0]];
+    const context = {
+      activeDeck: GREETINGS_DECK,
+      getStudyBatch: jest.fn(() => eligible),
+      recordAnswer: jest.fn(async () => {
+        eligible = [];
+      }),
+    };
+    const screen = renderStudyScreen(context);
+    await openCommunicationSession(screen);
+    await act(async () => {
+      fireEvent.press(screen.getByText('Bien'));
+    });
+    await waitFor(() => expect(screen.getByText('¡Bacano! Todo al día')).toBeTruthy());
+    expect(mockSaveLastStudySession).toHaveBeenLastCalledWith({ deckId: GREETINGS_DECK.id });
+  });
+});
+
+it('keeps the next card when the already selected region is tapped', async () => {
+  const screen = renderStudyScreen();
+  await openCommunicationSession(screen);
+  await act(async () => {
+    fireEvent.press(screen.getByText('Bien'));
+  });
+  await waitFor(() => expect(screen.getByText('adios')).toBeTruthy());
+  fireEvent.press(screen.getByText('Todo'));
+  expect(screen.getByText('adios')).toBeTruthy();
+  expect(screen.getByText('2 restantes')).toBeTruthy();
 });

@@ -93,7 +93,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [x] **B01.1 [AI]** Record current `npm run typecheck`, `npm run lint`, `npm run format:check`, and `npm test -- --runInBand` results; separate existing failures from new failures. Check asset validity and audio-file references.
 - [x] **B01.2 [AI]** Add the Jest suite to CI; make data validation reproducible without changing the lockfile during CI.
 - [x] **B01.3 [AI]** Replace the fake successful build check with a real appropriately scoped native validation/build job; report skipped/unavailable builds honestly in PR summaries.
-- [ ] **B01.4 [AI, SIM]** Establish a dedicated iOS simulator workflow and capture launch, onboarding, study, quiz, phrases, settings, and restart evidence.
+- [x] **B01.4 [AI, SIM]** Establish a dedicated iOS simulator workflow and capture launch, onboarding, study, quiz, phrases, settings, and restart evidence.
 - [ ] **B01.5 [AI, SIM]** Locate/install supported Android tooling if available, document the actual environment constraint if not, and establish an emulator workflow without treating iOS success as Android success.
 - [x] **B01.6 [AI]** Document repeatable commands, fixture reset, screenshots, and build artifacts. Preserve user data and unrelated simulator sessions.
 
@@ -106,7 +106,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 - [x] **B01.10 [AI]** Replace deprecated action runtimes in app CI with official Node 24 actions pinned to release SHAs; keep npm checks on Node 22 and pin Ubuntu 24.04. Verify the actual GitHub Actions run after push.
 
-**Current evidence:** [Foundation report](docs/qa/2026-10-14-foundation/REPORT.md), [development commands](DEVELOPMENT.md). B01.4: dedicated simulator created/booted, Expo Go installed; opening the app stopped at a confirmation while Mac UI control was locked. Full screen/restart evidence remains open. B01.5: Android Studio found, but SDK/ADB/emulator setup is missing; emulator workflow remains open.
+**Current evidence:** [Foundation report](docs/qa/2026-10-14-foundation/REPORT.md), [development commands](DEVELOPMENT.md). B01.4: interactive iOS 26.0 / Expo Go 54 smoke evidence captured through Xcode 27 Device Hub; see the dated iOS report. This does not establish signed native-release, audio-quality, or hardware acceptance. B01.5: Android Studio found, but SDK/ADB/emulator setup is missing; emulator workflow remains open.
 
 **Exit:** checks have recorded results, CI no longer claims an unperformed build passed, and platform launch evidence or a specific tooling blocker is recorded.
 
@@ -126,6 +126,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B02.3-A [AI]** Record quiz recognition separately, keep flashcard schedules/counters unchanged, identify modalities/evidence explicitly, and preserve legacy data without invented history.
   - [ ] **B02.3-B [AI]** Add self-rated flashcard observations alongside transactional grading and connect assessed listening/speaking observations when those features exist. No such abilities are claimed from recognition results.
 - [ ] **B02.4 [AI]** Audit session queue stability, grading during rapid interactions, daily new-card caps, relearning, resume, and cross-deck behavior. Pin actual failures with regression tests.
+  - [x] **B02.4-A [AI, SIM]** Reproduce and fix card skipping when eligible queues shrink, guard overlapping grade submissions, and save the next resume card; verify controlled regressions and iOS simulator behavior.
+  - [ ] **B02.4-B [AI, SIM]** Complete transactional persistence/failure recovery, exact full-queue resume, relearning, daily-cap races, cross-deck and mid-save navigation audits. A screen-level submission guard does not establish multi-key transaction safety.
 - [x] **B02.5 [AI]** Replace the three-repetitions “mastered” claim with an explicitly defined, evidence-based progress model. Keep estimated and measured abilities visibly distinct.
 - [ ] **B02.6 [AI, SIM]** Refresh Home/Progress after study and app resume; verify empty library, fresh install, returning learner, midnight, timezone changes, and upgrade fixtures.
   - [x] **B02.6-A [AI]** Add/test focus, foreground, and local-date refresh with cancellation, stale-response protection, and a Home integration regression.
@@ -356,8 +358,12 @@ B02.1-C, B02.2, B02.5, B02.3-A, B02.6-A, B04.1-A, and B11.1-A were merged and pu
 
 ### iOS simulator retry — 2026-10-14
 
-The owner confirmed the Mac was unlocked. CoreSimulator boot, Metro startup, Expo URL dispatch, and screenshot capture worked, but interactive UI control remains blocked by a missing `Simulator.app` in the installed Xcode bundle. The display still showed the first-open Expo Go confirmation. B01.4 and screen/restart checks remain open; no app-flow acceptance is claimed. See the foundation QA report for the exact retry evidence.
+Historical attempt: the owner confirmed the Mac was unlocked. CoreSimulator boot, Metro startup, Expo URL dispatch, and screenshot capture worked, but the old UI entry point was unavailable. The initial diagnosis blamed missing `Simulator.app`; this was corrected after identifying Xcode 27 Device Hub, and later interactive checks succeeded. The display still showed the first-open Expo Go confirmation. B01.4 and screen/restart checks remain open; no app-flow acceptance is claimed. See the foundation QA report for the exact retry evidence.
 
 ### Dependency triage and CI maintenance — 2026-10-14
 
 B01.8-A/B and B01.10 delivered in `306f114`, merged and pushed to main. [GitHub Actions run 38594812008](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38594812008) passed all quality/content, iOS/Android project generation, production JS bundle, and artifact-upload jobs; B01.8-C remains open. See [the dependency report](docs/qa/2026-10-14-dependency-triage/REPORT.md) and its exact audit snapshot. Full tests remain 40 suites / 372 tests. No simulator, physical-device, native signing, or editorial acceptance is claimed.
+
+### iOS smoke and study-queue corrections — 2026-10-14
+
+B01.4 and B02.4-A passed 40 suites / 376 tests, static/data checks, independent follow-up review (29 Study-screen tests), and corrected iOS single-grade/restart checks. They have dated screenshots and regression evidence in [the iOS smoke report](docs/qa/2026-10-14-ios-smoke/REPORT.md). The Xcode 27 setup guidance now correctly uses Device Hub. Broader study persistence, daily-cap/planner behavior, actual audio acceptance, Android, and physical-device checks remain open.

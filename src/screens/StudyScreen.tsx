@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, TextInput, View, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -80,6 +80,9 @@ export default function StudyScreen() {
   const [seed, setSeed] = useState(0);
   const [activeRegion, setActiveRegion] = useState<RegionFilterId>('all');
   const [idx, setIdx] = useState(0);
+  const [queuedCardIds, setQueuedCardIds] = useState<string[]>([]);
+  const grading = useRef(false);
+  const sessionVersion = useRef(0);
   const [daily, setDaily] = useState({ count: 0, target: 10 });
 
   const allCards = useMemo<SearchRow[]>(
@@ -125,27 +128,39 @@ export default function StudyScreen() {
     [decks, resumeSession],
   );
 
-  const rawBatch = useMemo(() => {
-    void seed;
-    return ready && activeDeck ? getStudyBatch(activeRegion === 'all' ? 15 : 100) : [];
-  }, [ready, activeDeck, activeRegion, seed, getStudyBatch]);
-
-  const batch = useMemo(() => {
-    if (!activeDeck) return [];
-    const filtered = rawBatch.filter((card) =>
+  // Snapshot membership/order at session boundaries. Grading changes the provider's
+  // eligible queue, but must not remove a card before this screen advances its index.
+  const activeDeckId = activeDeck?.id;
+  useEffect(() => {
+    if (!ready || !activeDeck || mode !== 'session') {
+      setQueuedCardIds([]);
+      return;
+    }
+    const filtered = getStudyBatch(activeRegion === 'all' ? 15 : 100).filter((card) =>
       cardMatchesRegion(card, activeRegion, activeDeck.name),
     );
-    if (!startCardId) return filtered.slice(0, 15);
+    const preferred = startCardId
+      ? activeDeck.cards.find(
+          (card) =>
+            card.id === startCardId && cardMatchesRegion(card, activeRegion, activeDeck.name),
+        )
+      : undefined;
+    const selected = preferred
+      ? [preferred, ...filtered.filter((card) => card.id !== preferred.id)]
+      : filtered;
+    setQueuedCardIds(selected.slice(0, 15).map((card) => card.id));
+    // Deliberately exclude deck-object/provider-function updates after a grade.
+    // Only explicit session boundaries request a new eligible queue.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, mode, activeDeckId, activeRegion, startCardId, seed]);
 
-    const preferredCard =
-      activeDeck.cards.find(
-        (card) => card.id === startCardId && cardMatchesRegion(card, activeRegion, activeDeck.name),
-      ) || filtered.find((card) => card.id === startCardId);
-
-    if (!preferredCard) return filtered.slice(0, 15);
-
-    return [preferredCard, ...filtered.filter((card) => card.id !== preferredCard.id)].slice(0, 15);
-  }, [activeDeck, activeRegion, rawBatch, startCardId]);
+  const batch = useMemo(() => {
+    const byId = new Map(activeDeck?.cards.map((card) => [card.id, card]));
+    return queuedCardIds.flatMap((id) => {
+      const queued = byId.get(id);
+      return queued ? [queued] : [];
+    });
+  }, [activeDeck, queuedCardIds]);
 
   const progress = daily.target > 0 ? Math.min(1, daily.count / daily.target) : 0;
   const remaining = Math.max(0, batch.length - idx);
@@ -191,6 +206,8 @@ export default function StudyScreen() {
   }
 
   function startSession(deckId: string, cardId?: string) {
+    sessionVersion.current += 1;
+    setSeed((value) => value + 1);
     setActiveDeckId(deckId);
     setStartCardId(cardId);
     setActiveRegion('all');
@@ -217,27 +234,38 @@ export default function StudyScreen() {
   }
 
   function changeRegion(region: RegionFilterId) {
+    if (region === activeRegion) return;
+    sessionVersion.current += 1;
     setActiveRegion(region);
     setIdx(0);
   }
 
   async function grade(qValue: 1 | 2 | 3 | 4 | 5) {
     const currentCard = batch[idx];
-    if (!currentCard || !activeDeck) return;
-    await recordAnswer(currentCard.id, qValue);
-    const nextDP = await incrementDailyProgress(1);
-    setDaily({ count: nextDP.count, target: nextDP.target });
-    const savedSession = await saveLastStudySession({
-      deckId: activeDeck.id,
-      cardId: currentCard.id,
-    });
-    setResumeSession(savedSession);
-    setIdx((prev) => {
-      const next = prev + 1;
-      if (next < batch.length) return next;
-      setSeed((s) => s + 1);
-      return 0;
-    });
+    if (!currentCard || !activeDeck || grading.current) return;
+    grading.current = true;
+    const version = sessionVersion.current;
+    const nextCard = batch[idx + 1];
+    try {
+      await recordAnswer(currentCard.id, qValue);
+      const nextDP = await incrementDailyProgress(1);
+      const savedSession = await saveLastStudySession({
+        deckId: activeDeck.id,
+        ...(nextCard ? { cardId: nextCard.id } : {}),
+      });
+      if (sessionVersion.current !== version) return;
+      setDaily({ count: nextDP.count, target: nextDP.target });
+      setResumeSession(savedSession);
+      if (nextCard) {
+        setIdx(idx + 1);
+      } else {
+        setStartCardId(undefined);
+        setIdx(0);
+        setSeed((value) => value + 1);
+      }
+    } finally {
+      grading.current = false;
+    }
   }
 
   if (!ready) {
