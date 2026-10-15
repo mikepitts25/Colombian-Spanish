@@ -301,7 +301,11 @@ describe('Home workload honesty', () => {
     expect(screen.getByText('2 new in library')).toBeTruthy();
     fireEvent.press(await screen.findByText('Study new cards'));
     await waitFor(() =>
-      expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: DECK.id }),
+      expect(mockNavigate).toHaveBeenCalledWith('Study', {
+        autoStartDeckId: DECK.id,
+        sessionCardLimit: 6,
+        sessionNewLimit: 2,
+      }),
     );
   });
 
@@ -311,7 +315,11 @@ describe('Home workload honesty', () => {
     fireEvent.press(await screen.findByText('Study due cards'));
     await waitFor(() => expect(setActive).toHaveBeenCalledWith(DECK.id));
     await waitFor(() =>
-      expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: DECK.id }),
+      expect(mockNavigate).toHaveBeenCalledWith('Study', {
+        autoStartDeckId: DECK.id,
+        sessionCardLimit: 6,
+        sessionNewLimit: 0,
+      }),
     );
   });
 
@@ -376,7 +384,11 @@ it('waits for a fresh provider budget before starting a session', async () => {
   expect(mockNavigate).not.toHaveBeenCalled();
   await act(async () => finish());
   await waitFor(() =>
-    expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: DECK.id }),
+    expect(mockNavigate).toHaveBeenCalledWith('Study', {
+      autoStartDeckId: DECK.id,
+      sessionCardLimit: 6,
+      sessionNewLimit: 2,
+    }),
   );
 });
 
@@ -388,6 +400,66 @@ it('shows a retryable preparation failure without navigating', async () => {
   expect(mockNavigate).not.toHaveBeenCalled();
   fireEvent.press(screen.getByText('Study due cards'));
   await waitFor(() =>
-    expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: DECK.id }),
+    expect(mockNavigate).toHaveBeenCalledWith('Study', {
+      autoStartDeckId: DECK.id,
+      sessionCardLimit: 6,
+      sessionNewLimit: 2,
+    }),
+  );
+});
+
+it('uses saved purpose/time and refreshes the recommendation after foreground preference changes', async () => {
+  const business: Deck = {
+    id: 'deck-business',
+    name: 'Business',
+    cards: Array.from({ length: 10 }, (_, i) => makeCard(`work-${i}`)),
+  };
+  const travel: Deck = {
+    id: 'deck-travel',
+    name: 'Travel',
+    cards: Array.from({ length: 10 }, (_, i) => makeCard(`travel-${i}`)),
+  };
+  mockUseDeck.mockReturnValue({
+    ready: true,
+    decks: [travel, business],
+    activeDeckId: travel.id,
+    setActiveDeckId: jest.fn(),
+    reload: mockReload,
+  });
+  const prefs = require('../../src/storage/prefs').getPrefs;
+  prefs.mockResolvedValue({
+    newCardsPerDay: 10,
+    learningReason: 'work',
+    homeRegion: 'paisa',
+    studyMinutes: 3,
+    learningLevel: 'basic',
+  });
+  const ui = render(<HomeScreen />);
+  await ui.findByText('Suggested: Business · up to 3 cards · about 2 min');
+  fireEvent.press(ui.getByText('Study new cards'));
+  await waitFor(() =>
+    expect(mockNavigate).toHaveBeenCalledWith('Study', {
+      autoStartDeckId: business.id,
+      sessionCardLimit: 5,
+      sessionNewLimit: 3,
+    }),
+  );
+  prefs.mockResolvedValue({
+    newCardsPerDay: 10,
+    learningReason: 'travel',
+    homeRegion: 'all',
+    studyMinutes: 10,
+    learningLevel: 'basic',
+  });
+  const listener = (AppState.addEventListener as jest.Mock).mock.calls.at(-1)[1];
+  await act(async () => listener('active'));
+  expect(ui.getByText('Suggested: Travel · up to 8 cards · about 5 min')).toBeTruthy();
+  fireEvent.press(ui.getByText('Study new cards'));
+  await waitFor(() =>
+    expect(mockNavigate).toHaveBeenCalledWith('Study', {
+      autoStartDeckId: travel.id,
+      sessionCardLimit: 15,
+      sessionNewLimit: 8,
+    }),
   );
 });

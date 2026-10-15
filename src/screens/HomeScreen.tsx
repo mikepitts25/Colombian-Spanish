@@ -12,7 +12,8 @@ import { speakCard } from '../services/tts';
 import { getCategoryForDeck, getDeckDisplayName } from '../utils/deckCategories';
 import { pickWordOfDay } from '../utils/wordOfDay';
 import { isNewCard } from '../utils/srs';
-import { getPrefs } from '../storage/prefs';
+import { getPrefs, Prefs } from '../storage/prefs';
+import { recommendDailyReview } from '../utils/dailyReview';
 
 const COLOMBIAN_GREETINGS = [
   {
@@ -92,6 +93,7 @@ async function loadHomeProgress() {
     freezes: streak.freezes,
     newLimit: prefs.newCardsPerDay,
     newIntroduced: daily.newCount ?? 0,
+    profile: prefs as Partial<Prefs>,
     loaded: true,
     now: Date.now(),
   };
@@ -111,6 +113,7 @@ export default function HomeScreen() {
     freezes: 0,
     newLimit: 0,
     newIntroduced: 0,
+    profile: {} as Partial<Prefs>,
     loaded: false,
     now: Date.now(),
   });
@@ -146,11 +149,17 @@ export default function HomeScreen() {
         .slice(0, 4),
     [workload],
   );
-  const nextNewDeck =
-    workload.find((deck) => deck.id === activeDeckId && deck.newCount > 0) ??
-    workload.find((deck) => deck.newCount > 0);
-  const recommendedDeck =
-    quickDecks[0] ?? (activity.loaded && !error && newAvailableToday > 0 ? nextNewDeck : undefined);
+  const recommendation =
+    activity.loaded && !error
+      ? recommendDailyReview(
+          decks || [],
+          activity.profile,
+          newAvailableToday,
+          activity.now,
+          activeDeckId,
+        )
+      : undefined;
+  const recommendedDeck = workload.find((deck) => deck.id === recommendation?.deckId);
 
   const wordOfDay = useMemo(
     () => pickWordOfDay(decks || [], new Date(activity.now), getDeckDisplayName),
@@ -166,7 +175,7 @@ export default function HomeScreen() {
   });
   const dueCardSub = t(totalDue === 1 ? 'home.dueSubOne' : 'home.dueSubMany');
 
-  const startStudy = async (deckId?: string) => {
+  const startStudy = async (deckId?: string, bounded = false) => {
     if (!deckId) {
       nav.navigate('Study');
       return;
@@ -179,7 +188,12 @@ export default function HomeScreen() {
       // Match the queue provider to the current day's stored budget/preferences.
       await reload({ requireFreshBudget: true });
       setActiveDeckId(deckId);
-      nav.navigate('Study', { autoStartDeckId: deckId });
+      nav.navigate('Study', {
+        autoStartDeckId: deckId,
+        ...(bounded && recommendation
+          ? { sessionCardLimit: recommendation.cardLimit, sessionNewLimit: recommendation.newLimit }
+          : {}),
+      });
     } catch {
       setStudyStartError(true);
     } finally {
@@ -259,6 +273,15 @@ export default function HomeScreen() {
             </View>
           </View>
 
+          {recommendation && recommendedDeck && (
+            <Text style={styles.todaySub}>
+              {t('home.reviewEstimate', {
+                deck: getDeckDisplayName(recommendedDeck),
+                count: recommendation.cardCount,
+                minutes: recommendation.estimatedMinutes,
+              })}
+            </Text>
+          )}
           {studyStartError && (
             <Text accessibilityRole="alert" style={styles.todaySub}>
               {t('home.studyStartError')}
@@ -267,7 +290,7 @@ export default function HomeScreen() {
           <Pressable
             disabled={studyStarting}
             style={styles.primaryButton}
-            onPress={() => startStudy(recommendedDeck?.id)}
+            onPress={() => startStudy(recommendedDeck?.id, true)}
           >
             <Text style={styles.primaryButtonText}>
               {studyStarting

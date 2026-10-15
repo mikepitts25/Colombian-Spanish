@@ -560,7 +560,11 @@ it('opens the requested deck session directly from a Home handoff', async () => 
   const screen = renderStudyScreen();
   expect(await screen.findByText('hola')).toBeTruthy();
   expect(screen.getByText('3 restantes')).toBeTruthy();
-  expect(mockSetParams).toHaveBeenCalledWith({ autoStartDeckId: undefined });
+  expect(mockSetParams).toHaveBeenCalledWith({
+    autoStartDeckId: undefined,
+    sessionCardLimit: undefined,
+    sessionNewLimit: undefined,
+  });
 });
 
 it('retries a failed grade with the same attempt identity and original quality', async () => {
@@ -745,4 +749,101 @@ it('clears an earlier resume-load error after a new session checkpoint saves', a
   expect(
     screen.queryByText('No se pudo cargar la sesión guardada. Reintenta para continuar.'),
   ).toBeNull();
+});
+
+test('Home bounded review freezes card and new-card limits into its checkpoint', async () => {
+  const cards = [
+    makeCard('due', { reps: 2, interval: 2 }),
+    ...Array.from({ length: 8 }, (_, i) => makeCard(`new-${i}`)),
+  ];
+  mockRouteParams = { autoStartDeckId: GREETINGS_DECK.id, sessionCardLimit: 4, sessionNewLimit: 2 };
+  const ui = renderStudyScreen({ decks: [{ ...GREETINGS_DECK, cards }] });
+  await waitFor(() =>
+    expect(mockSaveLastStudySession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        queue: expect.objectContaining({ cardIds: ['due', 'new-0', 'new-1'] }),
+      }),
+    ),
+  );
+  expect(ui.getByText('3 restantes')).toBeTruthy();
+});
+
+test('invalid bounded-route limits use safe ordinary queue defaults', async () => {
+  const cards = Array.from({ length: 20 }, (_, i) => makeCard(`card-${i}`));
+  mockRouteParams = {
+    autoStartDeckId: GREETINGS_DECK.id,
+    sessionCardLimit: Infinity,
+    sessionNewLimit: -1,
+  };
+  const ui = renderStudyScreen({ decks: [{ ...GREETINGS_DECK, cards }] });
+  await waitFor(() => expect(ui.getByText('15 restantes')).toBeTruthy());
+  await waitFor(() =>
+    expect(mockSaveLastStudySession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        queue: expect.objectContaining({ cardIds: cards.slice(0, 15).map((card) => card.id) }),
+      }),
+    ),
+  );
+});
+test('saved bounded queue resumes its membership without fresh default filling', async () => {
+  const cards = Array.from({ length: 10 }, (_, i) => makeCard(`saved-${i}`));
+  mockGetLastStudySession.mockResolvedValue({
+    deckId: GREETINGS_DECK.id,
+    cardId: 'saved-1',
+    updatedAt: 1000,
+    queue: {
+      schemaVersion: 1,
+      cardIds: ['saved-1', 'saved-2'],
+      region: 'all',
+      sessionId: 'bounded-old',
+    },
+  });
+  const ui = renderStudyScreen({ decks: [{ ...GREETINGS_DECK, cards }] });
+  await ui.findByText('Continuar sesión');
+  fireEvent.press(ui.getByText('Continuar'));
+  await waitFor(() => expect(ui.getByText('2 restantes')).toBeTruthy());
+  await waitFor(() =>
+    expect(mockSaveLastStudySession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        queue: expect.objectContaining({
+          cardIds: ['saved-1', 'saved-2'],
+          sessionId: 'bounded-old',
+        }),
+      }),
+    ),
+  );
+});
+
+test('resumed bounded review retains its limits when explicitly changing regions', async () => {
+  const cards = Array.from({ length: 10 }, (_, i) =>
+    makeCard(`bounded-${i}`, { regions: ['paisa'] }),
+  );
+  mockGetLastStudySession.mockResolvedValue({
+    deckId: GREETINGS_DECK.id,
+    cardId: 'bounded-0',
+    updatedAt: 1000,
+    queue: {
+      schemaVersion: 1,
+      cardIds: ['bounded-0', 'bounded-1'],
+      region: 'all',
+      sessionId: 'bounded-resume',
+      limits: { cardLimit: 4, newLimit: 2 },
+    },
+  });
+  const ui = renderStudyScreen({ decks: [{ ...GREETINGS_DECK, cards }] });
+  await ui.findByText('Continuar');
+  fireEvent.press(ui.getByText('Continuar'));
+  await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
+  fireEvent.press(ui.getByText('Paisa'));
+  await waitFor(() =>
+    expect(mockSaveLastStudySession).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        queue: expect.objectContaining({
+          region: 'paisa',
+          cardIds: ['bounded-0', 'bounded-1'],
+          limits: { cardLimit: 4, newLimit: 2 },
+        }),
+      }),
+    ),
+  );
 });

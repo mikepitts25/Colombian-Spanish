@@ -2,6 +2,7 @@ import { UiLanguage } from '../storage/prefs';
 
 export const translations = {
   es: {
+    'home.reviewEstimate': 'Sugerencia: {deck} · hasta {count} tarjetas · aprox. {minutes} min',
     'profile.title': 'Tus preferencias de aprendizaje',
     'profile.subtitle':
       'Ajusta tu enfoque. Estos datos quedan en este dispositivo y en tus copias de seguridad.',
@@ -480,6 +481,7 @@ export const translations = {
     'nav.difficultWords': 'Palabras Difíciles',
   },
   en: {
+    'home.reviewEstimate': 'Suggested: {deck} · up to {count} cards · about {minutes} min',
     'profile.title': 'Your learning preferences',
     'profile.subtitle': 'Adjust your focus. These details stay on this device and in your backups.',
     'profile.level': 'Your starting level',

@@ -89,6 +89,8 @@ export default function StudyScreen() {
   const checkpointBlocked = useRef(false);
   const pendingCheckpoint = useRef<Omit<LastStudySession, 'updatedAt'> | undefined>(undefined);
   const requestedQueue = useRef<StudyQueueSnapshot | undefined>(undefined);
+  const sessionLimits = useRef({ cardLimit: 15, newLimit: 15 });
+  const boundedLimits = useRef<StudyQueueSnapshot['limits']>(undefined);
   const [queuedCardIds, setQueuedCardIds] = useState<string[]>([]);
   const grading = useRef(false);
   const [gradeSaving, setGradeSaving] = useState(false);
@@ -175,7 +177,16 @@ export default function StudyScreen() {
       : preferred
         ? [preferred, ...filtered.filter((card) => card.id !== preferred.id)]
         : filtered;
-    const ids = selected.slice(0, 15).map((card) => card.id);
+    let newSelected = 0;
+    const limited = saved
+      ? selected
+      : selected.filter((card) => {
+          if (!isNewCard(card)) return true;
+          return newSelected++ < sessionLimits.current.newLimit;
+        });
+    const ids = limited
+      .slice(0, saved ? 15 : sessionLimits.current.cardLimit)
+      .map((card) => card.id);
     setQueuedCardIds(ids);
     setSessionComplete(!!saved && ids.length === 0);
     const queue: StudyQueueSnapshot = {
@@ -183,6 +194,7 @@ export default function StudyScreen() {
       cardIds: ids,
       region: activeRegion,
       sessionId: learningSession.current,
+      ...(boundedLimits.current ? { limits: { ...boundedLimits.current } } : {}),
     };
     void persistQueueCheckpoint({
       deckId: activeDeck.id,
@@ -268,11 +280,28 @@ export default function StudyScreen() {
     }
   }
 
-  function startSession(deckId: string, cardId?: string, saved?: LastStudySession) {
+  function startSession(
+    deckId: string,
+    cardId?: string,
+    saved?: LastStudySession,
+    limits?: { cardLimit?: unknown; newLimit?: unknown },
+  ) {
     if (grading.current || pendingGrade.current || checkpointBlocked.current) return;
     sessionVersion.current += 1;
     pendingGrade.current = undefined;
     requestedQueue.current = saved?.queue;
+    const validLimit = (value: unknown, minimum: number) =>
+      typeof value === 'number' && Number.isInteger(value) && value >= minimum && value <= 15;
+    const requestedLimits = {
+      cardLimit: validLimit(limits?.cardLimit, 1) ? (limits!.cardLimit as number) : 15,
+      newLimit: validLimit(limits?.newLimit, 0) ? (limits!.newLimit as number) : 15,
+    };
+    boundedLimits.current = saved?.queue?.limits
+      ? { ...saved.queue.limits }
+      : validLimit(limits?.cardLimit, 1) || validLimit(limits?.newLimit, 0)
+        ? requestedLimits
+        : undefined;
+    sessionLimits.current = boundedLimits.current ?? { cardLimit: 15, newLimit: 15 };
     learningSession.current = saved?.queue?.sessionId ?? createLearningSessionId();
     checkpointBlocked.current = true;
     setCheckpointBusy(true);
@@ -292,9 +321,16 @@ export default function StudyScreen() {
   useEffect(() => {
     if (!ready || !autoStartDeckId) return;
     if (decks?.some((deck) => deck.id === autoStartDeckId)) {
-      startSession(autoStartDeckId);
+      startSession(autoStartDeckId, undefined, undefined, {
+        cardLimit: route.params?.sessionCardLimit,
+        newLimit: route.params?.sessionNewLimit,
+      });
     }
-    nav.setParams({ autoStartDeckId: undefined });
+    nav.setParams({
+      autoStartDeckId: undefined,
+      sessionCardLimit: undefined,
+      sessionNewLimit: undefined,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, autoStartDeckId]);
 
@@ -342,6 +378,7 @@ export default function StudyScreen() {
           cardIds: batch.slice(1).map((card) => card.id),
           region: activeRegion,
           sessionId: learningSession.current,
+          ...(boundedLimits.current ? { limits: { ...boundedLimits.current } } : {}),
         },
       },
     };

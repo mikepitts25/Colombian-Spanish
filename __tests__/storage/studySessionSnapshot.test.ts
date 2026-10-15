@@ -89,3 +89,35 @@ it('recovers the exact next queue with an interrupted grade and deduplicates its
     write.mockImplementation(original);
   }
 });
+
+it('preserves bounded limits through storage and version-3 backup without retaining caller references', async () => {
+  const input = {
+    deckId: 'd1',
+    cardId: 'c3',
+    queue: { ...queue, limits: { cardLimit: 4, newLimit: 2 } },
+  };
+  const pending = saveLastStudySession(input as any);
+  input.queue.limits.newLimit = 10;
+  const saved = await pending;
+  expect(saved.queue?.limits).toEqual({ cardLimit: 4, newLimit: 2 });
+  expect((await getLastStudySession())?.queue?.limits).toEqual({ cardLimit: 4, newLimit: 2 });
+  expect(
+    parseBackupText(JSON.stringify(await captureBackupSnapshot())).applicationState?.lastSession,
+  ).toEqual(saved);
+});
+it.each([
+  null,
+  { cardLimit: 4 },
+  { cardLimit: 0, newLimit: 0 },
+  { cardLimit: 16, newLimit: 2 },
+  { cardLimit: 1.5, newLimit: 1 },
+  { cardLimit: 4, newLimit: -1 },
+  { cardLimit: 4, newLimit: 16 },
+  { cardLimit: 1, newLimit: 1 },
+  { cardLimit: 4, newLimit: 2, extra: 1 },
+])('rejects malformed or inconsistent bounded queue limits %j', async (limits) => {
+  await expect(
+    saveLastStudySession({ deckId: 'd1', cardId: 'c3', queue: { ...queue, limits } } as any),
+  ).rejects.toThrow();
+  expect(await AsyncStorage.getItem('SRS_LAST_STUDY_SESSION_V1')).toBeNull();
+});

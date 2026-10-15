@@ -188,10 +188,14 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [ ] **B05.1 [AI, H-PRODUCT]** Prepare a concrete starting audience and journey: default proposal is an adult with beginner/basic Spanish preparing for everyday life in Colombia. Make level self-report adjustable; validate the proposal in the pilot.
 - [ ] **B05.2 [AI]** Use purpose and region throughout recommendations, with editable preferences and a general-content fallback. Include optional trip date and available study time.
   - [x] **B05.2-A [AI, SIM]** Add a bilingual Settings editor for purpose, region, self-reported level, 3/5/10-minute time and optional calendar trip date; preserve unrelated state and version-3 backups, with retry and iOS save/reopen evidence.
+  - [x] **B05.2-B1 [AI, SIM]** Rank Home review suggestions by due priority and saved purpose/region, with general fallback and level/time-bounded workload; verify foreground changes and iOS direct handoff.
   - [ ] **B05.2-B [AI, SIM]** Consume these preferences in bounded recommendations with general fallback, preserving daily-cap and exact-resume behavior.
 - [ ] **B05.3 [AI]** Build 3/5/10-minute plan options combining due review, a small amount of new material, and one applied activity. Use initial duration estimates, then calibrate with measured session times.
+  - [x] **B05.3-A [AI, SIM]** Use saved 3/5/10-minute preference for a bounded flashcard review with initial level-sensitive estimates and small new-card caps; preserve exact bounded resume and validate sparse-content estimates.
+  - [ ] **B05.3-B [AI, SIM]** Add the applied-activity phase, complete plan progression and duration calibration; a bounded flashcard review does not close the parent.
 - [ ] **B05.4 [AI, SIM]** Separate reviews due, new cards available, and today's bounded plan; provide catch-up after absence without resetting progress or flooding the learner.
   - [x] **B05.4-A [AI, SIM]** Separate studied reviews due now, fresh library cards, and remaining daily new-card allowance; verify English/Spanish Home and count changes after study.
+  - [x] **B05.4-B1 [AI, SIM]** Keep due reviews first and cap the selected flashcard batch after absence; show a separate bounded suggestion and preserve its limits on restart and explicit region changes.
   - [ ] **B05.4-B [AI, SIM]** Add bounded timed plans and absence catch-up behavior; parent remains open.
 - [ ] **B05.5 [AI, SIM]** Make the main Home action start/resume the recommended activity directly; verify preference changes, timezone changes, and no-content states.
   - [x] **B05.5-A [AI, SIM]** Start the selected due/new deck directly after refreshing the provider budget; cover foreground preference/day changes, empty library, exhausted cap, and read-failure retry in automated tests. Verify direct start on iOS.
@@ -488,3 +492,7 @@ Implementation `c77550b` was merged and pushed to main. [GitHub Actions run 3875
 B05.2-A provides an adjustable local profile with version-3 backup support and bilingual Settings navigation. [Report](docs/qa/2026-10-15-learning-preferences/REPORT.md). Final suite: 59 / 624 tests; static/content checks and independent review passed. iOS validated invalid/valid dates, keyboard dismissal, save and English reopen without changing daily counters. Personalized recommendations and timed plans remain open.
 
 Implementation `6276835` was merged and pushed to main. [GitHub Actions run 38752944117](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38752944117) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
+
+### Preference-aware bounded Home review — 2026-10-15
+
+B05.2-B1 / B05.3-A / B05.4-B1 connect the editable profile to due-first review suggestions with small fresh-card limits, sparse-workload estimates and exact bounded queue persistence. [Report](docs/qa/2026-10-15-bounded-home-review/REPORT.md). Final suite: 60 / 646 tests and static/content checks. Review's resumed-limit regression was reproduced and fixed. iOS verified eight-card Business handoff, one grade, exact seven-card restart/resume, and retained limits after an explicit region change. Applied activity, calibration, trip-aware planning and wider platform/device gates remain open.
