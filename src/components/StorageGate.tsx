@@ -24,18 +24,21 @@ export default function StorageGate({ children }: { children: ReactNode }) {
   }, [attempt]);
   if (state === 'ready') return <>{children}</>;
   return (
+    <StorageStatus error={state === 'error'} onRetry={() => setAttempt((value) => value + 1)} />
+  );
+}
+
+/** Shared retry screen for storage recovery and startup content merge failures. */
+export function StorageStatus({ error, onRetry }: { error: boolean; onRetry: () => void }) {
+  return (
     <View style={styles.wrap}>
-      <Text accessibilityRole={state === 'error' ? 'alert' : 'text'} style={styles.message}>
-        {state === 'error'
+      <Text accessibilityRole={error ? 'alert' : 'text'} style={styles.message}>
+        {error
           ? 'No se pudo cargar tu progreso guardado. Reintenta sin restablecer la app.\n\nCould not load your saved progress. Retry without resetting the app.'
           : 'Cargando / Loading…'}
       </Text>
-      {state === 'error' && (
-        <Pressable
-          accessibilityRole="button"
-          style={styles.button}
-          onPress={() => setAttempt((value) => value + 1)}
-        >
+      {error && (
+        <Pressable accessibilityRole="button" style={styles.button} onPress={onRetry}>
           <Text style={styles.label}>Reintentar / Try again</Text>
         </Pressable>
       )}

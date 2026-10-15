@@ -1,5 +1,6 @@
-import AsyncStorage, { StorageAccess } from './durableStorage';
+import AsyncStorage, { StorageAccess, withStorageTransaction } from './durableStorage';
 import { Deck, FlashCard } from '../types';
+import { validateBackupDecks } from './backupValidation';
 
 const KEY = 'SRS_DECKS_V3';
 const DAILY_KEY = 'SRS_DAILY_PROGRESS_V1';
@@ -50,51 +51,58 @@ export async function saveLastStudySession(
   return next;
 }
 
+/** Read fresh decks and journal one edit without racing grades, restores or other editors. */
+export function mutateDecks(edit: (decks: Deck[]) => Deck[]): Promise<Deck[]> {
+  return withStorageTransaction(async (tx) => {
+    const raw = await tx.getItem(KEY);
+    const current: unknown = raw === null ? [] : JSON.parse(raw);
+    validateBackupDecks(current);
+    const next = edit(current);
+    validateBackupDecks(next);
+    await saveDecks(next, tx);
+    return next;
+  });
+}
+
 export async function upsertDeck(deck: Deck) {
-  const decks = await loadDecks();
-  const idx = decks.findIndex((d) => d.id === deck.id);
-  if (idx === -1) decks.push(deck);
-  else decks[idx] = deck;
-  await saveDecks(decks);
+  const snapshot = JSON.parse(JSON.stringify(deck)) as Deck;
+  await mutateDecks((decks) => {
+    const idx = decks.findIndex((d) => d.id === snapshot.id);
+    if (idx === -1) decks.push(snapshot);
+    else decks[idx] = snapshot;
+    return decks;
+  });
 }
 
 export async function addCard(deckId: string, card: FlashCard) {
-  const decks = await loadDecks();
-  const d = decks.find((dd) => dd.id === deckId);
-  if (!d) return;
-  d.cards.push(card);
-  await saveDecks(decks);
+  const snapshot = JSON.parse(JSON.stringify(card)) as FlashCard;
+  await mutateDecks((decks) => {
+    const deck = decks.find((d) => d.id === deckId);
+    if (deck) deck.cards.push(snapshot);
+    return decks;
+  });
 }
 
 export async function removeDeckById(deckId: string) {
-  const decks = await loadDecks();
-  const next = decks.filter((d) => d.id !== deckId);
-  await saveDecks(next);
+  await mutateDecks((decks) => decks.filter((d) => d.id !== deckId));
 }
 
 export async function renameDeckById(deckId: string, name: string) {
-  const decks = await loadDecks();
-  const next = decks.map((d) => (d.id === deckId ? { ...d, name } : d));
-  await saveDecks(next);
+  await mutateDecks((decks) => decks.map((d) => (d.id === deckId ? { ...d, name } : d)));
 }
 
 export async function resetDeckProgressById(deckId: string) {
-  const decks = await loadDecks();
-  const now = Date.now();
-  const next = decks.map((d) => {
-    if (d.id !== deckId) return d;
-    return {
-      ...d,
-      cards: (d.cards || []).map((c) => ({
-        ...c,
-        due: now,
-        reps: 0,
-        interval: 0,
-        ease: 2.5,
-      })),
-    };
+  await mutateDecks((decks) => {
+    const now = Date.now();
+    return decks.map((d) =>
+      d.id !== deckId
+        ? d
+        : {
+            ...d,
+            cards: d.cards.map((c) => ({ ...c, due: now, reps: 0, interval: 0, ease: 2.5 })),
+          },
+    );
   });
-  await saveDecks(next);
 }
 
 function todayISO(): string {

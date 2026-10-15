@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { render, act, waitFor } from '@testing-library/react-native';
+import { render, act, waitFor, fireEvent } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DeckProvider, useDeckContext } from '../../src/context/DeckContext';
 import { Deck, FlashCard } from '../../src/types';
@@ -623,4 +623,63 @@ it('keeps provider state unchanged when the grade journal cannot be saved', asyn
     ).rejects.toThrow('disk full');
   });
   expect(ctx!.decks).toEqual(prior);
+});
+
+it('keeps concurrent favorite toggles and review/flag patches without losing grades', async () => {
+  await AsyncStorage.setItem(
+    'SRS_DECKS_V3',
+    JSON.stringify([makeStoredDeck('custom', [makeCard('concurrent')])]),
+  );
+  let ctx: ReturnType<typeof useDeckContext> | undefined;
+  renderWithProvider(
+    <Consumer
+      onReady={(value) => {
+        ctx = value;
+      }}
+    />,
+  );
+  await waitFor(() => expect(ctx?.ready).toBe(true));
+  await act(async () => {
+    await Promise.all([ctx!.toggleFavorite('concurrent'), ctx!.toggleFavorite('concurrent')]);
+  });
+  let stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
+  expect(stored.find((d: Deck) => d.id === 'custom').cards[0].favorite).toBe(false);
+  await act(async () => {
+    await Promise.all([
+      ctx!.recordAnswer('concurrent', 4, { attemptId: 'concurrent-a', sessionId: 'concurrent-s' }),
+      ctx!.flagCard('concurrent', true),
+      ctx!.updateCardReview('concurrent', { back: 'editor correction', reviewStatus: 'reviewed' }),
+    ]);
+  });
+  stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
+  expect(stored.find((d: Deck) => d.id === 'custom').cards[0]).toMatchObject({
+    reps: 1,
+    flagged: true,
+    back: 'editor correction',
+    reviewStatus: 'reviewed',
+    favorite: false,
+  });
+});
+
+it('offers a retry after startup merge fails without discarding stored decks', async () => {
+  const raw = JSON.stringify([makeStoredDeck('custom', [makeCard('keep')])]);
+  await AsyncStorage.setItem('SRS_DECKS_V3', raw);
+  const write = AsyncStorage.setItem as jest.Mock;
+  write.mockRejectedValueOnce(new Error('disk full'));
+  const { findByText, getByText } = renderWithProvider(<Consumer />);
+  await findByText('Reintentar / Try again');
+  expect(await AsyncStorage.getItem('SRS_DECKS_V3')).toBe(raw);
+  await act(async () => {
+    fireEvent.press(getByText('Reintentar / Try again'));
+  });
+  await waitFor(() => expect(getByText('true')).toBeTruthy());
+  const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
+  expect(stored.find((d: Deck) => d.id === 'custom').cards[0].id).toBe('keep');
+});
+
+it('keeps corrupt startup decks and shows a recovery error instead of reseeding', async () => {
+  await AsyncStorage.setItem('SRS_DECKS_V3', 'corrupt');
+  const { findByText } = renderWithProvider(<Consumer />);
+  await findByText('Reintentar / Try again');
+  expect(await AsyncStorage.getItem('SRS_DECKS_V3')).toBe('corrupt');
 });

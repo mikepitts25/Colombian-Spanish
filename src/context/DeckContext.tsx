@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
 import {
   loadDecks,
-  saveDecks,
+  mutateDecks,
   upsertDeck,
   addCard as addCardStorage,
   removeDeckById,
@@ -13,6 +13,7 @@ import { getPrefs } from '../storage/prefs';
 import { commitFlashcardAnswer, AnswerOptions } from '../storage/flashcardAnswer';
 import { createLearningSessionId } from '../storage/learningEvents';
 import { Deck, FlashCard } from '../types';
+import { StorageStatus } from '../components/StorageGate';
 import { buildSessionQueue } from '../utils/srs';
 
 // Try to import ALL_DECKS from src/data/decks (static build-time import)
@@ -97,57 +98,53 @@ function mergeSeedDeckContent(storedDeck: Deck, seedDeck: Deck): Deck {
 export function DeckProvider({ children }: { children: ReactNode }) {
   const [decks, setDecks] = useState<Deck[]>([]);
   const [ready, setReady] = useState(false);
+  const [startupError, setStartupError] = useState(false);
+  const [startupAttempt, setStartupAttempt] = useState(0);
   const [activeDeckId, setActiveDeckId] = useState<string | undefined>(undefined);
   const [newCardsPerDay, setNewCardsPerDay] = useState(10);
   const [newIntroducedToday, setNewIntroducedToday] = useState(0);
 
   async function seedOrMerge() {
-    const stored = await loadDecks();
-    let working = stored ?? [];
-    // Seed on truly empty installs
-    if (!working || working.length === 0) {
-      if (SEED_DECKS.length > 0) {
-        for (const d of SEED_DECKS) {
-          await upsertDeck(d);
-        }
-        working = SEED_DECKS.slice();
-      } else {
-        working = [];
-      }
-    } else {
-      // Merge seed content updates without losing user progress or custom decks.
+    const working = await mutateDecks((stored) => {
+      if (!stored.length) return JSON.parse(JSON.stringify(SEED_DECKS)) as Deck[];
       const seedsById = new Map(SEED_DECKS.map((d) => [d.id, d]));
-      working = working.map((deck) => {
+      const merged = stored.map((deck) => {
         const seedDeck = seedsById.get(deck.id);
         return seedDeck ? mergeSeedDeckContent(deck, seedDeck) : deck;
       });
-
-      const present = new Set(working.map((d) => d.id));
-      let changed = false;
-      for (const d of SEED_DECKS) {
-        if (!present.has(d.id)) {
-          working.push(d);
-          changed = true;
-        }
+      const present = new Set(merged.map((d) => d.id));
+      for (const deck of SEED_DECKS) {
+        if (!present.has(deck.id)) merged.push(JSON.parse(JSON.stringify(deck)) as Deck);
       }
-      if (changed || seedsById.size > 0) await saveDecks(working);
-    }
+      return merged;
+    });
     setDecks(working);
     if (!activeDeckId && working.length > 0) setActiveDeckId(working[0].id);
   }
 
   useEffect(() => {
+    let mounted = true;
+    setStartupError(false);
     (async () => {
-      await seedOrMerge();
       try {
-        const [prefs, daily] = await Promise.all([getPrefs(), getDailyProgress()]);
-        setNewCardsPerDay(prefs.newCardsPerDay);
-        setNewIntroducedToday(daily.newCount ?? 0);
-      } catch {}
-      setReady(true);
+        await seedOrMerge();
+        try {
+          const [prefs, daily] = await Promise.all([getPrefs(), getDailyProgress()]);
+          if (mounted) {
+            setNewCardsPerDay(prefs.newCardsPerDay);
+            setNewIntroducedToday(daily.newCount ?? 0);
+          }
+        } catch {}
+        if (mounted) setReady(true);
+      } catch {
+        if (mounted) setStartupError(true);
+      }
     })();
+    return () => {
+      mounted = false;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [startupAttempt]);
 
   const activeDeck = useMemo(
     () => decks.find((d) => d.id === activeDeckId) || decks[0],
@@ -179,71 +176,49 @@ export function DeckProvider({ children }: { children: ReactNode }) {
   }
 
   async function flagCard(cardId: string, flagged: boolean) {
-    const stored = await loadDecks();
-    let changed = false;
-    const next = (stored || []).map((d) => {
-      const cards = (d.cards || []).map((c) => {
-        if (c.id !== cardId) return c;
-        changed = true;
-        return { ...c, flagged };
-      });
-      return { ...d, cards };
-    });
-    if (changed) {
-      await saveDecks(next);
-      setDecks(next);
-    }
+    const next = await mutateDecks((stored) =>
+      stored.map((deck) => ({
+        ...deck,
+        cards: deck.cards.map((card) => (card.id === cardId ? { ...card, flagged } : card)),
+      })),
+    );
+    setDecks(next);
   }
 
   async function clearAllFlags() {
-    const stored = await loadDecks();
-    const next = (stored || []).map((d) => ({
-      ...d,
-      cards: (d.cards || []).map((c) => ({ ...c, flagged: false })),
-    }));
-    await saveDecks(next);
+    const next = await mutateDecks((stored) =>
+      stored.map((deck) => ({
+        ...deck,
+        cards: deck.cards.map((card) => ({ ...card, flagged: false })),
+      })),
+    );
     setDecks(next);
   }
 
   async function toggleFavorite(cardId: string) {
-    const stored = await loadDecks();
-    let changed = false;
-    const next = (stored || []).map((d) => {
-      const cards = (d.cards || []).map((c) => {
-        if (c.id !== cardId) return c;
-        changed = true;
-        return { ...c, favorite: !c.favorite };
-      });
-      return { ...d, cards };
-    });
-    if (changed) {
-      await saveDecks(next);
-      setDecks(next);
-    }
+    const next = await mutateDecks((stored) =>
+      stored.map((deck) => ({
+        ...deck,
+        cards: deck.cards.map((card) =>
+          card.id === cardId ? { ...card, favorite: !card.favorite } : card,
+        ),
+      })),
+    );
+    setDecks(next);
   }
 
   async function updateCardReview(
     cardId: string,
     patch: Partial<Pick<FlashCard, 'back' | 'example' | 'flagged' | 'reviewStatus' | 'reviewedAt'>>,
   ) {
-    const stored = await loadDecks();
-    let changed = false;
-    const next = (stored || []).map((deck) => ({
-      ...deck,
-      cards: (deck.cards || []).map((card) => {
-        if (card.id !== cardId) return card;
-        changed = true;
-        return {
-          ...card,
-          ...patch,
-        };
-      }),
-    }));
-
-    if (changed) {
-      await saveDecks(next);
-      setDecks(next);
-    }
+    const snapshot = { ...patch };
+    const next = await mutateDecks((stored) =>
+      stored.map((deck) => ({
+        ...deck,
+        cards: deck.cards.map((card) => (card.id === cardId ? { ...card, ...snapshot } : card)),
+      })),
+    );
+    setDecks(next);
   }
 
   async function addCardToDeck(
@@ -331,6 +306,8 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     reload,
   };
 
+  if (startupError)
+    return <StorageStatus error onRetry={() => setStartupAttempt((value) => value + 1)} />;
   return <DeckContext.Provider value={value}>{children}</DeckContext.Provider>;
 }
 
