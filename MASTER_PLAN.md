@@ -148,12 +148,14 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B03.1-A [AI]** Export the complete deterministic 1,392-card inventory; prioritize explicit native-review requests and vulgar/flirty material, with source/audio provenance.
   - [ ] **B03.1-B [AI]** Prioritize the exact first-mission card set when its script is selected; this inventory does not invent a selected pilot script.
 - [x] **B03.2 [AI]** Add explicit regional metadata supporting shared/multiple regions rather than relying solely on inferred deck/tag matches; retain compatible filtering and migrations.
-- [ ] **B03.3 [AI]** Define reviewed/draft/needs-correction states, reviewer attribution, content versions, and a release filter. Automated validation checks completeness and contradictions; it does not certify authenticity.
+- [x] **B03.3 [AI]** Define reviewed/draft/needs-correction states, reviewer attribution, content versions, and a release filter. Automated validation checks completeness and contradictions; it does not certify authenticity.
 - [ ] **B03.4 [H-LANGUAGE, AI]** Review the first mission, grammar fixtures, common phrases, slang/register, and regional claims; AI applies reviewed corrections and adds regression fixtures.
 - [ ] **B03.5 [AI, H-LANGUAGE]** Prepare recording scripts and speaker briefs; recruit/record through human-led arrangements, obtain appropriate rights/consent, and review pronunciation. Maintain generated versus human audio provenance.
   - [x] **B03.5-A [AI]** Prepare the recording/review handoff brief and provenance guidance in `docs/editorial/README.md`.
   - [ ] **B03.5-B [AI, H-LANGUAGE]** Select exact pilot scripts, obtain human performance/rights and editorial acceptance, then integrate accepted recordings.
 - [ ] **B03.6 [AI, H-LANGUAGE]** Review the remaining library in batches, prioritizing usage and risk. Quarantine unresolved teaching content from the release rather than marking it approved.
+  - [x] **B03.6-A [AI]** Exclude draft/correction/stale deck cards from reviewed-pack exports and block standard production EAS builds while bundled deck text lacks current attributed acceptance; do not invent approvals.
+  - [ ] **B03.6-B [H-LANGUAGE]** Supply actual qualified decisions and accept the selected release library.
 
 **Exit:** released teaching content has traceable editorial status; pilot content and audio are accepted; unresolved content is excluded or explicitly gated. Do not block unrelated UI coding while waiting for recordings.
 
@@ -442,3 +444,7 @@ Implementation `23ef29d` was merged and pushed to main. [GitHub Actions run 3871
 B11.1-B and B11.2-B2a add a version-3 file snapshot with preferences, daily counts/goals, streak, seen words, quiz history, notification preferences and saved session pointer. A distinct app-state restore mode journals all supported state together; card-only modes retain local state. See [the report](docs/qa/2026-10-15-complete-backups/REPORT.md). OS permissions, caches, complete queue restoration and physical/native interruption remain separate.
 
 Implementation `8ae6250` was merged and pushed to main. [GitHub Actions run 38721570387](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38721570387) passed quality/content and iOS/Android project generation and production JavaScript bundles. Final local verification: 50 suites / 511 tests; iOS file export/app-state restore/restart accepted as documented.
+
+### Editorial release pipeline — 2026-10-15
+
+B03.3 / B03.6-A add a separate attributed decision ledger, exact teaching fingerprints/version candidates, stale-review invalidation, filtered reviewed-pack export and standard production EAS deck gate. The empty real ledger produces 1,392 effective drafts; development remains usable. [Workflow](docs/editorial/RELEASE_WORKFLOW.md), [report](docs/qa/2026-10-15-editorial-release/REPORT.md). This is machine enforcement, not invented human acceptance; grammar/audio/mission review and any future filtered-pack runtime integration remain separate.

@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { loadDataModule, readAudioEntries } = require('./lib/project-data');
 const { validateProject } = require('./validate-project');
+const { loadEditorialReport } = require('./release-content');
 
 function buildReviewInventory(root) {
   const validation = validateProject(root);
@@ -18,6 +19,7 @@ function buildReviewInventory(root) {
       path.relative(root, entry.path).split(path.sep).join('/'),
     ]),
   );
+  const editorial = new Map(loadEditorialReport(root).cards.map((card) => [card.cardId, card]));
   const cards = ALL_DECKS.flatMap((deck) =>
     deck.cards.map((card) => {
       const register = getCardRegister(card) || null;
@@ -28,6 +30,7 @@ function buildReviewInventory(root) {
             ? 1
             : 2;
       return {
+        editorial: editorial.get(card.id),
         priority,
         deckId: deck.id,
         deckName: deck.name,
@@ -56,7 +59,7 @@ function buildReviewInventory(root) {
     }),
   ).sort((a, b) => a.priority - b.priority || a.cardId.localeCompare(b.cardId, 'en'));
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     notes: [
       'Generated inventory, not editorial acceptance. Missing metadata does not prove no review occurred.',
       'Region and register inference reflect current app behavior, not independently verified claims.',

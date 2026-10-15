@@ -17,7 +17,11 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "validate:data": "node scripts/validate-project.js",
-    "content:review": "node scripts/export-content-review.js --output docs/editorial/content-review.json"
+    "content:review": "node scripts/export-content-review.js --output docs/editorial/content-review.json",
+    "content:validate-reviews": "node scripts/release-content.js --validate",
+    "content:release": "node scripts/release-content.js",
+    "release:preflight": "node scripts/release-content.js --check",
+    "eas-build-post-install": "node scripts/release-content.js --build-hook"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
