@@ -132,6 +132,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B02.4-B2a [AI, SIM]** Serialize fresh deck reads, editor/management mutations and seed merging with grades/restores through the durable coordinator; pin concurrent lost updates, validate before writes, preserve malformed data and offer startup retry.
   - [x] **B02.4-B2b [AI]** Serialize preference/daily/seen-word/streak/quiz mutations with grading/restores, retain queued input snapshots and generate distinct quiz IDs; pin parallel lost updates and write failure.
   - [x] **B02.4-B2c [AI, SIM]** Persist the exact bounded remaining study queue, region and session identity; gate initial grading on checkpoint success, retry failed checkpoints, filter unavailable resumed cards without refilling, and verify grade/restart/resume/completion on iOS.
+  - [x] **B02.4-B2d [AI, SIM]** Make onboarding goal/preferences a recoverable intent; retain setup on save failure with bilingual retry, guard pending controls/rapid submission, and verify a fresh iOS direct-study handoff.
   - [ ] **B02.4-B2 [AI, SIM]** Complete exact full-queue resume, broad relearning/cross-deck and external-navigation audits, unrelated editor mutation races, OS interruption and simulator/device acceptance.
 - [x] **B02.5 [AI]** Replace the three-repetitions “mastered” claim with an explicitly defined, evidence-based progress model. Keep estimated and measured abilities visibly distinct.
 - [ ] **B02.6 [AI, SIM]** Refresh Home/Progress after study and app resume; verify empty library, fresh install, returning learner, midnight, timezone changes, and upgrade fixtures.
@@ -473,3 +474,7 @@ Implementation `8b945db` was merged and pushed to main. [GitHub Actions run 3874
 B04.3-A adds the deterministic typed-recall/cloze foundation, explicit variants/hints, accent corrections and assessed recall provenance without changing card scheduling. [Report](docs/qa/2026-10-15-production-exercises/REPORT.md). Final verification: 55 suites / 590 tests plus static/content checks; review findings reproduced and corrected. UI, reviewed exercise content and simulator acceptance remain open under B04.3-B.
 
 Implementation `d9687b9` was merged and pushed to main. [GitHub Actions run 38750355516](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38750355516) passed quality/content and independent iOS/Android project generation and production JavaScript bundles. Native UI integration remains open.
+
+### Onboarding save recovery — 2026-10-15
+
+B02.4-B2d fixes silent onboarding save failure, commits setup together and blocks navigation until acknowledged success. [Report](docs/qa/2026-10-15-onboarding-recovery/REPORT.md). Final suite: 57 / 602 tests; static/content checks and fresh independent review passed. A dedicated fresh iOS simulator reached Travel directly with the selected goal and consistent stored setup. Native low-storage/physical interruption and broader planner work remain open.

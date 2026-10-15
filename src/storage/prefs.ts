@@ -70,12 +70,14 @@ export async function getPrefs(access: StorageAccess = AsyncStorage): Promise<Pr
   }
 }
 
-export async function setPrefs(patch: Partial<Prefs>): Promise<Prefs> {
+export async function setPrefs(
+  patch: Partial<Prefs>,
+  access: StorageAccess = AsyncStorage,
+): Promise<Prefs> {
   const snapshot = { ...patch };
-  return withStorageTransaction(async (tx) => {
-    const current = await getPrefs(tx);
-    const next: Prefs = { ...current, ...snapshot };
-    await tx.setItem(KEY, JSON.stringify(next));
-    return next;
-  });
+  if (access === AsyncStorage) return withStorageTransaction((tx) => setPrefs(snapshot, tx));
+  const current = await getPrefs(access);
+  const next: Prefs = { ...current, ...snapshot };
+  await access.setItem(KEY, JSON.stringify(next));
+  return next;
 }

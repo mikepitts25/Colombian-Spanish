@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
 import { useLanguage } from '../context/LanguageContext';
 import { useDeck } from '../hooks/useDeck';
-import { setPrefs, HomeRegion, LearningReason } from '../storage/prefs';
-import { setDailyTarget } from '../storage/storage';
+import { HomeRegion, LearningReason } from '../storage/prefs';
+import { completeOnboarding } from '../storage/onboarding';
 import type { TranslationKey } from '../i18n/translations';
 import type { Deck } from '../types';
 
@@ -112,38 +112,49 @@ export default function OnboardingScreen() {
   const [region, setRegion] = useState<HomeRegion | null>(null);
   const [goal, setGoal] = useState(10);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const submitting = useRef(false);
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const canAdvance = step === 0 ? reason !== null : step === 1 ? region !== null : true;
 
   async function finish() {
-    if (saving) return;
+    if (submitting.current) return;
+    submitting.current = true;
     setSaving(true);
+    setSaveError(false);
     const chosenReason = reason ?? 'general';
     const chosenRegion = region ?? 'all';
     try {
-      await setDailyTarget(goal);
-      await setPrefs({
-        onboardingDone: true,
-        learningReason: chosenReason,
-        homeRegion: chosenRegion,
+      await completeOnboarding({ reason: chosenReason, region: chosenRegion, target: goal });
+      if (!mounted.current) return;
+      const deckId = recommendDeckId(chosenReason, chosenRegion, decks || []);
+      if (deckId) setActiveDeckId(deckId);
+      nav.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'Root',
+            params: deckId ? { screen: 'Study', params: { autoStartDeckId: deckId } } : undefined,
+          },
+        ],
       });
-    } catch {}
-
-    const deckId = recommendDeckId(chosenReason, chosenRegion, decks || []);
-    if (deckId) setActiveDeckId(deckId);
-
-    nav.reset({
-      index: 0,
-      routes: [
-        {
-          name: 'Root',
-          params: deckId ? { screen: 'Study', params: { autoStartDeckId: deckId } } : undefined,
-        },
-      ],
-    });
+    } catch {
+      if (mounted.current) setSaveError(true);
+    } finally {
+      submitting.current = false;
+      if (mounted.current) setSaving(false);
+    }
   }
 
   function next() {
+    if (submitting.current) return;
     if (step < TOTAL_STEPS - 1) setStep(step + 1);
     else void finish();
   }
@@ -177,6 +188,7 @@ export default function OnboardingScreen() {
                 <Pressable
                   key={r.id}
                   style={[styles.option, reason === r.id && styles.optionActive]}
+                  disabled={saving}
                   onPress={() => setReason(r.id)}
                 >
                   <Text style={styles.optionEmoji}>{r.emoji}</Text>
@@ -198,6 +210,7 @@ export default function OnboardingScreen() {
                 <Pressable
                   key={r.id}
                   style={[styles.option, region === r.id && styles.optionActive]}
+                  disabled={saving}
                   onPress={() => setRegion(r.id)}
                 >
                   <Text style={styles.optionEmoji}>{r.emoji}</Text>
@@ -222,6 +235,8 @@ export default function OnboardingScreen() {
                 <Pressable
                   key={g.value}
                   style={[styles.goalBtn, goal === g.value && styles.goalBtnActive]}
+                  disabled={saving}
+                  accessibilityState={{ disabled: saving }}
                   onPress={() => setGoal(g.value)}
                 >
                   <Text style={[styles.goalValue, goal === g.value && styles.goalValueActive]}>
@@ -237,9 +252,19 @@ export default function OnboardingScreen() {
         )}
       </ScrollView>
 
+      {saveError && (
+        <Text accessibilityRole="alert" style={styles.saveError}>
+          {t('onboarding.saveError')}
+        </Text>
+      )}
       <View style={styles.footer}>
         {step > 0 ? (
-          <Pressable style={styles.backBtn} onPress={() => setStep(step - 1)}>
+          <Pressable
+            style={styles.backBtn}
+            disabled={saving}
+            accessibilityState={{ disabled: saving }}
+            onPress={() => setStep(step - 1)}
+          >
             <Text style={styles.backBtnText}>{t('onboarding.back')}</Text>
           </Pressable>
         ) : (
@@ -248,10 +273,13 @@ export default function OnboardingScreen() {
         <Pressable
           style={[styles.nextBtn, !canAdvance && styles.nextBtnDisabled]}
           disabled={!canAdvance || saving}
+          accessibilityState={{ disabled: !canAdvance || saving, busy: saving }}
           onPress={next}
         >
           <Text style={styles.nextBtnText}>
-            {step === TOTAL_STEPS - 1 ? t('onboarding.start') : t('onboarding.next')}
+            {step === TOTAL_STEPS - 1
+              ? t(saveError ? 'practice.retrySave' : 'onboarding.start')
+              : t('onboarding.next')}
           </Text>
         </Pressable>
       </View>
@@ -261,6 +289,7 @@ export default function OnboardingScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg },
+  saveError: { color: colors.textPrimary, marginHorizontal: 20, marginBottom: 8 },
   flagStripe: { flexDirection: 'row', height: 3 },
   flagBand: { height: 3 },
   scroll: { padding: 20, paddingBottom: 24 },
