@@ -157,6 +157,9 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [ ] **B03.5 [AI, H-LANGUAGE]** Prepare recording scripts and speaker briefs; recruit/record through human-led arrangements, obtain appropriate rights/consent, and review pronunciation. Maintain generated versus human audio provenance.
   - [x] **B03.5-A [AI]** Prepare the recording/review handoff brief and provenance guidance in `docs/editorial/README.md`.
   - [ ] **B03.5-B [AI, H-LANGUAGE]** Select exact pilot scripts, obtain human performance/rights and editorial acceptance, then integrate accepted recordings.
+    - [x] **B03.5-B1 [AI]** Prepare the exact first-morning draft line sheet, variants, roles, recording/take manifest and acceptance handoff in `docs/editorial/FIRST_MORNING_RECORDING_BRIEF.md`.
+    - [ ] **B03.5-B2 [H-LANGUAGE, H-PRODUCT]** Revise/accept the script and arrange human performances/rights; supply recordings and real acceptance evidence.
+    - [ ] **B03.5-B3 [AI]** Validate supplied files/manifests and integrate accepted audio with accurate provenance.
 - [ ] **B03.6 [AI, H-LANGUAGE]** Review the remaining library in batches, prioritizing usage and risk. Quarantine unresolved teaching content from the release rather than marking it approved.
   - [x] **B03.6-A [AI]** Exclude draft/correction/stale deck cards from reviewed-pack exports and block standard production EAS builds while bundled deck text lacks current attributed acceptance; do not invent approvals.
   - [ ] **B03.6-B [H-LANGUAGE]** Supply actual qualified decisions and accept the selected release library.
@@ -535,3 +538,7 @@ Implementation `dc50ec6` was merged and pushed to main. [GitHub Actions run 3880
 ### Optional mission follow-up practice — 2026-10-15
 
 B07.5-B1 adds a bilingual recall-and-reveal self-check for difficult phrases, without assessment events or SRS/daily changes. [Report](docs/qa/2026-10-15-mission-follow-up/REPORT.md). Local verification passed 64 suites / 677 tests plus static/content checks. A fresh review found no actionable issues. iOS confirmed cue/reveal/example/next/return/reopen; four stored sections matched exactly. The mission remains a gated editorial draft and accepted-content daily planning remains open.
+
+### Exact first-morning recording handoff — 2026-10-15
+
+B03.5-B1 adds the [draft line sheet and speaker/editor brief](docs/editorial/FIRST_MORNING_RECORDING_BRIEF.md), tied to the exact mission fingerprint and source IDs. It covers alternate takes, continuous exchange order, file/manifest delivery, human acceptance and subsequent AI integration. No performer was contacted, no audio commissioned/generated and no approval fabricated. Human editorial/performance/rights and hardware/learner gates remain open.
