@@ -7,6 +7,8 @@ The screen loads before editing, offers retry on read failure, retains edits on 
 - [x] Pin storage defaults, validation, preserved fields and backup roundtrip with failing tests.
 - [x] Add profile normalization and atomic patch persistence; extend strict backup validation.
 - [x] Add bilingual Settings editor and navigation; tests for load/save failure, retry, invalid date and preserved draft.
-- [ ] Full checks, fresh review and simulator save/reopen; update checklist, merge/push and CI.
+- [x] Full checks, fresh review and simulator save/reopen; update checklist, merge/push and CI.
 
 Verification: storage and screen tests failed before new implementation; final suite 59/624 passed. Static/content checks passed with unchanged generated inventory. Fresh review found no actionable findings (40 focused tests/typecheck). Spanish iOS save and English reopen confirmed work/Paisa/basic/10 minutes/leap date; impossible dates disabled Save. Date input scrolled above the keyboard; Return made Save visible. Daily totals/goal remained unchanged. No design deviations or deferred minor findings. Merge/CI pending.
+
+Implementation `6276835` was merged and pushed to main. [GitHub Actions run 38752944117](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38752944117) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
