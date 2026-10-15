@@ -1,4 +1,4 @@
-import AsyncStorage, { StorageAccess } from './durableStorage';
+import AsyncStorage, { StorageAccess, withStorageTransaction } from './durableStorage';
 
 const KEY = 'SRS_PREFS_V1';
 
@@ -71,8 +71,11 @@ export async function getPrefs(access: StorageAccess = AsyncStorage): Promise<Pr
 }
 
 export async function setPrefs(patch: Partial<Prefs>): Promise<Prefs> {
-  const current = await getPrefs();
-  const next: Prefs = { ...current, ...patch };
-  await AsyncStorage.setItem(KEY, JSON.stringify(next));
-  return next;
+  const snapshot = { ...patch };
+  return withStorageTransaction(async (tx) => {
+    const current = await getPrefs(tx);
+    const next: Prefs = { ...current, ...snapshot };
+    await tx.setItem(KEY, JSON.stringify(next));
+    return next;
+  });
 }

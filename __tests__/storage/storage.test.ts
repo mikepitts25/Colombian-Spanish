@@ -1,3 +1,4 @@
+import { localDayKey } from '../../src/utils/calendarDay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   loadDecks,
@@ -254,7 +255,7 @@ describe('getDailyProgress', () => {
     const dp = await getDailyProgress();
     expect(dp.count).toBe(0);
     expect(dp.target).toBe(10);
-    expect(dp.date).toBe(todayISO());
+    expect(dp.date).toBe(localDayKey());
   });
 
   it('returns existing progress when the stored date is today', async () => {
@@ -271,7 +272,7 @@ describe('getDailyProgress', () => {
     const dp = await getDailyProgress();
     expect(dp.count).toBe(0);
     expect(dp.target).toBe(20);
-    expect(dp.date).toBe(todayISO());
+    expect(dp.date).toBe(localDayKey());
   });
 
   it('returns default target=10 when parsed target is falsy', async () => {

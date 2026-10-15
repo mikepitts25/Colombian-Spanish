@@ -1,5 +1,7 @@
 import AsyncStorage, { StorageAccess, withStorageTransaction } from './durableStorage';
 import { Deck, FlashCard } from '../types';
+import { localDayKey, storedDayKey, dayDistance } from '../utils/calendarDay';
+import { createLearningSessionId } from './learningEvents';
 import { validateBackupDecks } from './backupValidation';
 
 const KEY = 'SRS_DECKS_V3';
@@ -106,15 +108,13 @@ export async function resetDeckProgressById(deckId: string) {
 }
 
 function todayISO(): string {
-  const d = new Date();
-  // local midnight boundary
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString();
+  return localDayKey();
 }
 
 export async function getDailyProgress(
   access: StorageAccess = AsyncStorage,
 ): Promise<DailyProgress> {
+  if (access === AsyncStorage) return withStorageTransaction((tx) => getDailyProgress(tx));
   const raw = await access.getItem(DAILY_KEY);
   const today = todayISO();
   if (!raw) {
@@ -125,7 +125,7 @@ export async function getDailyProgress(
   try {
     const parsed = JSON.parse(raw) as DailyProgress;
     if (!parsed || !parsed.date) throw new Error('bad');
-    if (parsed.date !== today) {
+    if (storedDayKey(parsed.date) !== today) {
       const fresh: DailyProgress = {
         date: today,
         count: 0,
@@ -137,6 +137,10 @@ export async function getDailyProgress(
     }
     if (!parsed.target) parsed.target = 10;
     if (typeof parsed.newCount !== 'number') parsed.newCount = 0;
+    if (parsed.date !== today) {
+      parsed.date = today;
+      await access.setItem(DAILY_KEY, JSON.stringify(parsed));
+    }
     return parsed;
   } catch {
     const fresh: DailyProgress = { date: today, count: 0, target: 10, newCount: 0 };
@@ -149,6 +153,8 @@ export async function incrementDailyProgress(
   delta: number = 1,
   access: StorageAccess = AsyncStorage,
 ): Promise<DailyProgress> {
+  if (access === AsyncStorage)
+    return withStorageTransaction((tx) => incrementDailyProgress(delta, tx));
   const current = await getDailyProgress(access);
   const next: DailyProgress = { ...current, count: current.count + delta };
   await access.setItem(DAILY_KEY, JSON.stringify(next));
@@ -159,16 +165,22 @@ export async function incrementDailyNewCount(
   delta: number = 1,
   access: StorageAccess = AsyncStorage,
 ): Promise<DailyProgress> {
+  if (access === AsyncStorage)
+    return withStorageTransaction((tx) => incrementDailyNewCount(delta, tx));
   const current = await getDailyProgress(access);
   const next: DailyProgress = { ...current, newCount: (current.newCount ?? 0) + delta };
   await access.setItem(DAILY_KEY, JSON.stringify(next));
   return next;
 }
 
-export async function setDailyTarget(target: number): Promise<DailyProgress> {
-  const current = await getDailyProgress();
+export async function setDailyTarget(
+  target: number,
+  access: StorageAccess = AsyncStorage,
+): Promise<DailyProgress> {
+  if (access === AsyncStorage) return withStorageTransaction((tx) => setDailyTarget(target, tx));
+  const current = await getDailyProgress(access);
   const next: DailyProgress = { ...current, target: Math.max(1, Math.floor(target)) };
-  await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(next));
+  await access.setItem(DAILY_KEY, JSON.stringify(next));
   return next;
 }
 
@@ -185,11 +197,8 @@ export type StreakState = { streak: number; freezes: number };
 type StoredStreak = { streak?: number; lastStudyDate?: string; freezes?: number };
 
 function daysSince(lastStudyDate: string | undefined): number | undefined {
-  if (!lastStudyDate) return undefined;
-  const last = new Date(lastStudyDate);
-  if (Number.isNaN(last.getTime())) return undefined;
-  const today = new Date(todayISO());
-  return Math.round((today.getTime() - last.getTime()) / (24 * 60 * 60 * 1000));
+  const last = storedDayKey(lastStudyDate);
+  return last ? dayDistance(last, todayISO()) : undefined;
 }
 
 async function readStoredStreak(
@@ -225,6 +234,7 @@ export async function getStudyStreak(): Promise<number> {
 }
 
 export async function recordStudySession(access: StorageAccess = AsyncStorage): Promise<number> {
+  if (access === AsyncStorage) return withStorageTransaction((tx) => recordStudySession(tx));
   const parsed = (await readStoredStreak(access)) ?? {};
   const today = todayISO();
   const prevStreak = parsed.streak || 0;
@@ -294,6 +304,10 @@ export async function recordSeenWord(
   },
   access: StorageAccess = AsyncStorage,
 ): Promise<SeenWord[]> {
+  if (access === AsyncStorage) {
+    const snapshot = { ...params };
+    return withStorageTransaction((tx) => recordSeenWord(snapshot, tx));
+  }
   const words = await getSeenWords(access);
   const now = Date.now();
   const existingIndex = words.findIndex((word) => word.cardId === params.cardId);
@@ -328,8 +342,8 @@ export interface QuizResult {
   region: string;
 }
 
-export async function getQuizHistory(): Promise<QuizResult[]> {
-  const raw = await AsyncStorage.getItem(QUIZ_HISTORY_KEY);
+export async function getQuizHistory(access: StorageAccess = AsyncStorage): Promise<QuizResult[]> {
+  const raw = await access.getItem(QUIZ_HISTORY_KEY);
   if (!raw) return [];
   try {
     const parsed = JSON.parse(raw);
@@ -339,22 +353,29 @@ export async function getQuizHistory(): Promise<QuizResult[]> {
   }
 }
 
-export async function saveQuizHistory(results: QuizResult[]) {
-  await AsyncStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(results.slice(0, 10)));
+export async function saveQuizHistory(results: QuizResult[], access: StorageAccess = AsyncStorage) {
+  await access.setItem(QUIZ_HISTORY_KEY, JSON.stringify(results.slice(0, 10)));
 }
 
-export async function recordQuizResult(params: {
-  id?: string;
-  score: number;
-  total: number;
-  missedCardIds: string[];
-  region: string;
-}): Promise<QuizResult[]> {
-  const history = await getQuizHistory();
+export async function recordQuizResult(
+  params: {
+    id?: string;
+    score: number;
+    total: number;
+    missedCardIds: string[];
+    region: string;
+  },
+  access: StorageAccess = AsyncStorage,
+): Promise<QuizResult[]> {
+  if (access === AsyncStorage) {
+    const snapshot = { ...params, missedCardIds: [...params.missedCardIds] };
+    return withStorageTransaction((tx) => recordQuizResult(snapshot, tx));
+  }
+  const history = await getQuizHistory(access);
   if (params.id && history.some((result) => result.id === params.id)) return history;
   const now = Date.now();
   const result: QuizResult = {
-    id: params.id ?? `quiz-${now}`,
+    id: params.id ?? `quiz-${createLearningSessionId()}`,
     createdAt: now,
     score: params.score,
     total: params.total,
@@ -362,6 +383,6 @@ export async function recordQuizResult(params: {
     region: params.region,
   };
   const next = [result, ...history].slice(0, 10);
-  await saveQuizHistory(next);
+  await saveQuizHistory(next, access);
   return next;
 }

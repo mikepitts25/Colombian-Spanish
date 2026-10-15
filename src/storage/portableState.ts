@@ -1,3 +1,4 @@
+import { storedDayKey } from '../utils/calendarDay';
 import { StorageAccess } from './durableStorage';
 
 const FIELDS = {
@@ -19,7 +20,7 @@ const record = (v: unknown): v is Record<string, unknown> =>
 const text = (v: unknown) => typeof v === 'string' && v.trim().length > 0;
 const number = (v: unknown) => typeof v === 'number' && Number.isFinite(v) && v >= 0;
 const integer = (v: unknown) => number(v) && Number.isInteger(v);
-const date = (v: unknown) => typeof v === 'string' && Number.isFinite(Date.parse(v));
+const date = (v: unknown) => storedDayKey(v) !== undefined;
 const optional = (v: Record<string, unknown>, k: string, test: (x: unknown) => boolean) =>
   v[k] === undefined || test(v[k]);
 const only = (v: Record<string, unknown>, keys: string[]) =>

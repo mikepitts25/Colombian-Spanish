@@ -130,10 +130,12 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B02.4-A [AI, SIM]** Reproduce and fix card skipping when eligible queues shrink, guard overlapping grade submissions, and save the next resume card; verify controlled regressions and iOS simulator behavior.
   - [x] **B02.4-B1 [AI]** Commit grade schedule/counters/seen-word/streak/event/next pointer through a durable journal; deduplicate retained attempts, enforce concurrent new-card caps, preserve provider state on pre-commit failure, guard unresolved Study boundaries, and freeze Difficult practice membership with save retry.
   - [x] **B02.4-B2a [AI, SIM]** Serialize fresh deck reads, editor/management mutations and seed merging with grades/restores through the durable coordinator; pin concurrent lost updates, validate before writes, preserve malformed data and offer startup retry.
+  - [x] **B02.4-B2b [AI]** Serialize preference/daily/seen-word/streak/quiz mutations with grading/restores, retain queued input snapshots and generate distinct quiz IDs; pin parallel lost updates and write failure.
   - [ ] **B02.4-B2 [AI, SIM]** Complete exact full-queue resume, broad relearning/cross-deck and external-navigation audits, unrelated editor mutation races, OS interruption and simulator/device acceptance.
 - [x] **B02.5 [AI]** Replace the three-repetitions “mastered” claim with an explicitly defined, evidence-based progress model. Keep estimated and measured abilities visibly distinct.
 - [ ] **B02.6 [AI, SIM]** Refresh Home/Progress after study and app resume; verify empty library, fresh install, returning learner, midnight, timezone changes, and upgrade fixtures.
   - [x] **B02.6-A [AI]** Add/test focus, foreground, and local-date refresh with cancellation, stale-response protection, and a Home integration regression.
+  - [x] **B02.6-B1 [AI, SIM]** Use local calendar-day labels, preserve same-day legacy counts/target/new budget, compare streak calendar days, verify DST/three-zone fixtures and actual iOS stored-state migration without resetting totals.
   - [ ] **B02.6-B [AI, SIM]** Complete timezone/DST, fresh/empty/returning-user and upgrade coverage, then capture native simulator evidence.
 
 **Batch evidence:** [Second correctness report](docs/qa/2026-10-14-learning-correctness/REPORT.md). Learning history stores at most 5,000 observations and deduplicates retained IDs. Conjugation editorial acceptance and full study transaction/session audits remain open.
@@ -450,3 +452,7 @@ Implementation `8ae6250` was merged and pushed to main. [GitHub Actions run 3872
 B03.3 / B03.6-A add a separate attributed decision ledger, exact teaching fingerprints/version candidates, stale-review invalidation, filtered reviewed-pack export and standard production EAS deck gate. The empty real ledger produces 1,392 effective drafts; development remains usable. [Workflow](docs/editorial/RELEASE_WORKFLOW.md), [report](docs/qa/2026-10-15-editorial-release/REPORT.md). This is machine enforcement, not invented human acceptance; grammar/audio/mission review and any future filtered-pack runtime integration remain separate.
 
 Editorial implementation `7ad5265` passed [GitHub Actions run 38722545095](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38722545095), including 51 suites / 525 tests locally, ledger/inventory checks and iOS/Android project generation/production JavaScript bundles. The expected editorial production gate remains closed pending actual human decisions.
+
+### Calendar and local-state coordination — 2026-10-15
+
+B02.4-B2b / B02.6-B1 close reproduced preference/daily/seen-word/quiz lost updates, serialize streak effects, replace timestamp-only quiz IDs and use calendar-day identities for daily totals/streaks. [Report](docs/qa/2026-10-15-calendar-storage/REPORT.md). Legacy instants lack their original zone, so migration uses the current zone; native timezone switching, broader resume/clock behavior and exact session queues remain open.
