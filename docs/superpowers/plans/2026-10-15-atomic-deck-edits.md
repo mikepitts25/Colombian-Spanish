@@ -7,6 +7,6 @@ The alternative of a separate editor lock would not exclude grades/restores; reu
 - [x] Reproduce concurrent rename/add, favorite toggles, grade/edit preservation, corrupt-state preservation and save failure.
 - [x] Introduce validated transaction-local deck mutation and route storage/provider editors and seed merge through it.
 - [x] Run targeted/full checks and independent review; fix findings.
-- [ ] Record evidence and precise remaining limits in master plan, merge/push and verify CI.
+- [x] Record evidence and precise remaining limits in master plan, merge/push and verify CI.
 
 Simulator acceptance is optional for unchanged UI interactions; concurrency/failure ordering needs controlled automated regressions. Physical interruption, complete queue restoration, stale UI refresh races, preference/counter writers and broader navigation remain separate work.

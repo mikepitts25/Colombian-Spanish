@@ -23,3 +23,7 @@ This checks the normal native flow. Automated tests provide controlled overlap a
 ## Limits
 
 This addresses deck persistence ordering, not full-queue resume or all application concurrency. Preference and standalone counter/history helpers still have separate mutation paths. A later explicit reset/delete/replace can intentionally supersede prior grades. General stale UI refresh responses and repeated editor actions after an uncertain post-journal failure need separate UX/idempotency work; unlike grading attempts, favorite toggles have no stable retry receipt. Native low-storage/process interruption and physical durability remain open. No new content review or mastery evidence is claimed.
+
+## Integration
+
+Implementation `23ef29d` was merged and pushed to main. [GitHub Actions run 38719896046](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38719896046) passed quality/content and independent iOS/Android project generation and production JavaScript bundle jobs. This does not establish native compilation/signing or physical-device acceptance.
