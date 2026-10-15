@@ -27,3 +27,7 @@ The initial native Alert preview disappeared when invoked immediately after pick
 This exports decks/cards and supported event history, not full application state. Preferences, daily counters, streak, seen words, quiz round history and exact session queue are omitted; B11.1 remains open. Replace behavior and failure recovery are covered by automated tests, not a destructive simulator reset. Interrupted native restore, Android provider/chooser behavior, cloud file providers, physical devices, native compilation/signing and store acceptance remain open. Expo Go success does not substitute for those checks. Existing dependency audit findings remain tracked separately; this batch adds SDK-compatible Expo adapters without claiming those findings resolved.
 
 SDK adapter references: [Expo filesystem](https://docs.expo.dev/versions/v54.0.0/sdk/filesystem/), [document picker](https://docs.expo.dev/versions/v54.0.0/sdk/document-picker/), [sharing](https://docs.expo.dev/versions/v54.0.0/sdk/sharing/).
+
+## Integration
+
+Implementation `1e98e24` was merged and pushed to main. [GitHub Actions run 38712206939](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38712206939) passed quality/content and independent iOS/Android project generation and production JavaScript bundles. Native compilation/signing and device acceptance are still separate gates.

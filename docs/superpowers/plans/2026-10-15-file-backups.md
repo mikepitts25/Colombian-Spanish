@@ -8,4 +8,4 @@ Scope: B11.1-A2, continuing the authorized master plan. Preserve legacy envelope
 - [x] Review file lifetime and concurrent actions; fix findings and retest.
 - [x] Exercise iOS save/import/cancel plus grade/restart in the dedicated simulator; record screenshots and discovered fixes.
 - [x] Update privacy disclosures, QA evidence and master checklist; verify full quality/content checks.
-- [ ] Merge/push and record actual CI result.
+- [x] Merge/push and record actual CI result.
