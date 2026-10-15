@@ -24,8 +24,24 @@ jest.mock('../../src/hooks/useDeck', () => ({
   useDeck: () => ({
     ready: true,
     decks: [
-      { id: 'deck-greetings', cards: [{ id: '0010' }] },
-      { id: 'deck-food', cards: [{ id: '0024' }, { id: '0025' }] },
+      {
+        id: 'deck-greetings',
+        cards: [
+          {
+            id: '0010',
+            front: 'buenos días',
+            back: 'good morning',
+            example: 'Buenos días. | Good morning.',
+          },
+        ],
+      },
+      {
+        id: 'deck-food',
+        cards: [
+          { id: '0024', front: 'café', back: 'coffee' },
+          { id: '0025', front: 'agua', back: 'water' },
+        ],
+      },
       { id: 'deck-conversation', cards: [{ id: '1148' }] },
     ],
   }),
@@ -154,4 +170,43 @@ test('allows local exit after a settled checkpoint failure while retaining retry
   fireEvent.press(ui.getByText('Back'));
   expect(mockBack).toHaveBeenCalledTimes(1);
   expect(ui.getByText('Retry save')).toBeTruthy();
+});
+
+test('offers difficult-phrase recall/reveal without writing extra events or changing the completed checkpoint', async () => {
+  const ui = await begin();
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'hola');
+  fireEvent.press(ui.getByText('Check answer'));
+  await ui.findByText('Try the correction');
+  fireEvent.press(ui.getByText('Continue with help'));
+  await ui.findByText('Ask for coffee');
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'wrong');
+  fireEvent.press(ui.getByText('Check answer'));
+  await ui.findByText('Try the correction');
+  fireEvent.press(ui.getByText('Continue with help'));
+  fireEvent.press(await ui.findByText('Accept water'));
+  await ui.findByText('Correct');
+  fireEvent.press(ui.getByText('Continue'));
+  await ui.findByText('Close the exchange');
+  await submit(ui, 'gracias');
+  await ui.findByText('Practice complete');
+  const before = await AsyncStorage.getItem('SRS_MISSIONS_V1');
+  const events = await getLearningEvents();
+  fireEvent.press(ui.getByText('Review these phrases'));
+  await ui.findByText('good morning');
+  expect(ui.queryByText('buenos días')).toBeNull();
+  fireEvent.press(ui.getByText('Reveal phrase'));
+  expect(ui.getByText('buenos días')).toBeTruthy();
+  fireEvent.press(ui.getByText('Next phrase'));
+  expect(ui.getByText('coffee')).toBeTruthy();
+  expect(ui.queryByText('café')).toBeNull();
+  fireEvent.press(ui.getByText('Reveal phrase'));
+  expect(ui.getByText('café')).toBeTruthy();
+  fireEvent.press(ui.getByText('Return to mission'));
+  expect(ui.getByText('Practice complete')).toBeTruthy();
+  fireEvent.press(ui.getByText('Review these phrases'));
+  expect(ui.getByText('good morning')).toBeTruthy();
+  expect(ui.queryByText('buenos días')).toBeNull();
+  expect(await AsyncStorage.getItem('SRS_MISSIONS_V1')).toBe(before);
+  expect(await getLearningEvents()).toEqual(events);
+  expect(await AsyncStorage.getItem('SRS_DAILY_PROGRESS_V1')).toBeNull();
 });

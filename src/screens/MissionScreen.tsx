@@ -18,6 +18,7 @@ import { FIRST_MORNING } from '../missions/firstMorning';
 import { LocalizedText, validateMission } from '../missions/schema';
 import { MissionCommand, MissionRun } from '../missions/engine';
 import { applyMissionCommand, loadMissionRun, startMissionRun } from '../storage/missions';
+import MissionFollowUp from '../components/MissionFollowUp';
 import { colors } from '../styles/theme';
 
 type Pending =
@@ -29,6 +30,7 @@ export default function MissionScreen() {
   const { language, t } = useLanguage();
   const nav = useNavigation<any>();
   const { ready, decks } = useDeck();
+  const [reviewing, setReviewing] = useState(false);
   const [run, setRun] = useState<MissionRun>();
   const [loading, setLoading] = useState(true),
     [loadError, setLoadError] = useState(false);
@@ -142,6 +144,12 @@ export default function MissionScreen() {
   );
   const node =
     run && !contentChanged ? FIRST_MORNING.nodes.find((n) => n.id === run.nodeId) : undefined;
+  const followUpCards = run?.completed
+    ? run.reviewCardIds.flatMap((id) => {
+        const card = decks.flatMap((d) => d.cards).find((c) => c.id === id);
+        return card ? [card] : [];
+      })
+    : [];
   return (
     <SafeAreaView style={styles.wrap}>
       <KeyboardAvoidingView
@@ -180,120 +188,135 @@ export default function MissionScreen() {
               ) : !run ? (
                 button(t('mission.start'), start)
               ) : node ? (
-                <View style={styles.card}>
-                  <Text accessibilityRole="header" style={styles.heading}>
-                    {local(node.title)}
-                  </Text>
-                  {node.kind === 'scene' || node.kind === 'complete' ? (
-                    <Text style={styles.body}>{local(node.text)}</Text>
-                  ) : (
-                    <Text style={styles.prompt}>
-                      {local(node.prompt).replace('{{blank}}', '____')}
+                reviewing && followUpCards.length > 0 ? (
+                  <MissionFollowUp
+                    key={followUpCards.map((c) => c.id).join(':')}
+                    cards={followUpCards}
+                    onDone={() => setReviewing(false)}
+                  />
+                ) : (
+                  <View style={styles.card}>
+                    <Text accessibilityRole="header" style={styles.heading}>
+                      {local(node.title)}
                     </Text>
-                  )}
-                  {node.kind === 'scene' && button(t('mission.continue'), () => command('advance'))}
-                  {(node.kind === 'production' || node.kind === 'choice') && (
-                    <>
-                      {node.hints.slice(0, run.hintsUsed).map((hint, i) => (
-                        <Text key={i} style={styles.hint}>
-                          {local(hint)}
-                        </Text>
-                      ))}
-                      {!run.feedback ? (
-                        <>
-                          {node.kind === 'production' ? (
-                            <>
-                              <TextInput
-                                accessibilityLabel={t('mission.answer')}
-                                style={styles.input}
-                                value={answer}
-                                onChangeText={setAnswer}
-                                maxLength={256}
-                                autoCorrect={false}
-                                autoCapitalize="sentences"
-                                editable={!disabled}
-                                returnKeyType="done"
-                              />
-                              {button(
-                                t('mission.check'),
-                                () =>
+                    {node.kind === 'scene' || node.kind === 'complete' ? (
+                      <Text style={styles.body}>{local(node.text)}</Text>
+                    ) : (
+                      <Text style={styles.prompt}>
+                        {local(node.prompt).replace('{{blank}}', '____')}
+                      </Text>
+                    )}
+                    {node.kind === 'scene' &&
+                      button(t('mission.continue'), () => command('advance'))}
+                    {(node.kind === 'production' || node.kind === 'choice') && (
+                      <>
+                        {node.hints.slice(0, run.hintsUsed).map((hint, i) => (
+                          <Text key={i} style={styles.hint}>
+                            {local(hint)}
+                          </Text>
+                        ))}
+                        {!run.feedback ? (
+                          <>
+                            {node.kind === 'production' ? (
+                              <>
+                                <TextInput
+                                  accessibilityLabel={t('mission.answer')}
+                                  style={styles.input}
+                                  value={answer}
+                                  onChangeText={setAnswer}
+                                  maxLength={256}
+                                  autoCorrect={false}
+                                  autoCapitalize="sentences"
+                                  editable={!disabled}
+                                  returnKeyType="done"
+                                />
+                                {button(
+                                  t('mission.check'),
+                                  () =>
+                                    command('answer', {
+                                      answer,
+                                      durationMs: Math.max(0, Date.now() - startedAt.current),
+                                    }),
+                                  disabled || !answer.trim(),
+                                )}
+                              </>
+                            ) : (
+                              node.options.map((option) =>
+                                button(local(option.text), () =>
                                   command('answer', {
-                                    answer,
+                                    choiceId: option.id,
                                     durationMs: Math.max(0, Date.now() - startedAt.current),
                                   }),
-                                disabled || !answer.trim(),
-                              )}
-                            </>
-                          ) : (
-                            node.options.map((option) =>
-                              button(local(option.text), () =>
-                                command('answer', {
-                                  choiceId: option.id,
-                                  durationMs: Math.max(0, Date.now() - startedAt.current),
-                                }),
-                              ),
-                            )
-                          )}
-                          {run.hintsUsed < node.hints.length &&
-                            button(t('mission.hint'), () => command('hint'))}
-                        </>
-                      ) : (
-                        <View accessibilityLiveRegion="polite">
-                          <Text style={styles.feedback}>{t(`mission.${run.feedback.status}`)}</Text>
-                          {node.kind === 'production' ? (
-                            <>
-                              <Text style={styles.prompt}>
-                                {node.exercise.acceptedAnswers[run.feedback.answerIndex!]}
+                                ),
+                              )
+                            )}
+                            {run.hintsUsed < node.hints.length &&
+                              button(t('mission.hint'), () => command('hint'))}
+                          </>
+                        ) : (
+                          <View accessibilityLiveRegion="polite">
+                            <Text style={styles.feedback}>
+                              {t(`mission.${run.feedback.status}`)}
+                            </Text>
+                            {node.kind === 'production' ? (
+                              <>
+                                <Text style={styles.prompt}>
+                                  {node.exercise.acceptedAnswers[run.feedback.answerIndex!]}
+                                </Text>
+                                <Text style={styles.body}>{local(node.correction)}</Text>
+                              </>
+                            ) : (
+                              <Text style={styles.body}>
+                                {local(
+                                  node.options.find((o) => o.id === run.feedback!.optionId)!
+                                    .feedback,
+                                )}
                               </Text>
-                              <Text style={styles.body}>{local(node.correction)}</Text>
-                            </>
-                          ) : (
-                            <Text style={styles.body}>
-                              {local(
-                                node.options.find((o) => o.id === run.feedback!.optionId)!.feedback,
-                              )}
-                            </Text>
-                          )}
-                          {button(t('mission.retryAnswer'), () => command('retry'))}
-                          {button(
-                            t(
-                              run.feedback.status === 'correct'
-                                ? 'mission.continue'
-                                : 'mission.helpContinue',
-                            ),
-                            () => command('advance'),
-                          )}
-                        </View>
-                      )}
-                    </>
-                  )}
-                  {node.kind === 'complete' && (
-                    <>
-                      <Text style={styles.feedback}>
-                        {t(run.assisted ? 'mission.assisted' : 'mission.unaided')}
-                      </Text>
-                      {run.reviewCardIds.length > 0 && (
-                        <>
-                          <Text style={styles.heading}>{t('mission.review')}</Text>
-                          {run.reviewCardIds.map((id) => (
-                            <Text key={id} style={styles.body}>
-                              {decks.flatMap((d) => d.cards).find((c) => c.id === id)?.front ?? id}
-                            </Text>
-                          ))}
-                        </>
-                      )}
-                      {restart ? (
-                        <>
-                          <Text style={styles.body}>{t('mission.restartQuestion')}</Text>
-                          {button(t('mission.restart'), start)}
-                          {button(t('mission.cancel'), () => setRestart(false))}
-                        </>
-                      ) : (
-                        button(t('mission.again'), () => setRestart(true))
-                      )}
-                    </>
-                  )}
-                </View>
+                            )}
+                            {button(t('mission.retryAnswer'), () => command('retry'))}
+                            {button(
+                              t(
+                                run.feedback.status === 'correct'
+                                  ? 'mission.continue'
+                                  : 'mission.helpContinue',
+                              ),
+                              () => command('advance'),
+                            )}
+                          </View>
+                        )}
+                      </>
+                    )}
+                    {node.kind === 'complete' && (
+                      <>
+                        <Text style={styles.feedback}>
+                          {t(run.assisted ? 'mission.assisted' : 'mission.unaided')}
+                        </Text>
+                        {run.reviewCardIds.length > 0 && (
+                          <>
+                            <Text style={styles.heading}>{t('mission.review')}</Text>
+                            {run.reviewCardIds.map((id) => (
+                              <Text key={id} style={styles.body}>
+                                {decks.flatMap((d) => d.cards).find((c) => c.id === id)?.front ??
+                                  id}
+                              </Text>
+                            ))}
+                          </>
+                        )}
+                        {followUpCards.length > 0 &&
+                          button(t('mission.reviewAction'), () => setReviewing(true))}
+                        {restart ? (
+                          <>
+                            <Text style={styles.body}>{t('mission.restartQuestion')}</Text>
+                            {button(t('mission.restart'), start)}
+                            {button(t('mission.cancel'), () => setRestart(false))}
+                          </>
+                        ) : (
+                          button(t('mission.again'), () => setRestart(true))
+                        )}
+                      </>
+                    )}
+                  </View>
+                )
               ) : null}
               {saveError && (
                 <>

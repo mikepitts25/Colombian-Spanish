@@ -232,6 +232,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [ ] **B07.5 [AI]** Feed difficulties back into personalized practice without duplicating events, unfairly penalizing hint use, or changing unrelated card scheduling.
   - [x] **B07.5-A [AI]** Collect unique difficult source IDs per run and show follow-up phrases; keep authored hint and model-answer assistance distinct and leave SRS/daily counters unchanged.
   - [ ] **B07.5-B [AI, SIM]** Provide an explicit follow-up practice handoff and connect accepted mission activity to daily guidance.
+    - [x] **B07.5-B1 [AI, SIM]** Add optional difficult-phrase cue/reveal/example practice from completion; verify hidden-answer resets, return/reopen and unchanged runs/events/SRS/daily state.
+    - [ ] **B07.5-B2 [AI, SIM]** Connect accepted mission activity and follow-up to personalized daily guidance.
 - [ ] **B07.6 [AI, SIM, H-LEARNER]** Verify all branches and interrupted sessions, then run the B13 learner pilot. Speaking can be an optional later enhancement; do not block the first pilot on B09.
 
 **Exit:** one complete mission links comprehension, response, feedback, and subsequent review; scripted technical checks and actual learner findings are recorded separately.
@@ -527,3 +529,9 @@ B11.2-C passed on the unlocked fresh iOS QA simulator: clipboard success/import-
 B03.1-B / B04.3-B1 / B07.1-A / B07.2 / B07.3-A / B07.5-A add a versioned authored engine and recoverable bilingual text-first café mission behind the development gate. [Report](docs/qa/2026-10-15-offline-mission/REPORT.md). The [exact editorial packet](docs/editorial/first-morning-mission-draft.json) remains unreviewed. Separate recall/recognition events preserve model-answer assistance; mission attempts do not grade flashcards or increment their daily goal. Optional mission backup state accepts older seven-field app-state files. Fresh review findings were pinned with failing tests and fixed: partial input/timing survives hints, and settled checkpoint failure permits exit. Simulator evidence covers accent feedback, cold restart, retry, hints, incorrect-choice repair, cloze, assisted completion and Spanish reopen. Authentic listening, human acceptance, follow-up practice, wider accessibility/platform and signed candidate checks remain open.
 
 Final local verification for this package: 64 suites / 676 tests passed, plus types, lint, formatting, data validation, editorial ledger validation and unchanged generated library inventory. The two review regressions passed after fixes.
+
+Implementation `dc50ec6` was merged and pushed to main. [GitHub Actions run 38805168069](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38805168069) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles. These are not native compilation or release-candidate acceptance.
+
+### Optional mission follow-up practice — 2026-10-15
+
+B07.5-B1 adds a bilingual recall-and-reveal self-check for difficult phrases, without assessment events or SRS/daily changes. [Report](docs/qa/2026-10-15-mission-follow-up/REPORT.md). Local verification passed 64 suites / 677 tests plus static/content checks. A fresh review found no actionable issues. iOS confirmed cue/reveal/example/next/return/reopen; four stored sections matched exactly. The mission remains a gated editorial draft and accepted-content daily planning remains open.

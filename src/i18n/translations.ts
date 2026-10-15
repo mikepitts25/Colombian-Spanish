@@ -2,6 +2,14 @@ import { UiLanguage } from '../storage/prefs';
 
 export const translations = {
   es: {
+    'mission.followUp': 'Recuerda y compara',
+    'mission.followUpNote':
+      'Intenta decir la frase en español antes de revelarla. Este repaso opcional no registra una nota ni cambia tus repasos programados.',
+    'mission.phrasePosition': 'Frase {current} de {total}',
+    'mission.reviewAction': 'Repasar estas frases',
+    'mission.reveal': 'Revelar frase',
+    'mission.nextPhrase': 'Siguiente frase',
+    'mission.return': 'Volver a la misión',
     'mission.unavailable': 'La vista previa de la misión no está disponible.',
     'mission.draft': 'Borrador editorial · solo práctica escrita',
     'mission.notice':
@@ -511,6 +519,14 @@ export const translations = {
     'nav.difficultWords': 'Palabras Difíciles',
   },
   en: {
+    'mission.followUp': 'Recall and compare',
+    'mission.followUpNote':
+      'Try saying the Spanish phrase before revealing it. This optional self-check does not record a score or change your review schedule.',
+    'mission.phrasePosition': 'Phrase {current} of {total}',
+    'mission.reviewAction': 'Review these phrases',
+    'mission.reveal': 'Reveal phrase',
+    'mission.nextPhrase': 'Next phrase',
+    'mission.return': 'Return to mission',
     'mission.unavailable': 'Mission preview is unavailable.',
     'mission.draft': 'Editorial draft · text practice only',
     'mission.notice':
