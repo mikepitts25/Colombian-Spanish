@@ -25,4 +25,4 @@ Review focus: journal-write failure; partial application; cleanup failure; corru
 
 - [x] Independent review; fix proven issues with regression tests.
 - [x] Update master checklist with exact scope and remaining file/device work.
-- [ ] Commit, merge and push under standing user authorization; verify CI and record result.
+- [x] Commit, merge and push under standing user authorization; verify CI and record result.

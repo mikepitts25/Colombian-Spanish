@@ -16,7 +16,7 @@ Baseline 41 suites / 419 tests passed. Final full suite: **44 suites / 438 tests
 
 New failure-injection coverage verifies write ordering, journal preparation failure, second-key failure, cleanup failure, persisted-journal replay without an in-memory transaction, malformed journals, buffered reads, rejected callbacks, serialized later writes, history preservation/conflicts, concurrent restore/append and startup failure/retry. The persisted-journal test was also run with recovery temporarily disabled: it failed expecting restored data but receiving null, then passed after recovery was restored. No regression toggle remains in production.
 
-Independent review found no actionable findings and independently reran all 19 new tests across three suites. CI integration results are appended after execution.
+Independent review found no actionable findings and independently reran all 19 new tests across three suites. Implementation `80a2982` was merged and pushed to main. [GitHub Actions run 38679345816](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38679345816) passed all quality/content and iOS/Android project generation and production JS bundle jobs; these do not establish native compilation or hardware acceptance.
 
 ## Limits
 

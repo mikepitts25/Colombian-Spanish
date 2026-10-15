@@ -396,3 +396,5 @@ B11.2-A adds pre-write validation for corrupt deck/card data, duplicate IDs, uns
 ### Recoverable backup restore — 2026-10-15
 
 B11.2-B1 adds a durable after-image journal for deck/history restore, replay before app storage access, serialization with event writes, and a startup recovery/retry screen. See [the report](docs/qa/2026-10-15-restore-recovery/REPORT.md). This is roll-forward recovery, not a native database transaction. Full-state/file-based backup, simulator interruption acceptance, and hardware durability remain open.
+
+Implementation `80a2982` was merged and pushed to main; [GitHub Actions run 38679345816](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38679345816) passed quality/content and iOS/Android project generation and production JS bundle jobs. Local verification passed 44 suites / 438 tests and static/content checks.
