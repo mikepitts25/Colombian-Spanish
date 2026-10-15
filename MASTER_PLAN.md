@@ -171,6 +171,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [ ] **B04.1-B [AI, H-LANGUAGE]** Improve semantic plausibility and validate synonyms/regional/grammatical alternatives; literal deduplication is not editorial acceptance.
 - [x] **B04.2 [AI, SIM]** Offer a small first-session practice experience before ten words have been seen; handle sparse regional pools without duplicate or impossible questions.
 - [ ] **B04.3 [AI]** Add unaided production/reverse-recall and cloze exercises, with explicit accepted variants and informative corrections. Keep modality-specific results.
+  - [x] **B04.3-A [AI]** Add a versioned offline typed-recall/cloze assessment engine with explicit variants, authored hints/corrections, strict normalization and assessed recall provenance; verify retries, backup preservation and unchanged SRS/counters.
+  - [ ] **B04.3-B [AI, SIM, H-LANGUAGE]** Integrate reviewed exercise packs, reference/release checks and an accessible learner player; verify keyboard, correction, hints and completion on simulators.
 - [ ] **B04.4 [AI, H-LANGUAGE]** Add short reviewed grammar explanations attached to useful phrases; cover requests, questions, pronouns, and past events in the pilot's scope.
 - [ ] **B04.5 [AI, SIM]** Verify correct/incorrect/hinted responses, accents, punctuation, empty pools, repeated attempts, and learning-event integrity.
   - [x] **B04.5-A [AI, SIM]** Verify short unhinted correct/incorrect and repeat rounds, actual scores, zero/sparse pools, recognition-only events, unchanged flashcard goal, reachable completion controls, and next-question scroll reset.
@@ -465,3 +467,7 @@ Calendar/storage implementation `073f279` passed [GitHub Actions run 38723557623
 B02.4-B2c preserves the remaining queue and session identity through grading, backup and restart, with checkpoint retry and distinct batch completion. [Report](docs/qa/2026-10-15-exact-study-resume/REPORT.md). Final local verification: 54 suites / 556 tests, types/lint/format/data/editorial checks and unchanged generated inventory. Independent review found a stale read-error state; its regression failed before correction and passed afterward. iOS resumed the exact six-card suffix after process termination and finished it with an empty saved queue. Broader external navigation, difficult-mode policies and physical/native interruption remain open.
 
 Implementation `8b945db` was merged and pushed to main. [GitHub Actions run 38749492905](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38749492905) passed all quality/content checks and independent iOS/Android project generation and production JavaScript bundles. These do not constitute native compilation or physical-device acceptance.
+
+### Production exercise engine — 2026-10-15
+
+B04.3-A adds the deterministic typed-recall/cloze foundation, explicit variants/hints, accent corrections and assessed recall provenance without changing card scheduling. [Report](docs/qa/2026-10-15-production-exercises/REPORT.md). Final verification: 55 suites / 590 tests plus static/content checks; review findings reproduced and corrected. UI, reviewed exercise content and simulator acceptance remain open under B04.3-B.

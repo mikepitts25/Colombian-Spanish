@@ -9,6 +9,7 @@ export interface LearningEvent {
   deckId: string;
   sessionId: string;
   missionId?: string;
+  exercise?: { id: string; contentVersion: number; kind: 'typed-recall' | 'cloze' };
   modality: LearningModality;
   outcome: 'correct' | 'incorrect';
   evidence: 'self-rated' | 'answer-checked';
@@ -41,6 +42,21 @@ function normalizeEvent(value: unknown): LearningEvent {
     !['recognition', 'recall', 'listening', 'speaking'].includes(event.modality) ||
     !['correct', 'incorrect'].includes(event.outcome) ||
     !['self-rated', 'answer-checked'].includes(event.evidence) ||
+    (event.exercise !== undefined &&
+      (!event.exercise ||
+        typeof event.exercise !== 'object' ||
+        Array.isArray(event.exercise) ||
+        Object.keys(event.exercise).some(
+          (key) => !['id', 'contentVersion', 'kind'].includes(key),
+        ) ||
+        !text(event.exercise.id) ||
+        !Number.isSafeInteger(event.exercise.contentVersion) ||
+        event.exercise.contentVersion < 1 ||
+        !['typed-recall', 'cloze'].includes(event.exercise.kind) ||
+        event.modality !== 'recall' ||
+        event.evidence !== 'answer-checked' ||
+        event.hintsUsed === null ||
+        event.quality !== undefined)) ||
     !nonnegative(event.occurredAt) ||
     (event.quality !== undefined && ![0, 1, 2, 3, 4, 5].includes(event.quality)) ||
     (event.hintsUsed !== null &&
@@ -56,6 +72,7 @@ function normalizeEvent(value: unknown): LearningEvent {
     deckId: event.deckId,
     sessionId: event.sessionId,
     ...(event.missionId === undefined ? {} : { missionId: event.missionId }),
+    ...(event.exercise === undefined ? {} : { exercise: { ...event.exercise } }),
     modality: event.modality,
     outcome: event.outcome,
     evidence: event.evidence,
