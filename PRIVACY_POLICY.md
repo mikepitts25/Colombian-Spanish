@@ -22,9 +22,11 @@ The developer's separate audio-generation script can send authored text to Eleve
 
 Export Backup copies deck/card data and supported learning-event history to the system clipboard. Flagged-card export also copies learning text. Clipboard contents may be available to other apps or OS clipboard-sync features according to platform settings. Imports read clipboard text only when the import action is selected and require confirmation before replacement.
 
+Version-3 file backups include supported local learning state: preferences, daily progress, streak, seen words, quiz rounds, notification preferences and the saved session pointer, alongside decks and learning events. App-state restore is a separate explicit action; card-only merge/replacement keeps local preferences and counters. Restart after restoring app state to reload contexts and reconcile reminders. Device permissions, scheduled OS notifications and cache/audio files are not imported.
+
 File export creates dated JSON in the app cache and opens the system share sheet. You choose its destination, which may include local Files or a provider that uploads to cloud storage. File import reads the document you select, validates it and shows an in-app preview before you choose additive merge or deck replacement. The temporary imported cache copy is removed on a best-effort basis after reading; the selected source is retained. Export cache files remain available for recipients after hand-off. On later exports, the app attempts to remove its own export files at least 24 hours old; OS cache cleanup can also apply. This is not a guaranteed 24-hour deletion deadline.
 
-These backups are not encrypted. They currently omit some state, including preferences, streak and seen-word records, and should not be described as complete device backups. A saved restore intent may complete on retry/restart after an interrupted write. Copies saved or shared outside the app remain under your control.
+These backups are not encrypted. Legacy/clipboard version-2 backups omit preferences, streak and seen-word records. Version-3 files cover the supported app state listed above, not a complete device or operating-system backup. A saved restore intent may complete on retry/restart after an interrupted write. Copies saved or shared outside the app remain under your control.
 
 ## Retention and control
 

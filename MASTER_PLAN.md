@@ -256,13 +256,15 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 **Split:** B11-A backup/restore reliability now; B11-B optional account/sync later; B11-C hosted infrastructure only if needed. **Main files:** storage/context, settings, new backup/sync modules, server code if selected.
 
-- [ ] **B11.1 [AI, SIM]** Make backup export/import usable as a file with clear dates/content, validation, safe merge/replace, preview, and recovery. Preserve custom cards, edits, favorites, event history, and preferences.
+- [x] **B11.1 [AI, SIM]** Make backup export/import usable as a file with clear dates/content, validation, safe merge/replace, preview, and recovery. Preserve custom cards, edits, favorites, event history, and preferences.
   - [x] **B11.1-A [AI]** Include versioned recognition history in clipboard backups; retain legacy import support, validate incoming events, and merge without deleting newer observations. Full file-based/atomic recovery work remains open.
   - [x] **B11.1-A2 [AI, SIM]** Add dated JSON file export/import, size and schema validation, in-app counts/date/limitations preview, guarded additive merge or deck replacement, safe share-file lifetime, and iOS Expo Go save/import/cancel acceptance. Preferences, streak, seen-word and full-state migration remain open.
+  - [x] **B11.1-B [AI, SIM]** Add validated version-3 supported local-state snapshots and explicit journaled app-state restore, legacy compatibility and safe absent-state defaults; verify iOS save/import/restore/restart. OS permissions, scheduled notifications and caches are not portable state.
 - [ ] **B11.2 [AI]** Test corrupt/oversized/old backups, partial writes, duplicate IDs, migration failure, and interrupted restore; never silently wipe existing progress.
   - [x] **B11.2-A [AI]** Validate clipboard backup deck/card structure, scheduling and optional fields, unique deck/card IDs, supported versions/history, and input size before confirmation or writes; preserve valid legacy content and handle clipboard-read errors.
   - [x] **B11.2-B1 [AI]** Add serialized durable restore journaling, replay before app storage access, startup recovery/retry, conflict validation before writes, and failure-injection tests for interrupted deck/history restore.
-  - [ ] **B11.2-B2 [AI, SIM]** Complete file-based/full-state backup migrations and simulator interrupted-restore acceptance. Hardware/file-share validation stays separate.
+  - [x] **B11.2-B2a [AI]** Validate supplemental state, preserve corrupt source state, migrate legacy streaks and replay interrupted full-state restore under failure injection.
+  - [ ] **B11.2-B2 [AI, SIM]** Complete simulator interrupted-restore acceptance. Hardware/file-share validation stays separate.
 - [ ] **B11.3 [AI, H-PRODUCT]** Decide whether cross-device demand justifies optional accounts. Keep local learning available without an account.
 - [ ] **B11.4 [AI, H-ACCOUNT]** If enabled, implement secure auth, per-user access, sync conflicts, offline queues, deletion/export, and recovery; configure production services through authorized accounts.
 - [ ] **B11.5 [AI, DEVICE]** Verify backup through real share/file flows; if sync exists, test two physical devices, reinstall/recovery, conflicting offline edits, and interrupted connectivity.
@@ -434,3 +436,7 @@ Implementation `1e98e24` was merged and pushed to main. [GitHub Actions run 3871
 B02.4-B2a fixes reproduced lost grades and overlapping editor updates by committing each deck mutation from current stored data inside the durable coordinator. Startup merge failures retain the existing data and show retry. See [the report](docs/qa/2026-10-15-atomic-deck-edits/REPORT.md). Full-queue resume, external-navigation/UI refresh races, preference/counter writers and physical interruption remain open.
 
 Implementation `23ef29d` was merged and pushed to main. [GitHub Actions run 38719896046](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38719896046) passed quality/content and independent iOS/Android project generation and production JavaScript bundle jobs. This does not establish native compilation/signing or physical-device acceptance.
+
+### Supported local-state backup — 2026-10-15
+
+B11.1-B and B11.2-B2a add a version-3 file snapshot with preferences, daily counts/goals, streak, seen words, quiz history, notification preferences and saved session pointer. A distinct app-state restore mode journals all supported state together; card-only modes retain local state. See [the report](docs/qa/2026-10-15-complete-backups/REPORT.md). OS permissions, caches, complete queue restoration and physical/native interruption remain separate.

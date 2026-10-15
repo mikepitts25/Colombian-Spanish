@@ -127,6 +127,14 @@ export default function SettingsScreen() {
         t('settings.alert.notBackup.message'),
       );
     }
+    if (parsed.version === 3) {
+      try {
+        setFilePreview(parseBackupText(raw));
+      } catch {
+        setFileError(t('settings.alert.invalidBackup.message'));
+      }
+      return;
+    }
     if (!Array.isArray(parsed.decks) || ![undefined, 1, 2].includes(parsed.version)) {
       return Alert.alert(
         t('settings.alert.invalidBackup.title'),
@@ -207,11 +215,19 @@ export default function SettingsScreen() {
     }
   }
 
-  async function applyFileBackup(backup: BackupSnapshot, mode: 'replace' | 'merge-new') {
+  async function applyFileBackup(
+    backup: BackupSnapshot,
+    mode: 'replace' | 'merge-new' | 'replace-state',
+  ) {
     try {
-      await restoreBackup(backup.decks, backup.learningEvents, mode);
+      if (mode === 'replace-state')
+        await restoreBackup(backup.decks, backup.learningEvents, mode, backup.applicationState);
+      else await restoreBackup(backup.decks, backup.learningEvents, mode);
       setFilePreview(null);
-      Alert.alert(t('settings.alert.imported.title'), t('settings.alert.imported.message'));
+      Alert.alert(
+        t('settings.alert.imported.title'),
+        t(mode === 'replace-state' ? 'settings.file.restart' : 'settings.alert.imported.message'),
+      );
     } catch {
       setFileError(t('settings.alert.restoreError.message'));
     }
@@ -242,6 +258,23 @@ export default function SettingsScreen() {
               events: filePreview.learningEvents?.length ?? 0,
             })}
           </Text>
+          <Text style={styles.rowSubtitle}>
+            {t(
+              filePreview.version === 3
+                ? 'settings.file.stateIncluded'
+                : 'settings.file.stateOmitted',
+            )}
+          </Text>
+          {filePreview.version === 3 && (
+            <Pressable
+              accessibilityRole="button"
+              style={styles.previewButton}
+              disabled={fileBusy}
+              onPress={() => runFileAction(() => applyFileBackup(filePreview, 'replace-state'))}
+            >
+              <Text style={{ color: '#f87171' }}>{t('settings.file.restoreState')}</Text>
+            </Pressable>
+          )}
           <Pressable
             accessibilityRole="button"
             style={styles.previewButton}
@@ -271,7 +304,11 @@ export default function SettingsScreen() {
           </Pressable>
         </ScrollView>
       )}
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={filePreview ? { display: 'none' } : undefined}
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+      >
         <Text style={styles.pageTitle}>⚙️ {t('settings.title')}</Text>
 
         {/* Aprendizaje */}
@@ -378,7 +415,7 @@ export default function SettingsScreen() {
 
 const styles = StyleSheet.create({
   previewPanel: {
-    maxHeight: '65%',
+    flex: 1,
     margin: 16,
     padding: 16,
     borderRadius: 16,

@@ -1,4 +1,5 @@
 import { Deck } from '../types';
+import { PortableState, readPortableState, validatePortableState } from './portableState';
 import { MAX_BACKUP_CHARACTERS, validateBackupDecks } from './backupValidation';
 import { withStorageTransaction } from './durableStorage';
 import {
@@ -16,7 +17,8 @@ export class BackupInputError extends Error {
 }
 export interface BackupSnapshot {
   kind: 'colombian-spanish-backup';
-  version?: 1 | 2;
+  version?: 1 | 2 | 3;
+  applicationState?: PortableState;
   exportedAt?: string;
   decks: Deck[];
   learningEvents?: LearningEvent[];
@@ -31,19 +33,21 @@ export function parseBackupText(raw: string): BackupSnapshot {
   }
   if (!value || value.kind !== 'colombian-spanish-backup') throw new BackupInputError('notBackup');
   try {
-    if (![undefined, 1, 2].includes(value.version)) throw new Error('Unsupported version');
+    if (![undefined, 1, 2, 3].includes(value.version)) throw new Error('Unsupported version');
     validateBackupDecks(value.decks);
     if (
       value.exportedAt !== undefined &&
       (typeof value.exportedAt !== 'string' || !Number.isFinite(Date.parse(value.exportedAt)))
     )
       throw new Error('Invalid date');
+    if (value.version === 3) validatePortableState(value.applicationState);
     return {
+      ...(value.version === 3 ? { applicationState: value.applicationState } : {}),
       kind: value.kind,
       version: value.version,
       exportedAt: value.exportedAt,
       decks: value.decks,
-      ...(value.version === 2
+      ...(value.version === 2 || value.version === 3
         ? { learningEvents: validateLearningEvents(value.learningEvents) }
         : {}),
     };
@@ -61,7 +65,8 @@ export function captureBackupSnapshot(): Promise<BackupSnapshot> {
       validateBackupDecks(decks);
       const snapshot: BackupSnapshot = {
         kind: 'colombian-spanish-backup',
-        version: 2,
+        version: 3,
+        applicationState: await readPortableState(tx),
         exportedAt: new Date().toISOString(),
         decks,
         learningEvents: await readLearningEvents(tx),

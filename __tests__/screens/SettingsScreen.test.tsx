@@ -569,7 +569,7 @@ it('shares a dated file snapshot without overwriting clipboard contents', async 
   expect(shareBackupFile).toHaveBeenCalledWith(expect.any(String), 'Guardar archivo de respaldo');
   const payload = JSON.parse((shareBackupFile as jest.Mock).mock.calls[0][0]);
   expect(payload.exportedAt).toEqual(expect.any(String));
-  expect(payload.version).toBe(2);
+  expect(payload.version).toBe(3);
   expect(mockSetStringAsync).not.toHaveBeenCalled();
 });
 
@@ -602,9 +602,46 @@ it('keeps preview controls guarded until restore finishes', async () => {
   );
   fireEvent.press(await screen.findByText('Añadir tarjetas nuevas'));
   fireEvent.press(screen.getByText('Cancelar'));
-  await act(async () => fireEvent.press(screen.getByText('Guardar archivo de respaldo')));
+  await act(async () => fireEvent.press(screen.getByText('Reemplazar decks')));
   expect(screen.getByText('Vista previa del respaldo')).toBeTruthy();
   expect(shareBackupFile).not.toHaveBeenCalled();
   await act(async () => finish());
   await waitFor(() => expect(screen.queryByText('Vista previa del respaldo')).toBeNull());
 });
+
+it.each(['file', 'clipboard'])(
+  'previews full-state %s input and requires its explicit restore action',
+  async (source) => {
+    const applicationState = {
+      prefs: { uiLanguage: 'en' },
+      daily: null,
+      streak: null,
+      seenWords: null,
+      quizHistory: null,
+      lastSession: null,
+      notificationPrefs: null,
+    };
+    const raw = JSON.stringify({
+      kind: 'colombian-spanish-backup',
+      version: 3,
+      decks: [],
+      learningEvents: [],
+      applicationState,
+    });
+    (pickBackupFile as jest.Mock).mockResolvedValue(raw);
+    mockGetStringAsync.mockResolvedValue(raw);
+    const screen = render(<SettingsScreen />);
+    await act(async () =>
+      fireEvent.press(
+        await screen.findByText(
+          source === 'file' ? 'Importar archivo de respaldo' : 'Importar respaldo',
+        ),
+      ),
+    );
+    expect(await screen.findByText('Restaurar estado de la app')).toBeTruthy();
+    expect(restoreBackup).not.toHaveBeenCalled();
+    await act(async () => fireEvent.press(screen.getByText('Restaurar estado de la app')));
+    expect(restoreBackup).toHaveBeenCalledWith([], [], 'replace-state', applicationState);
+    expect(mockAlert).toHaveBeenCalledWith('Importado', expect.stringContaining('Reinicia'));
+  },
+);

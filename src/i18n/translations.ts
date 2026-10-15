@@ -366,12 +366,19 @@ export const translations = {
     'settings.alert.restoreError.message':
       'No se pudo finalizar la importación. Si el respaldo ya se guardó, se completará antes de cargar tus datos al reintentar o reiniciar. No restablezcas la app.',
     'settings.file.export': 'Guardar archivo de respaldo',
-    'settings.file.exportSub': 'Decks e historial de aprendizaje · JSON',
+    'settings.file.exportSub': 'Decks, historial y estado de la app · JSON',
     'settings.file.import': 'Importar archivo de respaldo',
     'settings.file.importSub': 'Vista previa antes de reemplazar o añadir tarjetas',
     'settings.file.previewTitle': 'Vista previa del respaldo',
     'settings.file.preview':
-      'Exportado: {date}\n{decks} decks · {cards} tarjetas · {events} observaciones.\nAñadir tarjetas nuevas conserva el contenido y los intervalos existentes. Reemplazar decks los sobrescribe. El historial de aprendizaje se combina en ambos modos. Las preferencias y la racha no están incluidas.',
+      'Exportado: {date}\n{decks} decks · {cards} tarjetas · {events} observaciones.\nAñadir tarjetas nuevas conserva el contenido y los intervalos existentes. Reemplazar decks los sobrescribe. El historial de aprendizaje se combina en ambos modos.',
+    'settings.file.stateIncluded':
+      'Incluye preferencias, metas, racha, palabras vistas, resultados y sesión guardada. Solo Restaurar estado de la app los reemplaza junto con los decks; añadir o reemplazar decks conserva el estado local. Los datos ausentes se restablecen. Requiere reiniciar. Los permisos del dispositivo no se importan.',
+    'settings.file.stateOmitted':
+      'Este respaldo antiguo no incluye preferencias ni el resto del estado de la app.',
+    'settings.file.restoreState': 'Restaurar estado de la app',
+    'settings.file.restart':
+      'Reinicia la app para cargar las preferencias, el progreso y los recordatorios restaurados. Los permisos del dispositivo no cambian.',
     'settings.file.unknownDate': 'fecha no disponible',
     'settings.file.merge': 'Añadir tarjetas nuevas',
     'settings.file.replace': 'Reemplazar decks',
@@ -810,12 +817,18 @@ export const translations = {
     'settings.alert.restoreError.message':
       'Import could not finish. If the restore was saved, it will finish before loading your data on retry or restart. Do not reset the app.',
     'settings.file.export': 'Save backup file',
-    'settings.file.exportSub': 'Decks and learning history · JSON',
+    'settings.file.exportSub': 'Decks, history and app state · JSON',
     'settings.file.import': 'Import backup file',
     'settings.file.importSub': 'Preview before replacing or adding cards',
     'settings.file.previewTitle': 'Backup preview',
     'settings.file.preview':
-      'Exported: {date}\n{decks} decks · {cards} cards · {events} observations.\nAdd new cards keeps existing content and schedules. Replace decks overwrites them. Learning history is merged in both modes. Preferences and streak are not included.',
+      'Exported: {date}\n{decks} decks · {cards} cards · {events} observations.\nAdd new cards keeps existing content and schedules. Replace decks overwrites them. Learning history is merged in both modes.',
+    'settings.file.stateIncluded':
+      'Includes preferences, daily goals, streak, seen words, results and saved session. Only Restore app state replaces these along with decks; adding or replacing decks keeps local app state. Missing source values reset to defaults. Restart required. Device permissions are not imported.',
+    'settings.file.stateOmitted': 'This older backup omits preferences and other app state.',
+    'settings.file.restoreState': 'Restore app state',
+    'settings.file.restart':
+      'Restart the app to load restored preferences, progress and reminders. Device permissions are unchanged.',
     'settings.file.unknownDate': 'date unavailable',
     'settings.file.merge': 'Add new cards',
     'settings.file.replace': 'Replace decks',

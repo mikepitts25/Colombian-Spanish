@@ -1,4 +1,5 @@
 import { Deck } from '../types';
+import { PortableState, validatePortableState, writePortableState } from './portableState';
 import { validateBackupDecks } from './backupValidation';
 import { withStorageTransaction } from './durableStorage';
 import {
@@ -11,11 +12,15 @@ import {
 export async function restoreBackup(
   decks: Deck[],
   learningEvents?: unknown,
-  mode: 'replace' | 'merge-new' = 'replace',
+  mode: 'replace' | 'merge-new' | 'replace-state' = 'replace',
+  applicationState?: PortableState,
 ): Promise<void> {
   // Snapshot validated input so a caller cannot mutate it while it waits in a queue.
   validateBackupDecks(decks);
-  if (!['replace', 'merge-new'].includes(mode)) throw new Error('Invalid restore mode');
+  if (!['replace', 'merge-new', 'replace-state'].includes(mode))
+    throw new Error('Invalid restore mode');
+  if (mode === 'replace-state') validatePortableState(applicationState);
+  const stateJSON = mode === 'replace-state' ? JSON.stringify(applicationState) : undefined;
   const deckJSON = JSON.stringify(decks);
   const incoming =
     learningEvents === undefined ? undefined : validateLearningEvents(learningEvents);
@@ -50,6 +55,7 @@ export async function restoreBackup(
         restoredJSON = JSON.stringify(current);
       }
       await tx.setItem('SRS_DECKS_V3', restoredJSON);
+      if (stateJSON !== undefined) await writePortableState(tx, JSON.parse(stateJSON));
       if (historyJSON !== undefined) await tx.setItem('SRS_LEARNING_EVENTS_V1', historyJSON);
     }),
   );
