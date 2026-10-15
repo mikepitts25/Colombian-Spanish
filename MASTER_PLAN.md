@@ -279,6 +279,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B11.2-B1 [AI]** Add serialized durable restore journaling, replay before app storage access, startup recovery/retry, conflict validation before writes, and failure-injection tests for interrupted deck/history restore.
   - [x] **B11.2-B2a [AI]** Validate supplemental state, preserve corrupt source state, migrate legacy streaks and replay interrupted full-state restore under failure injection.
   - [ ] **B11.2-B2 [AI, SIM]** Complete simulator interrupted-restore acceptance. Hardware/file-share validation stays separate.
+  - [x] **B11.2-C [AI, SIM]** Reverify native clipboard success/import-cancel alerts and file export/picker/preview/cancel with the new profile and bounded queue fields; compare unchanged local state and retained source.
 - [ ] **B11.3 [AI, H-PRODUCT]** Decide whether cross-device demand justifies optional accounts. Keep local learning available without an account.
 - [ ] **B11.4 [AI, H-ACCOUNT]** If enabled, implement secure auth, per-user access, sync conflicts, offline queues, deletion/export, and recovery; configure production services through authorized accounts.
 - [ ] **B11.5 [AI, DEVICE]** Verify backup through real share/file flows; if sync exists, test two physical devices, reinstall/recovery, conflicting offline edits, and interrupted connectivity.
@@ -508,3 +509,7 @@ B13.1-A / B13.2-A deliver a [draft protocol](docs/pilot/PROTOCOL.md), [editorial
 Implementation `0c32322` was merged and pushed to main. [GitHub Actions run 38754924531](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38754924531) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
 
 Pilot preparation `e914e89` was merged and pushed to main. Document formatting and local links passed; observation CSV has 22 unique columns and zero participant records. No functional code or data-collection behavior changed.
+
+### Renewed backup alerts and file preview — 2026-10-15
+
+B11.2-C passed on the unlocked fresh iOS QA simulator: clipboard success/import-cancel alerts, local Files save, version-3 preview and cancellation, including current learning profile and bounded queue limits. [Report](docs/qa/2026-10-15-backup-alerts/REPORT.md). Export/source matched at 372,299 bytes; all seven local sections remained exactly unchanged after cancellation and no journal remained. QA-only documentation; interruption/hardware and remaining AI implementation tasks stay open.
