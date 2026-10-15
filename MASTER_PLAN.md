@@ -213,6 +213,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 **Split:** B06-A player/exercises with fixtures; B06-B reviewed audio integration and device checks. **Main files:** `src/services/tts.ts`, audio components/manifest, prefs, new listening screens/content, tests.
 
 - [ ] **B06.1 [AI]** Implement replay, phrase looping, transcript reveal, supported speed controls, and explicit generated/human speaker provenance; honor saved audio preferences.
+  - [x] **B06.1-A [AI, SIM]** Honor saved speed for card clips and device/text fallback; add bilingual Settings speed selection/save, generated pronunciation preview, explicit repeat/Stop and honest backend labels, with stale-request cancellation and failure recovery.
+  - [ ] **B06.1-B [AI, SIM]** Integrate phrase replay/loop/transcript controls into listening activities, preserve transcript assistance and implement/verify automatic speech preferences without surprise playback.
 - [ ] **B06.2 [AI]** Support listening without initially showing the Spanish text; record comprehension separately from transcript-assisted answers.
 - [ ] **B06.3 [AI, H-LANGUAGE]** Integrate accepted phrase and dialogue recordings with speaker/region metadata; support multiple speakers without claiming one voice represents a whole region.
 - [ ] **B06.4 [AI, SIM]** Add downloadable audio packs with size/status, cancellation, integrity checks, storage recovery, and offline playback. Do not depend on device TTS for promised offline audio coverage.
@@ -542,3 +544,9 @@ B07.5-B1 adds a bilingual recall-and-reveal self-check for difficult phrases, wi
 ### Exact first-morning recording handoff — 2026-10-15
 
 B03.5-B1 adds the [draft line sheet and speaker/editor brief](docs/editorial/FIRST_MORNING_RECORDING_BRIEF.md), tied to the exact mission fingerprint and source IDs. It covers alternate takes, continuous exchange order, file/manifest delivery, human acceptance and subsequent AI integration. No performer was contacted, no audio commissioned/generated and no approval fabricated. Human editorial/performance/rights and hardware/learner gates remain open.
+
+Implementation `45b3341` (optional mission follow-up) was merged/pushed. [GitHub Actions run 38805709928](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38805709928) passed quality/content checks and iOS/Android project generation and production JavaScript bundles. Recording brief `4eee146` was merged/pushed after formatting, local-link, exact fingerprint/variant and seven-unique-line-ID checks; it is documentation only.
+
+### Saved playback speed and pronunciation preview — 2026-10-15
+
+B06.1-A adds saved speed support, explicit preview looping/Stop, generated-versus-device backend labels and protected asynchronous preference/seek playback. [Report](docs/qa/2026-10-15-audio-preferences/REPORT.md). Final local checks: 65 suites / 688 tests, static/content checks and unchanged generated inventory. Fresh review found no actionable issues. iOS verified Spanish save, generated preview/Stop and English reopen at 0.75× without learning-counter/event changes. Integrated listening/transcript controls, auto-speech, human audio and physical audio-route/intelligibility gates remain open.

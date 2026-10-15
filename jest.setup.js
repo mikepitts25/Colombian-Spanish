@@ -12,6 +12,7 @@ jest.mock('expo-speech', () => ({
 // 2b. expo-audio mock
 jest.mock('expo-audio', () => ({
   createAudioPlayer: jest.fn(() => ({
+    setPlaybackRate: jest.fn(),
     play: jest.fn(),
     pause: jest.fn(),
     seekTo: jest.fn(),

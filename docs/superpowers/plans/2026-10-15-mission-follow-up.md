@@ -7,6 +7,8 @@ This is bounded continuation of the authorized mission roadmap. Reusing Study's 
 - [x] Add failing targeted UI tests for reveal, next/reset, exit and unchanged mission/event/daily state.
 - [x] Implement bilingual accessible follow-up activity and completion handoff, handling missing source cards.
 - [x] Verify full suite/static/content checks, single fresh review and regressions for findings, iOS UI evidence.
-- [ ] Update master evidence, merge/push and record CI.
+- [x] Update master evidence, merge/push and record CI.
 
 Evidence: 64 suites / 677 tests; types/lint/content/inventory checks; iOS Spanish reveal/next/reset/return/reopen and byte-equivalent stored sections; one fresh review with no actionable findings. See docs/qa/2026-10-15-mission-follow-up/REPORT.md.
+
+Merged/pushed `45b3341`; CI 38805709928 passed quality/content and iOS/Android project generation/production JavaScript bundles.

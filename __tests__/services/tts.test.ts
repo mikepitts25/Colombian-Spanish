@@ -1,5 +1,10 @@
+import { waitFor } from '@testing-library/react-native';
 import { createAudioPlayer } from 'expo-audio';
 import * as Speech from 'expo-speech';
+import { getPrefs } from '../../src/storage/prefs';
+jest.mock('../../src/storage/prefs', () => ({
+  getPrefs: jest.fn(async () => ({ speechRate: 0.98 })),
+}));
 import { speak, speakCard, stop } from '../../src/services/tts';
 
 jest.mock('../../src/data/audioManifest', () => ({
@@ -15,6 +20,7 @@ const mockStop = Speech.stop as jest.Mock;
 
 function makePlayer(overrides = {}) {
   return {
+    setPlaybackRate: jest.fn(),
     play: jest.fn(),
     pause: jest.fn(),
     seekTo: jest.fn(),
@@ -112,7 +118,7 @@ describe('speakCard', () => {
   });
 
   it('stops queued speech before bundled playback starts', async () => {
-    speak('old speech');
+    await speak('old speech');
     jest.clearAllMocks();
 
     const player = makePlayer();
@@ -135,7 +141,7 @@ describe('speakCard', () => {
     await speakCard({ id: '0009', front: 'hola' });
     jest.clearAllMocks();
 
-    speak('text fallback');
+    await speak('text fallback');
 
     expect(player.pause).toHaveBeenCalledTimes(1);
     expect(player.remove).toHaveBeenCalledTimes(1);
@@ -161,7 +167,7 @@ describe('speakCard', () => {
     mockCreateAudioPlayer.mockReturnValueOnce(firstPlayer).mockReturnValueOnce(secondPlayer);
 
     const firstCall = speakCard({ id: '0009', front: 'hola' });
-    await Promise.resolve();
+    await waitFor(() => expect(firstPlayer.seekTo).toHaveBeenCalledWith(0));
     const secondCall = speakCard({ id: '0010', front: 'adios' });
     await secondCall;
     firstSeek.resolve();
@@ -185,9 +191,9 @@ describe('speakCard', () => {
     mockCreateAudioPlayer.mockReturnValue(player);
 
     const pending = speakCard({ id: '0009', front: 'hola' });
-    await Promise.resolve();
+    await waitFor(() => expect(player.seekTo).toHaveBeenCalledWith(0));
 
-    speak('manual fallback');
+    await speak('manual fallback');
     seek.resolve();
     await pending;
 
@@ -208,7 +214,7 @@ describe('speakCard', () => {
     mockCreateAudioPlayer.mockReturnValue(player);
 
     const pending = speakCard({ id: '0009', front: 'hola' });
-    await Promise.resolve();
+    await waitFor(() => expect(player.seekTo).toHaveBeenCalledWith(0));
 
     stop();
     seek.reject(new Error('seek failed'));
@@ -221,8 +227,8 @@ describe('speakCard', () => {
 });
 
 describe('speak', () => {
-  it('keeps text-only Expo Speech fallback for components without card ids', () => {
-    speak('¿qué más?');
+  it('keeps text-only Expo Speech fallback for components without card ids', async () => {
+    await speak('¿qué más?');
 
     expect(mockSpeak).toHaveBeenCalledWith(
       '¿qué más?',
@@ -230,8 +236,8 @@ describe('speak', () => {
     );
   });
 
-  it('uses a custom language when provided', () => {
-    speak('hello', 'en-US');
+  it('uses a custom language when provided', async () => {
+    await speak('hello', 'en-US');
 
     expect(mockSpeak).toHaveBeenCalledWith('hello', expect.objectContaining({ language: 'en-US' }));
   });
@@ -249,5 +255,79 @@ describe('stop', () => {
     expect(player.pause).toHaveBeenCalledTimes(1);
     expect(player.remove).toHaveBeenCalledTimes(1);
     expect(mockStop).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('saved playback preferences', () => {
+  it('applies saved speed, pitch correction and explicit clip looping', async () => {
+    (getPrefs as jest.Mock).mockResolvedValueOnce({ speechRate: 0.75 });
+    const player = makePlayer({ setPlaybackRate: jest.fn() });
+    mockCreateAudioPlayer.mockReturnValue(player);
+    const result = await speakCard({ id: '0009', front: 'hola' }, { loop: true });
+    expect(player.setPlaybackRate).toHaveBeenCalledWith(0.75, 'high');
+    expect(player).toMatchObject({ loop: true, shouldCorrectPitch: true });
+    expect(result).toMatchObject({ source: 'generated', loop: true });
+  });
+  it('uses saved speed for device fallback and honestly reports one-shot playback', async () => {
+    (getPrefs as jest.Mock).mockResolvedValueOnce({ speechRate: 1.25 });
+    expect(await speakCard({ id: 'missing', front: 'hola' }, { loop: true })).toEqual({
+      source: 'device',
+      loop: false,
+    });
+    expect(mockSpeak).toHaveBeenCalledWith('hola', expect.objectContaining({ rate: 1.25 }));
+  });
+  it('does not revive playback after stop while preferences are loading', async () => {
+    const wait = deferred<any>();
+    (getPrefs as jest.Mock).mockReturnValueOnce(wait.promise);
+    const call = speakCard({ id: '0009', front: 'hola' });
+    stop();
+    wait.resolve({ speechRate: 0.75 });
+    expect(await call).toEqual({ source: 'cancelled', loop: false });
+    expect(mockCreateAudioPlayer).not.toHaveBeenCalled();
+    expect(mockSpeak).not.toHaveBeenCalled();
+  });
+  it('preserves defaults on failed reads without writing preferences', async () => {
+    (getPrefs as jest.Mock).mockRejectedValueOnce(new Error('read failed'));
+    await speakCard({ id: 'missing', front: 'hola' });
+    expect(mockSpeak).toHaveBeenCalledWith('hola', expect.objectContaining({ rate: 0.98 }));
+  });
+});
+
+describe('preference read concurrency', () => {
+  it('honors saved text-speech speed and cancels text speech still waiting on preferences', async () => {
+    (getPrefs as jest.Mock).mockResolvedValueOnce({ speechRate: 1.25 });
+    await speak('hola');
+    expect(mockSpeak).toHaveBeenLastCalledWith('hola', expect.objectContaining({ rate: 1.25 }));
+    const wait = deferred<any>();
+    (getPrefs as jest.Mock).mockReturnValueOnce(wait.promise);
+    const call = speak('old text');
+    stop();
+    wait.resolve({ speechRate: 0.75 });
+    expect((await call).source).toBe('cancelled');
+    expect(mockSpeak).toHaveBeenCalledTimes(1);
+  });
+  it('newer requests win while older preferences are delayed and snapshot caller input', async () => {
+    const wait = deferred<any>();
+    (getPrefs as jest.Mock).mockReturnValueOnce(wait.promise);
+    const card = { id: '0009', front: 'hola' };
+    const older = speakCard(card);
+    card.id = 'missing';
+    card.front = 'changed';
+    await speakCard({ id: '0010', front: 'buenos días' }, { rate: 1 });
+    wait.resolve({ speechRate: 0.75 });
+    expect((await older).source).toBe('cancelled');
+    expect(mockCreateAudioPlayer).toHaveBeenCalledTimes(1);
+    expect(mockCreateAudioPlayer).toHaveBeenCalledWith(1010);
+    expect(mockSpeak).not.toHaveBeenCalled();
+  });
+  it('rejects invalid playback controls before interrupting current playback', async () => {
+    await speakCard({ id: '0009', front: 'hola' });
+    jest.clearAllMocks();
+    for (const options of [{ rate: NaN }, { rate: 0 }, { rate: 2 }, { loop: 'yes' }])
+      await expect(speakCard({ id: '0009', front: 'hola' }, options as any)).rejects.toThrow(
+        'Invalid',
+      );
+    expect(mockStop).not.toHaveBeenCalled();
+    expect(mockCreateAudioPlayer).not.toHaveBeenCalled();
   });
 });

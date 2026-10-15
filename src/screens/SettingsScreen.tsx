@@ -353,6 +353,13 @@ export default function SettingsScreen() {
         <Text style={styles.groupLabel}>{t('settings.section.app')}</Text>
         <View style={styles.groupCard}>
           <SettingsRow
+            emoji="🔊"
+            title={t('audio.title')}
+            subtitle={t('audio.settingsNote')}
+            onPress={() => nav.navigate('AudioPreferences')}
+          />
+          <Divider />
+          <SettingsRow
             emoji="🌐"
             title={t('settings.language.title')}
             subtitle={t('settings.language.subtitle')}

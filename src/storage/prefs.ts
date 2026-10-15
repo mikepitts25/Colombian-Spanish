@@ -16,7 +16,7 @@ export type HomeRegion = 'all' | 'paisa' | 'rolo' | 'costeno' | 'valluno' | 'lla
 
 export type Prefs = {
   autoSpeak: boolean;
-  speechRate: number; // expo-speech rate
+  speechRate: number; // Requested clip/TTS playback rate; perceived tempo varies by backend
   uiLanguage: UiLanguage;
   newCardsPerDay: number; // daily cap on never-studied cards entering the queue
   onboardingDone: boolean;

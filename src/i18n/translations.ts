@@ -2,6 +2,29 @@ import { UiLanguage } from '../storage/prefs';
 
 export const translations = {
   es: {
+    'audio.title': 'Preferencias de audio',
+    'audio.back': 'Volver',
+    'audio.note':
+      'Guarda una velocidad para los clips de pronunciación y la voz del dispositivo. El ritmo percibido puede variar.',
+    'audio.loading': 'Cargando preferencias de audio…',
+    'audio.loadError': 'No se pudieron cargar las preferencias de audio.',
+    'audio.retry': 'Reintentar',
+    'audio.selected': 'Velocidad elegida: {rate}×',
+    'audio.save': 'Guardar velocidad',
+    'audio.saved': 'Velocidad guardada.',
+    'audio.saveError': 'No se pudo guardar. Tu selección sigue aquí.',
+    'audio.previewTitle': 'Vista previa de pronunciación',
+    'audio.previewNote':
+      'Escucha buenos días antes de guardar. Los clips incluidos usan audio generado y permiten repetir. La voz del dispositivo suena una vez y puede necesitar una voz instalada.',
+    'audio.repeat': 'Repetir clip',
+    'audio.on': 'Activado',
+    'audio.off': 'Desactivado',
+    'audio.preview': 'Escuchar pronunciación',
+    'audio.stop': 'Detener audio',
+    'audio.generated': 'Fuente: clip generado',
+    'audio.device': 'Fuente: voz del dispositivo · una vez',
+    'audio.previewError': 'No se pudo iniciar el audio. Reintenta.',
+    'audio.settingsNote': 'Velocidad y vista previa de pronunciación',
     'mission.followUp': 'Recuerda y compara',
     'mission.followUpNote':
       'Intenta decir la frase en español antes de revelarla. Este repaso opcional no registra una nota ni cambia tus repasos programados.',
@@ -519,6 +542,29 @@ export const translations = {
     'nav.difficultWords': 'Palabras Difíciles',
   },
   en: {
+    'audio.title': 'Audio preferences',
+    'audio.back': 'Back',
+    'audio.note':
+      'Save a speed for pronunciation clips and device speech. Their perceived tempo can differ.',
+    'audio.loading': 'Loading audio preferences…',
+    'audio.loadError': 'Could not load audio preferences.',
+    'audio.retry': 'Retry',
+    'audio.selected': 'Selected speed: {rate}×',
+    'audio.save': 'Save speed',
+    'audio.saved': 'Speed saved.',
+    'audio.saveError': 'Could not save. Your selection is still here.',
+    'audio.previewTitle': 'Pronunciation preview',
+    'audio.previewNote':
+      'Preview buenos días before saving. Bundled clips use generated audio and support repeat. Device speech plays once and may need an installed voice.',
+    'audio.repeat': 'Repeat clip',
+    'audio.on': 'On',
+    'audio.off': 'Off',
+    'audio.preview': 'Preview pronunciation',
+    'audio.stop': 'Stop audio',
+    'audio.generated': 'Source: generated clip',
+    'audio.device': 'Source: device speech · plays once',
+    'audio.previewError': 'Could not start audio. Try again.',
+    'audio.settingsNote': 'Playback speed and pronunciation preview',
     'mission.followUp': 'Recall and compare',
     'mission.followUpNote':
       'Try saying the Spanish phrase before revealing it. This optional self-check does not record a score or change your review schedule.',
