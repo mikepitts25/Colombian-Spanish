@@ -5,6 +5,7 @@ import HomeScreen from '../../src/screens/HomeScreen';
 import { Deck, FlashCard } from '../../src/types';
 
 const mockNavigate = jest.fn();
+const mockReload = jest.fn().mockResolvedValue(undefined);
 let mockLanguage: 'es' | 'en' = 'en';
 
 jest.mock('@react-navigation/native', () => ({
@@ -22,6 +23,10 @@ jest.mock('../../src/storage/storage', () => ({
   getDailyProgress: jest.fn().mockResolvedValue({ count: 0, target: 10, newCount: 0 }),
   getStudyStreak: jest.fn().mockResolvedValue(0),
   getStreakState: jest.fn().mockResolvedValue({ streak: 0, freezes: 0 }),
+}));
+
+jest.mock('../../src/storage/prefs', () => ({
+  getPrefs: jest.fn().mockResolvedValue({ newCardsPerDay: 10 }),
 }));
 
 jest.mock('../../src/services/tts', () => ({
@@ -65,7 +70,7 @@ function makeCard(id: string, overrides: Partial<FlashCard> = {}): FlashCard {
 const DECK: Deck = {
   id: 'deck-greetings',
   name: 'Saludos',
-  cards: [makeCard('c1')],
+  cards: [makeCard('c1', { reps: 1, interval: 1 })],
 };
 
 const SLANG_DECK: Deck = {
@@ -90,15 +95,26 @@ const RESTED_DECK: Deck = {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() });
   mockLanguage = 'en';
+  mockReload.mockResolvedValue(undefined);
+  require('../../src/storage/prefs').getPrefs.mockResolvedValue({ newCardsPerDay: 10 });
+  require('../../src/storage/storage').getDailyProgress.mockResolvedValue({
+    count: 0,
+    target: 10,
+    newCount: 0,
+  });
   mockUseDeck.mockReturnValue({
     ready: true,
     decks: [DECK, SLANG_DECK],
     activeDeckId: DECK.id,
     activeDeck: DECK,
     setActiveDeckId: jest.fn(),
+    reload: mockReload,
   });
 });
+
+afterEach(() => jest.restoreAllMocks());
 
 describe('HomeScreen quick actions', () => {
   it('navigates to quiz, difficult words, phrases, and add-card flows', async () => {
@@ -132,6 +148,7 @@ describe('HomeScreen quick actions', () => {
       activeDeckId: DECK.id,
       activeDeck: DECK,
       setActiveDeckId: jest.fn(),
+      reload: mockReload,
     });
 
     const { getByText, queryByText } = render(<HomeScreen />);
@@ -168,7 +185,7 @@ describe('HomeScreen quick actions', () => {
 
     await waitFor(() => expect(getByText('Estudiar tarjetas pendientes')).toBeTruthy());
     expect(getByText('Herramientas')).toBeTruthy();
-    expect(getByText('Decks pendientes')).toBeTruthy();
+    expect(getByText('Decks para repasar')).toBeTruthy();
     expect(getByText('Ver todos los decks')).toBeTruthy();
   });
 
@@ -201,6 +218,7 @@ describe('HomeScreen quick actions', () => {
       activeDeckId: DECK.id,
       activeDeck: DECK,
       setActiveDeckId: jest.fn(),
+      reload: mockReload,
     });
 
     const { getByText } = render(<HomeScreen />);
@@ -246,4 +264,130 @@ it('refreshes daily progress and streak when the app returns to the foreground',
   } finally {
     subscription.mockRestore();
   }
+});
+
+describe('Home workload honesty', () => {
+  function useCards(cards: FlashCard[]) {
+    const deck = { ...DECK, cards };
+    const setActiveDeckId = jest.fn();
+    mockUseDeck.mockReturnValue({
+      ready: true,
+      decks: [deck],
+      activeDeckId: deck.id,
+      activeDeck: deck,
+      setActiveDeckId,
+      reload: mockReload,
+    });
+    return setActiveDeckId;
+  }
+
+  it('separates new cards, reviews due now, and reviews scheduled later today', async () => {
+    useCards([
+      makeCard('new'),
+      makeCard('due', { reps: 1, interval: 1 }),
+      makeCard('later', { reps: 1, interval: 1, due: NOW + 3600000 }),
+      makeCard('failed-before', { ease: 2.1, due: NOW - 1 }),
+    ]);
+    const screen = render(<HomeScreen />);
+    expect(await screen.findAllByText('2 reviews due')).toHaveLength(2);
+    expect(screen.getByText('1 new in library')).toBeTruthy();
+    expect(await screen.findByText('New cards available today: 1')).toBeTruthy();
+  });
+
+  it('shows a fresh library without presenting every new card as overdue', async () => {
+    useCards([makeCard('a'), makeCard('b')]);
+    const screen = render(<HomeScreen />);
+    expect(await screen.findByText('0 reviews due')).toBeTruthy();
+    expect(screen.getByText('2 new in library')).toBeTruthy();
+    fireEvent.press(await screen.findByText('Study new cards'));
+    await waitFor(() =>
+      expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: DECK.id }),
+    );
+  });
+
+  it('starts due reviews directly instead of opening the Study landing', async () => {
+    const setActive = useCards([makeCard('due', { reps: 1, interval: 1 })]);
+    const screen = render(<HomeScreen />);
+    fireEvent.press(await screen.findByText('Study due cards'));
+    await waitFor(() => expect(setActive).toHaveBeenCalledWith(DECK.id));
+    await waitFor(() =>
+      expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: DECK.id }),
+    );
+  });
+
+  it('offers browsing when the new-card allowance is exhausted', async () => {
+    useCards([makeCard('new')]);
+    require('../../src/storage/storage').getDailyProgress.mockResolvedValue({
+      count: 10,
+      target: 10,
+      newCount: 10,
+    });
+    const screen = render(<HomeScreen />);
+    expect(await screen.findByText('New cards available today: 0')).toBeTruthy();
+    fireEvent.press(screen.getByText('Browse study decks'));
+    expect(mockNavigate).toHaveBeenCalledWith('Study');
+    expect(screen.queryByText('Study new cards')).toBeNull();
+  });
+
+  it('keeps the empty-library route usable', async () => {
+    mockUseDeck.mockReturnValue({ ready: true, decks: [], setActiveDeckId: jest.fn() });
+    const screen = render(<HomeScreen />);
+    expect(await screen.findByText('0 reviews due')).toBeTruthy();
+    fireEvent.press(await screen.findByText('Browse study decks'));
+    expect(mockNavigate).toHaveBeenCalledWith('Study');
+  });
+});
+
+it('refreshes the remaining new-card budget from preferences on foreground', async () => {
+  const prefs = require('../../src/storage/prefs').getPrefs;
+  const daily = require('../../src/storage/storage').getDailyProgress;
+  const deck = {
+    ...DECK,
+    cards: Array.from({ length: 8 }, (_, index) => makeCard(`new-${index}`)),
+  };
+  mockUseDeck.mockReturnValue({
+    ready: true,
+    decks: [deck],
+    activeDeckId: deck.id,
+    setActiveDeckId: jest.fn(),
+    reload: mockReload,
+  });
+  prefs.mockResolvedValue({ newCardsPerDay: 5 });
+  daily.mockResolvedValue({ count: 3, target: 10, newCount: 3 });
+  const screen = render(<HomeScreen />);
+  await screen.findByText('New cards available today: 2');
+  prefs.mockResolvedValue({ newCardsPerDay: 7 });
+  const listener = (AppState.addEventListener as jest.Mock).mock.calls.at(-1)[1];
+  await act(async () => listener('active'));
+  expect(screen.getByText('New cards available today: 4')).toBeTruthy();
+});
+
+it('waits for a fresh provider budget before starting a session', async () => {
+  let finish!: () => void;
+  mockReload.mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  const screen = render(<HomeScreen />);
+  fireEvent.press(await screen.findByText('Study due cards'));
+  expect(mockReload).toHaveBeenCalledTimes(1);
+  expect(mockNavigate).not.toHaveBeenCalled();
+  await act(async () => finish());
+  await waitFor(() =>
+    expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: DECK.id }),
+  );
+});
+
+it('shows a retryable preparation failure without navigating', async () => {
+  mockReload.mockRejectedValueOnce(new Error('storage unavailable'));
+  const screen = render(<HomeScreen />);
+  fireEvent.press(await screen.findByText('Study due cards'));
+  expect(await screen.findByText('Could not prepare the session. Please try again.')).toBeTruthy();
+  expect(mockNavigate).not.toHaveBeenCalled();
+  fireEvent.press(screen.getByText('Study due cards'));
+  await waitFor(() =>
+    expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: DECK.id }),
+  );
 });

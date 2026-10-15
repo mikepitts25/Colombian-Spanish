@@ -522,3 +522,11 @@ it('keeps the next card when the already selected region is tapped', async () =>
   expect(screen.getByText('adios')).toBeTruthy();
   expect(screen.getByText('2 restantes')).toBeTruthy();
 });
+
+it('opens the requested deck session directly from a Home handoff', async () => {
+  mockRouteParams = { autoStartDeckId: GREETINGS_DECK.id };
+  const screen = renderStudyScreen();
+  expect(await screen.findByText('hola')).toBeTruthy();
+  expect(screen.getByText('3 restantes')).toBeTruthy();
+  expect(mockSetParams).toHaveBeenCalledWith({ autoStartDeckId: undefined });
+});

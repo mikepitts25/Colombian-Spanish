@@ -49,7 +49,7 @@ type Ctx = {
   renameDeck: (deckId: string, name: string) => Promise<void>;
   deleteDeck: (deckId: string) => Promise<void>;
   resetDeckProgress: (deckId: string) => Promise<void>;
-  reload: () => Promise<void>;
+  reload: (options?: { requireFreshBudget?: boolean }) => Promise<void>;
 };
 
 const DeckContext = createContext<Ctx | undefined>(undefined);
@@ -316,14 +316,16 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     setDecks(updated);
   }
 
-  async function reload() {
+  async function reload(options?: { requireFreshBudget?: boolean }) {
     const stored = await loadDecks();
     setDecks(stored);
     try {
       const [prefs, daily] = await Promise.all([getPrefs(), getDailyProgress()]);
       setNewCardsPerDay(prefs.newCardsPerDay);
       setNewIntroducedToday(daily.newCount ?? 0);
-    } catch {}
+    } catch (error) {
+      if (options?.requireFreshBudget) throw error;
+    }
   }
 
   const value: Ctx = {

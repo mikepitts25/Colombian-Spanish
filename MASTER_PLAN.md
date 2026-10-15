@@ -10,7 +10,7 @@
 
 **Brief:** Product assessment and user request in this chat on October 14, 2026. Major new subsystems get a focused design and implementation plan when selected; do not predesign the entire roadmap or invent future interfaces now.
 
-**Last updated:** 2026-10-14. **Status:** Foundation, learning correctness, dependency maintenance, and iOS smoke batches merged and pushed; implementation CI passed. Remaining implementation and human/device gates are tracked below.
+**Last updated:** 2026-10-15. **Status:** Foundation, learning correctness, dependency maintenance, and iOS smoke batches merged and pushed; implementation CI passed. Remaining implementation and human/device gates are tracked below.
 
 ## How to use this checklist
 
@@ -178,7 +178,11 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [ ] **B05.2 [AI]** Use purpose and region throughout recommendations, with editable preferences and a general-content fallback. Include optional trip date and available study time.
 - [ ] **B05.3 [AI]** Build 3/5/10-minute plan options combining due review, a small amount of new material, and one applied activity. Use initial duration estimates, then calibrate with measured session times.
 - [ ] **B05.4 [AI, SIM]** Separate reviews due, new cards available, and today's bounded plan; provide catch-up after absence without resetting progress or flooding the learner.
+  - [x] **B05.4-A [AI, SIM]** Separate studied reviews due now, fresh library cards, and remaining daily new-card allowance; verify English/Spanish Home and count changes after study.
+  - [ ] **B05.4-B [AI, SIM]** Add bounded timed plans and absence catch-up behavior; parent remains open.
 - [ ] **B05.5 [AI, SIM]** Make the main Home action start/resume the recommended activity directly; verify preference changes, timezone changes, and no-content states.
+  - [x] **B05.5-A [AI, SIM]** Start the selected due/new deck directly after refreshing the provider budget; cover foreground preference/day changes, empty library, exhausted cap, and read-failure retry in automated tests. Verify direct start on iOS.
+  - [ ] **B05.5-B [AI, SIM]** Complete purpose/region/time-aware recommendations, broader resume/timezone scenarios, and platform coverage.
 
 **Exit:** one clear next action consistently reflects the learner's preferences and time budget; the whole library is not presented as overdue work.
 
@@ -377,3 +381,7 @@ Implementation `0f9811e` was merged and pushed to main. [GitHub Actions run 3862
 B04.2 and B04.5-A are complete with [dated regression and simulator evidence](docs/qa/2026-10-14-early-quiz/REPORT.md). Learners can start after one studied word; rounds remain capped at ten, and recognition stays separate from flashcard progress. A simulator-discovered clipped completion action is now scrollable, with each question starting at the top. Semantic distractor quality and full platform/accessibility/release checks remain open.
 
 Implementation `041e109` was merged and pushed to main. [GitHub Actions run 38623220871](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38623220871) passed all quality/content and iOS/Android project generation and production JS bundle checks. Final local verification: 40 suites / 380 tests, types/lint/format/data/inventory checks, and iOS short-round interaction.
+
+### Home workload and direct study — 2026-10-15
+
+B05.4-A and B05.5-A are complete with [regression and iOS simulator evidence](docs/qa/2026-10-15-home-workload/REPORT.md). Home separates studied reviews due now from the fresh library and daily new-card allowance, and opens the selected study session directly. A fresh provider-budget read is required before starting; failed reads show a retryable error. Spanish simulator inspection also caught and verified a corrected clipped streak badge. The bounded timed planner, personalized recommendations, broader timezone/resume scenarios, Android interaction, and physical-device acceptance remain open. Integration and final verification are recorded in the report.

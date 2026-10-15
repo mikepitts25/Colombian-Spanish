@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
@@ -11,6 +11,8 @@ import { useLanguage } from '../context/LanguageContext';
 import { speakCard } from '../services/tts';
 import { getCategoryForDeck, getDeckDisplayName } from '../utils/deckCategories';
 import { pickWordOfDay } from '../utils/wordOfDay';
+import { isNewCard } from '../utils/srs';
+import { getPrefs } from '../storage/prefs';
 
 const COLOMBIAN_GREETINGS = [
   {
@@ -73,29 +75,43 @@ const CATEGORY_EMOJIS: Record<string, string> = {
 
 type DeckWithDue = Deck & {
   dueCount: number;
+  newCount: number;
   cat: string;
 };
 
 async function loadHomeProgress() {
-  const [daily, streak] = await Promise.all([getDailyProgress(), getStreakState()]);
+  const [daily, streak, prefs] = await Promise.all([
+    getDailyProgress(),
+    getStreakState(),
+    getPrefs(),
+  ]);
   return {
     count: daily.count,
     target: daily.target,
     streak: streak.streak,
     freezes: streak.freezes,
+    newLimit: prefs.newCardsPerDay,
+    newIntroduced: daily.newCount ?? 0,
+    loaded: true,
     now: Date.now(),
   };
 }
 
 export default function HomeScreen() {
-  const { ready, decks, activeDeckId, setActiveDeckId } = useDeck();
+  const { ready, decks, activeDeckId, setActiveDeckId, reload } = useDeck();
   const nav = useNavigation<any>();
+  const starting = useRef(false);
+  const [studyStarting, setStudyStarting] = useState(false);
+  const [studyStartError, setStudyStartError] = useState(false);
   const { t } = useLanguage();
   const { value: activity, error } = useFocusedAsync(loadHomeProgress, {
     count: 0,
     target: 10,
     streak: 0,
     freezes: 0,
+    newLimit: 0,
+    newIntroduced: 0,
+    loaded: false,
     now: Date.now(),
   });
   const { count: dailyCount, target: dailyTarget, streak, freezes } = activity;
@@ -104,32 +120,37 @@ export default function HomeScreen() {
     return getGreetingKey();
   }, [activity.now]);
 
-  const endOfToday = useMemo(() => {
-    const d = new Date(activity.now);
-    d.setHours(23, 59, 59, 999);
-    return d.getTime();
-  }, [activity.now]);
-
-  const totalDue = useMemo(
+  const workload = useMemo<DeckWithDue[]>(
     () =>
-      (decks || []).reduce(
-        (s, d) => s + (d.cards || []).filter((c: any) => (c.due ?? 0) <= endOfToday).length,
-        0,
-      ),
-    [decks, endOfToday],
+      (decks || []).map((deck) => ({
+        ...deck,
+        dueCount: (deck.cards || []).filter(
+          (card) => !isNewCard(card) && (card.due ?? 0) <= activity.now,
+        ).length,
+        newCount: (deck.cards || []).filter(isNewCard).length,
+        cat: getCategoryForDeck(deck),
+      })),
+    [decks, activity.now],
   );
-
-  const quickDecks = useMemo<DeckWithDue[]>(() => {
-    return (decks || [])
-      .map((d) => ({
-        ...d,
-        dueCount: (d.cards || []).filter((c: any) => (c.due ?? 0) <= endOfToday).length,
-        cat: getCategoryForDeck(d),
-      }))
-      .filter((d) => d.dueCount > 0)
-      .sort((a, b) => b.dueCount - a.dueCount)
-      .slice(0, 4);
-  }, [decks, endOfToday]);
+  const totalDue = workload.reduce((sum, deck) => sum + deck.dueCount, 0);
+  const totalNew = workload.reduce((sum, deck) => sum + deck.newCount, 0);
+  const newAvailableToday = Math.min(
+    totalNew,
+    Math.max(0, activity.newLimit - activity.newIntroduced),
+  );
+  const quickDecks = useMemo(
+    () =>
+      workload
+        .filter((deck) => deck.dueCount > 0)
+        .sort((a, b) => b.dueCount - a.dueCount)
+        .slice(0, 4),
+    [workload],
+  );
+  const nextNewDeck =
+    workload.find((deck) => deck.id === activeDeckId && deck.newCount > 0) ??
+    workload.find((deck) => deck.newCount > 0);
+  const recommendedDeck =
+    quickDecks[0] ?? (activity.loaded && !error && newAvailableToday > 0 ? nextNewDeck : undefined);
 
   const wordOfDay = useMemo(
     () => pickWordOfDay(decks || [], new Date(activity.now), getDeckDisplayName),
@@ -145,9 +166,26 @@ export default function HomeScreen() {
   });
   const dueCardSub = t(totalDue === 1 ? 'home.dueSubOne' : 'home.dueSubMany');
 
-  const startStudy = (deckId?: string) => {
-    if (deckId) setActiveDeckId(deckId);
-    nav.navigate('Study');
+  const startStudy = async (deckId?: string) => {
+    if (!deckId) {
+      nav.navigate('Study');
+      return;
+    }
+    if (starting.current) return;
+    starting.current = true;
+    setStudyStarting(true);
+    setStudyStartError(false);
+    try {
+      // Match the queue provider to the current day's stored budget/preferences.
+      await reload({ requireFreshBudget: true });
+      setActiveDeckId(deckId);
+      nav.navigate('Study', { autoStartDeckId: deckId });
+    } catch {
+      setStudyStartError(true);
+    } finally {
+      starting.current = false;
+      setStudyStarting(false);
+    }
   };
 
   if (!ready) {
@@ -190,10 +228,18 @@ export default function HomeScreen() {
         )}
         <View style={styles.todayCard}>
           <View style={styles.todayHeader}>
-            <View>
+            <View style={styles.todaySummary}>
               <Text style={styles.eyebrow}>{t('home.today')}</Text>
               <Text style={styles.todayTitle}>{dueCardLabel}</Text>
               <Text style={styles.todaySub}>{dueCardSub}</Text>
+              <Text style={styles.todaySub}>
+                {t('home.newInLibrary', { count: totalNew.toLocaleString() })}
+              </Text>
+              {activity.loaded && !error && (
+                <Text style={styles.todaySub}>
+                  {t('home.newAvailableToday', { count: newAvailableToday })}
+                </Text>
+              )}
             </View>
             <View style={styles.streakPill}>
               <Text style={styles.streakText}>
@@ -213,9 +259,26 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          <Pressable style={styles.primaryButton} onPress={() => startStudy(quickDecks[0]?.id)}>
+          {studyStartError && (
+            <Text accessibilityRole="alert" style={styles.todaySub}>
+              {t('home.studyStartError')}
+            </Text>
+          )}
+          <Pressable
+            disabled={studyStarting}
+            style={styles.primaryButton}
+            onPress={() => startStudy(recommendedDeck?.id)}
+          >
             <Text style={styles.primaryButtonText}>
-              {totalDue > 0 ? t('home.studyDueCards') : t('home.studyAnyway')}
+              {studyStarting
+                ? t('common.loading')
+                : t(
+                    totalDue > 0
+                      ? 'home.studyDueCards'
+                      : recommendedDeck
+                        ? 'home.studyNewCards'
+                        : 'home.browseStudyDecks',
+                  )}
             </Text>
           </Pressable>
         </View>
@@ -315,7 +378,9 @@ export default function HomeScreen() {
           ) : (
             <View style={styles.emptyDueState}>
               <Text style={styles.emptyTitle}>{t('home.allCaughtUp')}</Text>
-              <Text style={styles.emptyText}>{t('home.emptyDueText')}</Text>
+              <Text style={styles.emptyText}>
+                {t(totalNew > 0 ? 'home.newSeparate' : 'home.emptyDueText')}
+              </Text>
             </View>
           )}
         </View>
@@ -378,6 +443,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     textTransform: 'uppercase',
   },
+  todaySummary: { flex: 1, minWidth: 0 },
   todayTitle: {
     color: colors.textPrimary,
     fontSize: 30,
@@ -387,6 +453,7 @@ const styles = StyleSheet.create({
   },
   todaySub: { color: colors.textSecondary, fontSize: 13, marginTop: 1 },
   streakPill: {
+    flexShrink: 0,
     backgroundColor: colors.surfaceElevated,
     borderRadius: radius.full,
     borderWidth: 1,
