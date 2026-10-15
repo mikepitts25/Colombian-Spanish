@@ -23,3 +23,5 @@ Restore app state completed with explicit restart guidance. [Confirmation](02-re
 ## Remaining boundaries
 
 Controlled storage failure/replay is automated, not native low-storage interruption acceptance. Android/cloud providers, hardware share flows, native signing/compilation and physical durability remain open. Full-state restore intentionally replaces local counters/preferences and can rewind SRS, while event history merges; do not interpret counters as a reconstructed event ledger. Repeated non-idempotent edits and complete session-queue resume remain separate work. Privacy draft/inventory distinguish version-3 files from legacy clipboard omissions and OS/device state.
+
+Implementation `8ae6250` was merged and pushed to main. [GitHub Actions run 38721570387](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38721570387) passed quality/content and iOS/Android project generation and production JavaScript bundles. Final local verification: 50 suites / 511 tests; iOS file export/app-state restore/restart accepted as documented.

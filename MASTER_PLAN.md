@@ -440,3 +440,5 @@ Implementation `23ef29d` was merged and pushed to main. [GitHub Actions run 3871
 ### Supported local-state backup — 2026-10-15
 
 B11.1-B and B11.2-B2a add a version-3 file snapshot with preferences, daily counts/goals, streak, seen words, quiz history, notification preferences and saved session pointer. A distinct app-state restore mode journals all supported state together; card-only modes retain local state. See [the report](docs/qa/2026-10-15-complete-backups/REPORT.md). OS permissions, caches, complete queue restoration and physical/native interruption remain separate.
+
+Implementation `8ae6250` was merged and pushed to main. [GitHub Actions run 38721570387](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38721570387) passed quality/content and iOS/Android project generation and production JavaScript bundles. Final local verification: 50 suites / 511 tests; iOS file export/app-state restore/restart accepted as documented.

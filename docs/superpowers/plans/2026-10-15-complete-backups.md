@@ -9,4 +9,4 @@ Legacy unversioned/1/2 imports remain supported. Clipboard export remains the ex
 - [x] Add failing full-state snapshot, validation, legacy, replacement/merge and interrupted-replay tests.
 - [x] Implement state schema/parser/snapshot and explicit transactional restore mode.
 - [x] Add bilingual preview/confirmation controls, permission-safe reminder reconciliation and restart guidance; test.
-- [ ] Full checks, independent review, simulator acceptance, checklist/evidence, merge/push and CI.
+- [x] Full checks, independent review, simulator acceptance, checklist/evidence, merge/push and CI.
