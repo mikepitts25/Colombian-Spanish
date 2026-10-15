@@ -51,3 +51,31 @@ describe('region filters', () => {
     expect(getCardRegion(makeCard({ tags: ['food'] }), 'Food')).toBe('General');
   });
 });
+
+describe('explicit region metadata', () => {
+  it('matches all declared regions and overrides legacy deck/tag inference', () => {
+    const card = makeCard({ regions: ['rolo', 'costeno'], tags: ['paisa'] });
+    expect(cardMatchesRegion(card, 'rolo', 'Paisa')).toBe(true);
+    expect(cardMatchesRegion(card, 'costeno', 'Paisa')).toBe(true);
+    expect(cardMatchesRegion(card, 'paisa', 'Paisa')).toBe(false);
+    expect(getCardRegion(card, 'Paisa')).toBe('Rolo / Costeño');
+  });
+  it('allows declared shared general content in regional decks', () => {
+    const card = makeCard({ regions: ['general'] });
+    expect(cardMatchesRegion(card, 'general', 'Paisa Slang')).toBe(true);
+    expect(cardMatchesRegion(card, 'paisa', 'Paisa Slang')).toBe(false);
+  });
+  it('retains general and specific membership for a shared regional card', () => {
+    const card = makeCard({ regions: ['general', 'llanero'] });
+    expect(cardMatchesRegion(card, 'general')).toBe(true);
+    expect(cardMatchesRegion(card, 'llanero')).toBe(true);
+    expect(cardMatchesRegion(card, 'all')).toBe(true);
+  });
+});
+
+it('rejects sparse metadata and falls back safely for malformed persisted values', () => {
+  const { isValidCardRegions } = require('../../src/utils/regionMetadata');
+  expect(isValidCardRegions(new Array(1))).toBe(false);
+  expect(cardMatchesRegion(makeCard({ regions: [] }), 'paisa', 'Paisa')).toBe(true);
+  expect(cardMatchesRegion(makeCard({ regions: ['unknown'] as any }), 'general')).toBe(true);
+});

@@ -1,4 +1,5 @@
-import { FlashCard } from '../types';
+import { isValidCardRegions } from './regionMetadata';
+import { CardRegion, FlashCard } from '../types';
 import { type TranslationKey } from '../i18n/translations';
 
 export type RegionFilterId =
@@ -49,7 +50,7 @@ function cardText(card: FlashCard, deckName?: string) {
   return normalize([deckName, ...(card.tags || [])].filter(Boolean).join(' '));
 }
 
-export function getCardRegionId(card: FlashCard, deckName?: string): RegionFilterId {
+function inferLegacyRegion(card: FlashCard, deckName?: string): CardRegion {
   const text = cardText(card, deckName);
   for (const [region, pattern] of Object.entries(REGION_PATTERNS) as [
     Exclude<RegionFilterId, 'all' | 'general'>,
@@ -60,12 +61,21 @@ export function getCardRegionId(card: FlashCard, deckName?: string): RegionFilte
   return 'general';
 }
 
+export function getCardRegionIds(card: FlashCard, deckName?: string): CardRegion[] {
+  return isValidCardRegions(card.regions) ? [...card.regions] : [inferLegacyRegion(card, deckName)];
+}
+
+// Compatibility for consumers requiring one primary label. Filtering uses all memberships.
+export function getCardRegionId(card: FlashCard, deckName?: string): CardRegion {
+  return getCardRegionIds(card, deckName)[0];
+}
+
 export function cardMatchesRegion(card: FlashCard, region: RegionFilterId, deckName?: string) {
-  if (region === 'all') return true;
-  return getCardRegionId(card, deckName) === region;
+  return region === 'all' || getCardRegionIds(card, deckName).includes(region);
 }
 
 export function getCardRegion(card: FlashCard, deckName?: string) {
-  const region = REGION_FILTERS.find((item) => item.id === getCardRegionId(card, deckName));
-  return region?.label ?? 'General';
+  return getCardRegionIds(card, deckName)
+    .map((id) => REGION_FILTERS.find((item) => item.id === id)?.label ?? 'General')
+    .join(' / ');
 }

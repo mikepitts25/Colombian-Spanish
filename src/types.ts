@@ -37,7 +37,10 @@ export interface LegacyConjugationData {
 // know when a phrase is safe to use (vulgar slang, flirty piropos, etc.).
 export type CardRegister = 'formal' | 'casual' | 'vulgar' | 'flirty';
 
+export type CardRegion = 'general' | 'paisa' | 'rolo' | 'costeno' | 'valluno' | 'llanero';
+
 export interface FlashCard {
+  regions?: CardRegion[]; // Explicit shared/multiple region membership; absent = legacy inference
   id: string;
   front: string; // Spanish (Colombia)
   back: string; // English

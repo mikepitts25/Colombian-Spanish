@@ -79,6 +79,7 @@ function mergeSeedDeckContent(storedDeck: Deck, seedDeck: Deck): Deck {
       flagged: storedCard.flagged,
       reviewStatus: storedCard.reviewStatus,
       reviewedAt: storedCard.reviewedAt,
+      regions: storedCard.regions ?? seedCard.regions,
     };
   });
 

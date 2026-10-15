@@ -8,7 +8,9 @@ function buildReviewInventory(root) {
   const validation = validateProject(root);
   if (validation.errors.length) throw new Error(validation.errors.join('\n'));
   const { ALL_DECKS } = loadDataModule(path.join(root, 'src/data/decks/index.ts'));
-  const { getCardRegionId } = loadDataModule(path.join(root, 'src/utils/regions.ts'));
+  const { getCardRegionId, getCardRegionIds } = loadDataModule(
+    path.join(root, 'src/utils/regions.ts'),
+  );
   const { getCardRegister } = loadDataModule(path.join(root, 'src/utils/register.ts'));
   const audio = new Map(
     readAudioEntries(path.join(root, 'src/data/audioManifest.ts')).map((entry) => [
@@ -36,7 +38,9 @@ function buildReviewInventory(root) {
         tags: card.tags || [],
         register,
         registerSource: card.register ? 'explicit' : register ? 'inferred' : 'unspecified',
-        inferredRegion: getCardRegionId(card, deck.name),
+        inferredRegion: card.regions ? null : getCardRegionId(card, deck.name),
+        regions: getCardRegionIds(card, deck.name),
+        regionSource: card.regions ? 'explicit' : 'legacy-inference',
         regionVerification: 'not-established',
         reviewStatus: card.reviewStatus || 'unreviewed',
         reviewedAt: card.reviewedAt || null,
@@ -52,7 +56,7 @@ function buildReviewInventory(root) {
     }),
   ).sort((a, b) => a.priority - b.priority || a.cardId.localeCompare(b.cardId, 'en'));
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     notes: [
       'Generated inventory, not editorial acceptance. Missing metadata does not prove no review occurred.',
       'Region and register inference reflect current app behavior, not independently verified claims.',

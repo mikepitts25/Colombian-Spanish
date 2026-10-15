@@ -4,6 +4,9 @@ const path = require('path');
 const { loadDataModule, readAudioEntries } = require('./lib/project-data');
 
 function validateProject(root) {
+  const { isValidCardRegions } = loadDataModule(
+    path.join(__dirname, '../src/utils/regionMetadata.ts'),
+  );
   const errors = [];
   const { ALL_DECKS: decks } = loadDataModule(path.join(root, 'src/data/decks/index.ts'));
   const audio = readAudioEntries(path.join(root, 'src/data/audioManifest.ts'));
@@ -30,6 +33,8 @@ function validateProject(root) {
       }
       if (cardIds.has(card.id)) errors.push(`Duplicate card ID: ${card.id}`);
       cardIds.add(card.id);
+      if (card.regions !== undefined && !isValidCardRegions(card.regions))
+        errors.push(`${card.id}: invalid regions`);
       for (const field of ['front', 'back', 'example']) {
         if (!text(card[field])) errors.push(`${card.id}: ${field} must be non-empty`);
       }

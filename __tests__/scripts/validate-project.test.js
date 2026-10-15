@@ -87,3 +87,10 @@ test('rejects empty libraries and malformed decks', () => {
   writeDecks([{ id: 'a', name: 'A', cards: null }]);
   expect(run().stderr).toContain('a: cards must be a non-empty array');
 });
+test.each([[], ['all'], ['paisa', 'paisa'], [null], 'rolo'].map((regions) => [regions]))(
+  'rejects invalid explicit region metadata %j',
+  (regions) => {
+    writeDecks([{ id: 'a', name: 'A', cards: [{ ...card, regions }] }]);
+    expect(run().stderr).toContain('one: invalid regions');
+  },
+);

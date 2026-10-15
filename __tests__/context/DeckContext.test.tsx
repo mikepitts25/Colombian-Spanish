@@ -129,9 +129,10 @@ describe('DeckProvider initialization', () => {
   });
 
   it('refreshes updated seed card content while preserving stored progress', async () => {
-    const oldStoredCard = {
+    const oldStoredCard: FlashCard = {
       ...SEED_CARD,
       example: 'Hola, ¿cómo estás?',
+      regions: ['general', 'rolo'],
       due: 12345,
       reps: 7,
       interval: 21,
@@ -152,6 +153,7 @@ describe('DeckProvider initialization', () => {
     expect(stored[0].cards[0]).toEqual(
       expect.objectContaining({
         example: 'Hola, ¿cómo estás? | Hello, how are you?',
+        regions: ['general', 'rolo'],
         due: 12345,
         reps: 7,
         interval: 21,

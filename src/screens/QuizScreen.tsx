@@ -20,7 +20,7 @@ import {
 } from '../storage/learningEvents';
 import {
   cardMatchesRegion,
-  getCardRegionId,
+  getCardRegionIds,
   REGION_FILTERS,
   REGION_LABEL_KEYS,
   RegionFilterId,
@@ -146,7 +146,9 @@ export default function QuizScreen() {
         correctAnswer,
         options: shuffle([correctAnswer, ...distractors]),
         deckId: row.deckId,
-        regionLabel: t(REGION_LABEL_KEYS[getCardRegionId(row.card, row.deckName)]),
+        regionLabel: getCardRegionIds(row.card, row.deckName)
+          .map((region) => t(REGION_LABEL_KEYS[region]))
+          .join(' / '),
       };
     },
     [allCards, t],

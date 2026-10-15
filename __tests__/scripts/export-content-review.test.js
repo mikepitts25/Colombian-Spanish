@@ -27,6 +27,8 @@ test('exports every indexed card, prioritizes native review, and keeps provenanc
     reviewStatus: 'unreviewed',
     example: '¡Hola! ¿Cómo estás? | Hello! How are you?',
     inferredRegion: 'general',
+    regions: ['general'],
+    regionSource: 'legacy-inference',
     regionVerification: 'not-established',
   });
 });

@@ -1,3 +1,4 @@
+import { isValidCardRegions } from '../utils/regionMetadata';
 import { Deck } from '../types';
 
 // Bound clipboard parsing work before JSON.parse allocates a second object tree.
@@ -68,6 +69,7 @@ export function validateBackupDecks(value: unknown): asserts value is Deck[] {
         (card.reviewStatus !== undefined &&
           !['unreviewed', 'reviewed', 'needs_native'].includes(card.reviewStatus as string)) ||
         (card.reviewedAt !== undefined && !nonnegative(card.reviewedAt)) ||
+        (card.regions !== undefined && !isValidCardRegions(card.regions)) ||
         (card.conjugation !== undefined && !validConjugation(card.conjugation))
       ) {
         throw new Error('Invalid card');

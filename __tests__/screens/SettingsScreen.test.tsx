@@ -434,6 +434,7 @@ describe('backup input safety', () => {
       favorite: 'true',
       flagged: 1,
       tags: ['Paisa', null],
+      regions: ['paisa', 'unknown'],
       reviewStatus: 'accepted',
       reviewedAt: -1,
       example: {},
@@ -485,6 +486,7 @@ describe('backup input safety', () => {
         {
           ...validBackupCard,
           tags: ['Paisa', '', ' '],
+          regions: ['general', 'rolo'],
           example: 'Hola, parce',
           ipa: 'paɾse',
           reviewedAt: 0,
