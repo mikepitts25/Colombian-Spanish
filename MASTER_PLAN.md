@@ -504,3 +504,7 @@ B05.2-B1 / B05.3-A / B05.4-B1 connect the editable profile to due-first review s
 ### Learner pilot preparation — 2026-10-15
 
 B13.1-A / B13.2-A deliver a [draft protocol](docs/pilot/PROTOCOL.md), [editorial task specifications](docs/pilot/TASK_BANK.md) and empty observation CSV. Measures separate independent/assisted performance, modalities, usability, delayed checks and transfer, with explicit denominators/missingness and no fabricated outcomes. Product acceptance, reviewed exact language/audio, candidate readiness and actual participant work remain open. This preparation does not establish learning efficacy or initiate recruitment/data collection.
+
+Implementation `0c32322` was merged and pushed to main. [GitHub Actions run 38754924531](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38754924531) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
+
+Pilot preparation `e914e89` was merged and pushed to main. Document formatting and local links passed; observation CSV has 22 unique columns and zero participant records. No functional code or data-collection behavior changed.

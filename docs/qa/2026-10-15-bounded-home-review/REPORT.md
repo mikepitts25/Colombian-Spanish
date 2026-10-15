@@ -18,3 +18,5 @@ Home refreshes provider budget before handoff. Study validates route limits and 
 ## Limits
 
 This is a bounded flashcard review, not the complete review/new/applied-activity planner. Estimates need measured calibration. Trip-date urgency, native language acceptance, broad timezone/navigation behavior, Android interaction, signed native builds and physical-device acceptance remain open. Regional metadata guides ranking but is not editorial approval. Repeated explicit starts are permitted; the daily new-card limit is still enforced at grade commit.
+
+Implementation `0c32322` was merged and pushed to main. [GitHub Actions run 38754924531](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38754924531) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.

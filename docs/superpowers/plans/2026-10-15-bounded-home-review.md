@@ -8,6 +8,8 @@ Home shows suggested deck and up-to card count/time estimate. The main action re
 
 - [x] Pin due priority, purpose/region/fallback, level/time bounds and cap/empty cases in pure tests; pin route queue limits in Study and Home handoff tests.
 - [x] Implement recommendation helper, localized preview and bounded route integration without changing scheduling/rewards.
-- [ ] Run full checks, review and simulator bounded start/restart evidence; checklist, merge/push and CI.
+- [x] Run full checks, review and simulator bounded start/restart evidence; checklist, merge/push and CI.
 
 Final: fixed resumed limit reset — resume/region regression RED→GREEN; optional validated limits are persisted with exact queue and deeply copied for storage/grade intents. Sparse-content estimate regression also passed after correction. Final suite 60/646 and static/content checks passed; iOS eight-card start, grade/restart/exact seven-card resume and explicit-region cap evidence captured. No deferred minor findings. Merge/CI pending.
+
+Implementation `0c32322` was merged and pushed to main. [GitHub Actions run 38754924531](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38754924531) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
