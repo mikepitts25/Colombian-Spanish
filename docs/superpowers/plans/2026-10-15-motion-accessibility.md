@@ -7,6 +7,8 @@ Keep swipe grading semantics intact; avoid stale responder closures when prefere
 - [x] RED regressions for hidden answer focus, accessible controls, motion preference/live changes, current responder callbacks and navigation semantics.
 - [x] Implement a shared reduced-motion hook and bounded component/navigation changes.
 - [x] Full checks, one fresh review and regressions if needed, available iOS evidence, master updates.
-- [ ] Merge/push and record CI.
+- [x] Merge/push and record CI.
 
 Review: one fresh reviewer identified mutable PanResponder gesture data used after release. RED proved grade 2 instead of 4 for right swipe after native dx reset; fixed by capturing grade synchronously. Both directions and full suite pass. QA report records native active-face/OS motion checks and unavailable native drag evidence.
+
+Merged/pushed `2da944e`; CI 38808238773 passed quality/content and iOS/Android project generation/production JavaScript bundles.

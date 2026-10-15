@@ -10,7 +10,7 @@
 
 **Brief:** Product assessment and user request in this chat on October 14, 2026. Major new subsystems get a focused design and implementation plan when selected; do not predesign the entire roadmap or invent future interfaces now.
 
-**Last updated:** 2026-10-15. **Status:** Foundation, learning correctness, dependency maintenance, and iOS smoke batches merged and pushed; implementation CI passed. Remaining implementation and human/device gates are tracked below.
+**Last updated:** 2026-10-15. **Status:** Foundation, learning correctness, recoverable draft missions, follow-up practice, audio preferences and initial accessibility batches merged/pushed with successful CI. iPhone/iPad simulator evidence is recorded. Remaining AI implementation and human/device gates are tracked below; the roadmap is not all complete.
 
 ## How to use this checklist
 
@@ -256,6 +256,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B08.4-A [AI, SIM]** Exclude inactive flashcard answers from accessibility focus, include active phrase/example in named flip controls and guard interrupted/stale swipe animations without grading a later card.
   - [ ] **B08.4-B [AI, SIM]** Complete activity-specific layouts, long/large text and evidence-based Progress next actions.
 - [ ] **B08.5 [AI, SIM]** Capture representative iPhone/Android and supported tablet layouts in both languages/themes, including large text, long content, reduced motion, and narrow screens.
+  - [x] **B08.5-A [AI, SIM]** Capture initial dark-theme iPhone and 13-inch iPad mission/audio/Study layouts, including Spanish mission keyboard, landscape and English audio controls; record exact coverage and limits.
+  - [ ] **B08.5-B [AI, SIM]** Expand to Android, smaller tablets/narrow views, both themes, long/large text and full activity coverage.
 - [ ] **B08.6 [AI, DEVICE, H-LEARNER]** Verify real screen-reader navigation, tap comfort, daylight readability, and accessibility preferences; obtain feedback from people who use relevant assistive features where possible.
 
 **Exit:** consistent implemented screens have screenshot evidence and accessible flows; visual attractiveness and practical usability have human feedback.
@@ -316,6 +318,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [ ] **B12.2 [AI, DEVICE]** Test a physical iPhone on each promised support boundary; cover an older/lower-performance supported device and a current device where feasible. Record gaps explicitly.
 - [ ] **B12.3 [AI, DEVICE]** Test physical Android hardware if Android ships, including a lower-performance supported device and relevant vendor battery restrictions. Emulator results are supplementary.
 - [ ] **B12.4 [AI, SIM, DEVICE]** Test tablets if advertised/supported by the release; app configuration currently enables iPad support. Either validate the supported layout or deliberately narrow support.
+  - [x] **B12.4-A [AI, SIM]** Establish dedicated iPad Pro 13-inch / iPadOS 26 simulator smoke: fresh onboarding, Study flip, draft mission typing/feedback/rotation/restart and English audio preview/Stop/save.
+  - [ ] **B12.4-B [AI, SIM, DEVICE]** Complete smaller-tablet, window/multitasking, large-text, theme, accessibility and signed-candidate/hardware validation; refine wide layouts.
 - [ ] **B12.5 [AI, DEVICE]** Verify audio/microphone routes, interruptions, permissions changed in OS settings, actual scheduled reminders, notification taps, and app background/termination behavior. Audit reminder settings against implemented behavior, including the rolling word-of-day window.
 - [ ] **B12.6 [AI, DEVICE]** Verify airplane-mode cold launch, downloaded content, poor network, low storage, file sharing, reinstall with backup, and upgrade without progress loss.
 - [ ] **B12.7 [AI, DEVICE]** Measure startup, scrolling, memory, battery/thermal behavior, and storage on hardware; set budgets from the baseline and pilot needs, then track regressions.
@@ -560,3 +564,9 @@ Implementation `4e1eb54` (audio preferences) was merged/pushed. [GitHub Actions 
 ### Navigation/flashcard accessibility and reduced motion — 2026-10-15
 
 B08.2-A / B08.4-A add readable named/selected tabs, inactive-face exclusion, explicit audio controls and system reduced-motion handling. [Report](docs/qa/2026-10-15-motion-accessibility/REPORT.md). Final local verification: 66 suites / 700 tests and static/content checks. Review identified mutable native swipe state being reset before animation completion; a failing right-swipe regression proved the wrong grade and the fix captures the grade synchronously. iOS verified active-face AX changes and OS Reduce Motion On/Off interaction. Real screen-reader/hardware, native swipe, wider layouts and full theme work remain open.
+
+Implementation `2da944e` (navigation/card accessibility and Reduce Motion) was merged/pushed. [GitHub Actions run 38808238773](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38808238773) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
+
+### Initial dedicated tablet simulation — 2026-10-15
+
+B12.4-A / B08.5-A add [iPad Pro 13-inch smoke evidence](docs/qa/2026-10-15-tablet-smoke/REPORT.md): fresh Spanish onboarding, Study flip, mission keyboard and correct feedback, landscape, exact feedback after process restart and English audio preview/Stop/save. The saved mission has one observation and revision 2; no duplicate or flashcard grade was introduced. Device Hub AX loss after rotation/restart was worked around using current screenshots. Smaller tablets/windowing, large text/themes, wide-layout polish, real accessibility, audio hardware and signed-candidate validation remain open. QA-only documentation; functional baseline remains 66 suites / 700 tests.
