@@ -249,8 +249,12 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 - [ ] **B08.1 [AI, H-PRODUCT]** Prepare concrete visual directions using a real mission and existing screens; choose a coherent direction with Colombian settings/people and appropriate asset rights.
 - [ ] **B08.2 [AI]** Define light/dark semantic tokens, typography, spacing, consistent icons, focus/pressed/disabled states, and accessible reusable controls. Replace tiny navigation labels and excessive competing accents.
+  - [x] **B08.2-A [AI, SIM]** Increase bottom-tab labels/targets and expose selected tab semantics; add explicit 48-point flashcard audio action and system Reduce Motion support for card/stack transitions with live preference handling.
+  - [ ] **B08.2-B [AI, SIM]** Complete theme/token/control consistency, focus/pressed states and large-text/platform layout coverage.
 - [ ] **B08.3 [AI, SIM]** Implement mission-led Home and clear access to practice, explore, saved content, and profile/settings; preserve existing features and navigation entry points.
 - [ ] **B08.4 [AI, SIM]** Give flashcards, listening, missions, and speaking distinct useful layouts. Present actual learned abilities and next actions in Progress.
+  - [x] **B08.4-A [AI, SIM]** Exclude inactive flashcard answers from accessibility focus, include active phrase/example in named flip controls and guard interrupted/stale swipe animations without grading a later card.
+  - [ ] **B08.4-B [AI, SIM]** Complete activity-specific layouts, long/large text and evidence-based Progress next actions.
 - [ ] **B08.5 [AI, SIM]** Capture representative iPhone/Android and supported tablet layouts in both languages/themes, including large text, long content, reduced motion, and narrow screens.
 - [ ] **B08.6 [AI, DEVICE, H-LEARNER]** Verify real screen-reader navigation, tap comfort, daylight readability, and accessibility preferences; obtain feedback from people who use relevant assistive features where possible.
 
@@ -550,3 +554,9 @@ Implementation `45b3341` (optional mission follow-up) was merged/pushed. [GitHub
 ### Saved playback speed and pronunciation preview — 2026-10-15
 
 B06.1-A adds saved speed support, explicit preview looping/Stop, generated-versus-device backend labels and protected asynchronous preference/seek playback. [Report](docs/qa/2026-10-15-audio-preferences/REPORT.md). Final local checks: 65 suites / 688 tests, static/content checks and unchanged generated inventory. Fresh review found no actionable issues. iOS verified Spanish save, generated preview/Stop and English reopen at 0.75× without learning-counter/event changes. Integrated listening/transcript controls, auto-speech, human audio and physical audio-route/intelligibility gates remain open.
+
+Implementation `4e1eb54` (audio preferences) was merged/pushed. [GitHub Actions run 38806930672](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38806930672) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
+
+### Navigation/flashcard accessibility and reduced motion — 2026-10-15
+
+B08.2-A / B08.4-A add readable named/selected tabs, inactive-face exclusion, explicit audio controls and system reduced-motion handling. [Report](docs/qa/2026-10-15-motion-accessibility/REPORT.md). Final local verification: 66 suites / 700 tests and static/content checks. Review identified mutable native swipe state being reset before animation completion; a failing right-swipe regression proved the wrong grade and the fix captures the grade synchronously. iOS verified active-face AX changes and OS Reduce Motion On/Off interaction. Real screen-reader/hardware, native swipe, wider layouts and full theme work remain open.

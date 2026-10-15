@@ -1,6 +1,10 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react-native';
+import { render, waitFor, fireEvent } from '@testing-library/react-native';
 
+let mockReducedMotion = false;
+jest.mock('../../src/hooks/useReducedMotion', () => ({
+  useReducedMotion: () => mockReducedMotion,
+}));
 const mockStackNavigator = jest.fn(({ children }) => <>{children}</>);
 const mockStackScreen = jest.fn(({ name, component: Component }: any) => {
   if (name === 'Root' && Component) return <Component />;
@@ -66,6 +70,7 @@ jest.mock('../../src/screens/OnboardingScreen', () => () => null);
 describe('RootNavigator transitions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockReducedMotion = false;
   });
 
   // The navigator defers rendering until the onboarding pref loads.
@@ -87,6 +92,40 @@ describe('RootNavigator transitions', () => {
       }),
       undefined,
     );
+  });
+
+  it('disables stack animation when reduced motion is requested', async () => {
+    mockReducedMotion = true;
+    await renderNavigator();
+    expect(mockStackNavigator).toHaveBeenCalledWith(
+      expect.objectContaining({ screenOptions: expect.objectContaining({ animation: 'none' }) }),
+      undefined,
+    );
+  });
+  it('exposes named selected tabs and retains navigation', async () => {
+    await renderNavigator();
+    const tabBar = mockTabNavigator.mock.calls[0][0].tabBar;
+    const navigate = jest.fn();
+    const ui = render(
+      tabBar({
+        state: {
+          index: 0,
+          routes: [
+            { key: 'home', name: 'Home' },
+            { key: 'study', name: 'Study' },
+            { key: 'progress', name: 'Progress' },
+            { key: 'settings', name: 'Settings' },
+          ],
+        },
+        descriptors: {},
+        navigation: { navigate },
+      }),
+    );
+    expect(ui.getByRole('tab', { name: 'HOME' })).toHaveAccessibilityState({ selected: true });
+    const settings = ui.getByRole('tab', { name: 'SETTINGS' });
+    expect(settings).toHaveAccessibilityState({ selected: false });
+    fireEvent.press(settings);
+    expect(navigate).toHaveBeenCalledWith('Settings');
   });
 
   it('uses Study as the only discovery/study bottom tab', async () => {

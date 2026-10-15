@@ -229,7 +229,10 @@ describe('StudyScreen landing', () => {
     );
     fireEvent.press(await screen.findByText('celular'));
 
-    await waitFor(() => expect(screen.getByText('cell phone')).toBeTruthy());
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: /Voltear tarjeta: celular/ })).toBeTruthy(),
+    );
+    expect(screen.queryByText('cell phone')).toBeNull();
     expect(screen.setActiveDeckId).toHaveBeenCalledWith('deck-technology');
     expect(mockSaveLastStudySession).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -351,7 +354,7 @@ describe('StudyScreen session', () => {
 
     await openCommunicationSession(screen);
 
-    expect(screen.getByLabelText('Voltear tarjeta')).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Voltear tarjeta: hola/ })).toBeTruthy();
   });
 
   it('grading buttons are visible in the grade bar', async () => {
@@ -370,7 +373,8 @@ describe('StudyScreen session', () => {
     await openCommunicationSession(screen);
 
     expect(screen.getByText('hola')).toBeTruthy();
-    expect(screen.getByText('hello')).toBeTruthy();
+    expect(screen.getByText('hello', { includeHiddenElements: true })).toBeTruthy();
+    expect(screen.queryByText('hello')).toBeNull();
   });
 
   it('pressing "Again" calls recordAnswer with quality 1', async () => {

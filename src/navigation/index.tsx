@@ -23,6 +23,7 @@ import AddCardScreen from '../screens/AddCardScreen';
 import ExploreScreen from '../screens/ExploreScreen';
 import DifficultWordsScreen from '../screens/DifficultWordsScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 import { colors } from '../styles/theme';
 import { TranslationKey } from '../i18n/translations';
 import { useLanguage } from '../context/LanguageContext';
@@ -58,6 +59,9 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
           return (
             <Pressable
               key={route.key}
+              accessibilityRole="tab"
+              accessibilityLabel={t(tab.labelKey)}
+              accessibilityState={{ selected: focused }}
               style={[styles.tabItem, focused && styles.tabItemActive]}
               onPress={() => navigation.navigate(route.name)}
               android_ripple={null}
@@ -97,6 +101,7 @@ const stackHeaderOpts = {
 
 export default function RootNavigator() {
   const { t } = useLanguage();
+  const reducedMotion = useReducedMotion();
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -113,7 +118,7 @@ export default function RootNavigator() {
 
   return (
     <Stack.Navigator
-      screenOptions={smoothStackTransition}
+      screenOptions={reducedMotion ? { animation: 'none' } : smoothStackTransition}
       initialRouteName={onboarded ? 'Root' : 'Onboarding'}
     >
       <Stack.Screen
@@ -215,10 +220,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255,218,0,0.4)',
     padding: 4,
-    height: 62,
+    minHeight: 64,
   },
   tabItem: {
     flex: 1,
+    minHeight: 48,
+    paddingVertical: 8,
+    paddingHorizontal: 2,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 2,
@@ -231,7 +239,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   tabLabel: {
-    fontSize: 9,
+    fontSize: 12,
     fontWeight: '600',
     color: colors.textSecondary,
     letterSpacing: 0.5,

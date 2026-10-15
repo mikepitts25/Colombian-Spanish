@@ -1,5 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
 import { Animated, Easing, PanResponder, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 import { colors } from '../styles/theme';
 import { CardRegister, FlashCard } from '../types';
 import { splitExampleText } from '../utils/exampleText';
@@ -21,6 +22,7 @@ const REGISTER_COLORS: Record<CardRegister, { bg: string; border: string; text: 
 
 export default function Flashcard({ card, onGrade }: Props) {
   const { t } = useLanguage();
+  const reducedMotion = useReducedMotion();
   const [isFront, setIsFront] = useState(true);
   const exampleText = splitExampleText(card.example);
   const register = getCardRegister(card);
@@ -57,62 +59,114 @@ export default function Flashcard({ card, onGrade }: Props) {
     void speakCard(card);
   }
 
-  function flip(to?: 'front' | 'back') {
-    const target = to ?? (isFront ? 'back' : 'front');
-    Animated.timing(rot, {
-      toValue: target === 'front' ? 0 : 180,
+  const intendedFront = useRef(true),
+    version = useRef(0),
+    gestureBusy = useRef(false);
+  const animation = useRef<Animated.CompositeAnimation | null>(null);
+  const latest = useRef({ onGrade, reducedMotion, cardId: card.id });
+  latest.current = { onGrade, reducedMotion, cardId: card.id };
+  const cancelMotion = useCallback(() => {
+    version.current++;
+    animation.current?.stop();
+    animation.current = null;
+    rot.stopAnimation();
+    translateX.stopAnimation();
+    translateX.setValue(0);
+    gestureBusy.current = false;
+  }, [rot, translateX]);
+  function flip(to: 'front' | 'back') {
+    cancelMotion();
+    intendedFront.current = to === 'front';
+    const target = to === 'front' ? 0 : 180;
+    if (reducedMotion) {
+      rot.setValue(target);
+      setIsFront(to === 'front');
+      return;
+    }
+    const request = version.current;
+    animation.current = Animated.timing(rot, {
+      toValue: target,
       duration: 280,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
-    }).start(() => setIsFront(target === 'front'));
+    });
+    animation.current.start(({ finished }) => {
+      if (finished && version.current === request) setIsFront(to === 'front');
+    });
   }
-
-  const prevId = useRef(card.id);
   useEffect(() => {
-    if (prevId.current !== card.id) {
-      prevId.current = card.id;
-      rot.setValue(0);
-      setIsFront(true);
-      translateX.setValue(0);
+    cancelMotion();
+    intendedFront.current = true;
+    rot.setValue(0);
+    setIsFront(true);
+  }, [card.id, cancelMotion, rot]);
+  useEffect(() => {
+    if (reducedMotion) {
+      cancelMotion();
+      rot.setValue(intendedFront.current ? 0 : 180);
+      setIsFront(intendedFront.current);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [card.id]);
+  }, [reducedMotion, cancelMotion, rot]);
+  useEffect(() => () => cancelMotion(), [cancelMotion]);
 
-  const SWIPE_THRESHOLD = 80;
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: (_e, gs) =>
-        Math.abs(gs.dx) > 8 && Math.abs(gs.dx) > Math.abs(gs.dy),
-      onPanResponderMove: Animated.event([null, { dx: translateX }], { useNativeDriver: false }),
-      onPanResponderRelease: (_e, gs) => {
-        if (gs.dx > SWIPE_THRESHOLD) {
-          Animated.timing(translateX, {
-            toValue: 420,
+  const panResponder = useMemo(
+    () =>
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (_e, gs) =>
+          !gestureBusy.current && Math.abs(gs.dx) > 8 && Math.abs(gs.dx) > Math.abs(gs.dy),
+        onPanResponderMove: (_e, gs) => {
+          if (!gestureBusy.current) translateX.setValue(latest.current.reducedMotion ? 0 : gs.dx);
+        },
+        onPanResponderTerminate: () => {
+          cancelMotion();
+          rot.setValue(intendedFront.current ? 0 : 180);
+          setIsFront(intendedFront.current);
+        },
+        onPanResponderRelease: (_e, gs) => {
+          if (gestureBusy.current) return;
+          if (Math.abs(gs.dx) <= 80) {
+            if (latest.current.reducedMotion) translateX.setValue(0);
+            else {
+              animation.current = Animated.spring(translateX, {
+                toValue: 0,
+                useNativeDriver: true,
+                bounciness: 8,
+              });
+              animation.current.start();
+            }
+            return;
+          }
+          cancelMotion();
+          gestureBusy.current = true;
+          const request = version.current,
+            id = latest.current.cardId,
+            quality = gs.dx > 0 ? 4 : 2;
+          const grade = () => {
+            if (request !== version.current || id !== latest.current.cardId) return;
+            gestureBusy.current = false;
+            translateX.setValue(0);
+            intendedFront.current = true;
+            rot.setValue(0);
+            setIsFront(true);
+            latest.current.onGrade(quality);
+          };
+          if (latest.current.reducedMotion) {
+            grade();
+            return;
+          }
+          animation.current = Animated.timing(translateX, {
+            toValue: gs.dx > 0 ? 420 : -420,
             duration: 170,
             easing: Easing.out(Easing.quad),
             useNativeDriver: true,
-          }).start(() => {
-            translateX.setValue(0);
-            if (!isFront) flip('front');
-            onGrade(4);
           });
-        } else if (gs.dx < -SWIPE_THRESHOLD) {
-          Animated.timing(translateX, {
-            toValue: -420,
-            duration: 170,
-            easing: Easing.out(Easing.quad),
-            useNativeDriver: true,
-          }).start(() => {
-            translateX.setValue(0);
-            if (!isFront) flip('front');
-            onGrade(2);
+          animation.current.start(({ finished }) => {
+            if (finished) grade();
           });
-        } else {
-          Animated.spring(translateX, { toValue: 0, useNativeDriver: true, bounciness: 8 }).start();
-        }
-      },
-    }),
-  ).current;
+        },
+      }),
+    [cancelMotion, rot, translateX],
+  );
 
   return (
     <Animated.View
@@ -127,24 +181,34 @@ export default function Flashcard({ card, onGrade }: Props) {
           { transform: [{ perspective: 1200 }, { rotateY: frontDeg }] },
         ]}
         pointerEvents={isFront ? 'auto' : 'none'}
+        accessibilityElementsHidden={!isFront}
+        importantForAccessibility={isFront ? 'auto' : 'no-hide-descendants'}
       >
-        <Pressable
-          accessibilityLabel={t('common.flipCard')}
-          style={styles.face}
-          onPress={() => flip('back')}
-          onLongPress={say}
-        >
-          {registerBadge}
-          <Text style={styles.frontWord}>{card.front}</Text>
-          {exampleText?.spanish ? (
-            <Text testID="flashcard-front-example" style={styles.example}>
-              "{exampleText.spanish}"
-            </Text>
-          ) : null}
-          <Pressable style={styles.speakerBtn} onPress={say}>
+        <View style={styles.face}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`${t('common.flipCard')}: ${card.front}. ${exampleText?.spanish ?? ''} ${register ? t(REGISTER_LABEL_KEYS[register]) : ''}`}
+            style={styles.flipTarget}
+            onPress={() => flip('back')}
+            onLongPress={say}
+          >
+            {registerBadge}
+            <Text style={styles.frontWord}>{card.front}</Text>
+            {exampleText?.spanish ? (
+              <Text testID="flashcard-front-example" style={styles.example}>
+                "{exampleText.spanish}"
+              </Text>
+            ) : null}
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`${t('common.listen')}: ${card.front}`}
+            style={styles.speakerBtn}
+            onPress={say}
+          >
             <Text style={styles.speakerIcon}>🔊</Text>
           </Pressable>
-        </Pressable>
+        </View>
       </Animated.View>
 
       {/* BACK */}
@@ -155,8 +219,15 @@ export default function Flashcard({ card, onGrade }: Props) {
           { transform: [{ perspective: 1200 }, { rotateY: backDeg }] },
         ]}
         pointerEvents={isFront ? 'none' : 'auto'}
+        accessibilityElementsHidden={isFront}
+        importantForAccessibility={isFront ? 'no-hide-descendants' : 'auto'}
       >
-        <Pressable style={styles.face} onPress={() => flip('front')}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`${t('common.flipCard')}: ${card.back}. ${exampleText?.english ?? ''}`}
+          style={styles.face}
+          onPress={() => flip('front')}
+        >
           {registerBadge}
           <Text style={styles.backWord}>{card.back}</Text>
           {exampleText?.english ? (
@@ -198,6 +269,7 @@ const styles = StyleSheet.create({
     borderTopColor: colors.accentBlue,
   },
 
+  flipTarget: { flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center', gap: 12 },
   face: {
     flex: 1,
     width: '100%',
@@ -241,9 +313,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 16,
     right: 16,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: 'rgba(255,218,0,0.1)',
     borderWidth: 1,
     borderColor: 'rgba(255,218,0,0.36)',
