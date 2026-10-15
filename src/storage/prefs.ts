@@ -1,4 +1,4 @@
-import AsyncStorage from './durableStorage';
+import AsyncStorage, { StorageAccess } from './durableStorage';
 
 const KEY = 'SRS_PREFS_V1';
 
@@ -34,8 +34,8 @@ function normalizeUiLanguage(value: unknown): UiLanguage {
   return value === 'en' || value === 'es' ? value : DEFAULTS.uiLanguage;
 }
 
-export async function getPrefs(): Promise<Prefs> {
-  const raw = await AsyncStorage.getItem(KEY);
+export async function getPrefs(access: StorageAccess = AsyncStorage): Promise<Prefs> {
+  const raw = await access.getItem(KEY);
   if (!raw) return DEFAULTS;
   try {
     const parsed = JSON.parse(raw) as Partial<Prefs>;

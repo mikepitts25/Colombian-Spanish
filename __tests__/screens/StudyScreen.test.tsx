@@ -373,7 +373,11 @@ describe('StudyScreen session', () => {
       fireEvent.press(screen.getByText('Otra vez'));
     });
 
-    expect(screen.recordAnswer).toHaveBeenCalledWith('c1', 1);
+    expect(screen.recordAnswer).toHaveBeenCalledWith(
+      'c1',
+      1,
+      expect.objectContaining({ attemptId: expect.any(String), sessionId: expect.any(String) }),
+    );
   });
 
   it('pressing "Good" calls recordAnswer with quality 4', async () => {
@@ -384,7 +388,11 @@ describe('StudyScreen session', () => {
       fireEvent.press(screen.getByText('Bien'));
     });
 
-    expect(screen.recordAnswer).toHaveBeenCalledWith('c1', 4);
+    expect(screen.recordAnswer).toHaveBeenCalledWith(
+      'c1',
+      4,
+      expect.objectContaining({ attemptId: expect.any(String), sessionId: expect.any(String) }),
+    );
   });
 
   it('pressing "Easy" calls recordAnswer with quality 5', async () => {
@@ -395,10 +403,14 @@ describe('StudyScreen session', () => {
       fireEvent.press(screen.getByText('Fácil'));
     });
 
-    expect(screen.recordAnswer).toHaveBeenCalledWith('c1', 5);
+    expect(screen.recordAnswer).toHaveBeenCalledWith(
+      'c1',
+      5,
+      expect.objectContaining({ attemptId: expect.any(String), sessionId: expect.any(String) }),
+    );
   });
 
-  it('calls incrementDailyProgress and saves the next card for resume', async () => {
+  it('passes the next card into the grade transaction without a second counter write', async () => {
     const screen = renderStudyScreen();
 
     await openCommunicationSession(screen);
@@ -406,11 +418,12 @@ describe('StudyScreen session', () => {
       fireEvent.press(screen.getByText('Bien'));
     });
 
-    expect(mockIncrementDailyProgress).toHaveBeenCalledWith(1);
-    expect(mockSaveLastStudySession).toHaveBeenLastCalledWith({
-      deckId: 'deck-greetings',
-      cardId: 'c2',
-    });
+    expect(mockIncrementDailyProgress).not.toHaveBeenCalled();
+    expect(screen.recordAnswer).toHaveBeenCalledWith(
+      'c1',
+      4,
+      expect.objectContaining({ nextSession: { deckId: 'deck-greetings', cardId: 'c2' } }),
+    );
   });
 
   it('advances to the next card after grading', async () => {
@@ -466,10 +479,11 @@ describe('StudyScreen queue stability', () => {
     });
     await waitFor(() => expect(screen.getByText('adios')).toBeTruthy());
     expect(screen.getByText('2 restantes')).toBeTruthy();
-    expect(mockSaveLastStudySession).toHaveBeenLastCalledWith({
-      deckId: GREETINGS_DECK.id,
-      cardId: 'c2',
-    });
+    expect(context.recordAnswer).toHaveBeenCalledWith(
+      'c1',
+      4,
+      expect.objectContaining({ nextSession: { deckId: GREETINGS_DECK.id, cardId: 'c2' } }),
+    );
   });
 
   it('submits only once while a grade is still saving', async () => {
@@ -489,7 +503,7 @@ describe('StudyScreen queue stability', () => {
       finish();
     });
     await waitFor(() => expect(screen.getByText('adios')).toBeTruthy());
-    expect(mockIncrementDailyProgress).toHaveBeenCalledTimes(1);
+    expect(mockIncrementDailyProgress).not.toHaveBeenCalled();
   });
 
   it('does not save the just-graded card as resume when the batch ends', async () => {
@@ -529,4 +543,43 @@ it('opens the requested deck session directly from a Home handoff', async () => 
   expect(await screen.findByText('hola')).toBeTruthy();
   expect(screen.getByText('3 restantes')).toBeTruthy();
   expect(mockSetParams).toHaveBeenCalledWith({ autoStartDeckId: undefined });
+});
+
+it('retries a failed grade with the same attempt identity and original quality', async () => {
+  const recordAnswer = jest
+    .fn()
+    .mockRejectedValueOnce(new Error('disk full'))
+    .mockResolvedValue(undefined);
+  const screen = renderStudyScreen({ recordAnswer });
+  await openCommunicationSession(screen);
+  await act(async () => fireEvent.press(screen.getByText('Bien')));
+  const retry = await screen.findByText('Intentar guardar de nuevo');
+  expect(screen.getByText('hola')).toBeTruthy();
+  const original = recordAnswer.mock.calls[0];
+  expect(original[2]).toEqual(
+    expect.objectContaining({ attemptId: expect.any(String), sessionId: expect.any(String) }),
+  );
+  await act(async () => fireEvent.press(retry));
+  expect(recordAnswer.mock.calls[1]).toEqual(original);
+  expect(mockIncrementDailyProgress).not.toHaveBeenCalled();
+  expect(await screen.findByText('adios')).toBeTruthy();
+});
+
+it('keeps the current session and region while a grade is unresolved', async () => {
+  let finish!: () => void;
+  const recordAnswer = jest.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  const screen = renderStudyScreen({ recordAnswer });
+  await openCommunicationSession(screen);
+  fireEvent.press(screen.getByText('Bien'));
+  fireEvent.press(screen.getByText('Paisa'));
+  fireEvent.press(screen.getByText('Volver'));
+  expect(screen.getByText('hola')).toBeTruthy();
+  await act(async () => finish());
+  expect(await screen.findByText('adios')).toBeTruthy();
+  expect(recordAnswer).toHaveBeenCalledTimes(1);
 });

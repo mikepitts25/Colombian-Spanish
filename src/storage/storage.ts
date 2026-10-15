@@ -1,4 +1,4 @@
-import AsyncStorage from './durableStorage';
+import AsyncStorage, { StorageAccess } from './durableStorage';
 import { Deck, FlashCard } from '../types';
 
 const KEY = 'SRS_DECKS_V3';
@@ -12,8 +12,8 @@ export interface LastStudySession {
   updatedAt: number;
 }
 
-export async function loadDecks(): Promise<Deck[]> {
-  const raw = await AsyncStorage.getItem(KEY);
+export async function loadDecks(access: StorageAccess = AsyncStorage): Promise<Deck[]> {
+  const raw = await access.getItem(KEY);
   if (!raw) return [];
   try {
     return JSON.parse(raw);
@@ -22,8 +22,8 @@ export async function loadDecks(): Promise<Deck[]> {
   }
 }
 
-export async function saveDecks(decks: Deck[]) {
-  await AsyncStorage.setItem(KEY, JSON.stringify(decks));
+export async function saveDecks(decks: Deck[], access: StorageAccess = AsyncStorage) {
+  await access.setItem(KEY, JSON.stringify(decks));
 }
 
 export async function getLastStudySession(): Promise<LastStudySession | undefined> {
@@ -40,12 +40,13 @@ export async function getLastStudySession(): Promise<LastStudySession | undefine
 
 export async function saveLastStudySession(
   session: Omit<LastStudySession, 'updatedAt'>,
+  access: StorageAccess = AsyncStorage,
 ): Promise<LastStudySession> {
   const next = {
     ...session,
     updatedAt: Date.now(),
   };
-  await AsyncStorage.setItem(LAST_STUDY_SESSION_KEY, JSON.stringify(next));
+  await access.setItem(LAST_STUDY_SESSION_KEY, JSON.stringify(next));
   return next;
 }
 
@@ -103,12 +104,14 @@ function todayISO(): string {
   return d.toISOString();
 }
 
-export async function getDailyProgress(): Promise<DailyProgress> {
-  const raw = await AsyncStorage.getItem(DAILY_KEY);
+export async function getDailyProgress(
+  access: StorageAccess = AsyncStorage,
+): Promise<DailyProgress> {
+  const raw = await access.getItem(DAILY_KEY);
   const today = todayISO();
   if (!raw) {
     const fresh: DailyProgress = { date: today, count: 0, target: 10, newCount: 0 };
-    await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(fresh));
+    await access.setItem(DAILY_KEY, JSON.stringify(fresh));
     return fresh;
   }
   try {
@@ -121,7 +124,7 @@ export async function getDailyProgress(): Promise<DailyProgress> {
         target: parsed.target ?? 10,
         newCount: 0,
       };
-      await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(fresh));
+      await access.setItem(DAILY_KEY, JSON.stringify(fresh));
       return fresh;
     }
     if (!parsed.target) parsed.target = 10;
@@ -129,22 +132,28 @@ export async function getDailyProgress(): Promise<DailyProgress> {
     return parsed;
   } catch {
     const fresh: DailyProgress = { date: today, count: 0, target: 10, newCount: 0 };
-    await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(fresh));
+    await access.setItem(DAILY_KEY, JSON.stringify(fresh));
     return fresh;
   }
 }
 
-export async function incrementDailyProgress(delta: number = 1): Promise<DailyProgress> {
-  const current = await getDailyProgress();
+export async function incrementDailyProgress(
+  delta: number = 1,
+  access: StorageAccess = AsyncStorage,
+): Promise<DailyProgress> {
+  const current = await getDailyProgress(access);
   const next: DailyProgress = { ...current, count: current.count + delta };
-  await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(next));
+  await access.setItem(DAILY_KEY, JSON.stringify(next));
   return next;
 }
 
-export async function incrementDailyNewCount(delta: number = 1): Promise<DailyProgress> {
-  const current = await getDailyProgress();
+export async function incrementDailyNewCount(
+  delta: number = 1,
+  access: StorageAccess = AsyncStorage,
+): Promise<DailyProgress> {
+  const current = await getDailyProgress(access);
   const next: DailyProgress = { ...current, newCount: (current.newCount ?? 0) + delta };
-  await AsyncStorage.setItem(DAILY_KEY, JSON.stringify(next));
+  await access.setItem(DAILY_KEY, JSON.stringify(next));
   return next;
 }
 
@@ -175,9 +184,10 @@ function daysSince(lastStudyDate: string | undefined): number | undefined {
   return Math.round((today.getTime() - last.getTime()) / (24 * 60 * 60 * 1000));
 }
 
-async function readStoredStreak(): Promise<StoredStreak | undefined> {
-  const raw =
-    (await AsyncStorage.getItem(STREAK_KEY)) ?? (await AsyncStorage.getItem(LEGACY_STREAK_KEY));
+async function readStoredStreak(
+  access: StorageAccess = AsyncStorage,
+): Promise<StoredStreak | undefined> {
+  const raw = (await access.getItem(STREAK_KEY)) ?? (await access.getItem(LEGACY_STREAK_KEY));
   if (!raw) return undefined;
   try {
     return JSON.parse(raw) as StoredStreak;
@@ -206,8 +216,8 @@ export async function getStudyStreak(): Promise<number> {
   return (await getStreakState()).streak;
 }
 
-export async function recordStudySession(): Promise<number> {
-  const parsed = (await readStoredStreak()) ?? {};
+export async function recordStudySession(access: StorageAccess = AsyncStorage): Promise<number> {
+  const parsed = (await readStoredStreak(access)) ?? {};
   const today = todayISO();
   const prevStreak = parsed.streak || 0;
   let freezes = parsed.freezes ?? 0;
@@ -230,7 +240,7 @@ export async function recordStudySession(): Promise<number> {
     freezes = Math.min(MAX_FREEZES, freezes + 1);
   }
 
-  await AsyncStorage.setItem(
+  await access.setItem(
     STREAK_KEY,
     JSON.stringify({ streak: nextStreak, lastStudyDate: today, freezes }),
   );
@@ -252,8 +262,8 @@ export interface SeenWord {
 const SEEN_WORDS_KEY = 'SRS_SEEN_WORDS_V1';
 const QUIZ_HISTORY_KEY = 'SRS_QUIZ_HISTORY_V1';
 
-export async function getSeenWords(): Promise<SeenWord[]> {
-  const raw = await AsyncStorage.getItem(SEEN_WORDS_KEY);
+export async function getSeenWords(access: StorageAccess = AsyncStorage): Promise<SeenWord[]> {
+  const raw = await access.getItem(SEEN_WORDS_KEY);
   if (!raw) return [];
   try {
     return JSON.parse(raw);
@@ -262,18 +272,21 @@ export async function getSeenWords(): Promise<SeenWord[]> {
   }
 }
 
-export async function saveSeenWords(words: SeenWord[]) {
-  await AsyncStorage.setItem(SEEN_WORDS_KEY, JSON.stringify(words));
+export async function saveSeenWords(words: SeenWord[], access: StorageAccess = AsyncStorage) {
+  await access.setItem(SEEN_WORDS_KEY, JSON.stringify(words));
 }
 
-export async function recordSeenWord(params: {
-  cardId: string;
-  deckId: string;
-  front: string;
-  back: string;
-  correct: boolean;
-}): Promise<SeenWord[]> {
-  const words = await getSeenWords();
+export async function recordSeenWord(
+  params: {
+    cardId: string;
+    deckId: string;
+    front: string;
+    back: string;
+    correct: boolean;
+  },
+  access: StorageAccess = AsyncStorage,
+): Promise<SeenWord[]> {
+  const words = await getSeenWords(access);
   const now = Date.now();
   const existingIndex = words.findIndex((word) => word.cardId === params.cardId);
   const existing = existingIndex >= 0 ? words[existingIndex] : undefined;
@@ -294,7 +307,7 @@ export async function recordSeenWord(params: {
       ? words.map((word, index) => (index === existingIndex ? nextWord : word))
       : [...words, nextWord];
 
-  await saveSeenWords(nextWords);
+  await saveSeenWords(nextWords, access);
   return nextWords;
 }
 

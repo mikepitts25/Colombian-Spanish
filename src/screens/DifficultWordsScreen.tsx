@@ -1,11 +1,12 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../styles/theme';
 import Flashcard from '../components/Flashcard';
 import { useDeck } from '../hooks/useDeck';
 import { selectDifficultCards } from '../utils/srs';
-import { incrementDailyProgress } from '../storage/storage';
+import { createLearningSessionId } from '../storage/learningEvents';
+import { AnswerAttempt } from '../storage/flashcardAnswer';
 import { FlashCard } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -54,8 +55,13 @@ export default function DifficultWordsScreen() {
   const { ready, decks, recordAnswer } = useDeck();
   const { t } = useLanguage();
   const [idx, setIdx] = useState(0);
+  const [queueIds, setQueueIds] = useState<string[] | null>(null);
+  const grading = useRef(false);
+  const pendingGrade = useRef<AnswerAttempt | undefined>(undefined);
+  const sessionId = useRef(createLearningSessionId());
+  const [gradeError, setGradeError] = useState(false);
 
-  const difficultRows = useMemo<DifficultRow[]>(() => {
+  const eligibleRows = useMemo<DifficultRow[]>(() => {
     const rows = (decks || []).flatMap((deck) =>
       (deck.cards || []).map((card) => ({
         deckId: deck.id,
@@ -71,14 +77,47 @@ export default function DifficultWordsScreen() {
       .sort((a, b) => selectedIds.get(a.card.id)! - selectedIds.get(b.card.id)!);
   }, [decks]);
 
+  useEffect(() => {
+    if (ready && queueIds === null) setQueueIds(eligibleRows.map((row) => row.card.id));
+  }, [ready, queueIds, eligibleRows]);
+  const byId = new Map(
+    (decks || []).flatMap((deck) =>
+      deck.cards.map((card) => [card.id, { card, deckId: deck.id, deckName: deck.name }] as const),
+    ),
+  );
+  const difficultRows =
+    queueIds === null
+      ? eligibleRows
+      : queueIds.flatMap((id) => {
+          const row = byId.get(id);
+          return row ? [row] : [];
+        });
   const current = difficultRows[idx] ?? null;
   const count = difficultRows.length;
 
-  async function grade(q: 1 | 2 | 3 | 4 | 5) {
-    if (!current) return;
-    await recordAnswer(current.card.id, q);
-    await incrementDailyProgress(1);
-    setIdx((prev) => Math.min(prev + 1, Math.max(0, count - 1)));
+  async function grade(q: 0 | 1 | 2 | 3 | 4 | 5) {
+    if (!current || grading.current) return;
+    grading.current = true;
+    const attempt = pendingGrade.current ?? {
+      attemptId: createLearningSessionId(),
+      sessionId: sessionId.current,
+      cardId: current.card.id,
+      quality: q,
+    };
+    pendingGrade.current = attempt;
+    try {
+      await recordAnswer(attempt.cardId, attempt.quality, {
+        attemptId: attempt.attemptId,
+        sessionId: attempt.sessionId,
+      });
+      pendingGrade.current = undefined;
+      setGradeError(false);
+      setIdx((value) => value + 1);
+    } catch {
+      setGradeError(true);
+    } finally {
+      grading.current = false;
+    }
   }
 
   if (!ready) {
@@ -131,12 +170,26 @@ export default function DifficultWordsScreen() {
         <Flashcard key={current.card.id} card={current.card} onGrade={grade} />
       </View>
 
+      {gradeError && (
+        <View style={{ padding: 12, gap: 8 }}>
+          <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
+            {t('practice.saveError')}
+          </Text>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => grade(pendingGrade.current?.quality ?? 1)}
+          >
+            <Text style={{ color: colors.brand }}>{t('practice.retrySave')}</Text>
+          </Pressable>
+        </View>
+      )}
       <View style={styles.gradeBar}>
         <Text style={styles.gradeLabel}>{t('difficult.reviewPrompt')}</Text>
         <View style={styles.gradeButtons}>
           {GRADES.map((g) => (
             <Pressable
               key={g.labelKey}
+              disabled={gradeError}
               style={[styles.gradeBtn, { backgroundColor: g.bg, borderColor: g.border }]}
               onPress={() => grade(g.q)}
             >

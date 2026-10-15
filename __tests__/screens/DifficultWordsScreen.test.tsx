@@ -65,7 +65,7 @@ describe('DifficultWordsScreen', () => {
     expect(queryByText('hola')).toBeNull();
   });
 
-  it('grades the current difficult card and increments daily progress', async () => {
+  it('delegates grading and counting to one provider transaction', async () => {
     const recordAnswer = jest.fn().mockResolvedValue(undefined);
     mockUseDeck.mockReturnValue({
       ready: true,
@@ -80,7 +80,50 @@ describe('DifficultWordsScreen', () => {
       fireEvent.press(getByText('Bien'));
     });
 
-    expect(recordAnswer).toHaveBeenCalledWith('parce', 4);
-    expect(mockIncrementDailyProgress).toHaveBeenCalledWith(1);
+    expect(recordAnswer).toHaveBeenCalledWith(
+      'parce',
+      4,
+      expect.objectContaining({ attemptId: expect.any(String), sessionId: expect.any(String) }),
+    );
+    expect(mockIncrementDailyProgress).not.toHaveBeenCalled();
   });
+});
+
+it('keeps one stable attempt through a failed save and retry', async () => {
+  const recordAnswer = jest
+    .fn()
+    .mockRejectedValueOnce(new Error('disk full'))
+    .mockResolvedValue(undefined);
+  mockUseDeck.mockReturnValue({ ready: true, decks: [DECK], recordAnswer });
+  const screen = render(<DifficultWordsScreen />);
+  await act(async () => fireEvent.press(await screen.findByText('Bien')));
+  const retry = await screen.findByText('Intentar guardar de nuevo');
+  await act(async () => fireEvent.press(retry));
+  expect(recordAnswer.mock.calls[1]).toEqual(recordAnswer.mock.calls[0]);
+  expect(mockIncrementDailyProgress).not.toHaveBeenCalled();
+});
+
+it('does not skip the next difficult card when grading changes eligibility', async () => {
+  const second = makeCard('second', { ease: 2.0, reps: 1 });
+  const context = {
+    ready: true,
+    decks: [{ ...DECK, cards: [{ ...DECK.cards[0], due: NOW - 1000 }, second] }],
+    recordAnswer: jest.fn(),
+  };
+  context.recordAnswer.mockImplementation(async (id: string) => {
+    context.decks = [
+      {
+        ...DECK,
+        cards: context.decks[0].cards.map((card) =>
+          card.id === id
+            ? { ...card, ease: 2.8, reps: 10, interval: 30, due: NOW + 86400000 }
+            : card,
+        ),
+      },
+    ];
+  });
+  mockUseDeck.mockImplementation(() => context);
+  const screen = render(<DifficultWordsScreen />);
+  await act(async () => fireEvent.press(await screen.findByText('Bien')));
+  expect(await screen.findByText('second')).toBeTruthy();
 });

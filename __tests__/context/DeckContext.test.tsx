@@ -601,3 +601,26 @@ describe('resetDeckProgress', () => {
     expect(card.ease).toBe(2.5);
   });
 });
+
+it('keeps provider state unchanged when the grade journal cannot be saved', async () => {
+  const card = makeCard('write-failure');
+  await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+  let ctx: ReturnType<typeof useDeckContext> | undefined;
+  renderWithProvider(
+    <Consumer
+      onReady={(value) => {
+        ctx = value;
+      }}
+    />,
+  );
+  await waitFor(() => expect(ctx?.ready).toBe(true));
+  const prior = ctx!.decks;
+  const write = AsyncStorage.setItem as jest.Mock;
+  write.mockRejectedValueOnce(new Error('disk full'));
+  await act(async () => {
+    await expect(
+      ctx!.recordAnswer('write-failure', 4, { attemptId: 'failed-attempt', sessionId: 'session' }),
+    ).rejects.toThrow('disk full');
+  });
+  expect(ctx!.decks).toEqual(prior);
+});

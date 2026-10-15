@@ -1,4 +1,5 @@
-import AsyncStorage from './durableStorage';
+import AsyncStorage, { StorageAccess } from './durableStorage';
+import type { CardQuality } from '../types';
 
 export type LearningModality = 'recognition' | 'recall' | 'listening' | 'speaking';
 export interface LearningEvent {
@@ -12,6 +13,7 @@ export interface LearningEvent {
   outcome: 'correct' | 'incorrect';
   evidence: 'self-rated' | 'answer-checked';
   occurredAt: number;
+  quality?: CardQuality; // Self-rating only; absent from older/assessed observations
   hintsUsed: number | null;
   durationMs: number | null;
 }
@@ -40,6 +42,7 @@ function normalizeEvent(value: unknown): LearningEvent {
     !['correct', 'incorrect'].includes(event.outcome) ||
     !['self-rated', 'answer-checked'].includes(event.evidence) ||
     !nonnegative(event.occurredAt) ||
+    (event.quality !== undefined && ![0, 1, 2, 3, 4, 5].includes(event.quality)) ||
     (event.hintsUsed !== null &&
       (!nonnegative(event.hintsUsed) || !Number.isInteger(event.hintsUsed))) ||
     (event.durationMs !== null && !nonnegative(event.durationMs))
@@ -57,6 +60,7 @@ function normalizeEvent(value: unknown): LearningEvent {
     outcome: event.outcome,
     evidence: event.evidence,
     occurredAt: event.occurredAt,
+    ...(event.quality === undefined ? {} : { quality: event.quality }),
     hintsUsed: event.hintsUsed,
     durationMs: event.durationMs,
   };
@@ -70,8 +74,10 @@ export function validateLearningEvents(value: unknown): LearningEvent[] {
   return events;
 }
 
-async function readLearningEvents(): Promise<LearningEvent[]> {
-  const raw = await AsyncStorage.getItem(KEY);
+export async function readLearningEvents(
+  access: StorageAccess = AsyncStorage,
+): Promise<LearningEvent[]> {
+  const raw = await access.getItem(KEY);
   if (!raw) return [];
   const stored = JSON.parse(raw);
   if (stored?.schemaVersion !== 1) throw new Error('Unsupported learning history version');

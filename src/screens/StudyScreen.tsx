@@ -8,7 +8,6 @@ import Flashcard from '../components/Flashcard';
 import {
   getDailyProgress,
   getLastStudySession,
-  incrementDailyProgress,
   LastStudySession,
   saveLastStudySession,
 } from '../storage/storage';
@@ -29,6 +28,8 @@ import {
 } from '../utils/deckCategories';
 import type { CategoryKey } from '../utils/deckCategories';
 import type { FlashCard } from '../types';
+import { createLearningSessionId } from '../storage/learningEvents';
+import { AnswerAttempt, DailyNewCardLimitError } from '../storage/flashcardAnswer';
 import { speakCard } from '../services/tts';
 import { formatIntervalShort, previewInterval } from '../utils/srs';
 
@@ -82,6 +83,10 @@ export default function StudyScreen() {
   const [idx, setIdx] = useState(0);
   const [queuedCardIds, setQueuedCardIds] = useState<string[]>([]);
   const grading = useRef(false);
+  const [gradeSaving, setGradeSaving] = useState(false);
+  const pendingGrade = useRef<AnswerAttempt | undefined>(undefined);
+  const learningSession = useRef(createLearningSessionId());
+  const [gradeError, setGradeError] = useState<'save' | 'limit' | null>(null);
   const sessionVersion = useRef(0);
   const [daily, setDaily] = useState({ count: 0, target: 10 });
 
@@ -206,7 +211,11 @@ export default function StudyScreen() {
   }
 
   function startSession(deckId: string, cardId?: string) {
+    if (grading.current || pendingGrade.current) return;
     sessionVersion.current += 1;
+    pendingGrade.current = undefined;
+    learningSession.current = createLearningSessionId();
+    setGradeError(null);
     setSeed((value) => value + 1);
     setActiveDeckId(deckId);
     setStartCardId(cardId);
@@ -234,37 +243,58 @@ export default function StudyScreen() {
   }
 
   function changeRegion(region: RegionFilterId) {
-    if (region === activeRegion) return;
+    if (region === activeRegion || grading.current || pendingGrade.current) return;
     sessionVersion.current += 1;
+    pendingGrade.current = undefined;
+    learningSession.current = createLearningSessionId();
+    setGradeError(null);
     setActiveRegion(region);
     setIdx(0);
   }
 
-  async function grade(qValue: 1 | 2 | 3 | 4 | 5) {
+  async function grade(qValue: 0 | 1 | 2 | 3 | 4 | 5) {
     const currentCard = batch[idx];
     if (!currentCard || !activeDeck || grading.current) return;
     grading.current = true;
+    setGradeSaving(true);
     const version = sessionVersion.current;
     const nextCard = batch[idx + 1];
+    const attempt = pendingGrade.current ?? {
+      attemptId: createLearningSessionId(),
+      sessionId: learningSession.current,
+      cardId: currentCard.id,
+      quality: qValue,
+      nextSession: { deckId: activeDeck.id, ...(nextCard ? { cardId: nextCard.id } : {}) },
+    };
+    pendingGrade.current = attempt;
     try {
-      await recordAnswer(currentCard.id, qValue);
-      const nextDP = await incrementDailyProgress(1);
-      const savedSession = await saveLastStudySession({
-        deckId: activeDeck.id,
-        ...(nextCard ? { cardId: nextCard.id } : {}),
+      await recordAnswer(attempt.cardId, attempt.quality, {
+        attemptId: attempt.attemptId,
+        sessionId: attempt.sessionId,
+        nextSession: attempt.nextSession,
       });
+      const nextDP = await getDailyProgress();
+      if (pendingGrade.current === attempt) pendingGrade.current = undefined;
       if (sessionVersion.current !== version) return;
+      setGradeError(null);
       setDaily({ count: nextDP.count, target: nextDP.target });
-      setResumeSession(savedSession);
+      setResumeSession({ ...attempt.nextSession!, updatedAt: Date.now() });
       if (nextCard) {
         setIdx(idx + 1);
       } else {
+        learningSession.current = createLearningSessionId();
         setStartCardId(undefined);
         setIdx(0);
         setSeed((value) => value + 1);
       }
+    } catch (error) {
+      if (sessionVersion.current === version) {
+        if (error instanceof DailyNewCardLimitError) pendingGrade.current = undefined;
+        setGradeError(error instanceof DailyNewCardLimitError ? 'limit' : 'save');
+      }
     } finally {
       grading.current = false;
+      setGradeSaving(false);
     }
   }
 
@@ -430,7 +460,13 @@ export default function StudyScreen() {
   return (
     <SafeAreaView style={styles.wrap}>
       <View style={styles.sessionHeader}>
-        <Pressable style={styles.sessionBackBtn} onPress={() => setMode('landing')}>
+        <Pressable
+          style={styles.sessionBackBtn}
+          disabled={gradeSaving || gradeError === 'save'}
+          onPress={() => {
+            if (!grading.current && !pendingGrade.current) setMode('landing');
+          }}
+        >
           <Text style={styles.sessionBackText}>{t('study.session.back')}</Text>
         </Pressable>
         <View style={styles.sessionTitleBlock}>
@@ -475,6 +511,7 @@ export default function StudyScreen() {
           {REGION_FILTERS.map((region) => (
             <Pressable
               key={region.id}
+              disabled={gradeSaving || gradeError === 'save'}
               style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
               onPress={() => changeRegion(region.id)}
             >
@@ -522,6 +559,21 @@ export default function StudyScreen() {
         </View>
       )}
 
+      {gradeError && (
+        <View style={styles.saveError}>
+          <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
+            {t(gradeError === 'limit' ? 'practice.newLimit' : 'practice.saveError')}
+          </Text>
+          {gradeError === 'save' && (
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => grade(pendingGrade.current?.quality ?? 1)}
+            >
+              <Text style={{ color: colors.brand }}>{t('practice.retrySave')}</Text>
+            </Pressable>
+          )}
+        </View>
+      )}
       <View style={styles.gradeBar}>
         <Text style={styles.gradeLabel}>{t('study.gradePrompt')}</Text>
         <View style={styles.gradeButtons}>
@@ -530,7 +582,7 @@ export default function StudyScreen() {
               key={g.labelKey}
               style={[styles.gradeBtn, { backgroundColor: g.bg, borderColor: g.border }]}
               onPress={() => grade(g.q)}
-              disabled={!card}
+              disabled={!card || gradeSaving || !!gradeError}
             >
               <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
               <Text style={[styles.gradeBtnInterval, { color: g.color + 'b3' }]}>
@@ -545,6 +597,7 @@ export default function StudyScreen() {
 }
 
 const styles = StyleSheet.create({
+  saveError: { padding: 12, gap: 8 },
   wrap: { flex: 1, backgroundColor: colors.bg },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 20 },
 

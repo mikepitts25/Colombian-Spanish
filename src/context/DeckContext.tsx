@@ -7,14 +7,13 @@ import {
   removeDeckById,
   renameDeckById,
   resetDeckProgressById,
-  recordSeenWord,
-  recordStudySession,
   getDailyProgress,
-  incrementDailyNewCount,
 } from '../storage/storage';
 import { getPrefs } from '../storage/prefs';
+import { commitFlashcardAnswer, AnswerOptions } from '../storage/flashcardAnswer';
+import { createLearningSessionId } from '../storage/learningEvents';
 import { Deck, FlashCard } from '../types';
-import { buildSessionQueue, gradeCard, isNewCard } from '../utils/srs';
+import { buildSessionQueue } from '../utils/srs';
 
 // Try to import ALL_DECKS from src/data/decks (static build-time import)
 let SEED_DECKS: Deck[] = [];
@@ -33,7 +32,11 @@ type Ctx = {
   activeDeckId: string | undefined;
   setActiveDeckId: (id: string) => void;
   getStudyBatch: (size?: number) => FlashCard[];
-  recordAnswer: (cardId: string, quality: 0 | 1 | 2 | 3 | 4 | 5) => Promise<void>;
+  recordAnswer: (
+    cardId: string,
+    quality: 0 | 1 | 2 | 3 | 4 | 5,
+    options?: AnswerOptions,
+  ) => Promise<void>;
   toggleFavorite: (cardId: string) => Promise<void>;
   flagCard: (cardId: string, flagged: boolean) => Promise<void>;
   updateCardReview: (
@@ -159,41 +162,20 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     });
   }
 
-  async function recordAnswer(cardId: string, quality: 0 | 1 | 2 | 3 | 4 | 5) {
-    let reviewedCard: FlashCard | undefined;
-    let reviewedDeckId: string | undefined;
-
-    const nextDecks = decks.map((deck) => {
-      const idx = deck.cards.findIndex((card) => card.id === cardId);
-      if (idx === -1) return deck;
-
-      const nextCards = [...deck.cards];
-      reviewedCard = nextCards[idx];
-      reviewedDeckId = deck.id;
-      nextCards[idx] = gradeCard(nextCards[idx], quality);
-
-      return {
-        ...deck,
-        cards: nextCards,
-      };
-    });
-
-    if (!reviewedCard || !reviewedDeckId) return;
-
-    setDecks(nextDecks);
-    await saveDecks(nextDecks);
-    if (isNewCard(reviewedCard)) {
-      const daily = await incrementDailyNewCount(1);
-      setNewIntroducedToday(daily.newCount ?? 0);
+  async function recordAnswer(
+    cardId: string,
+    quality: 0 | 1 | 2 | 3 | 4 | 5,
+    options?: AnswerOptions,
+  ) {
+    const identity = options ?? {
+      attemptId: createLearningSessionId(),
+      sessionId: createLearningSessionId(),
+    };
+    const result = await commitFlashcardAnswer({ ...identity, cardId, quality });
+    if (result) {
+      setDecks(result.decks);
+      setNewIntroducedToday(result.daily.newCount);
     }
-    await recordSeenWord({
-      cardId: reviewedCard.id,
-      deckId: reviewedDeckId,
-      front: reviewedCard.front,
-      back: reviewedCard.back,
-      correct: quality >= 3,
-    });
-    await recordStudySession();
   }
 
   async function flagCard(cardId: string, flagged: boolean) {
