@@ -463,3 +463,5 @@ Calendar/storage implementation `073f279` passed [GitHub Actions run 38723557623
 ### Exact bounded study resume — 2026-10-15
 
 B02.4-B2c preserves the remaining queue and session identity through grading, backup and restart, with checkpoint retry and distinct batch completion. [Report](docs/qa/2026-10-15-exact-study-resume/REPORT.md). Final local verification: 54 suites / 556 tests, types/lint/format/data/editorial checks and unchanged generated inventory. Independent review found a stale read-error state; its regression failed before correction and passed afterward. iOS resumed the exact six-card suffix after process termination and finished it with an empty saved queue. Broader external navigation, difficult-mode policies and physical/native interruption remain open.
+
+Implementation `8b945db` was merged and pushed to main. [GitHub Actions run 38749492905](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38749492905) passed all quality/content checks and independent iOS/Android project generation and production JavaScript bundles. These do not constitute native compilation or physical-device acceptance.

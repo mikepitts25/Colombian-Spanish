@@ -16,3 +16,5 @@ B02.4-B2c: a versioned snapshot holds up to 15 ordered remaining card IDs, regio
 ## Limits
 
 This does not establish physical-device durability, native compilation/signing, every external-navigation race or a complete Difficult/early-review policy. The initial checkpoint is a coordinated single-key write; multi-key grades use the existing recovery journal. Legacy timestamp records cannot reconstruct missing historical queues. No human editorial acceptance or audio quality claim is made.
+
+Implementation `8b945db` was merged and pushed to main. [GitHub Actions run 38749492905](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38749492905) passed all quality/content checks and independent iOS/Android project generation and production JavaScript bundles. These do not constitute native compilation or physical-device acceptance.

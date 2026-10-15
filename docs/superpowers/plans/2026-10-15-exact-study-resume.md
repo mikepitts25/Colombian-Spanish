@@ -8,6 +8,8 @@ Replace index-over-a-filtered-array with remaining IDs so deletions cannot shift
 - [x] Storage snapshot validator and legacy-compatible reads/writes; backup acceptance.
 - [x] Study checkpoint, remaining queue, retry, completion and boundary integration.
 - [x] Targeted/full checks, review, simulator grade/restart/resume evidence, checklist.
-- [ ] Merge/push and CI; broader navigation, difficult-mode policy and physical interruption remain separate.
+- [x] Merge/push and CI; broader navigation, difficult-mode policy and physical interruption remain separate.
 
 Verification: 54 suites / 556 tests passed; types/lint/format/data/ledger/inventory checks passed. The fresh review identified a stale resume-load error hiding a new checkpoint; a failing regression pinned it, the successful checkpoint now clears it, and follow-up review found no actionable issues. Interrupted grade persistence is replayed with exact queue and one event in a storage regression. iOS evidence captures a seven-card queue, one grade, process restart, exact six-card suffix resume, and completion with an empty queue. Merge/CI evidence will be recorded after integration.
+
+Implementation `8b945db` was merged and pushed to main. [GitHub Actions run 38749492905](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38749492905) passed all quality/content checks and independent iOS/Android project generation and production JavaScript bundles. These do not constitute native compilation or physical-device acceptance.
