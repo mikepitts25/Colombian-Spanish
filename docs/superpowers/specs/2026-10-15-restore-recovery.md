@@ -1,0 +1,5 @@
+# Recoverable local restore
+
+Implement B11.2 interrupted-write recovery without changing accepted backup formats. A restore replaces decks and merges recognition history as one recoverable intent. Before writing either key, persist a versioned after-image journal. If any write or journal removal fails, leave the intent durable. All app storage reads/writes use one serialized coordinator that finishes a pending intent before serving callers, including after process restart. This is roll-forward recovery, not native database atomicity. Reject corrupt/unknown journals without modifying data.
+
+Preserve conflicting-event rejection and the 5,000-observation bound. Read/validate current history and incoming decks before journal creation. Serialize restore against learning-history writes. No new dependencies, storage-key migration, destructive reset, or claim of physical-device durability. Failed restore UI must explain that a saved restore may finish on retry/restart. File-based import and full-state backup remain separate.

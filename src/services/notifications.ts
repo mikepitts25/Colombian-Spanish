@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '../storage/durableStorage';
 import * as Notifications from 'expo-notifications';
 import { ALL_DECKS } from '../data/decks';
 import { getPrefs, UiLanguage } from '../storage/prefs';

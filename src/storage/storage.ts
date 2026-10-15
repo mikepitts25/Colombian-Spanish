@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from './durableStorage';
 import { Deck, FlashCard } from '../types';
 
 const KEY = 'SRS_DECKS_V3';

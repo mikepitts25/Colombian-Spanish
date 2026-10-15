@@ -359,6 +359,8 @@ export const translations = {
     'settings.import.subtitle': 'Restaurar desde portapapeles',
     'settings.rate.title': 'Calificar la App',
     'settings.version.title': 'Versión',
+    'settings.alert.restoreError.message':
+      'No se pudo finalizar la importación. Si el respaldo ya se guardó, se completará antes de cargar tus datos al reintentar o reiniciar. No restablezcas la app.',
     'settings.alert.backupError.title': 'Error de respaldo',
     'settings.alert.backupError.message':
       'No se pudo completar la operación de respaldo. Inténtalo de nuevo.',
@@ -781,6 +783,8 @@ export const translations = {
     'settings.import.subtitle': 'Restore from clipboard',
     'settings.rate.title': 'Rate the App',
     'settings.version.title': 'Version',
+    'settings.alert.restoreError.message':
+      'Import could not finish. If the restore was saved, it will finish before loading your data on retry or restart. Do not reset the app.',
     'settings.alert.backupError.title': 'Backup failed',
     'settings.alert.backupError.message':
       'Could not complete the backup operation. Please try again.',

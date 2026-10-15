@@ -4,13 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Alert } from 'react-native/Libraries/Alert/Alert';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
-import { getDailyProgress, saveDecks, loadDecks } from '../storage/storage';
-import {
-  getLearningEvents,
-  mergeLearningEvents,
-  validateLearningEvents,
-} from '../storage/learningEvents';
+import { getDailyProgress, loadDecks } from '../storage/storage';
+import { getLearningEvents, validateLearningEvents } from '../storage/learningEvents';
 import { MAX_BACKUP_CHARACTERS, validateBackupDecks } from '../storage/backupValidation';
+import { restoreBackup } from '../storage/backupRestore';
 import { getPrefs } from '../storage/prefs';
 import * as Clipboard from 'expo-clipboard';
 import { useLanguage } from '../context/LanguageContext';
@@ -138,13 +135,15 @@ export default function SettingsScreen() {
           style: 'destructive',
           onPress: async () => {
             try {
-              if (parsed.version === 2) await mergeLearningEvents(parsed.learningEvents);
-              await saveDecks(parsed.decks);
+              await restoreBackup(
+                parsed.decks,
+                parsed.version === 2 ? parsed.learningEvents : undefined,
+              );
               Alert.alert(t('settings.alert.imported.title'), t('settings.alert.imported.message'));
             } catch {
               Alert.alert(
                 t('settings.alert.backupError.title'),
-                t('settings.alert.backupError.message'),
+                t('settings.alert.restoreError.message'),
               );
             }
           },

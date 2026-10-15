@@ -257,7 +257,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B11.1-A [AI]** Include versioned recognition history in clipboard backups; retain legacy import support, validate incoming events, and merge without deleting newer observations. Full file-based/atomic recovery work remains open.
 - [ ] **B11.2 [AI]** Test corrupt/oversized/old backups, partial writes, duplicate IDs, migration failure, and interrupted restore; never silently wipe existing progress.
   - [x] **B11.2-A [AI]** Validate clipboard backup deck/card structure, scheduling and optional fields, unique deck/card IDs, supported versions/history, and input size before confirmation or writes; preserve valid legacy content and handle clipboard-read errors.
-  - [ ] **B11.2-B [AI, SIM]** Complete interrupted/partial-write recovery, migration-failure handling, and file-based restore robustness.
+  - [x] **B11.2-B1 [AI]** Add serialized durable restore journaling, replay before app storage access, startup recovery/retry, conflict validation before writes, and failure-injection tests for interrupted deck/history restore.
+  - [ ] **B11.2-B2 [AI, SIM]** Complete file-based/full-state backup migrations and simulator interrupted-restore acceptance. Hardware/file-share validation stays separate.
 - [ ] **B11.3 [AI, H-PRODUCT]** Decide whether cross-device demand justifies optional accounts. Keep local learning available without an account.
 - [ ] **B11.4 [AI, H-ACCOUNT]** If enabled, implement secure auth, per-user access, sync conflicts, offline queues, deletion/export, and recovery; configure production services through authorized accounts.
 - [ ] **B11.5 [AI, DEVICE]** Verify backup through real share/file flows; if sync exists, test two physical devices, reinstall/recovery, conflicting offline edits, and interrupted connectivity.
@@ -391,3 +392,7 @@ B05.4-A and B05.5-A are complete with [regression and iOS simulator evidence](do
 ### Backup input validation — 2026-10-15
 
 B11.2-A adds pre-write validation for corrupt deck/card data, duplicate IDs, unsupported versions/history, and oversized clipboard input, with legacy custom-content compatibility and clipboard-read error handling. See [the evidence and limits](docs/qa/2026-10-15-backup-validation/REPORT.md). B11.1/B11.2 remain open for file-based restore and recovery from partial/interrupted writes. Simulator interaction was blocked by the Mac lock during this batch; automated checks do not substitute for it. Implementation `6e0cbdf` was merged and pushed to main. Final local verification: 41 suites / 419 tests plus types/lint/format/data/inventory checks. [GitHub Actions run 38678603279](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38678603279) passed quality/content and independent iOS/Android project generation and production JS bundle jobs.
+
+### Recoverable backup restore — 2026-10-15
+
+B11.2-B1 adds a durable after-image journal for deck/history restore, replay before app storage access, serialization with event writes, and a startup recovery/retry screen. See [the report](docs/qa/2026-10-15-restore-recovery/REPORT.md). This is roll-forward recovery, not a native database transaction. Full-state/file-based backup, simulator interruption acceptance, and hardware durability remain open.

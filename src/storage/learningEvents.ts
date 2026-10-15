@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from './durableStorage';
 
 export type LearningModality = 'recognition' | 'recall' | 'listening' | 'speaking';
 export interface LearningEvent {
@@ -83,7 +83,7 @@ export async function getLearningEvents(): Promise<LearningEvent[]> {
   return readLearningEvents();
 }
 
-function serializeWrite<T>(operation: () => Promise<T>): Promise<T> {
+export function serializeLearningHistoryWrite<T>(operation: () => Promise<T>): Promise<T> {
   const result = writes.then(operation);
   writes = result.catch(() => {});
   return result;
@@ -94,7 +94,7 @@ function boundHistory(events: LearningEvent[]): LearningEvent[] {
 }
 
 export function appendLearningEvent(value: LearningEvent): Promise<boolean> {
-  return serializeWrite(async () => {
+  return serializeLearningHistoryWrite(async () => {
     const event = normalizeEvent(value);
     const history = await readLearningEvents();
     const existing = history.find((item) => item.id === event.id);
@@ -116,23 +116,31 @@ export function appendLearningEvent(value: LearningEvent): Promise<boolean> {
 
 // Backup imports merge by stable identity. A conflicting ID is never overwritten.
 export function mergeLearningEvents(value: unknown): Promise<void> {
-  return serializeWrite(async () => {
+  return serializeLearningHistoryWrite(async () => {
     const incoming = validateLearningEvents(value);
     const current = await readLearningEvents();
-    const events = new Map(current.map((event) => [event.id, event]));
-    for (const event of incoming) {
-      const prior = events.get(event.id);
-      if (prior && JSON.stringify(prior) !== JSON.stringify(event)) {
-        throw new Error('Learning event ID conflict');
-      }
-      events.set(event.id, event);
-    }
     await AsyncStorage.setItem(
       KEY,
       JSON.stringify({
         schemaVersion: 1,
-        events: boundHistory([...events.values()]),
+        events: mergeEventHistory(current, incoming),
       }),
     );
   });
+}
+
+// Pure merge shared by ordinary history imports and recoverable deck restores.
+export function mergeEventHistory(
+  current: LearningEvent[],
+  incoming: LearningEvent[],
+): LearningEvent[] {
+  const events = new Map(current.map((event) => [event.id, event]));
+  for (const event of incoming) {
+    const prior = events.get(event.id);
+    if (prior && JSON.stringify(prior) !== JSON.stringify(event)) {
+      throw new Error('Learning event ID conflict');
+    }
+    events.set(event.id, event);
+  }
+  return boundHistory([...events.values()]);
 }

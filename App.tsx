@@ -6,6 +6,7 @@ import RootNavigator from './src/navigation';
 import { LanguageProvider } from './src/context/LanguageContext';
 import { DeckProvider } from './src/hooks/useDeck';
 import ErrorBoundary from './src/components/ErrorBoundary';
+import StorageGate from './src/components/StorageGate';
 import { refreshScheduledNotifications } from './src/services/notifications';
 import { initCrashReporting } from './src/services/crashReporting';
 
@@ -20,14 +21,16 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ErrorBoundary>
-        <NavigationContainer>
-          <DeckProvider>
-            <LanguageProvider>
-              <StatusBar style="light" />
-              <RootNavigator />
-            </LanguageProvider>
-          </DeckProvider>
-        </NavigationContainer>
+        <StorageGate>
+          <NavigationContainer>
+            <DeckProvider>
+              <LanguageProvider>
+                <StatusBar style="light" />
+                <RootNavigator />
+              </LanguageProvider>
+            </DeckProvider>
+          </NavigationContainer>
+        </StorageGate>
       </ErrorBoundary>
     </GestureHandlerRootView>
   );

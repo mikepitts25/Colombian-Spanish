@@ -7,6 +7,11 @@ import {
 } from '../../src/storage/learningEvents';
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
 import SettingsScreen from '../../src/screens/SettingsScreen';
+import { restoreBackup } from '../../src/storage/backupRestore';
+jest.mock('../../src/storage/backupRestore', () => {
+  const actual = jest.requireActual('../../src/storage/backupRestore');
+  return { restoreBackup: jest.fn(actual.restoreBackup) };
+});
 
 const mockNavigate = jest.fn();
 
@@ -41,7 +46,7 @@ jest.mock('../../src/context/LanguageContext', () => {
   };
 });
 
-import { getDailyProgress, loadDecks, saveDecks } from '../../src/storage/storage';
+import { getDailyProgress, loadDecks } from '../../src/storage/storage';
 import * as Clipboard from 'expo-clipboard';
 import { Alert } from 'react-native/Libraries/Alert/Alert';
 
@@ -368,7 +373,7 @@ describe('learning-history backup compatibility', () => {
       });
     }
     expect(await getLearningEvents()).toEqual([observation]);
-    expect(saveDecks).toHaveBeenCalledTimes(2);
+    expect(restoreBackup).toHaveBeenCalledTimes(2);
   });
 
   it('rejects invalid history or an unsupported backup version before changing data', async () => {
@@ -388,7 +393,7 @@ describe('learning-history backup compatibility', () => {
       });
       expect(mockAlert).toHaveBeenLastCalledWith('Respaldo inválido', expect.any(String));
     }
-    expect(saveDecks).not.toHaveBeenCalled();
+    expect(restoreBackup).not.toHaveBeenCalled();
     expect(await getLearningEvents()).toEqual([observation]);
   });
 });
@@ -452,7 +457,7 @@ describe('backup input safety', () => {
     const screen = render(<SettingsScreen />);
     await act(async () => fireEvent.press(await screen.findByText('Importar respaldo')));
     expect(mockAlert).toHaveBeenLastCalledWith('Respaldo inválido', expect.any(String));
-    expect(saveDecks).not.toHaveBeenCalled();
+    expect(restoreBackup).not.toHaveBeenCalled();
     expect(await getLearningEvents()).toEqual([observation]);
   });
 
@@ -461,7 +466,7 @@ describe('backup input safety', () => {
     const screen = render(<SettingsScreen />);
     await act(async () => fireEvent.press(await screen.findByText('Importar respaldo')));
     expect(mockAlert).toHaveBeenLastCalledWith('Respaldo demasiado grande', expect.any(String));
-    expect(saveDecks).not.toHaveBeenCalled();
+    expect(restoreBackup).not.toHaveBeenCalled();
   });
 
   it('handles clipboard read failure without changing data', async () => {
@@ -469,7 +474,7 @@ describe('backup input safety', () => {
     const screen = render(<SettingsScreen />);
     await act(async () => fireEvent.press(await screen.findByText('Importar respaldo')));
     expect(mockAlert).toHaveBeenLastCalledWith('Error de respaldo', expect.any(String));
-    expect(saveDecks).not.toHaveBeenCalled();
+    expect(restoreBackup).not.toHaveBeenCalled();
   });
 
   it.each([undefined, 1, 2])('preserves valid custom data from version %s', async (version) => {
@@ -507,7 +512,7 @@ describe('backup input safety', () => {
     await act(async () =>
       confirm[2].find((button: any) => button.style === 'destructive').onPress(),
     );
-    expect(saveDecks).toHaveBeenCalledWith([deck]);
+    expect(restoreBackup).toHaveBeenCalledWith([deck], version === 2 ? [observation] : undefined);
   });
 });
 
@@ -526,5 +531,5 @@ it('accepts a full built-in library backup without changing its content', async 
   const confirm = mockAlert.mock.calls.find(([title]) => title === '¿Importar respaldo?');
   expect(confirm).toBeDefined();
   await act(async () => confirm[2].find((button: any) => button.style === 'destructive').onPress());
-  expect(saveDecks).toHaveBeenCalledWith(ALL_DECKS);
+  expect(restoreBackup).toHaveBeenCalledWith(ALL_DECKS, []);
 });

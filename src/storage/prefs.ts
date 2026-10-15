@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from './durableStorage';
 
 const KEY = 'SRS_PREFS_V1';
 
