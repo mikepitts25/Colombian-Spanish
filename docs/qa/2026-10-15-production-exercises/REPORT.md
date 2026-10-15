@@ -13,3 +13,5 @@ B04.3-A implements a versioned deterministic typed-recall/cloze engine with auth
 ## Scope and limits
 
 This is reusable engine work, not a completed learner-facing feature. No UI or simulator acceptance is claimed for this package. No real teaching exercise was approved or added to the library. Pack reference checks, editorial release gating, accessible typed-answer UI, keyboard behavior, mission integration and efficacy remain subsequent work. Local event deduplication applies while the ID remains in bounded history.
+
+Implementation `d9687b9` was merged and pushed to main. [GitHub Actions run 38750355516](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38750355516) passed quality/content and independent iOS/Android project generation and production JavaScript bundles. Native UI integration remains open.

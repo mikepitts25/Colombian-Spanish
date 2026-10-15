@@ -471,3 +471,5 @@ Implementation `8b945db` was merged and pushed to main. [GitHub Actions run 3874
 ### Production exercise engine — 2026-10-15
 
 B04.3-A adds the deterministic typed-recall/cloze foundation, explicit variants/hints, accent corrections and assessed recall provenance without changing card scheduling. [Report](docs/qa/2026-10-15-production-exercises/REPORT.md). Final verification: 55 suites / 590 tests plus static/content checks; review findings reproduced and corrected. UI, reviewed exercise content and simulator acceptance remain open under B04.3-B.
+
+Implementation `d9687b9` was merged and pushed to main. [GitHub Actions run 38750355516](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38750355516) passed quality/content and independent iOS/Android project generation and production JavaScript bundles. Native UI integration remains open.
