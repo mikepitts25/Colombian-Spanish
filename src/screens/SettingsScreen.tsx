@@ -10,6 +10,7 @@ import {
   mergeLearningEvents,
   validateLearningEvents,
 } from '../storage/learningEvents';
+import { MAX_BACKUP_CHARACTERS, validateBackupDecks } from '../storage/backupValidation';
 import { getPrefs } from '../storage/prefs';
 import * as Clipboard from 'expo-clipboard';
 import { useLanguage } from '../context/LanguageContext';
@@ -76,7 +77,21 @@ export default function SettingsScreen() {
   }
 
   async function importBackup() {
-    const raw = await Clipboard.getStringAsync();
+    let raw: string;
+    try {
+      raw = await Clipboard.getStringAsync();
+    } catch {
+      return Alert.alert(
+        t('settings.alert.backupError.title'),
+        t('settings.alert.backupError.message'),
+      );
+    }
+    if (raw.length > MAX_BACKUP_CHARACTERS) {
+      return Alert.alert(
+        t('settings.alert.backupTooLarge.title'),
+        t('settings.alert.backupTooLarge.message'),
+      );
+    }
     if (!raw?.trim()) {
       return Alert.alert(
         t('settings.alert.emptyClipboard.title'),
@@ -104,15 +119,14 @@ export default function SettingsScreen() {
         t('settings.alert.invalidBackup.message'),
       );
     }
-    if (parsed.version === 2) {
-      try {
-        validateLearningEvents(parsed.learningEvents);
-      } catch {
-        return Alert.alert(
-          t('settings.alert.invalidBackup.title'),
-          t('settings.alert.invalidBackup.message'),
-        );
-      }
+    try {
+      validateBackupDecks(parsed.decks);
+      if (parsed.version === 2) validateLearningEvents(parsed.learningEvents);
+    } catch {
+      return Alert.alert(
+        t('settings.alert.invalidBackup.title'),
+        t('settings.alert.invalidBackup.message'),
+      );
     }
     Alert.alert(
       t('settings.alert.importConfirm.title'),

@@ -370,6 +370,9 @@ export const translations = {
     'settings.alert.invalidJson.message': 'El portapapeles no contiene JSON válido.',
     'settings.alert.notBackup.title': 'No es un respaldo',
     'settings.alert.notBackup.message': 'El JSON no es un respaldo de esta app.',
+    'settings.alert.backupTooLarge.title': 'Respaldo demasiado grande',
+    'settings.alert.backupTooLarge.message':
+      'El respaldo supera el límite de 10 millones de caracteres. No se cambió ningún dato.',
     'settings.alert.invalidBackup.title': 'Respaldo inválido',
     'settings.alert.invalidBackup.message':
       'El respaldo contiene datos faltantes, inválidos o no compatibles.',
@@ -789,6 +792,9 @@ export const translations = {
     'settings.alert.invalidJson.message': 'The clipboard does not contain valid JSON.',
     'settings.alert.notBackup.title': 'Not a backup',
     'settings.alert.notBackup.message': 'The JSON is not a backup from this app.',
+    'settings.alert.backupTooLarge.title': 'Backup too large',
+    'settings.alert.backupTooLarge.message':
+      'The backup exceeds the 10 million character limit. No data was changed.',
     'settings.alert.invalidBackup.title': 'Invalid backup',
     'settings.alert.invalidBackup.message':
       'Backup contains missing, invalid, or unsupported data.',

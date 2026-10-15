@@ -392,3 +392,139 @@ describe('learning-history backup compatibility', () => {
     expect(await getLearningEvents()).toEqual([observation]);
   });
 });
+
+const validBackupCard = {
+  id: 'custom-card',
+  front: 'parce',
+  back: 'friend',
+  createdAt: 0,
+  due: 1000,
+  reps: 0,
+  interval: 0,
+  ease: 2.5,
+  favorite: true,
+  flagged: false,
+  tags: ['Paisa'],
+  reviewStatus: 'needs_native',
+};
+const validBackupDeck = { id: 'custom-deck', name: 'Custom', cards: [validBackupCard] };
+
+describe('backup input safety', () => {
+  it.each([
+    ['null deck', [null]],
+    ['blank deck ID', [{ ...validBackupDeck, id: ' ' }]],
+    ['missing deck name', [{ id: 'd', cards: [] }]],
+    ['invalid cards', [{ ...validBackupDeck, cards: {} }]],
+    ['duplicate deck IDs', [validBackupDeck, validBackupDeck]],
+    ['duplicate card IDs across decks', [validBackupDeck, { ...validBackupDeck, id: 'another' }]],
+    ['null card', [{ ...validBackupDeck, cards: [null] }]],
+    ...Object.entries({
+      front: null,
+      back: 1,
+      due: '1000',
+      createdAt: -1,
+      reps: 0.5,
+      interval: -1,
+      ease: 0,
+      favorite: 'true',
+      flagged: 1,
+      tags: ['Paisa', null],
+      reviewStatus: 'accepted',
+      reviewedAt: -1,
+      example: {},
+      ipa: [],
+      register: 'unknown',
+      conjugation: { present: null },
+    }).map(([field, value]): [string, unknown] => [
+      field,
+      [{ ...validBackupDeck, cards: [{ ...validBackupCard, [field]: value }] }],
+    ]),
+  ])('rejects %s before confirmation or writes', async (_label, decks) => {
+    await appendLearningEvent(observation);
+    mockGetStringAsync.mockResolvedValue(
+      JSON.stringify({
+        kind: 'colombian-spanish-backup',
+        version: 2,
+        decks,
+        learningEvents: [],
+      }),
+    );
+    const screen = render(<SettingsScreen />);
+    await act(async () => fireEvent.press(await screen.findByText('Importar respaldo')));
+    expect(mockAlert).toHaveBeenLastCalledWith('Respaldo inválido', expect.any(String));
+    expect(saveDecks).not.toHaveBeenCalled();
+    expect(await getLearningEvents()).toEqual([observation]);
+  });
+
+  it('rejects oversized clipboard input before attempting JSON parsing', async () => {
+    mockGetStringAsync.mockResolvedValue(' '.repeat(10_000_001) + '{');
+    const screen = render(<SettingsScreen />);
+    await act(async () => fireEvent.press(await screen.findByText('Importar respaldo')));
+    expect(mockAlert).toHaveBeenLastCalledWith('Respaldo demasiado grande', expect.any(String));
+    expect(saveDecks).not.toHaveBeenCalled();
+  });
+
+  it('handles clipboard read failure without changing data', async () => {
+    mockGetStringAsync.mockRejectedValueOnce(new Error('clipboard unavailable'));
+    const screen = render(<SettingsScreen />);
+    await act(async () => fireEvent.press(await screen.findByText('Importar respaldo')));
+    expect(mockAlert).toHaveBeenLastCalledWith('Error de respaldo', expect.any(String));
+    expect(saveDecks).not.toHaveBeenCalled();
+  });
+
+  it.each([undefined, 1, 2])('preserves valid custom data from version %s', async (version) => {
+    const deck = {
+      ...validBackupDeck,
+      description: 'My phrases',
+      cards: [
+        {
+          ...validBackupCard,
+          tags: ['Paisa', '', ' '],
+          example: 'Hola, parce',
+          ipa: 'paɾse',
+          reviewedAt: 0,
+          register: 'casual',
+          conjugation: {
+            present: { yo: 'soy', tu: 'eres', el: 'es', nosotros: 'somos', ellos: 'son' },
+            past: { yo: 'fui', tu: 'fuiste', el: 'fue', nosotros: 'fuimos', ellos: 'fueron' },
+            future: { yo: 'seré', tu: 'serás', el: 'será', nosotros: 'seremos', ellos: 'serán' },
+          },
+        },
+      ],
+    };
+    mockGetStringAsync.mockResolvedValue(
+      JSON.stringify({
+        kind: 'colombian-spanish-backup',
+        version,
+        decks: [deck],
+        ...(version === 2 ? { learningEvents: [observation] } : {}),
+      }),
+    );
+    const screen = render(<SettingsScreen />);
+    await act(async () => fireEvent.press(await screen.findByText('Importar respaldo')));
+    const confirm = mockAlert.mock.calls.find(([title]) => title === '¿Importar respaldo?');
+    expect(confirm).toBeDefined();
+    await act(async () =>
+      confirm[2].find((button: any) => button.style === 'destructive').onPress(),
+    );
+    expect(saveDecks).toHaveBeenCalledWith([deck]);
+  });
+});
+
+it('accepts a full built-in library backup without changing its content', async () => {
+  const { ALL_DECKS } = require('../../src/data/decks');
+  mockGetStringAsync.mockResolvedValue(
+    JSON.stringify({
+      kind: 'colombian-spanish-backup',
+      version: 2,
+      decks: ALL_DECKS,
+      learningEvents: [],
+    }),
+  );
+  const screen = render(<SettingsScreen />);
+  await act(async () => fireEvent.press(await screen.findByText('Importar respaldo')));
+  const confirm = mockAlert.mock.calls.find(([title]) => title === '¿Importar respaldo?');
+  expect(confirm).toBeDefined();
+  await act(async () => confirm[2].find((button: any) => button.style === 'destructive').onPress());
+  expect(saveDecks).toHaveBeenCalledWith(ALL_DECKS);
+});
