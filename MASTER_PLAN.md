@@ -308,7 +308,11 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 **Package:** research protocol + first mission pilot + findings and prioritization. Human participation is necessary; AI can prepare, analyze, and implement responses.
 
 - [ ] **B13.1 [AI, H-PRODUCT]** Define success measures before the pilot: first-session completion, time to useful outcome, hint usage, delayed unaided recall, comprehension of a new speaker, and success in a new scenario. Treat numeric targets as hypotheses until baseline data exists.
+  - [x] **B13.1-A [AI]** Prepare the dated pilot protocol, explicit measures/denominators, missingness/assistance rules, audience hypothesis, readiness and data-handling decisions; no recruitment or outcomes claimed.
+  - [ ] **B13.1-B [H-PRODUCT]** Accept the candidate, audience, collection/retention arrangements and predeclared feasibility criteria before recruitment.
 - [ ] **B13.2 [AI, H-LANGUAGE]** Prepare equivalent pre/post/transfer tasks and delayed checks (for example, the next day and one week later); avoid simply repeating the memorized quiz.
+  - [x] **B13.2-A [AI]** Prepare parallel/transfer/delayed task specifications, scoring rubric and an empty observation template; label materials unaccepted and keep human language/audio review open.
+  - [ ] **B13.2-B [H-LANGUAGE, AI]** Author/accept exact Spanish prompts, variants, equivalent forms and novel-speaker assets, then integrate reviewed corrections.
 - [ ] **B13.3 [H-PRODUCT, H-LEARNER]** Recruit a small directional pilot, initially around 5–8 people spanning beginners and learners with basics; obtain consent and agree on appropriate data collection. This sample is not proof of broad efficacy.
 - [ ] **B13.4 [H-LEARNER, AI]** Observe independent first use and complete delayed checks; record confusion, pronunciation feedback problems, accessibility needs, motivation, and actual task performance.
 - [ ] **B13.5 [AI]** Analyze modality-specific events and qualitative findings; distinguish usability results from learning effects and retention metrics.
@@ -496,3 +500,7 @@ Implementation `6276835` was merged and pushed to main. [GitHub Actions run 3875
 ### Preference-aware bounded Home review — 2026-10-15
 
 B05.2-B1 / B05.3-A / B05.4-B1 connect the editable profile to due-first review suggestions with small fresh-card limits, sparse-workload estimates and exact bounded queue persistence. [Report](docs/qa/2026-10-15-bounded-home-review/REPORT.md). Final suite: 60 / 646 tests and static/content checks. Review's resumed-limit regression was reproduced and fixed. iOS verified eight-card Business handoff, one grade, exact seven-card restart/resume, and retained limits after an explicit region change. Applied activity, calibration, trip-aware planning and wider platform/device gates remain open.
+
+### Learner pilot preparation — 2026-10-15
+
+B13.1-A / B13.2-A deliver a [draft protocol](docs/pilot/PROTOCOL.md), [editorial task specifications](docs/pilot/TASK_BANK.md) and empty observation CSV. Measures separate independent/assisted performance, modalities, usability, delayed checks and transfer, with explicit denominators/missingness and no fabricated outcomes. Product acceptance, reviewed exact language/audio, candidate readiness and actual participant work remain open. This preparation does not establish learning efficacy or initiate recruitment/data collection.
