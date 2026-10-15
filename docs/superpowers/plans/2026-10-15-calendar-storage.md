@@ -7,4 +7,4 @@ Daily progress currently identifies local midnight by its UTC timestamp. Moving 
 - [x] Reproduce parallel lost updates across prefs/daily/seen/quiz and pin calendar/DST/legacy fixtures.
 - [x] Serialize remaining mutation helpers and add calendar-day normalization without claiming reconstruction of missing historical timezone information.
 - [x] Full quality/content checks, independent review, exact evidence/checklist.
-- [ ] Merge/push and CI. Native timezone switching/real interruption remains separately open.
+- [x] Merge/push and CI. Native timezone switching/real interruption remains separately open.

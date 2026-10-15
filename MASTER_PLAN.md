@@ -456,3 +456,5 @@ Editorial implementation `7ad5265` passed [GitHub Actions run 38722545095](https
 ### Calendar and local-state coordination — 2026-10-15
 
 B02.4-B2b / B02.6-B1 close reproduced preference/daily/seen-word/quiz lost updates, serialize streak effects, replace timestamp-only quiz IDs and use calendar-day identities for daily totals/streaks. [Report](docs/qa/2026-10-15-calendar-storage/REPORT.md). Legacy instants lack their original zone, so migration uses the current zone; native timezone switching, broader resume/clock behavior and exact session queues remain open.
+
+Calendar/storage implementation `073f279` passed [GitHub Actions run 38723557623](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38723557623), including quality/content and iOS/Android project generation/production JavaScript bundles. Final local suite: 53 suites / 539 tests; iOS migration retained saved totals.

@@ -23,3 +23,5 @@ Dedicated iPhone 16 Pro / iOS 26.0, Expo Go 54.0.7. The new bundle loaded the ex
 ## Limits
 
 Legacy records did not store their original zone; an old ISO instant is interpreted in the current device zone, not reconstructed from missing information. Daily counts follow the current local date and reset when that date changes, including travel/clock changes; this is not a cross-device/timezone abuse ledger. Native timezone switching, broad lifecycle/clock scenarios, hardware interruption and exact queue resume remain open. Absolute replay protects committed intents; generic mutation helpers do not gain permanent retry receipts, so callers must not blindly repeat an uncertain non-idempotent increment. Grading retains its separate stable attempt identity.
+
+Calendar/storage implementation `073f279` passed [GitHub Actions run 38723557623](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38723557623), including quality/content and iOS/Android project generation/production JavaScript bundles. Final local suite: 53 suites / 539 tests; iOS migration retained saved totals.
