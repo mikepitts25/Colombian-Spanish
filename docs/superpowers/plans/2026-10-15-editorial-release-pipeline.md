@@ -9,4 +9,4 @@ The current app still bundles the full development library. Add a production EAS
 - [x] Pin ledger/status/fingerprint/filter/production-gate behavior with failing tests.
 - [x] Implement ledger validation, deterministic inventory metadata, filtered export and production hook.
 - [x] Document editor workflow, release limits and exact human dependency; full checks and independent review.
-- [ ] Merge/push, verify CI and record checklist evidence.
+- [x] Merge/push, verify CI and record checklist evidence.
