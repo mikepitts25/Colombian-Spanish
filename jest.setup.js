@@ -84,7 +84,6 @@ jest.mock('react-native/Libraries/Alert/Alert', () => {
   const alert = jest.fn();
   return {
     alert,
-    Alert: { alert },
     default: { alert },
   };
 });
@@ -94,6 +93,6 @@ jest.mock('react-native/Libraries/Alert/Alert', () => {
 jest.mock('react-native', () => {
   const RN = jest.requireActual('react-native');
   RN.AccessibilityInfo.isReduceMotionEnabled = jest.fn().mockResolvedValue(false);
-  RN.Alert = require('react-native/Libraries/Alert/Alert').Alert;
+  RN.Alert = require('react-native/Libraries/Alert/Alert').default;
   return RN;
 });

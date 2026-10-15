@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Alert } from 'react-native/Libraries/Alert/Alert';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
 import { getDailyProgress, loadDecks } from '../storage/storage';
 import { getLearningEvents, validateLearningEvents } from '../storage/learningEvents';
 import { MAX_BACKUP_CHARACTERS, validateBackupDecks } from '../storage/backupValidation';
 import { restoreBackup } from '../storage/backupRestore';
+import {
+  captureBackupSnapshot,
+  parseBackupText,
+  BackupInputError,
+  BackupSnapshot,
+} from '../storage/backupSnapshot';
+import { pickBackupFile, shareBackupFile, BackupFileError } from '../services/backupFiles';
 import { getPrefs } from '../storage/prefs';
 import * as Clipboard from 'expo-clipboard';
 import { useLanguage } from '../context/LanguageContext';
@@ -18,15 +24,22 @@ function SettingsRow({
   subtitle,
   onPress,
   chevron = true,
+  disabled = false,
 }: {
   emoji: string;
   title: string;
   subtitle?: string;
   onPress?: () => void;
   chevron?: boolean;
+  disabled?: boolean;
 }) {
   return (
-    <Pressable style={styles.settingsRow} onPress={onPress}>
+    <Pressable
+      style={styles.settingsRow}
+      onPress={onPress}
+      disabled={disabled}
+      accessibilityState={{ disabled }}
+    >
       <Text style={styles.rowEmoji}>{emoji}</Text>
       <View style={styles.rowInfo}>
         <Text style={styles.rowTitle}>{title}</Text>
@@ -45,6 +58,10 @@ export default function SettingsScreen() {
   const nav = useNavigation<any>();
   const { t, toggleLanguage } = useLanguage();
   const [target, setTarget] = useState(10);
+  const fileAction = useRef(false);
+  const [fileBusy, setFileBusy] = useState(false);
+  const [filePreview, setFilePreview] = useState<BackupSnapshot | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
   const [newPerDay, setNewPerDay] = useState(10);
 
   useEffect(() => {
@@ -133,27 +150,127 @@ export default function SettingsScreen() {
         {
           text: t('settings.alert.import'),
           style: 'destructive',
-          onPress: async () => {
-            try {
-              await restoreBackup(
-                parsed.decks,
-                parsed.version === 2 ? parsed.learningEvents : undefined,
-              );
-              Alert.alert(t('settings.alert.imported.title'), t('settings.alert.imported.message'));
-            } catch {
-              Alert.alert(
-                t('settings.alert.backupError.title'),
-                t('settings.alert.restoreError.message'),
-              );
-            }
-          },
+          onPress: () =>
+            runFileAction(async () => {
+              try {
+                await restoreBackup(
+                  parsed.decks,
+                  parsed.version === 2 ? parsed.learningEvents : undefined,
+                );
+                Alert.alert(
+                  t('settings.alert.imported.title'),
+                  t('settings.alert.imported.message'),
+                );
+              } catch {
+                Alert.alert(
+                  t('settings.alert.backupError.title'),
+                  t('settings.alert.restoreError.message'),
+                );
+              }
+            }),
         },
       ],
     );
   }
 
+  async function runFileAction(action: () => Promise<void>) {
+    if (fileAction.current) return;
+    fileAction.current = true;
+    setFileBusy(true);
+    setFileError(null);
+    try {
+      await action();
+    } catch (error) {
+      if (
+        (error instanceof BackupFileError || error instanceof BackupInputError) &&
+        error.code === 'tooLarge'
+      ) {
+        setFileError(
+          `${t('settings.alert.fileTooLarge.title')}\n${t('settings.alert.fileTooLarge.message')}`,
+        );
+      } else if (error instanceof BackupFileError && error.code === 'unavailable') {
+        setFileError(
+          `${t('settings.alert.sharingUnavailable.title')}\n${t('settings.alert.sharingUnavailable.message')}`,
+        );
+      } else if (error instanceof BackupInputError) {
+        setFileError(
+          `${t('settings.alert.invalidBackup.title')}\n${t('settings.alert.invalidBackup.message')}`,
+        );
+      } else {
+        setFileError(
+          `${t('settings.alert.backupError.title')}\n${t('settings.alert.backupError.message')}`,
+        );
+      }
+    } finally {
+      fileAction.current = false;
+      setFileBusy(false);
+    }
+  }
+
+  async function applyFileBackup(backup: BackupSnapshot, mode: 'replace' | 'merge-new') {
+    try {
+      await restoreBackup(backup.decks, backup.learningEvents, mode);
+      setFilePreview(null);
+      Alert.alert(t('settings.alert.imported.title'), t('settings.alert.imported.message'));
+    } catch {
+      setFileError(t('settings.alert.restoreError.message'));
+    }
+  }
+
+  async function importFile() {
+    const raw = await pickBackupFile();
+    if (raw !== null) setFilePreview(parseBackupText(raw));
+  }
+
   return (
     <SafeAreaView style={styles.wrap}>
+      {fileError && (
+        <Text accessibilityRole="alert" style={styles.fileError}>
+          {fileError}
+        </Text>
+      )}
+      {filePreview && (
+        <ScrollView style={styles.previewPanel} contentContainerStyle={{ gap: 12 }}>
+          <Text accessibilityRole="header" style={styles.rowTitle}>
+            {t('settings.file.previewTitle')}
+          </Text>
+          <Text style={styles.rowSubtitle}>
+            {t('settings.file.preview', {
+              date: filePreview.exportedAt ?? t('settings.file.unknownDate'),
+              decks: filePreview.decks.length,
+              cards: filePreview.decks.reduce((sum, deck) => sum + deck.cards.length, 0),
+              events: filePreview.learningEvents?.length ?? 0,
+            })}
+          </Text>
+          <Pressable
+            accessibilityRole="button"
+            style={styles.previewButton}
+            disabled={fileBusy}
+            onPress={() => runFileAction(() => applyFileBackup(filePreview, 'merge-new'))}
+          >
+            <Text style={{ color: colors.brand }}>{t('settings.file.merge')}</Text>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            style={styles.previewButton}
+            disabled={fileBusy}
+            onPress={() => runFileAction(() => applyFileBackup(filePreview, 'replace'))}
+          >
+            <Text style={{ color: '#f87171' }}>{t('settings.file.replace')}</Text>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            style={styles.previewButton}
+            disabled={fileBusy}
+            onPress={() => {
+              setFilePreview(null);
+              setFileError(null);
+            }}
+          >
+            <Text style={{ color: colors.textPrimary }}>{t('settings.alert.cancel')}</Text>
+          </Pressable>
+        </ScrollView>
+      )}
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <Text style={styles.pageTitle}>⚙️ {t('settings.title')}</Text>
 
@@ -203,14 +320,37 @@ export default function SettingsScreen() {
             emoji="💾"
             title={t('settings.export.title')}
             subtitle={t('settings.export.subtitle')}
-            onPress={exportBackup}
+            disabled={fileBusy || filePreview !== null}
+            onPress={() => runFileAction(exportBackup)}
           />
           <Divider />
           <SettingsRow
             emoji="📥"
             title={t('settings.import.title')}
             subtitle={t('settings.import.subtitle')}
-            onPress={importBackup}
+            disabled={fileBusy || filePreview !== null}
+            onPress={() => runFileAction(importBackup)}
+          />
+          <Divider />
+          <SettingsRow
+            emoji="📄"
+            title={t('settings.file.export')}
+            subtitle={t('settings.file.exportSub')}
+            disabled={fileBusy || filePreview !== null}
+            onPress={() =>
+              runFileAction(async () => {
+                const snapshot = await captureBackupSnapshot();
+                await shareBackupFile(JSON.stringify(snapshot), t('settings.file.export'));
+              })
+            }
+          />
+          <Divider />
+          <SettingsRow
+            emoji="📂"
+            title={t('settings.file.import')}
+            subtitle={t('settings.file.importSub')}
+            disabled={fileBusy || filePreview !== null}
+            onPress={() => runFileAction(importFile)}
           />
         </View>
 
@@ -237,6 +377,17 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
+  previewPanel: {
+    maxHeight: '65%',
+    margin: 16,
+    padding: 16,
+    borderRadius: 16,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.brand,
+  },
+  previewButton: { minHeight: 44, justifyContent: 'center', padding: 8 },
+  fileError: { color: colors.textPrimary, padding: 16 },
   wrap: { flex: 1, backgroundColor: colors.bg },
   scroll: { padding: 16, paddingBottom: 120 },
 

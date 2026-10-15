@@ -365,6 +365,22 @@ export const translations = {
     'settings.version.title': 'Versión',
     'settings.alert.restoreError.message':
       'No se pudo finalizar la importación. Si el respaldo ya se guardó, se completará antes de cargar tus datos al reintentar o reiniciar. No restablezcas la app.',
+    'settings.file.export': 'Guardar archivo de respaldo',
+    'settings.file.exportSub': 'Decks e historial de aprendizaje · JSON',
+    'settings.file.import': 'Importar archivo de respaldo',
+    'settings.file.importSub': 'Vista previa antes de reemplazar o añadir tarjetas',
+    'settings.file.previewTitle': 'Vista previa del respaldo',
+    'settings.file.preview':
+      'Exportado: {date}\n{decks} decks · {cards} tarjetas · {events} observaciones.\nAñadir tarjetas nuevas conserva el contenido y los intervalos existentes. Reemplazar decks los sobrescribe. El historial de aprendizaje se combina en ambos modos. Las preferencias y la racha no están incluidas.',
+    'settings.file.unknownDate': 'fecha no disponible',
+    'settings.file.merge': 'Añadir tarjetas nuevas',
+    'settings.file.replace': 'Reemplazar decks',
+    'settings.alert.fileTooLarge.title': 'Archivo de respaldo demasiado grande',
+    'settings.alert.fileTooLarge.message':
+      'Elige un respaldo JSON de hasta 20 MB y 10 millones de caracteres. No se cambió ningún dato.',
+    'settings.alert.sharingUnavailable.title': 'No se pueden compartir archivos',
+    'settings.alert.sharingUnavailable.message':
+      'Puedes usar Exportar respaldo para copiar el JSON.',
     'settings.alert.backupError.title': 'Error de respaldo',
     'settings.alert.backupError.message':
       'No se pudo completar la operación de respaldo. Inténtalo de nuevo.',
@@ -793,6 +809,22 @@ export const translations = {
     'settings.version.title': 'Version',
     'settings.alert.restoreError.message':
       'Import could not finish. If the restore was saved, it will finish before loading your data on retry or restart. Do not reset the app.',
+    'settings.file.export': 'Save backup file',
+    'settings.file.exportSub': 'Decks and learning history · JSON',
+    'settings.file.import': 'Import backup file',
+    'settings.file.importSub': 'Preview before replacing or adding cards',
+    'settings.file.previewTitle': 'Backup preview',
+    'settings.file.preview':
+      'Exported: {date}\n{decks} decks · {cards} cards · {events} observations.\nAdd new cards keeps existing content and schedules. Replace decks overwrites them. Learning history is merged in both modes. Preferences and streak are not included.',
+    'settings.file.unknownDate': 'date unavailable',
+    'settings.file.merge': 'Add new cards',
+    'settings.file.replace': 'Replace decks',
+    'settings.alert.fileTooLarge.title': 'Backup file too large',
+    'settings.alert.fileTooLarge.message':
+      'Choose a JSON backup up to 20 MB and 10 million characters. No data was changed.',
+    'settings.alert.sharingUnavailable.title': 'File sharing unavailable',
+    'settings.alert.sharingUnavailable.message':
+      'You can use Export Backup to copy the JSON instead.',
     'settings.alert.backupError.title': 'Backup failed',
     'settings.alert.backupError.message':
       'Could not complete the backup operation. Please try again.',

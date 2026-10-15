@@ -257,6 +257,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 - [ ] **B11.1 [AI, SIM]** Make backup export/import usable as a file with clear dates/content, validation, safe merge/replace, preview, and recovery. Preserve custom cards, edits, favorites, event history, and preferences.
   - [x] **B11.1-A [AI]** Include versioned recognition history in clipboard backups; retain legacy import support, validate incoming events, and merge without deleting newer observations. Full file-based/atomic recovery work remains open.
+  - [x] **B11.1-A2 [AI, SIM]** Add dated JSON file export/import, size and schema validation, in-app counts/date/limitations preview, guarded additive merge or deck replacement, safe share-file lifetime, and iOS Expo Go save/import/cancel acceptance. Preferences, streak, seen-word and full-state migration remain open.
 - [ ] **B11.2 [AI]** Test corrupt/oversized/old backups, partial writes, duplicate IDs, migration failure, and interrupted restore; never silently wipe existing progress.
   - [x] **B11.2-A [AI]** Validate clipboard backup deck/card structure, scheduling and optional fields, unique deck/card IDs, supported versions/history, and input size before confirmation or writes; preserve valid legacy content and handle clipboard-read errors.
   - [x] **B11.2-B1 [AI]** Add serialized durable restore journaling, replay before app storage access, startup recovery/retry, conflict validation before writes, and failure-injection tests for interrupted deck/history restore.
@@ -418,3 +419,9 @@ B11.6-A adds tested JavaScript error redaction and a code-backed data inventory,
 B02.3-B1 and B02.4-B1 add one recoverable grade intent covering scheduling, daily counters, seen words, streak, self-rated recall evidence and the next-card pointer. Study and Difficult practice preserve attempt identity through retry and no longer increment a second independent counter. See [the report](docs/qa/2026-10-15-transactional-grading/REPORT.md). Exact queue restoration, broad external-navigation/editor races and physical/OS interruption checks remain open.
 
 Diagnostics implementation `3f55dbf` was merged and pushed to main. [GitHub Actions run 38680261404](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38680261404) passed quality/content and iOS/Android project generation and production JS bundle jobs. Final diagnostics baseline: 45 suites / 453 tests.
+
+### File backups and renewed iOS acceptance — 2026-10-15
+
+B11.1-A2 delivers file-based deck/card/event backup with explicit preview and additive merge. Simulator testing caught and fixed a picker-to-alert presentation race and an existing invalid native Alert import masked by the Jest mock. See [the report](docs/qa/2026-10-15-file-backups/REPORT.md). Full-state backup, interrupted restore acceptance, Android provider behavior and physical-device acceptance remain open.
+
+Grading implementation `1a329d6` passed [GitHub Actions run 38681070946](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38681070946). Renewed iOS simulator checks confirmed one grade, daily/new-card totals and persisted self-rated event after process restart; exact queue and interruption work remains open.

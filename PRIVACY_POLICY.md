@@ -18,9 +18,11 @@ Core flashcard and quiz data can be used locally. This does not mean every app/b
 
 The developer's separate audio-generation script can send authored text to ElevenLabs when deliberately run with developer credentials. The learning app does not call that script to synthesize learner content during ordinary use.
 
-## Clipboard backups and exports
+## Backups and exports
 
 Export Backup copies deck/card data and supported learning-event history to the system clipboard. Flagged-card export also copies learning text. Clipboard contents may be available to other apps or OS clipboard-sync features according to platform settings. Imports read clipboard text only when the import action is selected and require confirmation before replacement.
+
+File export creates dated JSON in the app cache and opens the system share sheet. You choose its destination, which may include local Files or a provider that uploads to cloud storage. File import reads the document you select, validates it and shows an in-app preview before you choose additive merge or deck replacement. The temporary imported cache copy is removed on a best-effort basis after reading; the selected source is retained. Export cache files remain available for recipients after hand-off. On later exports, the app attempts to remove its own export files at least 24 hours old; OS cache cleanup can also apply. This is not a guaranteed 24-hour deletion deadline.
 
 These backups are not encrypted. They currently omit some state, including preferences, streak and seen-word records, and should not be described as complete device backups. A saved restore intent may complete on retry/restart after an interrupted write. Copies saved or shared outside the app remain under your control.
 

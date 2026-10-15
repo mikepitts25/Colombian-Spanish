@@ -7,6 +7,12 @@ import {
 } from '../../src/storage/learningEvents';
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
 import SettingsScreen from '../../src/screens/SettingsScreen';
+import { pickBackupFile, shareBackupFile } from '../../src/services/backupFiles';
+jest.mock('../../src/services/backupFiles', () => ({
+  pickBackupFile: jest.fn(),
+  shareBackupFile: jest.fn(),
+  BackupFileError: class extends Error {},
+}));
 import { restoreBackup } from '../../src/storage/backupRestore';
 jest.mock('../../src/storage/backupRestore', () => {
   const actual = jest.requireActual('../../src/storage/backupRestore');
@@ -48,7 +54,7 @@ jest.mock('../../src/context/LanguageContext', () => {
 
 import { getDailyProgress, loadDecks } from '../../src/storage/storage';
 import * as Clipboard from 'expo-clipboard';
-import { Alert } from 'react-native/Libraries/Alert/Alert';
+import { Alert } from 'react-native';
 
 const mockGetDailyProgress = getDailyProgress as jest.Mock;
 const mockLoadDecks = loadDecks as jest.Mock;
@@ -64,6 +70,8 @@ beforeEach(async () => {
   mockLoadDecks.mockResolvedValue([]);
   mockSetStringAsync.mockResolvedValue(undefined);
   mockGetStringAsync.mockResolvedValue('');
+  (pickBackupFile as jest.Mock).mockResolvedValue(null);
+  (shareBackupFile as jest.Mock).mockResolvedValue(undefined);
 });
 
 describe('SettingsScreen rendering', () => {
@@ -534,4 +542,69 @@ it('accepts a full built-in library backup without changing its content', async 
   expect(confirm).toBeDefined();
   await act(async () => confirm[2].find((button: any) => button.style === 'destructive').onPress());
   expect(restoreBackup).toHaveBeenCalledWith(ALL_DECKS, []);
+});
+
+it('previews a file backup in the app and exposes explicit merge and replace choices', async () => {
+  (pickBackupFile as jest.Mock).mockResolvedValue(
+    JSON.stringify({
+      kind: 'colombian-spanish-backup',
+      version: 2,
+      exportedAt: '2026-10-15T12:00:00.000Z',
+      decks: [validBackupDeck],
+      learningEvents: [],
+    }),
+  );
+  const screen = render(<SettingsScreen />);
+  await act(async () => fireEvent.press(await screen.findByText('Importar archivo de respaldo')));
+  expect(await screen.findByText('Vista previa del respaldo')).toBeTruthy();
+  expect(screen.getByText(/Exportado: 2026-10-15/)).toBeTruthy();
+  expect(screen.getByText('Reemplazar decks')).toBeTruthy();
+  expect(restoreBackup).not.toHaveBeenCalled();
+  await act(async () => fireEvent.press(screen.getByText('Añadir tarjetas nuevas')));
+  expect(restoreBackup).toHaveBeenCalledWith([validBackupDeck], [], 'merge-new');
+});
+it('shares a dated file snapshot without overwriting clipboard contents', async () => {
+  const screen = render(<SettingsScreen />);
+  await act(async () => fireEvent.press(await screen.findByText('Guardar archivo de respaldo')));
+  expect(shareBackupFile).toHaveBeenCalledWith(expect.any(String), 'Guardar archivo de respaldo');
+  const payload = JSON.parse((shareBackupFile as jest.Mock).mock.calls[0][0]);
+  expect(payload.exportedAt).toEqual(expect.any(String));
+  expect(payload.version).toBe(2);
+  expect(mockSetStringAsync).not.toHaveBeenCalled();
+});
+
+it('leaves data unchanged when file selection is cancelled', async () => {
+  const screen = render(<SettingsScreen />);
+  await act(async () => fireEvent.press(await screen.findByText('Importar archivo de respaldo')));
+  expect(restoreBackup).not.toHaveBeenCalled();
+  expect(mockAlert).not.toHaveBeenCalled();
+});
+it('rejects an invalid file before presenting restore choices', async () => {
+  (pickBackupFile as jest.Mock).mockResolvedValue('{}');
+  const screen = render(<SettingsScreen />);
+  await act(async () => fireEvent.press(await screen.findByText('Importar archivo de respaldo')));
+  expect(await screen.findByText(/Respaldo inválido/)).toBeTruthy();
+  expect(restoreBackup).not.toHaveBeenCalled();
+});
+
+it('keeps preview controls guarded until restore finishes', async () => {
+  (pickBackupFile as jest.Mock).mockResolvedValue(
+    JSON.stringify({ kind: 'colombian-spanish-backup', version: 2, decks: [], learningEvents: [] }),
+  );
+  const screen = render(<SettingsScreen />);
+  await act(async () => fireEvent.press(await screen.findByText('Importar archivo de respaldo')));
+  let finish!: () => void;
+  (restoreBackup as jest.Mock).mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  fireEvent.press(await screen.findByText('Añadir tarjetas nuevas'));
+  fireEvent.press(screen.getByText('Cancelar'));
+  await act(async () => fireEvent.press(screen.getByText('Guardar archivo de respaldo')));
+  expect(screen.getByText('Vista previa del respaldo')).toBeTruthy();
+  expect(shareBackupFile).not.toHaveBeenCalled();
+  await act(async () => finish());
+  await waitFor(() => expect(screen.queryByText('Vista previa del respaldo')).toBeNull());
 });

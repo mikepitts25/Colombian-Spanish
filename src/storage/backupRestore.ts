@@ -8,9 +8,14 @@ import {
 } from './learningEvents';
 
 /** Replace decks and merge history as one recoverable, idempotent restore intent. */
-export async function restoreBackup(decks: Deck[], learningEvents?: unknown): Promise<void> {
+export async function restoreBackup(
+  decks: Deck[],
+  learningEvents?: unknown,
+  mode: 'replace' | 'merge-new' = 'replace',
+): Promise<void> {
   // Snapshot validated input so a caller cannot mutate it while it waits in a queue.
   validateBackupDecks(decks);
+  if (!['replace', 'merge-new'].includes(mode)) throw new Error('Invalid restore mode');
   const deckJSON = JSON.stringify(decks);
   const incoming =
     learningEvents === undefined ? undefined : validateLearningEvents(learningEvents);
@@ -28,7 +33,23 @@ export async function restoreBackup(decks: Deck[], learningEvents?: unknown): Pr
           events: mergeEventHistory(current, incoming),
         });
       }
-      await tx.setItem('SRS_DECKS_V3', deckJSON);
+      let restoredJSON = deckJSON;
+      if (mode === 'merge-new') {
+        const raw = await tx.getItem('SRS_DECKS_V3');
+        const current = raw === null ? [] : JSON.parse(raw);
+        validateBackupDecks(current);
+        const incomingDecks = JSON.parse(deckJSON) as Deck[];
+        const ids = new Set(current.flatMap((deck) => deck.cards.map((card) => card.id)));
+        for (const incomingDeck of incomingDecks) {
+          const newCards = incomingDeck.cards.filter((card) => !ids.has(card.id));
+          newCards.forEach((card) => ids.add(card.id));
+          const existing = current.find((deck) => deck.id === incomingDeck.id);
+          if (existing) existing.cards.push(...newCards);
+          else current.push({ ...incomingDeck, cards: newCards });
+        }
+        restoredJSON = JSON.stringify(current);
+      }
+      await tx.setItem('SRS_DECKS_V3', restoredJSON);
       if (historyJSON !== undefined) await tx.setItem('SRS_LEARNING_EVENTS_V1', historyJSON);
     }),
   );

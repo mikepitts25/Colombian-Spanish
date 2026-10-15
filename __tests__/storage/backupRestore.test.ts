@@ -81,3 +81,45 @@ it('serializes concurrent append with restore without losing either observation'
   ]);
   expect((await getLearningEvents()).map((e) => e.id).sort()).toEqual(['e1', 'later']);
 });
+
+it('merges only new cards/decks without overwriting existing content or progress', async () => {
+  const original = [
+    {
+      id: 'd1',
+      name: 'Local name',
+      cards: [
+        {
+          id: 'c1',
+          front: 'local',
+          back: 'local',
+          createdAt: 0,
+          due: 1000,
+          reps: 3,
+          interval: 3,
+          ease: 2.5,
+        },
+      ],
+    },
+  ];
+  await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(original));
+  await restoreBackup(
+    [
+      {
+        id: 'd1',
+        name: 'Backup name',
+        cards: [
+          { ...original[0].cards[0], front: 'incoming', reps: 0 },
+          { ...original[0].cards[0], id: 'c2' },
+        ],
+      },
+      { id: 'd2', name: 'New deck', cards: [{ ...original[0].cards[0], id: 'c3' }] },
+    ],
+    [],
+    'merge-new',
+  );
+  const merged = await loadDecks();
+  expect(merged[0].name).toBe('Local name');
+  expect(merged[0].cards[0]).toEqual(original[0].cards[0]);
+  expect(merged[0].cards.map((card) => card.id)).toEqual(['c1', 'c2']);
+  expect(merged[1].cards.map((card) => card.id)).toEqual(['c3']);
+});
