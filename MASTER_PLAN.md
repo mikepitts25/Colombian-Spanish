@@ -478,3 +478,5 @@ Implementation `d9687b9` was merged and pushed to main. [GitHub Actions run 3875
 ### Onboarding save recovery — 2026-10-15
 
 B02.4-B2d fixes silent onboarding save failure, commits setup together and blocks navigation until acknowledged success. [Report](docs/qa/2026-10-15-onboarding-recovery/REPORT.md). Final suite: 57 / 602 tests; static/content checks and fresh independent review passed. A dedicated fresh iOS simulator reached Travel directly with the selected goal and consistent stored setup. Native low-storage/physical interruption and broader planner work remain open.
+
+Implementation `c77550b` was merged and pushed to main. [GitHub Actions run 38751487389](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38751487389) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.

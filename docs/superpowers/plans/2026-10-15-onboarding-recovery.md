@@ -4,8 +4,10 @@ Bounded correction under B02.4-B2d. Existing onboarding silently swallows persis
 
 - [x] Reproduce write-failure navigation and pending-control failures in screen tests; pin atomic replay/count preservation in storage tests.
 - [x] Implement coordinated onboarding completion and explicit retry/pending state.
-- [ ] Full checks and fresh review; update master/evidence, merge/push and verify CI.
+- [x] Full checks and fresh review; update master/evidence, merge/push and verify CI.
 
 Ruling: this is a correctness fix in an existing flow, not a new onboarding redesign. Standing authorization covers implementation, merge and push.
 
 Evidence: screen regressions failed before the correction and passed afterward, with 57 suites / 602 tests green. Static/content checks passed. Fresh review found no actionable findings (47 focused tests); Spanish failure/retry rendering was added for its coverage gap and passed. Fresh iOS successful onboarding confirmed goal/cap separation and exact stored setup; injected failure/replay remains automated evidence. Integration/CI pending.
+
+Implementation `c77550b` was merged and pushed to main. [GitHub Actions run 38751487389](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38751487389) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
