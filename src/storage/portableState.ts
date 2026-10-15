@@ -1,3 +1,4 @@
+import { LEARNING_LEVELS, STUDY_MINUTES, isTripDate } from '../utils/learningProfile';
 import { isValidStudySession } from './studySession';
 import { storedDayKey } from '../utils/calendarDay';
 import { StorageAccess } from './durableStorage';
@@ -77,6 +78,9 @@ function valid(name: keyof PortableState, value: unknown): boolean {
         'onboardingDone',
         'learningReason',
         'homeRegion',
+        'learningLevel',
+        'studyMinutes',
+        'tripDate',
       ]) &&
       ['autoSpeak', 'onboardingDone'].every((k) =>
         optional(value, k, (v) => typeof v === 'boolean'),
@@ -91,6 +95,11 @@ function valid(name: keyof PortableState, value: unknown): boolean {
         'newCardsPerDay',
         (v) => integer(v) && (v as number) >= 1 && (v as number) <= 100,
       ) &&
+      optional(value, 'learningLevel', (v) =>
+        (LEARNING_LEVELS as readonly unknown[]).includes(v),
+      ) &&
+      optional(value, 'studyMinutes', (v) => (STUDY_MINUTES as readonly unknown[]).includes(v)) &&
+      optional(value, 'tripDate', (v) => v === null || isTripDate(v)) &&
       optional(value, 'uiLanguage', (v) => ['en', 'es'].includes(v as string)) &&
       optional(
         value,

@@ -8,6 +8,7 @@ import HomeScreen from '../screens/HomeScreen';
 import StudyScreen from '../screens/StudyScreen';
 import ProgressScreen from '../screens/ProgressScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import LearningPreferencesScreen from '../screens/LearningPreferencesScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import DailyGoalScreen from '../screens/DailyGoalScreen';
 import ManageDecksScreen from '../screens/ManageDecksScreen';
@@ -123,6 +124,11 @@ export default function RootNavigator() {
         name="Notifications"
         component={NotificationsScreen}
         options={{ ...stackHeaderOpts, headerShown: false }}
+      />
+      <Stack.Screen
+        name="LearningPreferences"
+        component={LearningPreferencesScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="DailyGoal"

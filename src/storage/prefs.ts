@@ -1,4 +1,11 @@
 import AsyncStorage, { StorageAccess, withStorageTransaction } from './durableStorage';
+import {
+  LearningLevel,
+  StudyMinutes,
+  LEARNING_LEVELS,
+  STUDY_MINUTES,
+  isTripDate,
+} from '../utils/learningProfile';
 
 const KEY = 'SRS_PREFS_V1';
 
@@ -15,6 +22,9 @@ export type Prefs = {
   onboardingDone: boolean;
   learningReason: LearningReason | null;
   homeRegion: HomeRegion | null;
+  learningLevel: LearningLevel;
+  studyMinutes: StudyMinutes;
+  tripDate: string | null;
 };
 
 const DEFAULTS: Prefs = {
@@ -25,10 +35,20 @@ const DEFAULTS: Prefs = {
   onboardingDone: false,
   learningReason: null,
   homeRegion: null,
+  learningLevel: 'beginner',
+  studyMinutes: 5,
+  tripDate: null,
 };
 
-const LEARNING_REASONS: LearningReason[] = ['travel', 'move', 'love', 'work', 'culture', 'general'];
-const HOME_REGIONS: HomeRegion[] = ['all', 'paisa', 'rolo', 'costeno', 'valluno', 'llanero'];
+export const LEARNING_REASONS: LearningReason[] = [
+  'travel',
+  'move',
+  'love',
+  'work',
+  'culture',
+  'general',
+];
+export const HOME_REGIONS: HomeRegion[] = ['all', 'paisa', 'rolo', 'costeno', 'valluno', 'llanero'];
 
 function normalizeUiLanguage(value: unknown): UiLanguage {
   return value === 'en' || value === 'es' ? value : DEFAULTS.uiLanguage;
@@ -40,6 +60,13 @@ export async function getPrefs(access: StorageAccess = AsyncStorage): Promise<Pr
   try {
     const parsed = JSON.parse(raw) as Partial<Prefs>;
     return {
+      learningLevel: LEARNING_LEVELS.includes(parsed.learningLevel as LearningLevel)
+        ? parsed.learningLevel!
+        : DEFAULTS.learningLevel,
+      studyMinutes: STUDY_MINUTES.includes(parsed.studyMinutes as StudyMinutes)
+        ? parsed.studyMinutes!
+        : DEFAULTS.studyMinutes,
+      tripDate: isTripDate(parsed.tripDate) ? parsed.tripDate : null,
       autoSpeak: typeof parsed.autoSpeak === 'boolean' ? parsed.autoSpeak : DEFAULTS.autoSpeak,
       speechRate:
         typeof parsed.speechRate === 'number' &&

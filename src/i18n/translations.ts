@@ -2,6 +2,23 @@ import { UiLanguage } from '../storage/prefs';
 
 export const translations = {
   es: {
+    'profile.title': 'Tus preferencias de aprendizaje',
+    'profile.subtitle':
+      'Ajusta tu enfoque. Estos datos quedan en este dispositivo y en tus copias de seguridad.',
+    'profile.level': 'Tu nivel inicial',
+    'profile.level.beginner': 'Principiante',
+    'profile.level.basic': 'Conozco lo básico',
+    'profile.level.confident': 'Me comunico con confianza',
+    'profile.levelNote': 'Es una autoevaluación que puedes cambiar, no una prueba de nivel.',
+    'profile.time': 'Tiempo disponible',
+    'profile.minutes': '{count} minutos',
+    'profile.trip': 'Fecha de viaje (opcional, AAAA-MM-DD)',
+    'profile.tripNote':
+      'Déjala vacía para quitarla. No cambia tu meta diaria ni tu límite de tarjetas nuevas.',
+    'profile.invalidDate': 'Escribe una fecha válida en formato AAAA-MM-DD.',
+    'profile.loadError': 'No se pudieron cargar tus preferencias.',
+    'profile.saveError': 'No se pudo guardar. Tus cambios siguen aquí.',
+    'profile.saved': 'Preferencias guardadas.',
     'tabs.home': 'INICIO',
     'tabs.study': 'ESTUDIAR',
     'tabs.progress': 'PROGRESO',
@@ -463,6 +480,22 @@ export const translations = {
     'nav.difficultWords': 'Palabras Difíciles',
   },
   en: {
+    'profile.title': 'Your learning preferences',
+    'profile.subtitle': 'Adjust your focus. These details stay on this device and in your backups.',
+    'profile.level': 'Your starting level',
+    'profile.level.beginner': 'Beginner',
+    'profile.level.basic': 'I know the basics',
+    'profile.level.confident': 'I communicate confidently',
+    'profile.levelNote': 'This is an adjustable self-report, not a proficiency test.',
+    'profile.time': 'Time available',
+    'profile.minutes': '{count} minutes',
+    'profile.trip': 'Trip date (optional, YYYY-MM-DD)',
+    'profile.tripNote':
+      'Leave blank to remove it. This does not change your daily goal or new-card limit.',
+    'profile.invalidDate': 'Enter a real date in YYYY-MM-DD format.',
+    'profile.loadError': 'Could not load your preferences.',
+    'profile.saveError': 'Could not save. Your edits are still here.',
+    'profile.saved': 'Preferences saved.',
     'tabs.home': 'HOME',
     'tabs.study': 'STUDY',
     'tabs.progress': 'PROGRESS',

@@ -315,6 +315,12 @@ export default function SettingsScreen() {
         <Text style={styles.groupLabel}>{t('settings.section.learning')}</Text>
         <View style={styles.groupCard}>
           <SettingsRow
+            emoji="🧭"
+            title={t('profile.title')}
+            onPress={() => nav.navigate('LearningPreferences')}
+          />
+          <Divider />
+          <SettingsRow
             emoji="🎯"
             title={t('settings.dailyGoal.title')}
             subtitle={t('settings.dailyGoal.subtitle', { count: target })}

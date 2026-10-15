@@ -13,6 +13,9 @@ const DEFAULT_PREFS = {
   onboardingDone: false,
   learningReason: null,
   homeRegion: null,
+  learningLevel: 'beginner',
+  studyMinutes: 5,
+  tripDate: null,
 };
 
 describe('getPrefs', () => {

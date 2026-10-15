@@ -187,6 +187,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 - [ ] **B05.1 [AI, H-PRODUCT]** Prepare a concrete starting audience and journey: default proposal is an adult with beginner/basic Spanish preparing for everyday life in Colombia. Make level self-report adjustable; validate the proposal in the pilot.
 - [ ] **B05.2 [AI]** Use purpose and region throughout recommendations, with editable preferences and a general-content fallback. Include optional trip date and available study time.
+  - [x] **B05.2-A [AI, SIM]** Add a bilingual Settings editor for purpose, region, self-reported level, 3/5/10-minute time and optional calendar trip date; preserve unrelated state and version-3 backups, with retry and iOS save/reopen evidence.
+  - [ ] **B05.2-B [AI, SIM]** Consume these preferences in bounded recommendations with general fallback, preserving daily-cap and exact-resume behavior.
 - [ ] **B05.3 [AI]** Build 3/5/10-minute plan options combining due review, a small amount of new material, and one applied activity. Use initial duration estimates, then calibrate with measured session times.
 - [ ] **B05.4 [AI, SIM]** Separate reviews due, new cards available, and today's bounded plan; provide catch-up after absence without resetting progress or flooding the learner.
   - [x] **B05.4-A [AI, SIM]** Separate studied reviews due now, fresh library cards, and remaining daily new-card allowance; verify English/Spanish Home and count changes after study.
@@ -480,3 +482,7 @@ Implementation `d9687b9` was merged and pushed to main. [GitHub Actions run 3875
 B02.4-B2d fixes silent onboarding save failure, commits setup together and blocks navigation until acknowledged success. [Report](docs/qa/2026-10-15-onboarding-recovery/REPORT.md). Final suite: 57 / 602 tests; static/content checks and fresh independent review passed. A dedicated fresh iOS simulator reached Travel directly with the selected goal and consistent stored setup. Native low-storage/physical interruption and broader planner work remain open.
 
 Implementation `c77550b` was merged and pushed to main. [GitHub Actions run 38751487389](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38751487389) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
+
+### Editable learning preferences — 2026-10-15
+
+B05.2-A provides an adjustable local profile with version-3 backup support and bilingual Settings navigation. [Report](docs/qa/2026-10-15-learning-preferences/REPORT.md). Final suite: 59 / 624 tests; static/content checks and independent review passed. iOS validated invalid/valid dates, keyboard dismissal, save and English reopen without changing daily counters. Personalized recommendations and timed plans remain open.
