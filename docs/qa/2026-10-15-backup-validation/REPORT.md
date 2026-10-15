@@ -22,4 +22,4 @@ This package does not add file export/import, preview, merge/replace choices, pr
 
 ## Final verification and integration
 
-**41 suites / 419 tests passed**, plus TypeScript, ESLint, Prettier, data validation, deterministic editorial inventory comparison, and `git diff --check`. Inventory remains 47 decks / 1,392 cards / 1,392 audio mappings. Independent follow-up review found no remaining actionable findings within scope. Integration/CI results will be appended after execution.
+**41 suites / 419 tests passed**, plus TypeScript, ESLint, Prettier, data validation, deterministic editorial inventory comparison, and `git diff --check`. Inventory remains 47 decks / 1,392 cards / 1,392 audio mappings. Independent follow-up review found no remaining actionable findings within scope. Implementation `6e0cbdf` was fast-forward merged and pushed to main. [GitHub Actions run 38678603279](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38678603279) passed all quality/content and iOS/Android project generation and production JS bundle jobs. Those jobs do not compile/sign native binaries or validate hardware.
