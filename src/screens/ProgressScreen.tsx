@@ -59,7 +59,8 @@ export default function ProgressScreen() {
   const dailyStats = snapshot.daily;
   const streak = snapshot.streak;
   const recognition = snapshot.history.events.filter(
-    (event) => event.modality === 'recognition' && event.evidence === 'answer-checked',
+    (event) =>
+      event.modality === 'recognition' && event.evidence === 'answer-checked' && !event.missionId,
   );
   const recognitionCorrect = recognition.filter((event) => event.outcome === 'correct').length;
 

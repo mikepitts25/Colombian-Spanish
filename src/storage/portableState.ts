@@ -1,9 +1,11 @@
+import { validateMissionEnvelope } from '../missions/engine';
 import { LEARNING_LEVELS, STUDY_MINUTES, isTripDate } from '../utils/learningProfile';
 import { isValidStudySession } from './studySession';
 import { storedDayKey } from '../utils/calendarDay';
 import { StorageAccess } from './durableStorage';
 
 const FIELDS = {
+  missions: { key: 'SRS_MISSIONS_V1', empty: { schemaVersion: 1, runs: [] } },
   prefs: { key: 'SRS_PREFS_V1', empty: {} },
   daily: {
     key: 'SRS_DAILY_PROGRESS_V1',
@@ -15,7 +17,9 @@ const FIELDS = {
   lastSession: { key: 'SRS_LAST_STUDY_SESSION_V1', empty: {} },
   notificationPrefs: { key: 'SRS_NOTIFICATION_PREFS_V1', empty: {} },
 } as const;
-export type PortableState = Record<keyof typeof FIELDS, unknown | null>;
+export type PortableState = Record<Exclude<keyof typeof FIELDS, 'missions'>, unknown | null> & {
+  missions?: unknown | null;
+};
 const names = Object.keys(FIELDS) as (keyof PortableState)[];
 const record = (v: unknown): v is Record<string, unknown> =>
   !!v && typeof v === 'object' && !Array.isArray(v);
@@ -44,6 +48,14 @@ function uniqueRows(
 }
 function valid(name: keyof PortableState, value: unknown): boolean {
   if (value === null) return true;
+  if (name === 'missions') {
+    try {
+      validateMissionEnvelope(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }
   if (name === 'seenWords')
     return uniqueRows(
       value,
@@ -141,9 +153,11 @@ function valid(name: keyof PortableState, value: unknown): boolean {
 export function validatePortableState(value: unknown): asserts value is PortableState {
   if (
     !record(value) ||
-    Object.keys(value).length !== names.length ||
+    Object.keys(value).some((name) => !names.includes(name as keyof PortableState)) ||
     !names.every(
-      (name) => Object.prototype.hasOwnProperty.call(value, name) && valid(name, value[name]),
+      (name) =>
+        (name === 'missions' && value[name] === undefined) ||
+        (Object.prototype.hasOwnProperty.call(value, name) && valid(name, value[name])),
     )
   )
     throw new Error('Invalid portable application state');

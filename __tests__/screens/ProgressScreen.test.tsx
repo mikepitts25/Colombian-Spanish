@@ -71,3 +71,10 @@ it('shows unavailable evidence instead of a misleading empty score when history 
   expect(await screen.findByText('Recognition results unavailable')).toBeTruthy();
   expect(screen.queryByText('No recognition results yet')).toBeNull();
 });
+
+it('keeps mission recognition out of the quiz-only recognition metric', async () => {
+  await appendLearningEvent(observation('quiz'));
+  await appendLearningEvent(observation('mission', { missionId: 'morning', outcome: 'incorrect' }));
+  const screen = render(<ProgressScreen />);
+  expect(await screen.findByText('1 / 1 correct')).toBeTruthy();
+});

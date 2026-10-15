@@ -1,3 +1,4 @@
+import { SHOW_REVIEW_TOOLS } from '../config';
 import React, { useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -327,6 +328,15 @@ export default function HomeScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('home.tools')}</Text>
+          {SHOW_REVIEW_TOOLS && (
+            <Pressable
+              accessibilityRole="button"
+              style={[styles.quickAction, { minHeight: 48 }]}
+              onPress={() => nav.navigate('MissionPreview')}
+            >
+              <Text style={styles.quickActionLabel}>{t('mission.draft')}</Text>
+            </Pressable>
+          )}
           <View style={styles.quickActions}>
             <Pressable style={styles.quickAction} onPress={() => nav.navigate('Quiz')}>
               <Text style={styles.quickActionIcon}>🎯</Text>

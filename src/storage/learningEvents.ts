@@ -1,23 +1,7 @@
 import AsyncStorage, { StorageAccess } from './durableStorage';
-import type { CardQuality } from '../types';
-
-export type LearningModality = 'recognition' | 'recall' | 'listening' | 'speaking';
-export interface LearningEvent {
-  schemaVersion: 1;
-  id: string;
-  cardId: string;
-  deckId: string;
-  sessionId: string;
-  missionId?: string;
-  exercise?: { id: string; contentVersion: number; kind: 'typed-recall' | 'cloze' };
-  modality: LearningModality;
-  outcome: 'correct' | 'incorrect';
-  evidence: 'self-rated' | 'answer-checked';
-  occurredAt: number;
-  quality?: CardQuality; // Self-rating only; absent from older/assessed observations
-  hintsUsed: number | null;
-  durationMs: number | null;
-}
+import { LearningEvent, normalizeEvent, validateLearningEvents } from './learningEventSchema';
+export type { LearningEvent, LearningModality } from './learningEventSchema';
+export { validateLearningEvents } from './learningEventSchema';
 
 const KEY = 'SRS_LEARNING_EVENTS_V1';
 const MAX_EVENTS = 5000;
@@ -27,68 +11,6 @@ let sequence = 0;
 export function createLearningSessionId(): string {
   // Local observation identity, not an authentication token.
   return `${Date.now().toString(36)}-${(++sequence).toString(36)}-${Math.random().toString(36).slice(2)}`;
-}
-
-function normalizeEvent(value: unknown): LearningEvent {
-  const event = value as LearningEvent | null;
-  const text = (item: unknown) => typeof item === 'string' && item.trim().length > 0;
-  const nonnegative = (item: unknown) =>
-    typeof item === 'number' && Number.isFinite(item) && item >= 0;
-  if (
-    !event ||
-    event.schemaVersion !== 1 ||
-    ![event.id, event.cardId, event.deckId, event.sessionId].every(text) ||
-    (event.missionId !== undefined && !text(event.missionId)) ||
-    !['recognition', 'recall', 'listening', 'speaking'].includes(event.modality) ||
-    !['correct', 'incorrect'].includes(event.outcome) ||
-    !['self-rated', 'answer-checked'].includes(event.evidence) ||
-    (event.exercise !== undefined &&
-      (!event.exercise ||
-        typeof event.exercise !== 'object' ||
-        Array.isArray(event.exercise) ||
-        Object.keys(event.exercise).some(
-          (key) => !['id', 'contentVersion', 'kind'].includes(key),
-        ) ||
-        !text(event.exercise.id) ||
-        !Number.isSafeInteger(event.exercise.contentVersion) ||
-        event.exercise.contentVersion < 1 ||
-        !['typed-recall', 'cloze'].includes(event.exercise.kind) ||
-        event.modality !== 'recall' ||
-        event.evidence !== 'answer-checked' ||
-        event.hintsUsed === null ||
-        event.quality !== undefined)) ||
-    !nonnegative(event.occurredAt) ||
-    (event.quality !== undefined && ![0, 1, 2, 3, 4, 5].includes(event.quality)) ||
-    (event.hintsUsed !== null &&
-      (!nonnegative(event.hintsUsed) || !Number.isInteger(event.hintsUsed))) ||
-    (event.durationMs !== null && !nonnegative(event.durationMs))
-  ) {
-    throw new Error('Invalid learning event');
-  }
-  return {
-    schemaVersion: 1,
-    id: event.id,
-    cardId: event.cardId,
-    deckId: event.deckId,
-    sessionId: event.sessionId,
-    ...(event.missionId === undefined ? {} : { missionId: event.missionId }),
-    ...(event.exercise === undefined ? {} : { exercise: { ...event.exercise } }),
-    modality: event.modality,
-    outcome: event.outcome,
-    evidence: event.evidence,
-    occurredAt: event.occurredAt,
-    ...(event.quality === undefined ? {} : { quality: event.quality }),
-    hintsUsed: event.hintsUsed,
-    durationMs: event.durationMs,
-  };
-}
-
-export function validateLearningEvents(value: unknown): LearningEvent[] {
-  if (!Array.isArray(value)) throw new Error('Invalid learning history');
-  const events = value.map(normalizeEvent);
-  const ids = new Set(events.map((event) => event.id));
-  if (ids.size !== events.length) throw new Error('Duplicate learning event IDs');
-  return events;
 }
 
 export async function readLearningEvents(

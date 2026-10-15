@@ -1,0 +1,271 @@
+{
+  "status": "unreviewed-draft",
+  "mission": {
+    "schemaVersion": 1,
+    "id": "first-morning-medellin",
+    "contentVersion": 1,
+    "title": {
+      "en": "Your first morning in Medellín",
+      "es": "Tu primera mañana en Medellín"
+    },
+    "entry": "welcome",
+    "prerequisites": [],
+    "media": [],
+    "nodes": [
+      {
+        "id": "welcome",
+        "kind": "scene",
+        "title": {
+          "en": "At the café",
+          "es": "En la cafetería"
+        },
+        "text": {
+          "en": "Practice greeting the staff, asking for coffee, choosing an alternative and saying thank you. This draft uses reading and typing; it does not assess listening or speaking.",
+          "es": "Practica saludar, pedir café, elegir una alternativa y dar las gracias. Este borrador usa lectura y escritura; no evalúa escucha ni habla."
+        },
+        "hints": [],
+        "next": "greeting"
+      },
+      {
+        "id": "greeting",
+        "kind": "production",
+        "title": {
+          "en": "Greet the staff",
+          "es": "Saluda al personal"
+        },
+        "prompt": {
+          "en": "Greet the staff as you arrive in the morning.",
+          "es": "Saluda al llegar por la mañana."
+        },
+        "correction": {
+          "en": "A morning greeting: buenos días. A shorter alternative is buen día.",
+          "es": "Un saludo por la mañana: buenos días. Otra opción es buen día."
+        },
+        "hints": [
+          {
+            "en": "Begin with buenos…",
+            "es": "Empieza con buenos…"
+          }
+        ],
+        "next": "request",
+        "exercise": {
+          "schemaVersion": 1,
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "cardId": "0010",
+          "deckId": "deck-greetings",
+          "kind": "typed-recall",
+          "prompt": "Greet the staff in the morning.",
+          "acceptedAnswers": ["Buenos días", "Buen día"],
+          "explanation": "Use a morning greeting.",
+          "hints": ["Begin with buenos…"]
+        }
+      },
+      {
+        "id": "request",
+        "kind": "production",
+        "title": {
+          "en": "Ask for coffee",
+          "es": "Pide un café"
+        },
+        "prompt": {
+          "en": "Ask for one coffee politely.",
+          "es": "Pide un café de forma cortés."
+        },
+        "correction": {
+          "en": "One possible request is un café, por favor. You can also begin with quisiera.",
+          "es": "Una opción es un café, por favor. También puedes empezar con quisiera."
+        },
+        "hints": [
+          {
+            "en": "Include por favor.",
+            "es": "Incluye por favor."
+          },
+          {
+            "en": "Try: un café, por favor.",
+            "es": "Prueba: un café, por favor."
+          }
+        ],
+        "next": "unavailable",
+        "exercise": {
+          "schemaVersion": 1,
+          "id": "morning-coffee",
+          "contentVersion": 1,
+          "cardId": "0024",
+          "deckId": "deck-food",
+          "kind": "typed-recall",
+          "prompt": "Ask for one coffee politely.",
+          "acceptedAnswers": ["Un café, por favor", "Quisiera un café, por favor"],
+          "explanation": "A short polite request.",
+          "hints": ["Include por favor.", "Try: un café, por favor."]
+        }
+      },
+      {
+        "id": "unavailable",
+        "kind": "choice",
+        "title": {
+          "en": "Choose an alternative",
+          "es": "Elige una alternativa"
+        },
+        "prompt": {
+          "en": "The staff says: «No tenemos café. ¿Quieres agua?» What works next?",
+          "es": "El personal dice: «No tenemos café. ¿Quieres agua?» ¿Qué puedes hacer?"
+        },
+        "cardId": "0025",
+        "deckId": "deck-food",
+        "hints": [
+          {
+            "en": "Coffee is unavailable; water is offered.",
+            "es": "No hay café; te ofrecen agua."
+          }
+        ],
+        "options": [
+          {
+            "id": "water",
+            "text": {
+              "en": "Accept water",
+              "es": "Aceptar agua"
+            },
+            "correct": true,
+            "next": "thanks",
+            "feedback": {
+              "en": "Water is the offered alternative. You can reply: agua, por favor.",
+              "es": "El agua es la alternativa ofrecida. Puedes responder: agua, por favor."
+            }
+          },
+          {
+            "id": "more-coffee",
+            "text": {
+              "en": "Ask for more coffee",
+              "es": "Pedir más café"
+            },
+            "correct": false,
+            "feedback": {
+              "en": "Coffee is unavailable. The offered alternative is water: agua, por favor.",
+              "es": "No hay café. La alternativa ofrecida es agua: agua, por favor."
+            }
+          }
+        ]
+      },
+      {
+        "id": "thanks",
+        "kind": "production",
+        "title": {
+          "en": "Close the exchange",
+          "es": "Cierra la conversación"
+        },
+        "prompt": {
+          "en": "Complete the thank-you: Muchas {{blank}}.",
+          "es": "Completa: Muchas {{blank}}."
+        },
+        "correction": {
+          "en": "Muchas gracias means thank you very much.",
+          "es": "Muchas gracias sirve para agradecer."
+        },
+        "hints": [
+          {
+            "en": "The missing word begins with g.",
+            "es": "La palabra que falta empieza con g."
+          }
+        ],
+        "next": "complete",
+        "exercise": {
+          "schemaVersion": 1,
+          "id": "morning-thanks",
+          "contentVersion": 1,
+          "cardId": "1148",
+          "deckId": "deck-conversation",
+          "kind": "cloze",
+          "prompt": "Muchas {{blank}}.",
+          "acceptedAnswers": ["gracias"],
+          "explanation": "Complete the thank-you.",
+          "hints": ["The missing word begins with g."]
+        }
+      },
+      {
+        "id": "complete",
+        "kind": "complete",
+        "title": {
+          "en": "Practice complete",
+          "es": "Práctica terminada"
+        },
+        "text": {
+          "en": "You practiced a café exchange and an unavailable-item alternative. Try it again or revisit the phrases below. This is practice, not a proficiency result.",
+          "es": "Practicaste una conversación en una cafetería y una alternativa cuando no hay un producto. Puedes repetir o repasar las frases indicadas. Esto es práctica, no un resultado de nivel."
+        },
+        "hints": []
+      }
+    ]
+  },
+  "missionSha256": "3d6233d9fcbf5408ce2fb6bb2e09b172183f773b3e24d008503487608642e95b",
+  "sourceCards": [
+    {
+      "deckId": "deck-conversation",
+      "card": {
+        "id": "1148",
+        "front": "Gracias",
+        "back": "Thank you",
+        "example": "Gracias por tu ayuda. | Thanks for your help.",
+        "tags": ["conversation", "polite"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    {
+      "deckId": "deck-food",
+      "card": {
+        "id": "0024",
+        "front": "café",
+        "back": "coffee",
+        "example": "El café colombiano es muy famoso. | Colombian coffee is very famous.",
+        "tags": ["food"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    {
+      "deckId": "deck-food",
+      "card": {
+        "id": "0025",
+        "front": "agua",
+        "back": "water",
+        "example": "¿Me puedes dar un vaso de agua, por favor? | Can you give me a glass of water, please?",
+        "tags": ["food"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    {
+      "deckId": "deck-greetings",
+      "card": {
+        "id": "0010",
+        "front": "buenos días",
+        "back": "good morning",
+        "example": "Buenos días, ¿cómo amaneciste? | Good morning, how did you wake up?",
+        "tags": ["greetings"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    }
+  ],
+  "reviewRequirements": [
+    "Review exact bilingual script, prompts, accepted variants, punctuation and accents.",
+    "Review the unavailable-coffee repair branch and the restricted acceptance set.",
+    "Assess setting, politeness/register, beginner load and regional claims.",
+    "Source-card review alone does not approve the composed mission.",
+    "No listening/speaking or human-recording evidence is provided.",
+    "Record reviewer identity, date, exact mission fingerprint and any required changes; do not infer approval."
+  ]
+}

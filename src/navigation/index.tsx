@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import MissionScreen from '../screens/MissionScreen';
 import HomeScreen from '../screens/HomeScreen';
 import StudyScreen from '../screens/StudyScreen';
 import ProgressScreen from '../screens/ProgressScreen';
@@ -142,6 +143,11 @@ export default function RootNavigator() {
       />
       {SHOW_REVIEW_TOOLS && (
         <>
+          <Stack.Screen
+            name="MissionPreview"
+            component={MissionScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="Review"
             component={ReviewScreen}

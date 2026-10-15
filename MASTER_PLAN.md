@@ -148,9 +148,9 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 **Package:** machine validation and review workflow first; human review batches follow independently. **Main files:** `src/data/decks/`, `src/utils/register.ts`, `src/utils/regions.ts`, review screens, audio manifest/generation script, new editorial artifacts.
 
-- [ ] **B03.1 [AI]** Export a review inventory with stable IDs, text, examples, translations, tags, register, regional claims, audio provenance, and review status. Prioritize the first mission and the 20 `needs_native` cards.
+- [x] **B03.1 [AI]** Export a review inventory with stable IDs, text, examples, translations, tags, register, regional claims, audio provenance, and review status. Prioritize the first mission and the 20 `needs_native` cards.
   - [x] **B03.1-A [AI]** Export the complete deterministic 1,392-card inventory; prioritize explicit native-review requests and vulgar/flirty material, with source/audio provenance.
-  - [ ] **B03.1-B [AI]** Prioritize the exact first-mission card set when its script is selected; this inventory does not invent a selected pilot script.
+  - [x] **B03.1-B [AI]** Prepare the exact first-morning mission review packet, SHA-256 script fingerprint and four source anchors in `docs/editorial/first-morning-mission-draft.json`; its status remains unreviewed and it does not approve the pilot script.
 - [x] **B03.2 [AI]** Add explicit regional metadata supporting shared/multiple regions rather than relying solely on inferred deck/tag matches; retain compatible filtering and migrations.
 - [x] **B03.3 [AI]** Define reviewed/draft/needs-correction states, reviewer attribution, content versions, and a release filter. Automated validation checks completeness and contradictions; it does not certify authenticity.
 - [ ] **B03.4 [H-LANGUAGE, AI]** Review the first mission, grammar fixtures, common phrases, slang/register, and regional claims; AI applies reviewed corrections and adds regression fixtures.
@@ -174,6 +174,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [ ] **B04.3 [AI]** Add unaided production/reverse-recall and cloze exercises, with explicit accepted variants and informative corrections. Keep modality-specific results.
   - [x] **B04.3-A [AI]** Add a versioned offline typed-recall/cloze assessment engine with explicit variants, authored hints/corrections, strict normalization and assessed recall provenance; verify retries, backup preservation and unchanged SRS/counters.
   - [ ] **B04.3-B [AI, SIM, H-LANGUAGE]** Integrate reviewed exercise packs, reference/release checks and an accessible learner player; verify keyboard, correction, hints and completion on simulators.
+    - [x] **B04.3-B1 [AI, SIM]** Add the development-gated first-morning player for typed recall/cloze, hints, corrections, explicit retry, assistance evidence and recoverable completion; validate source references and iOS interaction.
+    - [ ] **B04.3-B2 [H-LANGUAGE, AI]** Accept exact authored exercise variants/corrections and integrate accepted release content; widen platform/accessibility checks.
 - [ ] **B04.4 [AI, H-LANGUAGE]** Add short reviewed grammar explanations attached to useful phrases; cover requests, questions, pronouns, and past events in the pilot's scope.
 - [ ] **B04.5 [AI, SIM]** Verify correct/incorrect/hinted responses, accents, punctuation, empty pools, repeated attempts, and learning-event integrity.
   - [x] **B04.5-A [AI, SIM]** Verify short unhinted correct/incorrect and repeat rounds, actual scores, zero/sparse pools, recognition-only events, unchanged flashcard goal, reachable completion controls, and next-question scroll reset.
@@ -220,10 +222,16 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 **Split:** B07-A content schema/player; B07-B first mission integration. **Main files:** navigation, types, new mission content/player/state modules, daily-plan integration, learning-event storage, tests.
 
 - [ ] **B07.1 [AI, H-PRODUCT]** Define the first mission: “Your first morning in Medellín,” including its outcome, required phrases, completion criteria, and assisted alternatives. Resolve its focused design before coding the new subsystem.
-- [ ] **B07.2 [AI]** Create a versioned mission format for scenes, dialogue, choices, exercises, outcomes, prerequisites, and media references; validate IDs/assets and reject broken branches.
+  - [x] **B07.1-A [AI]** Document the focused technical design and exact text-first draft, with greeting, polite request, unavailable-item alternative, thanks, restricted variants and honest completion labels.
+  - [ ] **B07.1-B [H-PRODUCT, H-LANGUAGE]** Accept the experience and exact language before production release/pilot.
+- [x] **B07.2 [AI]** Create a versioned mission format for scenes, dialogue, choices, exercises, outcomes, prerequisites, and media references; validate IDs/assets and reject broken branches.
 - [ ] **B07.3 [AI, SIM]** Build an accessible player with deterministic branching, hints, retry, save/resume, completion, and offline support. Start with authored branches.
+  - [x] **B07.3-A [AI, SIM]** Implement the bundled text-first draft player, exact checkpoints, atomic event/state recovery, duplicate/stale command guards, safe load/save errors, bilingual feedback/completion and backup compatibility; verify the café flow and cold restart on iOS.
+  - [ ] **B07.3-B [AI, SIM]** Expand native accessibility, small/tablet and Android checks; validate offline cold launch in the actual candidate and integrate media playback with B06.
 - [ ] **B07.4 [AI, H-LANGUAGE]** Assemble reviewed content: hear an exchange, understand it, choose or produce a reply, handle an unavailable item, and complete the practical outcome.
 - [ ] **B07.5 [AI]** Feed difficulties back into personalized practice without duplicating events, unfairly penalizing hint use, or changing unrelated card scheduling.
+  - [x] **B07.5-A [AI]** Collect unique difficult source IDs per run and show follow-up phrases; keep authored hint and model-answer assistance distinct and leave SRS/daily counters unchanged.
+  - [ ] **B07.5-B [AI, SIM]** Provide an explicit follow-up practice handoff and connect accepted mission activity to daily guidance.
 - [ ] **B07.6 [AI, SIM, H-LEARNER]** Verify all branches and interrupted sessions, then run the B13 learner pilot. Speaking can be an optional later enhancement; do not block the first pilot on B09.
 
 **Exit:** one complete mission links comprehension, response, feedback, and subsequent review; scripted technical checks and actual learner findings are recorded separately.
@@ -513,3 +521,9 @@ Pilot preparation `e914e89` was merged and pushed to main. Document formatting a
 ### Renewed backup alerts and file preview — 2026-10-15
 
 B11.2-C passed on the unlocked fresh iOS QA simulator: clipboard success/import-cancel alerts, local Files save, version-3 preview and cancellation, including current learning profile and bounded queue limits. [Report](docs/qa/2026-10-15-backup-alerts/REPORT.md). Export/source matched at 372,299 bytes; all seven local sections remained exactly unchanged after cancellation and no journal remained. QA-only documentation; interruption/hardware and remaining AI implementation tasks stay open.
+
+### First offline draft mission/player — 2026-10-15
+
+B03.1-B / B04.3-B1 / B07.1-A / B07.2 / B07.3-A / B07.5-A add a versioned authored engine and recoverable bilingual text-first café mission behind the development gate. [Report](docs/qa/2026-10-15-offline-mission/REPORT.md). The [exact editorial packet](docs/editorial/first-morning-mission-draft.json) remains unreviewed. Separate recall/recognition events preserve model-answer assistance; mission attempts do not grade flashcards or increment their daily goal. Optional mission backup state accepts older seven-field app-state files. Fresh review findings were pinned with failing tests and fixed: partial input/timing survives hints, and settled checkpoint failure permits exit. Simulator evidence covers accent feedback, cold restart, retry, hints, incorrect-choice repair, cloze, assisted completion and Spanish reopen. Authentic listening, human acceptance, follow-up practice, wider accessibility/platform and signed candidate checks remain open.
+
+Final local verification for this package: 64 suites / 676 tests passed, plus types, lint, formatting, data validation, editorial ledger validation and unchanged generated library inventory. The two review regressions passed after fixes.

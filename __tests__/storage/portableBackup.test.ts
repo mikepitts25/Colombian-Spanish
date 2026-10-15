@@ -111,7 +111,10 @@ it('recovers all state after a partial restore before the next application read'
   });
   await expect((restoreBackup as any)([], [], 'replace-state', state)).rejects.toThrow('disk full');
   const backup = await captureBackupSnapshot();
-  expect((backup as any).applicationState).toEqual(state);
+  expect((backup as any).applicationState).toEqual({
+    ...state,
+    missions: { schemaVersion: 1, runs: [] },
+  });
   expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
 });
 it('refuses a snapshot when stored supplemental state is corrupt', async () => {

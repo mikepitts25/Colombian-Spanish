@@ -1,0 +1,143 @@
+import type { MissionPack, LocalizedText } from './schema';
+const l = (en: string, es: string): LocalizedText => ({ en, es });
+// Editorial draft. Accessible only behind the development-tools gate.
+export const FIRST_MORNING: MissionPack = {
+  schemaVersion: 1,
+  id: 'first-morning-medellin',
+  contentVersion: 1,
+  title: l('Your first morning in Medellín', 'Tu primera mañana en Medellín'),
+  entry: 'welcome',
+  prerequisites: [],
+  media: [],
+  nodes: [
+    {
+      id: 'welcome',
+      kind: 'scene',
+      title: l('At the café', 'En la cafetería'),
+      text: l(
+        'Practice greeting the staff, asking for coffee, choosing an alternative and saying thank you. This draft uses reading and typing; it does not assess listening or speaking.',
+        'Practica saludar, pedir café, elegir una alternativa y dar las gracias. Este borrador usa lectura y escritura; no evalúa escucha ni habla.',
+      ),
+      hints: [],
+      next: 'greeting',
+    },
+    {
+      id: 'greeting',
+      kind: 'production',
+      title: l('Greet the staff', 'Saluda al personal'),
+      prompt: l('Greet the staff as you arrive in the morning.', 'Saluda al llegar por la mañana.'),
+      correction: l(
+        'A morning greeting: buenos días. A shorter alternative is buen día.',
+        'Un saludo por la mañana: buenos días. Otra opción es buen día.',
+      ),
+      hints: [l('Begin with buenos…', 'Empieza con buenos…')],
+      next: 'request',
+      exercise: {
+        schemaVersion: 1,
+        id: 'morning-greeting',
+        contentVersion: 1,
+        cardId: '0010',
+        deckId: 'deck-greetings',
+        kind: 'typed-recall',
+        prompt: 'Greet the staff in the morning.',
+        acceptedAnswers: ['Buenos días', 'Buen día'],
+        explanation: 'Use a morning greeting.',
+        hints: ['Begin with buenos…'],
+      },
+    },
+    {
+      id: 'request',
+      kind: 'production',
+      title: l('Ask for coffee', 'Pide un café'),
+      prompt: l('Ask for one coffee politely.', 'Pide un café de forma cortés.'),
+      correction: l(
+        'One possible request is un café, por favor. You can also begin with quisiera.',
+        'Una opción es un café, por favor. También puedes empezar con quisiera.',
+      ),
+      hints: [
+        l('Include por favor.', 'Incluye por favor.'),
+        l('Try: un café, por favor.', 'Prueba: un café, por favor.'),
+      ],
+      next: 'unavailable',
+      exercise: {
+        schemaVersion: 1,
+        id: 'morning-coffee',
+        contentVersion: 1,
+        cardId: '0024',
+        deckId: 'deck-food',
+        kind: 'typed-recall',
+        prompt: 'Ask for one coffee politely.',
+        acceptedAnswers: ['Un café, por favor', 'Quisiera un café, por favor'],
+        explanation: 'A short polite request.',
+        hints: ['Include por favor.', 'Try: un café, por favor.'],
+      },
+    },
+    {
+      id: 'unavailable',
+      kind: 'choice',
+      title: l('Choose an alternative', 'Elige una alternativa'),
+      prompt: l(
+        'The staff says: «No tenemos café. ¿Quieres agua?» What works next?',
+        'El personal dice: «No tenemos café. ¿Quieres agua?» ¿Qué puedes hacer?',
+      ),
+      cardId: '0025',
+      deckId: 'deck-food',
+      hints: [l('Coffee is unavailable; water is offered.', 'No hay café; te ofrecen agua.')],
+      options: [
+        {
+          id: 'water',
+          text: l('Accept water', 'Aceptar agua'),
+          correct: true,
+          next: 'thanks',
+          feedback: l(
+            'Water is the offered alternative. You can reply: agua, por favor.',
+            'El agua es la alternativa ofrecida. Puedes responder: agua, por favor.',
+          ),
+        },
+        {
+          id: 'more-coffee',
+          text: l('Ask for more coffee', 'Pedir más café'),
+          correct: false,
+          feedback: l(
+            'Coffee is unavailable. The offered alternative is water: agua, por favor.',
+            'No hay café. La alternativa ofrecida es agua: agua, por favor.',
+          ),
+        },
+      ],
+    },
+    {
+      id: 'thanks',
+      kind: 'production',
+      title: l('Close the exchange', 'Cierra la conversación'),
+      prompt: l('Complete the thank-you: Muchas {{blank}}.', 'Completa: Muchas {{blank}}.'),
+      correction: l(
+        'Muchas gracias means thank you very much.',
+        'Muchas gracias sirve para agradecer.',
+      ),
+      hints: [l('The missing word begins with g.', 'La palabra que falta empieza con g.')],
+      next: 'complete',
+      exercise: {
+        schemaVersion: 1,
+        id: 'morning-thanks',
+        contentVersion: 1,
+        cardId: '1148',
+        deckId: 'deck-conversation',
+        kind: 'cloze',
+        prompt: 'Muchas {{blank}}.',
+        acceptedAnswers: ['gracias'],
+        explanation: 'Complete the thank-you.',
+        hints: ['The missing word begins with g.'],
+      },
+    },
+    {
+      id: 'complete',
+      kind: 'complete',
+      title: l('Practice complete', 'Práctica terminada'),
+      text: l(
+        'You practiced a café exchange and an unavailable-item alternative. Try it again or revisit the phrases below. This is practice, not a proficiency result.',
+        'Practicaste una conversación en una cafetería y una alternativa cuando no hay un producto. Puedes repetir o repasar las frases indicadas. Esto es práctica, no un resultado de nivel.',
+      ),
+      hints: [],
+    },
+  ],
+};

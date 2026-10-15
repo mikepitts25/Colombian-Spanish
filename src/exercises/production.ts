@@ -1,4 +1,4 @@
-import { LearningEvent, validateLearningEvents } from '../storage/learningEvents';
+import { LearningEvent, validateLearningEvents } from '../storage/learningEventSchema';
 
 export interface ProductionExercise {
   schemaVersion: 1;
@@ -126,6 +126,7 @@ export function assessProductionAnswer(
 }
 
 export interface ProductionAttempt {
+  modelAnswerRevealed?: boolean;
   sessionId: string;
   attempt: number;
   answer: string;
@@ -149,6 +150,8 @@ export function createProductionObservation(
     input.durationMs < 0
   )
     throw new Error('Invalid production elapsed duration');
+  if (input.modelAnswerRevealed !== undefined && typeof input.modelAnswerRevealed !== 'boolean')
+    throw new Error('Invalid production assistance');
   const result = assessProductionAnswer(exercise, input.answer, input.hintsUsed);
   if (result.status === 'empty') throw new Error('Cannot record an unanswered exercise');
   return validateLearningEvents([
@@ -158,6 +161,7 @@ export function createProductionObservation(
       sessionId: input.sessionId,
       cardId: exercise.cardId,
       deckId: exercise.deckId,
+      ...(input.modelAnswerRevealed ? { assistance: 'model-answer' as const } : {}),
       modality: 'recall',
       evidence: 'answer-checked',
       outcome: result.status === 'correct' ? 'correct' : 'incorrect',

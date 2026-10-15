@@ -11,6 +11,7 @@ const DATA_KEYS = new Set([
   'SRS_QUIZ_HISTORY_V1',
   'SRS_LEARNING_EVENTS_V1',
   'SRS_PREFS_V1',
+  'SRS_MISSIONS_V1',
   'SRS_NOTIFICATION_PREFS_V1',
 ]);
 export interface StorageAccess {
