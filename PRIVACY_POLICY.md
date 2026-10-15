@@ -1,72 +1,35 @@
-# Privacy Policy for Colombian Spanish SRS
+# Colombian Spanish — data and privacy
 
-**Last Updated:** February 3, 2026
+Updated October 15, 2026. This describes the repository's current behavior. The release owner must supply a public contact and confirm service/project settings against the actual signed build before publishing this document.
 
-## Introduction
+## Learning data on your device
 
-Colombian Spanish SRS ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our mobile application.
+The app stores decks, custom cards and edits, favorites/flags, spaced-repetition schedules, daily counts, study streaks, recent-session information, seen-word history, quiz results, modality-specific learning observations and preferences locally. Notifications use saved local reminder preferences. No learner account or application cloud-sync feature is implemented.
 
-## Information We Collect
+Local data uses AsyncStorage. It is not an app-managed encrypted vault. Operating-system protections and backup settings apply; do not put secrets into custom learning cards or assume uninstalling removes every OS backup or exported copy.
 
-### Information You Provide
+## Network and third-party services
 
-- **Study Progress**: We store your flashcard study progress, including which cards you've reviewed and your performance metrics, locally on your device.
-- **Custom Cards**: Any custom flashcards you create are stored locally on your device.
+Core flashcard and quiz data can be used locally. This does not mean every app/build action is offline:
 
-### Information We Do Not Collect
+- **Updates:** the app is configured with an Expo update endpoint. A compatible installed build may contact Expo for update checks and downloads. Network providers receive ordinary connection metadata. The actual release's update configuration must be checked before publication.
+- **Optional diagnostics:** a production build configured with `EXPO_PUBLIC_SENTRY_DSN` enables JavaScript error reporting to the configured Sentry project. Development builds and builds without a DSN do not initialize this application reporting path. Error payloads retain event/build metadata, generic error type and numeric stack positions. Application messages, custom extras, user/request/context data, breadcrumbs and frame source text are removed by the application's filter. Automatic traces, sessions, native collection and structured logs are disabled in this configuration. Providers may still process network metadata such as IP addresses; project retention/access settings and signed-build payloads require owner verification.
+- **Audio:** bundled generated pronunciation files play locally. Missing or failed playback can use the device's text-to-speech service. Voice availability and any service/network behavior depend on the operating system and voice settings; offline speech is not promised for every device or custom phrase.
 
-- **Personal Information**: We do not collect names, email addresses, phone numbers, or any other personally identifiable information.
-- **Location Data**: We do not track or collect your location.
-- **Usage Analytics**: We do not use third-party analytics services or track your usage patterns.
-- **Internet Connectivity**: The app works entirely offline. We do not transmit any data over the internet.
+The developer's separate audio-generation script can send authored text to ElevenLabs when deliberately run with developer credentials. The learning app does not call that script to synthesize learner content during ordinary use.
 
-## How We Use Your Information
+## Clipboard backups and exports
 
-All data is stored **locally on your device** using secure device storage (AsyncStorage). We use this information solely to:
+Export Backup copies deck/card data and supported learning-event history to the system clipboard. Flagged-card export also copies learning text. Clipboard contents may be available to other apps or OS clipboard-sync features according to platform settings. Imports read clipboard text only when the import action is selected and require confirmation before replacement.
 
-- Track your study progress and schedule review sessions
-- Display your learning statistics
-- Save custom cards you create
+These backups are not encrypted. They currently omit some state, including preferences, streak and seen-word records, and should not be described as complete device backups. A saved restore intent may complete on retry/restart after an interrupted write. Copies saved or shared outside the app remain under your control.
 
-## Data Storage and Security
+## Retention and control
 
-- **Local Storage**: All data is stored locally on your device. We do not have access to your data.
-- **No Cloud Sync**: The app does not sync data to any cloud servers.
-- **No Third-Party Access**: We do not share, sell, or transfer any data to third parties.
+Learning data remains in local application storage until removed or replaced by the user or operating system. Individual decks can be reset/deleted through the app; those actions do not promise to remove all independent history. Learning-event history is bounded to the latest 5,000 retained observations and quiz-result history to ten rounds. No application-hosted learner account or remote deletion service is implemented.
 
-## Data Retention and Deletion
+Removing the app typically removes its local application storage, subject to platform backup/restore behavior. Separately delete exported copies or clipboard content if desired. Service-side diagnostic retention depends on the configured project and is not verified by this repository audit.
 
-- **Retention**: Your data remains on your device until you delete the app.
-- **Deletion**: Uninstalling the app will delete all locally stored data.
-- **No Backups**: We do not maintain backups of your data.
+## Release contact and review
 
-## Children's Privacy
-
-Our app is not intended for use by children under the age of 4. We do not knowingly collect personal information from children.
-
-## Changes to This Privacy Policy
-
-We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.
-
-## Your Rights
-
-Since all data is stored locally on your device, you have complete control over your information:
-
-- You can delete data by uninstalling the app
-- You can reset your progress within the app settings
-- You can export your custom cards (feature coming soon)
-
-## Contact Us
-
-If you have any questions about this Privacy Policy, please contact us:
-
-- **Email**: [Your contact email]
-- **GitHub**: https://github.com/mikepitts25/Colombian-Spanish
-
-## Consent
-
-By using our app, you consent to our Privacy Policy and agree to its terms.
-
----
-
-**Note**: This app is designed with privacy as a core principle. Your learning data never leaves your device.
+A verified support/privacy contact must be supplied by the release owner before publication. Until then this repository document is a technical disclosure draft, not evidence that store forms, consent requirements, provider retention or a signed build have been reviewed. Changes to recording, hosted AI, accounts, sync or analytics require a new data-flow review and updated disclosure.

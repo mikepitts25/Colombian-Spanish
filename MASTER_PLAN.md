@@ -263,6 +263,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [ ] **B11.4 [AI, H-ACCOUNT]** If enabled, implement secure auth, per-user access, sync conflicts, offline queues, deletion/export, and recovery; configure production services through authorized accounts.
 - [ ] **B11.5 [AI, DEVICE]** Verify backup through real share/file flows; if sync exists, test two physical devices, reinstall/recovery, conflicting offline edits, and interrupted connectivity.
 - [ ] **B11.6 [AI, H-PRODUCT]** Inventory all diagnostics/network data, validate crash-reporting redaction and sampling, and update privacy disclosures to match actual behavior.
+  - [x] **B11.6-A [AI]** Audit runtime/developer data flows, test a JavaScript diagnostic allowlist, disable automatic traces/sessions/native/log collection in this configuration, and correct the repository technical privacy disclosure.
+  - [ ] **B11.6-B [H-PRODUCT, H-ACCOUNT, DEVICE]** Supply the public contact, verify actual signed-build envelopes and configured service retention/access/IP handling, and accept the release disclosure/store forms.
 
 **Exit:** B11-A can ship independently. Account/sync/service tasks are conditional and remain unchecked until deliberately selected and verified.
 
@@ -402,3 +404,9 @@ Implementation `80a2982` was merged and pushed to main; [GitHub Actions run 3867
 ### Explicit region membership — 2026-10-15
 
 B03.2 supports declared shared/multiple region membership, filtering and localized quiz labels, compatible legacy inference, stored metadata preservation during seed updates, backup validation and schema-2 editorial inventory provenance. See [the report](docs/qa/2026-10-15-region-metadata/REPORT.md) and [authoring guidance](docs/editorial/REGIONS.md). Existing library regional claims remain unverified pending B03 editorial acceptance; explicit declarations are not native-review sign-off.
+
+Region implementation `4b33a55` passed [GitHub Actions run 38679733478](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38679733478) with 44 suites / 448 tests locally and all static/content checks.
+
+### Diagnostic data and privacy accuracy — 2026-10-15
+
+B11.6-A adds tested JavaScript error redaction and a code-backed data inventory, and corrects outdated network/storage/clipboard claims in the repository privacy draft. No service settings were changed or public policy published. B11.6-B owner/account/signed-device checks remain open. See [the report](docs/qa/2026-10-15-diagnostics-privacy/REPORT.md).
