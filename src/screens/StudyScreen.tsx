@@ -31,7 +31,8 @@ import type { FlashCard } from '../types';
 import { createLearningSessionId } from '../storage/learningEvents';
 import { AnswerAttempt, DailyNewCardLimitError } from '../storage/flashcardAnswer';
 import { speakCard } from '../services/tts';
-import { formatIntervalShort, previewInterval } from '../utils/srs';
+import { StudyQueueSnapshot } from '../storage/studySession';
+import { isNewCard, formatIntervalShort, previewInterval } from '../utils/srs';
 
 const GRADES = [
   {
@@ -76,11 +77,18 @@ export default function StudyScreen() {
   const [mode, setMode] = useState<StudyMode>('landing');
   const [q, setQ] = useState('');
   const [searching, setSearching] = useState(false);
+  const [resumeLoadError, setResumeLoadError] = useState(false);
+  const [resumeLoadAttempt, setResumeLoadAttempt] = useState(0);
   const [resumeSession, setResumeSession] = useState<LastStudySession | undefined>(undefined);
   const [startCardId, setStartCardId] = useState<string | undefined>(undefined);
   const [seed, setSeed] = useState(0);
   const [activeRegion, setActiveRegion] = useState<RegionFilterId>('all');
-  const [idx, setIdx] = useState(0);
+  const [sessionComplete, setSessionComplete] = useState(false);
+  const [checkpointBusy, setCheckpointBusy] = useState(false);
+  const [checkpointFailed, setCheckpointFailed] = useState(false);
+  const checkpointBlocked = useRef(false);
+  const pendingCheckpoint = useRef<Omit<LastStudySession, 'updatedAt'> | undefined>(undefined);
+  const requestedQueue = useRef<StudyQueueSnapshot | undefined>(undefined);
   const [queuedCardIds, setQueuedCardIds] = useState<string[]>([]);
   const grading = useRef(false);
   const [gradeSaving, setGradeSaving] = useState(false);
@@ -129,7 +137,10 @@ export default function StudyScreen() {
   }, [allCards, q]);
 
   const resumeDeck = useMemo(
-    () => (resumeSession ? decks.find((deck) => deck.id === resumeSession.deckId) : undefined),
+    () =>
+      resumeSession && resumeSession.queue?.cardIds.length !== 0
+        ? decks.find((deck) => deck.id === resumeSession.deckId)
+        : undefined,
     [decks, resumeSession],
   );
 
@@ -150,10 +161,34 @@ export default function StudyScreen() {
             card.id === startCardId && cardMatchesRegion(card, activeRegion, activeDeck.name),
         )
       : undefined;
-    const selected = preferred
-      ? [preferred, ...filtered.filter((card) => card.id !== preferred.id)]
-      : filtered;
-    setQueuedCardIds(selected.slice(0, 15).map((card) => card.id));
+    const saved = requestedQueue.current;
+    requestedQueue.current = undefined;
+    const selected = saved
+      ? saved.cardIds.flatMap((id) => {
+          const card = activeDeck.cards.find((item) => item.id === id);
+          return card &&
+            cardMatchesRegion(card, activeRegion, activeDeck.name) &&
+            (isNewCard(card) || card.due <= Date.now())
+            ? [card]
+            : [];
+        })
+      : preferred
+        ? [preferred, ...filtered.filter((card) => card.id !== preferred.id)]
+        : filtered;
+    const ids = selected.slice(0, 15).map((card) => card.id);
+    setQueuedCardIds(ids);
+    setSessionComplete(!!saved && ids.length === 0);
+    const queue: StudyQueueSnapshot = {
+      schemaVersion: 1,
+      cardIds: ids,
+      region: activeRegion,
+      sessionId: learningSession.current,
+    };
+    void persistQueueCheckpoint({
+      deckId: activeDeck.id,
+      ...(ids[0] ? { cardId: ids[0] } : {}),
+      queue,
+    });
     // Deliberately exclude deck-object/provider-function updates after a grade.
     // Only explicit session boundaries request a new eligible queue.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -168,8 +203,8 @@ export default function StudyScreen() {
   }, [activeDeck, queuedCardIds]);
 
   const progress = daily.target > 0 ? Math.min(1, daily.count / daily.target) : 0;
-  const remaining = Math.max(0, batch.length - idx);
-  const card = batch[idx];
+  const remaining = batch.length;
+  const card = batch[0];
 
   // Honest per-card scheduling preview for each grade (what Anki does).
   const gradeIntervals = useMemo(() => {
@@ -186,13 +221,20 @@ export default function StudyScreen() {
   useEffect(() => {
     if (!ready) return undefined;
     let mounted = true;
-    getLastStudySession().then((session) => {
-      if (mounted) setResumeSession(session);
-    });
+    const version = sessionVersion.current;
+    setResumeLoadError(false);
+    getLastStudySession().then(
+      (session) => {
+        if (mounted && version === sessionVersion.current) setResumeSession(session);
+      },
+      () => {
+        if (mounted && version === sessionVersion.current) setResumeLoadError(true);
+      },
+    );
     return () => {
       mounted = false;
     };
-  }, [ready]);
+  }, [ready, resumeLoadAttempt]);
 
   useEffect(() => {
     if (!ready || !activeDeck || mode !== 'session') return undefined;
@@ -205,24 +247,43 @@ export default function StudyScreen() {
     };
   }, [activeDeck, mode, ready]);
 
-  function persistSession(deckId: string, cardId?: string) {
-    const payload = cardId ? { deckId, cardId } : { deckId };
-    void saveLastStudySession(payload).then(setResumeSession);
+  async function persistQueueCheckpoint(payload: Omit<LastStudySession, 'updatedAt'>) {
+    const version = sessionVersion.current;
+    pendingCheckpoint.current = payload;
+    checkpointBlocked.current = true;
+    setCheckpointBusy(true);
+    setCheckpointFailed(false);
+    try {
+      const saved = await saveLastStudySession(payload);
+      if (version === sessionVersion.current && pendingCheckpoint.current === payload) {
+        setResumeSession(saved);
+        setResumeLoadError(false);
+        pendingCheckpoint.current = undefined;
+        checkpointBlocked.current = false;
+      }
+    } catch {
+      if (version === sessionVersion.current) setCheckpointFailed(true);
+    } finally {
+      if (version === sessionVersion.current) setCheckpointBusy(false);
+    }
   }
 
-  function startSession(deckId: string, cardId?: string) {
-    if (grading.current || pendingGrade.current) return;
+  function startSession(deckId: string, cardId?: string, saved?: LastStudySession) {
+    if (grading.current || pendingGrade.current || checkpointBlocked.current) return;
     sessionVersion.current += 1;
     pendingGrade.current = undefined;
-    learningSession.current = createLearningSessionId();
+    requestedQueue.current = saved?.queue;
+    learningSession.current = saved?.queue?.sessionId ?? createLearningSessionId();
+    checkpointBlocked.current = true;
+    setCheckpointBusy(true);
+    setCheckpointFailed(false);
+    setSessionComplete(false);
     setGradeError(null);
     setSeed((value) => value + 1);
     setActiveDeckId(deckId);
     setStartCardId(cardId);
-    setActiveRegion('all');
-    setIdx(0);
+    setActiveRegion(saved?.queue?.region ?? 'all');
     setMode('session');
-    persistSession(deckId, cardId);
   }
 
   // Onboarding hands off with an autoStartDeckId param so the very first
@@ -243,28 +304,46 @@ export default function StudyScreen() {
   }
 
   function changeRegion(region: RegionFilterId) {
-    if (region === activeRegion || grading.current || pendingGrade.current) return;
+    if (
+      region === activeRegion ||
+      grading.current ||
+      pendingGrade.current ||
+      checkpointBlocked.current
+    )
+      return;
     sessionVersion.current += 1;
     pendingGrade.current = undefined;
     learningSession.current = createLearningSessionId();
     setGradeError(null);
+    checkpointBlocked.current = true;
+    setCheckpointBusy(true);
+    setCheckpointFailed(false);
+    setStartCardId(undefined);
     setActiveRegion(region);
-    setIdx(0);
   }
 
   async function grade(qValue: 0 | 1 | 2 | 3 | 4 | 5) {
-    const currentCard = batch[idx];
-    if (!currentCard || !activeDeck || grading.current) return;
+    const currentCard = batch[0];
+    if (!currentCard || !activeDeck || grading.current || checkpointBlocked.current) return;
     grading.current = true;
     setGradeSaving(true);
     const version = sessionVersion.current;
-    const nextCard = batch[idx + 1];
+    const nextCard = batch[1];
     const attempt = pendingGrade.current ?? {
       attemptId: createLearningSessionId(),
       sessionId: learningSession.current,
       cardId: currentCard.id,
       quality: qValue,
-      nextSession: { deckId: activeDeck.id, ...(nextCard ? { cardId: nextCard.id } : {}) },
+      nextSession: {
+        deckId: activeDeck.id,
+        ...(nextCard ? { cardId: nextCard.id } : {}),
+        queue: {
+          schemaVersion: 1 as const,
+          cardIds: batch.slice(1).map((card) => card.id),
+          region: activeRegion,
+          sessionId: learningSession.current,
+        },
+      },
     };
     pendingGrade.current = attempt;
     try {
@@ -279,14 +358,8 @@ export default function StudyScreen() {
       setGradeError(null);
       setDaily({ count: nextDP.count, target: nextDP.target });
       setResumeSession({ ...attempt.nextSession!, updatedAt: Date.now() });
-      if (nextCard) {
-        setIdx(idx + 1);
-      } else {
-        learningSession.current = createLearningSessionId();
-        setStartCardId(undefined);
-        setIdx(0);
-        setSeed((value) => value + 1);
-      }
+      setQueuedCardIds(attempt.nextSession?.queue?.cardIds ?? []);
+      if (!nextCard) setSessionComplete(true);
     } catch (error) {
       if (sessionVersion.current === version) {
         if (error instanceof DailyNewCardLimitError) pendingGrade.current = undefined;
@@ -431,10 +504,24 @@ export default function StudyScreen() {
 
               <View style={styles.resumeBlock}>
                 <Text style={styles.sectionTitle}>{t('study.resume.title')}</Text>
-                {resumeDeck ? (
+                {resumeLoadError ? (
+                  <View style={styles.resumeEmptyCard}>
+                    <Text accessibilityRole="alert" style={styles.resumeEmptyText}>
+                      {t('study.resume.loadError')}
+                    </Text>
+                    <Pressable
+                      accessibilityRole="button"
+                      onPress={() => setResumeLoadAttempt((value) => value + 1)}
+                    >
+                      <Text style={styles.resumeCta}>{t('study.resume.retry')}</Text>
+                    </Pressable>
+                  </View>
+                ) : resumeDeck ? (
                   <Pressable
                     style={styles.resumeCard}
-                    onPress={() => startSession(resumeDeck.id, resumeSession?.cardId)}
+                    onPress={() =>
+                      startSession(resumeDeck.id, resumeSession?.cardId, resumeSession)
+                    }
                   >
                     <View style={styles.resumeTextBlock}>
                       <Text style={styles.resumeDeckName}>{getDeckDisplayName(resumeDeck)}</Text>
@@ -462,9 +549,10 @@ export default function StudyScreen() {
       <View style={styles.sessionHeader}>
         <Pressable
           style={styles.sessionBackBtn}
-          disabled={gradeSaving || gradeError === 'save'}
+          disabled={gradeSaving || gradeError === 'save' || checkpointBusy || checkpointFailed}
           onPress={() => {
-            if (!grading.current && !pendingGrade.current) setMode('landing');
+            if (!grading.current && !pendingGrade.current && !checkpointBlocked.current)
+              setMode('landing');
           }}
         >
           <Text style={styles.sessionBackText}>{t('study.session.back')}</Text>
@@ -511,7 +599,7 @@ export default function StudyScreen() {
           {REGION_FILTERS.map((region) => (
             <Pressable
               key={region.id}
-              disabled={gradeSaving || gradeError === 'save'}
+              disabled={gradeSaving || gradeError === 'save' || checkpointBusy || checkpointFailed}
               style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
               onPress={() => changeRegion(region.id)}
             >
@@ -551,14 +639,34 @@ export default function StudyScreen() {
       ) : (
         <View style={[styles.cardArea, styles.center]}>
           <Text style={{ fontSize: 48 }}>🎉</Text>
-          <Text style={styles.noDeckTitle}>{t('study.caughtUp.title')}</Text>
-          <Text style={styles.noDeckSub}>{t('study.caughtUp.sub')}</Text>
+          <Text style={styles.noDeckTitle}>
+            {t(sessionComplete ? 'study.sessionComplete.title' : 'study.caughtUp.title')}
+          </Text>
+          <Text style={styles.noDeckSub}>
+            {t(sessionComplete ? 'study.sessionComplete.sub' : 'study.caughtUp.sub')}
+          </Text>
           <Pressable style={styles.quizCta} onPress={() => nav.navigate('Quiz')}>
             <Text style={styles.quizCtaText}>{t('study.takeQuiz')}</Text>
           </Pressable>
         </View>
       )}
 
+      {checkpointFailed && (
+        <View style={styles.saveError}>
+          <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
+            {t('study.checkpointError')}
+          </Text>
+          <Pressable
+            accessibilityRole="button"
+            disabled={checkpointBusy}
+            onPress={() => {
+              if (pendingCheckpoint.current) void persistQueueCheckpoint(pendingCheckpoint.current);
+            }}
+          >
+            <Text style={{ color: colors.brand }}>{t('practice.retrySave')}</Text>
+          </Pressable>
+        </View>
+      )}
       {gradeError && (
         <View style={styles.saveError}>
           <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
@@ -582,7 +690,7 @@ export default function StudyScreen() {
               key={g.labelKey}
               style={[styles.gradeBtn, { backgroundColor: g.bg, borderColor: g.border }]}
               onPress={() => grade(g.q)}
-              disabled={!card || gradeSaving || !!gradeError}
+              disabled={!card || gradeSaving || !!gradeError || checkpointBusy || checkpointFailed}
             >
               <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
               <Text style={[styles.gradeBtnInterval, { color: g.color + 'b3' }]}>

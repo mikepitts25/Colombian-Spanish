@@ -1,19 +1,16 @@
 import AsyncStorage, { StorageAccess, withStorageTransaction } from './durableStorage';
+import { LastStudySession, isValidStudySession, copySessionInput } from './studySession';
 import { Deck, FlashCard } from '../types';
 import { localDayKey, storedDayKey, dayDistance } from '../utils/calendarDay';
 import { createLearningSessionId } from './learningEvents';
 import { validateBackupDecks } from './backupValidation';
 
+export type { LastStudySession } from './studySession';
+
 const KEY = 'SRS_DECKS_V3';
 const DAILY_KEY = 'SRS_DAILY_PROGRESS_V1';
 const LAST_STUDY_SESSION_KEY = 'SRS_LAST_STUDY_SESSION_V1';
 type DailyProgress = { date: string; count: number; target: number; newCount: number };
-
-export interface LastStudySession {
-  deckId: string;
-  cardId?: string;
-  updatedAt: number;
-}
 
 export async function loadDecks(access: StorageAccess = AsyncStorage): Promise<Deck[]> {
   const raw = await access.getItem(KEY);
@@ -34,7 +31,7 @@ export async function getLastStudySession(): Promise<LastStudySession | undefine
   if (!raw) return undefined;
   try {
     const parsed = JSON.parse(raw) as LastStudySession;
-    if (!parsed?.deckId || typeof parsed.updatedAt !== 'number') return undefined;
+    if (!isValidStudySession(parsed)) return undefined;
     return parsed;
   } catch {
     return undefined;
@@ -46,9 +43,10 @@ export async function saveLastStudySession(
   access: StorageAccess = AsyncStorage,
 ): Promise<LastStudySession> {
   const next = {
-    ...session,
+    ...copySessionInput(session),
     updatedAt: Date.now(),
   };
+  if (!isValidStudySession(next)) throw new Error('Invalid study session snapshot');
   await access.setItem(LAST_STUDY_SESSION_KEY, JSON.stringify(next));
   return next;
 }

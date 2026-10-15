@@ -1,3 +1,4 @@
+import '@testing-library/jest-native/extend-expect';
 import React from 'react';
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
 import StudyScreen from '../../src/screens/StudyScreen';
@@ -141,6 +142,7 @@ function renderStudyScreen(ctxOverrides: Record<string, any> = {}) {
 async function openCommunicationSession(screen: ReturnType<typeof renderStudyScreen>) {
   fireEvent.press(await screen.findByText('Comunicación'));
   await waitFor(() => expect(screen.getByText('hola')).toBeTruthy());
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
 }
 
 beforeEach(() => {
@@ -149,11 +151,7 @@ beforeEach(() => {
   mockGetDailyProgress.mockResolvedValue({ count: 3, target: 10 });
   mockIncrementDailyProgress.mockResolvedValue({ count: 4, target: 10 });
   mockGetLastStudySession.mockResolvedValue(undefined);
-  mockSaveLastStudySession.mockResolvedValue({
-    deckId: 'deck-greetings',
-    cardId: 'c1',
-    updatedAt: 1000,
-  });
+  mockSaveLastStudySession.mockImplementation(async (payload) => ({ ...payload, updatedAt: 1000 }));
 });
 
 describe('StudyScreen landing', () => {
@@ -214,7 +212,12 @@ describe('StudyScreen landing', () => {
 
     await waitFor(() => expect(screen.getByText('hola')).toBeTruthy());
     expect(screen.setActiveDeckId).toHaveBeenCalledWith('deck-greetings');
-    expect(mockSaveLastStudySession).toHaveBeenCalledWith({ deckId: 'deck-greetings' });
+    expect(mockSaveLastStudySession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        deckId: 'deck-greetings',
+        queue: expect.objectContaining({ cardIds: ['c1', 'c2', 'c3'] }),
+      }),
+    );
   });
 
   it('starts a session from a search result and activates the result deck', async () => {
@@ -228,10 +231,12 @@ describe('StudyScreen landing', () => {
 
     await waitFor(() => expect(screen.getByText('cell phone')).toBeTruthy());
     expect(screen.setActiveDeckId).toHaveBeenCalledWith('deck-technology');
-    expect(mockSaveLastStudySession).toHaveBeenCalledWith({
-      deckId: 'deck-technology',
-      cardId: 'tech-1',
-    });
+    expect(mockSaveLastStudySession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        deckId: 'deck-technology',
+        cardId: 'tech-1',
+      }),
+    );
   });
 
   it('starts a session from the stored resume deck', async () => {
@@ -246,10 +251,12 @@ describe('StudyScreen landing', () => {
 
     await waitFor(() => expect(screen.getByText('celular')).toBeTruthy());
     expect(screen.setActiveDeckId).toHaveBeenCalledWith('deck-technology');
-    expect(mockSaveLastStudySession).toHaveBeenCalledWith({
-      deckId: 'deck-technology',
-      cardId: 'tech-1',
-    });
+    expect(mockSaveLastStudySession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        deckId: 'deck-technology',
+        cardId: 'tech-1',
+      }),
+    );
   });
 
   it('returns from a session to the Study landing', async () => {
@@ -312,6 +319,7 @@ describe('StudyScreen session', () => {
 
     fireEvent.press(await screen.findByText('Comunicación'));
     await waitFor(() => expect(screen.getByText('general-card')).toBeTruthy());
+    await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     fireEvent.press(screen.getByText('Paisa'));
 
     await waitFor(() => expect(screen.getByText('que hubo')).toBeTruthy());
@@ -422,7 +430,9 @@ describe('StudyScreen session', () => {
     expect(screen.recordAnswer).toHaveBeenCalledWith(
       'c1',
       4,
-      expect.objectContaining({ nextSession: { deckId: 'deck-greetings', cardId: 'c2' } }),
+      expect.objectContaining({
+        nextSession: expect.objectContaining({ deckId: 'deck-greetings', cardId: 'c2' }),
+      }),
     );
   });
 
@@ -482,7 +492,9 @@ describe('StudyScreen queue stability', () => {
     expect(context.recordAnswer).toHaveBeenCalledWith(
       'c1',
       4,
-      expect.objectContaining({ nextSession: { deckId: GREETINGS_DECK.id, cardId: 'c2' } }),
+      expect.objectContaining({
+        nextSession: expect.objectContaining({ deckId: GREETINGS_DECK.id, cardId: 'c2' }),
+      }),
     );
   });
 
@@ -520,8 +532,14 @@ describe('StudyScreen queue stability', () => {
     await act(async () => {
       fireEvent.press(screen.getByText('Bien'));
     });
-    await waitFor(() => expect(screen.getByText('¡Bacano! Todo al día')).toBeTruthy());
-    expect(mockSaveLastStudySession).toHaveBeenLastCalledWith({ deckId: GREETINGS_DECK.id });
+    await waitFor(() => expect(screen.getByText('Sesión terminada')).toBeTruthy());
+    expect(context.recordAnswer).toHaveBeenCalledWith(
+      'c1',
+      4,
+      expect.objectContaining({
+        nextSession: expect.objectContaining({ queue: expect.objectContaining({ cardIds: [] }) }),
+      }),
+    );
   });
 });
 
@@ -582,4 +600,149 @@ it('keeps the current session and region while a grade is unresolved', async () 
   await act(async () => finish());
   expect(await screen.findByText('adios')).toBeTruthy();
   expect(recordAnswer).toHaveBeenCalledTimes(1);
+});
+
+it('resumes only the saved ordered queue and learning-session identity', async () => {
+  mockGetLastStudySession.mockResolvedValue({
+    deckId: GREETINGS_DECK.id,
+    cardId: 'c3',
+    updatedAt: 1000,
+    queue: { schemaVersion: 1, cardIds: ['c3', 'c2'], region: 'all', sessionId: 'saved-session' },
+  });
+  const screen = renderStudyScreen();
+  fireEvent.press(await screen.findByText('Continuar'));
+  await waitFor(() => expect(screen.getByText('como vas')).toBeTruthy());
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  expect(screen.getByText('2 restantes')).toBeTruthy();
+  await act(async () => fireEvent.press(screen.getByText('Bien')));
+  expect(screen.recordAnswer).toHaveBeenCalledWith(
+    'c3',
+    4,
+    expect.objectContaining({
+      sessionId: 'saved-session',
+      nextSession: expect.objectContaining({ queue: expect.objectContaining({ cardIds: ['c2'] }) }),
+    }),
+  );
+  expect(screen.getByText('adios')).toBeTruthy();
+  expect(screen.queryByText('hola')).toBeNull();
+});
+it('does not skip the current card when a previously graded card is deleted', async () => {
+  const context = { activeDeck: GREETINGS_DECK };
+  const screen = renderStudyScreen(context);
+  await openCommunicationSession(screen);
+  await act(async () => fireEvent.press(screen.getByText('Bien')));
+  expect(screen.getByText('adios')).toBeTruthy();
+  context.activeDeck = { ...GREETINGS_DECK, cards: GREETING_CARDS.slice(1) };
+  await act(async () => screen.rerender(<StudyScreen />));
+  expect(screen.getByText('adios')).toBeTruthy();
+});
+it('requires the initial queue checkpoint to save and offers a retry before grading', async () => {
+  mockSaveLastStudySession.mockRejectedValueOnce(new Error('disk full'));
+  const screen = renderStudyScreen();
+  fireEvent.press(await screen.findByText('Comunicación'));
+  await screen.findByText('No se pudo guardar esta sesión. Reintenta antes de responder.');
+  fireEvent.press(screen.getByText('Bien'));
+  expect(screen.recordAnswer).not.toHaveBeenCalled();
+  await act(async () => fireEvent.press(screen.getByText('Intentar guardar de nuevo')));
+  await act(async () => fireEvent.press(screen.getByText('Bien')));
+  expect(screen.recordAnswer).toHaveBeenCalledTimes(1);
+});
+it('ends the bounded batch instead of silently starting another batch', async () => {
+  const screen = renderStudyScreen({ getStudyBatch: () => [GREETING_CARDS[0]] });
+  await openCommunicationSession(screen);
+  await act(async () => fireEvent.press(screen.getByText('Bien')));
+  expect(await screen.findByText('Sesión terminada')).toBeTruthy();
+  expect(screen.queryByText('hola')).toBeNull();
+});
+
+it('drops missing and no-longer-eligible saved cards without filling the queue', async () => {
+  const future = makeCard('future', { reps: 1, interval: 1, due: Date.now() + 86400000 });
+  mockGetLastStudySession.mockResolvedValue({
+    deckId: GREETINGS_DECK.id,
+    cardId: 'gone',
+    updatedAt: 1000,
+    queue: {
+      schemaVersion: 1,
+      cardIds: ['gone', 'future', 'c2'],
+      region: 'all',
+      sessionId: 'original',
+    },
+  });
+  const screen = renderStudyScreen({
+    activeDeck: { ...GREETINGS_DECK, cards: [...GREETING_CARDS, future] },
+  });
+  fireEvent.press(await screen.findByText('Continuar'));
+  expect(await screen.findByText('adios')).toBeTruthy();
+  expect(screen.getByText('1 restantes')).toBeTruthy();
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  expect(mockSaveLastStudySession).toHaveBeenCalledWith(
+    expect.objectContaining({
+      cardId: 'c2',
+      queue: expect.objectContaining({ cardIds: ['c2'], sessionId: 'original' }),
+    }),
+  );
+});
+it('restores the saved regional filter along with queue identity', async () => {
+  mockGetLastStudySession.mockResolvedValue({
+    deckId: GREETINGS_DECK.id,
+    cardId: 'paisa',
+    updatedAt: 1000,
+    queue: { schemaVersion: 1, cardIds: ['paisa'], region: 'paisa', sessionId: 'regional-session' },
+  });
+  const screen = renderStudyScreen({
+    activeDeck: { ...GREETINGS_DECK, cards: MIXED_REGION_CARDS },
+    getStudyBatch: () => MIXED_REGION_CARDS,
+  });
+  fireEvent.press(await screen.findByText('Continuar'));
+  expect(await screen.findByText('que hubo')).toBeTruthy();
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  expect(mockSaveLastStudySession).toHaveBeenCalledWith(
+    expect.objectContaining({
+      queue: expect.objectContaining({ region: 'paisa', sessionId: 'regional-session' }),
+    }),
+  );
+  expect(screen.queryByText('general-card')).toBeNull();
+});
+it('blocks grading until the initial checkpoint finishes', async () => {
+  let finish!: () => void;
+  mockSaveLastStudySession.mockImplementationOnce(
+    (payload) =>
+      new Promise((resolve) => {
+        finish = () => resolve({ ...payload, updatedAt: 1000 });
+      }),
+  );
+  const screen = renderStudyScreen();
+  fireEvent.press(await screen.findByText('Comunicación'));
+  await screen.findByText('hola');
+  fireEvent.press(screen.getByText('Bien'));
+  expect(screen.recordAnswer).not.toHaveBeenCalled();
+  await act(async () => finish());
+  await act(async () => fireEvent.press(screen.getByText('Bien')));
+  expect(screen.recordAnswer).toHaveBeenCalledTimes(1);
+});
+it('offers retry when loading the saved session fails instead of implying no session exists', async () => {
+  mockGetLastStudySession.mockRejectedValueOnce(new Error('read failed'));
+  const screen = renderStudyScreen();
+  expect(
+    await screen.findByText('No se pudo cargar la sesión guardada. Reintenta para continuar.'),
+  ).toBeTruthy();
+  mockGetLastStudySession.mockResolvedValue({
+    deckId: GREETINGS_DECK.id,
+    cardId: 'c2',
+    updatedAt: 1000,
+    queue: { schemaVersion: 1, cardIds: ['c2'], region: 'all', sessionId: 'recovered' },
+  });
+  await act(async () => fireEvent.press(screen.getByText('Reintentar')));
+  expect(await screen.findByText('Continuar')).toBeTruthy();
+});
+it('clears an earlier resume-load error after a new session checkpoint saves', async () => {
+  mockGetLastStudySession.mockRejectedValueOnce(new Error('read failed'));
+  const screen = renderStudyScreen();
+  await screen.findByText('No se pudo cargar la sesión guardada. Reintenta para continuar.');
+  await openCommunicationSession(screen);
+  fireEvent.press(screen.getByText('Volver'));
+  expect(await screen.findByText('Continuar')).toBeTruthy();
+  expect(
+    screen.queryByText('No se pudo cargar la sesión guardada. Reintenta para continuar.'),
+  ).toBeNull();
 });

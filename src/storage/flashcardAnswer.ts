@@ -1,3 +1,4 @@
+import { copySessionInput } from './studySession';
 import { CardQuality, Deck } from '../types';
 import { gradeCard, isNewCard } from '../utils/srs';
 import { withStorageTransaction } from './durableStorage';
@@ -46,7 +47,7 @@ export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
   // Snapshot caller state before waiting for another event/restore operation.
   const input = {
     ...attempt,
-    nextSession: attempt.nextSession ? { ...attempt.nextSession } : undefined,
+    nextSession: attempt.nextSession ? copySessionInput(attempt.nextSession) : undefined,
   };
   return serializeLearningHistoryWrite(() =>
     withStorageTransaction(async (tx) => {

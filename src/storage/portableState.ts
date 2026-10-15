@@ -1,3 +1,4 @@
+import { isValidStudySession } from './studySession';
 import { storedDayKey } from '../utils/calendarDay';
 import { StorageAccess } from './durableStorage';
 
@@ -122,12 +123,7 @@ function valid(name: keyof PortableState, value: unknown): boolean {
       optional(value, 'lastStudyDate', date) &&
       optional(value, 'freezes', (v) => integer(v) && (v as number) <= 2)
     );
-  if (name === 'lastSession')
-    return (
-      only(value, ['deckId', 'cardId', 'updatedAt']) &&
-      (Object.keys(value).length === 0 ||
-        (text(value.deckId) && number(value.updatedAt) && optional(value, 'cardId', text)))
-    );
+  if (name === 'lastSession') return Object.keys(value).length === 0 || isValidStudySession(value);
   return (
     only(value, ['masterOn', 'morningOn', 'nightOn', 'streakOn', 'achieveOn']) &&
     Object.values(value).every((v) => typeof v === 'boolean')
