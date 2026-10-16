@@ -275,8 +275,12 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 **Split:** B09-A record/replay; B09-B evaluated feedback service; B09-C optional conversational extension. **Main files:** new recording/speaking modules, permissions/config, mission integration; server-side service if selected.
 
 - [ ] **B09.1 [AI, H-PRODUCT, H-ACCOUNT]** Compare device-local and hosted recognition/feedback against latency, cost, regional handling, retention, and privacy requirements. Use fixtures until a provider/budget is selected.
+  - [x] **B09.1-A [AI]** Prepare official-source Apple/Android local and Azure/Google hosted shortlist, exact regional/retention limits, cost/latency evaluation and fixture-first implementation contract. [Decision packet](docs/speaking/OPTIONS_AND_EVALUATION.md). No provider selected or performance result invented.
+  - [ ] **B09.1-B [H-PRODUCT, H-ACCOUNT, AI]** Select scope/provider/budget/retention; supply authorized account and consented recordings as needed, then run the measured device/service comparison.
 - [ ] **B09.2 [AI, SIM]** Implement permission request/denial/recovery, record/replay/delete, recording indicators, interruption handling, and a non-speaking alternative.
 - [ ] **B09.3 [AI, H-LANGUAGE]** Define feedback for task completion, intelligibility, and phrasing. Do not equate transcription accuracy with phonetic pronunciation scoring; validate any scores against editor-rated recordings.
+  - [x] **B09.3-A [AI]** Draft separate task/intelligibility/phrasing/transcript/assistance rubric, cannot-assess behavior, held-out and disagreement evaluation. [Rubric](docs/speaking/OPTIONS_AND_EVALUATION.md#draft-feedback-rubric).
+  - [ ] **B09.3-B [H-LANGUAGE, H-LEARNER, AI]** Accept task/rating definitions, supply independent recordings/ratings and evaluate actual model feedback before enabling assessed speaking claims.
 - [ ] **B09.4 [AI]** If hosted, keep keys server-side; add consent, authentication as appropriate, rate/spend limits, timeout/retry/cancel, retention/deletion, and safe logs. Verify offline behavior.
 - [ ] **B09.5 [AI, H-LANGUAGE]** Add an authored voice-note scenario with a short message, learner response, relevant follow-up, one useful correction, and targeted review.
 - [ ] **B09.6 [AI, DEVICE, H-LEARNER]** Evaluate real microphones, Bluetooth/headsets, quiet/noisy environments, accents, hesitations, weak connectivity, interruptions, and permission changes on both shipped platforms.
@@ -600,3 +604,9 @@ B14.1 refreshes [competition](COMPETITIVE_ANALYSIS.md), README and conditional s
 ### Coordinated Navigation 7 and explicit return behavior — 2026-10-16
 
 B01.8-C1 removes the Navigation 6 decoder chain and adopts explicit nested/pop return semantics. [Report](docs/qa/2026-10-16-navigation-seven/REPORT.md). Final suite: 71 / 726 tests with static/content checks and unchanged inventory; fresh review found no actionable findings. iPhone verified cold start, Quiz-to-Study, exact eight-card resume, Stop/tab focus, manager-to-Home and retained listening completion. Tablet verified Quiz-to-Study, Home and exact saved mission feedback. Audit now reports 62 total / 39 omit-dev findings, zero critical; remaining SDK/test-tooling and native/hardware gates stay open.
+
+Implementation `0c4b312` (Navigation 7) was merged/pushed. [GitHub Actions run 38855643836](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38855643836) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles. Native signing and physical acceptance remain separate.
+
+### Speaking options and evaluation preparation — 2026-10-16
+
+B09.1-A / B09.3-A deliver an [official-source shortlist and draft feedback/evaluation contract](docs/speaking/OPTIONS_AND_EVALUATION.md), separating strict local recognition, hosted transcription and independently validated task/intelligibility feedback. Provider/budget, accepted prompts/recordings/ratings and actual device/latency/cost evaluation remain open. No provider configured, audio uploaded or score invented. Document review found no actionable findings; formatting and local links passed.
