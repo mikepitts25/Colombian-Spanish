@@ -34,7 +34,7 @@ Screenshots and `native-state-check.json` retain the observed evidence.
 
 ## Remaining boundaries
 
-Both unsigned simulators emit the known notifications keychain entitlement warning. Signed notification registration/delivery, Android native compilation/emulator, physical audio quality/routes, battery/performance, signed release QA and editorial acceptance remain open. Merge/push and CI results will be recorded after integration.
+Both unsigned simulators emit the known notifications keychain entitlement warning. Signed notification registration/delivery, Android native compilation/emulator, physical audio quality/routes, battery/performance, signed release QA and editorial acceptance remain open. Migration `3df2a11` and peer-install correction `ef5833d` are merged/pushed to main. [CI38955215294](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38955215294) passed all four quality/content and iOS/Android project-generation/JS-bundle jobs.
 
 ## Sources
 
@@ -42,6 +42,6 @@ Both unsigned simulators emit the known notifications keychain entitlement warni
 
 ## CI install correction
 
-The first pushed migration, `3df2a11`, failed [CI38954379577](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38954379577) at npm ci: the lock lacked `@react-native/metro-config@0.86.3` and its Babel dependencies. Investigation found the Mac's inherited global `legacy-peer-deps=true`; isolated npm-version checks also inherited that setting and did not reproduce the runner's normal resolution. Worklets 0.10.1 declares Metro config as a required peer. The correction declares that build dependency explicitly at RN's exact version, regenerates the complete lock, and commits a project `.npmrc` with `legacy-peer-deps=false`, leaving the user's global setting untouched. Strict installs and full checks are repeated; no CI check is removed or bypassed.
+The first pushed migration, `3df2a11`, failed [CI38954379577](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38954379577) at npm ci: the lock lacked `@react-native/metro-config@0.86.3` and its Babel dependencies. Investigation found the Mac's inherited global `legacy-peer-deps=true`; isolated npm-version checks also inherited that setting and did not reproduce the runner's normal resolution. Worklets 0.10.1 declares Metro config as a required peer. The correction declares that build dependency explicitly at RN's exact version, regenerates the complete lock, and commits a project `.npmrc` with `legacy-peer-deps=false`, leaving the user's global setting untouched. Strict clean installs, npm ls, all 771 tests, calendar16, static/content checks and both platform exports passed. Installation also passed under the runner’s exact Node22.23.3/npm10.9.9 with normal peer checks. Merged main repeated a strict install and all771 tests. iOS27 launched against the corrected complete graph and retained1/5 plus nine new cards available. No CI check was removed or bypassed.
 
 The main checkout's generated native projects and 110 pods were refreshed to SDK 57. Its ignored local AppDelegate uses the existing project QA Metro on 8098, and ignored `.xcode.env.local` disables source-map upload for the unconfigured local unsigned build. The compiled/tested simulator binary remains the worktree build described above.
