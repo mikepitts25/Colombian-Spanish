@@ -508,6 +508,9 @@ export const translations = {
     'settings.import.subtitle': 'Restaurar desde portapapeles',
     'settings.rate.title': 'Calificar la App',
     'settings.version.title': 'Versión',
+    'settings.version.native': '{version} · compilación {build}',
+    'settings.version.host': 'Expo Go: {version} · compilación {build}',
+    'settings.version.unknown': 'No disponible',
     'settings.alert.restoreError.message':
       'No se pudo finalizar la importación. Si el respaldo ya se guardó, se completará antes de cargar tus datos al reintentar o reiniciar. No restablezcas la app.',
     'settings.file.export': 'Guardar archivo de respaldo',
@@ -1101,6 +1104,9 @@ export const translations = {
     'settings.import.subtitle': 'Restore from clipboard',
     'settings.rate.title': 'Rate the App',
     'settings.version.title': 'Version',
+    'settings.version.native': '{version} · build {build}',
+    'settings.version.host': 'Expo Go host: {version} · build {build}',
+    'settings.version.unknown': 'Unavailable',
     'settings.alert.restoreError.message':
       'Import could not finish. If the restore was saved, it will finish before loading your data on retry or restart. Do not reset the app.',
     'settings.file.export': 'Save backup file',

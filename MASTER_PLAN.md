@@ -107,7 +107,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
     - [x] **B01.8-C1 [AI, SIM]** Migrate coordinated Navigation 7, explicit nested/pop return actions and header API; verify real-router reuse, full suite, iPhone/tablet flows and remove decoder path. Audit 62 total / 39 omit-dev, zero critical; high findings remain. [Report](docs/qa/2026-10-16-navigation-seven/REPORT.md).
     - [ ] **B01.8-C2 [AI, SIM]** Complete separately verified Expo/RN/Jest and remaining no-patch advisory migration/backports with native flows. Navigation migration does not close these paths.
       - [x] **B01.8-C2a [AI]** Scope the current Expo Metro config to patched PostCSS 8.5.30; reproduce/fix out-of-tree source-map disclosure tests and preserve normal transforms. Audit 61 total / 38 omit-dev, 0 critical; remaining findings stay open. [Report](docs/qa/2026-10-16-postcss-patch/REPORT.md).
-      - [ ] **B01.8-C2b [AI, SIM]** SDK54→55 aligned package/runtime migration: clean766 tests/calendar16, both exports/prebuild and native iOS compilation/QA passed; fresh review and merge/CI pending. [Report](docs/qa/2026-10-16-sdk55/REPORT.md). SDK56+ and remaining advisory paths remain open.
+      - [x] **B01.8-C2b [AI, SIM]** SDK54→55 aligned package/runtime migration: clean 766 tests/calendar 16, both exports/prebuild and native iOS compilation/QA passed; fresh review found no blockers, merged/pushed `5a1693a`, CI38889781746 passed. [Report](docs/qa/2026-10-16-sdk55/REPORT.md). SDK56+ and remaining advisory paths remain open.
 - [ ] **B01.9 [AI, H-PRODUCT, H-ACCOUNT]** Decide whether to restore or retire the historical Kanban Pages deployment. Its previously failing workflow now reports successful deployment on October 16 pushes without an agent configuration change. Owner should confirm the intended publication scope; no Pages/account setting was changed in these batches.
 
 - [x] **B01.10 [AI]** Replace deprecated action runtimes in app CI with official Node 24 actions pinned to release SHAs; keep npm checks on Node 22 and pin Ubuntu 24.04. Verify the actual GitHub Actions run after push.
@@ -337,7 +337,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 **Package:** maintain one repeatable test script and evidence matrix; rerun affected cases for each candidate. AI writes the script, builds, diagnoses, and fixes failures. Device access and sensory judgments may require a person.
 
 - [ ] **B12.1 [AI, SIM]** Establish fixtures for fresh/returning learners, large libraries, difficult cards, empty filters, corrupted data, long text, and upgrades. Record tested OS versions and build identifiers.
-  - [ ] **B12.1-M [AI, SIM]** Replace the Settings placeholderv2.0.0/build42 with actual app/host metadata and unknown handling; observed native binary is1.0.0/build1.0.0. Keep Expo Go host identity distinct from application identity.
+  - [x] **B12.1-M [AI, SIM]** Replace the Settings placeholder with actual native version/build, distinct Expo Go host labels and localized unknown handling; remove the inactive store action. Native Spanish/English label matches binary 1.0.0/build1.0.0. [QA](docs/qa/2026-10-16-native-build-metadata/REPORT.md).
 - [ ] **B12.2 [AI, DEVICE]** Test a physical iPhone on each promised support boundary; cover an older/lower-performance supported device and a current device where feasible. Record gaps explicitly.
 - [ ] **B12.3 [AI, DEVICE]** Test physical Android hardware if Android ships, including a lower-performance supported device and relevant vendor battery restrictions. Emulator results are supplementary.
 - [ ] **B12.4 [AI, SIM, DEVICE]** Test tablets if advertised/supported by the release; app configuration currently enables iPad support. Either validate the supported layout or deliberately narrow support.
@@ -641,3 +641,7 @@ B01.8-C2a removes the PostCSS advisory through an exact-parent same-major patch 
 B02.6-B1 delivers 16 storage checks across four isolated timezone processes, now in CI. Full suite 78 suites / 764 tests, types/lint/format/content checks passed; independent review confirmed fixtures and runner. PostCSS batch `71b048e` merged/pushed; [CI38886863213](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38886863213) passed quality/content and both platform project-generation/JS-bundle jobs.
 
 Calendar matrix `fde0735` merged/pushed to main; [CI38887199615](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38887199615) passed quality/content,16-zone cases and both project-generation/JS-bundle jobs.
+
+### Native build metadata — October 16, 2026
+
+B12.1-M replaces the placeholder build with native API values and distinguishes Expo Go host identity. Three regressions observed RED→GREEN; all 79 suites / 769 tests, types/lint/format/content checks pass. Native iOS Spanish/English labels match the compiled binary. Fresh review found no actionable issues. SDK55 `5a1693a` [CI38889781746](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38889781746) passed every quality/content and iOS/Android project-generation/JS-bundle job.

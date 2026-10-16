@@ -16,6 +16,8 @@ import {
 import { pickBackupFile, shareBackupFile, BackupFileError } from '../services/backupFiles';
 import { getPrefs } from '../storage/prefs';
 import * as Clipboard from 'expo-clipboard';
+import * as Application from 'expo-application';
+import Constants, { ExecutionEnvironment } from 'expo-constants';
 import { useLanguage } from '../context/LanguageContext';
 
 function SettingsRow({
@@ -57,6 +59,15 @@ function Divider() {
 export default function SettingsScreen() {
   const nav = useNavigation<any>();
   const { t, toggleLanguage } = useLanguage();
+  const buildLabel = t(
+    Constants.executionEnvironment === ExecutionEnvironment.StoreClient
+      ? 'settings.version.host'
+      : 'settings.version.native',
+    {
+      version: Application.nativeApplicationVersion?.trim() || t('settings.version.unknown'),
+      build: Application.nativeBuildVersion?.trim() || t('settings.version.unknown'),
+    },
+  );
   const [target, setTarget] = useState(10);
   const fileAction = useRef(false);
   const [fileBusy, setFileBusy] = useState(false);
@@ -408,16 +419,9 @@ export default function SettingsScreen() {
         <Text style={styles.groupLabel}>{t('settings.section.about')}</Text>
         <View style={styles.groupCard}>
           <SettingsRow
-            emoji="⭐"
-            title={t('settings.rate.title')}
-            subtitle="App Store"
-            onPress={() => {}}
-          />
-          <Divider />
-          <SettingsRow
             emoji="📋"
             title={t('settings.version.title')}
-            subtitle="v2.0.0 (build 42)"
+            subtitle={buildLabel}
             chevron={false}
           />
         </View>

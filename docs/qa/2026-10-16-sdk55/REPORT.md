@@ -44,4 +44,6 @@ Binary Info.plist reports version 1.0.0 /build 1.0.0. The pre-existing Settings 
 
 ## Outstanding boundaries
 
-Fresh whole-package review found no actionable findings or merge blockers and independently checked six config tests, dependency compatibility, React/renderer alignment and PostCSS resolution. Merge/CI outcomes are recorded when available. No Android emulator/hardware, signed release, physical routes, actual audio quality, weak-network/low-storage, native OS interruption suite or live timezone-switch pass is claimed. Android SDK license authorization remains separate. Human editorial/rights/provider decisions remain open.
+Fresh whole-package review found no actionable findings or merge blockers and independently checked six config tests, dependency compatibility, React/renderer alignment and PostCSS resolution. Merged/pushed `5a1693a`; [CI38889781746](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38889781746) passed all quality/content and platform project-generation/JS-bundle jobs. No Android emulator/hardware, signed release, physical routes, actual audio quality, weak-network/low-storage, native OS interruption suite or live timezone-switch pass is claimed. Android SDK license authorization remains separate. Human editorial/rights/provider decisions remain open.
+
+The later B12.1-M follow-up corrects the Settings placeholder noted above; see the [metadata report](../2026-10-16-native-build-metadata/REPORT.md).

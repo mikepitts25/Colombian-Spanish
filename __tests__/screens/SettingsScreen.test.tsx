@@ -8,6 +8,16 @@ import {
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
 import SettingsScreen from '../../src/screens/SettingsScreen';
 import { pickBackupFile, shareBackupFile } from '../../src/services/backupFiles';
+jest.mock('expo-application', () => ({
+  __esModule: true,
+  nativeApplicationVersion: '1.2.3',
+  nativeBuildVersion: '99',
+}));
+jest.mock('expo-constants', () => ({
+  __esModule: true,
+  default: { executionEnvironment: 'bare' },
+  ExecutionEnvironment: { StoreClient: 'storeClient' },
+}));
 jest.mock('../../src/services/backupFiles', () => ({
   pickBackupFile: jest.fn(),
   shareBackupFile: jest.fn(),
@@ -66,6 +76,11 @@ beforeEach(async () => {
   await AsyncStorage.clear();
   jest.clearAllMocks();
   mockLanguage = 'es';
+  Object.assign(jest.requireMock('expo-application'), {
+    nativeApplicationVersion: '1.2.3',
+    nativeBuildVersion: '99',
+  });
+  jest.requireMock('expo-constants').default.executionEnvironment = 'bare';
   mockGetDailyProgress.mockResolvedValue({ date: '2026-01-01', count: 5, target: 10 });
   mockLoadDecks.mockResolvedValue([]);
   mockSetStringAsync.mockResolvedValue(undefined);
@@ -134,7 +149,7 @@ describe('SettingsScreen rendering', () => {
       'Importar respaldo',
       'Restaurar desde portapapeles',
       'SOBRE LA APP',
-      'Calificar la App',
+      '1.2.3 · compilación 99',
       'Versión',
     ].forEach((label) => expect(getByText(label)).toBeTruthy());
   });
@@ -169,7 +184,7 @@ describe('SettingsScreen rendering', () => {
       'Import Backup',
       'Restore from clipboard',
       'ABOUT THE APP',
-      'Rate the App',
+      '1.2.3 · build 99',
       'Version',
     ].forEach((label) => expect(getByText(label)).toBeTruthy());
   });
@@ -645,3 +660,28 @@ it.each(['file', 'clipboard'])(
     expect(mockAlert).toHaveBeenCalledWith('Importado', expect.stringContaining('Reinicia'));
   },
 );
+
+it('shows the native application build instead of placeholder version or an inactive store action', async () => {
+  const screen = render(<SettingsScreen />);
+  expect(await screen.findByText('1.2.3 · compilación 99')).toBeTruthy();
+  expect(screen.queryByText('v2.0.0 (build 42)')).toBeNull();
+  expect(screen.queryByText('App Store')).toBeNull();
+});
+it('identifies Expo Go host metadata in English rather than claiming it is the app version', async () => {
+  mockLanguage = 'en';
+  Object.assign(jest.requireMock('expo-application'), {
+    nativeApplicationVersion: '55.0.34',
+    nativeBuildVersion: '123',
+  });
+  jest.requireMock('expo-constants').default.executionEnvironment = 'storeClient';
+  const screen = render(<SettingsScreen />);
+  expect(await screen.findByText('Expo Go host: 55.0.34 · build 123')).toBeTruthy();
+});
+it('shows unavailable when native build values are missing or blank', async () => {
+  Object.assign(jest.requireMock('expo-application'), {
+    nativeApplicationVersion: null,
+    nativeBuildVersion: '  ',
+  });
+  const screen = render(<SettingsScreen />);
+  expect(await screen.findByText('No disponible · compilación No disponible')).toBeTruthy();
+});
