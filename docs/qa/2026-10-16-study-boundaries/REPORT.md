@@ -29,4 +29,4 @@ After terminating and launching the app again, Study → Continue Business resto
 
 ## Integration
 
-Pending commit and remote CI. Broader master B02.4-B2 remains open.
+Implementation `73b9407` was merged and pushed to main. The merged tree passed all 79 suites / 777 tests. Final worktree types, lint, format and diff checks passed; calendar 16 and content validation passed. [CI38961900481](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38961900481) passed all four jobs, including quality/tests/content and both platform project generation/production JS exports. These export jobs do not establish native Android compilation or signed/physical acceptance. Broader master B02.4-B2 remains open.

@@ -11,7 +11,7 @@ An external active-deck change must own a new session identity and queue. An ear
 - [x] Baseline StudyScreen45 tests pass; reproduce external-deck-switch/late-grade failure in a controlled test. Observed: new celular disappears when prior hola grade resolves.
 - [x] Pin success/failure, delayed checkpoint ordering, old checkpoint completion and new identity/limits cases. Fix only the demonstrated session ownership and ordering failures; retain exact queues.
 - [x] Run full/static/calendar/content checks and applicable native navigation/resume checks. Capture actual boundaries; do not claim deterministic native race injection if only unit tests exercised it.
-- [ ] One fresh whole-package review, RED→GREEN fixes, final checks; update master checklist/QA, merge/push and observe CI under standing authorization.
+- [x] One fresh whole-package review, RED→GREEN fixes, final checks; update master checklist/QA, merge/push and observe CI under standing authorization.
 
 ## Investigation
 
@@ -23,4 +23,4 @@ Ruling: this is a correction of the existing session/backup invariants already a
 
 Task2 result: three observed RED failures (late-grade UI, premature checkpoint, unmounted deferred checkpoint), then51 StudyScreen tests GREEN; full79/777, types/lint/calendar16/content GREEN. Fixed queue owner/generation, grade-settled barrier and disposal invalidation. Additional tests cover failure/retry isolation, latest boundary and bounded identity/limits. Native old-bundle evidence exposed inherited identity/limits; corrected-bundle rerun passed: fresh Business identity, nine cards without inherited limits, exact cold resume; daily/events/library totals unchanged.
 
-Final review: one fresh independent whole-package reviewer reported no actionable findings. Integration remains pending.
+Final review: one fresh independent whole-package reviewer reported no actionable findings. Implementation 73b9407 merged/pushed to main; merged suite 79/777 passed. CI38961900481 passed all four jobs. Master B02.4-B2e and QA evidence updated; broader audits remain open.
