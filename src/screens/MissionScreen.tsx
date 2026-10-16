@@ -15,7 +15,9 @@ import { SHOW_REVIEW_TOOLS } from '../config';
 import { useLanguage } from '../context/LanguageContext';
 import { useDeck } from '../hooks/useDeck';
 import { FIRST_MORNING } from '../missions/firstMorning';
-import { LocalizedText, validateMission } from '../missions/schema';
+import MissionAudio from '../components/MissionAudio';
+import { pronunciationAudio } from '../data/audioManifest';
+import { LocalizedText, MissionPack, validateMission } from '../missions/schema';
 import { MissionCommand, MissionRun } from '../missions/engine';
 import { applyMissionCommand, loadMissionRun, startMissionRun } from '../storage/missions';
 import MissionFollowUp from '../components/MissionFollowUp';
@@ -26,7 +28,7 @@ type Pending =
   | { kind: 'command'; command: MissionCommand };
 const identity = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 
-export default function MissionScreen() {
+export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: MissionPack } = {}) {
   const { language, t } = useLanguage();
   const nav = useNavigation<any>();
   const { ready, decks } = useDeck();
@@ -44,26 +46,30 @@ export default function MissionScreen() {
     pending = useRef<Pending | undefined>(undefined),
     generation = useRef(0),
     startedAt = useRef(Date.now());
+  const listening = pack.nodes.some((node) => node.kind === 'listening');
   const local = (value: LocalizedText) => value[language];
   const available = useMemo(() => {
     if (!SHOW_REVIEW_TOOLS || !ready) return false;
     try {
-      validateMission(FIRST_MORNING, {
+      validateMission(pack, {
         cards: new Map(decks.flatMap((d) => d.cards.map((c) => [c.id, d.id] as [string, string]))),
-        mediaIds: new Set(),
+        mediaIds: new Set(Object.keys(pronunciationAudio)),
+        transcripts: new Map(
+          decks.flatMap((d) => d.cards.map((c) => [c.id, c.front] as [string, string])),
+        ),
         missionIds: new Set(),
       });
       return true;
     } catch {
       return false;
     }
-  }, [ready, decks]);
+  }, [ready, decks, pack]);
   const load = useCallback(async () => {
     const request = ++generation.current;
     setLoading(true);
     setLoadError(false);
     try {
-      const result = await loadMissionRun(FIRST_MORNING);
+      const result = await loadMissionRun(pack);
       if (mounted.current && request === generation.current) {
         setRun(result.run);
         setContentChanged(result.contentChanged);
@@ -74,7 +80,7 @@ export default function MissionScreen() {
     } finally {
       if (mounted.current && request === generation.current) setLoading(false);
     }
-  }, []);
+  }, [pack]);
   useEffect(() => {
     mounted.current = true;
     if (available) void load();
@@ -91,13 +97,16 @@ export default function MissionScreen() {
     try {
       const next =
         intent.kind === 'start'
-          ? await startMissionRun(FIRST_MORNING, intent.id, intent.at, intent.expectedRunId)
-          : await applyMissionCommand(FIRST_MORNING, intent.command);
+          ? await startMissionRun(pack, intent.id, intent.at, intent.expectedRunId)
+          : await applyMissionCommand(pack, intent.command);
       pending.current = undefined;
       if (mounted.current) {
         setRun(next);
         setContentChanged(false);
-        if (intent.kind === 'start' || intent.command.type !== 'hint') {
+        if (
+          intent.kind === 'start' ||
+          ['advance', 'retry', 'answer'].includes(intent.command.type)
+        ) {
           setAnswer('');
           startedAt.current = Date.now();
         }
@@ -142,8 +151,7 @@ export default function MissionScreen() {
       <Text style={styles.buttonText}>{label}</Text>
     </Pressable>
   );
-  const node =
-    run && !contentChanged ? FIRST_MORNING.nodes.find((n) => n.id === run.nodeId) : undefined;
+  const node = run && !contentChanged ? pack.nodes.find((n) => n.id === run.nodeId) : undefined;
   const followUpCards = run?.completed
     ? run.reviewCardIds.flatMap((id) => {
         const card = decks.flatMap((d) => d.cards).find((c) => c.id === id);
@@ -168,9 +176,13 @@ export default function MissionScreen() {
             <Text style={styles.body}>{t('mission.unavailable')}</Text>
           ) : (
             <>
-              <Text style={styles.eyebrow}>{t('mission.draft')}</Text>
-              <Text style={styles.title}>{local(FIRST_MORNING.title)}</Text>
-              <Text style={styles.body}>{t('mission.notice')}</Text>
+              <Text style={styles.eyebrow}>
+                {t(listening ? 'listening.generated' : 'mission.draft')}
+              </Text>
+              <Text style={styles.title}>{local(pack.title)}</Text>
+              <Text style={styles.body}>
+                {t(listening ? 'listening.notice' : 'mission.notice')}
+              </Text>
               {!ready || loading ? (
                 <Text style={styles.body}>{t('mission.loading')}</Text>
               ) : loadError ? (
@@ -208,8 +220,19 @@ export default function MissionScreen() {
                     )}
                     {node.kind === 'scene' &&
                       button(t('mission.continue'), () => command('advance'))}
-                    {(node.kind === 'production' || node.kind === 'choice') && (
+                    {(node.kind === 'production' ||
+                      node.kind === 'choice' ||
+                      node.kind === 'listening') && (
                       <>
+                        {node.kind === 'listening' && (
+                          <MissionAudio
+                            key={`${run.id}:${node.id}`}
+                            node={node}
+                            run={run}
+                            disabled={disabled}
+                            onCommand={(type) => command(type)}
+                          />
+                        )}
                         {node.hints.slice(0, run.hintsUsed).map((hint, i) => (
                           <Text key={i} style={styles.hint}>
                             {local(hint)}
@@ -242,11 +265,14 @@ export default function MissionScreen() {
                               </>
                             ) : (
                               node.options.map((option) =>
-                                button(local(option.text), () =>
-                                  command('answer', {
-                                    choiceId: option.id,
-                                    durationMs: Math.max(0, Date.now() - startedAt.current),
-                                  }),
+                                button(
+                                  local(option.text),
+                                  () =>
+                                    command('answer', {
+                                      choiceId: option.id,
+                                      durationMs: Math.max(0, Date.now() - startedAt.current),
+                                    }),
+                                  disabled || (node.kind === 'listening' && !run.audioPlayed),
                                 ),
                               )
                             )}

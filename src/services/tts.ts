@@ -52,11 +52,15 @@ function fallback(text: string, rate: number, lang = DEFAULT_LANGUAGE): Playback
 const cancelled = (): PlaybackResult => ({ source: 'cancelled', loop: false });
 export async function speakCard(
   card: PronunciationCard,
-  options: { rate?: number; loop?: boolean } = {},
+  options: { rate?: number; loop?: boolean; requireBundled?: boolean } = {},
 ): Promise<PlaybackResult> {
   const { id, front } = card;
-  const { rate: override, loop = false } = options;
-  if (typeof loop !== 'boolean' || (override !== undefined && !validRate(override)))
+  const { rate: override, loop = false, requireBundled = false } = options;
+  if (
+    typeof requireBundled !== 'boolean' ||
+    typeof loop !== 'boolean' ||
+    (override !== undefined && !validRate(override))
+  )
     throw new Error('Invalid playback options');
   interruptPlayback();
   const requestId = activeRequestId;
@@ -77,9 +81,11 @@ export async function speakCard(
     } catch {
       if (requestId !== activeRequestId) return cancelled();
       releasePlayer(currentPlayer);
+      if (requireBundled) throw new Error('Required bundled audio is unavailable');
       return fallback(front, rate);
     }
   }
+  if (requireBundled) throw new Error('Required bundled audio is unavailable');
   return fallback(front, rate);
 }
 export async function speak(text: string, lang = DEFAULT_LANGUAGE): Promise<PlaybackResult> {

@@ -1,0 +1,231 @@
+{
+  "status": "unreviewed-draft",
+  "mission": {
+    "schemaVersion": 1,
+    "id": "listening-basics",
+    "contentVersion": 1,
+    "title": {
+      "en": "Listen to everyday phrases",
+      "es": "Escucha frases cotidianas"
+    },
+    "entry": "greeting",
+    "prerequisites": [],
+    "media": [
+      {
+        "id": "greeting-audio",
+        "cardId": "0010",
+        "provenance": "generated"
+      },
+      {
+        "id": "coffee-audio",
+        "cardId": "0024",
+        "provenance": "generated"
+      },
+      {
+        "id": "water-audio",
+        "cardId": "0025",
+        "provenance": "generated"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "greeting",
+        "kind": "listening",
+        "title": {
+          "en": "A morning greeting",
+          "es": "Un saludo por la mañana"
+        },
+        "prompt": {
+          "en": "Play the clip, then choose its English meaning.",
+          "es": "Escucha el clip y elige su significado en inglés."
+        },
+        "transcript": "buenos días",
+        "mediaId": "greeting-audio",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "hints": [],
+        "options": [
+          {
+            "id": "morning",
+            "text": {
+              "en": "Good morning",
+              "es": "Good morning"
+            },
+            "correct": true,
+            "next": "coffee",
+            "feedback": {
+              "en": "Buenos días is a morning greeting.",
+              "es": "Buenos días es un saludo por la mañana."
+            }
+          },
+          {
+            "id": "water",
+            "text": {
+              "en": "Water",
+              "es": "Water"
+            },
+            "correct": false,
+            "feedback": {
+              "en": "The greeting means good morning: buenos días.",
+              "es": "El saludo significa good morning: buenos días."
+            }
+          }
+        ]
+      },
+      {
+        "id": "coffee",
+        "kind": "listening",
+        "title": {
+          "en": "At the café",
+          "es": "En la cafetería"
+        },
+        "prompt": {
+          "en": "Play the clip, then choose its English meaning.",
+          "es": "Escucha el clip y elige su significado en inglés."
+        },
+        "transcript": "café",
+        "mediaId": "coffee-audio",
+        "cardId": "0024",
+        "deckId": "deck-food",
+        "hints": [],
+        "options": [
+          {
+            "id": "water",
+            "text": {
+              "en": "Water",
+              "es": "Water"
+            },
+            "correct": false,
+            "feedback": {
+              "en": "The word is café: coffee.",
+              "es": "La palabra es café: coffee."
+            }
+          },
+          {
+            "id": "coffee",
+            "text": {
+              "en": "Coffee",
+              "es": "Coffee"
+            },
+            "correct": true,
+            "next": "water",
+            "feedback": {
+              "en": "Café means coffee.",
+              "es": "Café significa coffee."
+            }
+          }
+        ]
+      },
+      {
+        "id": "water",
+        "kind": "listening",
+        "title": {
+          "en": "Another drink",
+          "es": "Otra bebida"
+        },
+        "prompt": {
+          "en": "Play the clip, then choose its English meaning.",
+          "es": "Escucha el clip y elige su significado en inglés."
+        },
+        "transcript": "agua",
+        "mediaId": "water-audio",
+        "cardId": "0025",
+        "deckId": "deck-food",
+        "hints": [],
+        "options": [
+          {
+            "id": "water",
+            "text": {
+              "en": "Water",
+              "es": "Water"
+            },
+            "correct": true,
+            "next": "complete",
+            "feedback": {
+              "en": "Agua means water.",
+              "es": "Agua significa water."
+            }
+          },
+          {
+            "id": "coffee",
+            "text": {
+              "en": "Coffee",
+              "es": "Coffee"
+            },
+            "correct": false,
+            "feedback": {
+              "en": "The word is agua: water.",
+              "es": "La palabra es agua: water."
+            }
+          }
+        ]
+      },
+      {
+        "id": "complete",
+        "kind": "complete",
+        "title": {
+          "en": "Listening practice complete",
+          "es": "Práctica de escucha terminada"
+        },
+        "text": {
+          "en": "You practiced recognizing three generated pronunciation clips. Transcript reveals and corrections are tracked separately. This draft does not assess a conversation, a new speaker or proficiency.",
+          "es": "Practicaste reconocer tres clips de pronunciación generados. Las transcripciones y correcciones se registran por separado. Este borrador no evalúa una conversación, una voz nueva ni tu nivel."
+        },
+        "hints": []
+      }
+    ]
+  },
+  "missionSha256": "2ba96a84b2b33a7937dcb0ddd2024e5ae876ecbc46c9ca3e28878bc21949a901",
+  "sourceCards": [
+    {
+      "deckId": "deck-food",
+      "card": {
+        "id": "0024",
+        "front": "café",
+        "back": "coffee",
+        "example": "El café colombiano es muy famoso. | Colombian coffee is very famous.",
+        "tags": ["food"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    {
+      "deckId": "deck-food",
+      "card": {
+        "id": "0025",
+        "front": "agua",
+        "back": "water",
+        "example": "¿Me puedes dar un vaso de agua, por favor? | Can you give me a glass of water, please?",
+        "tags": ["food"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    {
+      "deckId": "deck-greetings",
+      "card": {
+        "id": "0010",
+        "front": "buenos días",
+        "back": "good morning",
+        "example": "Buenos días, ¿cómo amaneciste? | Good morning, how did you wake up?",
+        "tags": ["greetings"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    }
+  ],
+  "reviewRequired": [
+    "Exact transcripts, meanings and distractors",
+    "Generated pronunciation intelligibility; no regional or human speaker claim",
+    "Accessibility and authentic dialogue require separate acceptance"
+  ]
+}

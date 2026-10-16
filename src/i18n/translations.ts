@@ -2,6 +2,18 @@ import { UiLanguage } from '../storage/prefs';
 
 export const translations = {
   es: {
+    'listening.preview': 'Vista previa de escucha (borrador)',
+    'listening.generated': 'Pronunciación generada · borrador editorial',
+    'listening.notice':
+      'Estos clips y sus significados necesitan revisión humana antes del lanzamiento. Las opciones están en inglés para mantener oculto el texto en español.',
+    'listening.evidenceNote':
+      'Reproduce el clip antes de responder. Se registra el inicio de reproducción; no demuestra que hayas oído el sonido.',
+    'listening.savedSpeed': 'Velocidad guardada',
+    'listening.play': 'Escuchar / repetir',
+    'listening.playError':
+      'No se pudo reproducir el clip incluido. Reintenta o vuelve a la práctica escrita.',
+    'listening.transcript': 'Transcripción',
+    'listening.showTranscript': 'Mostrar transcripción',
     'audio.title': 'Preferencias de audio',
     'audio.back': 'Volver',
     'audio.note':
@@ -542,6 +554,18 @@ export const translations = {
     'nav.difficultWords': 'Palabras Difíciles',
   },
   en: {
+    'listening.preview': 'Listening preview (draft)',
+    'listening.generated': 'Generated pronunciation · editorial draft',
+    'listening.notice':
+      'These clips and meanings need human review before release. Choices are in English to keep the Spanish text hidden.',
+    'listening.evidenceNote':
+      'Play the clip before answering. Playback starts are recorded; they do not prove you heard the sound.',
+    'listening.savedSpeed': 'Saved speed',
+    'listening.play': 'Play / replay',
+    'listening.playError':
+      'Could not play the bundled clip. Try replaying or return to text practice.',
+    'listening.transcript': 'Transcript',
+    'listening.showTranscript': 'Show transcript',
     'audio.title': 'Audio preferences',
     'audio.back': 'Back',
     'audio.note':

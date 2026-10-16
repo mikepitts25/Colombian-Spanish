@@ -9,6 +9,13 @@ export interface LearningEvent {
   sessionId: string;
   missionId?: string;
   assistance?: 'model-answer';
+  transcriptAssisted?: boolean;
+  audio?: {
+    kind: 'generated';
+    evidence: 'playback-started';
+    mediaId: string;
+    contentVersion: number;
+  };
   exercise?: { id: string; contentVersion: number; kind: 'typed-recall' | 'cloze' };
   modality: LearningModality;
   outcome: 'correct' | 'incorrect';
@@ -29,6 +36,25 @@ export function normalizeEvent(value: unknown): LearningEvent {
     (event.assistance !== undefined &&
       (event.assistance !== 'model-answer' || event.evidence !== 'answer-checked')) ||
     event.schemaVersion !== 1 ||
+    (event.transcriptAssisted !== undefined &&
+      (typeof event.transcriptAssisted !== 'boolean' ||
+        event.modality !== 'listening' ||
+        event.evidence !== 'answer-checked')) ||
+    (event.audio !== undefined &&
+      (!event.audio ||
+        typeof event.audio !== 'object' ||
+        Array.isArray(event.audio) ||
+        Object.keys(event.audio).some(
+          (key) => !['kind', 'evidence', 'mediaId', 'contentVersion'].includes(key),
+        ) ||
+        event.audio.kind !== 'generated' ||
+        event.audio.evidence !== 'playback-started' ||
+        !text(event.audio.mediaId) ||
+        !Number.isSafeInteger(event.audio.contentVersion) ||
+        event.audio.contentVersion < 1 ||
+        event.modality !== 'listening' ||
+        event.evidence !== 'answer-checked' ||
+        event.quality !== undefined)) ||
     ![event.id, event.cardId, event.deckId, event.sessionId].every(text) ||
     (event.missionId !== undefined && !text(event.missionId)) ||
     !['recognition', 'recall', 'listening', 'speaking'].includes(event.modality) ||
@@ -66,6 +92,10 @@ export function normalizeEvent(value: unknown): LearningEvent {
     ...(event.missionId === undefined ? {} : { missionId: event.missionId }),
     ...(event.exercise === undefined ? {} : { exercise: { ...event.exercise } }),
     ...(event.assistance === undefined ? {} : { assistance: event.assistance }),
+    ...(event.transcriptAssisted === undefined
+      ? {}
+      : { transcriptAssisted: event.transcriptAssisted }),
+    ...(event.audio === undefined ? {} : { audio: { ...event.audio } }),
     modality: event.modality,
     outcome: event.outcome,
     evidence: event.evidence,

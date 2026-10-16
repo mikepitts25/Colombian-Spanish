@@ -12,6 +12,8 @@ export interface MissionRun {
   assisted: boolean;
   modelAnswerRevealed: boolean;
   completed: boolean;
+  audioPlayed?: boolean;
+  transcriptRevealed?: boolean;
   reviewCardIds: string[];
   updatedAt: number;
   feedback?: {
@@ -31,7 +33,7 @@ export interface MissionCommand {
   nodeId: string;
   expectedRevision: number;
   at: number;
-  type: 'advance' | 'hint' | 'retry' | 'answer';
+  type: 'advance' | 'hint' | 'retry' | 'answer' | 'playback' | 'transcript';
   answer?: string;
   choiceId?: string;
   durationMs?: number;
@@ -65,6 +67,8 @@ export function validateMissionEnvelope(value: unknown): asserts value is Missio
         'assisted',
         'modelAnswerRevealed',
         'completed',
+        'audioPlayed',
+        'transcriptRevealed',
         'reviewCardIds',
         'updatedAt',
         'feedback',
@@ -79,6 +83,8 @@ export function validateMissionEnvelope(value: unknown): asserts value is Missio
       typeof run.assisted !== 'boolean' ||
       typeof run.modelAnswerRevealed !== 'boolean' ||
       typeof run.completed !== 'boolean' ||
+      (run.audioPlayed !== undefined && typeof run.audioPlayed !== 'boolean') ||
+      (run.transcriptRevealed !== undefined && typeof run.transcriptRevealed !== 'boolean') ||
       typeof run.updatedAt !== 'number' ||
       !Number.isFinite(run.updatedAt) ||
       run.updatedAt < 0 ||
@@ -118,12 +124,23 @@ export function validateMissionRun(pack: MissionPack, run: MissionRun): MissionN
     !node ||
     run.completed !== (node?.kind === 'complete') ||
     run.hintsUsed > node.hints.length ||
-    ((run.modelAnswerRevealed || run.hintsUsed > 0 || run.reviewCardIds.length > 0) &&
+    ((run.transcriptRevealed ||
+      run.modelAnswerRevealed ||
+      run.hintsUsed > 0 ||
+      run.reviewCardIds.length > 0) &&
       !run.assisted)
   )
     throw new Error('Mission content changed or saved state is inconsistent');
+  if (
+    node.kind === 'listening'
+      ? typeof run.audioPlayed !== 'boolean' || typeof run.transcriptRevealed !== 'boolean'
+      : run.audioPlayed !== undefined || run.transcriptRevealed !== undefined
+  )
+    throw new Error('Invalid saved listening evidence');
   if (run.feedback) {
-    if (node.kind === 'choice') {
+    if (node.kind === 'listening' && !run.audioPlayed)
+      throw new Error('Invalid saved playback evidence');
+    if (node.kind === 'choice' || node.kind === 'listening') {
       const option = node.options.find((o) => o.id === run.feedback!.optionId);
       if (
         !option ||
@@ -148,6 +165,9 @@ export function startMission(pack: MissionPack, id: string, at: number): Mission
   validateMission(pack);
   const run: MissionRun = {
     schemaVersion: 1,
+    ...(pack.nodes.find((n) => n.id === pack.entry)?.kind === 'listening'
+      ? { audioPlayed: false, transcriptRevealed: false }
+      : {}),
     id,
     missionId: pack.id,
     contentVersion: pack.contentVersion,
@@ -176,7 +196,7 @@ export function transitionMission(
     !integer(command.expectedRevision) ||
     !Number.isFinite(command.at) ||
     command.at < 0 ||
-    !['advance', 'hint', 'retry', 'answer'].includes(command.type)
+    !['advance', 'hint', 'retry', 'answer', 'playback', 'transcript'].includes(command.type)
   )
     throw new Error('Invalid mission command');
   const source = pack.nodes.find((n) => n.id === command.nodeId);
@@ -203,7 +223,18 @@ export function transitionMission(
     throw new Error('Stale mission revision');
   const state: MissionRun = JSON.parse(JSON.stringify(current));
   let event: LearningEvent | undefined;
-  if (command.type === 'hint') {
+  if (command.type === 'playback' || command.type === 'transcript') {
+    if (node.kind !== 'listening' || state.feedback)
+      throw new Error('Listening step is not available');
+    if (command.type === 'playback') {
+      if (state.audioPlayed) throw new Error('Playback already recorded');
+      state.audioPlayed = true;
+    } else {
+      if (state.transcriptRevealed) throw new Error('Transcript already revealed');
+      state.transcriptRevealed = true;
+      state.assisted = true;
+    }
+  } else if (command.type === 'hint') {
     if (state.feedback || state.hintsUsed >= node.hints.length)
       throw new Error('No mission hint available');
     state.hintsUsed++;
@@ -217,9 +248,17 @@ export function transitionMission(
     let next: string;
     if (node.kind === 'scene') next = node.next;
     else if (node.kind === 'production' && state.feedback) next = node.next;
-    else if (node.kind === 'choice' && state.feedback)
+    else if ((node.kind === 'choice' || node.kind === 'listening') && state.feedback)
       next = node.options.find((o) => o.correct)!.next!;
     else throw new Error('Mission step is not ready to advance');
+    const nextNode = pack.nodes.find((n) => n.id === next);
+    if (nextNode?.kind === 'listening') {
+      state.audioPlayed = false;
+      state.transcriptRevealed = false;
+    } else {
+      delete state.audioPlayed;
+      delete state.transcriptRevealed;
+    }
     state.nodeId = next;
     state.completed = pack.nodes.find((n) => n.id === next)?.kind === 'complete';
     state.hintsUsed = 0;
@@ -256,7 +295,9 @@ export function transitionMission(
         }),
         missionId: pack.id,
       };
-    } else if (node.kind === 'choice') {
+    } else if (node.kind === 'choice' || node.kind === 'listening') {
+      if (node.kind === 'listening' && !state.audioPlayed)
+        throw new Error('Listening answer requires playback');
       const option = node.options.find((o) => o.id === command.choiceId);
       if (!option) throw new Error('Invalid mission choice');
       state.feedback = { status: option.correct ? 'correct' : 'incorrect', optionId: option.id };
@@ -267,7 +308,18 @@ export function transitionMission(
         missionId: pack.id,
         cardId: node.cardId,
         deckId: node.deckId,
-        modality: 'recognition',
+        modality: node.kind === 'listening' ? 'listening' : 'recognition',
+        ...(node.kind === 'listening'
+          ? {
+              transcriptAssisted: state.transcriptRevealed!,
+              audio: {
+                kind: 'generated' as const,
+                evidence: 'playback-started' as const,
+                mediaId: node.mediaId,
+                contentVersion: pack.contentVersion,
+              },
+            }
+          : {}),
         ...(state.modelAnswerRevealed ? { assistance: 'model-answer' as const } : {}),
         evidence: 'answer-checked',
         outcome: option.correct ? 'correct' : 'incorrect',

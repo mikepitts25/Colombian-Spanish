@@ -27,6 +27,11 @@ export interface ChoiceNode extends BaseNode {
     feedback: LocalizedText;
   }[];
 }
+export interface ListeningNode extends Omit<ChoiceNode, 'kind'> {
+  kind: 'listening';
+  transcript: string;
+  mediaId: string;
+}
 export interface ProductionNode extends BaseNode {
   kind: 'production';
   prompt: LocalizedText;
@@ -38,7 +43,7 @@ export interface CompleteNode extends BaseNode {
   kind: 'complete';
   text: LocalizedText;
 }
-export type MissionNode = SceneNode | ChoiceNode | ProductionNode | CompleteNode;
+export type MissionNode = SceneNode | ChoiceNode | ListeningNode | ProductionNode | CompleteNode;
 export interface MissionPack {
   schemaVersion: 1;
   id: string;
@@ -51,6 +56,7 @@ export interface MissionPack {
 }
 export interface MissionRegistry {
   cards: Map<string, string>;
+  transcripts?: Map<string, string>;
   mediaIds: Set<string>;
   missionIds: Set<string>;
 }
@@ -108,7 +114,7 @@ export function validateMission(value: unknown, registry?: MissionRegistry): Mis
       !text(item.cardId) ||
       item.provenance !== 'generated' ||
       media.has(item.id) ||
-      (registry && !registry.mediaIds.has(item.cardId))
+      (registry && (!registry.mediaIds.has(item.cardId) || !registry.cards.has(item.cardId)))
     )
       fail();
     media.add(item.id);
@@ -146,14 +152,29 @@ export function validateMission(value: unknown, registry?: MissionRegistry): Mis
         fail();
       exerciseIds.add(node.exercise.id);
       if (registry && registry.cards.get(node.exercise.cardId) !== node.exercise.deckId) fail();
-    } else if (node.kind === 'choice') {
+    } else if (node.kind === 'choice' || node.kind === 'listening') {
       if (
-        !only(node, [...base, 'prompt', 'cardId', 'deckId', 'options']) ||
+        !only(node, [
+          ...base,
+          'prompt',
+          'cardId',
+          'deckId',
+          'options',
+          ...(node.kind === 'listening' ? ['transcript'] : []),
+        ]) ||
         !localized(node.prompt) ||
         !text(node.cardId) ||
         !text(node.deckId) ||
         !array(node.options, 6) ||
         node.options.length < 2
+      )
+        fail();
+      if (
+        node.kind === 'listening' &&
+        (!text(node.transcript, 2000) ||
+          !node.mediaId ||
+          p.media.find((m) => m.id === node.mediaId)?.cardId !== node.cardId ||
+          (registry && registry.transcripts?.get(node.cardId) !== node.transcript))
       )
         fail();
       const optionIds = new Set();
@@ -187,7 +208,7 @@ export function validateMission(value: unknown, registry?: MissionRegistry): Mis
     if (!node) fail();
     visiting.add(id);
     if (node!.kind === 'complete') completions++;
-    else if (node!.kind === 'choice') {
+    else if (node!.kind === 'choice' || node!.kind === 'listening') {
       for (const option of node!.options) if (option.correct) walk(option.next!);
     } else walk(node!.next);
     visiting.delete(id);

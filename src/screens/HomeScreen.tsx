@@ -337,6 +337,15 @@ export default function HomeScreen() {
               <Text style={styles.quickActionLabel}>{t('mission.draft')}</Text>
             </Pressable>
           )}
+          {SHOW_REVIEW_TOOLS && (
+            <Pressable
+              accessibilityRole="button"
+              style={[styles.quickAction, { minHeight: 48 }]}
+              onPress={() => nav.navigate('ListeningPreview')}
+            >
+              <Text style={styles.quickActionLabel}>{t('listening.preview')}</Text>
+            </Pressable>
+          )}
           <View style={styles.quickActions}>
             <Pressable style={styles.quickAction} onPress={() => nav.navigate('Quiz')}>
               <Text style={styles.quickActionIcon}>🎯</Text>

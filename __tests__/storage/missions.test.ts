@@ -134,3 +134,49 @@ test('enforces declared completion prerequisites before starting another mission
   );
   expect(await AsyncStorage.getItem('SRS_MISSIONS_V1')).toBeNull();
 });
+
+test('listening transcript and playback evidence survive atomic state/event backup round trip', async () => {
+  const { listeningPack } = require('../../testFixtures/listening');
+  await AsyncStorage.setItem('SRS_DECKS_V3', '[]');
+  await startMissionRun(listeningPack, 'listen', 1000);
+  const command = { runId: 'listen', nodeId: 'listen', at: 1000 };
+  await applyMissionCommand(listeningPack, {
+    ...command,
+    id: 'transcript',
+    type: 'transcript',
+    expectedRevision: 0,
+  });
+  await applyMissionCommand(listeningPack, {
+    ...command,
+    id: 'play',
+    type: 'playback',
+    expectedRevision: 1,
+  });
+  await applyMissionCommand(listeningPack, {
+    ...command,
+    id: 'answer',
+    type: 'answer',
+    expectedRevision: 2,
+    choiceId: 'hello',
+    durationMs: 5,
+  });
+  const backup = parseBackupText(JSON.stringify(await captureBackupSnapshot()));
+  await AsyncStorage.clear();
+  await restoreBackup(
+    backup.decks,
+    backup.learningEvents,
+    'replace-state',
+    backup.applicationState,
+  );
+  expect((await loadMissionRun(listeningPack)).run).toMatchObject({
+    transcriptRevealed: true,
+    audioPlayed: true,
+    feedback: { status: 'correct' },
+  });
+  expect((await getLearningEvents())[0]).toMatchObject({
+    modality: 'listening',
+    transcriptAssisted: true,
+    audio: { mediaId: 'audio-c1' },
+  });
+  expect(await AsyncStorage.getItem('SRS_MISSIONS_V1')).not.toContain('hola');
+});

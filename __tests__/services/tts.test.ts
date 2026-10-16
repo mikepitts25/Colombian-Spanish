@@ -331,3 +331,21 @@ describe('preference read concurrency', () => {
     expect(mockCreateAudioPlayer).not.toHaveBeenCalled();
   });
 });
+
+describe('assessed bundled playback', () => {
+  it('rejects missing clips without speaking the hidden transcript', async () => {
+    await expect(
+      speakCard({ id: 'missing', front: 'hidden' }, { requireBundled: true }),
+    ).rejects.toThrow('bundled');
+    expect(mockSpeak).not.toHaveBeenCalled();
+  });
+  it('does not substitute device speech after a bundled player failure', async () => {
+    mockCreateAudioPlayer.mockImplementationOnce(() => {
+      throw new Error('player failed');
+    });
+    await expect(
+      speakCard({ id: '0009', front: 'hidden' }, { requireBundled: true }),
+    ).rejects.toThrow('bundled');
+    expect(mockSpeak).not.toHaveBeenCalled();
+  });
+});
