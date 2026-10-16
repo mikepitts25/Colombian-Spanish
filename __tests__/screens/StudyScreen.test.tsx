@@ -853,3 +853,199 @@ test('resumed bounded review retains its limits when explicitly changing regions
     ),
   );
 });
+
+test('an external deck switch keeps the new queue when an earlier grade finishes', async () => {
+  let finish!: () => void;
+  const context = {
+    activeDeckId: GREETINGS_DECK.id,
+    activeDeck: GREETINGS_DECK,
+    getStudyBatch: jest.fn((): FlashCard[] => context.activeDeck.cards),
+    recordAnswer: jest.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          finish = resolve;
+        }),
+    ),
+  };
+  const screen = renderStudyScreen(context);
+  await openCommunicationSession(screen);
+  fireEvent.press(screen.getByText('Bien'));
+  context.activeDeckId = TECH_DECK.id;
+  context.activeDeck = TECH_DECK;
+  screen.rerender(<StudyScreen />);
+  await screen.findByText('celular');
+  await act(async () => finish());
+  expect(screen.getByText('celular')).toBeTruthy();
+  expect(screen.getByText('1 restantes')).toBeTruthy();
+  expect(mockSaveLastStudySession).toHaveBeenLastCalledWith(
+    expect.objectContaining({ deckId: TECH_DECK.id, cardId: 'tech-1' }),
+  );
+});
+
+test('a new deck checkpoint waits for an earlier grade before becoming resumable', async () => {
+  let finish!: () => void;
+  const context = {
+    activeDeckId: GREETINGS_DECK.id,
+    activeDeck: GREETINGS_DECK,
+    getStudyBatch: jest.fn((): FlashCard[] => context.activeDeck.cards),
+    recordAnswer: jest.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          finish = resolve;
+        }),
+    ),
+  };
+  const screen = renderStudyScreen(context);
+  await openCommunicationSession(screen);
+  const original = mockSaveLastStudySession.mock.calls[0][0];
+  fireEvent.press(screen.getByText('Bien'));
+  context.activeDeckId = TECH_DECK.id;
+  context.activeDeck = TECH_DECK;
+  screen.rerender(<StudyScreen />);
+  await screen.findByText('celular');
+  expect(mockSaveLastStudySession).toHaveBeenCalledTimes(1);
+  expect(screen.getByText('Bien')).toBeDisabled();
+  await act(async () => finish());
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  const latest = mockSaveLastStudySession.mock.calls.at(-1)[0];
+  expect(latest.deckId).toBe(TECH_DECK.id);
+  expect(latest.queue.cardIds).toEqual(['tech-1']);
+  expect(latest.queue.sessionId).not.toBe(original.queue.sessionId);
+});
+
+test('leaving a waiting deck boundary cannot overwrite a later screen checkpoint', async () => {
+  let finish!: () => void;
+  const context = {
+    activeDeckId: GREETINGS_DECK.id,
+    activeDeck: GREETINGS_DECK,
+    getStudyBatch: jest.fn((): FlashCard[] => context.activeDeck.cards),
+    recordAnswer: jest.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          finish = resolve;
+        }),
+    ),
+  };
+  const screen = renderStudyScreen(context);
+  await openCommunicationSession(screen);
+  fireEvent.press(screen.getByText('Bien'));
+  context.activeDeckId = TECH_DECK.id;
+  context.activeDeck = TECH_DECK;
+  screen.rerender(<StudyScreen />);
+  await screen.findByText('celular');
+  screen.unmount();
+  const laterCheckpoint = {
+    deckId: FOOD_DECK.id,
+    cardId: 'food-1',
+    queue: {
+      schemaVersion: 1 as const,
+      cardIds: ['food-1'],
+      region: 'all' as const,
+      sessionId: 'later-screen',
+    },
+  };
+  await saveLastStudySession(laterCheckpoint);
+  await act(async () => finish());
+  expect(mockSaveLastStudySession).toHaveBeenCalledTimes(2);
+  expect(mockSaveLastStudySession).toHaveBeenLastCalledWith(laterCheckpoint);
+});
+
+test('a failed earlier grade cannot block or retry into a new deck', async () => {
+  let fail!: (reason: Error) => void;
+  const recordAnswer = jest
+    .fn()
+    .mockImplementationOnce(
+      () =>
+        new Promise<void>((_, reject) => {
+          fail = reject;
+        }),
+    )
+    .mockResolvedValue(undefined);
+  const context = {
+    activeDeckId: GREETINGS_DECK.id,
+    activeDeck: GREETINGS_DECK,
+    getStudyBatch: jest.fn((): FlashCard[] => context.activeDeck.cards),
+    recordAnswer,
+  };
+  const screen = renderStudyScreen(context);
+  await openCommunicationSession(screen);
+  fireEvent.press(screen.getByText('Bien'));
+  context.activeDeckId = TECH_DECK.id;
+  context.activeDeck = TECH_DECK;
+  screen.rerender(<StudyScreen />);
+  await screen.findByText('celular');
+  await act(async () => fail(new Error('old write failed')));
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  expect(screen.queryByText('Intentar guardar de nuevo')).toBeNull();
+  await act(async () => fireEvent.press(screen.getByText('Bien')));
+  expect(recordAnswer.mock.calls[1][0]).toBe('tech-1');
+  expect(recordAnswer.mock.calls[1][2].sessionId).not.toBe(recordAnswer.mock.calls[0][2].sessionId);
+  expect(await screen.findByText('Sesión terminada')).toBeTruthy();
+});
+
+test('only the latest external deck checkpoint is written after a pending grade', async () => {
+  let finish!: () => void;
+  const context = {
+    activeDeckId: GREETINGS_DECK.id,
+    activeDeck: GREETINGS_DECK,
+    getStudyBatch: jest.fn((): FlashCard[] => context.activeDeck.cards),
+    recordAnswer: jest.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          finish = resolve;
+        }),
+    ),
+  };
+  const screen = renderStudyScreen(context);
+  await openCommunicationSession(screen);
+  fireEvent.press(screen.getByText('Bien'));
+  context.activeDeckId = TECH_DECK.id;
+  context.activeDeck = TECH_DECK;
+  screen.rerender(<StudyScreen />);
+  await screen.findByText('celular');
+  context.activeDeckId = FOOD_DECK.id;
+  context.activeDeck = FOOD_DECK;
+  screen.rerender(<StudyScreen />);
+  await screen.findByText('arepa');
+  expect(mockSaveLastStudySession).toHaveBeenCalledTimes(1);
+  await act(async () => finish());
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  expect(mockSaveLastStudySession).toHaveBeenCalledTimes(2);
+  expect(mockSaveLastStudySession).toHaveBeenLastCalledWith(
+    expect.objectContaining({ deckId: FOOD_DECK.id, cardId: 'food-1' }),
+  );
+  expect(screen.getByText('arepa')).toBeTruthy();
+});
+
+test('an external deck change does not inherit a bounded queue or learning identity', async () => {
+  mockGetLastStudySession.mockResolvedValue({
+    deckId: GREETINGS_DECK.id,
+    cardId: 'c1',
+    updatedAt: 1000,
+    queue: {
+      schemaVersion: 1,
+      cardIds: ['c1'],
+      region: 'all',
+      sessionId: 'bounded-old',
+      limits: { cardLimit: 1, newLimit: 1 },
+    },
+  });
+  const context = {
+    activeDeckId: GREETINGS_DECK.id,
+    activeDeck: GREETINGS_DECK,
+    getStudyBatch: jest.fn((): FlashCard[] => context.activeDeck.cards),
+  };
+  const screen = renderStudyScreen(context);
+  fireEvent.press(await screen.findByText('Continuar'));
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  context.activeDeckId = TECH_DECK.id;
+  context.activeDeck = TECH_DECK;
+  screen.rerender(<StudyScreen />);
+  await screen.findByText('celular');
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  const latest = mockSaveLastStudySession.mock.calls.at(-1)[0];
+  expect(latest.deckId).toBe(TECH_DECK.id);
+  expect(latest.queue.cardIds).toEqual(['tech-1']);
+  expect(latest.queue.sessionId).not.toBe('bounded-old');
+  expect(latest.queue.limits).toBeUndefined();
+});

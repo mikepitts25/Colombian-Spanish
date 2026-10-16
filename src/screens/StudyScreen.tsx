@@ -93,12 +93,23 @@ export default function StudyScreen() {
   const boundedLimits = useRef<StudyQueueSnapshot['limits']>(undefined);
   const [queuedCardIds, setQueuedCardIds] = useState<string[]>([]);
   const grading = useRef(false);
+  const gradeSettled = useRef<Promise<void>>(Promise.resolve());
+  const queueDeckId = useRef<string | undefined>(undefined);
   const [gradeSaving, setGradeSaving] = useState(false);
   const pendingGrade = useRef<AnswerAttempt | undefined>(undefined);
   const learningSession = useRef(createLearningSessionId());
   const [gradeError, setGradeError] = useState<'save' | 'limit' | null>(null);
   const sessionVersion = useRef(0);
   const [daily, setDaily] = useState({ count: 0, target: 10 });
+
+  useEffect(
+    () => () => {
+      // A deferred checkpoint must not outlive this screen and replace another flow's session.
+      sessionVersion.current += 1;
+      pendingCheckpoint.current = undefined;
+    },
+    [],
+  );
 
   const allCards = useMemo<SearchRow[]>(
     () =>
@@ -150,6 +161,22 @@ export default function StudyScreen() {
   // eligible queue, but must not remove a card before this screen advances its index.
   const activeDeckId = activeDeck?.id;
   useEffect(() => {
+    const externalDeckChange = mode === 'session' && queueDeckId.current !== activeDeckId;
+    if (externalDeckChange) {
+      // Explicit starts set their owner first; a provider-driven switch is a new intent.
+      sessionVersion.current += 1;
+      queueDeckId.current = activeDeckId;
+      pendingGrade.current = undefined;
+      pendingCheckpoint.current = undefined;
+      checkpointBlocked.current = false;
+      requestedQueue.current = undefined;
+      learningSession.current = createLearningSessionId();
+      boundedLimits.current = undefined;
+      sessionLimits.current = { cardLimit: 15, newLimit: 15 };
+      // Discard the previous deck's failure UI at this external session boundary.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setGradeError(null);
+    }
     if (!ready || !activeDeck || mode !== 'session') {
       // Snapshot a session at this navigation/storage boundary; grading must not recompute it.
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -159,12 +186,13 @@ export default function StudyScreen() {
     const filtered = getStudyBatch(activeRegion === 'all' ? 15 : 100).filter((card) =>
       cardMatchesRegion(card, activeRegion, activeDeck.name),
     );
-    const preferred = startCardId
-      ? activeDeck.cards.find(
-          (card) =>
-            card.id === startCardId && cardMatchesRegion(card, activeRegion, activeDeck.name),
-        )
-      : undefined;
+    const preferred =
+      !externalDeckChange && startCardId
+        ? activeDeck.cards.find(
+            (card) =>
+              card.id === startCardId && cardMatchesRegion(card, activeRegion, activeDeck.name),
+          )
+        : undefined;
     const saved = requestedQueue.current;
     requestedQueue.current = undefined;
     const selected = saved
@@ -270,6 +298,10 @@ export default function StudyScreen() {
     setCheckpointBusy(true);
     setCheckpointFailed(false);
     try {
+      // Grades enter the history coordinator before durable storage. Do not let a
+      // newer deck checkpoint jump that queue and then be overwritten by the grade.
+      await gradeSettled.current;
+      if (version !== sessionVersion.current || pendingCheckpoint.current !== payload) return;
       const saved = await saveLastStudySession(payload);
       if (version === sessionVersion.current && pendingCheckpoint.current === payload) {
         setResumeSession(saved);
@@ -292,6 +324,7 @@ export default function StudyScreen() {
   ) {
     if (grading.current || pendingGrade.current || checkpointBlocked.current) return;
     sessionVersion.current += 1;
+    queueDeckId.current = deckId;
     pendingGrade.current = undefined;
     requestedQueue.current = saved?.queue;
     const validLimit = (value: unknown, minimum: number) =>
@@ -366,6 +399,10 @@ export default function StudyScreen() {
     const currentCard = batch[0];
     if (!currentCard || !activeDeck || grading.current || checkpointBlocked.current) return;
     grading.current = true;
+    let finishGrade!: () => void;
+    gradeSettled.current = new Promise<void>((resolve) => {
+      finishGrade = resolve;
+    });
     setGradeSaving(true);
     const version = sessionVersion.current;
     const nextCard = batch[1];
@@ -409,6 +446,7 @@ export default function StudyScreen() {
     } finally {
       grading.current = false;
       setGradeSaving(false);
+      finishGrade();
     }
   }
 

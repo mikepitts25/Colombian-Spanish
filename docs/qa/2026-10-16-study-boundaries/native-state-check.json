@@ -1,0 +1,124 @@
+[
+  {
+    "phase": "old-bundle-bounded-travel",
+    "daily": {
+      "date": "2026-10-16",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242"],
+        "region": "all",
+        "sessionId": "mvbequ5p-2-1yvdip2fth",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1792181757275
+    },
+    "eventCount": 1,
+    "cardCount": 1392
+  },
+  {
+    "phase": "old-bundle-external-business-regression",
+    "daily": {
+      "date": "2026-10-16",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1800",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1800", "1801", "1802", "1803", "1804"],
+        "region": "all",
+        "sessionId": "mvbequ5p-2-1yvdip2fth",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1792181843150
+    },
+    "eventCount": 1,
+    "cardCount": 1392
+  },
+  {
+    "phase": "fixed-bounded-travel",
+    "daily": {
+      "date": "2026-10-16",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242"],
+        "region": "all",
+        "sessionId": "mvbev99u-2-3ttwqz9w7qh",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1792181963484
+    },
+    "eventCount": 1,
+    "cardCount": 1392
+  },
+  {
+    "phase": "fixed-external-business",
+    "daily": {
+      "date": "2026-10-16",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1800",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1800", "1801", "1802", "1803", "1804", "1805", "1806", "1807", "1808"],
+        "region": "all",
+        "sessionId": "mvbext41-8-h5hpb0obwe"
+      },
+      "updatedAt": 1792182082476
+    },
+    "eventCount": 1,
+    "cardCount": 1392
+  },
+  {
+    "phase": "fixed-cold-resume",
+    "daily": {
+      "date": "2026-10-16",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1800",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1800", "1801", "1802", "1803", "1804", "1805", "1806", "1807", "1808"],
+        "region": "all",
+        "sessionId": "mvbext41-8-h5hpb0obwe"
+      },
+      "updatedAt": 1792182121163
+    },
+    "eventCount": 1,
+    "cardCount": 1392
+  }
+]
