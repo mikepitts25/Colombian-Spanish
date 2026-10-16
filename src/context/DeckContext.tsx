@@ -124,7 +124,6 @@ export function DeckProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let mounted = true;
-    setStartupError(false);
     (async () => {
       try {
         await seedOrMerge();
@@ -307,7 +306,15 @@ export function DeckProvider({ children }: { children: ReactNode }) {
   };
 
   if (startupError)
-    return <StorageStatus error onRetry={() => setStartupAttempt((value) => value + 1)} />;
+    return (
+      <StorageStatus
+        error
+        onRetry={() => {
+          setStartupError(false);
+          setStartupAttempt((value) => value + 1);
+        }}
+      />
+    );
   return <DeckContext.Provider value={value}>{children}</DeckContext.Provider>;
 }
 

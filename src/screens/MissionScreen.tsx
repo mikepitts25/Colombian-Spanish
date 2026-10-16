@@ -45,7 +45,7 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
     busy = useRef(false),
     pending = useRef<Pending | undefined>(undefined),
     generation = useRef(0),
-    startedAt = useRef(Date.now());
+    startedAt = useRef(0);
   const listening = pack.nodes.some((node) => node.kind === 'listening');
   const local = (value: LocalizedText) => value[language];
   const available = useMemo(() => {
@@ -66,8 +66,6 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
   }, [ready, decks, pack]);
   const load = useCallback(async () => {
     const request = ++generation.current;
-    setLoading(true);
-    setLoadError(false);
     try {
       const result = await loadMissionRun(pack);
       if (mounted.current && request === generation.current) {
@@ -83,6 +81,8 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
   }, [pack]);
   useEffect(() => {
     mounted.current = true;
+    // Mission availability starts an asynchronous persisted-run read.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (available) void load();
     return () => {
       mounted.current = false;
@@ -139,18 +139,7 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
     });
   };
   const disabled = saving || saveError;
-  const button = (label: string, onPress: () => void, off = disabled) => (
-    <Pressable
-      key={label}
-      accessibilityRole="button"
-      accessibilityState={{ disabled: off, busy: saving }}
-      disabled={off}
-      onPress={onPress}
-      style={[styles.button, off && styles.disabled]}
-    >
-      <Text style={styles.buttonText}>{label}</Text>
-    </Pressable>
-  );
+
   const node = run && !contentChanged ? pack.nodes.find((n) => n.id === run.nodeId) : undefined;
   const followUpCards = run?.completed
     ? run.reviewCardIds.flatMap((id) => {
@@ -165,13 +154,16 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
-          {button(
-            t('mission.back'),
-            () => {
-              if (!busy.current) nav.goBack();
-            },
-            saving,
-          )}
+          {
+            <ActionButton
+              label={t('mission.back')}
+              action={() => {
+                if (!busy.current) nav.goBack();
+              }}
+              off={saving}
+              busy={saving}
+            />
+          }
           {!SHOW_REVIEW_TOOLS || (ready && !available) ? (
             <Text style={styles.body}>{t('mission.unavailable')}</Text>
           ) : (
@@ -190,15 +182,38 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
                   <Text accessibilityRole="alert" style={styles.body}>
                     {t('mission.loadError')}
                   </Text>
-                  {button(t('mission.retry'), () => void load())}
+                  {
+                    <ActionButton
+                      label={t('mission.retry')}
+                      action={() => {
+                        setLoading(true);
+                        setLoadError(false);
+                        void load();
+                      }}
+                      off={disabled}
+                      busy={saving}
+                    />
+                  }
                 </>
               ) : contentChanged ? (
                 <>
                   <Text style={styles.body}>{t('mission.changed')}</Text>
-                  {button(t('mission.startVersion'), start)}
+                  {
+                    <ActionButton
+                      label={t('mission.startVersion')}
+                      action={start}
+                      off={disabled}
+                      busy={saving}
+                    />
+                  }
                 </>
               ) : !run ? (
-                button(t('mission.start'), start)
+                <ActionButton
+                  label={t('mission.start')}
+                  action={start}
+                  off={disabled}
+                  busy={saving}
+                />
               ) : node ? (
                 reviewing && followUpCards.length > 0 ? (
                   <MissionFollowUp
@@ -218,8 +233,14 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
                         {local(node.prompt).replace('{{blank}}', '____')}
                       </Text>
                     )}
-                    {node.kind === 'scene' &&
-                      button(t('mission.continue'), () => command('advance'))}
+                    {node.kind === 'scene' && (
+                      <ActionButton
+                        label={t('mission.continue')}
+                        action={() => command('advance')}
+                        off={disabled}
+                        busy={saving}
+                      />
+                    )}
                     {(node.kind === 'production' ||
                       node.kind === 'choice' ||
                       node.kind === 'listening') && (
@@ -253,31 +274,44 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
                                   editable={!disabled}
                                   returnKeyType="done"
                                 />
-                                {button(
-                                  t('mission.check'),
-                                  () =>
-                                    command('answer', {
-                                      answer,
-                                      durationMs: Math.max(0, Date.now() - startedAt.current),
-                                    }),
-                                  disabled || !answer.trim(),
-                                )}
+                                {
+                                  <ActionButton
+                                    label={t('mission.check')}
+                                    action={() =>
+                                      command('answer', {
+                                        answer,
+                                        durationMs: Math.max(0, Date.now() - startedAt.current),
+                                      })
+                                    }
+                                    off={disabled || !answer.trim()}
+                                    busy={saving}
+                                  />
+                                }
                               </>
                             ) : (
-                              node.options.map((option) =>
-                                button(
-                                  local(option.text),
-                                  () =>
+                              node.options.map((option) => (
+                                <ActionButton
+                                  key={option.id}
+                                  label={local(option.text)}
+                                  action={() =>
                                     command('answer', {
                                       choiceId: option.id,
                                       durationMs: Math.max(0, Date.now() - startedAt.current),
-                                    }),
-                                  disabled || (node.kind === 'listening' && !run.audioPlayed),
-                                ),
-                              )
+                                    })
+                                  }
+                                  off={disabled || (node.kind === 'listening' && !run.audioPlayed)}
+                                  busy={saving}
+                                />
+                              ))
                             )}
-                            {run.hintsUsed < node.hints.length &&
-                              button(t('mission.hint'), () => command('hint'))}
+                            {run.hintsUsed < node.hints.length && (
+                              <ActionButton
+                                label={t('mission.hint')}
+                                action={() => command('hint')}
+                                off={disabled}
+                                busy={saving}
+                              />
+                            )}
                           </>
                         ) : (
                           <View accessibilityLiveRegion="polite">
@@ -299,15 +333,26 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
                                 )}
                               </Text>
                             )}
-                            {button(t('mission.retryAnswer'), () => command('retry'))}
-                            {button(
-                              t(
-                                run.feedback.status === 'correct'
-                                  ? 'mission.continue'
-                                  : 'mission.helpContinue',
-                              ),
-                              () => command('advance'),
-                            )}
+                            {
+                              <ActionButton
+                                label={t('mission.retryAnswer')}
+                                action={() => command('retry')}
+                                off={disabled}
+                                busy={saving}
+                              />
+                            }
+                            {
+                              <ActionButton
+                                label={t(
+                                  run.feedback.status === 'correct'
+                                    ? 'mission.continue'
+                                    : 'mission.helpContinue',
+                                )}
+                                action={() => command('advance')}
+                                off={disabled}
+                                busy={saving}
+                              />
+                            }
                           </View>
                         )}
                       </>
@@ -328,16 +373,41 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
                             ))}
                           </>
                         )}
-                        {followUpCards.length > 0 &&
-                          button(t('mission.reviewAction'), () => setReviewing(true))}
+                        {followUpCards.length > 0 && (
+                          <ActionButton
+                            label={t('mission.reviewAction')}
+                            action={() => setReviewing(true)}
+                            off={disabled}
+                            busy={saving}
+                          />
+                        )}
                         {restart ? (
                           <>
                             <Text style={styles.body}>{t('mission.restartQuestion')}</Text>
-                            {button(t('mission.restart'), start)}
-                            {button(t('mission.cancel'), () => setRestart(false))}
+                            {
+                              <ActionButton
+                                label={t('mission.restart')}
+                                action={start}
+                                off={disabled}
+                                busy={saving}
+                              />
+                            }
+                            {
+                              <ActionButton
+                                label={t('mission.cancel')}
+                                action={() => setRestart(false)}
+                                off={disabled}
+                                busy={saving}
+                              />
+                            }
                           </>
                         ) : (
-                          button(t('mission.again'), () => setRestart(true))
+                          <ActionButton
+                            label={t('mission.again')}
+                            action={() => setRestart(true)}
+                            off={disabled}
+                            busy={saving}
+                          />
                         )}
                       </>
                     )}
@@ -349,13 +419,16 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
                   <Text accessibilityRole="alert" style={styles.body}>
                     {t('mission.saveError')}
                   </Text>
-                  {button(
-                    t('mission.retrySave'),
-                    () => {
-                      if (pending.current) void execute(pending.current);
-                    },
-                    saving,
-                  )}
+                  {
+                    <ActionButton
+                      label={t('mission.retrySave')}
+                      action={() => {
+                        if (pending.current) void execute(pending.current);
+                      }}
+                      off={saving}
+                      busy={saving}
+                    />
+                  }
                 </>
               )}
             </>
@@ -403,3 +476,28 @@ const styles = StyleSheet.create({
   hint: { fontSize: 16, color: colors.brand, lineHeight: 24 },
   feedback: { fontSize: 20, fontWeight: '700', color: colors.brand, marginVertical: 12 },
 });
+
+function ActionButton({
+  label,
+  action,
+  off,
+  busy = false,
+}: {
+  label: string;
+  action: () => void;
+  off: boolean;
+  busy?: boolean;
+}) {
+  return (
+    <Pressable
+      key={label}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: off, busy }}
+      disabled={off}
+      onPress={action}
+      style={[styles.button, off && styles.disabled]}
+    >
+      <Text style={styles.buttonText}>{label}</Text>
+    </Pressable>
+  );
+}

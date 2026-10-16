@@ -107,6 +107,7 @@ export default function HomeScreen() {
   const [studyStarting, setStudyStarting] = useState(false);
   const [studyStartError, setStudyStartError] = useState(false);
   const { t } = useLanguage();
+  const [initialNow] = useState(() => Date.now());
   const { value: activity, error } = useFocusedAsync(loadHomeProgress, {
     count: 0,
     target: 10,
@@ -116,7 +117,7 @@ export default function HomeScreen() {
     newIntroduced: 0,
     profile: {} as Partial<Prefs>,
     loaded: false,
-    now: Date.now(),
+    now: initialNow,
   });
   const { count: dailyCount, target: dailyTarget, streak, freezes } = activity;
   const greeting = useMemo(() => {

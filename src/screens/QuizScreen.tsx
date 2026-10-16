@@ -73,7 +73,7 @@ export default function QuizScreen() {
   const advancing = useRef(false);
   const pending = useRef<{ event: LearningEvent; correct: boolean } | null>(null);
   const answered = useRef(false);
-  const startedAt = useRef(Date.now());
+  const startedAt = useRef(0);
   const mounted = useRef(true);
   useEffect(() => {
     mounted.current = true;
@@ -556,7 +556,7 @@ export default function QuizScreen() {
                   showFeedback && isSelected && !isCorrectOption && styles.optionIncorrect,
                 ]}
                 onPress={() => handleSelectOption(option)}
-                disabled={showFeedback || saving || !!pending.current}
+                disabled={showFeedback || saving || saveError}
               >
                 <Text style={styles.optionText}>{option}</Text>
               </Pressable>

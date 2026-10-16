@@ -7,3 +7,5 @@ Three new cases first failed against the placeholder, then passed: native values
 Dedicated native SDK55 simulator UUID `6E0CD6D5-B769-426C-9B98-6984350BA622`, iOS26.0, Xcode27.0 unsigned debug build: Settings shows `1.0.0 · compilación 1.0.0`, then `1.0.0 · build 1.0.0` after switching to English. These match the actual compiled Info.plist version/build. [Screenshot](native-settings.png). Language change preserves goal5/new-cap10. Expo Go host/unknown values have fixture coverage; no compatible Expo Go or Android runtime UI acceptance is claimed.
 
 SDK55 migration `5a1693a` merged/pushed and CI38889781746 passed all jobs. This metadata batch merge/CI outcome is recorded separately after completion. Existing unsigned notification keychain warning remains a separate signed-build limitation, unrelated to version reporting.
+
+Merged/pushed as `caaf612`; [CI38890240877](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38890240877) passed all four quality/content, platform project-generation/JS-bundle and summary jobs.

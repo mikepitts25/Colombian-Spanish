@@ -1,0 +1,41 @@
+{
+  "upgradedIOS26": {
+    "daily": {
+      "date": "2026-10-16",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "queueCount": 9,
+    "firstCard": "1801",
+    "eventCount": 1,
+    "recordingFiles": 0,
+    "preferences": {
+      "uiLanguage": "en",
+      "homeRegion": "paisa",
+      "learningReason": "work",
+      "studyMinutes": 5,
+      "newCardsPerDay": 10
+    }
+  },
+  "freshIOS27": {
+    "daily": {
+      "date": "2026-10-16",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "queueCount": 9,
+    "firstCard": "0039",
+    "eventCount": 1,
+    "recordingFiles": 0,
+    "preferences": {
+      "uiLanguage": "es",
+      "homeRegion": "all",
+      "learningReason": "travel",
+      "studyMinutes": 5,
+      "newCardsPerDay": 10
+    }
+  },
+  "shutdownSDK55BaselineUnchanged": true
+}

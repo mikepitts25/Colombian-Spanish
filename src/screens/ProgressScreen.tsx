@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
@@ -51,11 +51,12 @@ export default function ProgressScreen() {
   const { decks, ready } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
+  const [initialNow] = useState(() => Date.now());
   const { value: snapshot, error } = useFocusedAsync(loadProgress, {
     daily: { count: 0, target: 10 },
     streak: 0,
     history: { events: [], unavailable: false },
-    now: Date.now(),
+    now: initialNow,
   });
   const dailyStats = snapshot.daily;
   const streak = snapshot.streak;

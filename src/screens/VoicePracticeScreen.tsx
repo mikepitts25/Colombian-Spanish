@@ -41,6 +41,8 @@ function VoicePracticeDraft() {
   useEffect(() => {
     if (state.phase !== 'recording') return;
     const start = Date.now();
+    // The recorder phase is external; reset the display when its new timer starts.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setElapsed(0);
     const timer = setInterval(
       () => setElapsed(Math.min(30, Math.floor((Date.now() - start) / 1000))),

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect, useCallback, useMemo } from 'react';
 import { Animated, Easing, PanResponder, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { colors } from '../styles/theme';
@@ -46,11 +46,11 @@ export default function Flashcard({ card, onGrade }: Props) {
     </View>
   ) : null;
 
-  const rot = useRef(new Animated.Value(0)).current;
+  const [rot] = useState(() => new Animated.Value(0));
   const frontDeg = rot.interpolate({ inputRange: [0, 180], outputRange: ['0deg', '180deg'] });
   const backDeg = rot.interpolate({ inputRange: [0, 180], outputRange: ['180deg', '360deg'] });
 
-  const translateX = useRef(new Animated.Value(0)).current;
+  const [translateX] = useState(() => new Animated.Value(0));
   const tilt = translateX.interpolate({
     inputRange: [-150, 0, 150],
     outputRange: ['-5deg', '0deg', '5deg'],
@@ -61,7 +61,9 @@ export default function Flashcard({ card, onGrade }: Props) {
     gestureBusy = useRef(false);
   const animation = useRef<Animated.CompositeAnimation | null>(null);
   const latest = useRef({ onGrade, reducedMotion, cardId: card.id });
-  latest.current = { onGrade, reducedMotion, cardId: card.id };
+  useLayoutEffect(() => {
+    latest.current = { onGrade, reducedMotion, cardId: card.id };
+  }, [onGrade, reducedMotion, card.id]);
   const cancelMotion = useCallback(() => {
     version.current++;
     animation.current?.stop();
@@ -101,6 +103,8 @@ export default function Flashcard({ card, onGrade }: Props) {
     cancelMotion();
     intendedFront.current = true;
     rot.setValue(0);
+    // Card identity changes must reset the native animation and its accessible face together.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsFront(true);
   }, [card.id, cancelMotion, rot]);
   useEffect(() => {
@@ -114,6 +118,8 @@ export default function Flashcard({ card, onGrade }: Props) {
 
   const panResponder = useMemo(
     () =>
+      // RN registers these callbacks; create does not read or invoke their refs during render.
+      // eslint-disable-next-line react-hooks/refs
       PanResponder.create({
         onMoveShouldSetPanResponder: (_e, gs) =>
           !gestureBusy.current && Math.abs(gs.dx) > 8 && Math.abs(gs.dx) > Math.abs(gs.dy),
@@ -260,7 +266,7 @@ const styles = StyleSheet.create({
   stopAudioText: { color: colors.textSecondary, fontSize: 16 },
 
   card: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: '#111827',
     borderRadius: 26,
     borderWidth: 1,

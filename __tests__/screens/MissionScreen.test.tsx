@@ -66,6 +66,19 @@ async function submit(ui: ReturnType<typeof render>, answer: string) {
   await ui.findByText('Correct');
   fireEvent.press(ui.getByText('Continue'));
 }
+test('choice actions keep stable React list keys', async () => {
+  const errors = jest.spyOn(console, 'error').mockImplementation(() => {});
+  const ui = await begin();
+  await submit(ui, 'Buenos días');
+  await ui.findByText('Ask for coffee');
+  await submit(ui, 'Un café, por favor');
+  await ui.findByText('Accept water');
+  const keyWarnings = errors.mock.calls.filter((args) =>
+    args.some((value) => String(value).includes('unique "key"')),
+  );
+  expect(keyWarnings).toHaveLength(0);
+});
+
 test('complete draft flow records three assessed recalls and one recognition without changing daily/SRS state', async () => {
   const ui = await begin();
   await submit(ui, 'Buenos días');

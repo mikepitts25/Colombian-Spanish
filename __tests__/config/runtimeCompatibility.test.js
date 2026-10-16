@@ -17,3 +17,11 @@ it.each(['production', 'development'])(
     }
   },
 );
+
+it('enables the supported iOS scene lifecycle required by Xcode 27', () => {
+  const config = configure({ config: expo });
+  expect(config.plugins).toContainEqual([
+    'expo-build-properties',
+    { ios: { enableSceneSupport: true } },
+  ]);
+});

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -86,14 +86,15 @@ export default function ReviewScreen() {
     REVIEW_FILTERS.find((filter) => filter.id === reviewFilter)?.labelKey ?? 'review.all',
   );
 
-  useEffect(() => {
+  const editorKey = JSON.stringify([current?.card.id, current?.card.back, current?.card.example]);
+  const [previousEditorKey, setPreviousEditorKey] = useState<string | null>(null);
+  if (editorKey !== previousEditorKey) {
+    setPreviousEditorKey(editorKey);
     setDraftBack(current?.card.back ?? '');
     setDraftExample(current?.card.example ?? '');
-  }, [current?.card.back, current?.card.example, current?.card.id]);
+  }
 
-  useEffect(() => {
-    if (index > 0 && index >= total) setIndex(Math.max(0, total - 1));
-  }, [index, total]);
+  if (index > 0 && index >= total) setIndex(Math.max(0, total - 1));
 
   function go(delta: number) {
     setIndex((value) => Math.max(0, Math.min(total - 1, value + delta)));

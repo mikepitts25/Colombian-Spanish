@@ -20,6 +20,8 @@ module.exports = ({ config }) => {
     plugins: [
       ...(config.plugins ?? []),
       'expo-sharing',
+      'expo-status-bar',
+      ['expo-build-properties', { ios: { enableSceneSupport: true } }],
       [
         'expo-audio',
         {

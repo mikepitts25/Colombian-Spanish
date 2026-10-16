@@ -9,10 +9,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "baseUrl": ".",
     "paths": {
-      "*": ["src/*"]
-    }
+      "*": ["./src/*"]
+    },
+    "types": ["jest", "node", "react"]
   },
   "exclude": ["node_modules"],
   "extends": "expo/tsconfig.base"

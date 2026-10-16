@@ -151,6 +151,8 @@ export default function StudyScreen() {
   const activeDeckId = activeDeck?.id;
   useEffect(() => {
     if (!ready || !activeDeck || mode !== 'session') {
+      // Snapshot a session at this navigation/storage boundary; grading must not recompute it.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setQueuedCardIds([]);
       return;
     }
@@ -234,6 +236,8 @@ export default function StudyScreen() {
     if (!ready) return undefined;
     let mounted = true;
     const version = sessionVersion.current;
+    // A fresh storage read replaces the previous attempt and its error status.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setResumeLoadError(false);
     getLastStudySession().then(
       (session) => {
@@ -998,7 +1002,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   regionOverflowFadeWide: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(2,6,23,0.55)',
   },
   regionOverflowFadeTight: {

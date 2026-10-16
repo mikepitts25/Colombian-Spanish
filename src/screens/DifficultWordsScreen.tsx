@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../styles/theme';
@@ -77,9 +77,7 @@ export default function DifficultWordsScreen() {
       .sort((a, b) => selectedIds.get(a.card.id)! - selectedIds.get(b.card.id)!);
   }, [decks]);
 
-  useEffect(() => {
-    if (ready && queueIds === null) setQueueIds(eligibleRows.map((row) => row.card.id));
-  }, [ready, queueIds, eligibleRows]);
+  if (ready && queueIds === null) setQueueIds(eligibleRows.map((row) => row.card.id));
   const byId = new Map(
     (decks || []).flatMap((deck) =>
       deck.cards.map((card) => [card.id, { card, deckId: deck.id, deckName: deck.name }] as const),

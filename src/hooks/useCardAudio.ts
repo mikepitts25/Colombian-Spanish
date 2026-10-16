@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { AppState } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { FlashCard } from '../types';
@@ -13,7 +13,9 @@ export function useCardAudio(card: FlashCard) {
       AppState.currentState !== 'background' && AppState.currentState !== 'inactive',
     ),
     current = useRef(card);
-  current.current = card;
+  useLayoutEffect(() => {
+    current.current = card;
+  }, [card]);
   const cancel = useCallback(() => {
     request.current++;
     stop();

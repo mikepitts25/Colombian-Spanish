@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AppState, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { ListeningNode } from '../missions/schema';
@@ -27,7 +27,9 @@ export default function MissionAudio({
   const active = useRef(true),
     request = useRef(0),
     latest = useRef({ run, onCommand });
-  latest.current = { run, onCommand };
+  useLayoutEffect(() => {
+    latest.current = { run, onCommand };
+  }, [run, onCommand]);
   const cancel = useCallback(() => {
     request.current++;
     stop();
@@ -56,6 +58,8 @@ export default function MissionAudio({
     return () => sub.remove();
   }, [reset]);
   useEffect(() => {
+    // Persisted feedback cancels external playback and clears its UI status.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (run.feedback) reset();
   }, [run.feedback, reset]);
   const play = async () => {
@@ -87,18 +91,7 @@ export default function MissionAudio({
       if (active.current && request.current === id) setPlaying(false);
     }
   };
-  const button = (label: string, action: () => void, off = disabled || playing) => (
-    <Pressable
-      key={label}
-      accessibilityRole="button"
-      accessibilityState={{ disabled: off }}
-      disabled={off}
-      onPress={action}
-      style={[styles.button, off && styles.disabled]}
-    >
-      <Text style={styles.buttonText}>{label}</Text>
-    </Pressable>
-  );
+
   return (
     <View style={styles.wrap}>
       <Text style={styles.note}>{t('listening.generated')}</Text>
@@ -136,8 +129,14 @@ export default function MissionAudio({
           {t('audio.repeat')} · {t(loop ? 'audio.on' : 'audio.off')}
         </Text>
       </Pressable>
-      {button(t('listening.play'), () => void play())}
-      {button(t('audio.stop'), reset, false)}
+      {
+        <ActionButton
+          label={t('listening.play')}
+          action={() => void play()}
+          off={disabled || playing}
+        />
+      }
+      {<ActionButton label={t('audio.stop')} action={reset} off={false} />}
       {played && (
         <Text accessibilityLiveRegion="polite" style={styles.note}>
           {t('audio.generated')}
@@ -154,10 +153,14 @@ export default function MissionAudio({
           <Text style={styles.transcript}>{node.transcript}</Text>
         </View>
       ) : (
-        button(t('listening.showTranscript'), () => {
-          reset();
-          onCommand('transcript');
-        })
+        <ActionButton
+          label={t('listening.showTranscript')}
+          action={() => {
+            reset();
+            onCommand('transcript');
+          }}
+          off={disabled || playing}
+        />
       )}
     </View>
   );
@@ -188,3 +191,18 @@ const styles = StyleSheet.create({
   buttonText: { fontSize: 16, color: colors.textInverse, fontWeight: '700', textAlign: 'center' },
   disabled: { opacity: 0.5 },
 });
+
+function ActionButton({ label, action, off }: { label: string; action: () => void; off: boolean }) {
+  return (
+    <Pressable
+      key={label}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: off }}
+      disabled={off}
+      onPress={action}
+      style={[styles.button, off && styles.disabled]}
+    >
+      <Text style={styles.buttonText}>{label}</Text>
+    </Pressable>
+  );
+}

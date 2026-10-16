@@ -49,12 +49,14 @@ jest.mock('../../src/data/decks', () => ({
 
 function Harness() {
   const [study, setStudy] = React.useState(false);
-  mockOnNavigate = (name, params) => {
-    if (name === 'Study') {
-      mockRouteParams = params;
-      setStudy(true);
-    }
-  };
+  React.useLayoutEffect(() => {
+    mockOnNavigate = (name, params) => {
+      if (name === 'Study') {
+        mockRouteParams = params;
+        setStudy(true);
+      }
+    };
+  }, []);
   return <DeckProvider>{study ? <StudyScreen /> : <HomeScreen />}</DeckProvider>;
 }
 

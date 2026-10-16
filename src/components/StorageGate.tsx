@@ -9,7 +9,6 @@ export default function StorageGate({ children }: { children: ReactNode }) {
   const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading');
   useEffect(() => {
     let mounted = true;
-    setState('loading');
     storage.getItem('SRS_DECKS_V3').then(
       () => {
         if (mounted) setState('ready');
@@ -24,7 +23,13 @@ export default function StorageGate({ children }: { children: ReactNode }) {
   }, [attempt]);
   if (state === 'ready') return <>{children}</>;
   return (
-    <StorageStatus error={state === 'error'} onRetry={() => setAttempt((value) => value + 1)} />
+    <StorageStatus
+      error={state === 'error'}
+      onRetry={() => {
+        setState('loading');
+        setAttempt((value) => value + 1);
+      }}
+    />
   );
 }
 

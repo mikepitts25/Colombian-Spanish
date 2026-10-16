@@ -30,8 +30,6 @@ export default function AudioPreferencesScreen() {
   };
   const load = useCallback(async () => {
     const request = ++loadId.current;
-    setLoading(true);
-    setLoadError(false);
     try {
       const prefs = await getPrefs();
       if (mounted.current && request === loadId.current) {
@@ -45,6 +43,8 @@ export default function AudioPreferencesScreen() {
     }
   }, []);
   useEffect(() => {
+    // Load persisted external state; setters run after the asynchronous storage read.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void load();
   }, [load]);
   useFocusEffect(
@@ -84,31 +84,22 @@ export default function AudioPreferencesScreen() {
       if (mounted.current && request === previewId.current) setPreviewError(true);
     }
   };
-  const button = (label: string, action: () => void, disabled = false) => (
-    <Pressable
-      key={label}
-      accessibilityRole="button"
-      accessibilityState={{ disabled }}
-      disabled={disabled}
-      onPress={action}
-      style={[styles.button, disabled && styles.disabled]}
-    >
-      <Text style={styles.buttonText}>{label}</Text>
-    </Pressable>
-  );
+
   return (
     <SafeAreaView style={styles.wrap}>
       <ScrollView contentContainerStyle={styles.content}>
-        {button(
-          t('audio.back'),
-          () => {
-            if (!saveBusy.current) {
-              cancel();
-              nav.goBack();
-            }
-          },
-          saving,
-        )}
+        {
+          <ActionButton
+            label={t('audio.back')}
+            action={() => {
+              if (!saveBusy.current) {
+                cancel();
+                nav.goBack();
+              }
+            }}
+            off={saving}
+          />
+        }
         <Text accessibilityRole="header" style={styles.title}>
           {t('audio.title')}
         </Text>
@@ -120,7 +111,17 @@ export default function AudioPreferencesScreen() {
             <Text accessibilityRole="alert" style={styles.body}>
               {t('audio.loadError')}
             </Text>
-            {button(t('audio.retry'), () => void load())}
+            {
+              <ActionButton
+                label={t('audio.retry')}
+                action={() => {
+                  setLoading(true);
+                  setLoadError(false);
+                  void load();
+                }}
+                off={false}
+              />
+            }
           </>
         ) : (
           <>
@@ -160,7 +161,7 @@ export default function AudioPreferencesScreen() {
               </Text>
             </Pressable>
             <Text style={styles.body}>{t('audio.autoSpeakNote')}</Text>
-            {button(t('audio.save'), () => void save(), saving)}
+            {<ActionButton label={t('audio.save')} action={() => void save()} off={saving} />}
             {saveStatus && (
               <Text accessibilityLiveRegion="polite" style={styles.body}>
                 {t(saveStatus === 'saved' ? 'audio.saved' : 'audio.saveError')}
@@ -183,8 +184,14 @@ export default function AudioPreferencesScreen() {
                   {t('audio.repeat')} · {t(loop ? 'audio.on' : 'audio.off')}
                 </Text>
               </Pressable>
-              {button(t('audio.preview'), () => void preview())}
-              {button(t('audio.stop'), cancel)}
+              {
+                <ActionButton
+                  label={t('audio.preview')}
+                  action={() => void preview()}
+                  off={false}
+                />
+              }
+              {<ActionButton label={t('audio.stop')} action={cancel} off={false} />}
               {source && (
                 <Text accessibilityLiveRegion="polite" style={styles.body}>
                   {t(source === 'generated' ? 'audio.generated' : 'audio.device')}
@@ -230,3 +237,18 @@ const styles = StyleSheet.create({
   optionText: { fontSize: 18, color: colors.textPrimary },
   card: { padding: 20, gap: 16, backgroundColor: colors.surface, borderRadius: 20 },
 });
+
+function ActionButton({ label, action, off }: { label: string; action: () => void; off: boolean }) {
+  return (
+    <Pressable
+      key={label}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: off }}
+      disabled={off}
+      onPress={action}
+      style={[styles.button, off && styles.disabled]}
+    >
+      <Text style={styles.buttonText}>{label}</Text>
+    </Pressable>
+  );
+}

@@ -12,7 +12,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useLanguage } from '../context/LanguageContext';
-import { TranslationKey } from '../i18n/translations';
 import { colors } from '../styles/theme';
 import { getPrefs, HOME_REGIONS, LEARNING_REASONS } from '../storage/prefs';
 import { isTripDate, LearningProfile, saveLearningProfile } from '../storage/learningProfile';
@@ -33,8 +32,6 @@ export default function LearningPreferencesScreen() {
   const submitting = useRef(false);
   const load = useCallback(async () => {
     const request = ++reading.current;
-    setLoading(true);
-    setLoadError(false);
     try {
       const prefs = await getPrefs();
       if (!mounted.current || request !== reading.current) return;
@@ -54,6 +51,8 @@ export default function LearningPreferencesScreen() {
   }, []);
   useEffect(() => {
     mounted.current = true;
+    // Load persisted external state; setters run after the asynchronous storage read.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void load();
     return () => {
       mounted.current = false;
@@ -83,33 +82,7 @@ export default function LearningPreferencesScreen() {
       if (mounted.current) setSaving(false);
     }
   }
-  function choices<T extends string | number>(
-    title: TranslationKey,
-    values: readonly T[],
-    selected: T,
-    label: (value: T) => string,
-    onChoose: (value: T) => void,
-  ) {
-    return (
-      <View style={styles.section}>
-        <Text accessibilityRole="header" style={styles.heading}>
-          {t(title)}
-        </Text>
-        {values.map((value) => (
-          <Pressable
-            key={value}
-            accessibilityRole="radio"
-            accessibilityState={{ checked: value === selected, disabled: saving }}
-            disabled={saving}
-            onPress={() => onChoose(value)}
-            style={[styles.choice, value === selected && styles.selected]}
-          >
-            <Text style={styles.choiceText}>{label(value)}</Text>
-          </Pressable>
-        ))}
-      </View>
-    );
-  }
+
   return (
     <SafeAreaView style={styles.wrap}>
       <Pressable
@@ -142,42 +115,58 @@ export default function LearningPreferencesScreen() {
               <Pressable
                 accessibilityRole="button"
                 style={styles.action}
-                onPress={() => void load()}
+                onPress={() => {
+                  setLoading(true);
+                  setLoadError(false);
+                  void load();
+                }}
               >
                 <Text style={styles.buttonText}>{t('study.resume.retry')}</Text>
               </Pressable>
             </View>
           ) : profile ? (
             <>
-              {choices(
-                'onboarding.reason.title',
-                LEARNING_REASONS,
-                profile.learningReason,
-                (id) => t(`onboarding.reason.${id}`),
-                (id) => edit({ learningReason: id }),
-              )}
-              {choices(
-                'onboarding.region.title',
-                HOME_REGIONS,
-                profile.homeRegion,
-                (id) => t(`onboarding.region.${id}`),
-                (id) => edit({ homeRegion: id }),
-              )}
-              {choices(
-                'profile.level',
-                LEARNING_LEVELS,
-                profile.learningLevel,
-                (id) => t(`profile.level.${id}`),
-                (id) => edit({ learningLevel: id }),
-              )}
+              {
+                <Choices
+                  title={t('onboarding.reason.title')}
+                  values={LEARNING_REASONS}
+                  selected={profile.learningReason}
+                  label={(id) => t(`onboarding.reason.${id}`)}
+                  onChoose={(id) => edit({ learningReason: id })}
+                  saving={saving}
+                />
+              }
+              {
+                <Choices
+                  title={t('onboarding.region.title')}
+                  values={HOME_REGIONS}
+                  selected={profile.homeRegion}
+                  label={(id) => t(`onboarding.region.${id}`)}
+                  onChoose={(id) => edit({ homeRegion: id })}
+                  saving={saving}
+                />
+              }
+              {
+                <Choices
+                  title={t('profile.level')}
+                  values={LEARNING_LEVELS}
+                  selected={profile.learningLevel}
+                  label={(id) => t(`profile.level.${id}`)}
+                  onChoose={(id) => edit({ learningLevel: id })}
+                  saving={saving}
+                />
+              }
               <Text style={styles.body}>{t('profile.levelNote')}</Text>
-              {choices(
-                'profile.time',
-                STUDY_MINUTES,
-                profile.studyMinutes,
-                (minutes) => t('profile.minutes', { count: minutes }),
-                (minutes) => edit({ studyMinutes: minutes }),
-              )}
+              {
+                <Choices
+                  title={t('profile.time')}
+                  values={STUDY_MINUTES}
+                  selected={profile.studyMinutes}
+                  label={(minutes) => t('profile.minutes', { count: minutes })}
+                  onChoose={(minutes) => edit({ studyMinutes: minutes })}
+                  saving={saving}
+                />
+              }
               <Text accessibilityRole="header" style={styles.heading}>
                 {t('profile.trip')}
               </Text>
@@ -268,3 +257,39 @@ const styles = StyleSheet.create({
   buttonText: { color: colors.textInverse, fontWeight: '700', fontSize: 16 },
   disabled: { opacity: 0.5 },
 });
+
+function Choices<T extends string | number>({
+  title,
+  values,
+  selected,
+  label,
+  onChoose,
+  saving,
+}: {
+  title: string;
+  values: readonly T[];
+  selected: T;
+  label: (value: T) => string;
+  onChoose: (value: T) => void;
+  saving: boolean;
+}) {
+  return (
+    <View style={styles.section}>
+      <Text accessibilityRole="header" style={styles.heading}>
+        {title}
+      </Text>
+      {values.map((value) => (
+        <Pressable
+          key={value}
+          accessibilityRole="radio"
+          accessibilityState={{ checked: value === selected, disabled: saving }}
+          disabled={saving}
+          onPress={() => onChoose(value)}
+          style={[styles.choice, value === selected && styles.selected]}
+        >
+          <Text style={styles.choiceText}>{label(value)}</Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+}
