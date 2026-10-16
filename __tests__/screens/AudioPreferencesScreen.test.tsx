@@ -27,7 +27,7 @@ beforeEach(async () => {
 test('loads existing speed, previews selected unsaved speed and explicitly saves only that preference', async () => {
   await prefs.setPrefs({ speechRate: 1.25, learningReason: 'travel' });
   const ui = render(<AudioPreferencesScreen />);
-  await ui.findByText('Save speed');
+  await ui.findByText('Save audio preferences');
   fireEvent.press(ui.getByText('0.75×'));
   fireEvent.press(ui.getByText('Preview pronunciation'));
   await ui.findByText('Source: generated clip');
@@ -36,8 +36,8 @@ test('loads existing speed, previews selected unsaved speed and explicitly saves
     { rate: 0.75, loop: false },
   );
   expect((await prefs.getPrefs()).speechRate).toBe(1.25);
-  fireEvent.press(ui.getByText('Save speed'));
-  await ui.findByText('Speed saved.');
+  fireEvent.press(ui.getByText('Save audio preferences'));
+  await ui.findByText('Audio preferences saved.');
   expect(await prefs.getPrefs()).toMatchObject({ speechRate: 0.75, learningReason: 'travel' });
   ui.unmount();
   expect(stop).toHaveBeenCalled();
@@ -51,8 +51,8 @@ test('explicit repeat is labeled and stop cancels a pending preview without stal
       }),
   );
   const ui = render(<AudioPreferencesScreen />);
-  await ui.findByText('Save speed');
-  fireEvent.press(ui.getByRole('switch'));
+  await ui.findByText('Save audio preferences');
+  fireEvent.press(ui.getByRole('switch', { name: 'Repeat clip' }));
   fireEvent.press(ui.getByText('Preview pronunciation'));
   expect(speakCard).toHaveBeenCalledWith(
     expect.anything(),
@@ -67,22 +67,45 @@ test('load failure offers retry without editable defaults or writes; save failur
   jest.spyOn(prefs, 'getPrefs').mockRejectedValueOnce(new Error('read'));
   const ui = render(<AudioPreferencesScreen />);
   await ui.findByText('Could not load audio preferences.');
-  expect(ui.queryByText('Save speed')).toBeNull();
+  expect(ui.queryByText('Save audio preferences')).toBeNull();
   fireEvent.press(ui.getByText('Retry'));
-  await ui.findByText('Save speed');
+  await ui.findByText('Save audio preferences');
   fireEvent.press(ui.getByText('1.25×'));
   jest.spyOn(prefs, 'setPrefs').mockRejectedValueOnce(new Error('full'));
-  fireEvent.press(ui.getByText('Save speed'));
+  fireEvent.press(ui.getByText('Save audio preferences'));
   await ui.findByText('Could not save. Your selection is still here.');
-  fireEvent.press(ui.getByText('Save speed'));
-  await ui.findByText('Speed saved.');
+  fireEvent.press(ui.getByText('Save audio preferences'));
+  await ui.findByText('Audio preferences saved.');
   expect((await prefs.getPrefs()).speechRate).toBe(1.25);
 });
 test('reports device fallback and its single-play limit honestly', async () => {
   (speakCard as jest.Mock).mockResolvedValueOnce({ source: 'device', loop: false });
   const ui = render(<AudioPreferencesScreen />);
-  await ui.findByText('Save speed');
-  fireEvent.press(ui.getByRole('switch'));
+  await ui.findByText('Save audio preferences');
+  fireEvent.press(ui.getByRole('switch', { name: 'Repeat clip' }));
   fireEvent.press(ui.getByText('Preview pronunciation'));
   await ui.findByText('Source: device speech · plays once');
+});
+
+test('automatic speech is opt-in, saved with speed, and does not play on enabling or reopening', async () => {
+  await prefs.setPrefs({ autoSpeak: false, speechRate: 1.25, learningReason: 'travel' });
+  const ui = render(<AudioPreferencesScreen />);
+  const toggle = await ui.findByRole('switch', { name: 'Speak after revealing a flashcard' });
+  expect(toggle).toHaveAccessibilityState({ checked: false });
+  fireEvent.press(toggle);
+  expect((await prefs.getPrefs()).autoSpeak).toBe(false);
+  fireEvent.press(ui.getByText('Save audio preferences'));
+  await ui.findByText('Audio preferences saved.');
+  expect(await prefs.getPrefs()).toMatchObject({
+    autoSpeak: true,
+    speechRate: 1.25,
+    learningReason: 'travel',
+  });
+  expect(speakCard).not.toHaveBeenCalled();
+  ui.unmount();
+  const next = render(<AudioPreferencesScreen />);
+  expect(
+    await next.findByRole('switch', { name: 'Speak after revealing a flashcard' }),
+  ).toHaveAccessibilityState({ checked: true });
+  expect(speakCard).not.toHaveBeenCalled();
 });

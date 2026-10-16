@@ -9,6 +9,7 @@ import { colors } from '../styles/theme';
 export default function AudioPreferencesScreen() {
   const { t } = useLanguage(),
     nav = useNavigation<any>();
+  const [autoSpeak, setAutoSpeak] = useState(false);
   const [rate, setRate] = useState(0.98),
     [loading, setLoading] = useState(true),
     [loadError, setLoadError] = useState(false),
@@ -33,7 +34,10 @@ export default function AudioPreferencesScreen() {
     setLoadError(false);
     try {
       const prefs = await getPrefs();
-      if (mounted.current && request === loadId.current) setRate(prefs.speechRate);
+      if (mounted.current && request === loadId.current) {
+        setRate(prefs.speechRate);
+        setAutoSpeak(prefs.autoSpeak);
+      }
     } catch {
       if (mounted.current && request === loadId.current) setLoadError(true);
     } finally {
@@ -59,7 +63,7 @@ export default function AudioPreferencesScreen() {
     setSaving(true);
     setSaveStatus(undefined);
     try {
-      await setPrefs({ speechRate: rate });
+      await setPrefs({ speechRate: rate, autoSpeak });
       if (mounted.current) setSaveStatus('saved');
     } catch {
       if (mounted.current) setSaveStatus('error');
@@ -139,6 +143,23 @@ export default function AudioPreferencesScreen() {
                 </Pressable>
               ))}
             </View>
+            <Pressable
+              accessibilityRole="switch"
+              accessibilityLabel={t('audio.autoSpeak')}
+              accessibilityState={{ checked: autoSpeak, disabled: saving }}
+              disabled={saving}
+              style={styles.button}
+              onPress={() => {
+                cancel();
+                setAutoSpeak(!autoSpeak);
+                setSaveStatus(undefined);
+              }}
+            >
+              <Text style={styles.buttonText}>
+                {t('audio.autoSpeak')} · {t(autoSpeak ? 'audio.on' : 'audio.off')}
+              </Text>
+            </Pressable>
+            <Text style={styles.body}>{t('audio.autoSpeakNote')}</Text>
             {button(t('audio.save'), () => void save(), saving)}
             {saveStatus && (
               <Text accessibilityLiveRegion="polite" style={styles.body}>
@@ -150,6 +171,7 @@ export default function AudioPreferencesScreen() {
               <Text style={styles.body}>{t('audio.previewNote')}</Text>
               <Pressable
                 accessibilityRole="switch"
+                accessibilityLabel={t('audio.repeat')}
                 accessibilityState={{ checked: loop }}
                 onPress={() => {
                   cancel();

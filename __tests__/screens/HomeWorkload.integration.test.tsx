@@ -25,7 +25,7 @@ jest.mock('../../src/context/LanguageContext', () => ({
       require('../../src/i18n/translations').translate('en', key, values),
   }),
 }));
-jest.mock('../../src/services/tts', () => ({ speakCard: jest.fn() }));
+jest.mock('../../src/services/tts', () => ({ speakCard: jest.fn(), stop: jest.fn() }));
 jest.mock('../../src/data/decks', () => ({
   ALL_DECKS: [
     {

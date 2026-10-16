@@ -5,7 +5,7 @@ import { colors } from '../styles/theme';
 import { CardRegister, FlashCard } from '../types';
 import { splitExampleText } from '../utils/exampleText';
 import { getCardRegister, REGISTER_LABEL_KEYS } from '../utils/register';
-import { speakCard } from '../services/tts';
+import { useCardAudio } from '../hooks/useCardAudio';
 import { useLanguage } from '../context/LanguageContext';
 
 interface Props {
@@ -24,6 +24,7 @@ export default function Flashcard({ card, onGrade }: Props) {
   const { t } = useLanguage();
   const reducedMotion = useReducedMotion();
   const [isFront, setIsFront] = useState(true);
+  const { say, cancel: stopAudio, prepareReveal } = useCardAudio(card);
   const exampleText = splitExampleText(card.example);
   const register = getCardRegister(card);
 
@@ -55,10 +56,6 @@ export default function Flashcard({ card, onGrade }: Props) {
     outputRange: ['-5deg', '0deg', '5deg'],
   });
 
-  function say() {
-    void speakCard(card);
-  }
-
   const intendedFront = useRef(true),
     version = useRef(0),
     gestureBusy = useRef(false);
@@ -75,12 +72,15 @@ export default function Flashcard({ card, onGrade }: Props) {
     gestureBusy.current = false;
   }, [rot, translateX]);
   function flip(to: 'front' | 'back') {
+    stopAudio();
+    const reveal = to === 'back' ? prepareReveal() : undefined;
     cancelMotion();
     intendedFront.current = to === 'front';
     const target = to === 'front' ? 0 : 180;
     if (reducedMotion) {
       rot.setValue(target);
       setIsFront(to === 'front');
+      reveal?.();
       return;
     }
     const request = version.current;
@@ -91,7 +91,10 @@ export default function Flashcard({ card, onGrade }: Props) {
       useNativeDriver: true,
     });
     animation.current.start(({ finished }) => {
-      if (finished && version.current === request) setIsFront(to === 'front');
+      if (finished && version.current === request) {
+        setIsFront(to === 'front');
+        reveal?.();
+      }
     });
   }
   useEffect(() => {
@@ -169,80 +172,92 @@ export default function Flashcard({ card, onGrade }: Props) {
   );
 
   return (
-    <Animated.View
-      style={[styles.cardWrap, { transform: [{ translateX }, { rotateZ: tilt }] }]}
-      {...panResponder.panHandlers}
-    >
-      {/* FRONT */}
+    <View>
       <Animated.View
-        style={[
-          styles.card,
-          styles.cardFront,
-          { transform: [{ perspective: 1200 }, { rotateY: frontDeg }] },
-        ]}
-        pointerEvents={isFront ? 'auto' : 'none'}
-        accessibilityElementsHidden={!isFront}
-        importantForAccessibility={isFront ? 'auto' : 'no-hide-descendants'}
+        style={[styles.cardWrap, { transform: [{ translateX }, { rotateZ: tilt }] }]}
+        {...panResponder.panHandlers}
       >
-        <View style={styles.face}>
+        {/* FRONT */}
+        <Animated.View
+          style={[
+            styles.card,
+            styles.cardFront,
+            { transform: [{ perspective: 1200 }, { rotateY: frontDeg }] },
+          ]}
+          pointerEvents={isFront ? 'auto' : 'none'}
+          accessibilityElementsHidden={!isFront}
+          importantForAccessibility={isFront ? 'auto' : 'no-hide-descendants'}
+        >
+          <View style={styles.face}>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`${t('common.flipCard')}: ${card.front}. ${exampleText?.spanish ?? ''} ${register ? t(REGISTER_LABEL_KEYS[register]) : ''}`}
+              style={styles.flipTarget}
+              onPress={() => flip('back')}
+              onLongPress={say}
+            >
+              {registerBadge}
+              <Text style={styles.frontWord}>{card.front}</Text>
+              {exampleText?.spanish ? (
+                <Text testID="flashcard-front-example" style={styles.example}>
+                  "{exampleText.spanish}"
+                </Text>
+              ) : null}
+            </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`${t('common.listen')}: ${card.front}`}
+              style={styles.speakerBtn}
+              onPress={say}
+            >
+              <Text style={styles.speakerIcon}>🔊</Text>
+            </Pressable>
+          </View>
+        </Animated.View>
+
+        {/* BACK */}
+        <Animated.View
+          style={[
+            styles.card,
+            styles.cardBack,
+            { transform: [{ perspective: 1200 }, { rotateY: backDeg }] },
+          ]}
+          pointerEvents={isFront ? 'none' : 'auto'}
+          accessibilityElementsHidden={isFront}
+          importantForAccessibility={isFront ? 'no-hide-descendants' : 'auto'}
+        >
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={`${t('common.flipCard')}: ${card.front}. ${exampleText?.spanish ?? ''} ${register ? t(REGISTER_LABEL_KEYS[register]) : ''}`}
-            style={styles.flipTarget}
-            onPress={() => flip('back')}
-            onLongPress={say}
+            accessibilityLabel={`${t('common.flipCard')}: ${card.back}. ${exampleText?.english ?? ''}`}
+            style={styles.face}
+            onPress={() => flip('front')}
           >
             {registerBadge}
-            <Text style={styles.frontWord}>{card.front}</Text>
-            {exampleText?.spanish ? (
-              <Text testID="flashcard-front-example" style={styles.example}>
-                "{exampleText.spanish}"
+            <Text style={styles.backWord}>{card.back}</Text>
+            {exampleText?.english ? (
+              <Text testID="flashcard-back-example" style={styles.exampleBack}>
+                {exampleText.english}
               </Text>
             ) : null}
           </Pressable>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={`${t('common.listen')}: ${card.front}`}
-            style={styles.speakerBtn}
-            onPress={say}
-          >
-            <Text style={styles.speakerIcon}>🔊</Text>
-          </Pressable>
-        </View>
+        </Animated.View>
       </Animated.View>
-
-      {/* BACK */}
-      <Animated.View
-        style={[
-          styles.card,
-          styles.cardBack,
-          { transform: [{ perspective: 1200 }, { rotateY: backDeg }] },
-        ]}
-        pointerEvents={isFront ? 'none' : 'auto'}
-        accessibilityElementsHidden={isFront}
-        importantForAccessibility={isFront ? 'no-hide-descendants' : 'auto'}
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={t('audio.stop')}
+        style={styles.stopAudio}
+        onPress={stopAudio}
       >
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={`${t('common.flipCard')}: ${card.back}. ${exampleText?.english ?? ''}`}
-          style={styles.face}
-          onPress={() => flip('front')}
-        >
-          {registerBadge}
-          <Text style={styles.backWord}>{card.back}</Text>
-          {exampleText?.english ? (
-            <Text testID="flashcard-back-example" style={styles.exampleBack}>
-              {exampleText.english}
-            </Text>
-          ) : null}
-        </Pressable>
-      </Animated.View>
-    </Animated.View>
+        <Text style={styles.stopAudioText}>{t('audio.stop')}</Text>
+      </Pressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   cardWrap: { height: 278 },
+  stopAudio: { minHeight: 48, marginTop: 8, alignItems: 'center', justifyContent: 'center' },
+  stopAudioText: { color: colors.textSecondary, fontSize: 16 },
 
   card: {
     ...StyleSheet.absoluteFillObject,

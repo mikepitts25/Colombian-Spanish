@@ -10,6 +10,6 @@ The renderer uses only compiled draft packs. Schema validation rejects missing a
 - [x] RED require-bundled playback tests, then a strict assessed-audio path that never falls back silently.
 - [x] RED player tests, then shared-player integration, bilingual controls, dev-gated navigation and exact draft review packet.
 - [x] Full quality/content checks, one fresh whole-package review and regression fixes, available simulator checks.
-- [ ] Precise master updates, merge/push and successful CI; continue next AI package.
+- [x] Precise master updates, merge/push and successful CI; continued into opt-in speech. Implementation `fdd28f1`, CI run 38853611768 succeeded.
 
 Ruling: assess short generated pronunciation with English meaning choices now; authentic dialogue/new-speaker comprehension requires accepted human recordings later. This unblocks player and evidence engineering without inventing language or audio acceptance. Automatic speech preference work remains a separate bounded task.

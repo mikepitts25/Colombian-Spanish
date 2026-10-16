@@ -22,8 +22,11 @@ export const translations = {
     'audio.loadError': 'No se pudieron cargar las preferencias de audio.',
     'audio.retry': 'Reintentar',
     'audio.selected': 'Velocidad elegida: {rate}×',
-    'audio.save': 'Guardar velocidad',
-    'audio.saved': 'Velocidad guardada.',
+    'audio.autoSpeak': 'Escuchar al revelar una tarjeta',
+    'audio.autoSpeakNote':
+      'Desactivado por defecto. Al activarlo y guardar, se pronuncia el español al revelar la respuesta. Abrir o reanudar la app no inicia audio. Usa Detener audio para cancelar.',
+    'audio.save': 'Guardar preferencias de audio',
+    'audio.saved': 'Preferencias de audio guardadas.',
     'audio.saveError': 'No se pudo guardar. Tu selección sigue aquí.',
     'audio.previewTitle': 'Vista previa de pronunciación',
     'audio.previewNote':
@@ -574,8 +577,11 @@ export const translations = {
     'audio.loadError': 'Could not load audio preferences.',
     'audio.retry': 'Retry',
     'audio.selected': 'Selected speed: {rate}×',
-    'audio.save': 'Save speed',
-    'audio.saved': 'Speed saved.',
+    'audio.autoSpeak': 'Speak after revealing a flashcard',
+    'audio.autoSpeakNote':
+      'Off by default. When enabled and saved, revealing an answer speaks the Spanish. Opening or resuming the app stays silent. Use Stop audio to cancel.',
+    'audio.save': 'Save audio preferences',
+    'audio.saved': 'Audio preferences saved.',
     'audio.saveError': 'Could not save. Your selection is still here.',
     'audio.previewTitle': 'Pronunciation preview',
     'audio.previewNote':

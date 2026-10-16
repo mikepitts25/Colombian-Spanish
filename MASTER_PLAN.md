@@ -126,6 +126,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B02.3-A [AI]** Record quiz recognition separately, keep flashcard schedules/counters unchanged, identify modalities/evidence explicitly, and preserve legacy data without invented history.
   - [x] **B02.3-B1 [AI]** Record self-rated flashcard recall observations (including optional quality) alongside the recoverable grading commit; no measured unaided recall claim.
   - [ ] **B02.3-B2 [AI]** Connect assessed listening/speaking observations when those features exist.
+    - [x] **B02.3-B2a [AI]** Generated listening observations preserve media/content identity and distinct transcript/model assistance, without SRS grading.
+    - [ ] **B02.3-B2b [AI]** Connect speaking observations when a validated speaking exercise exists.
 - [ ] **B02.4 [AI]** Audit session queue stability, grading during rapid interactions, daily new-card caps, relearning, resume, and cross-deck behavior. Pin actual failures with regression tests.
   - [x] **B02.4-A [AI, SIM]** Reproduce and fix card skipping when eligible queues shrink, guard overlapping grade submissions, and save the next resume card; verify controlled regressions and iOS simulator behavior.
   - [x] **B02.4-B1 [AI]** Commit grade schedule/counters/seen-word/streak/event/next pointer through a durable journal; deduplicate retained attempts, enforce concurrent new-card caps, preserve provider state on pre-commit failure, guard unresolved Study boundaries, and freeze Difficult practice membership with save retry.
@@ -212,11 +214,11 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 **Split:** B06-A player/exercises with fixtures; B06-B reviewed audio integration and device checks. **Main files:** `src/services/tts.ts`, audio components/manifest, prefs, new listening screens/content, tests.
 
-- [ ] **B06.1 [AI]** Implement replay, phrase looping, transcript reveal, supported speed controls, and explicit generated/human speaker provenance; honor saved audio preferences.
+- [x] **B06.1 [AI]** Implement replay, phrase looping, transcript reveal, supported speed controls and explicit provenance; honor saved audio preferences. Current generated player is verified; accepted human speaker integration remains B06.3.
   - [x] **B06.1-A [AI, SIM]** Honor saved speed for card clips and device/text fallback; add bilingual Settings speed selection/save, generated pronunciation preview, explicit repeat/Stop and honest backend labels, with stale-request cancellation and failure recovery.
-  - [ ] **B06.1-B [AI, SIM]** Integrate listening controls and verify automatic speech preferences.
+  - [x] **B06.1-B [AI, SIM]** Integrate listening controls and verify automatic speech preferences.
     - [x] **B06.1-B1 [AI, SIM]** Generated listening draft: replay/loop/Stop, saved/explicit speed, hidden transcript, durable transcript assistance, strict bundled playback prerequisite, separate evidence and cold-restart checks. [Report](docs/qa/2026-10-16-listening-practice/REPORT.md).
-    - [ ] **B06.1-B2 [AI, SIM]** Implement/verify automatic speech preferences without surprise playback.
+    - [x] **B06.1-B2 [AI, SIM]** Add opt-in reveal-triggered flashcard speech and Stop; preserve silence on open/resume, cancel stale reads/animated reveals, save/reopen settings and verify phone layout. [Report](docs/qa/2026-10-16-opt-in-speech/REPORT.md).
 - [x] **B06.2 [AI]** Support listening without initially showing the Spanish text; record comprehension separately from transcript-assisted answers. Generated draft player/evidence and iPhone restart checks verified; authentic recordings remain B06.3.
 - [ ] **B06.3 [AI, H-LANGUAGE]** Integrate accepted phrase and dialogue recordings with speaker/region metadata; support multiple speakers without claiming one voice represents a whole region.
 - [ ] **B06.4 [AI, SIM]** Add downloadable audio packs with size/status, cancellation, integrity checks, storage recovery, and offline playback. Do not depend on device TTS for promised offline audio coverage.
@@ -576,3 +578,9 @@ B12.4-A / B08.5-A add [iPad Pro 13-inch smoke evidence](docs/qa/2026-10-15-table
 ### Generated listening draft and evidence — 2026-10-16
 
 B06.1-B1 / B06.2 add a development-only three-phrase listening player with hidden transcripts, durable playback requirements, replay/loop/Stop, saved/explicit speeds and separate transcript/model assistance. [Report](docs/qa/2026-10-16-listening-practice/REPORT.md). Final local suite: 69 / 716 tests plus static/content checks and unchanged review inventory. Fresh review found no actionable issues. Dedicated iPhone simulation verified all three clips, transcript reveal, exact feedback after cold restart, next-item resets and assisted completion; storage confirms exactly three listening events and no flashcard grading. Auto-speech, accepted human audio, physical intelligibility/routes, Android runtime and signed-candidate checks remain open.
+
+Implementation `fdd28f1` (generated listening draft) was merged/pushed. [GitHub Actions run 38853611768](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38853611768) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
+
+### Opt-in reveal-triggered pronunciation — 2026-10-16
+
+B06.1-B2 closes the current generated player/audio preference work with explicit opt-in speech after flashcard answer reveal and reachable Stop. [Report](docs/qa/2026-10-16-opt-in-speech/REPORT.md). Final verification: 70 suites / 725 tests plus static/content checks. Review found two animation cancellation races; both were reproduced and fixed before the final suite. iPhone verified switch/save, revealed-card/Stop/grading layout, cold-restart persistence and restoring Off. Human audio, physical route/intelligibility, platform expansion and the remaining roadmap AI packages stay open.

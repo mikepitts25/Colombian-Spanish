@@ -9,6 +9,7 @@ const mockSetParams = jest.fn();
 let mockRouteParams: Record<string, unknown> | undefined;
 
 jest.mock('@react-navigation/native', () => ({
+  useFocusEffect: (cb: any) => require('react').useEffect(cb, [cb]),
   useNavigation: () => ({ navigate: mockNavigate, setParams: mockSetParams }),
   useRoute: () => ({ params: mockRouteParams }),
 }));
@@ -31,6 +32,7 @@ jest.mock('../../src/storage/storage', () => ({
 
 jest.mock('../../src/services/tts', () => ({
   speakCard: jest.fn(),
+  stop: jest.fn(),
 }));
 
 import { useDeck } from '../../src/hooks/useDeck';
