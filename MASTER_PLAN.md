@@ -106,7 +106,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [ ] **B01.8-C [AI, SIM]** Complete supported Navigation/Expo/test-tooling migrations or upstream backports, re-audit, and verify native flows. No-patch findings remain tracked rather than assumed resolved.
     - [x] **B01.8-C1 [AI, SIM]** Migrate coordinated Navigation 7, explicit nested/pop return actions and header API; verify real-router reuse, full suite, iPhone/tablet flows and remove decoder path. Audit 62 total / 39 omit-dev, zero critical; high findings remain. [Report](docs/qa/2026-10-16-navigation-seven/REPORT.md).
     - [ ] **B01.8-C2 [AI, SIM]** Complete separately verified Expo/RN/Jest and remaining no-patch advisory migration/backports with native flows. Navigation migration does not close these paths.
-- [ ] **B01.9 [AI, H-PRODUCT, H-ACCOUNT]** Decide whether to restore or retire the historical Kanban Pages deployment. Its existing workflow fails because repository Pages is not configured; enabling publication requires an explicit product/account decision.
+      - [x] **B01.8-C2a [AI]** Scope the current Expo Metro config to patched PostCSS 8.5.30; reproduce/fix out-of-tree source-map disclosure tests and preserve normal transforms. Audit 61 total / 38 omit-dev, 0 critical; remaining findings stay open. [Report](docs/qa/2026-10-16-postcss-patch/REPORT.md).
+- [ ] **B01.9 [AI, H-PRODUCT, H-ACCOUNT]** Decide whether to restore or retire the historical Kanban Pages deployment. Its previously failing workflow now reports successful deployment on October 16 pushes without an agent configuration change. Owner should confirm the intended publication scope; no Pages/account setting was changed in these batches.
 
 - [x] **B01.10 [AI]** Replace deprecated action runtimes in app CI with official Node 24 actions pinned to release SHAs; keep npm checks on Node 22 and pin Ubuntu 24.04. Verify the actual GitHub Actions run after push.
 
@@ -622,3 +623,9 @@ B09.2-A adds a development-only, local one-take practice screen without assessme
 ### Progress evidence — October 16, 2026
 
 B08.4-B1 separates checked recognition/recall/listening/speaking attempts from self-ratings and exposes assisted/unknown counts without inferring lifetime mastery or speaking assessment. Existing quiz-only evidence remains distinct. Fresh review found no actionable issues; 76 suites / 757 tests and types/lint passed, native iPhone Quiz/Study actions verified. Voice preview `acd2baf` CI38857476897 passed all quality/content and project-generation/bundle jobs.
+
+Progress batch `d6361f3` merged/pushed to main; [CI38886271710](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38886271710) passed all quality/content and iOS/Android project-generation/JS-bundle jobs.
+
+### PostCSS remediation — October 16, 2026
+
+B01.8-C2a removes the PostCSS advisory through an exact-parent same-major patch override, with actual disclosure RED→GREEN and normal map/transform compatibility tests. Final checks: 77 suites / 760 tests, types/lint/format/content and both platform production JS exports passed. Full audit remains 61 findings; supported Expo/RN/Jest migrations and remaining upstream advisory paths are not closed.

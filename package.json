@@ -64,5 +64,10 @@
     "jest-expo": "~54.0.17",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3"
+  },
+  "overrides": {
+    "@expo/metro-config@54.0.17": {
+      "postcss": "8.5.30"
+    }
   }
 }

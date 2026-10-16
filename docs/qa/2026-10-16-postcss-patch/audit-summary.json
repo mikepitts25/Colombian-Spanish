@@ -1,0 +1,326 @@
+{
+  "date": "2026-10-16",
+  "full": {
+    "info": 0,
+    "low": 0,
+    "moderate": 15,
+    "high": 46,
+    "critical": 0,
+    "total": 61
+  },
+  "omitDev": {
+    "info": 0,
+    "low": 0,
+    "moderate": 15,
+    "high": 23,
+    "critical": 0,
+    "total": 38
+  },
+  "remaining": {
+    "@expo/cli": {
+      "severity": "high",
+      "range": "<=0.0.0-canary-20231123-1b19f96-4 || >=0.0.1-canary-20231125-d600e44",
+      "direct": false
+    },
+    "@expo/code-signing-certificates": {
+      "severity": "high",
+      "range": "*",
+      "direct": false
+    },
+    "@expo/config": {
+      "severity": "moderate",
+      "range": "<=0.0.1-canary-20240418-8d74597 || >=3.3.23-alpha.0",
+      "direct": false
+    },
+    "@expo/config-plugins": {
+      "severity": "moderate",
+      "range": "*",
+      "direct": false
+    },
+    "@expo/metro": {
+      "severity": "high",
+      "range": "*",
+      "direct": false
+    },
+    "@expo/metro-config": {
+      "severity": "high",
+      "range": "<=0.0.1-canary-20240418-8d74597 || >=0.1.49-alpha.0",
+      "direct": false
+    },
+    "@expo/prebuild-config": {
+      "severity": "moderate",
+      "range": "*",
+      "direct": false
+    },
+    "@istanbuljs/load-nyc-config": {
+      "severity": "moderate",
+      "range": "*",
+      "direct": false
+    },
+    "@jest/console": {
+      "severity": "high",
+      "range": "25.4.0 - 30.2.0",
+      "direct": false
+    },
+    "@jest/core": {
+      "severity": "high",
+      "range": "<=30.2.0",
+      "direct": false
+    },
+    "@jest/environment": {
+      "severity": "high",
+      "range": "<=30.2.0",
+      "direct": false
+    },
+    "@jest/expect": {
+      "severity": "high",
+      "range": "<=30.2.0",
+      "direct": false
+    },
+    "@jest/fake-timers": {
+      "severity": "high",
+      "range": "<=30.2.0",
+      "direct": false
+    },
+    "@jest/globals": {
+      "severity": "high",
+      "range": "<=30.2.0",
+      "direct": false
+    },
+    "@jest/reporters": {
+      "severity": "high",
+      "range": "<=30.2.0",
+      "direct": false
+    },
+    "@jest/test-result": {
+      "severity": "high",
+      "range": "25.4.0 - 30.2.0",
+      "direct": false
+    },
+    "@jest/test-sequencer": {
+      "severity": "high",
+      "range": "<=30.2.0",
+      "direct": false
+    },
+    "@jest/transform": {
+      "severity": "high",
+      "range": "*",
+      "direct": false
+    },
+    "@react-native/community-cli-plugin": {
+      "severity": "high",
+      "range": "*",
+      "direct": false
+    },
+    "@types/jest": {
+      "severity": "high",
+      "range": "28.1.7 - 29.5.14",
+      "direct": true
+    },
+    "argparse": {
+      "severity": "moderate",
+      "range": "1.0.0 - 1.0.10",
+      "direct": false
+    },
+    "babel-jest": {
+      "severity": "high",
+      "range": ">=24.2.0-alpha.0",
+      "direct": false
+    },
+    "babel-plugin-istanbul": {
+      "severity": "moderate",
+      "range": ">=6.0.0-beta.0",
+      "direct": false
+    },
+    "braces": {
+      "severity": "high",
+      "range": "*",
+      "direct": false
+    },
+    "create-jest": {
+      "severity": "high",
+      "range": "29.7.0 - 30.2.0",
+      "direct": false
+    },
+    "expect": {
+      "severity": "high",
+      "range": "21.0.0-beta.1 - 30.2.0",
+      "direct": false
+    },
+    "expo": {
+      "severity": "high",
+      "range": ">=41.0.0-alpha.0",
+      "direct": true
+    },
+    "expo-asset": {
+      "severity": "moderate",
+      "range": "<=0.0.1-canary-20240418-8d74597 || 8.6.1 - 55.0.0-canary-20260223-05214f1 || 55.0.3-canary-20260128-67ce8d5 || 55.0.8-canary-20260424-7bedc9d - 55.0.8-canary-20260429-a5e59cf || 55.0.11-canary-20260327-0789fbc - 55.0.11-canary-20260402-9da566b || 56.0.0-canary-20260212-4f61309 - 56.0.0-canary-20260506-964f25d",
+      "direct": false
+    },
+    "expo-constants": {
+      "severity": "moderate",
+      "range": "<=0.0.1-canary-20240418-8d74597 || 10.1.2 - 55.0.14 || 56.0.0-canary-20260212-4f61309 - 56.0.0-canary-20260506-964f25d",
+      "direct": false
+    },
+    "expo-linking": {
+      "severity": "moderate",
+      "range": "<=0.0.1-canary-20240418-8d74597 || 2.2.2 - 55.0.0-canary-20260223-05214f1 || 55.0.4-canary-20260128-67ce8d5 || 55.0.8-canary-20260424-7bedc9d - 55.0.8-canary-20260429-a5e59cf || 55.0.10-canary-20260327-0789fbc - 55.0.10-canary-20260402-9da566b || 56.0.0-canary-20260212-4f61309 - 56.0.0-canary-20260506-964f25d || 57.0.0-canary-20260526-13e89ca - 57.0.0-canary-20260623-1c70a78 || 58.0.0-canary-20260806-8c2d007 - 58.0.0-canary-20260908-e343e6e",
+      "direct": true
+    },
+    "expo-manifests": {
+      "severity": "moderate",
+      "range": "<=0.0.1-canary-20240418-8d74597 || 0.9.0 - 55.0.15 || 56.0.0-canary-20260212-4f61309 - 56.0.0-canary-20260506-964f25d",
+      "direct": false
+    },
+    "expo-notifications": {
+      "severity": "moderate",
+      "range": "<=0.0.1-canary-20240418-8d74597 || 0.11.4 - 55.0.0-canary-20260223-05214f1 || 55.0.5-canary-20260128-67ce8d5 || 55.0.11-canary-20260424-7bedc9d - 55.0.11-canary-20260429-a5e59cf || 55.0.15-canary-20260327-0789fbc - 55.0.15-canary-20260402-9da566b || 56.0.0-canary-20260212-4f61309 - 56.0.0-canary-20260506-964f25d || 56.0.15-canary-20260526-6cd5e37 - 56.0.15-canary-20260628-fc0d9b4 || 57.0.0-canary-20260526-13e89ca - 57.0.0-canary-20260623-1c70a78 || 58.0.0-canary-20260806-8c2d007 - 58.0.0-canary-20260909-ea7a89a",
+      "direct": true
+    },
+    "expo-updates": {
+      "severity": "high",
+      "range": "<=0.0.1-canary-20240418-8d74597 || >=0.12.0",
+      "direct": true
+    },
+    "image-size": {
+      "severity": "high",
+      "range": "0.6.3 - 2.0.2",
+      "direct": false
+    },
+    "jest": {
+      "severity": "high",
+      "range": "23.5.0 - 30.2.0",
+      "direct": true
+    },
+    "jest-circus": {
+      "severity": "high",
+      "range": "20.1.0-alpha.1 - 30.2.0",
+      "direct": false
+    },
+    "jest-cli": {
+      "severity": "high",
+      "range": "23.5.0 - 30.2.0",
+      "direct": false
+    },
+    "jest-config": {
+      "severity": "high",
+      "range": "18.1.0 - 18.5.0-alpha.7da3df39 || 23.5.0 - 30.2.0",
+      "direct": false
+    },
+    "jest-environment-jsdom": {
+      "severity": "high",
+      "range": "24.2.0-alpha.0 - 30.2.0",
+      "direct": false
+    },
+    "jest-environment-node": {
+      "severity": "high",
+      "range": "24.2.0-alpha.0 - 30.2.0",
+      "direct": false
+    },
+    "jest-expo": {
+      "severity": "high",
+      "range": "33.0.0-rc.0 - 58.0.6",
+      "direct": true
+    },
+    "jest-haste-map": {
+      "severity": "high",
+      "range": "18.1.0 - 30.2.0",
+      "direct": false
+    },
+    "jest-message-util": {
+      "severity": "high",
+      "range": "18.5.0-alpha.7da3df39 - 30.2.0",
+      "direct": false
+    },
+    "jest-resolve": {
+      "severity": "high",
+      "range": "18.1.0 - 19.0.2 || 24.2.0-alpha.0 - 24.5.0 || 27.1.0 - 30.2.0",
+      "direct": false
+    },
+    "jest-resolve-dependencies": {
+      "severity": "high",
+      "range": "27.0.0-next.0 - 30.2.0",
+      "direct": false
+    },
+    "jest-runner": {
+      "severity": "high",
+      "range": "21.0.0-alpha.1 - 30.2.0",
+      "direct": false
+    },
+    "jest-runtime": {
+      "severity": "high",
+      "range": "18.1.0 - 30.2.0",
+      "direct": false
+    },
+    "jest-snapshot": {
+      "severity": "high",
+      "range": "23.3.0 - 30.2.0",
+      "direct": false
+    },
+    "jest-watch-typeahead": {
+      "severity": "high",
+      "range": "0.6.0 - 2.2.2",
+      "direct": false
+    },
+    "jest-watcher": {
+      "severity": "high",
+      "range": "25.4.0 - 30.2.0",
+      "direct": false
+    },
+    "js-yaml": {
+      "severity": "moderate",
+      "range": "3.2.7 - 3.15.2",
+      "direct": false
+    },
+    "metro": {
+      "severity": "high",
+      "range": ">=0.71.0",
+      "direct": false
+    },
+    "metro-config": {
+      "severity": "high",
+      "range": ">=0.71.0",
+      "direct": false
+    },
+    "metro-file-map": {
+      "severity": "high",
+      "range": "*",
+      "direct": false
+    },
+    "metro-transform-worker": {
+      "severity": "high",
+      "range": ">=0.71.0",
+      "direct": false
+    },
+    "micromatch": {
+      "severity": "high",
+      "range": ">=0.2.0",
+      "direct": false
+    },
+    "node-forge": {
+      "severity": "high",
+      "range": "*",
+      "direct": false
+    },
+    "react-native": {
+      "severity": "high",
+      "range": "<=0.0.0-ffdfbbec0 || >=0.71.0-rc.0",
+      "direct": true
+    },
+    "sprintf-js": {
+      "severity": "moderate",
+      "range": "*",
+      "direct": false
+    },
+    "uuid": {
+      "severity": "moderate",
+      "range": "<11.1.1",
+      "direct": false
+    },
+    "xcode": {
+      "severity": "moderate",
+      "range": ">=0.9.2",
+      "direct": false
+    }
+  }
+}
