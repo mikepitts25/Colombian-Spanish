@@ -32,6 +32,8 @@
 - [x] Write adapter tests with native/filesystem fixtures; observe RED. Implement `src/services/voicePractice.ts` with owned cache URI validation, size cap, native30-second capture, shared audio-mode restoration and explicit player cleanup using installed SDK54 APIs. No new packages.
 - [x] Write screen tests for explicit permission request, controls, statuses/errors, fallback, lifecycle and dev gate; observe RED. Add `src/screens/VoicePracticeScreen.tsx`, translations, dev-gated route/Home entry and microphone usage configuration needed by a development client.
 - [x] Full checks, one fresh review and RED→GREEN fixes, available iPhone/tablet route/layout/denial checks. No microphone permission grant or captured voice is assumed.
-- [ ] Update technical privacy/checklist and QA evidence accurately, merge/push and verify CI. Keep actual microphones, accepted feedback and provider decisions open.
+- [x] Update technical privacy/checklist and QA evidence accurately, merge/push and verify CI. Keep actual microphones, accepted feedback and provider decisions open.
 
 Ruling: build local self-check first — it is useful without an unselected provider and does not invent assessment validity. Archived Expo54 docs redirect to latest58 in this environment; installed1.1.1 public exports/types and source are authoritative for this implementation.
+
+Merged/pushed `acd2baf` to main. [CI 38857476897](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38857476897) passed quality/content and iOS/Android project-generation/JS-bundle jobs. No native capture or signed binary pass inferred.

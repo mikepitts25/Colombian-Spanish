@@ -24,4 +24,4 @@ Native-config introspection: production blocks Android RECORD_AUDIO and omits th
 
 Actual authorized microphone capture, recording audibility/duration, replay/delete at the native file boundary, Bluetooth/routes, incoming interruptions, permission changes, low storage and signed-client behavior need further simulator/device checks. Android SDK license authorization remains pending. Human content/rights and any assessed feedback validation remain open; this prototype makes no pronunciation score or efficacy claim.
 
-Merge/push and CI results are recorded in the master plan once available.
+Merged/pushed `acd2baf` to main. [CI 38857476897](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38857476897) passed quality/content and iOS/Android project-generation/JS-bundle jobs. These are not signed-build or native-capture checks.

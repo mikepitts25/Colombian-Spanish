@@ -263,6 +263,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [ ] **B08.4 [AI, SIM]** Give flashcards, listening, missions, and speaking distinct useful layouts. Present actual learned abilities and next actions in Progress.
   - [x] **B08.4-A [AI, SIM]** Exclude inactive flashcard answers from accessibility focus, include active phrase/example in named flip controls and guard interrupted/stale swipe animations without grading a later card.
   - [ ] **B08.4-B [AI, SIM]** Complete activity-specific layouts, long/large text and evidence-based Progress next actions.
+    - [x] **B08.4-B1 [AI, SIM]** Show retained checked/self-rated attempts separately by modality, assisted/unknown assistance counts, explicit history limits and working recognition/flashcard actions; preserve quiz-only metric and remove inactive Share. iPhone navigation and actual saved totals checked. [QA](docs/qa/2026-10-16-progress-evidence/REPORT.md).
+    - [ ] **B08.4-B2 [AI, SIM]** Complete broader layouts/large text, platform checks and personalized next actions after accepted activity integration.
 - [ ] **B08.5 [AI, SIM]** Capture representative iPhone/Android and supported tablet layouts in both languages/themes, including large text, long content, reduced motion, and narrow screens.
   - [x] **B08.5-A [AI, SIM]** Capture initial dark-theme iPhone and 13-inch iPad mission/audio/Study layouts, including Spanish mission keyboard, landscape and English audio controls; record exact coverage and limits.
   - [ ] **B08.5-B [AI, SIM]** Expand to Android, smaller tablets/narrow views, both themes, long/large text and full activity coverage.
@@ -616,3 +618,7 @@ B09.1-A / B09.3-A deliver an [official-source shortlist and draft feedback/evalu
 ### Local voice self-check preview — October 16, 2026
 
 B09.2-A adds a development-only, local one-take practice screen without assessment or learning credit. Whole-package review found retry-after-failed-Stop and native auto-timeout duration-reset defects; regression tests reproduced and fixed both. Final verification: 75 suites / 754 tests, types/lint/format/data/editorial-ledger checks pass. All 1,392 cards still await qualified current acceptance. iPhone simulator permission denial, text alternative and clean return verified; capture, physical routes and signed-client validation remain explicit work.
+
+### Progress evidence — October 16, 2026
+
+B08.4-B1 separates checked recognition/recall/listening/speaking attempts from self-ratings and exposes assisted/unknown counts without inferring lifetime mastery or speaking assessment. Existing quiz-only evidence remains distinct. Fresh review found no actionable issues; 76 suites / 757 tests and types/lint passed, native iPhone Quiz/Study actions verified. Voice preview `acd2baf` CI38857476897 passed all quality/content and project-generation/bundle jobs.

@@ -1,11 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProgressScreen from '../../src/screens/ProgressScreen';
 import { appendLearningEvent, LearningEvent } from '../../src/storage/learningEvents';
 
+const mockNavigate = jest.fn();
 jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({ navigate: jest.fn() }),
+  useNavigation: () => ({ navigate: mockNavigate }),
   useFocusEffect: (callback: () => void) => {
     require('react').useEffect(callback, [callback]);
   },
@@ -77,4 +78,26 @@ it('keeps mission recognition out of the quiz-only recognition metric', async ()
   await appendLearningEvent(observation('mission', { missionId: 'morning', outcome: 'incorrect' }));
   const screen = render(<ProgressScreen />);
   expect(await screen.findByText('1 / 1 correct')).toBeTruthy();
+});
+
+it('shows all retained practice evidence and working next actions without an inactive Share control', async () => {
+  await appendLearningEvent(
+    observation('listening', { modality: 'listening', transcriptAssisted: true }),
+  );
+  await appendLearningEvent(observation('recall', { modality: 'recall', evidence: 'self-rated' }));
+  const screen = render(<ProgressScreen />);
+  expect(await screen.findByText('Practice evidence')).toBeTruthy();
+  expect(screen.getByTestId('evidence-listening').props.children).toBe(
+    'Checked answers: 1 / 1 correct',
+  );
+  expect(screen.getByTestId('assistance-listening').props.children).toBe(
+    'Assisted: 1 · Assistance unknown: 0',
+  );
+  expect(screen.getByTestId('self-rated-recall').props.children).toBe('Self-rated attempts: 1');
+  expect(screen.getByText('No checked speaking results yet')).toBeTruthy();
+  expect(screen.queryByText('🎉 Share')).toBeNull();
+  fireEvent.press(screen.getByRole('button', { name: 'Practice recognition' }));
+  expect(mockNavigate).toHaveBeenLastCalledWith('Quiz');
+  fireEvent.press(screen.getByRole('button', { name: 'Review flashcards' }));
+  expect(mockNavigate).toHaveBeenLastCalledWith('Study');
 });

@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useLanguage } from '../context/LanguageContext';
 import { getLearningEvents } from '../storage/learningEvents';
 import { useFocusedAsync } from '../hooks/useFocusedAsync';
+import { summarizePracticeEvidence } from '../utils/practiceEvidence';
 import { isNewCard } from '../utils/srs';
 
 async function loadProgress() {
@@ -61,6 +62,10 @@ export default function ProgressScreen() {
   const recognition = snapshot.history.events.filter(
     (event) =>
       event.modality === 'recognition' && event.evidence === 'answer-checked' && !event.missionId,
+  );
+  const evidence = useMemo(
+    () => summarizePracticeEvidence(snapshot.history.events),
+    [snapshot.history.events],
   );
   const recognitionCorrect = recognition.filter((event) => event.outcome === 'correct').length;
 
@@ -128,9 +133,6 @@ export default function ProgressScreen() {
         {/* Title row */}
         <View style={styles.titleRow}>
           <Text style={styles.pageTitle}>{t('progress.title')}</Text>
-          <Pressable style={styles.shareBtn}>
-            <Text style={styles.shareBtnText}>{t('progress.share')}</Text>
-          </Pressable>
         </View>
 
         {/* Streak hero */}
@@ -241,6 +243,54 @@ export default function ProgressScreen() {
           <Text style={styles.dailySub}>{t('progress.reviewNote')}</Text>
         </View>
 
+        <View style={styles.dailyCard}>
+          <Text accessibilityRole="header" style={styles.sectionTitle}>
+            {t('progress.evidenceTitle')}
+          </Text>
+          <Text style={styles.evidenceNote}>{t('progress.evidenceNote')}</Text>
+          {snapshot.history.unavailable || error ? (
+            <Text style={styles.evidenceNote}>{t('progress.evidenceUnavailable')}</Text>
+          ) : (
+            evidence.map((row) => (
+              <View key={row.modality} style={styles.evidenceRow}>
+                <Text accessibilityRole="header" style={styles.dailyTitle}>
+                  {t(`progress.mode.${row.modality}`)}
+                </Text>
+                <Text testID={`evidence-${row.modality}`} style={styles.evidenceNote}>
+                  {row.checked
+                    ? t('progress.checkedAttempts', { correct: row.correct, total: row.checked })
+                    : t(`progress.empty.${row.modality}`)}
+                </Text>
+                {row.checked > 0 && (
+                  <Text testID={`assistance-${row.modality}`} style={styles.evidenceNote}>
+                    {t('progress.assistanceCounts', {
+                      assisted: row.assisted,
+                      unknown: row.unknownAssistance,
+                    })}
+                  </Text>
+                )}
+                <Text testID={`self-rated-${row.modality}`} style={styles.evidenceNote}>
+                  {t('progress.selfRatedAttempts', { count: row.selfRated })}
+                </Text>
+              </View>
+            ))
+          )}
+          <Pressable
+            accessibilityRole="button"
+            style={styles.practiceBtn}
+            onPress={() => nav.navigate('Quiz')}
+          >
+            <Text style={styles.studyMoreText}>{t('progress.practiceRecognition')}</Text>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            style={styles.practiceBtn}
+            onPress={() => nav.navigate('Study')}
+          >
+            <Text style={styles.studyMoreText}>{t('progress.practiceRecall')}</Text>
+          </Pressable>
+        </View>
+
         {/* Deck progress */}
         {deckProgress.length > 0 && (
           <View style={styles.section}>
@@ -298,15 +348,22 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   pageTitle: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
-  shareBtn: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255,218,0,0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,218,0,0.4)',
+  evidenceRow: {
+    gap: 6,
+    paddingVertical: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
   },
-  shareBtnText: { color: colors.brand, fontSize: 12, fontWeight: '700' },
+  evidenceNote: { color: colors.textSecondary, fontSize: 14, lineHeight: 21 },
+  practiceBtn: {
+    minHeight: 48,
+    justifyContent: 'center',
+    padding: 12,
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: colors.brand,
+    borderRadius: 10,
+  },
 
   streakCard: {
     flexDirection: 'row',
