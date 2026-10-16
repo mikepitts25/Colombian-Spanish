@@ -1,213 +1,57 @@
-# 🚀 App Store Launch Checklist
+# Store and release preparation
 
-> **Current release plan:** Follow [MASTER_PLAN.md](./MASTER_PLAN.md), especially B12–B14. This older checklist contains unverified or outdated counts, positioning, privacy/pricing assumptions, age ratings, and screenshot requirements. Revalidate those against the actual candidate and current store requirements before use; unchecked or checked items here are not release evidence.
+Updated **2026-10-16** for B14.1. [MASTER_PLAN.md](MASTER_PLAN.md), especially B03/B11/B12/B14, owns implementation and acceptance status. This file is preparation, not permission to publish or proof that a release is ready. No price, age rating, support boundary or store approval is assumed.
 
-## App Information
+## Candidate facts and catalogue gate
 
-- **App Name**: Colombian Spanish
-- **Subtitle**: Learn Colombian slang & expressions
-- **Bundle ID**: com.mikepitts.colombianspanish
-- **Version**: 1.0.0
-- **Content Rating**: 4+ (Everyone)
-- **Primary Category**: Education
-- **Secondary Category**: Travel
+- Repository configuration currently names Colombian Spanish, version 1.0.0, with iOS bundle ID / Android package `com.mikepitts.colombianspanish`. EAS uses remote app versions and production auto-increment; read the actual built candidate's identifiers/build number before submission. The in-app Settings version string is not evidence of the binary version.
+- iPad is enabled and the configured interface is dark. Do not promise both themes or a fully accepted tablet experience yet.
+- Development inventory: **47 decks / 1,392 cards / 1,392 bundled generated audio mappings**. The actual release count must come from the accepted release export. All current cards await current editorial acceptance; production content preflight intentionally blocks the empty accepted catalogue.
+- Text mission and three-clip listening practice are development-only editorial previews. They must not appear in released-feature marketing until deliberately accepted and included in a candidate.
+- There are no implemented payments, hosted conversation service, sync accounts or accepted human dialogue recordings. Do not advertise them or assign a price to hypothetical entitlements.
 
-## ✅ Required Assets
+## Copy for candidate review
 
-### App Icons
+Working name: **Colombian Spanish**. Working subtitle: **Practice words and phrases**. Both need product selection and current store field validation before entry.
 
-- [ ] iOS App Icon (1024x1024 px) → `assets/icon.png`
-- [ ] iOS Settings Icon (58x58, 87x87)
-- [ ] iOS Spotlight Icon (80x80, 120x120)
-- [ ] Android Adaptive Icon → `assets/adaptive-icon.png`
-  - [ ] Foreground (108x108 dp)
-  - [ ] Background color: #0f172a
-- [ ] Favicon (16x16, 32x32) → `assets/favicon.png`
+Candidate description draft, subject to accepted-content and device verification:
 
-### Screenshots Required
+> Practice Spanish words and phrases for everyday situations in Colombia. Review cards at a manageable pace, save your own phrases, and back up your local learning progress.
+>
+> Use scheduled flashcard review, recognition quizzes, favorites and custom cards. Adjust pronunciation speed and choose whether revealing an answer plays its Spanish pronunciation.
+>
+> Bundled pronunciation is generated audio. Device speech may be used as a fallback for ordinary cards and can depend on installed voices. The app does not certify an accent, offer pronunciation scores or guarantee fluency.
 
-#### iPhone (6.7" Display - iPhone 14 Pro Max)
+Use this only if the final candidate contains the described features and accepted material. Add a factual release card/deck count only after exporting that library. Add an offline claim only after airplane-mode cold launch, all promised bundled assets and actual candidate/device acceptance. Do not include generated listening previews in public copy by implication.
 
-- [ ] Screenshot 1: Home screen with "Due Today" visible
-- [ ] Screenshot 2: Study screen with flashcard
-- [ ] Screenshot 3: Category view with multiple decks
-- [ ] Screenshot 4: Match view / Stats view
-- [ ] Screenshot 5: Add card screen
+Remove the historical “only app,” “clearest accent,” “master expressions,” “speak like a true Colombian,” “authentic recordings,” universal no-network/no-tracking and unsupported learning-effect claims. [Current competition and positioning](COMPETITIVE_ANALYSIS.md) documents the evidence and product hypothesis.
 
-#### iPhone (6.5" Display - iPhone 11 Pro Max, XS Max)
+## Release gates
 
-- [ ] Same 5 screenshots, resized
+- [ ] **AI + language editor:** accept exact card/mission/audio versions; generate the selected release library and run content preflight. Region/register assertions, slang suitability and human recording rights require real evidence.
+- [ ] **AI + owner:** verify final name, subtitle, descriptions, keywords, support contact and privacy/support URLs against actual behavior; keep gated/planned functionality out of screenshots and text.
+- [ ] **AI + owner:** complete current age/content-rating questionnaires from the actual accepted catalogue, including slang, vulgar/flirty material and any later recording/service features. No default 4+ rating is assigned here.
+- [ ] **AI + owner:** reconcile [privacy policy](PRIVACY_POLICY.md) and [data inventory](docs/privacy/DATA_INVENTORY.md) with the signed build's diagnostics/update behavior and account/service configuration. Fill accurate platform disclosures; file/clipboard export can transmit data outside the app.
+- [ ] **AI + simulator:** capture actual candidate screens in both interface languages, supported layouts, long/large text and accessibility states. Choose required formats from current store submission guidance when preparing B14.5; do not reuse the old obsolete phone-size list or resize one layout as evidence of another device.
+- [ ] **AI + device access:** build and test the named signed candidate on promised iOS/Android support boundaries and enabled iPads. Cover backups/restore/reinstall/upgrade, offline cold launch, interruptions, audio routes, permissions/reminders, accessibility, performance and crash behavior. Expo Go and JavaScript bundles are supplementary evidence.
+- [ ] **Owner + AI:** confirm code licensing and content/asset/audio rights; the repository currently has no checked-in LICENSE file.
+- [ ] **Owner + AI:** resolve developer identity, distribution/signing access, agreements, required account data and production settings. AI can prepare builds and metadata; owner actions and publication remain explicit.
+- [ ] **Owner + AI, conditional:** select whether charging is justified, then implement/configure entitlements and restore purchases. Test purchase/cancellation/refund/offline/reinstall in the appropriate sandbox and on hardware before advertising paid access. No billing SDK/provider or price is selected by this document.
+- [ ] **Owner:** approve the concrete candidate and submitted listing. Store submission/publication is not authorized by a development merge.
 
-#### iPhone (5.5" Display - iPhone 8 Plus)
-
-- [ ] Same 5 screenshots, resized
-
-#### iPad (12.9" & 11")
-
-- [ ] Same 5 screenshots, iPad layout
-
-#### Android (Optional but recommended)
-
-- [ ] Phone screenshots (16:9 or 9:16)
-- [ ] 7-inch tablet screenshots
-- [ ] 10-inch tablet screenshots
-
-### Preview Video (Optional)
-
-- [ ] 15-30 second demo video showing the app flow
-
-## ✅ App Store Metadata
-
-### App Store Connect (iOS)
-
-- [ ] App name: Colombian Spanish
-- [ ] Subtitle: Learn Colombian slang & expressions
-- [ ] Promotional text: "Master 1,000+ Colombian expressions, slang, and phrases. The only app focused on real Colombian Spanish."
-- [ ] Description: (See below)
-- [ ] Keywords: colombian spanish, learn spanish, colombia, slang, medellin, bogota, spanish phrases
-- [ ] Support URL: [Your website or GitHub]
-- [ ] Marketing URL: [Optional]
-- [ ] Privacy Policy URL: [Host on GitHub Pages]
-
-### Google Play Store (Android)
-
-- [ ] Short description (80 chars max)
-- [ ] Full description (See below)
-- [ ] Feature graphic (1024x500)
-- [ ] Promo video (YouTube link)
-
-### App Description Template
-
-```
-Learn real Colombian Spanish with 1,000+ flashcards covering slang, expressions, food, culture, and more!
-
-Why Colombian Spanish?
-• Colombia is known for having the clearest Spanish accent
-• Colombian slang ("parce", "chimba", "bacano") is used across Latin America
-• Essential for travel, dating, or connecting with Colombian family
-
-What's inside:
-• 1,000+ flashcards across 35 decks
-• Spaced Repetition System (SRS) for efficient learning
-• Authentic Colombian expressions & slang
-• Paisa slang from Medellín
-• Food, culture & festival vocabulary
-• Dating & relationship phrases
-• Business & professional Spanish
-• Travel & emergency phrases
-
-Features:
-✓ Learn offline - no internet required
-✓ Text-to-speech pronunciation
-✓ Track daily progress
-✓ Custom card creation
-✓ Smart review scheduling
-
-Perfect for:
-• Traveling to Colombia
-• Dating a Colombian
-• Connecting with Colombian family
-• Expanding your Spanish vocabulary
-
-¡Vamos! Start speaking like a true Colombian.
-
-Privacy: All data stays on your device. No accounts, no tracking, no internet required.
-```
-
-## ✅ Build & Submit
-
-### iOS
-
-- [ ] Run `expo prebuild` to generate iOS project
-- [ ] Configure signing certificates in Xcode
-- [ ] Build with `eas build --platform ios`
-- [ ] Test on TestFlight
-- [ ] Submit to App Store Review
-
-### Android
-
-- [ ] Run `expo prebuild` to generate Android project
-- [ ] Build with `eas build --platform android`
-- [ ] Test APK on physical device
-- [ ] Upload to Google Play Console
-- [ ] Submit for review
-
-## ✅ Pre-Launch Testing
-
-### Device Testing
-
-- [ ] Test on iPhone (iOS 16+)
-- [ ] Test on Android (Android 10+)
-- [ ] Test tablet layout (iPad)
-- [ ] Test dark mode
-- [ ] Test offline functionality
-- [ ] Test text-to-speech
-
-### Content Testing
-
-- [ ] Verify all 1,016 cards load
-- [ ] Test all 35 decks
-- [ ] Verify SRS scheduling works
-- [ ] Test custom card creation
-- [ ] Test daily progress tracking
-
-## ✅ Post-Launch
-
-### Marketing
-
-- [ ] Post on Reddit (r/Colombia, r/Spanish, r/languagelearning)
-- [ ] Share on Twitter/X
-- [ ] Update GitHub README with App Store links
-- [ ] Create landing page (optional)
-
-### Analytics (Optional)
-
-- [ ] Set up App Store Connect analytics
-- [ ] Set up Google Play Console analytics
-
-### Future Updates
-
-- [ ] Plan v1.1 content additions
-- [ ] Native speaker audio recordings
-- [ ] Additional regional slang (Costeño, Rolo)
-- [ ] Conversation practice mode
-
-## 💰 Monetization Strategy
-
-### Free Version
-
-- First 7 decks free (~200 cards)
-- All features enabled
-- Ads optional (don't implement for v1)
-
-### Premium ($4.99 one-time)
-
-- Unlock all 35 decks (1,016 cards)
-- Future content updates
-- Remove ads (if added later)
-- Cloud backup (if implemented)
-
-### Implementation
-
-- [ ] Add RevenueCat for IAP
-- [ ] Set up paywall screen
-- [ ] Configure App Store IAP
-- [ ] Configure Google Play IAP
-
----
-
-## Quick Commands
+## Reproducible engineering checks
 
 ```bash
-# Build for iOS
-eas build --platform ios
-
-# Build for Android
-eas build --platform android
-
-# Local iOS testing
-expo run:ios
-
-# Local Android testing
-expo run:android
+npm ci
+npm run typecheck
+npm run lint
+npm run format:check
+npm test -- --runInBand
+npm run validate:data
+npm run content:validate-reviews
+npm run content:review
+git diff --exit-code docs/editorial/content-review.json
+npm run release:preflight
 ```
+
+The final command is expected to reject the current unaccepted catalogue. A passing technical suite does not substitute for editorial, learning, privacy, physical-device or account acceptance. Use the master plan and dated QA reports to record exact candidate/OS/results, gaps and any deliberate scope reduction.

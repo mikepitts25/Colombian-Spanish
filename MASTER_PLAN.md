@@ -95,6 +95,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [x] **B01.3 [AI]** Replace the fake successful build check with a real appropriately scoped native validation/build job; report skipped/unavailable builds honestly in PR summaries.
 - [x] **B01.4 [AI, SIM]** Establish a dedicated iOS simulator workflow and capture launch, onboarding, study, quiz, phrases, settings, and restart evidence.
 - [ ] **B01.5 [AI, SIM]** Locate/install supported Android tooling if available, document the actual environment constraint if not, and establish an emulator workflow without treating iOS success as Android success.
+  - [x] **B01.5-A [AI]** Reinspect the Mac: Android Studio and bundled JDK 21 exist; SDK, platform tools and project emulator are absent. Record an actionable setup path. [Environment evidence](docs/qa/ANDROID_TOOLCHAIN.md).
+  - [ ] **B01.5-B [AI, SIM, H-ACCOUNT]** Obtain SDK license authorization, install verified tooling/system image, create a dedicated emulator and run native flows. Agreement question is pending; no acceptance or Android runtime pass is claimed.
 - [x] **B01.6 [AI]** Document repeatable commands, fixture reset, screenshots, and build artifacts. Preserve user data and unrelated simulator sessions.
 
 - [x] **B01.7 [AI]** Record the dependency audit and apply compatible locked dependency updates without a forced major upgrade. See the dated foundation report for before/after counts.
@@ -352,7 +354,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 **Split:** B14-A positioning/assets/disclosures; B14-B payments if selected; B14-C release preparation/publication.
 
-- [ ] **B14.1 [AI]** Refresh competitor evidence and positioning; replace stale “only app,” card/deck counts, unverified learning claims, and generated/native audio claims in docs and store copy.
+- [x] **B14.1 [AI]** Refresh official-source competitor evidence and positioning; correct unsupported exclusivity/efficacy/voice claims, counts and conditional store copy. [Analysis](COMPETITIVE_ANALYSIS.md), [report](docs/qa/2026-10-16-market-positioning/REPORT.md). Candidate/editorial/account acceptance stays separate.
 - [ ] **B14.2 [AI, H-PRODUCT]** Prepare concrete free/core/paid options and cost scenarios. Consider a paid offline library and separately limited hosted AI; select pricing only after pilot feedback and cost analysis.
 - [ ] **B14.3 [AI, H-ACCOUNT]** If charging, implement entitlements and restore purchases; configure products/accounts through authorized access. Verify sandbox purchase, cancellation, refund/revocation, offline entitlement, and reinstall flows on physical devices.
 - [ ] **B14.4 [AI, H-PRODUCT]** Update privacy policy, data disclosures, support/deletion flows, recording consent, and age/content suitability against actual shipped features and slang content. Obtain specialist review if a concrete unresolved requirement needs it.
@@ -584,3 +586,9 @@ Implementation `fdd28f1` (generated listening draft) was merged/pushed. [GitHub 
 ### Opt-in reveal-triggered pronunciation — 2026-10-16
 
 B06.1-B2 closes the current generated player/audio preference work with explicit opt-in speech after flashcard answer reveal and reachable Stop. [Report](docs/qa/2026-10-16-opt-in-speech/REPORT.md). Final verification: 70 suites / 725 tests plus static/content checks. Review found two animation cancellation races; both were reproduced and fixed before the final suite. iPhone verified switch/save, revealed-card/Stop/grading layout, cold-restart persistence and restoring Off. Human audio, physical route/intelligibility, platform expansion and the remaining roadmap AI packages stay open.
+
+Implementation `57c8bc8` (opt-in card speech) was merged/pushed. [GitHub Actions run 38854193384](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38854193384) passed quality/content checks and independent iOS/Android project generation and production JavaScript bundles.
+
+### Current market positioning and truthful release preparation — 2026-10-16
+
+B14.1 refreshes [competition](COMPETITIVE_ANALYSIS.md), README and conditional store copy using official evidence, current code and accepted-release boundaries. [Report](docs/qa/2026-10-16-market-positioning/REPORT.md). Removed unsupported exclusivity, accent/efficacy, pricing, rating/privacy and stale count assumptions. Added current mission/listening privacy disclosures. Fresh document review found one broken official documentation link, corrected before merge. Content preflight still correctly blocks all unaccepted cards. B01.5-A also records installed Android Studio/bundled Java versus missing SDK/emulator; SDK license authorization and actual Android testing remain open. No publication or agreement acceptance occurred.
