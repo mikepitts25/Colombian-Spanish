@@ -28,6 +28,7 @@ jobs:
       - run: npm run lint
       - run: npm run format:check
       - run: npm test -- --runInBand
+      - run: npm run test:calendar
       - run: npm run validate:data
       - run: npm run content:validate-reviews
       - run: npm run content:review

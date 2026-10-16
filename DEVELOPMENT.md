@@ -76,3 +76,7 @@ Complete Android Studio's SDK setup with the appropriate account owner's accepta
 ## Current evidence and known gaps
 
 See [October 14 foundation report](docs/qa/2026-10-14-foundation/REPORT.md). The master checklist deliberately keeps native-editorial acceptance, full interactive simulator coverage, Android emulator coverage, physical-device QA, and release signing open until they have their own evidence.
+
+## Calendar integration matrix
+
+Run `npm run test:calendar` for daily progress, new allowance, streak and legacy-date fixtures in isolated Berlin, Bogotá, New York and Auckland Node processes. This changes only child-process `TZ`, not host clock/settings. Four checks per zone cover the actual 2026 short/long calendar-day lengths (Bogotá has no DST). The command fails if any zone suite fails and runs in CI. It does not replace live timezone-switch or native resume checks.

@@ -146,6 +146,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B02.6-A [AI]** Add/test focus, foreground, and local-date refresh with cancellation, stale-response protection, and a Home integration regression.
   - [x] **B02.6-B1 [AI, SIM]** Use local calendar-day labels, preserve same-day legacy counts/target/new budget, compare streak calendar days, verify DST/three-zone fixtures and actual iOS stored-state migration without resetting totals.
   - [ ] **B02.6-B [AI, SIM]** Complete timezone/DST, fresh/empty/returning-user and upgrade coverage, then capture native simulator evidence.
+    - [x] **B02.6-B1 [AI]** Add CI integration matrix in Berlin/Bogotá/New York/Auckland: 23/25-hour day boundaries, daily counts/new allowance/target, streaks, same-local-day legacy ISO migration and fresh/returning storage. 16 cases pass. [QA](docs/qa/2026-10-16-calendar-zones/REPORT.md).
+    - [ ] **B02.6-B2 [AI, SIM]** Verify live zone changes, native refresh, full fresh/empty/returning/upgrade flows and platform evidence; matrix results do not establish these.
 
 **Batch evidence:** [Second correctness report](docs/qa/2026-10-14-learning-correctness/REPORT.md). Learning history stores at most 5,000 observations and deduplicates retained IDs. Conjugation editorial acceptance and full study transaction/session audits remain open.
 
@@ -629,3 +631,7 @@ Progress batch `d6361f3` merged/pushed to main; [CI38886271710](https://github.c
 ### PostCSS remediation — October 16, 2026
 
 B01.8-C2a removes the PostCSS advisory through an exact-parent same-major patch override, with actual disclosure RED→GREEN and normal map/transform compatibility tests. Final checks: 77 suites / 760 tests, types/lint/format/content and both platform production JS exports passed. Full audit remains 61 findings; supported Expo/RN/Jest migrations and remaining upstream advisory paths are not closed.
+
+### Calendar integration matrix — October 16, 2026
+
+B02.6-B1 delivers 16 storage checks across four isolated timezone processes, now in CI. Full suite 78 suites / 764 tests, types/lint/format/content checks passed; independent review confirmed fixtures and runner. PostCSS batch `71b048e` merged/pushed; [CI38886863213](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38886863213) passed quality/content and both platform project-generation/JS-bundle jobs.

@@ -21,7 +21,8 @@
     "content:validate-reviews": "node scripts/release-content.js --validate",
     "content:release": "node scripts/release-content.js",
     "release:preflight": "node scripts/release-content.js --check",
-    "eas-build-post-install": "node scripts/release-content.js --build-hook"
+    "eas-build-post-install": "node scripts/release-content.js --build-hook",
+    "test:calendar": "node scripts/test-calendar-zones.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",

@@ -19,3 +19,5 @@ Full tree: **62 → 61** findings (46 high, 15 moderate, 0 critical). Omit-dev t
 ## Verification boundary
 
 Clean `npm ci` succeeded. Final verification: **77 suites / 760 tests passed**, types, lint, formatting, data/ledger validation and deterministic content-review inventory passed. Production Hermes JS exports succeeded for iOS (6.53 MB) and Android (6.54 MB). Initial export after reinstall reported a missing URL-parser file that exists on disk; resetting only this worktree's Watchman root and clearing Metro addresses the stale file inventory, without a product-code workaround. This patch concerns build tooling, not native audio/notification or signed-binary acceptance.
+
+Merged/pushed `71b048e`; [CI38886863213](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38886863213) passed quality/content and both platform project-generation/JS-bundle jobs.
