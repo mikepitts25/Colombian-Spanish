@@ -18,6 +18,10 @@ Core flashcard and quiz data can be used locally. This does not mean every app/b
 
 The developer's separate audio-generation script can send authored text to ElevenLabs when deliberately run with developer credentials. The learning app does not call that script to synthesize learner content during ordinary use.
 
+## Development-only voice self-check
+
+A development-only preview can request microphone access after an explicit Record action. It records one local take for up to 30 seconds, accepts files up to 2 MiB for replay and offers Stop, Delete and an unscored text alternative. Takes stay in the application cache, outside learning storage and backups; no application upload, transcription, assessment or learning credit is implemented. Leaving attempts cleanup. Failed deletion can be retried; an unexpected app termination can leave a cache file until OS cleanup. Production/preview native configuration blocks recording permission; the development build profile explicitly declares it. Expo Go has its own host permission configuration and is not evidence of a signed production build.
+
 ## Backups and exports
 
 Export Backup copies deck/card data and supported learning-event history to the system clipboard. Flagged-card export also copies learning text. Clipboard contents may be available to other apps or OS clipboard-sync features according to platform settings. Imports read clipboard text only when the import action is selected and require confirmation before replacement.

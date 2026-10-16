@@ -278,6 +278,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B09.1-A [AI]** Prepare official-source Apple/Android local and Azure/Google hosted shortlist, exact regional/retention limits, cost/latency evaluation and fixture-first implementation contract. [Decision packet](docs/speaking/OPTIONS_AND_EVALUATION.md). No provider selected or performance result invented.
   - [ ] **B09.1-B [H-PRODUCT, H-ACCOUNT, AI]** Select scope/provider/budget/retention; supply authorized account and consented recordings as needed, then run the measured device/service comparison.
 - [ ] **B09.2 [AI, SIM]** Implement permission request/denial/recovery, record/replay/delete, recording indicators, interruption handling, and a non-speaking alternative.
+  - [x] **B09.2-A [AI, SIM]** Development-only local self-check: bounded one-take recording/replay/delete, cancellation/retry controller and native fixtures, explicit permission/denial/settings path, unscored text alternative; production permission blocks. [QA](docs/qa/2026-10-16-local-voice-practice/REPORT.md). Actual capture is not established by fixtures.
+  - [ ] **B09.2-B [AI, SIM, DEVICE]** Verify granted capture/replay/delete and interruptions in an authorized development client, both platforms and physical audio routes; validate signed production permission exclusions before enabling any release scope.
 - [ ] **B09.3 [AI, H-LANGUAGE]** Define feedback for task completion, intelligibility, and phrasing. Do not equate transcription accuracy with phonetic pronunciation scoring; validate any scores against editor-rated recordings.
   - [x] **B09.3-A [AI]** Draft separate task/intelligibility/phrasing/transcript/assistance rubric, cannot-assess behavior, held-out and disagreement evaluation. [Rubric](docs/speaking/OPTIONS_AND_EVALUATION.md#draft-feedback-rubric).
   - [ ] **B09.3-B [H-LANGUAGE, H-LEARNER, AI]** Accept task/rating definitions, supply independent recordings/ratings and evaluate actual model feedback before enabling assessed speaking claims.
@@ -610,3 +612,7 @@ Implementation `0c4b312` (Navigation 7) was merged/pushed. [GitHub Actions run 3
 ### Speaking options and evaluation preparation — 2026-10-16
 
 B09.1-A / B09.3-A deliver an [official-source shortlist and draft feedback/evaluation contract](docs/speaking/OPTIONS_AND_EVALUATION.md), separating strict local recognition, hosted transcription and independently validated task/intelligibility feedback. Provider/budget, accepted prompts/recordings/ratings and actual device/latency/cost evaluation remain open. No provider configured, audio uploaded or score invented. Document review found no actionable findings; formatting and local links passed.
+
+### Local voice self-check preview — October 16, 2026
+
+B09.2-A adds a development-only, local one-take practice screen without assessment or learning credit. Whole-package review found retry-after-failed-Stop and native auto-timeout duration-reset defects; regression tests reproduced and fixed both. Final verification: 75 suites / 754 tests, types/lint/format/data/editorial-ledger checks pass. All 1,392 cards still await qualified current acceptance. iPhone simulator permission denial, text alternative and clean return verified; capture, physical routes and signed-client validation remain explicit work.

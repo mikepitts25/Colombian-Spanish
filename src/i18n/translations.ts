@@ -2,6 +2,34 @@ import { UiLanguage } from '../storage/prefs';
 
 export const translations = {
   es: {
+    'voice.preview': 'Autoevaluación de voz (borrador)',
+    'voice.title': 'Grabar y escuchar · borrador',
+    'voice.notice':
+      'Práctica local opcional. Grabar y escuchar no evalúa pronunciación ni otorga crédito de aprendizaje. El micrófono se solicita solo al elegir Grabar.',
+    'voice.prompt':
+      'Practica un saludo por la mañana. Graba una toma breve o usa el ejemplo escrito.',
+    'voice.idle': 'Listo para grabar',
+    'voice.requesting': 'Esperando permiso del micrófono',
+    'voice.preparing': 'Preparando micrófono',
+    'voice.recording': 'Grabando',
+    'voice.stopping': 'Deteniendo grabación',
+    'voice.ready': 'Listo para escuchar',
+    'voice.playing': 'Reproducción iniciada',
+    'voice.denied': 'Se denegó el acceso al micrófono. Puedes practicar sin grabar.',
+    'voice.error':
+      'Falló la acción de audio. Detén o elimina la toma para reintentar; la práctica escrita sigue disponible.',
+    'voice.record': 'Grabar hasta 30 segundos',
+    'voice.stop': 'Detener',
+    'voice.replay': 'Escuchar mi toma',
+    'voice.delete': 'Eliminar mi toma',
+    'voice.settings': 'Abrir ajustes de la app',
+    'voice.alternative': 'Practicar sin grabar',
+    'voice.selfCheck': 'Ejemplo de borrador sin nota: compara tu saludo:',
+    'voice.retention':
+      'Las tomas quedan en la caché temporal de esta app y fuera de las copias de seguridad. Elimina la toma o sal para intentar limpiarla. Si la app se cierra inesperadamente, el archivo puede quedar hasta que el sistema lo elimine. No se envía a servidores.',
+    'voice.exitError':
+      'No se pudo completar la acción o limpieza. Reintenta Volver; no se confirma que se haya eliminado.',
+    'voice.takeSize': 'Toma: {seconds} s · {kb} KB',
     'listening.preview': 'Vista previa de escucha (borrador)',
     'listening.generated': 'Pronunciación generada · borrador editorial',
     'listening.notice':
@@ -557,6 +585,33 @@ export const translations = {
     'nav.difficultWords': 'Palabras Difíciles',
   },
   en: {
+    'voice.preview': 'Voice self-check (draft)',
+    'voice.title': 'Record and listen back · draft',
+    'voice.notice':
+      'Optional local practice only. Recording and replay do not assess pronunciation or award learning credit. The microphone is requested only when you choose Record.',
+    'voice.prompt': 'Practice a morning greeting. Record a short take or use the text self-check.',
+    'voice.idle': 'Ready to record',
+    'voice.requesting': 'Waiting for microphone permission',
+    'voice.preparing': 'Preparing microphone',
+    'voice.recording': 'Recording',
+    'voice.stopping': 'Stopping recording',
+    'voice.ready': 'Ready to replay',
+    'voice.playing': 'Replay started',
+    'voice.denied': 'Microphone access was denied. You can practice without recording.',
+    'voice.error':
+      'Audio action failed. Stop or delete the take to retry; text practice remains available.',
+    'voice.record': 'Record up to 30 seconds',
+    'voice.stop': 'Stop',
+    'voice.replay': 'Replay my take',
+    'voice.delete': 'Delete my take',
+    'voice.settings': 'Open app settings',
+    'voice.alternative': 'Practice without recording',
+    'voice.selfCheck': 'Unscored draft example — compare your own greeting:',
+    'voice.retention':
+      'Takes stay in this app’s temporary cache, outside backups. Delete explicitly or leave to attempt cleanup. If the app stops unexpectedly, a cache file may remain until the OS removes it. No uploads.',
+    'voice.exitError':
+      'Could not finish the requested action or cleanup. Try Back again; no successful deletion is claimed.',
+    'voice.takeSize': 'Take: {seconds} s · {kb} KB',
     'listening.preview': 'Listening preview (draft)',
     'listening.generated': 'Generated pronunciation · editorial draft',
     'listening.notice':

@@ -6,6 +6,7 @@ import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AudioPreferencesScreen from '../screens/AudioPreferencesScreen';
 import ListeningScreen from '../screens/ListeningScreen';
+import VoicePracticeScreen from '../screens/VoicePracticeScreen';
 import MissionScreen from '../screens/MissionScreen';
 import HomeScreen from '../screens/HomeScreen';
 import StudyScreen from '../screens/StudyScreen';
@@ -155,6 +156,11 @@ export default function RootNavigator() {
       />
       {SHOW_REVIEW_TOOLS && (
         <>
+          <Stack.Screen
+            name="VoicePracticePreview"
+            component={VoicePracticeScreen}
+            options={{ headerShown: false, gestureEnabled: false }}
+          />
           <Stack.Screen
             name="ListeningPreview"
             component={ListeningScreen}

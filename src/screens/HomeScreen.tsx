@@ -340,6 +340,15 @@ export default function HomeScreen() {
           {SHOW_REVIEW_TOOLS && (
             <Pressable
               accessibilityRole="button"
+              style={styles.quickAction}
+              onPress={() => nav.navigate('VoicePracticePreview')}
+            >
+              <Text style={styles.quickActionLabel}>{t('voice.preview')}</Text>
+            </Pressable>
+          )}
+          {SHOW_REVIEW_TOOLS && (
+            <Pressable
+              accessibilityRole="button"
               style={[styles.quickAction, { minHeight: 48 }]}
               onPress={() => nav.navigate('ListeningPreview')}
             >
