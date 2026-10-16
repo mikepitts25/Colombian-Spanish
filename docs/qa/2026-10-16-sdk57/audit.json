@@ -200,7 +200,7 @@
       "severity": "high",
       "isDirect": false,
       "via": ["@jest/fake-timers"],
-      "effects": ["@jest/globals", "jest-circus", "jest-environment-jsdom", "jest-runner"],
+      "effects": ["@jest/globals", "jest-circus", "jest-environment-jsdom"],
       "range": "<=30.2.0",
       "nodes": ["node_modules/@jest/environment"],
       "fixAvailable": {
@@ -261,14 +261,10 @@
       "severity": "high",
       "isDirect": false,
       "via": ["@jest/console", "@jest/test-result", "@jest/transform", "jest-message-util"],
-      "effects": ["@jest/core"],
+      "effects": [],
       "range": "<=30.2.0",
       "nodes": ["node_modules/@jest/reporters"],
-      "fixAvailable": {
-        "name": "jest",
-        "version": "30.5.2",
-        "isSemVerMajor": true
-      }
+      "fixAvailable": true
     },
     "@jest/test-result": {
       "name": "@jest/test-result",
@@ -322,13 +318,13 @@
       "name": "@react-native/community-cli-plugin",
       "severity": "high",
       "isDirect": false,
-      "via": ["metro", "metro-config"],
+      "via": ["@react-native/metro-config", "metro", "metro-config"],
       "effects": ["react-native"],
       "range": "*",
       "nodes": ["node_modules/@react-native/community-cli-plugin"],
       "fixAvailable": {
         "name": "react-native",
-        "version": "0.72.17",
+        "version": "0.88.0",
         "isSemVerMajor": true
       }
     },
@@ -337,10 +333,52 @@
       "severity": "high",
       "isDirect": true,
       "via": ["babel-jest", "jest-environment-node"],
-      "effects": [],
+      "effects": ["jest-expo", "react-native"],
       "range": "*",
       "nodes": ["node_modules/@react-native/jest-preset"],
-      "fixAvailable": false
+      "fixAvailable": {
+        "name": "jest-expo",
+        "version": "58.0.11",
+        "isSemVerMajor": true
+      }
+    },
+    "@react-native/metro-config": {
+      "name": "@react-native/metro-config",
+      "severity": "high",
+      "isDirect": true,
+      "via": ["metro-config"],
+      "effects": ["@react-native/community-cli-plugin", "react-native-worklets"],
+      "range": "*",
+      "nodes": ["node_modules/@react-native/metro-config"],
+      "fixAvailable": {
+        "name": "react-native-worklets",
+        "version": "0.7.4",
+        "isSemVerMajor": true
+      }
+    },
+    "@react-native/virtualized-lists": {
+      "name": "@react-native/virtualized-lists",
+      "severity": "high",
+      "isDirect": false,
+      "via": ["react-native"],
+      "effects": [],
+      "range": "0.85.0-nightly-20260108-1236b6be4 - 0.87.0-rc.4",
+      "nodes": ["node_modules/@react-native/virtualized-lists"],
+      "fixAvailable": true
+    },
+    "@sentry/react-native": {
+      "name": "@sentry/react-native",
+      "severity": "high",
+      "isDirect": true,
+      "via": ["expo"],
+      "effects": [],
+      "range": ">=5.16.0-alpha.1",
+      "nodes": ["node_modules/@sentry/react-native"],
+      "fixAvailable": {
+        "name": "@sentry/react-native",
+        "version": "5.15.2",
+        "isSemVerMajor": true
+      }
     },
     "@types/jest": {
       "name": "@types/jest",
@@ -446,12 +484,12 @@
       "severity": "high",
       "isDirect": false,
       "via": ["jest-message-util"],
-      "effects": ["@jest/expect", "@types/jest", "jest-snapshot"],
+      "effects": ["@types/jest", "jest-snapshot"],
       "range": "21.0.0-beta.1 - 30.2.0",
       "nodes": ["node_modules/expect"],
       "fixAvailable": {
-        "name": "@types/jest",
-        "version": "30.0.0",
+        "name": "jest",
+        "version": "30.5.2",
         "isSemVerMajor": true
       }
     },
@@ -467,7 +505,7 @@
         "@expo/metro",
         "@expo/metro-config"
       ],
-      "effects": [],
+      "effects": ["@sentry/react-native"],
       "range": ">=45.0.0-beta.1",
       "nodes": ["node_modules/expo"],
       "fixAvailable": {
@@ -509,7 +547,7 @@
       "severity": "high",
       "isDirect": true,
       "via": ["@jest/core", "jest-cli"],
-      "effects": [],
+      "effects": ["jest-watch-typeahead"],
       "range": "23.5.0 - 30.2.0",
       "nodes": ["node_modules/jest"],
       "fixAvailable": {
@@ -609,13 +647,14 @@
       "isDirect": true,
       "via": [
         "@jest/globals",
+        "@react-native/jest-preset",
         "babel-jest",
         "jest-environment-jsdom",
         "jest-snapshot",
         "jest-watch-typeahead"
       ],
       "effects": [],
-      "range": "33.0.0-rc.0 - 58.0.6",
+      "range": ">=33.0.0-rc.0",
       "nodes": ["node_modules/jest-expo"],
       "fixAvailable": {
         "name": "jest-expo",
@@ -680,7 +719,7 @@
       "isDirect": false,
       "via": ["jest-snapshot"],
       "effects": [],
-      "range": "23.3.0 - 30.2.0",
+      "range": "27.0.0-next.0 - 30.2.0",
       "nodes": ["node_modules/jest-resolve-dependencies"],
       "fixAvailable": true
     },
@@ -738,7 +777,14 @@
       "severity": "high",
       "isDirect": false,
       "via": ["@jest/transform", "expect", "jest-message-util"],
-      "effects": ["jest-circus", "jest-expo", "jest-resolve-dependencies", "jest-runtime"],
+      "effects": [
+        "@jest/core",
+        "@jest/expect",
+        "jest-circus",
+        "jest-expo",
+        "jest-resolve-dependencies",
+        "jest-runtime"
+      ],
       "range": "23.3.0 - 30.2.0",
       "nodes": ["node_modules/jest-snapshot"],
       "fixAvailable": {
@@ -751,7 +797,7 @@
       "name": "jest-watch-typeahead",
       "severity": "high",
       "isDirect": false,
-      "via": ["jest-watcher"],
+      "via": ["jest", "jest-watcher"],
       "effects": ["jest-expo"],
       "range": "0.6.0 - 2.2.2",
       "nodes": ["node_modules/jest-watch-typeahead"],
@@ -766,7 +812,7 @@
       "severity": "high",
       "isDirect": false,
       "via": ["@jest/test-result"],
-      "effects": ["jest-runner", "jest-watch-typeahead"],
+      "effects": ["jest-runner"],
       "range": "25.4.0 - 30.2.0",
       "nodes": ["node_modules/jest-watcher"],
       "fixAvailable": {
@@ -798,8 +844,8 @@
       "range": ">=0.71.0",
       "nodes": ["node_modules/@expo/metro/node_modules/metro", "node_modules/metro"],
       "fixAvailable": {
-        "name": "react-native",
-        "version": "0.72.17",
+        "name": "react-native-worklets",
+        "version": "0.7.4",
         "isSemVerMajor": true
       }
     },
@@ -808,12 +854,12 @@
       "severity": "high",
       "isDirect": false,
       "via": ["metro"],
-      "effects": ["@react-native/community-cli-plugin"],
+      "effects": ["@react-native/community-cli-plugin", "@react-native/metro-config"],
       "range": ">=0.71.0",
       "nodes": ["node_modules/@expo/metro/node_modules/metro-config", "node_modules/metro-config"],
       "fixAvailable": {
-        "name": "react-native",
-        "version": "0.72.17",
+        "name": "react-native-worklets",
+        "version": "0.7.4",
         "isSemVerMajor": true
       }
     },
@@ -829,8 +875,8 @@
         "node_modules/metro-file-map"
       ],
       "fixAvailable": {
-        "name": "expo",
-        "version": "44.0.6",
+        "name": "react-native-worklets",
+        "version": "0.7.4",
         "isSemVerMajor": true
       }
     },
@@ -901,13 +947,45 @@
       "name": "react-native",
       "severity": "high",
       "isDirect": true,
-      "via": ["@react-native/community-cli-plugin"],
-      "effects": [],
+      "via": [
+        "@react-native/community-cli-plugin",
+        "@react-native/jest-preset",
+        "@react-native/virtualized-lists"
+      ],
+      "effects": ["@react-native/virtualized-lists"],
       "range": ">=0.73.0-nightly-20230506-1af868c52",
       "nodes": ["node_modules/react-native"],
       "fixAvailable": {
         "name": "react-native",
-        "version": "0.72.17",
+        "version": "0.88.0",
+        "isSemVerMajor": true
+      }
+    },
+    "react-native-reanimated": {
+      "name": "react-native-reanimated",
+      "severity": "high",
+      "isDirect": true,
+      "via": ["react-native-worklets"],
+      "effects": [],
+      "range": "3.20.0-nightly-20250722-b6c8b9a3c - 4.0.0-nightly-20250309-9ce9085cb || 4.2.0-nightly-20250829-e8916d7ed - 4.2.0-nightly-20251017-235c127fd || 4.4.0-nightly-20260325-414e8adaf - 4.7.1",
+      "nodes": ["node_modules/react-native-reanimated"],
+      "fixAvailable": {
+        "name": "react-native-reanimated",
+        "version": "4.3.4",
+        "isSemVerMajor": true
+      }
+    },
+    "react-native-worklets": {
+      "name": "react-native-worklets",
+      "severity": "high",
+      "isDirect": true,
+      "via": ["@react-native/metro-config"],
+      "effects": ["react-native-reanimated"],
+      "range": ">=0.8.0-bundle-mode-preview-1",
+      "nodes": ["node_modules/react-native-worklets"],
+      "fixAvailable": {
+        "name": "react-native-worklets",
+        "version": "0.7.4",
         "isSemVerMajor": true
       }
     },
@@ -989,17 +1067,17 @@
       "info": 0,
       "low": 0,
       "moderate": 13,
-      "high": 46,
+      "high": 51,
       "critical": 0,
-      "total": 59
+      "total": 64
     },
     "dependencies": {
-      "prod": 575,
-      "dev": 518,
+      "prod": 657,
+      "dev": 442,
       "optional": 45,
       "peer": 0,
       "peerOptional": 0,
-      "total": 1111
+      "total": 1117
     }
   }
 }

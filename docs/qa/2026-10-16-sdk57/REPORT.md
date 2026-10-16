@@ -8,7 +8,7 @@ Base: SDK 55 `caaf612`. SDK 56 was a tested intermediate checkpoint; its documen
 - Final checks: **79 suites / 771 tests**, 16 calendar cases across four zones, TypeScript, lint, formatting and content checks passed. Both final platform production JS exports passed. Inventory remains 47 decks / 1,392 cards and audio entries; all 1,392 editorial acceptances remain required.
 - Both native projects generated. Production introspection omits microphone usage and emits removal directives for Android recording/service permissions. Fingerprint runtime and bundle IDs remain stable. The SDK template now targets iOS 16.4 or later.
 - Xcode 27 scene support: config regression observed RED then GREEN; generated scene manifest uses `EXExpoAppSceneDelegate`, and AppDelegate conforms to `ExpoReactNativeFactoryProvider`. Unsigned arm64 iOS build succeeded with 110 installed pods. Only the ignored local AppDelegate points to QA Metro port 8098; that test-server setting is not committed.
-- Audits: **59 full findings** (46 high / 13 moderate), **23 omit-dev** (15 high / 8 moderate), zero critical. SDK 55 baseline was 57 full / 34 omit-dev. Full-tree findings increased; this is not a clean audit. Exact snapshots accompany this report.
+- Complete-peer audits: **64 full findings** (51 high / 13 moderate), **41 omit-dev** (28 high / 13 moderate), zero critical. The earlier 59/23 snapshot omitted a required peer graph under an inherited global npm setting and is superseded. Historical SDK 55 counts were 57/34; no dependency-security improvement is claimed from this migration. Exact final snapshots accompany this report.
 
 ## Compatibility changes and review
 
@@ -39,3 +39,9 @@ Both unsigned simulators emit the known notifications keychain entitlement warni
 ## Sources
 
 [SDK 56](https://expo.dev/changelog/sdk-56), [SDK 57 regression fixes](https://expo.dev/changelog/sdk-57), [SDK 57 Xcode 27 scene support](https://github.com/expo/fyi/blob/main/ios-scene-lifecycle.md), [React compiler diagnostics](https://react.dev/reference/eslint-plugin-react-hooks).
+
+## CI install correction
+
+The first pushed migration, `3df2a11`, failed [CI38954379577](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38954379577) at npm ci: the lock lacked `@react-native/metro-config@0.86.3` and its Babel dependencies. Investigation found the Mac's inherited global `legacy-peer-deps=true`; isolated npm-version checks also inherited that setting and did not reproduce the runner's normal resolution. Worklets 0.10.1 declares Metro config as a required peer. The correction declares that build dependency explicitly at RN's exact version, regenerates the complete lock, and commits a project `.npmrc` with `legacy-peer-deps=false`, leaving the user's global setting untouched. Strict installs and full checks are repeated; no CI check is removed or bypassed.
+
+The main checkout's generated native projects and 110 pods were refreshed to SDK 57. Its ignored local AppDelegate uses the existing project QA Metro on 8098, and ignored `.xcode.env.local` disables source-map upload for the unconfigured local unsigned build. The compiled/tested simulator binary remains the worktree build described above.
