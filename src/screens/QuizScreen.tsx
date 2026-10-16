@@ -419,7 +419,10 @@ export default function QuizScreen() {
                   })}
                 </Text>
               </View>
-              <Pressable style={styles.primaryButton} onPress={() => nav.navigate('Study')}>
+              <Pressable
+                style={styles.primaryButton}
+                onPress={() => nav.navigate('Root', { screen: 'Study' }, { pop: true })}
+              >
                 <Text style={styles.primaryButtonText}>{t('quiz.studyNow')}</Text>
               </Pressable>
             </View>

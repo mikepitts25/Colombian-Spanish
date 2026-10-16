@@ -112,10 +112,14 @@ describe('PhrasesScreen', () => {
 
     expect(mockSpeakCard).toHaveBeenCalledWith(expect.objectContaining({ id: 'weather-heat' }));
     expect(mockToggleFavorite).toHaveBeenCalledWith('weather-heat');
-    expect(mockNavigate).toHaveBeenCalledWith('Root', {
-      screen: 'Study',
-      params: { autoStartDeckId: 'deck-weather' },
-    });
+    expect(mockNavigate).toHaveBeenCalledWith(
+      'Root',
+      {
+        screen: 'Study',
+        params: { autoStartDeckId: 'deck-weather' },
+      },
+      { pop: true },
+    );
     expect(mockNavigate).toHaveBeenCalledWith('Phrasebook');
   });
 });

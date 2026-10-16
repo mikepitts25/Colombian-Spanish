@@ -33,7 +33,7 @@ describe('ManageDecksScreen navigation', () => {
 
     fireEvent.press(getByText('Inicio'));
 
-    expect(mockNavigate).toHaveBeenCalledWith('Root', { screen: 'Home' });
+    expect(mockNavigate).toHaveBeenCalledWith('Root', { screen: 'Home' }, { pop: true });
   });
 
   it('opens the translation review screen', () => {

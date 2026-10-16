@@ -104,6 +104,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B01.8-A [AI]** Trace remaining advisory roots and consumer/input paths; document compatible fixes, no-patch paths, and separately testable migration packages. See the dependency-triage report.
   - [x] **B01.8-B [AI]** Apply the compatible brace-expansion 5.0.12 lockfile patch without changing product dependency ranges; audit now reports 66 total / 43 production-tree findings, zero critical.
   - [ ] **B01.8-C [AI, SIM]** Complete supported Navigation/Expo/test-tooling migrations or upstream backports, re-audit, and verify native flows. No-patch findings remain tracked rather than assumed resolved.
+    - [x] **B01.8-C1 [AI, SIM]** Migrate coordinated Navigation 7, explicit nested/pop return actions and header API; verify real-router reuse, full suite, iPhone/tablet flows and remove decoder path. Audit 62 total / 39 omit-dev, zero critical; high findings remain. [Report](docs/qa/2026-10-16-navigation-seven/REPORT.md).
+    - [ ] **B01.8-C2 [AI, SIM]** Complete separately verified Expo/RN/Jest and remaining no-patch advisory migration/backports with native flows. Navigation migration does not close these paths.
 - [ ] **B01.9 [AI, H-PRODUCT, H-ACCOUNT]** Decide whether to restore or retire the historical Kanban Pages deployment. Its existing workflow fails because repository Pages is not configured; enabling publication requires an explicit product/account decision.
 
 - [x] **B01.10 [AI]** Replace deprecated action runtimes in app CI with official Node 24 actions pinned to release SHAs; keep npm checks on Node 22 and pin Ubuntu 24.04. Verify the actual GitHub Actions run after push.
@@ -594,3 +596,7 @@ Implementation `57c8bc8` (opt-in card speech) was merged/pushed. [GitHub Actions
 ### Current market positioning and truthful release preparation — 2026-10-16
 
 B14.1 refreshes [competition](COMPETITIVE_ANALYSIS.md), README and conditional store copy using official evidence, current code and accepted-release boundaries. [Report](docs/qa/2026-10-16-market-positioning/REPORT.md). Removed unsupported exclusivity, accent/efficacy, pricing, rating/privacy and stale count assumptions. Added current mission/listening privacy disclosures. Fresh document review found one broken official documentation link, corrected before merge. Content preflight still correctly blocks all unaccepted cards. B01.5-A also records installed Android Studio/bundled Java versus missing SDK/emulator; SDK license authorization and actual Android testing remain open. No publication or agreement acceptance occurred.
+
+### Coordinated Navigation 7 and explicit return behavior — 2026-10-16
+
+B01.8-C1 removes the Navigation 6 decoder chain and adopts explicit nested/pop return semantics. [Report](docs/qa/2026-10-16-navigation-seven/REPORT.md). Final suite: 71 / 726 tests with static/content checks and unchanged inventory; fresh review found no actionable findings. iPhone verified cold start, Quiz-to-Study, exact eight-card resume, Stop/tab focus, manager-to-Home and retained listening completion. Tablet verified Quiz-to-Study, Home and exact saved mission feedback. Audit now reports 62 total / 39 omit-dev findings, zero critical; remaining SDK/test-tooling and native/hardware gates stay open.

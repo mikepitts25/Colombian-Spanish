@@ -93,11 +93,11 @@ function Tabs() {
   );
 }
 
-const stackHeaderOpts = {
+const stackHeaderOpts: NativeStackNavigationOptions = {
   headerStyle: { backgroundColor: colors.surface },
   headerTintColor: colors.brand,
   headerTitleStyle: { fontWeight: '700' as const, color: colors.textPrimary },
-  headerBackTitleVisible: false,
+  headerBackButtonDisplayMode: 'minimal',
 };
 
 export default function RootNavigator() {

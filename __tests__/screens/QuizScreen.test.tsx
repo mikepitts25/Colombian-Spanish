@@ -108,7 +108,7 @@ describe('QuizScreen integration polish', () => {
 
     await waitFor(() => expect(getByText('Study 1 more word')).toBeTruthy());
     fireEvent.press(getByText('Study now'));
-    expect(mockNavigate).toHaveBeenCalledWith('Study');
+    expect(mockNavigate).toHaveBeenCalledWith('Root', { screen: 'Study' }, { pop: true });
   });
 
   it('renders quiz region filters without horizontal scrolling', async () => {

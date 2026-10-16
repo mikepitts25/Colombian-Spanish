@@ -14,7 +14,7 @@ export default function ExploreScreen() {
       id: 'browse',
       title: t('explore.browseDecks'),
       description: t('explore.browseDecksSub'),
-      onPress: () => nav.navigate('Study'),
+      onPress: () => nav.navigate('Root', { screen: 'Study' }, { pop: true }),
     },
     {
       id: 'phrasebook',

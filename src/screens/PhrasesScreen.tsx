@@ -62,10 +62,14 @@ export default function PhrasesScreen() {
               countLabel={t('phrases.cardCount', { count: selectedTopic.cards.length })}
               studyLabel={t(selectedTopic.studyKey as TranslationKey)}
               onStudy={() =>
-                nav.navigate('Root', {
-                  screen: 'Study',
-                  params: { autoStartDeckId: selectedTopic.deck.id },
-                })
+                nav.navigate(
+                  'Root',
+                  {
+                    screen: 'Study',
+                    params: { autoStartDeckId: selectedTopic.deck.id },
+                  },
+                  { pop: true },
+                )
               }
             />
           }

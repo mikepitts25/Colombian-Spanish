@@ -122,7 +122,7 @@ export default function ReviewScreen() {
       nav.goBack();
       return;
     }
-    nav.navigate('ManageDecks');
+    nav.navigate('ManageDecks', undefined, { pop: true });
   }
 
   async function saveReview(reviewStatus: 'reviewed' | 'needs_native') {

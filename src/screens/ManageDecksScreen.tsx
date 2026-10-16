@@ -71,7 +71,7 @@ export default function ManageDecksScreen() {
   }
 
   function goHome() {
-    nav.navigate('Root', { screen: 'Home' });
+    nav.navigate('Root', { screen: 'Home' }, { pop: true });
   }
 
   if (!ready)
