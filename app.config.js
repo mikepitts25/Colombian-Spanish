@@ -19,6 +19,7 @@ module.exports = ({ config }) => {
     },
     plugins: [
       ...(config.plugins ?? []),
+      'expo-sharing',
       [
         'expo-audio',
         {

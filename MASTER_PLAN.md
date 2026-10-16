@@ -107,6 +107,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
     - [x] **B01.8-C1 [AI, SIM]** Migrate coordinated Navigation 7, explicit nested/pop return actions and header API; verify real-router reuse, full suite, iPhone/tablet flows and remove decoder path. Audit 62 total / 39 omit-dev, zero critical; high findings remain. [Report](docs/qa/2026-10-16-navigation-seven/REPORT.md).
     - [ ] **B01.8-C2 [AI, SIM]** Complete separately verified Expo/RN/Jest and remaining no-patch advisory migration/backports with native flows. Navigation migration does not close these paths.
       - [x] **B01.8-C2a [AI]** Scope the current Expo Metro config to patched PostCSS 8.5.30; reproduce/fix out-of-tree source-map disclosure tests and preserve normal transforms. Audit 61 total / 38 omit-dev, 0 critical; remaining findings stay open. [Report](docs/qa/2026-10-16-postcss-patch/REPORT.md).
+      - [ ] **B01.8-C2b [AI, SIM]** SDK54→55 aligned package/runtime migration: clean766 tests/calendar16, both exports/prebuild and native iOS compilation/QA passed; fresh review and merge/CI pending. [Report](docs/qa/2026-10-16-sdk55/REPORT.md). SDK56+ and remaining advisory paths remain open.
 - [ ] **B01.9 [AI, H-PRODUCT, H-ACCOUNT]** Decide whether to restore or retire the historical Kanban Pages deployment. Its previously failing workflow now reports successful deployment on October 16 pushes without an agent configuration change. Owner should confirm the intended publication scope; no Pages/account setting was changed in these batches.
 
 - [x] **B01.10 [AI]** Replace deprecated action runtimes in app CI with official Node 24 actions pinned to release SHAs; keep npm checks on Node 22 and pin Ubuntu 24.04. Verify the actual GitHub Actions run after push.
@@ -285,6 +286,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [ ] **B09.2 [AI, SIM]** Implement permission request/denial/recovery, record/replay/delete, recording indicators, interruption handling, and a non-speaking alternative.
   - [x] **B09.2-A [AI, SIM]** Development-only local self-check: bounded one-take recording/replay/delete, cancellation/retry controller and native fixtures, explicit permission/denial/settings path, unscored text alternative; production permission blocks. [QA](docs/qa/2026-10-16-local-voice-practice/REPORT.md). Actual capture is not established by fixtures.
   - [ ] **B09.2-B [AI, SIM, DEVICE]** Verify granted capture/replay/delete and interruptions in an authorized development client, both platforms and physical audio routes; validate signed production permission exclusions before enabling any release scope.
+    - [x] **B09.2-B1 [AI, SIM]** Authorized native iOS development-client capture/Stop/replay/delete,30-second auto-stop and Back cleanup; zero retained recording files and unchanged learning counts verified. [SDK55 QA](docs/qa/2026-10-16-sdk55/REPORT.md).
+    - [ ] **B09.2-B2 [AI, SIM, DEVICE]** Android, OS interruptions/settings changes, routes/audio quality and actual signed-production exclusions remain separate.
 - [ ] **B09.3 [AI, H-LANGUAGE]** Define feedback for task completion, intelligibility, and phrasing. Do not equate transcription accuracy with phonetic pronunciation scoring; validate any scores against editor-rated recordings.
   - [x] **B09.3-A [AI]** Draft separate task/intelligibility/phrasing/transcript/assistance rubric, cannot-assess behavior, held-out and disagreement evaluation. [Rubric](docs/speaking/OPTIONS_AND_EVALUATION.md#draft-feedback-rubric).
   - [ ] **B09.3-B [H-LANGUAGE, H-LEARNER, AI]** Accept task/rating definitions, supply independent recordings/ratings and evaluate actual model feedback before enabling assessed speaking claims.
@@ -334,6 +337,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 **Package:** maintain one repeatable test script and evidence matrix; rerun affected cases for each candidate. AI writes the script, builds, diagnoses, and fixes failures. Device access and sensory judgments may require a person.
 
 - [ ] **B12.1 [AI, SIM]** Establish fixtures for fresh/returning learners, large libraries, difficult cards, empty filters, corrupted data, long text, and upgrades. Record tested OS versions and build identifiers.
+  - [ ] **B12.1-M [AI, SIM]** Replace the Settings placeholderv2.0.0/build42 with actual app/host metadata and unknown handling; observed native binary is1.0.0/build1.0.0. Keep Expo Go host identity distinct from application identity.
 - [ ] **B12.2 [AI, DEVICE]** Test a physical iPhone on each promised support boundary; cover an older/lower-performance supported device and a current device where feasible. Record gaps explicitly.
 - [ ] **B12.3 [AI, DEVICE]** Test physical Android hardware if Android ships, including a lower-performance supported device and relevant vendor battery restrictions. Emulator results are supplementary.
 - [ ] **B12.4 [AI, SIM, DEVICE]** Test tablets if advertised/supported by the release; app configuration currently enables iPad support. Either validate the supported layout or deliberately narrow support.
@@ -635,3 +639,5 @@ B01.8-C2a removes the PostCSS advisory through an exact-parent same-major patch 
 ### Calendar integration matrix — October 16, 2026
 
 B02.6-B1 delivers 16 storage checks across four isolated timezone processes, now in CI. Full suite 78 suites / 764 tests, types/lint/format/content checks passed; independent review confirmed fixtures and runner. PostCSS batch `71b048e` merged/pushed; [CI38886863213](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38886863213) passed quality/content and both platform project-generation/JS-bundle jobs.
+
+Calendar matrix `fde0735` merged/pushed to main; [CI38887199615](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/38887199615) passed quality/content,16-zone cases and both project-generation/JS-bundle jobs.

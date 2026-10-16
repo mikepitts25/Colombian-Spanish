@@ -51,7 +51,7 @@ xcrun simctl bootstatus DA623884-B6E4-4E09-8945-EC74CC888A61 -b
 npx expo start --localhost --port 8094
 ```
 
-Install an SDK-54-compatible Expo Go from the official Expo source for development smoke testing, or use the app's native development build. Open `exp://127.0.0.1:8094` on the dedicated simulator for Expo Go. Keep the Metro terminal running. A first-open confirmation may need interaction; do not claim a launched app from an unaccepted prompt.
+Use the app's native development build for SDK 55 checks. The official Expo Go 55.0.34 client currently fails the installed Expo Modules Core development-logger API check in this environment; do not patch around that mismatch or infer native acceptance from Expo Go. A compatible host can use the dedicated server URL. Keep the Metro terminal running. A first-open confirmation may need interaction; do not claim a launched app from an unaccepted prompt.
 
 ### Xcode 27: use Device Hub
 
@@ -80,3 +80,13 @@ See [October 14 foundation report](docs/qa/2026-10-14-foundation/REPORT.md). The
 ## Calendar integration matrix
 
 Run `npm run test:calendar` for daily progress, new allowance, streak and legacy-date fixtures in isolated Berlin, Bogotá, New York and Auckland Node processes. This changes only child-process `TZ`, not host clock/settings. Four checks per zone cover the actual 2026 short/long calendar-day lengths (Bogotá has no DST). The command fails if any zone suite fails and runs in CI. It does not replace live timezone-switch or native resume checks.
+
+## SDK 55 local native simulator build
+
+SDK 55 aligns React 19.2/RN 0.83.10 and Expo 55 modules. Update runtime compatibility uses native fingerprints, so changing the SDK cannot silently share an OTA runtime based only on app version. No OTA or store build is published by these commands.
+
+Generate with `EAS_BUILD_PROFILE=development npx expo prebuild --platform ios --no-install`, then `pod install --project-directory=ios`. Xcode27 rejects older resource-pod deployment minima, so the verified local build uses `IPHONEOS_DEPLOYMENT_TARGET=15.1 CODE_SIGNING_ALLOWED=NO` with xcodebuild. Set **`SENTRY_DISABLE_AUTO_UPLOAD=true`**, with the literal `true`, for local compilation without a configured upload project. `1` is not accepted by the current Sentry script.
+
+A generated debug app defaults to Metro8081. If another project owns that port, point only the ignored/generated debug AppDelegate's `RCTBundleURLProvider.sharedSettings().jsLocation` to your dedicated local server before building; do not stop the other project. This local test used127.0.0.1:8098. On this host, `NODE_OPTIONS=--dns-result-order=ipv4first npx expo start --localhost --port 8098` binds the IPv4 address emitted in the manifest; default Node resolution bound only::1. This is a child-process flag, not a host network change.
+
+Unsigned simulator builds can report missing-keychain-entitlement warnings from notifications. That is not a push-registration or signed-release pass. Production/preview microphone access remains blocked; development declares the explicit local recording purpose. Refer to the dated SDK 55 QA report for exact commands, build limits and verified flows.
