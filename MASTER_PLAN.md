@@ -391,6 +391,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 - [ ] **B13.1 [AI, H-PRODUCT]** Define success measures before the pilot: first-session completion, time to useful outcome, hint usage, delayed unaided recall, comprehension of a new speaker, and success in a new scenario. Treat numeric targets as hypotheses until baseline data exists.
   - [x] **B13.1-A [AI]** Prepare the dated pilot protocol, explicit measures/denominators, missingness/assistance rules, audience hypothesis, readiness and data-handling decisions; no recruitment or outcomes claimed.
+    - [x] **B13.1-A1 [AI]** Refresh the protocol for implemented draft mission/listening/voice flows and map actual data/provenance/assistance limits to pilot readiness, preserving candidate, language, consent, distribution and physical-device gates. [Readiness map](docs/pilot/READINESS.md). No participants, recruitment or results claimed.
   - [ ] **B13.1-B [H-PRODUCT]** Accept the candidate, audience, collection/retention arrangements and predeclared feasibility criteria before recruitment.
 - [ ] **B13.2 [AI, H-LANGUAGE]** Prepare equivalent pre/post/transfer tasks and delayed checks (for example, the next day and one week later); avoid simply repeating the memorized quiz.
   - [x] **B13.2-A [AI]** Prepare parallel/transfer/delayed task specifications, scoring rubric and an empty observation template; label materials unaccepted and keep human language/audio review open.
@@ -740,3 +741,7 @@ B02.4-B2i completes three real screen/provider/storage audits: Again/Hard due bo
 ### Optional audio-pack design preparation — 2026-10-17
 
 B06.4-A1 prepares the [reviewable download design](docs/superpowers/specs/2026-10-17-downloadable-audio-packs-design.md). Existing 1,392 generated clips are bundled; optional packs must add value without making those clips network-dependent. Installed SDK 57 exposes cancellable foreground DownloadTask; its file API lacks the newer SHA-256 digest method shown in latest online docs, so the proposal explicitly includes a compatible digest adapter/native-client check. No code, dependency, hosting, account or content acceptance changed. Implementation awaits the new-subsystem design review required by the brainstorming workflow; AI client implementation remains separate from real publication and human/device acceptance. Prior audit `a87d7e0` is merged/pushed and [CI39071263166](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39071263166) passed all four jobs.
+
+### Pilot capability handoff — 2026-10-17
+
+B13.1-A1 corrects stale protocol statements that predated the implemented development previews and generated-listening observations. [Readiness map](docs/pilot/READINESS.md) distinguishes authored completion, checked/self-rated attempts, transcript/model assistance, unscored voice checks and actual learner outcomes. Named candidate, accepted language/audio, consent/collection arrangements and physical-device acceptance remain genuine human/account/device dependencies. No participant data or app behavior changed.
