@@ -12,7 +12,7 @@ Conjugation has a named48-point Close control, selected tense tabs, stacked enla
 
 Baseline80 suites/792 tests passed. Four new regressions first failed for missing pending-grade button semantics, missing next-card scroll, missing conjugation trigger button semantics, and incorrect fixed interval previews. After correction, targeted11 tests passed and full80 suites/796 passed. Typecheck/lint, calendar16 cases,47-deck/1392-card/audio validation and editorial-ledger validation passed. The ledger still correctly reports1392 awaiting current human acceptance. Existing asynchronous act warnings remain; no clean-console claim.
 
-Fresh read-only whole-package review found no concrete actionable issues. Final merged-main checks and CI pending.
+Fresh read-only whole-package review found no concrete actionable issues. Integrated as `1695b0d` on main and pushed. Merged-main verification passed80 suites/796 tests. [CI39027355118](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39027355118) passed all four jobs (quality/content, independent Android and iOS project generation/bundling, validation results). [Board deployment39027355066](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39027355066) passed. Generation/bundling does not prove Android runtime or signed release acceptance.
 
 ## Native evidence and limits
 
@@ -22,7 +22,7 @@ Spanish conjugation default→maximum→accessibility-large checks retained Futu
 
 During capture, CoreSimulator updated its framework1171.7→1174.9.2 and shut down the simulator. The pending screenshot timed out; the dedicated simulator and Device Hub were restarted and the conjugation checks repeated successfully. This service restart is not evidence of dialog-state persistence across process death. The known unsigned expo-notifications keychain-entitlement warning was dismissed; no signed notification acceptance is claimed.
 
-Read-only own-app snapshots show1392 cards and daily4/5/newCount3/events6 unchanged through the subsequent conjugation checks. Explicit Continue after the service restart refreshed the checkpoint timestamp; no exact timestamp-preservation claim. Cleanup used the original own backup through the app and a cold restart. Daily1/5/newCount1 and the original Business eight-card queue/session/timestamp were restored with1392 cards. History is merged by design, so events6 remain; no exact history rollback is claimed. Default text size was restored. This normal cleanup does not establish interrupted-restore acceptance.
+Read-only own-app snapshots show1392 cards and daily4/5/newCount3/events6 unchanged through the subsequent conjugation checks. Explicit Continue after the service restart refreshed the checkpoint timestamp; no exact timestamp-preservation claim. Cleanup used the original own backup through the app and a cold restart. Daily1/5/newCount1 and the original Business eight-card queue/session/timestamp were restored with1392 cards. History is merged by design, so events6 remain; no exact history rollback is claimed. Default text size and Spanish interface were restored. This normal cleanup does not establish interrupted-restore acceptance.
 
 ## Decisions and costs
 
