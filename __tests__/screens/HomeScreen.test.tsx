@@ -527,3 +527,41 @@ it('keeps the due count and full translated unit accessible when text grows', as
     act(() => Dimensions.set({ window, screen: screenMetrics }));
   }
 });
+
+it('resumes the persisted plan phase directly instead of replacing it with a new suggestion', async () => {
+  const plan = {
+    id: 'saved-plan',
+    phase: 'review',
+    minutes: 3,
+    review: { session: { deckId: DECK.id } },
+  };
+  const read = jest
+    .spyOn(require('../../src/storage/dailyPlans'), 'readDailyPlan')
+    .mockResolvedValue(plan);
+  const open = jest
+    .spyOn(require('../../src/storage/recommendedPlan'), 'openRecommendedPlan')
+    .mockResolvedValue(plan);
+  const ui = render(<HomeScreen />);
+  await ui.findByText('Continue daily plan');
+  fireEvent.press(ui.getByText('Continue daily plan'));
+  await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('Study', { dailyPlanId: plan.id }));
+  expect(open).toHaveBeenCalledTimes(1);
+  expect(ui.getByText('Manage plan')).toBeTruthy();
+  expect(mockUseDeck().setActiveDeckId).not.toHaveBeenCalled();
+  read.mockRestore();
+  open.mockRestore();
+});
+
+it('a failed initial plan read offers Retry without opening unlinked practice', async () => {
+  const read = jest
+    .spyOn(require('../../src/storage/dailyPlans'), 'readDailyPlan')
+    .mockRejectedValueOnce(new Error('disk'))
+    .mockResolvedValue(undefined);
+  const ui = render(<HomeScreen />);
+  fireEvent.press(await ui.findByText('Retry'));
+  await ui.findByText('Study due cards');
+  expect(mockNavigate).not.toHaveBeenCalled();
+  fireEvent.press(ui.getByText('Study due cards'));
+  await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
+  read.mockRestore();
+});

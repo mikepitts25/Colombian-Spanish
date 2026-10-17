@@ -13,7 +13,7 @@ export async function readDailyPlan(
   validateDailyPlanEnvelope(envelope);
   return envelope.current ?? undefined;
 }
-export function startDailyPlan(value: DailyPlan): Promise<DailyPlan> {
+export function startDailyPlan(value: DailyPlan, access?: StorageAccess): Promise<DailyPlan> {
   validateDailyPlanEnvelope({ schemaVersion: 1, current: value });
   const input: DailyPlan = JSON.parse(JSON.stringify(value));
   if (
@@ -23,7 +23,7 @@ export function startDailyPlan(value: DailyPlan): Promise<DailyPlan> {
         JSON.stringify(input.review.session.queue!.cardIds))
   )
     throw new Error('A daily plan must start at its first activity');
-  return withStorageTransaction(async (tx) => {
+  const start = async (tx: StorageAccess) => {
     const current = await readDailyPlan(tx);
     if (current?.id === input.id) {
       if (dailyPlanDefinition(current) !== dailyPlanDefinition(input))
@@ -33,7 +33,44 @@ export function startDailyPlan(value: DailyPlan): Promise<DailyPlan> {
     if (current && current.phase !== 'complete') throw new Error('Unfinished daily plan');
     await tx.setItem(KEY, JSON.stringify({ schemaVersion: 1, current: input }));
     return input;
+  };
+  return access ? start(access) : withStorageTransaction(start);
+}
+
+/** Explicitly end an intent, retaining every grade, observation and schedule. */
+export function abandonDailyPlan(id: string): Promise<void> {
+  return withStorageTransaction(async (tx) => {
+    const current = await readDailyPlan(tx);
+    if (!current) return;
+    if (current.id !== id) throw new Error('Stale daily plan');
+    await tx.setItem(KEY, JSON.stringify({ schemaVersion: 1, current: null }));
   });
+}
+
+export async function linkedAppliedPlan(
+  tx: StorageAccess,
+  planId: string,
+  missionId: string,
+  contentVersion: number,
+  runId?: string,
+  allowComplete = false,
+): Promise<DailyPlan> {
+  const plan = await readDailyPlan(tx);
+  if (
+    !plan ||
+    plan.id !== planId ||
+    (plan.phase !== 'applied' && !(allowComplete && plan.phase === 'complete')) ||
+    plan.applied?.missionId !== missionId ||
+    plan.applied.contentVersion !== contentVersion ||
+    (runId !== undefined && plan.applied.runId !== runId)
+  )
+    throw new Error('Stale applied plan');
+  return plan;
+}
+export async function completeAppliedPlan(tx: StorageAccess, plan: DailyPlan): Promise<void> {
+  const next = { ...plan, phase: 'complete' as const };
+  validateDailyPlanEnvelope({ schemaVersion: 1, current: next });
+  await tx.setItem(KEY, JSON.stringify({ schemaVersion: 1, current: next }));
 }
 
 /** Called only within the grading transaction after a real card and budget are validated. */

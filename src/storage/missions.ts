@@ -1,4 +1,5 @@
 import AsyncStorage, { StorageAccess, withStorageTransaction } from './durableStorage';
+import { linkedAppliedPlan, completeAppliedPlan } from './dailyPlans';
 import {
   serializeLearningHistoryWrite,
   readLearningEvents,
@@ -23,18 +24,37 @@ async function readRuns(access: StorageAccess): Promise<MissionEnvelope> {
 }
 export async function loadMissionRun(
   pack: MissionPack,
-): Promise<{ run?: MissionRun; contentChanged: boolean }> {
-  const current = (await readRuns(AsyncStorage)).runs.find((run) => run.missionId === pack.id);
-  if (!current) return { contentChanged: false };
-  const contentChanged = current.contentVersion !== pack.contentVersion;
-  if (!contentChanged) validateMissionRun(pack, current);
-  return { run: current, contentChanged };
+  planId?: string,
+): Promise<{ run?: MissionRun; contentChanged: boolean; expectedRunId?: string }> {
+  const read = async (tx: StorageAccess) => {
+    const current = (await readRuns(tx)).runs.find((run) => run.missionId === pack.id);
+    if (planId) {
+      const plan = await linkedAppliedPlan(
+        tx,
+        planId,
+        pack.id,
+        pack.contentVersion,
+        undefined,
+        true,
+      );
+      if (current?.id !== plan.applied!.runId)
+        return { contentChanged: false, expectedRunId: current?.id };
+      validateMissionRun(pack, current);
+      if (current.completed && plan.phase === 'applied') await completeAppliedPlan(tx, plan);
+    }
+    if (!current) return { contentChanged: false };
+    const contentChanged = current.contentVersion !== pack.contentVersion;
+    if (!contentChanged) validateMissionRun(pack, current);
+    return { run: current, contentChanged };
+  };
+  return planId ? withStorageTransaction(read) : read(AsyncStorage);
 }
 export function startMissionRun(
   value: MissionPack,
   id: string,
   at: number,
   expectedRunId?: string,
+  planId?: string,
 ): Promise<MissionRun> {
   const pack = validateMission(value);
   const fresh = startMission(pack, id, at);
@@ -42,8 +62,19 @@ export function startMissionRun(
     withStorageTransaction(async (tx) => {
       const envelope = await readRuns(tx),
         current = envelope.runs.find((run) => run.missionId === pack.id);
+      const plan = planId
+        ? await linkedAppliedPlan(
+            tx,
+            planId,
+            pack.id,
+            pack.contentVersion,
+            id,
+            current?.id === id && current.completed,
+          )
+        : undefined;
       if (current?.id === id) {
         validateMissionRun(pack, current);
+        if (plan && current.completed) await completeAppliedPlan(tx, plan);
         return current;
       }
       if (current?.id !== expectedRunId) throw new Error('Stale mission start');
@@ -63,6 +94,7 @@ export function startMissionRun(
 export function applyMissionCommand(
   value: MissionPack,
   input: MissionCommand,
+  planId?: string,
 ): Promise<MissionRun> {
   const pack = validateMission(value),
     command: MissionCommand = JSON.parse(JSON.stringify(input));
@@ -72,6 +104,16 @@ export function applyMissionCommand(
         current = envelope.runs.find((run) => run.missionId === pack.id);
       if (!current) throw new Error('No active mission');
       const result = transitionMission(pack, current, command);
+      const plan = planId
+        ? await linkedAppliedPlan(
+            tx,
+            planId,
+            pack.id,
+            pack.contentVersion,
+            current.id,
+            result.replayed && result.state.completed,
+          )
+        : undefined;
       if (result.replayed) return result.state;
       if (result.event) {
         const events = mergeEventHistory(await readLearningEvents(tx), [result.event]);
@@ -84,6 +126,7 @@ export function applyMissionCommand(
           runs: envelope.runs.map((run) => (run.missionId === pack.id ? result.state : run)),
         }),
       );
+      if (plan && result.state.completed) await completeAppliedPlan(tx, plan);
       return result.state;
     }),
   );

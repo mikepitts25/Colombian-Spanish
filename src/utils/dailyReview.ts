@@ -12,7 +12,12 @@ const PURPOSE_DECKS: Record<string, string> = {
   culture: 'deck-culture',
   general: 'deck-greetings',
 };
-export function reviewLimits(minutes: unknown, level: unknown, measuredSeconds?: number) {
+export function reviewLimits(
+  minutes: unknown,
+  level: unknown,
+  measuredSeconds?: number,
+  reservedSeconds = 0,
+) {
   const estimatedMinutes = (STUDY_MINUTES as readonly unknown[]).includes(minutes)
     ? (minutes as 3 | 5 | 10)
     : 5;
@@ -26,7 +31,10 @@ export function reviewLimits(minutes: unknown, level: unknown, measuredSeconds?:
     measuredSeconds <= 90
       ? measuredSeconds
       : { beginner: 45, basic: 35, confident: 25 }[validLevel];
-  const cardLimit = Math.min(15, Math.floor((estimatedMinutes * 60) / seconds));
+  const reserved = Number.isFinite(reservedSeconds)
+    ? Math.max(0, Math.min(90, reservedSeconds))
+    : 0;
+  const cardLimit = Math.min(15, Math.floor((estimatedMinutes * 60 - reserved) / seconds));
   return {
     estimatedMinutes,
     secondsPerCard: seconds,
@@ -41,8 +49,14 @@ export function recommendDailyReview(
   now: number,
   activeDeckId?: string,
   measuredSeconds?: number,
+  reservedSeconds = 0,
 ) {
-  const limits = reviewLimits(profile.studyMinutes, profile.learningLevel, measuredSeconds);
+  const limits = reviewLimits(
+    profile.studyMinutes,
+    profile.learningLevel,
+    measuredSeconds,
+    reservedSeconds,
+  );
   const newLimit = Math.min(
     limits.newLimit,
     Number.isFinite(remainingNew) ? Math.max(0, Math.floor(remainingNew)) : 0,

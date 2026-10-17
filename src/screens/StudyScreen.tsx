@@ -42,6 +42,7 @@ import { speakCard } from '../services/tts';
 import { StudyQueueSnapshot } from '../storage/studySession';
 import { isNewCard, formatIntervalShort, previewInterval } from '../utils/srs';
 import { useActiveStudyTime } from '../hooks/useActiveStudyTime';
+import { readDailyPlan } from '../storage/dailyPlans';
 
 const GRADES = [
   {
@@ -86,6 +87,12 @@ export default function StudyScreen() {
   const route = useRoute<any>();
   const { t } = useLanguage();
   const [mode, setMode] = useState<StudyMode>('landing');
+  const dailyPlan = useRef<string | undefined>(undefined);
+  const [resumePlanId, setResumePlanId] = useState<string | undefined>();
+  const [planOpening, setPlanOpening] = useState(false);
+  const openingPlan = useRef(false);
+  const [planOpenError, setPlanOpenError] = useState(false);
+  const [planOpenAttempt, setPlanOpenAttempt] = useState(0);
   const [q, setQ] = useState('');
   const [searching, setSearching] = useState(false);
   const [resumeLoadError, setResumeLoadError] = useState(false);
@@ -178,6 +185,7 @@ export default function StudyScreen() {
   useEffect(() => {
     const externalDeckChange = mode === 'session' && queueDeckId.current !== activeDeckId;
     if (externalDeckChange) {
+      dailyPlan.current = undefined;
       // Explicit starts set their owner first; a provider-driven switch is a new intent.
       sessionVersion.current += 1;
       queueDeckId.current = activeDeckId;
@@ -219,8 +227,9 @@ export default function StudyScreen() {
       ? saved.cardIds.flatMap((id) => {
           const card = activeDeck.cards.find((item) => item.id === id);
           return card &&
-            cardMatchesRegion(card, activeRegion, activeDeck.name) &&
-            (isNewCard(card) || card.due <= Date.now())
+            (dailyPlan.current ||
+              (cardMatchesRegion(card, activeRegion, activeDeck.name) &&
+                (isNewCard(card) || card.due <= Date.now())))
             ? [card]
             : [];
         })
@@ -271,7 +280,12 @@ export default function StudyScreen() {
     mode === 'session' && card
       ? `${learningSession.current}:${activeDeckId}:${card.id}`
       : undefined,
-    !checkpointBusy && !checkpointFailed && !gradeSaving && !gradeError,
+    !checkpointBusy &&
+      !checkpointFailed &&
+      !gradeSaving &&
+      !gradeError &&
+      !planOpening &&
+      !planOpenError,
   );
   useLayoutEffect(() => {
     if (revealNextCard.current === undefined) return;
@@ -300,9 +314,16 @@ export default function StudyScreen() {
     // A fresh storage read replaces the previous attempt and its error status.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setResumeLoadError(false);
-    getLastStudySession().then(
-      (session) => {
-        if (mounted && version === sessionVersion.current) setResumeSession(session);
+    Promise.all([getLastStudySession(), readDailyPlan()]).then(
+      ([session, plan]) => {
+        if (mounted && version === sessionVersion.current) {
+          const linked =
+            plan?.phase === 'review' &&
+            plan.review?.session.queue?.sessionId === session?.queue?.sessionId &&
+            plan.review?.session.deckId === session?.deckId;
+          setResumeSession(linked ? plan!.review!.session : session);
+          setResumePlanId(linked ? plan!.id : undefined);
+        }
       },
       () => {
         if (mounted && version === sessionVersion.current) setResumeLoadError(true);
@@ -326,6 +347,7 @@ export default function StudyScreen() {
 
   async function persistQueueCheckpoint(payload: Omit<LastStudySession, 'updatedAt'>) {
     const version = sessionVersion.current;
+    const planId = dailyPlan.current;
     pendingCheckpoint.current = payload;
     checkpointBlocked.current = true;
     setCheckpointBusy(true);
@@ -338,6 +360,7 @@ export default function StudyScreen() {
       const saved = await saveLastStudySession(payload);
       if (version === sessionVersion.current && pendingCheckpoint.current === payload) {
         setResumeSession(saved);
+        setResumePlanId(planId);
         setResumeLoadError(false);
         pendingCheckpoint.current = undefined;
         checkpointBlocked.current = false;
@@ -354,8 +377,26 @@ export default function StudyScreen() {
     cardId?: string,
     saved?: LastStudySession,
     limits?: { cardLimit?: unknown; newLimit?: unknown; preferredRegion?: unknown },
+    planId?: string,
   ) {
-    if (grading.current || pendingGrade.current || checkpointBlocked.current) return;
+    if (
+      grading.current ||
+      pendingGrade.current ||
+      checkpointBlocked.current ||
+      (openingPlan.current && !planId)
+    )
+      return false;
+    if (
+      planId &&
+      (!saved?.queue ||
+        saved.queue.cardIds.some(
+          (id) => !decks.find((deck) => deck.id === deckId)?.cards.some((card) => card.id === id),
+        ))
+    ) {
+      setPlanOpenError(true);
+      return false;
+    }
+    dailyPlan.current = planId;
     sessionVersion.current += 1;
     queueDeckId.current = deckId;
     pendingGrade.current = undefined;
@@ -387,7 +428,56 @@ export default function StudyScreen() {
     setStartCardId(cardId);
     setActiveRegion(saved?.queue?.region ?? 'all');
     setMode('session');
+    return true;
   }
+
+  const requestedPlanId = route.params?.dailyPlanId;
+  useEffect(() => {
+    if (!ready || !requestedPlanId) return undefined;
+    let cancelled = false;
+    openingPlan.current = true;
+    // This navigation boundary starts the asynchronous persisted-plan read.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPlanOpening(true);
+    setPlanOpenError(false);
+    void (async () => {
+      try {
+        await gradeSettled.current;
+        const plan = await readDailyPlan();
+        if (cancelled) return;
+        if (!plan || plan.id !== requestedPlanId) throw new Error('Plan unavailable');
+        if (pendingGrade.current || grading.current || checkpointBlocked.current)
+          throw new Error('Pending study write');
+        if (plan.phase !== 'review') {
+          nav.navigate('DailyPlan', { planId: plan.id });
+        } else {
+          const session = plan.review!.session;
+          const deck = decks.find((deck) => deck.id === session.deckId);
+          if (
+            !deck ||
+            session.queue!.cardIds.some((id) => !deck.cards.some((card) => card.id === id))
+          )
+            throw new Error('Plan cards unavailable');
+          if (!startSession(session.deckId, session.cardId, session, undefined, plan.id))
+            throw new Error('Study busy');
+        }
+        nav.setParams({ dailyPlanId: undefined });
+      } catch {
+        if (!cancelled) setPlanOpenError(true);
+      } finally {
+        if (!cancelled) {
+          openingPlan.current = false;
+          setPlanOpening(false);
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+      openingPlan.current = false;
+    };
+    // The request freezes one exact plan; provider changes must not reopen it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, requestedPlanId, planOpenAttempt]);
 
   // Onboarding hands off with an autoStartDeckId param so the very first
   // session begins immediately instead of landing on the browse view.
@@ -395,6 +485,8 @@ export default function StudyScreen() {
   useEffect(() => {
     if (!ready || !autoStartDeckId) return;
     if (decks?.some((deck) => deck.id === autoStartDeckId)) {
+      // Consume the external onboarding/review handoff once, before checkpointing.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       startSession(autoStartDeckId, undefined, undefined, {
         cardLimit: route.params?.sessionCardLimit,
         newLimit: route.params?.sessionNewLimit,
@@ -417,7 +509,8 @@ export default function StudyScreen() {
 
   function changeRegion(region: RegionFilterId) {
     if (
-      (region === activeRegion && newCardRegion.current === 'all') ||
+      (region === activeRegion && newCardRegion.current === 'all' && !dailyPlan.current) ||
+      openingPlan.current ||
       grading.current ||
       pendingGrade.current ||
       checkpointBlocked.current
@@ -432,13 +525,22 @@ export default function StudyScreen() {
     setCheckpointFailed(false);
     setStartCardId(undefined);
     newCardRegion.current = 'all';
+    dailyPlan.current = undefined;
     setSeed((value) => value + 1);
     setActiveRegion(region);
   }
 
   async function grade(qValue: 0 | 1 | 2 | 3 | 4 | 5) {
     const currentCard = batch[0];
-    if (!currentCard || !activeDeck || grading.current || checkpointBlocked.current) return;
+    if (
+      !currentCard ||
+      !activeDeck ||
+      grading.current ||
+      checkpointBlocked.current ||
+      openingPlan.current ||
+      (planOpenError && !pendingGrade.current)
+    )
+      return;
     grading.current = true;
     let finishGrade!: () => void;
     gradeSettled.current = new Promise<void>((resolve) => {
@@ -453,6 +555,7 @@ export default function StudyScreen() {
       cardId: currentCard.id,
       quality: qValue,
       durationMs: activeDuration(),
+      ...(dailyPlan.current ? { planId: dailyPlan.current } : {}),
       nextSession: {
         deckId: activeDeck.id,
         ...(nextCard ? { cardId: nextCard.id } : {}),
@@ -471,6 +574,7 @@ export default function StudyScreen() {
         attemptId: attempt.attemptId,
         sessionId: attempt.sessionId,
         durationMs: attempt.durationMs,
+        ...(attempt.planId ? { planId: attempt.planId } : {}),
         nextSession: attempt.nextSession,
       });
       const nextDP = await getDailyProgress();
@@ -479,6 +583,7 @@ export default function StudyScreen() {
       setGradeError(null);
       setDaily({ count: nextDP.count, target: nextDP.target });
       setResumeSession({ ...attempt.nextSession!, updatedAt: Date.now() });
+      setResumePlanId(attempt.planId);
       revealNextCard.current = version;
       setQueuedCardIds(attempt.nextSession?.queue?.cardIds ?? []);
       if (!nextCard) setSessionComplete(true);
@@ -494,9 +599,35 @@ export default function StudyScreen() {
     }
   }
 
+  const planStatus = planOpening ? (
+    <Text style={{ color: colors.textPrimary }}>{t('common.loading')}</Text>
+  ) : planOpenError ? (
+    <View style={styles.saveError}>
+      <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
+        {t('plan.openError')}
+      </Text>
+      <Pressable
+        accessibilityRole="button"
+        onPress={() => {
+          nav.setParams({ dailyPlanId: requestedPlanId ?? resumePlanId });
+          setPlanOpenAttempt((value) => value + 1);
+        }}
+      >
+        <Text style={{ color: colors.brand }}>{t('mission.retry')}</Text>
+      </Pressable>
+      <Pressable
+        accessibilityRole="button"
+        onPress={() => nav.navigate('DailyPlan', { planId: requestedPlanId ?? resumePlanId })}
+      >
+        <Text style={{ color: colors.brand }}>{t('plan.manage')}</Text>
+      </Pressable>
+    </View>
+  ) : null;
+
   if (!ready) {
     return (
       <SafeAreaView style={styles.wrap}>
+        {planStatus}
         <View style={styles.center}>
           <Text style={styles.loadingEmoji}>📖</Text>
           <Text style={styles.loadingText}>{t('common.loading')}</Text>
@@ -508,6 +639,7 @@ export default function StudyScreen() {
   if (!activeDeck) {
     return (
       <SafeAreaView style={styles.wrap}>
+        {planStatus}
         <View style={styles.center}>
           <Text style={styles.noDeckEmoji}>🇨🇴</Text>
           <Text style={styles.noDeckTitle}>{t('study.noDeck.title')}</Text>
@@ -523,6 +655,7 @@ export default function StudyScreen() {
   if (mode === 'landing') {
     return (
       <SafeAreaView style={styles.wrap}>
+        {planStatus}
         <ScrollView
           key={fontScale}
           contentContainerStyle={styles.landingScroll}
@@ -654,7 +787,13 @@ export default function StudyScreen() {
                   <Pressable
                     style={[styles.resumeCard, largeText && styles.stacked]}
                     onPress={() =>
-                      startSession(resumeDeck.id, resumeSession?.cardId, resumeSession)
+                      startSession(
+                        resumeDeck.id,
+                        resumeSession?.cardId,
+                        resumeSession,
+                        undefined,
+                        resumePlanId,
+                      )
                     }
                   >
                     <View style={[styles.resumeTextBlock, largeText && styles.noFlex]}>
@@ -680,6 +819,7 @@ export default function StudyScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
+      {planStatus}
       <ScrollView
         ref={sessionScroll}
         contentContainerStyle={styles.sessionScroll}
@@ -692,7 +832,14 @@ export default function StudyScreen() {
           <Pressable
             accessibilityRole="button"
             style={styles.sessionBackBtn}
-            disabled={gradeSaving || gradeError === 'save' || checkpointBusy || checkpointFailed}
+            disabled={
+              gradeSaving ||
+              gradeError === 'save' ||
+              checkpointBusy ||
+              checkpointFailed ||
+              planOpening ||
+              planOpenError
+            }
             onPress={() => {
               if (!grading.current && !pendingGrade.current && !checkpointBlocked.current)
                 setMode('landing');
@@ -754,10 +901,20 @@ export default function StudyScreen() {
                 accessibilityState={{
                   selected: activeRegion === region.id,
                   disabled:
-                    gradeSaving || gradeError === 'save' || checkpointBusy || checkpointFailed,
+                    gradeSaving ||
+                    gradeError === 'save' ||
+                    checkpointBusy ||
+                    checkpointFailed ||
+                    planOpening ||
+                    planOpenError,
                 }}
                 disabled={
-                  gradeSaving || gradeError === 'save' || checkpointBusy || checkpointFailed
+                  gradeSaving ||
+                  gradeError === 'save' ||
+                  checkpointBusy ||
+                  checkpointFailed ||
+                  planOpening ||
+                  planOpenError
                 }
                 style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
                 onPress={() => changeRegion(region.id)}
@@ -812,8 +969,17 @@ export default function StudyScreen() {
             <Text style={styles.noDeckSub}>
               {t(sessionComplete ? 'study.sessionComplete.sub' : 'study.caughtUp.sub')}
             </Text>
-            <Pressable style={styles.quizCta} onPress={() => nav.navigate('Quiz')}>
-              <Text style={styles.quizCtaText}>{t('study.takeQuiz')}</Text>
+            <Pressable
+              style={styles.quizCta}
+              onPress={() =>
+                dailyPlan.current
+                  ? nav.navigate('DailyPlan', { planId: dailyPlan.current })
+                  : nav.navigate('Quiz')
+              }
+            >
+              <Text style={styles.quizCtaText}>
+                {t(dailyPlan.current ? 'plan.continue' : 'study.takeQuiz')}
+              </Text>
             </Pressable>
           </View>
         )}
@@ -863,7 +1029,13 @@ export default function StudyScreen() {
                 ]}
                 onPress={() => grade(g.q)}
                 disabled={
-                  !card || gradeSaving || !!gradeError || checkpointBusy || checkpointFailed
+                  !card ||
+                  gradeSaving ||
+                  !!gradeError ||
+                  checkpointBusy ||
+                  checkpointFailed ||
+                  planOpening ||
+                  planOpenError
                 }
               >
                 <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>

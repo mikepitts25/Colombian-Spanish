@@ -28,7 +28,19 @@ type Pending =
   | { kind: 'command'; command: MissionCommand };
 const identity = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 
-export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: MissionPack } = {}) {
+export default function MissionScreen({
+  pack = FIRST_MORNING,
+  planId,
+  planRunId,
+  onCompleted,
+  blocked = false,
+}: {
+  pack?: MissionPack;
+  planId?: string;
+  planRunId?: string;
+  onCompleted?: () => void;
+  blocked?: boolean;
+} = {}) {
   const { language, t } = useLanguage();
   const nav = useNavigation<any>();
   const { ready, decks } = useDeck();
@@ -46,6 +58,10 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
     pending = useRef<Pending | undefined>(undefined),
     generation = useRef(0),
     startedAt = useRef(0);
+  const expectedRun = useRef<string | undefined>(undefined);
+  useEffect(() => {
+    if (planId && run?.completed && !contentChanged) onCompleted?.();
+  }, [planId, run?.completed, contentChanged, onCompleted]);
   const listening = pack.nodes.some((node) => node.kind === 'listening');
   const local = (value: LocalizedText) => value[language];
   const available = useMemo(() => {
@@ -67,9 +83,10 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
   const load = useCallback(async () => {
     const request = ++generation.current;
     try {
-      const result = await loadMissionRun(pack);
+      const result = planId ? await loadMissionRun(pack, planId) : await loadMissionRun(pack);
       if (mounted.current && request === generation.current) {
         setRun(result.run);
+        expectedRun.current = result.expectedRunId ?? result.run?.id;
         setContentChanged(result.contentChanged);
         startedAt.current = Date.now();
       }
@@ -78,7 +95,7 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
     } finally {
       if (mounted.current && request === generation.current) setLoading(false);
     }
-  }, [pack]);
+  }, [pack, planId]);
   useEffect(() => {
     mounted.current = true;
     // Mission availability starts an asynchronous persisted-run read.
@@ -89,7 +106,7 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
     };
   }, [available, load]);
   const execute = async (intent: Pending) => {
-    if (busy.current) return;
+    if (busy.current || blocked) return;
     busy.current = true;
     pending.current = intent;
     setSaving(true);
@@ -97,11 +114,12 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
     try {
       const next =
         intent.kind === 'start'
-          ? await startMissionRun(pack, intent.id, intent.at, intent.expectedRunId)
-          : await applyMissionCommand(pack, intent.command);
+          ? await startMissionRun(pack, intent.id, intent.at, intent.expectedRunId, planId)
+          : await applyMissionCommand(pack, intent.command, planId);
       pending.current = undefined;
       if (mounted.current) {
         setRun(next);
+        expectedRun.current = next.id;
         setContentChanged(false);
         if (
           intent.kind === 'start' ||
@@ -121,7 +139,12 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
   };
   const start = () => {
     if (busy.current || pending.current) return;
-    void execute({ kind: 'start', id: identity(), at: Date.now(), expectedRunId: run?.id });
+    void execute({
+      kind: 'start',
+      id: planRunId ?? identity(),
+      at: Date.now(),
+      expectedRunId: expectedRun.current,
+    });
   };
   const command = (type: MissionCommand['type'], extra: Partial<MissionCommand> = {}) => {
     if (!run || busy.current || pending.current) return;
@@ -138,7 +161,7 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
       },
     });
   };
-  const disabled = saving || saveError;
+  const disabled = saving || saveError || blocked;
 
   const node = run && !contentChanged ? pack.nodes.find((n) => n.id === run.nodeId) : undefined;
   const followUpCards = run?.completed
@@ -158,9 +181,9 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
             <ActionButton
               label={t('mission.back')}
               action={() => {
-                if (!busy.current) nav.goBack();
+                if (!busy.current && !blocked) nav.goBack();
               }}
-              off={saving}
+              off={saving || blocked}
               busy={saving}
             />
           }
@@ -209,7 +232,7 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
                 </>
               ) : !run ? (
                 <ActionButton
-                  label={t('mission.start')}
+                  label={t(planId ? 'plan.startReply' : 'mission.start')}
                   action={start}
                   off={disabled}
                   busy={saving}
@@ -381,34 +404,35 @@ export default function MissionScreen({ pack = FIRST_MORNING }: { pack?: Mission
                             busy={saving}
                           />
                         )}
-                        {restart ? (
-                          <>
-                            <Text style={styles.body}>{t('mission.restartQuestion')}</Text>
-                            {
-                              <ActionButton
-                                label={t('mission.restart')}
-                                action={start}
-                                off={disabled}
-                                busy={saving}
-                              />
-                            }
-                            {
-                              <ActionButton
-                                label={t('mission.cancel')}
-                                action={() => setRestart(false)}
-                                off={disabled}
-                                busy={saving}
-                              />
-                            }
-                          </>
-                        ) : (
-                          <ActionButton
-                            label={t('mission.again')}
-                            action={() => setRestart(true)}
-                            off={disabled}
-                            busy={saving}
-                          />
-                        )}
+                        {!planId &&
+                          (restart ? (
+                            <>
+                              <Text style={styles.body}>{t('mission.restartQuestion')}</Text>
+                              {
+                                <ActionButton
+                                  label={t('mission.restart')}
+                                  action={start}
+                                  off={disabled}
+                                  busy={saving}
+                                />
+                              }
+                              {
+                                <ActionButton
+                                  label={t('mission.cancel')}
+                                  action={() => setRestart(false)}
+                                  off={disabled}
+                                  busy={saving}
+                                />
+                              }
+                            </>
+                          ) : (
+                            <ActionButton
+                              label={t('mission.again')}
+                              action={() => setRestart(true)}
+                              off={disabled}
+                              busy={saving}
+                            />
+                          ))}
                       </>
                     )}
                   </View>

@@ -1261,3 +1261,127 @@ test('explicit All clears a Home new-card preference even when All is already se
     screen.unmount();
   }
 });
+
+test('opens a saved daily plan exactly, links grades and offers the next phase', async () => {
+  const session = {
+    deckId: GREETINGS_DECK.id,
+    cardId: 'c1',
+    updatedAt: 1000,
+    queue: {
+      schemaVersion: 1,
+      cardIds: ['c1'],
+      region: 'all',
+      sessionId: 'planned-review',
+      limits: { cardLimit: 2, newLimit: 1 },
+    },
+  };
+  const read = jest
+    .spyOn(require('../../src/storage/dailyPlans'), 'readDailyPlan')
+    .mockResolvedValue({
+      id: 'daily-one',
+      phase: 'review',
+      review: { initialCardIds: ['c1'], session },
+      applied: { missionId: 'daily-morning-greeting', contentVersion: 1, runId: 'response' },
+    });
+  try {
+    mockRouteParams = { dailyPlanId: 'daily-one' };
+    const ui = renderStudyScreen({
+      decks: [
+        {
+          ...GREETINGS_DECK,
+          cards: GREETING_CARDS.map((card) =>
+            card.id === 'c1' ? { ...card, due: Date.now() + 86400000, reps: 2, interval: 1 } : card,
+          ),
+        },
+      ],
+    });
+    await waitFor(() => expect(ui.getByText('1 restantes')).toBeTruthy());
+    await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
+    await act(async () => fireEvent.press(ui.getByText('Bien')));
+    expect(ui.recordAnswer).toHaveBeenCalledWith(
+      'c1',
+      4,
+      expect.objectContaining({
+        planId: 'daily-one',
+        sessionId: 'planned-review',
+        nextSession: expect.objectContaining({ queue: expect.objectContaining({ cardIds: [] }) }),
+      }),
+    );
+    fireEvent.press(await ui.findByText('Continuar mi plan'));
+    expect(mockNavigate).toHaveBeenCalledWith('DailyPlan', { planId: 'daily-one' });
+  } finally {
+    read.mockRestore();
+  }
+});
+
+test('detached manual checkpoints clear their old plan linkage before ordinary resume', async () => {
+  const session = {
+    deckId: GREETINGS_DECK.id,
+    cardId: 'c1',
+    updatedAt: 1000,
+    queue: {
+      schemaVersion: 1,
+      cardIds: ['c1', 'c2'],
+      region: 'all',
+      sessionId: 'planned',
+      limits: { cardLimit: 2, newLimit: 2 },
+    },
+  };
+  const read = jest
+    .spyOn(require('../../src/storage/dailyPlans'), 'readDailyPlan')
+    .mockResolvedValue({ id: 'plan', phase: 'review', review: { session } });
+  try {
+    mockRouteParams = { dailyPlanId: 'plan' };
+    const ui = renderStudyScreen();
+    await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
+    await act(async () => fireEvent.press(ui.getByText('Bien')));
+    expect(ui.recordAnswer.mock.calls[0][2].planId).toBe('plan');
+    fireEvent.press(ui.getByText('General'));
+    await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
+    fireEvent.press(ui.getByText('Volver'));
+    fireEvent.press(await ui.findByText('Continuar'));
+    await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
+    await act(async () => fireEvent.press(ui.getByText('Bien')));
+    expect(ui.recordAnswer.mock.calls[1][2].planId).toBeUndefined();
+  } finally {
+    read.mockRestore();
+  }
+});
+
+test('a plan handoff retains a failed manual grade until its original retry settles', async () => {
+  const session = {
+    deckId: FOOD_DECK.id,
+    cardId: 'food-1',
+    updatedAt: 1000,
+    queue: {
+      schemaVersion: 1,
+      cardIds: ['food-1'],
+      region: 'all',
+      sessionId: 'food-review',
+      limits: { cardLimit: 1, newLimit: 1 },
+    },
+  };
+  const read = jest
+    .spyOn(require('../../src/storage/dailyPlans'), 'readDailyPlan')
+    .mockResolvedValue({ id: 'food-plan', phase: 'review', review: { session } });
+  try {
+    const recordAnswer = jest
+      .fn()
+      .mockRejectedValueOnce(new Error('disk'))
+      .mockResolvedValue(undefined);
+    const ui = renderStudyScreen({ recordAnswer });
+    await openCommunicationSession(ui);
+    await act(async () => fireEvent.press(ui.getByText('Bien')));
+    await ui.findByText('Intentar guardar de nuevo');
+    const original = recordAnswer.mock.calls[0];
+    mockRouteParams = { dailyPlanId: 'food-plan' };
+    await act(async () => ui.rerender(<StudyScreen />));
+    await ui.findByText('No se pudo abrir el plan guardado. Reintenta o gestiona el plan.');
+    expect(ui.getByText('hola')).toBeTruthy();
+    await act(async () => fireEvent.press(ui.getByText('Intentar guardar de nuevo')));
+    expect(recordAnswer.mock.calls[1]).toEqual(original);
+    expect(ui.setActiveDeckId).not.toHaveBeenCalledWith(FOOD_DECK.id);
+  } finally {
+    read.mockRestore();
+  }
+});

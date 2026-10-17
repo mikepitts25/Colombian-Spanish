@@ -223,3 +223,35 @@ test('offers difficult-phrase recall/reveal without writing extra events or chan
   expect(await getLearningEvents()).toEqual(events);
   expect(await AsyncStorage.getItem('SRS_DAILY_PROGRESS_V1')).toBeNull();
 });
+
+test('a linked one-response activity starts its planned run and completes only that plan', async () => {
+  const { DAILY_RESPONSE } = require('../../src/missions/dailyResponse');
+  const { startDailyPlan, readDailyPlan } = require('../../src/storage/dailyPlans');
+  await startDailyPlan({
+    id: 'daily',
+    day: '2026-10-17',
+    minutes: 3,
+    createdAt: 1000,
+    phase: 'applied',
+    applied: { missionId: DAILY_RESPONSE.id, contentVersion: 1, runId: 'planned' },
+  });
+  const completed = jest.fn();
+  const ui = render(
+    <MissionScreen
+      pack={DAILY_RESPONSE}
+      planId="daily"
+      planRunId="planned"
+      onCompleted={completed}
+    />,
+  );
+  fireEvent.press(await ui.findByText('Start draft reply'));
+  await ui.findByText('Greet the staff');
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'Buenos días');
+  fireEvent.press(ui.getByText('Check answer'));
+  await ui.findByText('Correct');
+  fireEvent.press(ui.getByText('Continue'));
+  await waitFor(() => expect(completed).toHaveBeenCalledTimes(1));
+  expect((await readDailyPlan()).phase).toBe('complete');
+  expect((await getLearningEvents())[0].sessionId).toBe('planned');
+  expect(ui.queryByText('Practice again')).toBeNull();
+});

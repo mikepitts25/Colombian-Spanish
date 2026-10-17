@@ -9,6 +9,7 @@ import ListeningScreen from '../screens/ListeningScreen';
 import VoicePracticeScreen from '../screens/VoicePracticeScreen';
 import MissionScreen from '../screens/MissionScreen';
 import HomeScreen from '../screens/HomeScreen';
+import DailyPlanScreen from '../screens/DailyPlanScreen';
 import StudyScreen from '../screens/StudyScreen';
 import ProgressScreen from '../screens/ProgressScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -138,6 +139,7 @@ export default function RootNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="Root" component={Tabs} options={{ headerShown: false }} />
+      <Stack.Screen name="DailyPlan" component={DailyPlanScreen} options={{ headerShown: false }} />
       <Stack.Screen
         name="Notifications"
         component={NotificationsScreen}

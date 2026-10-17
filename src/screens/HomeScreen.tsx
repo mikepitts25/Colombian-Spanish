@@ -1,5 +1,5 @@
 import { SHOW_REVIEW_TOOLS } from '../config';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
@@ -17,6 +17,11 @@ import { getPrefs, Prefs } from '../storage/prefs';
 import { recommendDailyReview } from '../utils/dailyReview';
 import { getLearningEvents } from '../storage/learningEvents';
 import { calibratedReviewSeconds } from '../utils/reviewPace';
+import { readDailyPlan } from '../storage/dailyPlans';
+import { DailyPlan } from '../storage/dailyPlanSchema';
+import { openRecommendedPlan } from '../storage/recommendedPlan';
+import { availableDailyResponse } from '../missions/dailyResponse';
+import { localDayKey } from '../utils/calendarDay';
 
 const COLOMBIAN_GREETINGS = [
   {
@@ -84,11 +89,12 @@ type DeckWithDue = Deck & {
 };
 
 async function loadHomeProgress() {
-  const [daily, streak, prefs, events] = await Promise.all([
+  const [daily, streak, prefs, events, plan] = await Promise.all([
     getDailyProgress(),
     getStreakState(),
     getPrefs(),
     getLearningEvents(),
+    readDailyPlan(),
   ]);
   const now = Date.now();
   return {
@@ -102,6 +108,7 @@ async function loadHomeProgress() {
     loaded: true,
     now,
     measuredSeconds: calibratedReviewSeconds(events, now),
+    plan,
   };
 }
 
@@ -115,7 +122,12 @@ export default function HomeScreen() {
   const [studyStartError, setStudyStartError] = useState(false);
   const { t } = useLanguage();
   const [initialNow] = useState(() => Date.now());
-  const { value: activity, error } = useFocusedAsync(loadHomeProgress, {
+  const [readAttempt, setReadAttempt] = useState(0);
+  const loadProgress = useCallback(() => {
+    void readAttempt;
+    return loadHomeProgress();
+  }, [readAttempt]);
+  const { value: activity, error } = useFocusedAsync(loadProgress, {
     count: 0,
     target: 10,
     streak: 0,
@@ -126,6 +138,7 @@ export default function HomeScreen() {
     loaded: false,
     now: initialNow,
     measuredSeconds: undefined as number | undefined,
+    plan: undefined as DailyPlan | undefined,
   });
   const { count: dailyCount, target: dailyTarget, streak, freezes } = activity;
   const greeting = useMemo(() => {
@@ -159,6 +172,12 @@ export default function HomeScreen() {
         .slice(0, 4),
     [workload],
   );
+  const response = availableDailyResponse(decks || [], SHOW_REVIEW_TOOLS);
+  const unfinishedPlan =
+    activity.plan && activity.plan.phase !== 'complete' ? activity.plan : undefined;
+  const completedToday =
+    activity.plan?.phase === 'complete' &&
+    activity.plan.day === localDayKey(new Date(activity.now));
   const recommendation =
     activity.loaded && !error
       ? recommendDailyReview(
@@ -168,6 +187,7 @@ export default function HomeScreen() {
           activity.now,
           activeDeckId,
           activity.measuredSeconds,
+          response ? 60 : 0,
         )
       : undefined;
   const recommendedDeck = workload.find((deck) => deck.id === recommendation?.deckId);
@@ -211,6 +231,29 @@ export default function HomeScreen() {
             }
           : {}),
       });
+    } catch {
+      setStudyStartError(true);
+    } finally {
+      starting.current = false;
+      setStudyStarting(false);
+    }
+  };
+  const startPlan = async () => {
+    if (starting.current) return;
+    starting.current = true;
+    setStudyStarting(true);
+    setStudyStartError(false);
+    try {
+      await reload({ requireFreshBudget: true });
+      const plan = await openRecommendedPlan(SHOW_REVIEW_TOOLS);
+      if (!plan) {
+        nav.navigate('Study');
+        return;
+      }
+      if (plan.phase === 'review') {
+        await reload({ requireFreshBudget: true });
+        nav.navigate('Study', { dailyPlanId: plan.id });
+      } else nav.navigate('DailyPlan', { planId: plan.id });
     } catch {
       setStudyStartError(true);
     } finally {
@@ -307,13 +350,27 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          {recommendation && recommendedDeck && (
+          {recommendation && recommendedDeck && !unfinishedPlan && !completedToday && (
             <Text style={styles.todaySub}>
               {t('home.reviewEstimate', {
                 deck: getDeckDisplayName(recommendedDeck),
                 count: recommendation.cardCount,
                 minutes: recommendation.estimatedMinutes,
               })}
+            </Text>
+          )}
+          {(unfinishedPlan || response || completedToday) && (
+            <Text style={styles.todaySub}>
+              {t(
+                completedToday
+                  ? 'plan.done'
+                  : unfinishedPlan?.phase === 'applied'
+                    ? 'plan.nextReply'
+                    : response
+                      ? 'plan.summary'
+                      : 'plan.reviewSummary',
+                { minutes: unfinishedPlan?.minutes ?? activity.profile.studyMinutes ?? 5 },
+              )}
             </Text>
           )}
           {studyStartError && (
@@ -325,22 +382,48 @@ export default function HomeScreen() {
             <Text style={styles.todaySub}>{t('home.measuredEstimate')}</Text>
           )}
           <Pressable
-            disabled={studyStarting}
+            disabled={studyStarting || (!activity.loaded && !error)}
             style={styles.primaryButton}
-            onPress={() => startStudy(recommendedDeck?.id, true)}
+            onPress={() =>
+              error
+                ? setReadAttempt((value) => value + 1)
+                : activity.plan || response
+                  ? void startPlan()
+                  : void startStudy(recommendedDeck?.id, true)
+            }
           >
             <Text style={styles.primaryButtonText}>
-              {studyStarting
+              {studyStarting || (!activity.loaded && !error)
                 ? t('common.loading')
-                : t(
-                    totalDue > 0
-                      ? 'home.studyDueCards'
-                      : recommendedDeck
-                        ? 'home.studyNewCards'
-                        : 'home.browseStudyDecks',
-                  )}
+                : error
+                  ? t('mission.retry')
+                  : activity.plan || response
+                    ? t(
+                        completedToday
+                          ? 'plan.completedAction'
+                          : unfinishedPlan
+                            ? 'plan.resume'
+                            : 'plan.start',
+                      )
+                    : t(
+                        totalDue > 0
+                          ? 'home.studyDueCards'
+                          : recommendedDeck
+                            ? 'home.studyNewCards'
+                            : 'home.browseStudyDecks',
+                      )}
             </Text>
           </Pressable>
+          {unfinishedPlan && (
+            <Pressable
+              accessibilityRole="button"
+              disabled={studyStarting}
+              onPress={() => nav.navigate('DailyPlan', { planId: unfinishedPlan.id })}
+              style={{ minHeight: 48, justifyContent: 'center', alignItems: 'center' }}
+            >
+              <Text style={{ color: colors.brand, fontWeight: '700' }}>{t('plan.manage')}</Text>
+            </Pressable>
+          )}
         </View>
 
         {wordOfDay ? (
