@@ -26,3 +26,9 @@ Registry checks still list braces 3.0.3, node-forge 1.4.0 and sprintf-js 1.1.3 a
 ## Simulator investigation kept separate
 
 Largest-text Study touch drags in Device Hub repeatedly jumped between top and bottom. Code inspection confirms the flashcard responder claims only horizontal-dominant moves and the parent remains a vertical ScrollView. Text-size reflow, physical-size and magnified host display controls did not yield a completed upper-label inspection. No app clipping fix or new native acceptance is claimed; B12.5-C remains open. Continue independent AI work rather than repeating the same coarse gestures indefinitely.
+
+## Integrated verification
+
+Implementation `cb3f27c` merged and pushed to main. [CI 39042396347](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39042396347) passed all four jobs: quality/content, iOS generation/export, Android generation/export and validation summary. [Board deployment 39042396346](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39042396346) also passed. Local calendar integration passed 16 cases across Berlin, Bogotá, New York and Auckland; data/audio validation passed 47 decks/1,392 cards; editorial validation passed while retaining all 1,392 pending human acceptances. The local calendar runner emitted the existing Watchman recrawl warning; no test failed.
+
+Remaining no-patch statements were reconfirmed against the primary [braces advisory](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) and [node-forge advisory](https://github.com/advisories/GHSA-86w9-cpqp-85rv). They are open dependency work, not human-only tasks.
