@@ -23,3 +23,7 @@ The unsigned client's known notification-keychain banner appeared after restart 
 ## Still open
 
 B02.4-B2h separately tracks editor pending-save, failure, rapid input/filter/back and draft recovery. The existing save function lacks explicit busy/error handling; this package does not claim those paths are safe. Broader OS/platform, large-text and physical acceptance remain separate. The goal remains active.
+
+## Integrated verification
+
+`3c7c5a9` merged and pushed to main. [CI39044015771](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39044015771) passed all four jobs: quality/content, iOS generation/export, Android generation/export and validation summary. [Board39044015774](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39044015774) also passed. Native compilation/signing/physical and broader editor save-recovery remain separate.
