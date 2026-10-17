@@ -22,6 +22,7 @@ jest.mock('../../src/hooks/useDeck', () => ({
 jest.mock('../../src/storage/storage', () => ({
   getDailyProgress: jest.fn().mockResolvedValue({ count: 0, target: 10, newCount: 0 }),
   getStudyStreak: jest.fn().mockResolvedValue(0),
+  getLastStudyDay: jest.fn().mockResolvedValue(undefined),
   getStreakState: jest.fn().mockResolvedValue({ streak: 0, freezes: 0 }),
 }));
 
@@ -98,6 +99,7 @@ const RESTED_DECK: Deck = {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  require('../../src/storage/storage').getLastStudyDay.mockResolvedValue(undefined);
   require('../../src/storage/learningEvents').getLearningEvents.mockResolvedValue([]);
   jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() });
   mockLanguage = 'en';
@@ -600,3 +602,40 @@ it('uses the same calibrated written-response allowance in the Home preview', as
   await ui.findByText('Suggested: Greetings · up to 3 cards · about 3 min');
   expect(ui.getByText('The reply estimate uses your recent active practice.')).toBeTruthy();
 });
+
+it.each(['en', 'es'] as const)(
+  'shows familiar-only catch-up in %s without hiding the new-card allowance',
+  async (language) => {
+    mockLanguage = language;
+    const last = new Date();
+    last.setDate(last.getDate() - 7);
+    require('../../src/storage/storage').getLastStudyDay.mockResolvedValue(
+      require('../../src/utils/calendarDay').localDayKey(last),
+    );
+    require('../../src/storage/prefs').getPrefs.mockResolvedValue({
+      newCardsPerDay: 10,
+      studyMinutes: 3,
+      learningLevel: 'beginner',
+    });
+    const ui = render(<HomeScreen />);
+    await ui.findByText(
+      language === 'en'
+        ? 'Ease back into reviews. This plan uses familiar cards; new cards remain available separately.'
+        : 'Retoma el repaso con calma. Este plan usa tarjetas conocidas; las nuevas siguen disponibles por separado.',
+    );
+    expect(
+      ui.getByText(
+        language === 'en' ? 'New cards available today: 2' : 'Tarjetas nuevas disponibles hoy: 2',
+      ),
+    ).toBeTruthy();
+    fireEvent.press(
+      ui.getByText(language === 'en' ? 'Study due cards' : 'Estudiar tarjetas pendientes'),
+    );
+    await waitFor(() =>
+      expect(mockNavigate).toHaveBeenCalledWith(
+        'Study',
+        expect.objectContaining({ sessionNewLimit: 0, sessionCardLimit: 4 }),
+      ),
+    );
+  },
+);

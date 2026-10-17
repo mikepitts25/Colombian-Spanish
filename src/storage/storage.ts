@@ -211,6 +211,14 @@ async function readStoredStreak(
   }
 }
 
+/** Last recorded flashcard review day; unknown history must not imply an absence. */
+export async function getLastStudyDay(
+  access: StorageAccess = AsyncStorage,
+): Promise<string | undefined> {
+  if (access === AsyncStorage) return withStorageTransaction((tx) => getLastStudyDay(tx));
+  return storedDayKey((await readStoredStreak(access))?.lastStudyDate);
+}
+
 export async function getStreakState(): Promise<StreakState> {
   const parsed = await readStoredStreak();
   if (!parsed) return { streak: 0, freezes: 0 };

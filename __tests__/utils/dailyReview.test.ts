@@ -145,3 +145,49 @@ test.each([
     );
   },
 );
+
+test.each([
+  ['2026-03-22', true, 0, 1],
+  ['2026-03-23', false, 3, 4],
+  ['2026-03-30', false, 3, 4],
+  [undefined, false, 3, 4],
+  ['bad', false, 3, 4],
+] as const)(
+  'uses familiar-only catch-up after a recorded review gap: %s',
+  (lastDay, catchUp, newLimit, cardCount) => {
+    const mixed = deck('mixed', [
+      card('due', { reps: 3, interval: 4 }),
+      card('n1'),
+      card('n2'),
+      card('n3'),
+    ]);
+    const before = JSON.stringify(mixed);
+    expect(
+      recommendDailyReview(
+        [mixed],
+        prefs,
+        10,
+        new Date(2026, 2, 29, 12).getTime(),
+        undefined,
+        undefined,
+        0,
+        lastDay,
+      ),
+    ).toMatchObject({ catchUp, newLimit, cardCount });
+    expect(JSON.stringify(mixed)).toBe(before);
+  },
+);
+test('a returning learner without due reviews can still start new material', () => {
+  expect(
+    recommendDailyReview(
+      [deck('new', [card('n1')])],
+      prefs,
+      10,
+      new Date(2026, 2, 29, 12).getTime(),
+      undefined,
+      undefined,
+      60,
+      '2026-03-01',
+    ),
+  ).toMatchObject({ catchUp: false, newCount: 1 });
+});

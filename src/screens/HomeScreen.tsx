@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
-import { getDailyProgress, getStreakState } from '../storage/storage';
+import { getDailyProgress, getStreakState, getLastStudyDay } from '../storage/storage';
 import { Deck } from '../types';
 import { useFocusedAsync } from '../hooks/useFocusedAsync';
 import { useLanguage } from '../context/LanguageContext';
@@ -91,13 +91,14 @@ type DeckWithDue = Deck & {
 };
 
 async function loadHomeProgress() {
-  const [daily, streak, prefs, events, plan, timings] = await Promise.all([
+  const [daily, streak, prefs, events, plan, timings, lastStudyDay] = await Promise.all([
     getDailyProgress(),
     getStreakState(),
     getPrefs(),
     getLearningEvents(),
     readDailyPlan(),
     readActivityTimings(),
+    getLastStudyDay(),
   ]);
   const now = Date.now();
   return {
@@ -113,6 +114,7 @@ async function loadHomeProgress() {
     measuredSeconds: calibratedReviewSeconds(events, now),
     plan,
     timings,
+    lastStudyDay,
   };
 }
 
@@ -144,6 +146,7 @@ export default function HomeScreen() {
     measuredSeconds: undefined as number | undefined,
     plan: undefined as DailyPlan | undefined,
     timings: [] as ActivityTimingSample[],
+    lastStudyDay: undefined as string | undefined,
   });
   const { count: dailyCount, target: dailyTarget, streak, freezes } = activity;
   const greeting = useMemo(() => {
@@ -196,6 +199,7 @@ export default function HomeScreen() {
           activeDeckId,
           activity.measuredSeconds,
           response ? (responseSeconds ?? 60) : 0,
+          activity.lastStudyDay,
         )
       : undefined;
   const recommendedDeck = workload.find((deck) => deck.id === recommendation?.deckId);
@@ -366,6 +370,9 @@ export default function HomeScreen() {
                 minutes: recommendation.estimatedMinutes,
               })}
             </Text>
+          )}
+          {recommendation?.catchUp && !unfinishedPlan && !completedToday && (
+            <Text style={styles.todaySub}>{t('plan.catchUp')}</Text>
           )}
           {(unfinishedPlan || response || completedToday) && (
             <Text style={styles.todaySub}>

@@ -1,3 +1,4 @@
+import { dayDistance, localDayKey } from './calendarDay';
 import { Deck } from '../types';
 import type { Prefs } from '../storage/prefs';
 import { isNewCard, buildSessionQueue } from './srs';
@@ -50,6 +51,7 @@ export function recommendDailyReview(
   activeDeckId?: string,
   measuredSeconds?: number,
   reservedSeconds = 0,
+  lastStudyDay?: string,
 ) {
   const limits = reviewLimits(
     profile.studyMinutes,
@@ -57,8 +59,13 @@ export function recommendDailyReview(
     measuredSeconds,
     reservedSeconds,
   );
+  const gap = lastStudyDay ? dayDistance(lastStudyDay, localDayKey(new Date(now))) : undefined;
+  const catchUp =
+    gap !== undefined &&
+    gap >= 7 &&
+    decks.some((deck) => deck.cards.some((card) => !isNewCard(card) && (card.due ?? 0) <= now));
   const newLimit = Math.min(
-    limits.newLimit,
+    catchUp ? 0 : limits.newLimit,
     Number.isFinite(remainingNew) ? Math.max(0, Math.floor(remainingNew)) : 0,
   );
   const preferredRegion: RegionFilterId = REGION_FILTERS.some(
@@ -97,6 +104,7 @@ export function recommendDailyReview(
   const dueCount = choice.selectedCount - newCount;
   return {
     deckId: choice.deck.id,
+    catchUp,
     preferredRegion,
     ...limits,
     newLimit,

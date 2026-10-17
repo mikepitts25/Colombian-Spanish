@@ -5,7 +5,7 @@ import { readDailyPlan, startDailyPlan } from './dailyPlans';
 import { DailyPlan } from './dailyPlanSchema';
 import { validateBackupDecks } from './backupValidation';
 import { getPrefs } from './prefs';
-import { getDailyProgress } from './storage';
+import { getDailyProgress, getLastStudyDay } from './storage';
 import { createLearningSessionId, readLearningEvents } from './learningEvents';
 import { localDayKey } from '../utils/calendarDay';
 import { calibratedReviewSeconds } from '../utils/reviewPace';
@@ -37,6 +37,7 @@ export function openRecommendedPlan(allowDraft: boolean): Promise<DailyPlan | un
       response
         ? (calibratedActivitySeconds(await readActivityTimings(tx), response, now) ?? 60)
         : 0,
+      await getLastStudyDay(tx),
     );
     if (!suggestion && !response) return undefined;
     const deck = decks.find((deck) => deck.id === suggestion?.deckId);

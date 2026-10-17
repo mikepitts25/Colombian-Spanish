@@ -53,3 +53,68 @@ test('production creates no draft activity and exhausted new-card cap permits ap
   expect(p?.review).toBeUndefined();
   expect(p?.applied?.missionId).toBe(DAILY_RESPONSE.id);
 });
+
+test('catch-up start uses fresh last-review state and freezes a familiar-only exact queue', async () => {
+  jest.useFakeTimers({ now: new Date(2026, 2, 29, 12) });
+  try {
+    const source = ALL_DECKS.find((d) => d.id === 'deck-business')!;
+    const decks = [
+      {
+        ...source,
+        cards: source.cards
+          .slice(0, 4)
+          .map((c, i) => (i === 0 ? { ...c, reps: 3, interval: 4, due: 0 } : c)),
+      },
+    ];
+    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(decks));
+    await AsyncStorage.setItem(
+      'SRS_STUDY_STREAK_V1',
+      JSON.stringify({ streak: 12, lastStudyDate: '2026-03-22', freezes: 1 }),
+    );
+    await setPrefs({ studyMinutes: 3, learningReason: 'work' });
+    const before = await AsyncStorage.getItem('SRS_DECKS_V3');
+    const plan = await openRecommendedPlan(false);
+    expect(plan?.review?.initialCardIds).toEqual([source.cards[0].id]);
+    expect(plan?.review?.session.queue?.limits).toEqual({ cardLimit: 4, newLimit: 0 });
+    expect(await AsyncStorage.getItem('SRS_DECKS_V3')).toBe(before);
+    expect((await getDailyProgress()).count).toBe(0);
+    await AsyncStorage.setItem(
+      'SRS_STUDY_STREAK_V1',
+      JSON.stringify({ lastStudyDate: '2026-03-29' }),
+    );
+    await setPrefs({ studyMinutes: 10 });
+    expect(await openRecommendedPlan(false)).toEqual(plan);
+  } finally {
+    jest.useRealTimers();
+  }
+});
+
+test.each([
+  ['SRS_STREAK_V1', { lastStudyDate: '2026-03-01T12:00:00.000Z' }, 1],
+  ['SRS_STUDY_STREAK_V1', { lastStudyDate: 'invalid' }, 4],
+  ['SRS_STUDY_STREAK_V1', null, 4],
+] as const)(
+  'last-review history normalizes legacy or unknown state: %s %j',
+  async (key, history, count) => {
+    jest.useFakeTimers({ now: new Date(2026, 2, 29, 12) });
+    try {
+      const source = ALL_DECKS.find((d) => d.id === 'deck-business')!;
+      await AsyncStorage.setItem(
+        'SRS_DECKS_V3',
+        JSON.stringify([
+          {
+            ...source,
+            cards: source.cards
+              .slice(0, 4)
+              .map((c, i) => (i === 0 ? { ...c, reps: 3, interval: 4, due: 0 } : c)),
+          },
+        ]),
+      );
+      await AsyncStorage.setItem(key, JSON.stringify(history));
+      await setPrefs({ studyMinutes: 3, learningReason: 'work' });
+      expect((await openRecommendedPlan(false))?.review?.initialCardIds).toHaveLength(count);
+    } finally {
+      jest.useRealTimers();
+    }
+  },
+);

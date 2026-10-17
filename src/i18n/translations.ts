@@ -116,6 +116,8 @@ export const translations = {
     'plan.completedAction': 'Ver plan terminado',
     'plan.done': 'Tu práctica del plan está terminada.',
     'plan.nextReply': 'Siguiente: una respuesta escrita (borrador).',
+    'plan.catchUp':
+      'Retoma el repaso con calma. Este plan usa tarjetas conocidas; las nuevas siguen disponibles por separado.',
     'plan.summary': 'Plan de {minutes} min: repaso y una respuesta escrita (borrador).',
     'plan.reviewSummary': 'Plan de repaso de {minutes} min.',
     'plan.startReply': 'Empezar respuesta de borrador',
@@ -737,6 +739,8 @@ export const translations = {
     'plan.completedAction': 'View completed plan',
     'plan.done': 'Your planned practice is complete.',
     'plan.nextReply': 'Next: one written reply (draft).',
+    'plan.catchUp':
+      'Ease back into reviews. This plan uses familiar cards; new cards remain available separately.',
     'plan.summary': '{minutes}-minute plan: review and one written reply (draft).',
     'plan.reviewSummary': '{minutes}-minute review plan.',
     'plan.startReply': 'Start draft reply',
