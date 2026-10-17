@@ -1,0 +1,34 @@
+# Phrase topics and Favorites at enlarged text
+
+Base `334862a`. Dedicated iPad mini A17 Pro / iPadOS26.0 `E66076BE-D9F8-49FB-870F-F29B57C4CA40`, unsigned SDK57 binary1.0.0/build1.0.0, Metro8098. This completes a bounded correction under B08.2-B/B08.5-B, not all activity/platform acceptance.
+
+## Reproduced behavior and correction
+
+Changing Text Size3→11 while phrase topics were mounted left native labels clipped into strips: [before](topics-es-live-max-before.png). Opening Weather at the same maximum size created readable new text but fixed audio/star boxes clipped their scaled glyphs: [before](weather-es-max-before.png). Following a normal save into Favorites exposed the same clipped icons and unnamed playback/removal actions: [before](favorites-es-max-before.png).
+
+Both screens now invalidate measured native content when fontScale changes. Topic selection and Favorites query remain owned by the screen and survive these subtree remounts; scroll offset and input focus may reset. Topic browsing's intro and Favorites title/search scroll with their lists. Enlarged card actions move below the phrase text, topic count/Study action stack, and icon glyphs retain a fixed readable size inside named 48-point targets. Phrase text continues scaling. Favorites uses semantic colors; save/removal state is exposed as selected. Existing scheduler, grade logic, favorite transactions and audio implementation are unchanged. No rapid-double-tap lock or new error recovery is claimed.
+
+## Behavior tests
+
+Six focused tests pass ([output](green.log)). New Phrases tests retain the selected Weather topic, original Study/Favorites destinations and exactly one pending favorite request across Dimensions changes; provider refresh exposes the saved/remove state. Favorites tests preserve tag/English search, exclude unmatched/unsaved cards, retain existing audio/deck-selection behavior and keep one pending removal through resizing and completion.
+
+The selected-topic retention test passed baseline (protects against placing the key above the state owner). The new favorite-state assertion failed baseline and passed after the correction. Favorites tests were rerun against the baseline source after correcting an initial ASCII-versus-Unicode ellipsis mistake in the test placeholder; both then failed for missing named button/selected semantics, and passed on the corrected source. A guessed remove-label suffix in the Phrases test was likewise corrected to the existing translation. [Phrases red](red.log), [Favorites meaningful red](favorites-red.log). These tests establish interaction/state contracts; screenshots establish actual layout.
+
+## Native checks and precise effects
+
+- [Spanish maximum topics](topics-es-max-after.png) wrap normally. Selected Weather survives maximum→default→maximum; [default](weather-es-default-after.png) and [maximum](weather-es-max-after.png) show readable phrase/example and audio/star controls. A visible coordinate star tap saves `weather-phrase-001`.
+- Favorites opens that saved phrase. Accessible field entry sets the tag query `heat`, reveals the software keyboard ([image](favorites-search-max-keyboard.png)); the visible hide-keyboard key dismisses it. Query and matching phrase survive maximum→default ([image](favorites-search-default-after.png)). AX field value reporting lagged, so screenshots establish the actual typed value.
+- [English default topic list](topics-en-default-after.png), [maximum Weather](weather-en-max-after.png) and [maximum Favorites](favorites-en-max-after.png) show translated actions. Another visible coordinate star tap removes the temporary favorite and shows the [empty view](favorites-en-max-empty-after.png). Removal deliberately stores `favorite:false` where the initial card omitted that property; the deck hash therefore does not revert byte-for-byte.
+- The native **Study weather** action opens Weather, first card `0114` / clima, exact nine-card queue `0114`–`0122` ([image](weather-study-en-max.png)). This intentionally replaces the QA fixture's former Travel queue; it studies the existing Weather deck, not only its seven phrase cards. No grade submitted. Spanish/default text restored; cold launch and visible Continue resume the exact Weather queue/session identity ([image](weather-cold-resume-es-default.png)). A Study deck-count subtitle during browsing shows all 27 deck cards, not nine remaining session cards.
+
+Eleven [read-only storage snapshots](native-state-check.json) are checked by `python3 docs/qa/2026-10-18-phrases-large-text/verify-evidence.py`. All 1,392 cards and every card field except the named favorite are preserved (whole-deck hashes reconstructed with only that favorite absent/true/false). Daily/new count stay 1/1, target 5, four learning events and three quiz results unchanged, streak unchanged, no plan/mission/write journal. Before Study handoff the original Travel queue stays exact; afterwards the intentionally new Weather queue stays exact across cold resume, with only its `updatedAt` refreshed. UI language changes only temporarily to English and returns Spanish. No simulator storage was injected, reset or edited.
+
+Cold launch repeats the known unsigned expo-notifications entitlement warning; dismissed through its visible close control. Some captures include development refresh/warning overlays. After cold launch the Device Hub app accessibility subtree was absent even while coordinate navigation visibly worked; screenshot and storage evidence establish the resume, not a screen-reader claim. Audio controls are named and automated dispatch is checked; audible quality, rights and physical routes are not accepted here.
+
+## Verification and remaining work
+
+Full **98 suites / 941 tests pass** ([output](full-suite.log)); TypeScript, zero-warning lint, 47-deck/1,392-card/audio validation and editorial-ledger validation pass. All 1,392 cards still await current human acceptance. Full-project formatting passes after formatting the new snapshot JSON. Fresh read-only whole-branch review found no actionable issues; it independently passed both focused suites (six tests), ran the 11-snapshot verifier and inspected representative maximum Weather/Favorites keyboard screenshots.
+
+This does not close B08.2-B, B08.5-B or any B12 platform/device parent. Narrow phone layouts, every topic/long phrase, both app themes, pressed/focus states, native pending-save failure, full assistive navigation, touch-only scrolling, Android and signed/physical candidate checks remain open. Existing audio-design review, Android license, editorial/account/device gates and deferred security B01.8-C2g are unchanged.
+
+Preceding fixture commit `334862a` passed [CI39079792501](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39079792501) (all four jobs) and [board39079792541](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39079792541). This branch requires its own post-push CI verification.

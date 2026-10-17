@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { TranslationKey } from '../i18n/translations';
@@ -13,6 +13,8 @@ export default function PhrasesScreen() {
   const { ready, decks, toggleFavorite } = useDeck();
   const { t } = useLanguage();
   const nav = useNavigation<any>();
+  const { fontScale } = useWindowDimensions();
+  const expanded = fontScale >= 1.4;
   const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>();
 
   const topics = useMemo(() => getAvailablePhraseTopics(decks || []), [decks]);
@@ -20,7 +22,7 @@ export default function PhrasesScreen() {
 
   if (!ready) {
     return (
-      <SafeAreaView style={styles.wrap}>
+      <SafeAreaView key={fontScale} style={styles.wrap}>
         <Text style={styles.loading}>{t('common.loading')}</Text>
       </SafeAreaView>
     );
@@ -30,7 +32,7 @@ export default function PhrasesScreen() {
 
   if (selectedTopic) {
     return (
-      <SafeAreaView style={styles.wrap}>
+      <SafeAreaView key={fontScale} style={styles.wrap}>
         <View style={styles.topicHeader}>
           <Pressable
             accessibilityRole="button"
@@ -46,7 +48,9 @@ export default function PhrasesScreen() {
             style={styles.favoritesButton}
             onPress={openFavorites}
           >
-            <Text style={styles.favoritesIcon}>★</Text>
+            <Text allowFontScaling={false} style={styles.favoritesIcon}>
+              ★
+            </Text>
           </Pressable>
         </View>
 
@@ -56,6 +60,7 @@ export default function PhrasesScreen() {
           contentContainerStyle={styles.cardsContent}
           ListHeaderComponent={
             <TopicHeader
+              expanded={expanded}
               topic={selectedTopic}
               title={t(selectedTopic.titleKey as TranslationKey)}
               description={t(selectedTopic.descriptionKey as TranslationKey)}
@@ -75,6 +80,7 @@ export default function PhrasesScreen() {
           }
           renderItem={({ item: card }) => (
             <PhraseCard
+              expanded={expanded}
               card={card}
               playLabel={t('phrases.playLabel', { phrase: card.front })}
               saveLabel={t('phrases.saveLabel', { phrase: card.front })}
@@ -89,23 +95,26 @@ export default function PhrasesScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.wrap}>
-      <View style={styles.header}>
-        <View style={styles.headerCopy}>
-          <Text style={styles.title}>{t('phrases.title')}</Text>
-          <Text style={styles.sub}>{t('phrases.sub')}</Text>
-        </View>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={t('phrases.openFavorites')}
-          style={styles.favoritesButton}
-          onPress={openFavorites}
-        >
-          <Text style={styles.favoritesIcon}>★</Text>
-        </Pressable>
-      </View>
-
+    <SafeAreaView key={fontScale} style={styles.wrap}>
       <FlatList
+        ListHeaderComponent={
+          <View style={styles.header}>
+            <View style={styles.headerCopy}>
+              <Text style={styles.title}>{t('phrases.title')}</Text>
+              <Text style={styles.sub}>{t('phrases.sub')}</Text>
+            </View>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={t('phrases.openFavorites')}
+              style={styles.favoritesButton}
+              onPress={openFavorites}
+            >
+              <Text allowFontScaling={false} style={styles.favoritesIcon}>
+                ★
+              </Text>
+            </Pressable>
+          </View>
+        }
         data={topics}
         keyExtractor={(topic) => topic.id}
         contentContainerStyle={styles.topicList}
@@ -116,7 +125,9 @@ export default function PhrasesScreen() {
             onPress={() => setSelectedTopicId(topic.id)}
           >
             <View style={styles.topicEmojiWrap}>
-              <Text style={styles.topicEmoji}>{topic.emoji}</Text>
+              <Text allowFontScaling={false} style={styles.topicEmoji}>
+                {topic.emoji}
+              </Text>
             </View>
             <View style={styles.topicCopy}>
               <Text style={styles.topicTitle}>{t(topic.titleKey as TranslationKey)}</Text>
@@ -125,7 +136,9 @@ export default function PhrasesScreen() {
                 {t('phrases.cardCount', { count: topic.cards.length })}
               </Text>
             </View>
-            <Text style={styles.chevron}>›</Text>
+            <Text allowFontScaling={false} style={styles.chevron}>
+              ›
+            </Text>
           </Pressable>
         )}
         ListEmptyComponent={<Text style={styles.empty}>{t('phrases.empty')}</Text>}
@@ -135,6 +148,7 @@ export default function PhrasesScreen() {
 }
 
 function TopicHeader({
+  expanded,
   topic,
   title,
   description,
@@ -142,6 +156,7 @@ function TopicHeader({
   studyLabel,
   onStudy,
 }: {
+  expanded: boolean;
   topic: AvailablePhraseTopic;
   title: string;
   description: string;
@@ -152,13 +167,15 @@ function TopicHeader({
   return (
     <View style={styles.selectedIntro}>
       <View style={styles.selectedTitleRow}>
-        <Text style={styles.selectedEmoji}>{topic.emoji}</Text>
+        <Text allowFontScaling={false} style={styles.selectedEmoji}>
+          {topic.emoji}
+        </Text>
         <View style={styles.selectedCopy}>
           <Text style={styles.selectedTitle}>{title}</Text>
           <Text style={styles.selectedSub}>{description}</Text>
         </View>
       </View>
-      <View style={styles.topicActionRow}>
+      <View style={[styles.topicActionRow, expanded && styles.stacked]}>
         <Text style={styles.selectedCount}>{countLabel}</Text>
         <Pressable accessibilityRole="button" style={styles.studyButton} onPress={onStudy}>
           <Text style={styles.studyButtonText}>{studyLabel}</Text>
@@ -169,6 +186,7 @@ function TopicHeader({
 }
 
 function PhraseCard({
+  expanded,
   card,
   playLabel,
   saveLabel,
@@ -176,6 +194,7 @@ function PhraseCard({
   onPlay,
   onToggleFavorite,
 }: {
+  expanded: boolean;
   card: AvailablePhraseTopic['cards'][number];
   playLabel: string;
   saveLabel: string;
@@ -184,28 +203,33 @@ function PhraseCard({
   onToggleFavorite: () => void;
 }) {
   return (
-    <View style={styles.phraseCard}>
-      <View style={styles.phraseCopy}>
+    <View style={[styles.phraseCard, expanded && styles.stacked]}>
+      <View style={[styles.phraseCopy, expanded && styles.unflexed]}>
         <Text style={styles.phraseFront}>{card.front}</Text>
         <Text style={styles.phraseBack}>{card.back}</Text>
         {card.example ? <Text style={styles.example}>“{card.example}”</Text> : null}
       </View>
-      <View style={styles.phraseActions}>
+      <View style={[styles.phraseActions, expanded && styles.horizontalActions]}>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={playLabel}
           style={styles.actionButton}
           onPress={onPlay}
         >
-          <Text style={styles.actionText}>🔊</Text>
+          <Text allowFontScaling={false} style={styles.actionText}>
+            🔊
+          </Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={card.favorite ? removeLabel : saveLabel}
+          accessibilityState={{ selected: !!card.favorite }}
           style={[styles.actionButton, card.favorite && styles.favoriteActive]}
           onPress={onToggleFavorite}
         >
-          <Text style={styles.actionText}>{card.favorite ? '★' : '☆'}</Text>
+          <Text allowFontScaling={false} style={styles.actionText}>
+            {card.favorite ? '★' : '☆'}
+          </Text>
         </Pressable>
       </View>
     </View>
@@ -230,9 +254,9 @@ const styles = StyleSheet.create({
     borderColor: colors.borderBrand,
     borderRadius: radius.md,
     borderWidth: 1,
-    height: 44,
+    minHeight: 48,
     justifyContent: 'center',
-    width: 44,
+    minWidth: 48,
   },
   favoritesIcon: { color: colors.brand, fontSize: 22 },
   topicList: { gap: spacing(1), paddingBottom: spacing(3) },
@@ -268,7 +292,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: spacing(1.5),
   },
-  backButton: { paddingVertical: spacing(0.5) },
+  backButton: {
+    paddingVertical: spacing(0.5),
+    minHeight: 48,
+    flexShrink: 1,
+    justifyContent: 'center',
+  },
   backText: { color: colors.brand, fontSize: 14, fontWeight: '800' },
   cardsContent: { paddingBottom: spacing(3) },
   selectedIntro: {
@@ -294,6 +323,9 @@ const styles = StyleSheet.create({
   studyButton: {
     backgroundColor: colors.brand,
     borderRadius: radius.md,
+    minHeight: 48,
+    justifyContent: 'center',
+    flexShrink: 1,
     paddingHorizontal: spacing(1.25),
     paddingVertical: spacing(1),
   },
@@ -310,7 +342,7 @@ const styles = StyleSheet.create({
   },
   phraseCopy: { flex: 1 },
   phraseFront: { color: colors.textPrimary, fontSize: 16, fontWeight: '800' },
-  phraseBack: { color: '#cbd5e1', fontSize: 14, marginTop: 3 },
+  phraseBack: { color: colors.textSecondary, fontSize: 14, marginTop: 3 },
   example: {
     color: colors.textSecondary,
     fontSize: 12,
@@ -318,6 +350,9 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     marginTop: 7,
   },
+  stacked: { flexDirection: 'column', alignItems: 'stretch', gap: spacing(1) },
+  unflexed: { flex: 0 },
+  horizontalActions: { flexDirection: 'row', flexWrap: 'wrap' },
   phraseActions: { gap: spacing(0.75) },
   actionButton: {
     alignItems: 'center',
@@ -325,9 +360,9 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     borderRadius: radius.base,
     borderWidth: 1,
-    height: 38,
+    minHeight: 48,
     justifyContent: 'center',
-    width: 38,
+    minWidth: 48,
   },
   favoriteActive: { borderColor: colors.brand },
   actionText: { color: colors.textPrimary, fontSize: 18 },

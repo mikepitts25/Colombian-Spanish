@@ -1,0 +1,47 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/PhrasesScreen.test.tsx
+
+FAIL __tests__/screens/PhrasesScreen.test.tsx
+  ✓ keeps the selected topic and action destinations through live text resizing (11 ms)
+  ✕ keeps one favorite request through live resizing and reflects the saved card state (10 ms)
+  PhrasesScreen
+    ✓ browses requested Weather phrases by topic (266 ms)
+    ✓ plays, saves, studies, and opens Favorites from a selected topic (16 ms)
+
+  ● keeps one favorite request through live resizing and reflects the saved card state
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 6
+
+    - ObjectContaining {
+    -   "selected": false,
+    + Object {
+    +   "busy": undefined,
+    +   "checked": undefined,
+    +   "disabled": undefined,
+    +   "expanded": undefined,
+    +   "selected": undefined,
+      }
+
+      155 |   fireEvent.press(screen.getByText('Weather today'));
+      156 |   const save = screen.getByRole('button', { name: 'Save Hace mucho calor hoy' });
+    > 157 |   expect(save.props.accessibilityState).toEqual(expect.objectContaining({ selected: false }));
+          |                                         ^
+      158 |   fireEvent.press(save);
+      159 |   act(() => Dimensions.set({ window: { ...Dimensions.get('window'), fontScale: 3.2 } }));
+      160 |   expect(screen.getByText('Weather today')).toBeTruthy();
+
+      at Object.toEqual (__tests__/screens/PhrasesScreen.test.tsx:157:41)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 3 passed, 4 total
+Snapshots:   0 total
+Time:        1.072 s
+Ran all test suites within paths "__tests__/screens/PhrasesScreen.test.tsx".

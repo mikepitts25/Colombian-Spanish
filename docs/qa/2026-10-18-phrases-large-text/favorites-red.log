@@ -1,0 +1,143 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/PhrasebookScreen.test.tsx
+
+FAIL __tests__/screens/PhrasebookScreen.test.tsx
+  ✕ retains a tag search through live resizing and names the matching playback action (286 ms)
+  ✕ does not resubmit a pending removal on resize and retains the search when it completes (6 ms)
+
+  ● retains a tag search through live resizing and names the matching playback action
+
+    Unable to find an element with role: button, name: Play Hace calor
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<Text>[39m
+        [0mFavorites[0m
+      [36m</Text>[39m
+      [36m<Text>[39m
+        [0mYour starred cards across all decks (offline + private).[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33mplaceholder[39m=[32m"Search (es/en/tags)…"[39m
+        [33mvalue[39m=[32m"summer"[39m
+      [36m/>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mHace calor[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mIt is hot[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mWeather[0m
+                  [0m • summer[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m🔊[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m★[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      80 |   expect(screen.queryByText('Llueve')).toBeNull();
+      81 |   expect(screen.queryByText('Unsaved card')).toBeNull();
+    > 82 |   fireEvent.press(screen.getByRole('button', { name: 'Play Hace calor' }));
+         |                          ^
+      83 |   expect(active).toHaveBeenCalledWith('weather');
+      84 |   expect(mockSpeak).toHaveBeenCalledWith(decks[0].cards[0]);
+      85 |   expect(toggle).not.toHaveBeenCalled();
+
+      at Object.getByRole (__tests__/screens/PhrasebookScreen.test.tsx:82:26)
+
+  ● does not resubmit a pending removal on resize and retains the search when it completes
+
+    Unable to find an element with role: button, name: Remove Hace calor, selected state: true
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<Text>[39m
+        [0mFavorites[0m
+      [36m</Text>[39m
+      [36m<Text>[39m
+        [0mYour starred cards across all decks (offline + private).[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33mplaceholder[39m=[32m"Search (es/en/tags)…"[39m
+        [33mvalue[39m=[32m"hot"[39m
+      [36m/>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mHace calor[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mIt is hot[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mWeather[0m
+                  [0m • summer[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m🔊[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m★[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+       96 |   const screen = render(<PhrasebookScreen />);
+       97 |   fireEvent.changeText(screen.getByPlaceholderText('Search (es/en/tags)…'), 'hot');
+    >  98 |   fireEvent.press(screen.getByRole('button', { name: 'Remove Hace calor', selected: true }));
+          |                          ^
+       99 |   act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
+      100 |   expect(toggle).toHaveBeenCalledTimes(1);
+      101 |   expect(toggle).toHaveBeenCalledWith('heat');
+
+      at Object.getByRole (__tests__/screens/PhrasebookScreen.test.tsx:98:26)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 2 total
+Snapshots:   0 total
+Time:        1.065 s
+Ran all test suites within paths "__tests__/screens/PhrasebookScreen.test.tsx".

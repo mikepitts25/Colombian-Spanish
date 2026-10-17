@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react-native';
+import { act, fireEvent, render } from '@testing-library/react-native';
+import { Dimensions } from 'react-native';
 import PhrasesScreen from '../../src/screens/PhrasesScreen';
 import { Deck, FlashCard } from '../../src/types';
 
@@ -32,6 +33,10 @@ import { useDeck } from '../../src/hooks/useDeck';
 
 const mockUseDeck = useDeck as jest.Mock;
 const NOW = Date.now();
+const originalWindow = Dimensions.get('window');
+afterEach(() => {
+  act(() => Dimensions.set({ window: originalWindow }));
+});
 
 function makeCard(id: string, overrides: Partial<FlashCard> = {}): FlashCard {
   return {
@@ -78,6 +83,7 @@ const WEATHER_DECK: Deck = {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  Dimensions.set({ window: { ...Dimensions.get('window'), fontScale: 1 } });
   mockUseDeck.mockReturnValue({
     ready: true,
     decks: [CONVERSATION_DECK, WEATHER_DECK],
@@ -122,4 +128,61 @@ describe('PhrasesScreen', () => {
     );
     expect(mockNavigate).toHaveBeenCalledWith('Phrasebook');
   });
+});
+
+test('keeps the selected topic and action destinations through live text resizing', () => {
+  const screen = render(<PhrasesScreen />);
+  fireEvent.press(screen.getByText('Weather today'));
+  act(() => Dimensions.set({ window: { ...Dimensions.get('window'), fontScale: 3.2 } }));
+  expect(screen.getByText('Hace mucho calor hoy')).toBeTruthy();
+  fireEvent.press(screen.getByRole('button', { name: 'Study weather' }));
+  expect(mockNavigate).toHaveBeenCalledWith(
+    'Root',
+    { screen: 'Study', params: { autoStartDeckId: 'deck-weather' } },
+    { pop: true },
+  );
+  fireEvent.press(screen.getByRole('button', { name: 'All topics' }));
+  expect(screen.getByText('Everyday conversation')).toBeTruthy();
+  expect(mockToggleFavorite).not.toHaveBeenCalled();
+  expect(mockSpeakCard).not.toHaveBeenCalled();
+});
+
+test('keeps one favorite request through live resizing and reflects the saved card state', async () => {
+  let finish!: () => void;
+  mockToggleFavorite.mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  const screen = render(<PhrasesScreen />);
+  fireEvent.press(screen.getByText('Weather today'));
+  const save = screen.getByRole('button', { name: 'Save Hace mucho calor hoy' });
+  expect(save.props.accessibilityState).toEqual(expect.objectContaining({ selected: false }));
+  fireEvent.press(save);
+  act(() => Dimensions.set({ window: { ...Dimensions.get('window'), fontScale: 3.2 } }));
+  expect(screen.getByText('Weather today')).toBeTruthy();
+  expect(mockToggleFavorite).toHaveBeenCalledTimes(1);
+  await act(async () => finish());
+  mockUseDeck.mockReturnValue({
+    ready: true,
+    decks: [
+      CONVERSATION_DECK,
+      {
+        ...WEATHER_DECK,
+        cards: WEATHER_DECK.cards.map((card) => ({
+          ...card,
+          favorite: card.id === 'weather-heat',
+        })),
+      },
+    ],
+    toggleFavorite: mockToggleFavorite,
+  });
+  screen.rerender(<PhrasesScreen />);
+  expect(
+    screen.getByRole('button', { name: 'Remove Hace mucho calor hoy' }).props.accessibilityState,
+  ).toEqual(expect.objectContaining({ selected: true }));
+  fireEvent.press(screen.getByRole('button', { name: 'Open Favorites' }));
+  expect(mockNavigate).toHaveBeenCalledWith('Phrasebook');
+  expect(mockToggleFavorite).toHaveBeenCalledTimes(1);
 });

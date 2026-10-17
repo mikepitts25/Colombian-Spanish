@@ -1,0 +1,12 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/PhrasesScreen.test.tsx __tests__/screens/PhrasebookScreen.test.tsx
+
+PASS __tests__/screens/PhrasebookScreen.test.tsx
+PASS __tests__/screens/PhrasesScreen.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        0.75 s, estimated 2 s
+Ran all test suites within paths "__tests__/screens/PhrasesScreen.test.tsx", "__tests__/screens/PhrasebookScreen.test.tsx".
