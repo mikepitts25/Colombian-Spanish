@@ -346,7 +346,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [x] **B11.2-A [AI]** Validate clipboard backup deck/card structure, scheduling and optional fields, unique deck/card IDs, supported versions/history, and input size before confirmation or writes; preserve valid legacy content and handle clipboard-read errors.
   - [x] **B11.2-B1 [AI]** Add serialized durable restore journaling, replay before app storage access, startup recovery/retry, conflict validation before writes, and failure-injection tests for interrupted deck/history restore.
   - [x] **B11.2-B2a [AI]** Validate supplemental state, preserve corrupt source state, migrate legacy streaks and replay interrupted full-state restore under failure injection.
-  - [ ] **B11.2-B2 [AI, SIM]** Complete simulator interrupted-restore acceptance. Hardware/file-share validation stays separate.
+  - [x] **B11.2-B2 [AI, SIM]** Native iOS26 restore interrupted after journal/deck writes; cold failed replay preserves partial state and blocks providers behind bilingual Retry. Allowing storage and app Retry replays all 11 after-images and clears the journal; normal-entry cold Study resumes the exact seven-card queue. Six suites/52 targeted tests and state assertions pass. [QA](docs/qa/2026-10-17-native-restore-recovery/REPORT.md). Hardware, real low storage, Android and file-share validation remain separate.
   - [x] **B11.2-C [AI, SIM]** Reverify native clipboard success/import-cancel alerts and file export/picker/preview/cancel with the new profile and bounded queue fields; compare unchanged local state and retained source.
 - [ ] **B11.3 [AI, H-PRODUCT]** Decide whether cross-device demand justifies optional accounts. Keep local learning available without an account.
 - [ ] **B11.4 [AI, H-ACCOUNT]** If enabled, implement secure auth, per-user access, sync conflicts, offline queues, deletion/export, and recovery; configure production services through authorized accounts.
@@ -706,3 +706,7 @@ B05.3-B2b2-A: Implementation `9f87d46` plus native evidence `0cd546a` were merge
 ### Editorial save recovery — 2026-10-17
 
 B02.4-B2h closes slow/failed editor saves, exact-intent retry and pending navigation/control conflicts. Native fault injection reproduced and verified recovery on iOS26; large-text feedback/reflow was also corrected. Full 93/906, types/lint/data/calendar and fresh independent review passed. [Evidence](docs/qa/2026-10-17-editor-save-recovery/REPORT.md). Normal Metro entry was restored and cold Study resume preserved Hola3/seven remaining, with no grading side effects. Remaining AI and human/device rows stay open.
+
+### Native interrupted restore — 2026-10-17
+
+B11.2-B2 verifies native process termination during a real journaled full-state restore, failed startup replay with retained partial data, and successful app Retry. All eleven after-images matched, journal cleared, and normal-entry cold Study resumed Hola3/seven remaining with unchanged counters/events. [Evidence](docs/qa/2026-10-17-native-restore-recovery/REPORT.md). No product code or native storage files were edited; test-only source/transport wrapper was removed from the running app by restoring normal Expo entry. Physical/Android/share/low-storage gates remain open.
