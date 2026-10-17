@@ -96,3 +96,52 @@ test('cleans up listeners/timers and ignores a result after unmount', async () =
   expect(subscription.remove).toHaveBeenCalledTimes(1);
   expect(hook.result.current.value).toBe(0);
 });
+
+test('keeps the last snapshot while backgrounded and catches up on foreground', async () => {
+  jest.useFakeTimers();
+  jest.setSystemTime(new Date(2026, 9, 17, 12));
+  const load = async () => Date.now();
+  const hook = renderHook(() => useFocusedAsync(load, 0));
+  await act(async () => {});
+  const initial = hook.result.current.value;
+  await act(async () => {
+    onStateChange('background');
+    jest.advanceTimersByTime(120000);
+  });
+  expect(hook.result.current.value).toBe(initial);
+  await act(async () => {
+    onStateChange('active');
+  });
+  expect(hook.result.current.value).toBe(initial + 120000);
+});
+
+test('a late minute refresh cannot replace a newer foreground snapshot', async () => {
+  jest.useFakeTimers();
+  jest.setSystemTime(new Date(2026, 9, 17, 12));
+  let resolveOld!: (value: number) => void;
+  let reads = 0;
+  const load = async () => {
+    if (++reads === 2)
+      return new Promise<number>((resolve) => {
+        resolveOld = resolve;
+      });
+    return Date.now();
+  };
+  const hook = renderHook(() => useFocusedAsync(load, 0));
+  await act(async () => {});
+  await act(async () => {
+    jest.advanceTimersByTime(60000);
+  });
+  expect(resolveOld).toBeDefined();
+  await act(async () => {
+    onStateChange('background');
+    jest.advanceTimersByTime(60000);
+    onStateChange('active');
+  });
+  const resumed = hook.result.current.value;
+  await act(async () => {
+    resolveOld(1);
+  });
+  expect(hook.result.current.value).toBe(resumed);
+  expect(resumed).toBe(new Date(2026, 9, 17, 12, 2).getTime());
+});

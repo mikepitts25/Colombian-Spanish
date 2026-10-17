@@ -3,7 +3,7 @@ import { AppState } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 // The loader must be stable (module-level or useCallback). Each focus owns its
-// reads, foreground subscription, and local-date check; older reads cannot win.
+// reads, foreground subscription, and minute refresh; older reads cannot win.
 export function useFocusedAsync<T>(load: () => Promise<T>, initial: T) {
   const [value, setValue] = useState(initial);
   const [error, setError] = useState(false);
@@ -11,7 +11,8 @@ export function useFocusedAsync<T>(load: () => Promise<T>, initial: T) {
     useCallback(() => {
       let active = true;
       let generation = 0;
-      let day = new Date().toDateString();
+      let foreground =
+        AppState.currentState !== 'background' && AppState.currentState !== 'inactive';
       async function refresh() {
         const request = ++generation;
         try {
@@ -26,17 +27,12 @@ export function useFocusedAsync<T>(load: () => Promise<T>, initial: T) {
       }
       void refresh();
       const subscription = AppState.addEventListener('change', (state) => {
-        if (state === 'active') {
-          day = new Date().toDateString();
-          void refresh();
-        }
+        foreground = state === 'active';
+        if (foreground) void refresh();
       });
       const timer = setInterval(() => {
-        const currentDay = new Date().toDateString();
-        if (currentDay !== day) {
-          day = currentDay;
-          void refresh();
-        }
+        // Due reviews and greetings can change within one calendar day too.
+        if (foreground) void refresh();
       }, 60000);
       return () => {
         active = false;
