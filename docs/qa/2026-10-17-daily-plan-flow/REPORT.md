@@ -12,7 +12,7 @@ Targeted tests cover the real content registry and development gate, 3/5/10-minu
 
 Fresh review identified three issues: stale resume linkage, Home changing decks before the old pending grade settled, and an error allowing unlinked fallback. Each was reproduced and fixed with failing/passing regressions.
 
-Final local verification: 87 suites / 862 tests passed; typecheck, lint, whole-repository format, calendar-zone checks, data/audio inventory and editorial-ledger validation passed. CI will be recorded after integration.
+Final local verification: 87 suites / 862 tests passed; typecheck, lint, whole-repository format, calendar-zone checks, data/audio inventory and editorial-ledger validation passed. The merged tree also passed 87 suites / 862 tests. Implementation `aea71a9` is on main. [CI 39034006822](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39034006822) passed all four jobs, including both platform project-generation and production JavaScript exports. [Board deployment 39034006820](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39034006820) passed.
 
 ## iOS simulator evidence
 

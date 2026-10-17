@@ -29,7 +29,7 @@ Draft authored language stays development-gated. Do not award learning proficien
 - [x] TDD: link mission start/commands/completion to the exact plan/run/version and commit final phase in the mission journal. Keep ordinary mission calls independent.
 - [x] TDD: Home starts/resumes the proper phase; Study opens exact saved plan, links grades, preserves ordinary resume linkage, detaches independent browsing and offers direct applied continuation. Guard pending writes/errors with retry.
 - [x] TDD: applied screen loads the exact plan, presents the existing mission player, honest unavailable/end/complete states, and verifies answer/feedback/restart/completion without SRS inflation.
-- [ ] Full tests/static/content/calendar checks and fresh review; available simulator flow, precise checklist evidence, merge/push and CI.
+- [x] Full tests/static/content/calendar checks and fresh review; available simulator flow, precise checklist evidence, merge/push and CI.
 
 Activity-specific active timing calibration remains a separately tracked next step; this flow package must not close B05.3-B2 until that and native acceptance pass.
 
@@ -45,4 +45,4 @@ Ruling: explicit End clears plan intent while retaining grades/history — learn
 
 Ruling: preserve exact linked card membership despite changed due/region metadata; block missing cards with manage/end — avoids silently changing the saved task, at the cost of requiring explicit recovery when content disappears.
 
-Available iOS checks completed for 3/5/10 minutes, changed preferences and cold review resume, explicit end, Spanish review → answer → cold feedback resume → completion, and unchanged SRS/daily counters during the applied phase. See QA report. Final integration/CI will be recorded after actual results.
+Available iOS checks completed for 3/5/10 minutes, changed preferences and cold review resume, explicit end, Spanish review → answer → cold feedback resume → completion, and unchanged SRS/daily counters during the applied phase. See QA report. Implementation `aea71a9` is merged/pushed. Merged tree: 87 suites / 862 tests passed. GitHub CI39034006822 passed all four jobs; board39034006820 passed. All six tasks in this bounded flow package are complete; the parent calibration/roadmap remains open.
