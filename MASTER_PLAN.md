@@ -721,3 +721,5 @@ B01.8-C2f bounds demonstrated stack exhaustion through semantic parsing and dire
 ### Progress accessibility — 2026-10-17
 
 B08.4-B2a is complete: readable live Dynamic Type layouts, full deck names, accessible goal values and working Study navigation. Native phone/tablet state hashes remained unchanged; 94 suites / 925 tests and independent review passed. [Evidence and coverage limits](docs/qa/2026-10-17-progress-accessibility/REPORT.md). B01.8-C2g records the owner-reported security-access blocker; no signature-validation patch applied. Broader AI tasks remain open.
+
+Progress batch integration: merged and pushed main at `67ef116`; merged local suite 94/925 passed. [CI 39052931950](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39052931950) passed all four jobs; [checklist board 39052931925](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39052931925) passed. Native project/JS bundle checks do not establish signing, physical-device or editorial acceptance.

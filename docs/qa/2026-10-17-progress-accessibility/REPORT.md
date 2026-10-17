@@ -27,3 +27,7 @@ Tablet app accessibility tree was unavailable, so its checks used screenshots an
 - Independent code review found no actionable defects and independently passed all eight focused tests.
 
 Security task B01.8-C2g remains open with the owner's reported Codex cybersecurity-access error recorded in the master checklist. No signature-validation patch was applied in this batch.
+
+## Integration
+
+Fast-forward merged and pushed to main at `67ef116`. The merged local suite passed 94 suites / 925 tests. [GitHub CI 39052931950](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39052931950) passed all four jobs, including quality/content and iOS/Android project generation plus production JavaScript bundles. [Checklist board run 39052931925](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39052931925) passed. These checks do not establish signed native compilation or physical-device acceptance.
