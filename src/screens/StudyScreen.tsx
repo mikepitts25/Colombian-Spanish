@@ -41,6 +41,7 @@ import { AnswerAttempt, DailyNewCardLimitError } from '../storage/flashcardAnswe
 import { speakCard } from '../services/tts';
 import { StudyQueueSnapshot } from '../storage/studySession';
 import { isNewCard, formatIntervalShort, previewInterval } from '../utils/srs';
+import { useActiveStudyTime } from '../hooks/useActiveStudyTime';
 
 const GRADES = [
   {
@@ -266,6 +267,12 @@ export default function StudyScreen() {
   const progress = daily.target > 0 ? Math.min(1, daily.count / daily.target) : 0;
   const remaining = batch.length;
   const card = batch[0];
+  const activeDuration = useActiveStudyTime(
+    mode === 'session' && card
+      ? `${learningSession.current}:${activeDeckId}:${card.id}`
+      : undefined,
+    !checkpointBusy && !checkpointFailed && !gradeSaving && !gradeError,
+  );
   useLayoutEffect(() => {
     if (revealNextCard.current === undefined) return;
     const version = revealNextCard.current;
@@ -445,6 +452,7 @@ export default function StudyScreen() {
       sessionId: learningSession.current,
       cardId: currentCard.id,
       quality: qValue,
+      durationMs: activeDuration(),
       nextSession: {
         deckId: activeDeck.id,
         ...(nextCard ? { cardId: nextCard.id } : {}),
@@ -462,6 +470,7 @@ export default function StudyScreen() {
       await recordAnswer(attempt.cardId, attempt.quality, {
         attemptId: attempt.attemptId,
         sessionId: attempt.sessionId,
+        durationMs: attempt.durationMs,
         nextSession: attempt.nextSession,
       });
       const nextDP = await getDailyProgress();

@@ -32,16 +32,22 @@ export interface AnswerAttempt {
   sessionId: string;
   cardId: string;
   quality: CardQuality;
+  durationMs?: number | null;
   nextSession?: Omit<LastStudySession, 'updatedAt'>;
 }
-export type AnswerOptions = Pick<AnswerAttempt, 'attemptId' | 'sessionId' | 'nextSession'>;
+export type AnswerOptions = Pick<
+  AnswerAttempt,
+  'attemptId' | 'sessionId' | 'nextSession' | 'durationMs'
+>;
 
 export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
   if (
     ![attempt.attemptId, attempt.sessionId, attempt.cardId].every(
       (value) => typeof value === 'string' && value.trim(),
     ) ||
-    ![0, 1, 2, 3, 4, 5].includes(attempt.quality)
+    ![0, 1, 2, 3, 4, 5].includes(attempt.quality) ||
+    (attempt.durationMs != null &&
+      (!Number.isSafeInteger(attempt.durationMs) || attempt.durationMs < 0))
   )
     throw new Error('Invalid grade attempt');
   // Snapshot caller state before waiting for another event/restore operation.
@@ -59,6 +65,7 @@ export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
           prior.cardId !== input.cardId ||
           prior.sessionId !== input.sessionId ||
           prior.quality !== input.quality ||
+          prior.durationMs !== (input.durationMs ?? null) ||
           prior.modality !== 'recall' ||
           prior.evidence !== 'self-rated'
         ) {
@@ -109,7 +116,7 @@ export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
         quality: input.quality,
         occurredAt: Date.now(),
         hintsUsed: null,
-        durationMs: null,
+        durationMs: input.durationMs ?? null,
       };
       await tx.setItem(
         'SRS_LEARNING_EVENTS_V1',

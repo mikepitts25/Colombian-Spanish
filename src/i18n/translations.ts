@@ -107,6 +107,7 @@ export const translations = {
     'mission.restart': 'Reiniciar misión',
     'mission.cancel': 'Cancelar',
     'home.reviewEstimate': 'Sugerencia: {deck} · hasta {count} tarjetas · aprox. {minutes} min',
+    'home.measuredEstimate': 'La duración estimada usa tu ritmo reciente de repaso activo.',
     'profile.title': 'Tus preferencias de aprendizaje',
     'profile.subtitle':
       'Ajusta tu enfoque. Estos datos quedan en este dispositivo y en tus copias de seguridad.',
@@ -709,6 +710,7 @@ export const translations = {
     'mission.restart': 'Restart mission',
     'mission.cancel': 'Cancel',
     'home.reviewEstimate': 'Suggested: {deck} · up to {count} cards · about {minutes} min',
+    'home.measuredEstimate': 'Time estimate uses your recent active review pace.',
     'profile.title': 'Your learning preferences',
     'profile.subtitle': 'Adjust your focus. These details stay on this device and in your backups.',
     'profile.level': 'Your starting level',

@@ -63,6 +63,22 @@ it('deduplicates a retained attempt and rejects conflicting retries', async () =
   await expect(commitFlashcardAnswer({ ...attempt, quality: 1 })).rejects.toThrow('conflict');
   expect(await getLearningEvents()).toHaveLength(1);
 });
+it('journals measured active duration with the grade and keeps retry timing immutable', async () => {
+  const timed = { ...attempt, durationMs: 23456 };
+  await commitFlashcardAnswer(timed);
+  await commitFlashcardAnswer(timed);
+  expect((await getLearningEvents())[0].durationMs).toBe(23456);
+  await expect(commitFlashcardAnswer({ ...timed, durationMs: 34567 })).rejects.toThrow('conflict');
+  expect((await getDailyProgress()).count).toBe(1);
+});
+it.each([-1, NaN, Infinity, 1.5])(
+  'rejects invalid active duration %s before writing',
+  async (durationMs) => {
+    await expect(commitFlashcardAnswer({ ...attempt, durationMs })).rejects.toThrow('Invalid');
+    expect(await getLearningEvents()).toHaveLength(0);
+    expect((await loadDecks())[0].cards[0].reps).toBe(0);
+  },
+);
 it('recovers a failed partial grade without duplicating it on retry', async () => {
   let fail = true;
   (AsyncStorage.setItem as jest.Mock).mockImplementation(async (key, value) => {

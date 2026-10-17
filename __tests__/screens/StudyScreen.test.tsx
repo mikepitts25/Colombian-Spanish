@@ -576,23 +576,36 @@ it('opens the requested deck session directly from a Home handoff', async () => 
 });
 
 it('retries a failed grade with the same attempt identity and original quality', async () => {
-  const recordAnswer = jest
-    .fn()
-    .mockRejectedValueOnce(new Error('disk full'))
-    .mockResolvedValue(undefined);
-  const screen = renderStudyScreen({ recordAnswer });
-  await openCommunicationSession(screen);
-  await act(async () => fireEvent.press(screen.getByText('Bien')));
-  const retry = await screen.findByText('Intentar guardar de nuevo');
-  expect(screen.getByText('hola')).toBeTruthy();
-  const original = recordAnswer.mock.calls[0];
-  expect(original[2]).toEqual(
-    expect.objectContaining({ attemptId: expect.any(String), sessionId: expect.any(String) }),
-  );
-  await act(async () => fireEvent.press(retry));
-  expect(recordAnswer.mock.calls[1]).toEqual(original);
-  expect(mockIncrementDailyProgress).not.toHaveBeenCalled();
-  expect(await screen.findByText('adios')).toBeTruthy();
+  const readTime = jest.fn().mockReturnValue(12000);
+  const timing = jest
+    .spyOn(require('../../src/hooks/useActiveStudyTime'), 'useActiveStudyTime')
+    .mockReturnValue(readTime);
+  try {
+    const recordAnswer = jest
+      .fn()
+      .mockRejectedValueOnce(new Error('disk full'))
+      .mockResolvedValue(undefined);
+    const screen = renderStudyScreen({ recordAnswer });
+    await openCommunicationSession(screen);
+    await act(async () => fireEvent.press(screen.getByText('Bien')));
+    const retry = await screen.findByText('Intentar guardar de nuevo');
+    expect(screen.getByText('hola')).toBeTruthy();
+    const original = recordAnswer.mock.calls[0];
+    expect(original[2]).toEqual(
+      expect.objectContaining({
+        attemptId: expect.any(String),
+        sessionId: expect.any(String),
+        durationMs: 12000,
+      }),
+    );
+    readTime.mockReturnValue(99000);
+    await act(async () => fireEvent.press(retry));
+    expect(recordAnswer.mock.calls[1]).toEqual(original);
+    expect(mockIncrementDailyProgress).not.toHaveBeenCalled();
+    expect(await screen.findByText('adios')).toBeTruthy();
+  } finally {
+    timing.mockRestore();
+  }
 });
 
 it('keeps the current session and region while a grade is unresolved', async () => {

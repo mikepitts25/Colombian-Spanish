@@ -28,6 +28,9 @@ jest.mock('../../src/storage/storage', () => ({
 jest.mock('../../src/storage/prefs', () => ({
   getPrefs: jest.fn().mockResolvedValue({ newCardsPerDay: 10 }),
 }));
+jest.mock('../../src/storage/learningEvents', () => ({
+  getLearningEvents: jest.fn().mockResolvedValue([]),
+}));
 
 jest.mock('../../src/services/tts', () => ({
   speakCard: jest.fn(),
@@ -95,6 +98,7 @@ const RESTED_DECK: Deck = {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  require('../../src/storage/learningEvents').getLearningEvents.mockResolvedValue([]);
   jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() });
   mockLanguage = 'en';
   mockReload.mockResolvedValue(undefined);
@@ -115,6 +119,45 @@ beforeEach(() => {
 });
 
 afterEach(() => jest.restoreAllMocks());
+
+it('uses measured active review pace for Home limits and labels it as an estimate', async () => {
+  const events = Array.from({ length: 6 }, (_, i) => ({
+    id: `e${i}`,
+    sessionId: `s${i % 2}`,
+    occurredAt: Date.now() - i,
+    modality: 'recall',
+    evidence: 'self-rated',
+    durationMs: 20000,
+  }));
+  require('../../src/storage/learningEvents').getLearningEvents.mockResolvedValue(events);
+  require('../../src/storage/prefs').getPrefs.mockResolvedValue({
+    newCardsPerDay: 10,
+    studyMinutes: 3,
+    learningLevel: 'beginner',
+  });
+  mockUseDeck.mockReturnValue({
+    ready: true,
+    decks: [
+      {
+        ...DECK,
+        cards: Array.from({ length: 20 }, (_, i) => makeCard(`due${i}`, { reps: 2, interval: 1 })),
+      },
+    ],
+    activeDeckId: DECK.id,
+    setActiveDeckId: jest.fn(),
+    reload: mockReload,
+  });
+  const ui = render(<HomeScreen />);
+  await ui.findByText('Suggested: Greetings · up to 9 cards · about 3 min');
+  expect(ui.getByText('Time estimate uses your recent active review pace.')).toBeTruthy();
+  fireEvent.press(ui.getByText('Study due cards'));
+  await waitFor(() =>
+    expect(mockNavigate).toHaveBeenCalledWith(
+      'Study',
+      expect.objectContaining({ sessionCardLimit: 9, sessionNewLimit: 0 }),
+    ),
+  );
+});
 
 describe('HomeScreen quick actions', () => {
   it('navigates to quiz, difficult words, phrases, and add-card flows', async () => {

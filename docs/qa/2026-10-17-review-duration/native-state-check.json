@@ -1,0 +1,502 @@
+[
+  {
+    "phase": "after-first-grade",
+    "capturedAt": 1792238128.1933172,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 1,
+      "target": 10,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1801",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1801", "1802", "1803", "1804", "1805", "1806", "1807", "1808", "1809"],
+        "region": "all",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk"
+      },
+      "updatedAt": 1792238116497
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvccat80-c-p95xzy7td1",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792238116497,
+        "hintsUsed": null,
+        "durationMs": 52616
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "deckHash": "d3335b8095e318d06d7066d76d101442465aea645bf44992c9e7ac78749b1203"
+  },
+  {
+    "phase": "background-confirmed",
+    "capturedAt": 1792238151.353819,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 1,
+      "target": 10,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1801",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1801", "1802", "1803", "1804", "1805", "1806", "1807", "1808", "1809"],
+        "region": "all",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk"
+      },
+      "updatedAt": 1792238116497
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvccat80-c-p95xzy7td1",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792238116497,
+        "hintsUsed": null,
+        "durationMs": 52616
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "deckHash": "d3335b8095e318d06d7066d76d101442465aea645bf44992c9e7ac78749b1203"
+  },
+  {
+    "phase": "after-background-grade",
+    "capturedAt": 1792238194.0526998,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 2,
+      "target": 10,
+      "newCount": 2
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1802",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1802", "1803", "1804", "1805", "1806", "1807", "1808", "1809"],
+        "region": "all",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk"
+      },
+      "updatedAt": 1792238182530
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvccat80-c-p95xzy7td1",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238116497,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 52616
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvccc868-h-lwqiyubqwc",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792238182530,
+        "hintsUsed": null,
+        "durationMs": 35213
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "deckHash": "a357db153b0d5ba3abc6d31622cbef91eda6b95a38319697a06f4d36d7f66b2a"
+  },
+  {
+    "phase": "calibrated-home",
+    "capturedAt": 1792238272.281176,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 5,
+      "target": 10,
+      "newCount": 5
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1805",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1805", "1806", "1807"],
+        "region": "all",
+        "sessionId": "mvccda7z-t-trqebk1sw6g",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1792238256703
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvccat80-c-p95xzy7td1",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238116497,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 52616
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvccc868-h-lwqiyubqwc",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238182530,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 35213
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcccte5-m-zetvba39x8",
+        "cardId": "1802",
+        "deckId": "deck-business",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238210023,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 27269
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvccdk2c-x-6sauaw7qtte",
+        "cardId": "1803",
+        "deckId": "deck-business",
+        "sessionId": "mvccda7z-t-trqebk1sw6g",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238244591,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 12699
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvccdtev-12-lgfr587fxg",
+        "sessionId": "mvccda7z-t-trqebk1sw6g",
+        "cardId": "1804",
+        "deckId": "deck-business",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792238256703,
+        "hintsUsed": null,
+        "durationMs": 11916
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "deckHash": "d546b04495236e6881fad01f5467a761be382825db56b8866ce101235083de7f"
+  },
+  {
+    "phase": "cold-launch-home",
+    "capturedAt": 1792238296.931494,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 5,
+      "target": 10,
+      "newCount": 5
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1805",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1805", "1806", "1807"],
+        "region": "all",
+        "sessionId": "mvccda7z-t-trqebk1sw6g",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1792238256703
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvccat80-c-p95xzy7td1",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238116497,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 52616
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvccc868-h-lwqiyubqwc",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238182530,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 35213
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcccte5-m-zetvba39x8",
+        "cardId": "1802",
+        "deckId": "deck-business",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238210023,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 27269
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvccdk2c-x-6sauaw7qtte",
+        "cardId": "1803",
+        "deckId": "deck-business",
+        "sessionId": "mvccda7z-t-trqebk1sw6g",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238244591,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 12699
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvccdtev-12-lgfr587fxg",
+        "sessionId": "mvccda7z-t-trqebk1sw6g",
+        "cardId": "1804",
+        "deckId": "deck-business",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792238256703,
+        "hintsUsed": null,
+        "durationMs": 11916
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "deckHash": "d546b04495236e6881fad01f5467a761be382825db56b8866ce101235083de7f"
+  },
+  {
+    "phase": "exact-cold-resume",
+    "capturedAt": 1792238360.181418,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 5,
+      "target": 10,
+      "newCount": 5
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1805",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1805", "1806", "1807"],
+        "region": "all",
+        "sessionId": "mvccda7z-t-trqebk1sw6g",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1792238350379
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvccat80-c-p95xzy7td1",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238116497,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 52616
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvccc868-h-lwqiyubqwc",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238182530,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 35213
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcccte5-m-zetvba39x8",
+        "cardId": "1802",
+        "deckId": "deck-business",
+        "sessionId": "mvcc9o73-2-hhifqhp6xpk",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238210023,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 27269
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvccdk2c-x-6sauaw7qtte",
+        "cardId": "1803",
+        "deckId": "deck-business",
+        "sessionId": "mvccda7z-t-trqebk1sw6g",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792238244591,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 12699
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvccdtev-12-lgfr587fxg",
+        "sessionId": "mvccda7z-t-trqebk1sw6g",
+        "cardId": "1804",
+        "deckId": "deck-business",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792238256703,
+        "hintsUsed": null,
+        "durationMs": 11916
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "en",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "deckHash": "d546b04495236e6881fad01f5467a761be382825db56b8866ce101235083de7f"
+  }
+]

@@ -15,6 +15,8 @@ import { pickWordOfDay } from '../utils/wordOfDay';
 import { isNewCard } from '../utils/srs';
 import { getPrefs, Prefs } from '../storage/prefs';
 import { recommendDailyReview } from '../utils/dailyReview';
+import { getLearningEvents } from '../storage/learningEvents';
+import { calibratedReviewSeconds } from '../utils/reviewPace';
 
 const COLOMBIAN_GREETINGS = [
   {
@@ -82,11 +84,13 @@ type DeckWithDue = Deck & {
 };
 
 async function loadHomeProgress() {
-  const [daily, streak, prefs] = await Promise.all([
+  const [daily, streak, prefs, events] = await Promise.all([
     getDailyProgress(),
     getStreakState(),
     getPrefs(),
+    getLearningEvents(),
   ]);
+  const now = Date.now();
   return {
     count: daily.count,
     target: daily.target,
@@ -96,7 +100,8 @@ async function loadHomeProgress() {
     newIntroduced: daily.newCount ?? 0,
     profile: prefs as Partial<Prefs>,
     loaded: true,
-    now: Date.now(),
+    now,
+    measuredSeconds: calibratedReviewSeconds(events, now),
   };
 }
 
@@ -120,6 +125,7 @@ export default function HomeScreen() {
     profile: {} as Partial<Prefs>,
     loaded: false,
     now: initialNow,
+    measuredSeconds: undefined as number | undefined,
   });
   const { count: dailyCount, target: dailyTarget, streak, freezes } = activity;
   const greeting = useMemo(() => {
@@ -161,6 +167,7 @@ export default function HomeScreen() {
           newAvailableToday,
           activity.now,
           activeDeckId,
+          activity.measuredSeconds,
         )
       : undefined;
   const recommendedDeck = workload.find((deck) => deck.id === recommendation?.deckId);
@@ -313,6 +320,9 @@ export default function HomeScreen() {
             <Text accessibilityRole="alert" style={styles.todaySub}>
               {t('home.studyStartError')}
             </Text>
+          )}
+          {recommendation && activity.measuredSeconds !== undefined && (
+            <Text style={styles.todaySub}>{t('home.measuredEstimate')}</Text>
           )}
           <Pressable
             disabled={studyStarting}
