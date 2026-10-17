@@ -1,0 +1,32 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false __tests__/screens/QuizScreen.test.tsx
+
+PASS __tests__/screens/QuizScreen.test.tsx
+  ✓ can retry completion without losing the score or creating another recognition attempt (214 ms)
+  ✓ shows unique answer meanings even when many cards share one translation (57 ms)
+  ✓ does not score a quiz with only one distinct answer meaning (64 ms)
+  ✓ exposes selected region controls and keeps their filter through live text changes (64 ms)
+  ✓ retains a pending selected answer and feedback through live text changes without duplicate credit (119 ms)
+  QuizScreen integration polish
+    ✓ shows a study CTA when no words have been studied (224 ms)
+    ✓ renders quiz region filters without horizontal scrolling (54 ms)
+    ✓ shows recent score history before starting a quiz (55 ms)
+    ✓ starts a missed-card review from quiz history (59 ms)
+    ✓ renders locked quiz copy in Spanish when UI language is Spanish (7 ms)
+  recognition evidence
+    ✓ records recognition without changing existing flashcard scheduling or double-counting taps (63 ms)
+    ✓ records incorrect recognition as incorrect instead of a failed flashcard review (60 ms)
+    ✓ keeps an unsaved answer recoverable and retries the same observation (163 ms)
+    ✓ uses the current translation rather than stale seen-word text (55 ms)
+  early quiz practice
+    ✓ finishes a one-word round and records only checked recognition (168 ms)
+    ✓ builds a short round from only studied words, without repeating duplicate history IDs (124 ms)
+    ✓ supports a single studied word in a region and an empty-region fallback (67 ms)
+    ✓ still caps a larger studied pool at ten questions (60 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       18 passed, 18 total
+Snapshots:   0 total
+Time:        2.589 s
+Ran all test suites matching /__tests__\/screens\/QuizScreen.test.tsx/i.

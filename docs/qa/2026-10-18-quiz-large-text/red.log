@@ -1,0 +1,231 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false __tests__/screens/QuizScreen.test.tsx -t live text changes
+
+FAIL __tests__/screens/QuizScreen.test.tsx
+  ✕ exposes selected region controls and keeps their filter through live text changes (297 ms)
+  ✕ retains a pending selected answer and feedback through live text changes without duplicate credit (58 ms)
+  ○ skipped can retry completion without losing the score or creating another recognition attempt
+  ○ skipped shows unique answer meanings even when many cards share one translation
+  ○ skipped does not score a quiz with only one distinct answer meaning
+  QuizScreen integration polish
+    ○ skipped shows a study CTA when no words have been studied
+    ○ skipped renders quiz region filters without horizontal scrolling
+    ○ skipped shows recent score history before starting a quiz
+    ○ skipped starts a missed-card review from quiz history
+    ○ skipped renders locked quiz copy in Spanish when UI language is Spanish
+  recognition evidence
+    ○ skipped records recognition without changing existing flashcard scheduling or double-counting taps
+    ○ skipped records incorrect recognition as incorrect instead of a failed flashcard review
+    ○ skipped keeps an unsaved answer recoverable and retries the same observation
+    ○ skipped uses the current translation rather than stale seen-word text
+  early quiz practice
+    ○ skipped finishes a one-word round and records only checked recognition
+    ○ skipped builds a short round from only studied words, without repeating duplicate history IDs
+    ○ skipped supports a single studied word in a region and an empty-region fallback
+    ○ skipped still caps a larger studied pool at ten questions
+
+  ● exposes selected region controls and keeps their filter through live text changes
+
+    Unable to find an element with role: button, name: All, selected state: true
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mVocabulary Quiz[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mPractice words from your seen-word pool, with due cards first.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mRegion[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mAll[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mGeneral[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mPaisa[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mRolo[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mCosteño[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mValluno[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mLlanero[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m10[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mstudied words available[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mUp to 10 questions in this round.[0m
+            [36m</Text>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mStart Quiz[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      363 |   try {
+      364 |     await screen.findByText('Start Quiz');
+    > 365 |     expect(screen.getByRole('button', { name: 'All', selected: true })).toBeTruthy();
+          |                   ^
+      366 |     fireEvent.press(screen.getByRole('button', { name: 'Rolo' }));
+      367 |     act(() =>
+      368 |       Dimensions.set({
+
+      at Object.getByRole (__tests__/screens/QuizScreen.test.tsx:365:19)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● retains a pending selected answer and feedback through live text changes without duplicate credit
+
+    Unable to find an element with role: button, name: back-c0
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<RCTScrollView[39m
+        [33mtestID[39m=[32m"quiz-question-scroll"[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mVocabulary Quiz[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m1 / 1[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mWhat does this mean?[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mfront-c0[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mGeneral[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mback-c0[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mback-c3[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mback-c7[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mback-c5[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      392 |   try {
+      393 |     fireEvent.press(await screen.findByText('Start Quiz'));
+    > 394 |     fireEvent.press(screen.getByRole('button', { name: 'back-c0' }));
+          |                            ^
+      395 |     await waitFor(async () => expect(await getLearningEvents()).toHaveLength(1));
+      396 |     act(() =>
+      397 |       Dimensions.set({
+
+      at Object.getByRole (__tests__/screens/QuizScreen.test.tsx:394:28)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 16 skipped, 18 total
+Snapshots:   0 total
+Time:        1.189 s, estimated 2 s
+Ran all test suites matching /__tests__\/screens\/QuizScreen.test.tsx/i with tests matching "live text changes".

@@ -1,8 +1,8 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getLearningEvents } from '../../src/storage/learningEvents';
-import { fireEvent, render, waitFor, within } from '@testing-library/react-native';
-import { ScrollView } from 'react-native';
+import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
+import { Dimensions, ScrollView } from 'react-native';
 import QuizScreen from '../../src/screens/QuizScreen';
 import { Deck, FlashCard } from '../../src/types';
 import { SeenWord } from '../../src/storage/storage';
@@ -40,7 +40,12 @@ jest.mock('../../src/context/LanguageContext', () => {
 });
 
 import { useDeck } from '../../src/hooks/useDeck';
-import { getSeenWords, getQuizHistory, recordQuizResult } from '../../src/storage/storage';
+import {
+  getSeenWords,
+  getQuizHistory,
+  recordQuizResult,
+  recordStudySession,
+} from '../../src/storage/storage';
 
 const mockUseDeck = useDeck as jest.Mock;
 const mockGetSeenWords = getSeenWords as jest.Mock;
@@ -349,4 +354,75 @@ describe('early quiz practice', () => {
     fireEvent.press(await screen.findByText('Start Quiz'));
     expect(screen.getByText('1 / 10')).toBeTruthy();
   });
+});
+
+it('exposes selected region controls and keeps their filter through live text changes', async () => {
+  const window = Dimensions.get('window');
+  const screenMetrics = Dimensions.get('screen');
+  const screen = renderQuiz();
+  try {
+    await screen.findByText('Start Quiz');
+    expect(screen.getByRole('button', { name: 'All', selected: true })).toBeTruthy();
+    fireEvent.press(screen.getByRole('button', { name: 'Rolo' }));
+    act(() =>
+      Dimensions.set({
+        window: { ...window, fontScale: 3 },
+        screen: { ...screenMetrics, fontScale: 3 },
+      }),
+    );
+    expect(screen.getByRole('button', { name: 'Rolo', selected: true })).toBeTruthy();
+    expect(screen.getByText('Study now')).toBeTruthy();
+    expect(await getLearningEvents()).toEqual([]);
+  } finally {
+    screen.unmount();
+    act(() => Dimensions.set({ window, screen: screenMetrics }));
+  }
+});
+
+it('retains a pending selected answer and feedback through live text changes without duplicate credit', async () => {
+  const window = Dimensions.get('window');
+  const screenMetrics = Dimensions.get('screen');
+  let release!: () => void;
+  (recordStudySession as jest.Mock).mockImplementationOnce(
+    () => new Promise<void>((resolve) => (release = resolve)),
+  );
+  (recordQuizResult as jest.Mock).mockImplementation(async (params) => [
+    { ...params, createdAt: NOW },
+  ]);
+  mockGetSeenWords.mockResolvedValue([makeSeenWord(CARDS[0])]);
+  const screen = renderQuiz();
+  try {
+    fireEvent.press(await screen.findByText('Start Quiz'));
+    fireEvent.press(screen.getByRole('button', { name: 'back-c0' }));
+    await waitFor(async () => expect(await getLearningEvents()).toHaveLength(1));
+    act(() =>
+      Dimensions.set({
+        window: { ...window, fontScale: 3 },
+        screen: { ...screenMetrics, fontScale: 3 },
+      }),
+    );
+    expect(
+      screen.getByRole('button', { name: 'back-c0', selected: true, disabled: true }),
+    ).toBeTruthy();
+    expect(screen.getByText('front-c0')).toBeTruthy();
+    expect(screen.getByText('1 / 1')).toBeTruthy();
+    fireEvent.press(screen.getByRole('button', { name: 'back-c0' }));
+    await act(async () => release());
+    await screen.findByText('See results');
+    act(() => Dimensions.set({ window, screen: screenMetrics }));
+    expect(screen.getByText('Correct')).toBeTruthy();
+    expect(
+      screen.getByRole('button', { name: 'back-c0', selected: true, disabled: true }),
+    ).toBeTruthy();
+    fireEvent.press(screen.getByText('See results'));
+    expect(await screen.findByText('Quiz Complete')).toBeTruthy();
+    expect(await getLearningEvents()).toEqual([
+      expect.objectContaining({ cardId: 'c0', modality: 'recognition', outcome: 'correct' }),
+    ]);
+    expect(recordQuizResult).toHaveBeenCalledTimes(1);
+    expect(recordQuizResult).toHaveBeenCalledWith(expect.objectContaining({ score: 1, total: 1 }));
+  } finally {
+    screen.unmount();
+    act(() => Dimensions.set({ window, screen: screenMetrics }));
+  }
 });

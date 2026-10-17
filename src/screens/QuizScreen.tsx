@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, radius, typography, elevation } from '../styles/theme';
@@ -55,6 +55,8 @@ const MIN_QUIZ_WORDS = 1;
 const MAX_QUIZ_QUESTIONS = 10;
 
 export default function QuizScreen() {
+  const { fontScale } = useWindowDimensions();
+  const largeText = fontScale >= 1.4;
   const { decks, ready } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
@@ -331,6 +333,8 @@ export default function QuizScreen() {
         {REGION_FILTERS.map((region) => (
           <Pressable
             key={region.id}
+            accessibilityRole="button"
+            accessibilityState={{ selected: activeRegion === region.id }}
             style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
             onPress={() => changeRegion(region.id)}
           >
@@ -391,7 +395,7 @@ export default function QuizScreen() {
     const needed = MIN_QUIZ_WORDS - availableSeenWords.length;
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.emptyScroll}>
+        <ScrollView key={fontScale} contentContainerStyle={styles.emptyScroll}>
           {renderRegionChips()}
           <View style={styles.emptyBody}>
             <View style={styles.centerPanel}>
@@ -441,7 +445,7 @@ export default function QuizScreen() {
   if (!session) {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.startScroll}>
+        <ScrollView key={fontScale} contentContainerStyle={styles.startScroll}>
           <View style={styles.header}>
             <Text style={styles.headerTitle}>{t('quiz.title')}</Text>
             <Text style={styles.headerSub}>{t('quiz.startSub')}</Text>
@@ -477,7 +481,7 @@ export default function QuizScreen() {
     const latestResult = quizHistory[0];
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.completeContainer}>
+        <ScrollView key={fontScale} contentContainerStyle={styles.completeContainer}>
           <Text style={styles.completeTitle}>{t('quiz.complete.title')}</Text>
           <Text style={styles.completeMessage}>
             {percentage >= 80 ? t('quiz.complete.strong') : t('quiz.complete.review')}
@@ -489,13 +493,13 @@ export default function QuizScreen() {
             </Text>
             <Text style={styles.scorePercent}>{percentage}%</Text>
           </View>
-          <View style={styles.statsContainer}>
-            <View style={styles.statItem}>
+          <View style={[styles.statsContainer, largeText && styles.stackedStats]}>
+            <View style={[styles.statItem, largeText && styles.noFlex]}>
               <Text style={styles.statNumber}>{session.score}</Text>
               <Text style={styles.statLabel}>{t('quiz.correct')}</Text>
             </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
+            <View style={[styles.statDivider, largeText && styles.horizontalDivider]} />
+            <View style={[styles.statItem, largeText && styles.noFlex]}>
               <Text style={styles.statNumber}>{missedCount}</Text>
               <Text style={styles.statLabel}>{t('quiz.missed')}</Text>
             </View>
@@ -526,7 +530,7 @@ export default function QuizScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
-        key={`${session.id}:${session.currentIndex}`}
+        key={`${session.id}:${session.currentIndex}:${fontScale}`}
         testID="quiz-question-scroll"
         contentContainerStyle={styles.questionScroll}
       >
@@ -550,6 +554,11 @@ export default function QuizScreen() {
             return (
               <Pressable
                 key={`${option}-${index}`}
+                accessibilityRole="button"
+                accessibilityState={{
+                  selected: isSelected,
+                  disabled: showFeedback || saving || saveError,
+                }}
                 style={[
                   styles.optionButton,
                   showFeedback && isCorrectOption && styles.optionCorrect,
@@ -907,6 +916,8 @@ const styles = StyleSheet.create({
     minWidth: 220,
   },
   statItem: { flex: 1, alignItems: 'center' },
+  stackedStats: { alignSelf: 'stretch', flexDirection: 'column', gap: spacing(2) },
+  noFlex: { flex: 0 },
   statNumber: {
     color: colors.textPrimary,
     fontSize: typography.size['2xl'],
@@ -919,4 +930,5 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   statDivider: { width: 1, backgroundColor: colors.border },
+  horizontalDivider: { width: '100%', height: 1 },
 });
