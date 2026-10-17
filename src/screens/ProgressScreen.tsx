@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
 import { getDailyProgress, getStudyStreak } from '../storage/storage';
@@ -51,6 +51,8 @@ export default function ProgressScreen() {
   const { decks, ready } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
+  const { fontScale } = useWindowDimensions();
+  const largeText = fontScale >= 1.4;
   const [initialNow] = useState(() => Date.now());
   const { value: snapshot, error } = useFocusedAsync(loadProgress, {
     daily: { count: 0, target: 10 },
@@ -130,36 +132,52 @@ export default function ProgressScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        key={fontScale}
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Title row */}
         <View style={styles.titleRow}>
           <Text style={styles.pageTitle}>{t('progress.title')}</Text>
         </View>
 
         {/* Streak hero */}
-        <View style={styles.streakCard}>
-          <View style={styles.streakLeft}>
+        <View style={[styles.streakCard, largeText && styles.stacked]}>
+          <View style={[styles.streakLeft, largeText && styles.noFlex]}>
             <Text style={styles.streakCaptionTop}>{t('progress.currentStreak')}</Text>
             <View style={styles.streakNumRow}>
               <Text style={styles.streakDays}>{streak}</Text>
-              <Text style={styles.streakUnit}>{t('progress.days')}</Text>
+              <Text style={styles.streakUnit}>
+                {t(streak === 1 ? 'progress.day' : 'progress.days')}
+              </Text>
             </View>
             <Text style={styles.streakCaption}>
               {streak > 0 ? t('progress.streak.keep') : t('progress.streak.start')}
             </Text>
           </View>
           <View style={styles.streakBadge}>
-            <Text style={styles.streakBadgeEmoji}>🔥</Text>
+            <Text allowFontScaling={false} accessible={false} style={styles.streakBadgeEmoji}>
+              🔥
+            </Text>
           </View>
         </View>
 
         {/* Daily goal card */}
         <View style={styles.dailyCard}>
-          <View style={styles.dailyCardRow}>
-            <View style={styles.dailyDonut}>
-              <DonutRing pct={dailyPct} size={90} />
+          <View style={[styles.dailyCardRow, largeText && styles.stacked]}>
+            <View
+              style={styles.dailyDonut}
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+            >
+              {largeText ? (
+                <Text style={styles.dailyPercentage}>{Math.round(dailyPct * 100)}%</Text>
+              ) : (
+                <DonutRing pct={dailyPct} size={90} />
+              )}
             </View>
-            <View style={styles.dailyRight}>
+            <View style={[styles.dailyRight, largeText && styles.noFlex]}>
               <Text style={styles.dailyTitle}>{t('progress.todayGoal')}</Text>
               <Text style={styles.dailySub}>
                 {t('progress.dailySub', {
@@ -168,10 +186,28 @@ export default function ProgressScreen() {
                 })}
               </Text>
               {/* Mini bar */}
-              <View style={styles.dailyBarTrack}>
+              <View
+                style={styles.dailyBarTrack}
+                accessible
+                accessibilityRole="progressbar"
+                accessibilityLabel={t('progress.todayGoal')}
+                accessibilityValue={{
+                  min: 0,
+                  max: 100,
+                  now: Math.round(dailyPct * 100),
+                  text: t('progress.dailySub', {
+                    count: dailyStats.count,
+                    target: dailyStats.target,
+                  }),
+                }}
+              >
                 <View style={[styles.dailyBarFill, { width: `${dailyPct * 100}%` as any }]} />
               </View>
-              <Pressable style={styles.studyMoreBtn} onPress={() => nav.navigate('Study')}>
+              <Pressable
+                accessibilityRole="button"
+                style={({ pressed }) => [styles.studyMoreBtn, pressed && styles.pressed]}
+                onPress={() => nav.navigate('Study')}
+              >
                 <Text style={styles.studyMoreText}>{t('progress.studyMore')}</Text>
               </Pressable>
             </View>
@@ -180,10 +216,11 @@ export default function ProgressScreen() {
 
         {/* 2×2 stat grid */}
         <View style={styles.statGrid}>
-          <View style={styles.statRow}>
+          <View style={[styles.statRow, largeText && styles.stacked]}>
             <View
               style={[
                 styles.statBox,
+                largeText && styles.noFlex,
                 { borderColor: '#FFDA00', backgroundColor: 'rgba(255,218,0,0.08)' },
               ]}
             >
@@ -195,6 +232,7 @@ export default function ProgressScreen() {
             <View
               style={[
                 styles.statBox,
+                largeText && styles.noFlex,
                 { borderColor: '#003893', backgroundColor: 'rgba(0,56,147,0.15)' },
               ]}
             >
@@ -204,10 +242,11 @@ export default function ProgressScreen() {
               <Text style={styles.statLabel}>{t('progress.studied')}</Text>
             </View>
           </View>
-          <View style={styles.statRow}>
+          <View style={[styles.statRow, largeText && styles.stacked]}>
             <View
               style={[
                 styles.statBox,
+                largeText && styles.noFlex,
                 { borderColor: '#CE1126', backgroundColor: 'rgba(206,17,38,0.1)' },
               ]}
             >
@@ -219,6 +258,7 @@ export default function ProgressScreen() {
             <View
               style={[
                 styles.statBox,
+                largeText && styles.noFlex,
                 { borderColor: 'rgba(255,218,0,0.4)', backgroundColor: 'rgba(255,218,0,0.06)' },
               ]}
             >
@@ -278,14 +318,14 @@ export default function ProgressScreen() {
           )}
           <Pressable
             accessibilityRole="button"
-            style={styles.practiceBtn}
+            style={({ pressed }) => [styles.practiceBtn, pressed && styles.pressed]}
             onPress={() => nav.navigate('Quiz')}
           >
             <Text style={styles.studyMoreText}>{t('progress.practiceRecognition')}</Text>
           </Pressable>
           <Pressable
             accessibilityRole="button"
-            style={styles.practiceBtn}
+            style={({ pressed }) => [styles.practiceBtn, pressed && styles.pressed]}
             onPress={() => nav.navigate('Study')}
           >
             <Text style={styles.studyMoreText}>{t('progress.practiceRecall')}</Text>
@@ -299,7 +339,7 @@ export default function ProgressScreen() {
             {deckProgress.map((deck) => (
               <View key={deck.id} style={styles.deckProgressRow}>
                 <View style={styles.deckProgressLeft}>
-                  <Text style={styles.deckProgressName} numberOfLines={1}>
+                  <Text accessibilityRole="header" style={styles.deckProgressName}>
                     {deck.name}
                   </Text>
                   <Text style={styles.deckProgressSub}>
@@ -315,7 +355,9 @@ export default function ProgressScreen() {
                 </View>
                 {deck.due > 0 && (
                   <View style={styles.deckDuePill}>
-                    <Text style={styles.deckDueText}>{deck.due}</Text>
+                    <Text style={styles.deckDueText}>
+                      {t('progress.deckDue', { count: deck.due })}
+                    </Text>
                   </View>
                 )}
               </View>
@@ -324,9 +366,9 @@ export default function ProgressScreen() {
         )}
 
         {/* Motivation card */}
-        <View style={styles.motivCard}>
+        <View style={[styles.motivCard, largeText && styles.stacked]}>
           <Text style={styles.motivEmoji}>{motivation.emoji}</Text>
-          <View style={styles.motivRight}>
+          <View style={[styles.motivRight, largeText && styles.noFlex]}>
             <Text style={styles.motivTitle}>{t('progress.keepGoing')}</Text>
             <Text style={styles.motivText}>{motivation.text}</Text>
           </View>
@@ -337,6 +379,10 @@ export default function ProgressScreen() {
 }
 
 const styles = StyleSheet.create({
+  stacked: { flexDirection: 'column', alignItems: 'stretch' },
+  noFlex: { flex: 0 },
+  pressed: { opacity: 0.65 },
+  dailyPercentage: { color: colors.brand, fontSize: 24, fontWeight: '800' },
   wrap: { flex: 1, backgroundColor: colors.bg },
   scroll: { padding: 16, paddingBottom: 120 },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10 },
@@ -384,7 +430,7 @@ const styles = StyleSheet.create({
   },
   streakLeft: { flex: 1, gap: 2 },
   streakCaptionTop: { color: colors.textSecondary, fontSize: 12 },
-  streakNumRow: { flexDirection: 'row', alignItems: 'baseline', gap: 6 },
+  streakNumRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', gap: 6 },
   streakDays: { color: colors.textPrimary, fontSize: 40, fontWeight: '800' },
   streakUnit: { color: colors.textSecondary, fontSize: 16, fontWeight: '600' },
   streakCaption: { color: colors.textTertiary, fontSize: 11 },
@@ -424,6 +470,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 6,
+    minHeight: 48,
+    justifyContent: 'center',
     borderRadius: 10,
     backgroundColor: 'rgba(255,218,0,0.1)',
     borderWidth: 1.5,
@@ -438,18 +486,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
     paddingVertical: 16,
+    paddingHorizontal: 10,
     borderRadius: 18,
     borderWidth: 1.5,
   },
   statVal: { fontSize: 24, fontWeight: '800' },
-  statLabel: { color: colors.textSecondary, fontSize: 10, fontWeight: '600', letterSpacing: 0.5 },
+  statLabel: { color: colors.textSecondary, fontSize: 12, fontWeight: '600', letterSpacing: 0.5 },
 
   section: { marginBottom: 16 },
   sectionTitle: { color: colors.textPrimary, fontSize: 16, fontWeight: '800', marginBottom: 10 },
 
   deckProgressRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'stretch',
     gap: 10,
     backgroundColor: colors.surface,
     borderWidth: 1,
@@ -458,10 +507,10 @@ const styles = StyleSheet.create({
     padding: 14,
     marginBottom: 8,
   },
-  deckProgressLeft: { width: 100 },
+  deckProgressLeft: { width: '100%' },
   deckProgressName: { color: colors.textPrimary, fontSize: 13, fontWeight: '600' },
   deckProgressSub: { color: colors.textTertiary, fontSize: 11, marginTop: 2 },
-  deckProgressBarWrap: { flex: 1 },
+  deckProgressBarWrap: { width: '100%', minHeight: 6 },
   deckProgressTrack: {
     height: 6,
     backgroundColor: '#1e293b',
@@ -470,6 +519,7 @@ const styles = StyleSheet.create({
   },
   deckProgressFill: { height: 6, backgroundColor: '#FFDA00', borderRadius: 3 },
   deckDuePill: {
+    alignSelf: 'flex-start',
     backgroundColor: 'rgba(248,113,113,0.2)',
     paddingHorizontal: 8,
     paddingVertical: 3,

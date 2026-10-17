@@ -101,3 +101,75 @@ it('shows all retained practice evidence and working next actions without an ina
   fireEvent.press(screen.getByRole('button', { name: 'Review flashcards' }));
   expect(mockNavigate).toHaveBeenLastCalledWith('Study');
 });
+
+it('exposes daily goal progress with an explicit percentage and study action', async () => {
+  const { localDayKey } = require('../../src/utils/calendarDay');
+  await AsyncStorage.setItem(
+    'SRS_DAILY_PROGRESS_V1',
+    JSON.stringify({ date: localDayKey(), count: 3, target: 5, newCount: 0 }),
+  );
+  const screen = render(<ProgressScreen />);
+  await screen.findByText('No recognition results yet');
+  expect(screen.getByRole('progressbar', { name: 'Today’s Goal' })).toHaveAccessibilityValue({
+    min: 0,
+    max: 100,
+    now: 60,
+    text: '3 of 5 cards studied',
+  });
+  fireEvent.press(screen.getByRole('button', { name: '📖 Study more' }));
+  expect(mockNavigate).toHaveBeenLastCalledWith('Study');
+});
+
+it('retains loaded evidence and working practice actions through live text-size changes', async () => {
+  const { Dimensions } = require('react-native');
+  const { act } = require('@testing-library/react-native');
+  const window = Dimensions.get('window'),
+    screenMetrics = Dimensions.get('screen');
+  await appendLearningEvent(
+    observation('large-text', { modality: 'listening', transcriptAssisted: true }),
+  );
+  const screen = render(<ProgressScreen />);
+  try {
+    expect(await screen.findByTestId('evidence-listening')).toHaveTextContent(
+      'Checked answers: 1 / 1 correct',
+    );
+    const stored = await AsyncStorage.getItem('SRS_LEARNING_EVENTS_V1');
+    await act(async () =>
+      Dimensions.set({
+        window: { ...window, fontScale: 3 },
+        screen: { ...screenMetrics, fontScale: 3 },
+      }),
+    );
+    expect(screen.getByTestId('assistance-listening')).toHaveTextContent(
+      'Assisted: 1 · Assistance unknown: 0',
+    );
+    expect(screen.getByTestId('progress-due-reviews').props.children).toBe(1);
+    expect(screen.getByRole('progressbar', { name: 'Today’s Goal' })).toHaveAccessibilityValue({
+      min: 0,
+      max: 100,
+      now: 0,
+    });
+    fireEvent.press(screen.getByRole('button', { name: 'Review flashcards' }));
+    expect(mockNavigate).toHaveBeenLastCalledWith('Study');
+    expect(await AsyncStorage.getItem('SRS_LEARNING_EVENTS_V1')).toBe(stored);
+  } finally {
+    screen.unmount();
+    act(() => Dimensions.set({ window, screen: screenMetrics }));
+  }
+});
+
+it('saturates the goal indicator while retaining the actual above-goal count', async () => {
+  const { localDayKey } = require('../../src/utils/calendarDay');
+  await AsyncStorage.setItem(
+    'SRS_DAILY_PROGRESS_V1',
+    JSON.stringify({ date: localDayKey(), count: 7, target: 5, newCount: 0 }),
+  );
+  const screen = render(<ProgressScreen />);
+  await screen.findByText('No recognition results yet');
+  expect(screen.getByRole('progressbar', { name: 'Today’s Goal' })).toHaveAccessibilityValue({
+    min: 0,
+    max: 100,
+    now: 100,
+    text: '7 of 5 cards studied',
+  });
+});

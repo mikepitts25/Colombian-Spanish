@@ -1,0 +1,569 @@
+watchman warning:  Recrawled this watch 21 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish'`
+
+FAIL __tests__/screens/ProgressScreen.test.tsx
+  ✓ does not infer mastery or recognition from old repetitions and excludes new cards from due reviews (338 ms)
+  ✓ reports checked recognition separately from other modalities and self-rated practice (58 ms)
+  ✓ shows unavailable evidence instead of a misleading empty score when history is corrupt (58 ms)
+  ✓ keeps mission recognition out of the quiz-only recognition metric (58 ms)
+  ✓ shows all retained practice evidence and working next actions without an inactive Share control (13 ms)
+  ✕ exposes daily goal progress with an explicit percentage and study action (13 ms)
+  ✕ retains loaded evidence and working practice actions through live text-size changes (13 ms)
+
+  ● exposes daily goal progress with an explicit percentage and study action
+
+    Unable to find an element with role: progressbar, name: Today’s Goal
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mMy Progress[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mCurrent streak[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m0[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mdays[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mStart your streak today 🚀[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔥[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0m0[0m
+                      [0m%[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mToday’s Goal[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m0 of 10 cards studied[0m
+                [36m</Text>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m📖 Study more[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m2[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mTOTAL CARDS[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text[39m
+                  [33mtestID[39m=[32m"progress-in-review"[39m
+                [36m>[39m
+                  [0m1[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mIN REVIEW[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text[39m
+                  [33mtestID[39m=[32m"progress-due-reviews"[39m
+                [36m>[39m
+                  [0m1[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mDUE REVIEWS[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m1[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mDECKS[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mQuiz recognition[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mNo recognition results yet[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mRecognition does not assess unaided recall, listening, or speaking.[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mReview counts reflect the cards in your review schedule.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text[39m
+              [33maccessibilityRole[39m=[32m"header"[39m
+            [36m>[39m
+              [0mPractice evidence[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mRetained attempts, including draft missions and retries, up to 5,000 observations. These are not ability or lifetime mastery scores. Assistance counts apply to checked answers; missing history stays unknown. Listening playback started does not prove audibility. Local voice self-checks are unscored.[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<Text[39m
+                [33maccessibilityRole[39m=[32m"header"[39m
+              [36m>[39m
+                [0mRecognition[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"evidence-recognition"[39m
+              [36m>[39m
+                [0mNo checked recognition results yet[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"self-rated-recognition"[39m
+              [36m>[39m
+                [0mSelf-rated attempts: 0[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text[39m
+                [33maccessibilityRole[39m=[32m"header"[39m
+              [36m>[39m
+                [0mRecall[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"evidence-recall"[39m
+              [36m>[39m
+                [0mNo checked recall results yet[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"self-rated-recall"[39m
+              [36m>[39m
+                [0mSelf-rated attempts: 0[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text[39m
+                [33maccessibilityRole[39m=[32m"header"[39m
+              [36m>[39m
+                [0mListening[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"evidence-listening"[39m
+              [36m>[39m
+                [0mNo checked listening results yet[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"self-rated-listening"[39m
+              [36m>[39m
+                [0mSelf-rated attempts: 0[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text[39m
+                [33maccessibilityRole[39m=[32m"header"[39m
+              [36m>[39m
+                [0mSpeaking[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"evidence-speaking"[39m
+              [36m>[39m
+                [0mNo checked speaking results yet[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"self-rated-speaking"[39m
+              [36m>[39m
+                [0mSelf-rated attempts: 0[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mPractice recognition[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mReview flashcards[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m📊 Progress by Deck[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mTest[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m1/2 cards[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m1[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m💪[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mKeep going![0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mEvery card gets you closer to fluency.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      106 |   const screen = render(<ProgressScreen />);
+      107 |   await screen.findByText('No recognition results yet');
+    > 108 |   expect(screen.getByRole('progressbar', { name: 'Today’s Goal' })).toHaveAccessibilityValue({
+          |                 ^
+      109 |     min: 0,
+      110 |     max: 100,
+      111 |     now: 0,
+
+      at Object.getByRole (__tests__/screens/ProgressScreen.test.tsx:108:17)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● retains loaded evidence and working practice actions through live text-size changes
+
+    Unable to find an element with role: progressbar, name: Today’s Goal
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mMy Progress[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mCurrent streak[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m0[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mdays[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mStart your streak today 🚀[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔥[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0m0[0m
+                      [0m%[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mToday’s Goal[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m0 of 10 cards studied[0m
+                [36m</Text>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m📖 Study more[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m2[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mTOTAL CARDS[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text[39m
+                  [33mtestID[39m=[32m"progress-in-review"[39m
+                [36m>[39m
+                  [0m1[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mIN REVIEW[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text[39m
+                  [33mtestID[39m=[32m"progress-due-reviews"[39m
+                [36m>[39m
+                  [0m1[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mDUE REVIEWS[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m1[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mDECKS[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mQuiz recognition[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mNo recognition results yet[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mRecognition does not assess unaided recall, listening, or speaking.[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mReview counts reflect the cards in your review schedule.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text[39m
+              [33maccessibilityRole[39m=[32m"header"[39m
+            [36m>[39m
+              [0mPractice evidence[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mRetained attempts, including draft missions and retries, up to 5,000 observations. These are not ability or lifetime mastery scores. Assistance counts apply to checked answers; missing history stays unknown. Listening playback started does not prove audibility. Local voice self-checks are unscored.[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<Text[39m
+                [33maccessibilityRole[39m=[32m"header"[39m
+              [36m>[39m
+                [0mRecognition[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"evidence-recognition"[39m
+              [36m>[39m
+                [0mNo checked recognition results yet[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"self-rated-recognition"[39m
+              [36m>[39m
+                [0mSelf-rated attempts: 0[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text[39m
+                [33maccessibilityRole[39m=[32m"header"[39m
+              [36m>[39m
+                [0mRecall[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"evidence-recall"[39m
+              [36m>[39m
+                [0mNo checked recall results yet[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"self-rated-recall"[39m
+              [36m>[39m
+                [0mSelf-rated attempts: 0[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text[39m
+                [33maccessibilityRole[39m=[32m"header"[39m
+              [36m>[39m
+                [0mListening[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"evidence-listening"[39m
+              [36m>[39m
+                [0mChecked answers: 1 / 1 correct[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"assistance-listening"[39m
+              [36m>[39m
+                [0mAssisted: 1 · Assistance unknown: 0[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"self-rated-listening"[39m
+              [36m>[39m
+                [0mSelf-rated attempts: 0[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text[39m
+                [33maccessibilityRole[39m=[32m"header"[39m
+              [36m>[39m
+                [0mSpeaking[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"evidence-speaking"[39m
+              [36m>[39m
+                [0mNo checked speaking results yet[0m
+              [36m</Text>[39m
+              [36m<Text[39m
+                [33mtestID[39m=[32m"self-rated-speaking"[39m
+              [36m>[39m
+                [0mSelf-rated attempts: 0[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mPractice recognition[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mReview flashcards[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m📊 Progress by Deck[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mTest[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m1/2 cards[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m1[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m💪[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mKeep going![0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mEvery card gets you closer to fluency.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      140 |     );
+      141 |     expect(screen.getByTestId('progress-due-reviews').props.children).toBe(1);
+    > 142 |     expect(screen.getByRole('progressbar', { name: 'Today’s Goal' })).toHaveAccessibilityValue({
+          |                   ^
+      143 |       min: 0,
+      144 |       max: 100,
+      145 |       now: 0,
+
+      at Object.getByRole (__tests__/screens/ProgressScreen.test.tsx:142:19)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 5 passed, 7 total
+Snapshots:   0 total
+Time:        1.636 s
+Ran all test suites matching /__tests__\/screens\/ProgressScreen.test.tsx/i.
