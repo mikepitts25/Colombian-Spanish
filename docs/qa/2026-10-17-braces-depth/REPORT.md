@@ -28,3 +28,7 @@ Existing unsigned SDK57 iPhoneSE3/iOS26 fixture `738E7A96-DCC0-459A-BDC3-EBAC4E6
 ## Audit boundary
 
 [Full audit](audit-after.json) remains **51 high**, zero moderate/critical; [omit-dev](audit-omit-dev-after.json) remains **28 high**. Braces3.0.3 continues to be reported intentionally. Scanner counts are not evidence that a custom tarball is safe; regression/compatibility/source evidence establishes this bounded mitigation. Replace the local fork only after a supported upstream release passes these checks. Node-forge and other remaining migration/advisory work stay open; no publication or external vulnerability report was sent.
+
+## Integrated verification
+
+`05d874f` merged and pushed to main. A strict clean main install with scripts disabled passes; merged full suite **94/922** passes. [CI39049683788](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39049683788) passed all four jobs (quality/content, both platform generation/exports and summary). [Board39049683842](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39049683842) also passed. Native and upstream results above are retained with the branch evidence. Audit51high/28omit-dev and the local-fork maintenance boundary remain explicit; B01.8-C2g and broader roadmap work stay open.
