@@ -3,7 +3,14 @@ module.exports = {
   extends: ['expo', 'prettier'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
-  ignorePatterns: ['node_modules/', 'dist/', 'build/', '.expo/', 'status-server/'],
+  ignorePatterns: [
+    'node_modules/',
+    'dist/',
+    'build/',
+    '.expo/',
+    'status-server/',
+    'vendor/braces/',
+  ],
   rules: {
     // Expo/RN often uses require() for assets or dynamic imports
     '@typescript-eslint/no-require-imports': 'off',

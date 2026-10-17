@@ -22,7 +22,8 @@
     "content:release": "node scripts/release-content.js",
     "release:preflight": "node scripts/release-content.js --check",
     "eas-build-post-install": "node scripts/release-content.js --build-hook",
-    "test:calendar": "node scripts/test-calendar-zones.js"
+    "test:calendar": "node scripts/test-calendar-zones.js",
+    "security:pack-braces": "node scripts/pack-braces-patch.js"
   },
   "dependencies": {
     "@expo/config-plugins": "~57.0.0",
@@ -70,7 +71,8 @@
     "jest": "^29.7.0",
     "jest-expo": "~57.0.6",
     "prettier": "^3.8.1",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "braces": "file:vendor/braces-3.0.3.tgz"
   },
   "overrides": {
     "xcode@3.0.1": {
@@ -78,6 +80,7 @@
     },
     "@istanbuljs/load-nyc-config@1.1.0": {
       "js-yaml": "4.3.2"
-    }
+    },
+    "braces": "$braces"
   }
 }

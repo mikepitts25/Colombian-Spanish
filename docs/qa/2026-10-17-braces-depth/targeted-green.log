@@ -1,0 +1,29 @@
+watchman warning:  Recrawled this watch 21 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish'`
+
+PASS __tests__/scripts/braces-depth.test.js
+  ✓ parse rejects excessive nested source without exhausting the stack (40 ms)
+  ✓ compile rejects excessive nested source without exhausting the stack (36 ms)
+  ✓ expand rejects excessive nested source without exhausting the stack (35 ms)
+  ✓ stringify rejects excessive nested source without exhausting the stack (37 ms)
+  ✓ create rejects excessive nested source without exhausting the stack (38 ms)
+  ✓ parser rejects excessive semantic container depth: '('.repeat(2000) + 'x' + ')'.repeat(2000) (37 ms)
+  ✓ parser rejects excessive semantic container depth: '{('.repeat(1000) + 'x' + ')}'.repeat(1000) (50 ms)
+  ✓ parser rejects excessive semantic container depth: '{'.repeat(2000) + 'x' (44 ms)
+  ✓ parser rejects excessive semantic container depth: '{'.repeat(2000) + '1..3' + '}'.repeat(2000) (39 ms)
+  ✓ compile bounds traversal of caller-supplied ASTs (41 ms)
+  ✓ expand bounds traversal of caller-supplied ASTs (41 ms)
+  ✓ stringify bounds traversal of caller-supplied ASTs (40 ms)
+  ✓ quoted and escaped braces remain literal instead of consuming nesting depth (74 ms)
+  ✓ preserves ordinary nested, numeric, padded, escaped, and glob patterns (46 ms)
+  ✓ supports the documented local depth boundary (80 ms)
+  ✓ installed and archived patch match every vendored executable and license file (531 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       16 passed, 16 total
+Snapshots:   0 total
+Time:        1.856 s
+Ran all test suites matching /__tests__\/scripts\/braces-depth.test.js/i.
