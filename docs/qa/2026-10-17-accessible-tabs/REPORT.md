@@ -10,11 +10,11 @@ Dedicated own iPhone18 Pro / iOS27 simulator 0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED
 
 Navigation wraps into two rows at fontScale >=1.4, keeping all four destinations and their full translated accessible labels/selection semantics. Text scales without a cap; decorative emoji retain their base size to preserve the content viewport. Default text keeps the existing four-column row. Native screenshots verify Spanish/English accessibility-large and maximum-size labels, working Study/Progress/Settings actions and live return to the default four-column row. A second observed failure during live resizing retained stale measured tab geometry and pushed destinations offscreen. Recreating only the tab pill when fontScale changes corrects that; navigation screen state remains outside the remount. Screenshots are the layout gate because Jest does not render native glyph geometry.
 
-Four fixtures explicitly assign native null/active/inactive/background startup values and verify minute refresh or suspension plus active-event catch-up. The original Jest mock supplied a function, so fixture setup uses a restored property descriptor. These characterize correct existing behavior; no product refresh code changed. Relevant hook/navigation tests pass16/16. Full 80 suites / 785 tests, calendar16, types/lint/content passed; final exact-tree full 80/785 and calendar16 also passed, with types/lint/format/diff checks. Existing unrelated act warnings remain in the suite; no failing test is claimed green.
+Four fixtures explicitly assign native null/active/inactive/background startup values and verify minute refresh or suspension plus active-event catch-up. The original Jest mock supplied a function, so fixture setup uses a restored property descriptor. These characterize correct existing behavior; no product refresh code changed. Relevant hook/navigation tests pass16/16. Full 80 suites / 785 tests, calendar16, types/lint/content passed; final exact-tree full 80/785 and calendar16 also passed, with types/lint/format/diff checks. Unchanged tests still emit act warnings; all suites passed.
 
 ## Boundaries
 
-This batch does not complete full-screen large-text, screen-reader, smaller phone/tablet, Android, theme, signed or physical acceptance. Full screen content remains problematic: Home due-title word wrapping, stale native text measurements after live font changes, Settings rows and Study category tiles need dedicated layout corrections. Those are observed open defects, not an accessibility pass. One fresh independent review found no critical/important findings. Its documentation-progress minor is addressed by this final record; integration remains pending.
+This batch does not complete full-screen large-text, screen-reader, smaller phone/tablet, Android, theme, signed or physical acceptance. Full screen content remains problematic: Home due-title word wrapping, stale native text measurements after live font changes, Settings rows and Study category tiles need dedicated layout corrections. Those are observed open defects, not an accessibility pass. One fresh independent review found no critical/important findings. Its documentation-progress minor is addressed by this final record; integration results are recorded below.
 
 ## Evidence and restoration
 
@@ -31,4 +31,4 @@ Simulator content-size category was restored to its original large; interface la
 
 ## Integration
 
-Pending commit and remote CI.
+Implementation `67a0151` merged/pushed to main. The merged tree passed 80 suites / 785 tests. [CI39008778017](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39008778017) passed all four jobs, including quality/tests/content and both platform project generation/production JS exports. Export success is not Android native compilation or signed/physical acceptance. B08.2-B1 and B02.6-C1 are complete; B08.2-B2 explicitly tracks observed screen-content defects.

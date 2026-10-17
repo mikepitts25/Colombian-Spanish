@@ -11,8 +11,10 @@ All four translated navigation labels must remain visible and tappable at access
 - [x] Capture native Spanish accessibility-large clipping before product changes.
 - [x] Complete four native startup AppState fixtures (null/active/inactive/background); characterize existing correct implementation without changing it.
 - [x] Correct tab wrapping and verify Spanish/English accessibility-large, largest supported size and default-size restoration through native UI. Native screenshots are the layout regression gate; Jest has no text-layout engine, so do not mirror style declarations with tests.
-- [ ] Full suite/static/content/calendar checks, one independent whole-package review, update master/QA, merge/push and observe CI.
+- [x] Full suite/static/content/calendar checks, one independent whole-package review, update master/QA, merge/push and observe CI.
 
 Ruling: existing B08 text-accessibility correction is authorized, so proceed with two-row layout rather than adding a product flow or seeking another approval. Cost if wrong: taller bottom navigation reduces content viewport at large sizes; scrollability/native evidence must be checked. Do not mark broader accessibility acceptance complete.
 
 Native follow-up: live decrease reproduced stale tab measurements; key the tab pill by fontScale to remeasure, without remounting navigator/screens. Both languages at accessibility-large/maximum and default restoration verified. Original content size large and Spanish restored; queue/counters/events unchanged. Broader Home/Settings/Study content defects remain recorded in QA.
+
+Final result: one independent review had no critical/important code findings; planned documentation updates addressed its progress-note minor. Implementation67a0151 merged/pushed, merged80/785 passed, CI39008778017 all four jobs green. Scope rulings and known limitations are retained in the QA report.
