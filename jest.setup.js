@@ -97,3 +97,11 @@ jest.mock('react-native', () => {
   RN.Alert = require('react-native/Libraries/Alert/Alert').default;
   return RN;
 });
+
+// Use default-size text unless a test explicitly exercises Dynamic Type.
+// The upstream RN fixture sets fontScale=2, which selects accessibility layouts.
+const { Dimensions } = require('react-native');
+Dimensions.set({
+  window: { ...Dimensions.get('window'), fontScale: 1 },
+  screen: { ...Dimensions.get('screen'), fontScale: 1 },
+});

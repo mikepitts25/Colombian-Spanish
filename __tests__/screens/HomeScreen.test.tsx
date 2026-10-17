@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
-import { AppState, AppStateStatus } from 'react-native';
+import { AppState, AppStateStatus, Dimensions } from 'react-native';
 import HomeScreen from '../../src/screens/HomeScreen';
 import { Deck, FlashCard } from '../../src/types';
 
@@ -462,4 +462,24 @@ it('uses saved purpose/time and refreshes the recommendation after foreground pr
       sessionNewLimit: 8,
     }),
   );
+});
+
+it('keeps the due count and full translated unit accessible when text grows', async () => {
+  const window = Dimensions.get('window');
+  const screenMetrics = Dimensions.get('screen');
+  const screen = render(<HomeScreen />);
+  await screen.findAllByText('1 review due');
+  try {
+    await act(async () =>
+      Dimensions.set({
+        window: { ...window, fontScale: 3 },
+        screen: { ...screenMetrics, fontScale: 3 },
+      }),
+    );
+    expect(screen.getByText('review due')).toBeTruthy();
+    expect(screen.getByLabelText('1 review due')).toBeTruthy();
+  } finally {
+    screen.unmount();
+    act(() => Dimensions.set({ window, screen: screenMetrics }));
+  }
 });

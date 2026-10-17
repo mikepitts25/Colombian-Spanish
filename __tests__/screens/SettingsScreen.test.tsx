@@ -1,4 +1,5 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   appendLearningEvent,
@@ -602,7 +603,7 @@ it('rejects an invalid file before presenting restore choices', async () => {
   expect(restoreBackup).not.toHaveBeenCalled();
 });
 
-it('keeps preview controls guarded until restore finishes', async () => {
+it('keeps preview controls guarded through font changes until restore finishes', async () => {
   (pickBackupFile as jest.Mock).mockResolvedValue(
     JSON.stringify({ kind: 'colombian-spanish-backup', version: 2, decks: [], learningEvents: [] }),
   );
@@ -616,6 +617,20 @@ it('keeps preview controls guarded until restore finishes', async () => {
       }),
   );
   fireEvent.press(await screen.findByText('Añadir tarjetas nuevas'));
+  const window = Dimensions.get('window');
+  const screenMetrics = Dimensions.get('screen');
+  try {
+    await act(async () =>
+      Dimensions.set({
+        window: { ...window, fontScale: 3 },
+        screen: { ...screenMetrics, fontScale: 3 },
+      }),
+    );
+    expect(screen.getByText('Vista previa del respaldo')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Cancelar' })).toBeDisabled();
+  } finally {
+    act(() => Dimensions.set({ window, screen: screenMetrics }));
+  }
   fireEvent.press(screen.getByText('Cancelar'));
   await act(async () => fireEvent.press(screen.getByText('Reemplazar decks')));
   expect(screen.getByText('Vista previa del respaldo')).toBeTruthy();

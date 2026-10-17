@@ -1,5 +1,6 @@
 import '@testing-library/jest-native/extend-expect';
 import React from 'react';
+import { Dimensions } from 'react-native';
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
 import StudyScreen from '../../src/screens/StudyScreen';
 import { FlashCard, Deck } from '../../src/types';
@@ -1048,4 +1049,26 @@ test('an external deck change does not inherit a bounded queue or learning ident
   expect(latest.queue.cardIds).toEqual(['tech-1']);
   expect(latest.queue.sessionId).not.toBe('bounded-old');
   expect(latest.queue.limits).toBeUndefined();
+});
+
+test('retains the landing search across live text-size changes without starting a session', async () => {
+  const window = Dimensions.get('window');
+  const screenMetrics = Dimensions.get('screen');
+  const screen = renderStudyScreen();
+  const input = await screen.findByPlaceholderText('Busca palabras, frases o decks...');
+  fireEvent.changeText(input, 'hola');
+  try {
+    await act(async () =>
+      Dimensions.set({
+        window: { ...window, fontScale: 3 },
+        screen: { ...screenMetrics, fontScale: 3 },
+      }),
+    );
+    expect(screen.getByDisplayValue('hola')).toBeTruthy();
+    expect(screen.getByText('hola')).toBeTruthy();
+    expect(mockSaveLastStudySession).not.toHaveBeenCalled();
+  } finally {
+    screen.unmount();
+    act(() => Dimensions.set({ window, screen: screenMetrics }));
+  }
 });

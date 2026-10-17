@@ -1,5 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Pressable,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
@@ -42,12 +50,18 @@ function SettingsRow({
       disabled={disabled}
       accessibilityState={{ disabled }}
     >
-      <Text style={styles.rowEmoji}>{emoji}</Text>
+      <Text style={styles.rowEmoji} allowFontScaling={false} accessible={false}>
+        {emoji}
+      </Text>
       <View style={styles.rowInfo}>
         <Text style={styles.rowTitle}>{title}</Text>
         {subtitle ? <Text style={styles.rowSubtitle}>{subtitle}</Text> : null}
       </View>
-      {chevron && <Text style={styles.chevron}>›</Text>}
+      {chevron && (
+        <Text style={styles.chevron} allowFontScaling={false} accessible={false}>
+          ›
+        </Text>
+      )}
     </Pressable>
   );
 }
@@ -57,6 +71,7 @@ function Divider() {
 }
 
 export default function SettingsScreen() {
+  const { fontScale } = useWindowDimensions();
   const nav = useNavigation<any>();
   const { t, toggleLanguage } = useLanguage();
   const buildLabel = t(
@@ -257,7 +272,11 @@ export default function SettingsScreen() {
         </Text>
       )}
       {filePreview && (
-        <ScrollView style={styles.previewPanel} contentContainerStyle={{ gap: 12 }}>
+        <ScrollView
+          key={`preview-${fontScale}`}
+          style={styles.previewPanel}
+          contentContainerStyle={{ gap: 12 }}
+        >
           <Text accessibilityRole="header" style={styles.rowTitle}>
             {t('settings.file.previewTitle')}
           </Text>
@@ -316,6 +335,7 @@ export default function SettingsScreen() {
         </ScrollView>
       )}
       <ScrollView
+        key={`settings-${fontScale}`}
         style={filePreview ? { display: 'none' } : undefined}
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}

@@ -226,13 +226,16 @@ describe('resetDeckProgressById', () => {
   it('resets all card progress fields in the target deck', async () => {
     const studied = makeCard('c1', { reps: 5, interval: 10, ease: 2.8, due: NOW + DAY_MS });
     await saveDecks([makeDeck('d1', { cards: [studied] })]);
+    const beforeReset = Date.now();
     await resetDeckProgressById('d1');
+    const afterReset = Date.now();
     const loaded = await loadDecks();
     const card = loaded[0].cards[0];
     expect(card.reps).toBe(0);
     expect(card.interval).toBe(0);
     expect(card.ease).toBe(2.5);
-    expect(card.due).toBeGreaterThanOrEqual(Date.now() - 100);
+    expect(card.due).toBeGreaterThanOrEqual(beforeReset);
+    expect(card.due).toBeLessThanOrEqual(afterReset);
   });
 
   it('does not affect other decks', async () => {

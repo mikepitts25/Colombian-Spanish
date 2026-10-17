@@ -1,6 +1,6 @@
 import { SHOW_REVIEW_TOOLS } from '../config';
 import React, { useMemo, useRef, useState } from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
@@ -101,6 +101,8 @@ async function loadHomeProgress() {
 }
 
 export default function HomeScreen() {
+  const { fontScale } = useWindowDimensions();
+  const largeText = fontScale >= 1.4;
   const { ready, decks, activeDeckId, setActiveDeckId, reload } = useDeck();
   const nav = useNavigation<any>();
   const starting = useRef(false);
@@ -224,7 +226,11 @@ export default function HomeScreen() {
         <View style={[styles.flagBand, { backgroundColor: '#CE1126', flex: 1 }]} />
       </View>
 
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        key={fontScale}
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           <View style={styles.greetingWrap}>
             <Text style={styles.greeting}>
@@ -233,7 +239,9 @@ export default function HomeScreen() {
             <Text style={styles.greetingSub}>{t(greeting.subKey)}</Text>
           </View>
           <Pressable style={styles.avatarBtn} onPress={() => nav.navigate('Settings')}>
-            <Text style={styles.avatarText}>👤</Text>
+            <Text style={styles.avatarText} allowFontScaling={false}>
+              👤
+            </Text>
           </Pressable>
         </View>
 
@@ -243,10 +251,21 @@ export default function HomeScreen() {
           </Text>
         )}
         <View style={styles.todayCard}>
-          <View style={styles.todayHeader}>
+          <View style={[styles.todayHeader, largeText && styles.stackedHeader]}>
             <View style={styles.todaySummary}>
               <Text style={styles.eyebrow}>{t('home.today')}</Text>
-              <Text style={styles.todayTitle}>{dueCardLabel}</Text>
+              {largeText ? (
+                <View accessible accessibilityLabel={dueCardLabel}>
+                  <Text style={styles.todayTitle} accessible={false}>
+                    {totalDue.toLocaleString()}
+                  </Text>
+                  <Text style={styles.todayDueUnit} accessible={false}>
+                    {t('home.dueUnit', { plural: totalDue === 1 ? '' : 's' })}
+                  </Text>
+                </View>
+              ) : (
+                <Text style={styles.todayTitle}>{dueCardLabel}</Text>
+              )}
               <Text style={styles.todaySub}>{dueCardSub}</Text>
               <Text style={styles.todaySub}>
                 {t('home.newInLibrary', { count: totalNew.toLocaleString() })}
@@ -266,7 +285,7 @@ export default function HomeScreen() {
           </View>
 
           <View style={styles.goalPanel}>
-            <View style={styles.goalHeader}>
+            <View style={[styles.goalHeader, largeText && styles.stackedHeader]}>
               <Text style={styles.goalLabel}>{t('home.dailyGoal')}</Text>
               <Text style={styles.goalValue}>{dailyGoalLabel}</Text>
             </View>
@@ -496,6 +515,8 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   todaySummary: { flex: 1, minWidth: 0 },
+  stackedHeader: { flexDirection: 'column', alignItems: 'stretch', gap: 8 },
+  todayDueUnit: { color: colors.textPrimary, fontSize: 18, fontWeight: '700' },
   todayTitle: {
     color: colors.textPrimary,
     fontSize: 30,

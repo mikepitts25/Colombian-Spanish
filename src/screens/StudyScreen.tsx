@@ -1,5 +1,13 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, TextInput, View, Pressable, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Pressable,
+  ScrollView,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { colors } from '../styles/theme';
@@ -69,6 +77,8 @@ type StudyMode = 'landing' | 'session';
 type SearchRow = { deckId: string; deckName: string; card: FlashCard };
 
 export default function StudyScreen() {
+  const { fontScale } = useWindowDimensions();
+  const largeText = fontScale >= 1.4;
   const { ready, decks, activeDeck, getStudyBatch, recordAnswer, toggleFavorite, setActiveDeckId } =
     useDeck();
   const nav = useNavigation<any>();
@@ -480,6 +490,7 @@ export default function StudyScreen() {
     return (
       <SafeAreaView style={styles.wrap}>
         <ScrollView
+          key={fontScale}
           contentContainerStyle={styles.landingScroll}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -569,12 +580,22 @@ export default function StudyScreen() {
                     key={cat.key}
                     style={[
                       styles.catCard,
+                      largeText && styles.catCardExpanded,
                       { backgroundColor: cat.bg, borderColor: cat.color + '66' },
                     ]}
                     onPress={() => handleCategoryPress(cat.key)}
                   >
-                    <Text style={styles.catEmoji}>{cat.emoji}</Text>
-                    <Text style={[styles.catLabel, { color: cat.color }]} numberOfLines={2}>
+                    <Text style={styles.catEmoji} allowFontScaling={false} accessible={false}>
+                      {cat.emoji}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.catLabel,
+                        largeText && styles.catLabelExpanded,
+                        { color: cat.color },
+                      ]}
+                      numberOfLines={largeText ? undefined : 2}
+                    >
                       {t(cat.labelKey)}
                     </Text>
                   </Pressable>
@@ -840,7 +861,7 @@ const styles = StyleSheet.create({
   catGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 24 },
   catCard: {
     width: '31%',
-    height: 80,
+    minHeight: 80,
     borderRadius: 16,
     borderWidth: 1.5,
     alignItems: 'center',
@@ -848,6 +869,8 @@ const styles = StyleSheet.create({
     gap: 4,
     padding: 8,
   },
+  catCardExpanded: { width: '100%', padding: 16 },
+  catLabelExpanded: { fontSize: 14, lineHeight: 19 },
   catEmoji: { fontSize: 22 },
   catLabel: {
     fontSize: 10,
