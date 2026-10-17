@@ -328,3 +328,23 @@ test.each([false, true])(
     expect(await missionStorage.readActivityTimings()).toHaveLength(feedback ? 1 : 0);
   },
 );
+
+test('notifies the parent when a pending save settles even after the player unmounts', async () => {
+  let release!: () => void;
+  const original = missionStorage.startMissionRun;
+  jest.spyOn(missionStorage, 'startMissionRun').mockImplementationOnce(
+    (...args) =>
+      new Promise((resolve) => {
+        release = () => {
+          void original(...args).then(resolve);
+        };
+      }),
+  );
+  const changed = jest.fn();
+  const ui = render(<MissionScreen onSavingChange={changed} />);
+  fireEvent.press(await ui.findByText('Start draft mission'));
+  expect(changed.mock.calls).toEqual([[true]]);
+  ui.unmount();
+  await act(async () => release());
+  await waitFor(() => expect(changed.mock.calls).toEqual([[true], [false]]));
+});

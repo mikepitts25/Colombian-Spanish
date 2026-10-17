@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SHOW_REVIEW_TOOLS } from '../config';
@@ -13,6 +13,7 @@ import MissionScreen from './MissionScreen';
 import { colors } from '../styles/theme';
 
 export default function DailyPlanScreen() {
+  const { fontScale } = useWindowDimensions();
   const nav = useNavigation<any>(),
     route = useRoute<any>();
   const id = route.params?.planId;
@@ -21,7 +22,13 @@ export default function DailyPlanScreen() {
   const [revision, setRevision] = useState(0),
     [busy, setBusy] = useState(false),
     [saveError, setSaveError] = useState(false);
-  const ending = useRef(false);
+  const ending = useRef(false),
+    childSaving = useRef(0);
+  const [playerSaving, setPlayerSaving] = useState(false);
+  const savingChanged = useCallback((saving: boolean) => {
+    childSaving.current += saving ? 1 : -1;
+    setPlayerSaving(childSaving.current > 0);
+  }, []);
   const load = useCallback(async () => {
     void revision;
     const plan = await readDailyPlan();
@@ -34,7 +41,7 @@ export default function DailyPlanScreen() {
   const completed = useCallback(() => setRevision((v) => v + 1), []);
   const home = () => nav.navigate('Root', { screen: 'Home' }, { pop: true });
   const end = async () => {
-    if (!value.plan || ending.current) return;
+    if (!value.plan || ending.current || childSaving.current) return;
     ending.current = true;
     setBusy(true);
     setSaveError(false);
@@ -59,26 +66,33 @@ export default function DailyPlanScreen() {
     plan.applied.contentVersion === response.contentVersion;
   if (canApply)
     return (
-      <View style={{ flex: 1, backgroundColor: colors.bg }}>
-        <MissionScreen
-          key={plan.id}
-          pack={response}
-          planId={plan.id}
-          planRunId={plan.applied!.runId}
-          onCompleted={completed}
-          blocked={busy}
-        />
-        {saveError && (
-          <Text accessibilityRole="alert" style={styles.body}>
-            {t('mission.saveError')}
-          </Text>
-        )}
-        <PlanAction label={t('plan.end')} onPress={() => void end()} disabled={busy} />
-      </View>
+      <MissionScreen
+        key={plan.id}
+        pack={response}
+        planId={plan.id}
+        planRunId={plan.applied!.runId}
+        onCompleted={completed}
+        onSavingChange={savingChanged}
+        blocked={busy}
+        footer={
+          <View>
+            {saveError && (
+              <Text accessibilityRole="alert" style={styles.body}>
+                {t('mission.saveError')}
+              </Text>
+            )}
+            <PlanAction
+              label={t('plan.end')}
+              onPress={() => void end()}
+              disabled={busy || playerSaving}
+            />
+          </View>
+        }
+      />
     );
   return (
     <SafeAreaView style={styles.wrap}>
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView key={fontScale} contentContainerStyle={styles.content}>
         <Text accessibilityRole="header" style={styles.title}>
           {t('plan.title')}
         </Text>
@@ -117,7 +131,11 @@ export default function DailyPlanScreen() {
           </Text>
         )}
         {plan && plan.phase !== 'complete' && (
-          <PlanAction label={t('plan.end')} onPress={() => void end()} disabled={busy} />
+          <PlanAction
+            label={t('plan.end')}
+            onPress={() => void end()}
+            disabled={busy || playerSaving}
+          />
         )}
         <PlanAction label={t('plan.home')} onPress={home} disabled={busy} />
       </ScrollView>

@@ -10,6 +10,7 @@ import {
   Text,
   TextInput,
   View,
+  useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -35,14 +36,19 @@ export default function MissionScreen({
   planId,
   planRunId,
   onCompleted,
+  onSavingChange,
+  footer,
   blocked = false,
 }: {
   pack?: MissionPack;
   planId?: string;
   planRunId?: string;
   onCompleted?: () => void;
+  onSavingChange?: (saving: boolean) => void;
+  footer?: React.ReactNode;
   blocked?: boolean;
 } = {}) {
+  const { fontScale } = useWindowDimensions();
   const { language, t } = useLanguage();
   const nav = useNavigation<any>();
   const { ready, decks } = useDeck();
@@ -126,6 +132,7 @@ export default function MissionScreen({
   const execute = async (intent: Pending) => {
     if (busy.current || blocked) return;
     busy.current = true;
+    onSavingChange?.(true);
     pending.current = intent;
     setSaving(true);
     setSaveError(false);
@@ -154,6 +161,7 @@ export default function MissionScreen({
     } finally {
       busy.current = false;
       if (mounted.current) setSaving(false);
+      onSavingChange?.(false);
     }
   };
   const start = () => {
@@ -198,7 +206,11 @@ export default function MissionScreen({
         style={styles.wrap}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
+        <ScrollView
+          key={fontScale}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={styles.content}
+        >
           {
             <ActionButton
               label={t('mission.back')}
@@ -479,6 +491,7 @@ export default function MissionScreen({
               )}
             </>
           )}
+          {footer}
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
