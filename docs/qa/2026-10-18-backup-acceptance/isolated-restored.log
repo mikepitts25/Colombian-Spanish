@@ -1,0 +1,10 @@
+PASS __tests__/storage/legacyBackupRecovery.test.ts
+  ✓ replays a failed legacy full-state migration before reads without duplicate history or legacy streak resurrection (13 ms)
+  ✓ refuses replacement against corrupt local history without changing any stored key: {broken (3 ms)
+  ✓ refuses replacement against corrupt local history without changing any stored key: {"schemaVersion":99,"events":[]} (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.31 s, estimated 1 s
+Ran all test suites matching /__tests__\/storage\/legacyBackupRecovery.test.ts/i.

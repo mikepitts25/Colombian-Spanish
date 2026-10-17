@@ -1,0 +1,30 @@
+FAIL __tests__/storage/legacyBackupRecovery.test.ts
+  ✕ replays a failed legacy full-state migration before reads without duplicate history or legacy streak resurrection (10 ms)
+  ✓ refuses replacement against corrupt local history without changing any stored key: {broken (1 ms)
+  ✓ refuses replacement against corrupt local history without changing any stored key: {"schemaVersion":99,"events":[]} (1 ms)
+
+  ● replays a failed legacy full-state migration before reads without duplicate history or legacy streak resurrection
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: [{"cards": [{"back": "my phrase", "createdAt": 1, "due": 9000, "ease": 2.5, "favorite": true, "front": "mi frase", "id": "custom-card", "interval": 4, "reps": 3}], "id": "custom-deck", "name": "My phrases"}]
+
+      94 |   expect(await AsyncStorage.getItem(STREAK)).toBe(previousStreak);
+      95 |   const partial = await rawState();
+    > 96 |   await expect(loadDecks()).rejects.toThrow('migration write unavailable');
+         |         ^
+      97 |   expect(await rawState()).toEqual(partial);
+      98 |   blocked = false;
+      99 |   const recovered = await captureBackupSnapshot();
+
+      at expect (../../../../../../../Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/node_modules/expect/build/index.js:113:15)
+      at Object.expect (__tests__/storage/legacyBackupRecovery.test.ts:96:9)
+      at asyncGeneratorStep (../../../../../../../Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../../../Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 passed, 3 total
+Snapshots:   0 total
+Time:        0.49 s, estimated 1 s
+Ran all test suites matching /__tests__\/storage\/legacyBackupRecovery.test.ts/i.

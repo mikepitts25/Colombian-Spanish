@@ -1,0 +1,22 @@
+[
+  {
+    "case": "isolated-baseline",
+    "exitCode": 0,
+    "expectedExitCode": 0
+  },
+  {
+    "case": "skipped-recovery",
+    "exitCode": 1,
+    "expectedExitCode": 1
+  },
+  {
+    "case": "unsupported-history",
+    "exitCode": 1,
+    "expectedExitCode": 1
+  },
+  {
+    "case": "isolated-restored",
+    "exitCode": 0,
+    "expectedExitCode": 0
+  }
+]
