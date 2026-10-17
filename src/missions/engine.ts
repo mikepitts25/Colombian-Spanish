@@ -1,3 +1,4 @@
+import { ActivityTimingSample, isTimedResponse, validateActivityTimings } from './activeTiming';
 import { assessProductionAnswer, createProductionObservation } from '../exercises/production';
 import type { LearningEvent } from '../storage/learningEventSchema';
 import { MissionPack, MissionNode, record, text, only, validateMission } from './schema';
@@ -21,11 +22,13 @@ export interface MissionRun {
     optionId?: string;
     answerIndex?: number;
   };
+  activeTiming?: { durationMs: number | null };
   lastOperation?: { id: string; key: string };
 }
 export interface MissionEnvelope {
   schemaVersion: 1;
   runs: MissionRun[];
+  timings?: ActivityTimingSample[];
 }
 export interface MissionCommand {
   id: string;
@@ -37,6 +40,7 @@ export interface MissionCommand {
   answer?: string;
   choiceId?: string;
   durationMs?: number;
+  activeDurationMs?: number | null;
 }
 const integer = (v: unknown, max = 100000): v is number =>
   typeof v === 'number' && Number.isSafeInteger(v) && v >= 0 && v <= max;
@@ -46,12 +50,14 @@ export function validateMissionEnvelope(value: unknown): asserts value is Missio
   };
   if (
     !record(value) ||
-    !only(value, ['schemaVersion', 'runs']) ||
+    !only(value, ['schemaVersion', 'runs', 'timings']) ||
     value.schemaVersion !== 1 ||
     !Array.isArray(value.runs) ||
     value.runs.length > 50
   )
     fail();
+  if ((value as MissionEnvelope).timings !== undefined)
+    validateActivityTimings((value as MissionEnvelope).timings);
   const ids = new Set();
   for (const run of (value as MissionEnvelope).runs) {
     if (
@@ -73,6 +79,7 @@ export function validateMissionEnvelope(value: unknown): asserts value is Missio
         'updatedAt',
         'feedback',
         'lastOperation',
+        'activeTiming',
       ]) ||
       run.schemaVersion !== 1 ||
       ![run.id, run.missionId, run.nodeId].every((v) => text(v)) ||
@@ -93,6 +100,13 @@ export function validateMissionEnvelope(value: unknown): asserts value is Missio
       !Array.from(run.reviewCardIds).every((v) => text(v)) ||
       new Set(run.reviewCardIds).size !== run.reviewCardIds.length ||
       ids.has(run.missionId)
+    )
+      fail();
+    if (
+      run.activeTiming !== undefined &&
+      (!record(run.activeTiming) ||
+        !only(run.activeTiming, ['durationMs']) ||
+        !(run.activeTiming.durationMs === null || integer(run.activeTiming.durationMs, 86400000)))
     )
       fail();
     if (
@@ -177,6 +191,7 @@ export function startMission(pack: MissionPack, id: string, at: number): Mission
     assisted: false,
     modelAnswerRevealed: false,
     completed: false,
+    ...(isTimedResponse(pack) ? { activeTiming: { durationMs: 0 } } : {}),
     reviewCardIds: [],
     updatedAt: at,
   };
@@ -196,7 +211,10 @@ export function transitionMission(
     !integer(command.expectedRevision) ||
     !Number.isFinite(command.at) ||
     command.at < 0 ||
-    !['advance', 'hint', 'retry', 'answer', 'playback', 'transcript'].includes(command.type)
+    !['advance', 'hint', 'retry', 'answer', 'playback', 'transcript'].includes(command.type) ||
+    (command.activeDurationMs !== undefined &&
+      command.activeDurationMs !== null &&
+      !integer(command.activeDurationMs, 86400000))
   )
     throw new Error('Invalid mission command');
   const source = pack.nodes.find((n) => n.id === command.nodeId);
@@ -209,6 +227,7 @@ export function transitionMission(
     command.expectedRevision,
     command.type,
     command.choiceId ?? status ?? null,
+    ...(command.activeDurationMs === undefined ? [] : [command.activeDurationMs]),
   ]);
   if (current.lastOperation?.id === command.id) {
     if (current.lastOperation.key !== key) throw new Error('Mission operation ID conflict');
@@ -332,6 +351,14 @@ export function transitionMission(
       state.assisted = true;
       state.reviewCardIds = [...new Set([...state.reviewCardIds, event.cardId])];
     }
+  }
+  if (state.activeTiming && ['hint', 'answer'].includes(command.type)) {
+    const prior = state.activeTiming.durationMs,
+      segment = command.activeDurationMs;
+    state.activeTiming.durationMs =
+      prior !== null && typeof segment === 'number' && prior + segment <= 86400000
+        ? prior + segment
+        : null;
   }
   state.revision++;
   state.updatedAt = command.at;

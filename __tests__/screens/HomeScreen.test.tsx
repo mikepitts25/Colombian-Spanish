@@ -565,3 +565,38 @@ it('a failed initial plan read offers Retry without opening unlinked practice', 
   await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
   read.mockRestore();
 });
+
+it('uses the same calibrated written-response allowance in the Home preview', async () => {
+  const { DAILY_RESPONSE } = require('../../src/missions/dailyResponse');
+  jest.spyOn(require('../../src/storage/missions'), 'readActivityTimings').mockResolvedValue(
+    Array.from({ length: 5 }, (_, i) => ({
+      runId: `r${i}`,
+      missionId: DAILY_RESPONSE.id,
+      contentVersion: 1,
+      occurredAt: Date.now() - i,
+      durationMs: 20000,
+    })),
+  );
+  require('../../src/storage/prefs').getPrefs.mockResolvedValue({
+    newCardsPerDay: 10,
+    studyMinutes: 3,
+    learningLevel: 'beginner',
+  });
+  const deck = {
+    ...DECK,
+    cards: [
+      makeCard('0010', { reps: 1 }),
+      ...Array.from({ length: 10 }, (_, i) => makeCard(`due${i}`, { reps: 1 })),
+    ],
+  };
+  mockUseDeck.mockReturnValue({
+    ready: true,
+    decks: [deck],
+    activeDeckId: deck.id,
+    reload: mockReload,
+    setActiveDeckId: jest.fn(),
+  });
+  const ui = render(<HomeScreen />);
+  await ui.findByText('Suggested: Greetings · up to 3 cards · about 3 min');
+  expect(ui.getByText('The reply estimate uses your recent active practice.')).toBeTruthy();
+});

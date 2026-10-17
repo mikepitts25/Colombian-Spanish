@@ -1,3 +1,5 @@
+import { readActivityTimings } from './missions';
+import { calibratedActivitySeconds } from '../missions/activeTiming';
 import { withStorageTransaction } from './durableStorage';
 import { readDailyPlan, startDailyPlan } from './dailyPlans';
 import { DailyPlan } from './dailyPlanSchema';
@@ -32,7 +34,9 @@ export function openRecommendedPlan(allowDraft: boolean): Promise<DailyPlan | un
       now,
       undefined,
       pace,
-      response ? 60 : 0,
+      response
+        ? (calibratedActivitySeconds(await readActivityTimings(tx), response, now) ?? 60)
+        : 0,
     );
     if (!suggestion && !response) return undefined;
     const deck = decks.find((deck) => deck.id === suggestion?.deckId);

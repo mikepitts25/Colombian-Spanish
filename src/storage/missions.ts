@@ -1,3 +1,4 @@
+import { isTimedResponse, ActivityTimingSample } from '../missions/activeTiming';
 import AsyncStorage, { StorageAccess, withStorageTransaction } from './durableStorage';
 import { linkedAppliedPlan, completeAppliedPlan } from './dailyPlans';
 import {
@@ -21,6 +22,11 @@ async function readRuns(access: StorageAccess): Promise<MissionEnvelope> {
   const value = raw === null ? { schemaVersion: 1, runs: [] } : JSON.parse(raw);
   validateMissionEnvelope(value);
   return value;
+}
+export async function readActivityTimings(
+  access: StorageAccess = AsyncStorage,
+): Promise<ActivityTimingSample[]> {
+  return (await readRuns(access)).timings ?? [];
 }
 export async function loadMissionRun(
   pack: MissionPack,
@@ -85,8 +91,8 @@ export function startMissionRun(
       )
         throw new Error('Missing mission prerequisite');
       const runs = [...envelope.runs.filter((run) => run.missionId !== pack.id), fresh];
-      validateMissionEnvelope({ schemaVersion: 1, runs });
-      await tx.setItem(KEY, JSON.stringify({ schemaVersion: 1, runs }));
+      validateMissionEnvelope({ ...envelope, runs });
+      await tx.setItem(KEY, JSON.stringify({ ...envelope, runs }));
       return fresh;
     }),
   );
@@ -97,7 +103,10 @@ export function applyMissionCommand(
   planId?: string,
 ): Promise<MissionRun> {
   const pack = validateMission(value),
-    command: MissionCommand = JSON.parse(JSON.stringify(input));
+    command: MissionCommand = {
+      ...JSON.parse(JSON.stringify(input)),
+      ...(input.activeDurationMs === undefined ? {} : { activeDurationMs: input.activeDurationMs }),
+    };
   return serializeLearningHistoryWrite(() =>
     withStorageTransaction(async (tx) => {
       const envelope = await readRuns(tx),
@@ -119,10 +128,36 @@ export function applyMissionCommand(
         const events = mergeEventHistory(await readLearningEvents(tx), [result.event]);
         await tx.setItem('SRS_LEARNING_EVENTS_V1', JSON.stringify({ schemaVersion: 1, events }));
       }
+      let timings = envelope.timings;
+      const durationMs = result.state.activeTiming?.durationMs;
+      if (
+        !current.completed &&
+        result.state.completed &&
+        isTimedResponse(pack) &&
+        typeof durationMs === 'number' &&
+        durationMs >= 2000 &&
+        durationMs <= 180000
+      ) {
+        if ((timings ?? []).some((sample) => sample.runId === current.id))
+          throw new Error('Activity timing run ID conflict');
+        timings = [
+          ...(timings ?? []),
+          {
+            runId: current.id,
+            missionId: pack.id,
+            contentVersion: pack.contentVersion,
+            occurredAt: command.at,
+            durationMs,
+          },
+        ]
+          .sort((a, b) => a.occurredAt - b.occurredAt)
+          .slice(-100);
+      }
       await tx.setItem(
         KEY,
         JSON.stringify({
-          schemaVersion: 1,
+          ...envelope,
+          ...(timings === undefined ? {} : { timings }),
           runs: envelope.runs.map((run) => (run.missionId === pack.id ? result.state : run)),
         }),
       );

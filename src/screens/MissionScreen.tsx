@@ -1,3 +1,5 @@
+import { useActiveStudyTime } from '../hooks/useActiveStudyTime';
+import { isTimedResponse } from '../missions/activeTiming';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -59,6 +61,8 @@ export default function MissionScreen({
     generation = useRef(0),
     startedAt = useRef(0);
   const expectedRun = useRef<string | undefined>(undefined);
+  const timingContinuous = useRef(false);
+  const timedResponse = isTimedResponse(pack);
   useEffect(() => {
     if (planId && run?.completed && !contentChanged) onCompleted?.();
   }, [planId, run?.completed, contentChanged, onCompleted]);
@@ -80,11 +84,25 @@ export default function MissionScreen({
       return false;
     }
   }, [ready, decks, pack]);
+  const readActiveTime = useActiveStudyTime(
+    timedResponse && run ? `${run.id}:${run.nodeId}:${run.revision}` : undefined,
+    available &&
+      !loading &&
+      !loadError &&
+      !contentChanged &&
+      !saving &&
+      !saveError &&
+      !blocked &&
+      !!run &&
+      !run.completed &&
+      !run.feedback,
+  );
   const load = useCallback(async () => {
     const request = ++generation.current;
     try {
       const result = planId ? await loadMissionRun(pack, planId) : await loadMissionRun(pack);
       if (mounted.current && request === generation.current) {
+        timingContinuous.current = !result.run || !!result.run.feedback || result.run.completed;
         setRun(result.run);
         expectedRun.current = result.expectedRunId ?? result.run?.id;
         setContentChanged(result.contentChanged);
@@ -118,6 +136,7 @@ export default function MissionScreen({
           : await applyMissionCommand(pack, intent.command, planId);
       pending.current = undefined;
       if (mounted.current) {
+        if (intent.kind === 'start') timingContinuous.current = true;
         setRun(next);
         expectedRun.current = next.id;
         setContentChanged(false);
@@ -158,6 +177,9 @@ export default function MissionScreen({
         at: Date.now(),
         type,
         ...extra,
+        ...(timedResponse && ['hint', 'answer'].includes(type)
+          ? { activeDurationMs: timingContinuous.current ? readActiveTime() : null }
+          : {}),
       },
     });
   };

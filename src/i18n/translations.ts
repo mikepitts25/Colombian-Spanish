@@ -119,6 +119,7 @@ export const translations = {
     'plan.summary': 'Plan de {minutes} min: repaso y una respuesta escrita (borrador).',
     'plan.reviewSummary': 'Plan de repaso de {minutes} min.',
     'plan.startReply': 'Empezar respuesta de borrador',
+    'plan.measuredReply': 'La estimación de la respuesta usa tu práctica activa reciente.',
     'plan.title': 'Tu plan diario',
     'plan.unavailable':
       'Esta actividad no está disponible en esta versión. Puedes terminar el plan conservando lo aprendido.',
@@ -739,6 +740,7 @@ export const translations = {
     'plan.summary': '{minutes}-minute plan: review and one written reply (draft).',
     'plan.reviewSummary': '{minutes}-minute review plan.',
     'plan.startReply': 'Start draft reply',
+    'plan.measuredReply': 'The reply estimate uses your recent active practice.',
     'plan.title': 'Your daily plan',
     'plan.unavailable':
       'This activity is unavailable in this build. You can end the plan and keep your learning progress.',

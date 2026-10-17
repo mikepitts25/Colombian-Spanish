@@ -1,3 +1,5 @@
+import { readActivityTimings } from '../storage/missions';
+import { calibratedActivitySeconds, ActivityTimingSample } from '../missions/activeTiming';
 import { SHOW_REVIEW_TOOLS } from '../config';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
@@ -89,12 +91,13 @@ type DeckWithDue = Deck & {
 };
 
 async function loadHomeProgress() {
-  const [daily, streak, prefs, events, plan] = await Promise.all([
+  const [daily, streak, prefs, events, plan, timings] = await Promise.all([
     getDailyProgress(),
     getStreakState(),
     getPrefs(),
     getLearningEvents(),
     readDailyPlan(),
+    readActivityTimings(),
   ]);
   const now = Date.now();
   return {
@@ -109,6 +112,7 @@ async function loadHomeProgress() {
     now,
     measuredSeconds: calibratedReviewSeconds(events, now),
     plan,
+    timings,
   };
 }
 
@@ -139,6 +143,7 @@ export default function HomeScreen() {
     now: initialNow,
     measuredSeconds: undefined as number | undefined,
     plan: undefined as DailyPlan | undefined,
+    timings: [] as ActivityTimingSample[],
   });
   const { count: dailyCount, target: dailyTarget, streak, freezes } = activity;
   const greeting = useMemo(() => {
@@ -173,6 +178,9 @@ export default function HomeScreen() {
     [workload],
   );
   const response = availableDailyResponse(decks || [], SHOW_REVIEW_TOOLS);
+  const responseSeconds = response
+    ? calibratedActivitySeconds(activity.timings, response, activity.now)
+    : undefined;
   const unfinishedPlan =
     activity.plan && activity.plan.phase !== 'complete' ? activity.plan : undefined;
   const completedToday =
@@ -187,7 +195,7 @@ export default function HomeScreen() {
           activity.now,
           activeDeckId,
           activity.measuredSeconds,
-          response ? 60 : 0,
+          response ? (responseSeconds ?? 60) : 0,
         )
       : undefined;
   const recommendedDeck = workload.find((deck) => deck.id === recommendation?.deckId);
@@ -377,6 +385,9 @@ export default function HomeScreen() {
             <Text accessibilityRole="alert" style={styles.todaySub}>
               {t('home.studyStartError')}
             </Text>
+          )}
+          {responseSeconds !== undefined && (
+            <Text style={styles.todaySub}>{t('plan.measuredReply')}</Text>
           )}
           {recommendation && activity.measuredSeconds !== undefined && (
             <Text style={styles.todaySub}>{t('home.measuredEstimate')}</Text>

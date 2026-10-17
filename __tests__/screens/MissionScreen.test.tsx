@@ -1,6 +1,8 @@
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
+import { AppState, AppStateStatus } from 'react-native';
+import { DAILY_RESPONSE } from '../../src/missions/dailyResponse';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MissionScreen from '../../src/screens/MissionScreen';
 import { FIRST_MORNING } from '../../src/missions/firstMorning';
@@ -8,7 +10,10 @@ import * as missionStorage from '../../src/storage/missions';
 import { getLearningEvents } from '../../src/storage/learningEvents';
 const mockBack = jest.fn();
 let mockPreview = true;
-jest.mock('@react-navigation/native', () => ({ useNavigation: () => ({ goBack: mockBack }) }));
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ goBack: mockBack }),
+  useFocusEffect: (cb: () => void) => require('react').useEffect(cb, [cb]),
+}));
 jest.mock('../../src/config', () => ({
   get SHOW_REVIEW_TOOLS() {
     return mockPreview;
@@ -255,3 +260,71 @@ test('a linked one-response activity starts its planned run and completes only t
   expect((await getLearningEvents())[0].sessionId).toBe('planned');
   expect(ui.queryByText('Practice again')).toBeNull();
 });
+
+test('times only actionable foreground segments, preserving hint/save retry timing without counting waits', async () => {
+  let clock = 0;
+  let change!: (s: AppStateStatus) => void;
+  jest.spyOn(performance, 'now').mockImplementation(() => clock);
+  Object.defineProperty(AppState, 'currentState', { configurable: true, value: 'active' });
+  jest.spyOn(AppState, 'addEventListener').mockImplementation((event, fn) => {
+    if (event === 'change') change = fn;
+    return { remove: jest.fn() };
+  });
+  const ui = render(<MissionScreen pack={DAILY_RESPONSE} />);
+  fireEvent.press(await ui.findByText('Start draft mission'));
+  await ui.findByText('Greet the staff');
+  clock = 2000;
+  fireEvent.press(ui.getByText('Hint'));
+  await ui.findByText('Begin with buenos…');
+  act(() => change('background'));
+  clock = 62000;
+  act(() => change('active'));
+  clock = 65000;
+  const apply = jest
+    .spyOn(missionStorage, 'applyMissionCommand')
+    .mockRejectedValueOnce(new Error('disk'));
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'Buenos días');
+  fireEvent.press(ui.getByText('Check answer'));
+  await ui.findByText('Could not save this step. Retry to continue.');
+  expect(apply.mock.calls[0][1].activeDurationMs).toBe(3000);
+  clock = 95000;
+  fireEvent.press(ui.getByText('Retry save'));
+  await ui.findByText('Correct');
+  expect(apply.mock.calls[1][1]).toEqual(apply.mock.calls[0][1]);
+  clock = 150000;
+  fireEvent.press(ui.getByText('Continue'));
+  await ui.findByText('Reply practiced');
+  expect(await missionStorage.readActivityTimings()).toEqual([
+    expect.objectContaining({ durationMs: 5000 }),
+  ]);
+});
+test.each([false, true])(
+  'cold response resume with feedback=%s never invents a lost timing segment',
+  async (feedback) => {
+    let clock = 0;
+    jest.spyOn(performance, 'now').mockImplementation(() => clock);
+    Object.defineProperty(AppState, 'currentState', { configurable: true, value: 'active' });
+    const ui = render(<MissionScreen pack={DAILY_RESPONSE} />);
+    fireEvent.press(await ui.findByText('Start draft mission'));
+    await ui.findByText('Greet the staff');
+    clock = 5000;
+    if (feedback) {
+      fireEvent.changeText(ui.getByLabelText('Your response'), 'Buenos días');
+      fireEvent.press(ui.getByText('Check answer'));
+      await ui.findByText('Correct');
+    }
+    ui.unmount();
+    clock = 80000;
+    const resumed = render(<MissionScreen pack={DAILY_RESPONSE} />);
+    if (!feedback) {
+      await resumed.findByLabelText('Your response');
+      clock = 85000;
+      fireEvent.changeText(resumed.getByLabelText('Your response'), 'Buenos días');
+      fireEvent.press(resumed.getByText('Check answer'));
+    }
+    await resumed.findByText('Correct');
+    fireEvent.press(resumed.getByText('Continue'));
+    await resumed.findByText('Reply practiced');
+    expect(await missionStorage.readActivityTimings()).toHaveLength(feedback ? 1 : 0);
+  },
+);
