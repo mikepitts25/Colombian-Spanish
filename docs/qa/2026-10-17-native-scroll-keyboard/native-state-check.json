@@ -1,0 +1,1679 @@
+[
+  {
+    "phase": "narrow-before-touch",
+    "device": "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792246434.026067,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 2,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-2",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [
+          "catchup-2",
+          "catchup-3",
+          "catchup-4",
+          "catchup-5",
+          "catchup-6",
+          "catchup-7",
+          "catchup-8",
+          "catchup-9"
+        ],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792246300685
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792245860357,
+        "hintsUsed": null,
+        "durationMs": 51706
+      }
+    ],
+    "cardCount": 1402,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "catchup-0",
+        "front": "Hola 0",
+        "back": "Hello 0",
+        "createdAt": 0,
+        "due": 1793109768065,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-1",
+        "front": "Hola 1",
+        "back": "Hello 1",
+        "createdAt": 0,
+        "due": 1793109860352,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-2",
+        "front": "Hola 2",
+        "back": "Hello 2",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-3",
+        "front": "Hola 3",
+        "back": "Hello 3",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-4",
+        "front": "Hola 4",
+        "back": "Hello 4",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "430f5cf85a5ecbbb75d7975e9fd83cff5111328e53acfd48f51d5a9750e02c6c"
+  },
+  {
+    "phase": "narrow-after-touch",
+    "device": "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792246543.051153,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 3,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-3",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [
+          "catchup-3",
+          "catchup-4",
+          "catchup-5",
+          "catchup-6",
+          "catchup-7",
+          "catchup-8",
+          "catchup-9"
+        ],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792246528211
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792246528211,
+        "hintsUsed": null,
+        "durationMs": 227435
+      }
+    ],
+    "cardCount": 1402,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "catchup-0",
+        "front": "Hola 0",
+        "back": "Hello 0",
+        "createdAt": 0,
+        "due": 1793109768065,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-1",
+        "front": "Hola 1",
+        "back": "Hello 1",
+        "createdAt": 0,
+        "due": 1793109860352,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-2",
+        "front": "Hola 2",
+        "back": "Hello 2",
+        "createdAt": 0,
+        "due": 1793110528206,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-3",
+        "front": "Hola 3",
+        "back": "Hello 3",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-4",
+        "front": "Hola 4",
+        "back": "Hello 4",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "cddec26bc81143d9d95dcf8549e39357d18ec0bb25b349ce2f503f8a420d6296"
+  },
+  {
+    "phase": "tablet-restored",
+    "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "plan": {
+      "schemaVersion": 1,
+      "current": null
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvcf6sfh-a-6veg4o2wnm5",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": true,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": null
+          },
+          "reviewCardIds": ["0010"],
+          "updatedAt": 1792244711942,
+          "lastOperation": {
+            "id": "mvcg86bq-6dw58k32z58",
+            "key": "[\"mvcf6sfh-a-6veg4o2wnm5\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792246895.111967,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 2,
+      "target": 5,
+      "newCount": 2
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792243010577
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7jol-h-ioghcalh57",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243003023,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 35139
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7piq-m-ydw9u4oywkf",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243010577,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7430
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcf6sfh-a-6veg4o2wnm5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcf6sfh-a-6veg4o2wnm5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792244691125,
+        "hintsUsed": 0,
+        "durationMs": 834959
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [],
+    "deckHash": "2b01383669a251058d5619ff3a72a14ea6131066d7f5b9aec0702860a7d6000d"
+  },
+  {
+    "phase": "tablet-applied-before-answer",
+    "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvchkn68-1-gss876oli3j",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792246973243,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["1802", "1803"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvchkn68-2-ig7pwq6nwt",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792247007416
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvchkn68-3-bcvwvdzln0v"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvchkn68-3-bcvwvdzln0v",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "greeting",
+          "revision": 0,
+          "hintsUsed": 0,
+          "assisted": false,
+          "modelAnswerRevealed": false,
+          "completed": false,
+          "activeTiming": {
+            "durationMs": 0
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792247036358
+        }
+      ]
+    },
+    "capturedAt": 1792247097.40446,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 4,
+      "target": 5,
+      "newCount": 4
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792247007421
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7jol-h-ioghcalh57",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243003023,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 35139
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7piq-m-ydw9u4oywkf",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243010577,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7430
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcf6sfh-a-6veg4o2wnm5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcf6sfh-a-6veg4o2wnm5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792244691125,
+        "hintsUsed": 0,
+        "durationMs": 834959
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchl1nw-a-2fbims1t53o",
+        "cardId": "1802",
+        "deckId": "deck-business",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "planId": "mvchkn68-1-gss876oli3j",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792246992081,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 18440
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchldi5-f-38zusc5upns",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "planId": "mvchkn68-1-gss876oli3j",
+        "cardId": "1803",
+        "deckId": "deck-business",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792247007421,
+        "hintsUsed": null,
+        "durationMs": 15220
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [],
+    "deckHash": "f6d6704524e7434c709a5eed09eb5cdd35477e331f870d3cf711d704fa21f5c4"
+  },
+  {
+    "phase": "tablet-accent-feedback",
+    "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvchkn68-1-gss876oli3j",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792246973243,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["1802", "1803"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvchkn68-2-ig7pwq6nwt",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792247007416
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvchkn68-3-bcvwvdzln0v"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvchkn68-3-bcvwvdzln0v",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "greeting",
+          "revision": 1,
+          "hintsUsed": 0,
+          "assisted": true,
+          "modelAnswerRevealed": false,
+          "completed": false,
+          "activeTiming": {
+            "durationMs": 391264
+          },
+          "reviewCardIds": ["0010"],
+          "updatedAt": 1792247427650,
+          "feedback": {
+            "status": "accent",
+            "answerIndex": 0
+          },
+          "lastOperation": {
+            "id": "mvchuds2-pkldfm9aimc",
+            "key": "[\"mvchkn68-3-bcvwvdzln0v\",\"greeting\",0,\"answer\",\"accent\",391264]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792247437.3772092,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 4,
+      "target": 5,
+      "newCount": 4
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792247007421
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7jol-h-ioghcalh57",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243003023,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 35139
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7piq-m-ydw9u4oywkf",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243010577,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7430
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcf6sfh-a-6veg4o2wnm5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcf6sfh-a-6veg4o2wnm5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792244691125,
+        "hintsUsed": 0,
+        "durationMs": 834959
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchl1nw-a-2fbims1t53o",
+        "cardId": "1802",
+        "deckId": "deck-business",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "planId": "mvchkn68-1-gss876oli3j",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792246992081,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 18440
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchldi5-f-38zusc5upns",
+        "cardId": "1803",
+        "deckId": "deck-business",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "planId": "mvchkn68-1-gss876oli3j",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792247007421,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 15220
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvchkn68-3-bcvwvdzln0v\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvchkn68-3-bcvwvdzln0v",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792247427650,
+        "hintsUsed": 0,
+        "durationMs": 391276,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [],
+    "deckHash": "f6d6704524e7434c709a5eed09eb5cdd35477e331f870d3cf711d704fa21f5c4"
+  },
+  {
+    "phase": "tablet-feedback-cold-resume",
+    "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvchkn68-1-gss876oli3j",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792246973243,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["1802", "1803"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvchkn68-2-ig7pwq6nwt",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792247007416
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvchkn68-3-bcvwvdzln0v"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvchkn68-3-bcvwvdzln0v",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "greeting",
+          "revision": 1,
+          "hintsUsed": 0,
+          "assisted": true,
+          "modelAnswerRevealed": false,
+          "completed": false,
+          "activeTiming": {
+            "durationMs": 391264
+          },
+          "reviewCardIds": ["0010"],
+          "updatedAt": 1792247427650,
+          "feedback": {
+            "status": "accent",
+            "answerIndex": 0
+          },
+          "lastOperation": {
+            "id": "mvchuds2-pkldfm9aimc",
+            "key": "[\"mvchkn68-3-bcvwvdzln0v\",\"greeting\",0,\"answer\",\"accent\",391264]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792247480.4803488,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 4,
+      "target": 5,
+      "newCount": 4
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792247007421
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7jol-h-ioghcalh57",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243003023,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 35139
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7piq-m-ydw9u4oywkf",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243010577,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7430
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcf6sfh-a-6veg4o2wnm5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcf6sfh-a-6veg4o2wnm5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792244691125,
+        "hintsUsed": 0,
+        "durationMs": 834959
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchl1nw-a-2fbims1t53o",
+        "cardId": "1802",
+        "deckId": "deck-business",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "planId": "mvchkn68-1-gss876oli3j",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792246992081,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 18440
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchldi5-f-38zusc5upns",
+        "cardId": "1803",
+        "deckId": "deck-business",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "planId": "mvchkn68-1-gss876oli3j",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792247007421,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 15220
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvchkn68-3-bcvwvdzln0v\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvchkn68-3-bcvwvdzln0v",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792247427650,
+        "hintsUsed": 0,
+        "durationMs": 391276,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [],
+    "deckHash": "f6d6704524e7434c709a5eed09eb5cdd35477e331f870d3cf711d704fa21f5c4"
+  },
+  {
+    "phase": "tablet-completed",
+    "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvchkn68-1-gss876oli3j",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792246973243,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1802", "1803"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvchkn68-2-ig7pwq6nwt",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792247007416
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvchkn68-3-bcvwvdzln0v"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvchkn68-3-bcvwvdzln0v",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": true,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": 391264
+          },
+          "reviewCardIds": ["0010"],
+          "updatedAt": 1792247487511,
+          "lastOperation": {
+            "id": "mvchvnyv-q77ebi1fzfm",
+            "key": "[\"mvchkn68-3-bcvwvdzln0v\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792247497.41209,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 4,
+      "target": 5,
+      "newCount": 4
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792247007421
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7jol-h-ioghcalh57",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243003023,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 35139
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7piq-m-ydw9u4oywkf",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243010577,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7430
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcf6sfh-a-6veg4o2wnm5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcf6sfh-a-6veg4o2wnm5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792244691125,
+        "hintsUsed": 0,
+        "durationMs": 834959
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchl1nw-a-2fbims1t53o",
+        "cardId": "1802",
+        "deckId": "deck-business",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "planId": "mvchkn68-1-gss876oli3j",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792246992081,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 18440
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchldi5-f-38zusc5upns",
+        "cardId": "1803",
+        "deckId": "deck-business",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "planId": "mvchkn68-1-gss876oli3j",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792247007421,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 15220
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvchkn68-3-bcvwvdzln0v\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvchkn68-3-bcvwvdzln0v",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792247427650,
+        "hintsUsed": 0,
+        "durationMs": 391276,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [],
+    "deckHash": "f6d6704524e7434c709a5eed09eb5cdd35477e331f870d3cf711d704fa21f5c4"
+  },
+  {
+    "phase": "tablet-home-completed",
+    "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvchkn68-1-gss876oli3j",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792246973243,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1802", "1803"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvchkn68-2-ig7pwq6nwt",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792247007416
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvchkn68-3-bcvwvdzln0v"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvchkn68-3-bcvwvdzln0v",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": true,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": 391264
+          },
+          "reviewCardIds": ["0010"],
+          "updatedAt": 1792247487511,
+          "lastOperation": {
+            "id": "mvchvnyv-q77ebi1fzfm",
+            "key": "[\"mvchkn68-3-bcvwvdzln0v\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792247518.2005,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 4,
+      "target": 5,
+      "newCount": 4
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792247007421
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7jol-h-ioghcalh57",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243003023,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 35139
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7piq-m-ydw9u4oywkf",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243010577,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7430
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcf6sfh-a-6veg4o2wnm5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcf6sfh-a-6veg4o2wnm5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792244691125,
+        "hintsUsed": 0,
+        "durationMs": 834959
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchl1nw-a-2fbims1t53o",
+        "cardId": "1802",
+        "deckId": "deck-business",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "planId": "mvchkn68-1-gss876oli3j",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792246992081,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 18440
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchldi5-f-38zusc5upns",
+        "cardId": "1803",
+        "deckId": "deck-business",
+        "sessionId": "mvchkn68-2-ig7pwq6nwt",
+        "planId": "mvchkn68-1-gss876oli3j",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792247007421,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 15220
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvchkn68-3-bcvwvdzln0v\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvchkn68-3-bcvwvdzln0v",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792247427650,
+        "hintsUsed": 0,
+        "durationMs": 391276,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [],
+    "deckHash": "f6d6704524e7434c709a5eed09eb5cdd35477e331f870d3cf711d704fa21f5c4"
+  }
+]
