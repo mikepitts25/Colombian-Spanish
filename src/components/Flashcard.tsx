@@ -1,5 +1,14 @@
 import React, { useRef, useState, useEffect, useLayoutEffect, useCallback, useMemo } from 'react';
-import { Animated, Easing, PanResponder, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Animated,
+  Easing,
+  PanResponder,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { colors } from '../styles/theme';
 import { CardRegister, FlashCard } from '../types';
@@ -10,6 +19,8 @@ import { useLanguage } from '../context/LanguageContext';
 
 interface Props {
   card: FlashCard;
+  /** Parent must provide vertical scrolling for the content-sized face. */
+  expandForLargeText?: boolean;
   onGrade: (q: 1 | 2 | 3 | 4 | 5) => void;
 }
 
@@ -20,9 +31,12 @@ const REGISTER_COLORS: Record<CardRegister, { bg: string; border: string; text: 
   flirty: { bg: 'rgba(244,114,182,0.15)', border: 'rgba(244,114,182,0.5)', text: '#f9a8d4' },
 };
 
-export default function Flashcard({ card, onGrade }: Props) {
+export default function Flashcard({ card, onGrade, expandForLargeText = false }: Props) {
   const { t } = useLanguage();
   const reducedMotion = useReducedMotion();
+  const { fontScale } = useWindowDimensions();
+  const largeText = expandForLargeText && fontScale >= 1.4;
+  const instantMotion = reducedMotion || largeText;
   const [isFront, setIsFront] = useState(true);
   const { say, cancel: stopAudio, prepareReveal } = useCardAudio(card);
   const exampleText = splitExampleText(card.example);
@@ -33,6 +47,7 @@ export default function Flashcard({ card, onGrade }: Props) {
       testID="flashcard-register-badge"
       style={[
         styles.registerBadge,
+        largeText && styles.registerBadgeFlow,
         {
           backgroundColor: REGISTER_COLORS[register].bg,
           borderColor: REGISTER_COLORS[register].border,
@@ -60,10 +75,10 @@ export default function Flashcard({ card, onGrade }: Props) {
     version = useRef(0),
     gestureBusy = useRef(false);
   const animation = useRef<Animated.CompositeAnimation | null>(null);
-  const latest = useRef({ onGrade, reducedMotion, cardId: card.id });
+  const latest = useRef({ onGrade, reducedMotion: instantMotion, cardId: card.id });
   useLayoutEffect(() => {
-    latest.current = { onGrade, reducedMotion, cardId: card.id };
-  }, [onGrade, reducedMotion, card.id]);
+    latest.current = { onGrade, reducedMotion: instantMotion, cardId: card.id };
+  }, [onGrade, instantMotion, card.id]);
   const cancelMotion = useCallback(() => {
     version.current++;
     animation.current?.stop();
@@ -79,7 +94,7 @@ export default function Flashcard({ card, onGrade }: Props) {
     cancelMotion();
     intendedFront.current = to === 'front';
     const target = to === 'front' ? 0 : 180;
-    if (reducedMotion) {
+    if (instantMotion) {
       rot.setValue(target);
       setIsFront(to === 'front');
       reveal?.();
@@ -108,12 +123,12 @@ export default function Flashcard({ card, onGrade }: Props) {
     setIsFront(true);
   }, [card.id, cancelMotion, rot]);
   useEffect(() => {
-    if (reducedMotion) {
+    if (instantMotion) {
       cancelMotion();
       rot.setValue(intendedFront.current ? 0 : 180);
       setIsFront(intendedFront.current);
     }
-  }, [reducedMotion, cancelMotion, rot]);
+  }, [instantMotion, cancelMotion, rot]);
   useEffect(() => () => cancelMotion(), [cancelMotion]);
 
   const panResponder = useMemo(
@@ -176,6 +191,59 @@ export default function Flashcard({ card, onGrade }: Props) {
       }),
     [cancelMotion, rot, translateX],
   );
+
+  if (largeText) {
+    // Only native content remounts for new text metrics; reveal/audio/gesture state stays above.
+    return (
+      <View>
+        <View key={fontScale} style={styles.expandedCard} {...panResponder.panHandlers}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={
+              isFront
+                ? `${t('common.flipCard')}: ${card.front}. ${exampleText?.spanish ?? ''} ${register ? t(REGISTER_LABEL_KEYS[register]) : ''}`
+                : `${t('common.flipCard')}: ${card.back}. ${exampleText?.english ?? ''}`
+            }
+            style={styles.expandedFace}
+            onPress={() => flip(isFront ? 'back' : 'front')}
+            onLongPress={isFront ? say : undefined}
+          >
+            {registerBadge}
+            <Text style={[isFront ? styles.frontWord : styles.backWord, styles.expandedWord]}>
+              {isFront ? card.front : card.back}
+            </Text>
+            {(isFront ? exampleText?.spanish : exampleText?.english) ? (
+              <Text style={isFront ? styles.example : styles.exampleBack}>
+                {isFront ? exampleText?.spanish : exampleText?.english}
+              </Text>
+            ) : null}
+          </Pressable>
+          {isFront && (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`${t('common.listen')}: ${card.front}`}
+              style={styles.expandedSpeaker}
+              onPress={say}
+            >
+              <Text allowFontScaling={false} accessible={false} style={styles.speakerIcon}>
+                🔊
+              </Text>
+            </Pressable>
+          )}
+        </View>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('audio.stop')}
+          style={styles.stopAudio}
+          onPress={stopAudio}
+        >
+          <Text key={fontScale} style={styles.stopAudioText}>
+            {t('audio.stop')}
+          </Text>
+        </Pressable>
+      </View>
+    );
+  }
 
   return (
     <View>
@@ -261,6 +329,26 @@ export default function Flashcard({ card, onGrade }: Props) {
 }
 
 const styles = StyleSheet.create({
+  expandedCard: {
+    minHeight: 278,
+    backgroundColor: '#111827',
+    borderRadius: 26,
+    borderWidth: 1,
+    borderTopWidth: 5,
+    borderColor: colors.border,
+    borderTopColor: colors.brand,
+  },
+  expandedFace: { padding: 20, alignItems: 'center', gap: 16 },
+  expandedWord: { fontSize: 28 },
+  expandedSpeaker: {
+    minHeight: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 12,
+    backgroundColor: colors.surfaceElevated,
+    borderRadius: 16,
+  },
+  registerBadgeFlow: { position: 'relative', top: 0 },
   cardWrap: { height: 278 },
   stopAudio: { minHeight: 48, marginTop: 8, alignItems: 'center', justifyContent: 'center' },
   stopAudioText: { color: colors.textSecondary, fontSize: 16 },

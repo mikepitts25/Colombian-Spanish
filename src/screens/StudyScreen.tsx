@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useRef } from 'react';
+import React, { useMemo, useState, useEffect, useRef, useLayoutEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -102,6 +102,9 @@ export default function StudyScreen() {
   const sessionLimits = useRef({ cardLimit: 15, newLimit: 15 });
   const boundedLimits = useRef<StudyQueueSnapshot['limits']>(undefined);
   const [queuedCardIds, setQueuedCardIds] = useState<string[]>([]);
+  const sessionScroll = useRef<ScrollView>(null);
+  const cardTop = useRef(0);
+  const revealNextCard = useRef<number | undefined>(undefined);
   const grading = useRef(false);
   const gradeSettled = useRef<Promise<void>>(Promise.resolve());
   const queueDeckId = useRef<string | undefined>(undefined);
@@ -257,6 +260,13 @@ export default function StudyScreen() {
   const progress = daily.target > 0 ? Math.min(1, daily.count / daily.target) : 0;
   const remaining = batch.length;
   const card = batch[0];
+  useLayoutEffect(() => {
+    if (revealNextCard.current === undefined) return;
+    const version = revealNextCard.current;
+    revealNextCard.current = undefined;
+    if (sessionVersion.current === version)
+      sessionScroll.current?.scrollTo({ y: cardTop.current, animated: false });
+  }, [queuedCardIds]);
 
   // Honest per-card scheduling preview for each grade (what Anki does).
   const gradeIntervals = useMemo(() => {
@@ -446,6 +456,7 @@ export default function StudyScreen() {
       setGradeError(null);
       setDaily({ count: nextDP.count, target: nextDP.target });
       setResumeSession({ ...attempt.nextSession!, updatedAt: Date.now() });
+      revealNextCard.current = version;
       setQueuedCardIds(attempt.nextSession?.queue?.cardIds ?? []);
       if (!nextCard) setSessionComplete(true);
     } catch (error) {
@@ -618,12 +629,12 @@ export default function StudyScreen() {
                   </View>
                 ) : resumeDeck ? (
                   <Pressable
-                    style={styles.resumeCard}
+                    style={[styles.resumeCard, largeText && styles.stacked]}
                     onPress={() =>
                       startSession(resumeDeck.id, resumeSession?.cardId, resumeSession)
                     }
                   >
-                    <View style={styles.resumeTextBlock}>
+                    <View style={[styles.resumeTextBlock, largeText && styles.noFlex]}>
                       <Text style={styles.resumeDeckName}>{getDeckDisplayName(resumeDeck)}</Text>
                       <Text style={styles.resumeDeckMeta}>
                         {resumeDeck.cards.length} {t('common.cards')}
@@ -646,165 +657,210 @@ export default function StudyScreen() {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <View style={styles.sessionHeader}>
-        <Pressable
-          style={styles.sessionBackBtn}
-          disabled={gradeSaving || gradeError === 'save' || checkpointBusy || checkpointFailed}
-          onPress={() => {
-            if (!grading.current && !pendingGrade.current && !checkpointBlocked.current)
-              setMode('landing');
-          }}
+      <ScrollView
+        ref={sessionScroll}
+        contentContainerStyle={styles.sessionScroll}
+        showsVerticalScrollIndicator={false}
+      >
+        <View
+          key={`header-${fontScale}`}
+          style={[styles.sessionHeader, largeText && styles.stacked]}
         >
-          <Text style={styles.sessionBackText}>{t('study.session.back')}</Text>
-        </Pressable>
-        <View style={styles.sessionTitleBlock}>
-          <Text style={styles.sessionEyebrow}>{t('tabs.study')}</Text>
-          <View style={styles.deckTitleRow}>
-            <Text style={styles.deckPillFlag}>🇨🇴</Text>
-            <Text style={styles.deckTitle} numberOfLines={1}>
-              {deckTitle}
+          <Pressable
+            accessibilityRole="button"
+            style={styles.sessionBackBtn}
+            disabled={gradeSaving || gradeError === 'save' || checkpointBusy || checkpointFailed}
+            onPress={() => {
+              if (!grading.current && !pendingGrade.current && !checkpointBlocked.current)
+                setMode('landing');
+            }}
+          >
+            <Text style={styles.sessionBackText}>{t('study.session.back')}</Text>
+          </Pressable>
+          <View style={[styles.sessionTitleBlock, largeText && styles.noFlex]}>
+            <Text style={styles.sessionEyebrow}>{t('tabs.study')}</Text>
+            <View style={styles.deckTitleRow}>
+              <Text allowFontScaling={false} accessible={false} style={styles.deckPillFlag}>
+                🇨🇴
+              </Text>
+              <Text style={styles.deckTitle} numberOfLines={largeText ? undefined : 1}>
+                {deckTitle}
+              </Text>
+            </View>
+          </View>
+          <View style={[styles.studyHeaderActions, largeText && styles.wrapped]}>
+            {card && (
+              <Pressable
+                style={styles.favoriteBtn}
+                accessibilityLabel={
+                  card.favorite ? t('study.favorite.remove') : t('study.favorite.save')
+                }
+                onPress={() => toggleFavorite(card.id)}
+              >
+                <Text allowFontScaling={false} accessible={false} style={styles.favoriteBtnText}>
+                  {card.favorite ? '★' : '☆'}
+                </Text>
+              </Pressable>
+            )}
+            <View style={styles.cardsLeftPill}>
+              <Text style={styles.cardsLeftText}>{t('study.cardsLeft', { count: remaining })}</Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.progressTrack}>
+          <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
+        </View>
+
+        <View style={styles.regionFilterWrap}>
+          <ScrollView
+            testID="region-filter-scroll"
+            key={`regions-${fontScale}`}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={[
+              styles.regionScroller,
+              largeText && { maxHeight: undefined, height: Math.ceil(34 * fontScale) },
+            ]}
+            contentContainerStyle={styles.regionRow}
+          >
+            {REGION_FILTERS.map((region) => (
+              <Pressable
+                key={region.id}
+                accessibilityRole="button"
+                accessibilityState={{
+                  selected: activeRegion === region.id,
+                  disabled:
+                    gradeSaving || gradeError === 'save' || checkpointBusy || checkpointFailed,
+                }}
+                disabled={
+                  gradeSaving || gradeError === 'save' || checkpointBusy || checkpointFailed
+                }
+                style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
+                onPress={() => changeRegion(region.id)}
+              >
+                <Text
+                  style={[
+                    styles.regionChipText,
+                    activeRegion === region.id && styles.regionChipTextActive,
+                  ]}
+                >
+                  {t(REGION_LABEL_KEYS[region.id])}
+                </Text>
+              </Pressable>
+            ))}
+          </ScrollView>
+          <View
+            testID="region-filter-overflow-cue"
+            pointerEvents="none"
+            style={styles.regionOverflowCue}
+          >
+            <View style={styles.regionOverflowFadeWide} />
+            <View style={styles.regionOverflowFadeTight} />
+            <Text allowFontScaling={false} accessible={false} style={styles.regionOverflowChevron}>
+              ›
             </Text>
           </View>
         </View>
-        <View style={styles.studyHeaderActions}>
-          {card && (
-            <Pressable
-              style={styles.favoriteBtn}
-              accessibilityLabel={
-                card.favorite ? t('study.favorite.remove') : t('study.favorite.save')
-              }
-              onPress={() => toggleFavorite(card.id)}
-            >
-              <Text style={styles.favoriteBtnText}>{card.favorite ? '★' : '☆'}</Text>
-            </Pressable>
-          )}
-          <View style={styles.cardsLeftPill}>
-            <Text style={styles.cardsLeftText}>{t('study.cardsLeft', { count: remaining })}</Text>
-          </View>
+
+        <View key={`hints-${fontScale}`} style={[styles.swipeHints, largeText && styles.stacked]}>
+          <Text style={styles.swipeHard}>{t('study.hint.hard')}</Text>
+          <Text style={styles.swipeTap}>{t('study.hint.flip')}</Text>
+          <Text style={styles.swipeEasy}>{t('study.hint.easy')}</Text>
         </View>
-      </View>
 
-      <View style={styles.progressTrack}>
-        <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
-      </View>
-
-      <View style={styles.regionFilterWrap}>
-        <ScrollView
-          testID="region-filter-scroll"
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.regionScroller}
-          contentContainerStyle={styles.regionRow}
-        >
-          {REGION_FILTERS.map((region) => (
-            <Pressable
-              key={region.id}
-              disabled={gradeSaving || gradeError === 'save' || checkpointBusy || checkpointFailed}
-              style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
-              onPress={() => changeRegion(region.id)}
-            >
-              <Text
-                style={[
-                  styles.regionChipText,
-                  activeRegion === region.id && styles.regionChipTextActive,
-                ]}
-              >
-                {t(REGION_LABEL_KEYS[region.id])}
-              </Text>
-            </Pressable>
-          ))}
-        </ScrollView>
-        <View
-          testID="region-filter-overflow-cue"
-          pointerEvents="none"
-          style={styles.regionOverflowCue}
-        >
-          <View style={styles.regionOverflowFadeWide} />
-          <View style={styles.regionOverflowFadeTight} />
-          <Text style={styles.regionOverflowChevron}>›</Text>
-        </View>
-      </View>
-
-      <View style={styles.swipeHints}>
-        <Text style={styles.swipeHard}>{t('study.hint.hard')}</Text>
-        <Text style={styles.swipeTap}>{t('study.hint.flip')}</Text>
-        <Text style={styles.swipeEasy}>{t('study.hint.easy')}</Text>
-      </View>
-
-      {card ? (
-        <View style={styles.cardArea}>
-          <Flashcard key={card.id} card={card} onGrade={grade} />
-          {isVerb(card) && <ConjugationPanel infinitive={card.front} />}
-        </View>
-      ) : (
-        <View style={[styles.cardArea, styles.center]}>
-          <Text style={{ fontSize: 48 }}>🎉</Text>
-          <Text style={styles.noDeckTitle}>
-            {t(sessionComplete ? 'study.sessionComplete.title' : 'study.caughtUp.title')}
-          </Text>
-          <Text style={styles.noDeckSub}>
-            {t(sessionComplete ? 'study.sessionComplete.sub' : 'study.caughtUp.sub')}
-          </Text>
-          <Pressable style={styles.quizCta} onPress={() => nav.navigate('Quiz')}>
-            <Text style={styles.quizCtaText}>{t('study.takeQuiz')}</Text>
-          </Pressable>
-        </View>
-      )}
-
-      {checkpointFailed && (
-        <View style={styles.saveError}>
-          <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
-            {t('study.checkpointError')}
-          </Text>
-          <Pressable
-            accessibilityRole="button"
-            disabled={checkpointBusy}
-            onPress={() => {
-              if (pendingCheckpoint.current) void persistQueueCheckpoint(pendingCheckpoint.current);
+        {card ? (
+          <View
+            testID="study-card-area"
+            style={styles.cardArea}
+            onLayout={(event) => {
+              cardTop.current = event.nativeEvent.layout.y;
             }}
           >
-            <Text style={{ color: colors.brand }}>{t('practice.retrySave')}</Text>
-          </Pressable>
-        </View>
-      )}
-      {gradeError && (
-        <View style={styles.saveError}>
-          <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
-            {t(gradeError === 'limit' ? 'practice.newLimit' : 'practice.saveError')}
-          </Text>
-          {gradeError === 'save' && (
+            <Flashcard key={card.id} card={card} onGrade={grade} expandForLargeText />
+            {isVerb(card) && <ConjugationPanel infinitive={card.front} />}
+          </View>
+        ) : (
+          <View style={[styles.cardArea, styles.center]}>
+            <Text style={{ fontSize: 48 }}>🎉</Text>
+            <Text style={styles.noDeckTitle}>
+              {t(sessionComplete ? 'study.sessionComplete.title' : 'study.caughtUp.title')}
+            </Text>
+            <Text style={styles.noDeckSub}>
+              {t(sessionComplete ? 'study.sessionComplete.sub' : 'study.caughtUp.sub')}
+            </Text>
+            <Pressable style={styles.quizCta} onPress={() => nav.navigate('Quiz')}>
+              <Text style={styles.quizCtaText}>{t('study.takeQuiz')}</Text>
+            </Pressable>
+          </View>
+        )}
+
+        {checkpointFailed && (
+          <View style={styles.saveError}>
+            <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
+              {t('study.checkpointError')}
+            </Text>
             <Pressable
               accessibilityRole="button"
-              onPress={() => grade(pendingGrade.current?.quality ?? 1)}
+              disabled={checkpointBusy}
+              onPress={() => {
+                if (pendingCheckpoint.current)
+                  void persistQueueCheckpoint(pendingCheckpoint.current);
+              }}
             >
               <Text style={{ color: colors.brand }}>{t('practice.retrySave')}</Text>
             </Pressable>
-          )}
+          </View>
+        )}
+        {gradeError && (
+          <View style={styles.saveError}>
+            <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
+              {t(gradeError === 'limit' ? 'practice.newLimit' : 'practice.saveError')}
+            </Text>
+            {gradeError === 'save' && (
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => grade(pendingGrade.current?.quality ?? 1)}
+              >
+                <Text style={{ color: colors.brand }}>{t('practice.retrySave')}</Text>
+              </Pressable>
+            )}
+          </View>
+        )}
+        <View key={`grades-${fontScale}`} style={styles.gradeBar}>
+          <Text style={styles.gradeLabel}>{t('study.gradePrompt')}</Text>
+          <View style={[styles.gradeButtons, largeText && styles.stacked]}>
+            {GRADES.map((g) => (
+              <Pressable
+                key={g.labelKey}
+                style={[
+                  styles.gradeBtn,
+                  largeText && styles.noFlex,
+                  { backgroundColor: g.bg, borderColor: g.border },
+                ]}
+                onPress={() => grade(g.q)}
+                disabled={
+                  !card || gradeSaving || !!gradeError || checkpointBusy || checkpointFailed
+                }
+              >
+                <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
+                <Text style={[styles.gradeBtnInterval, { color: g.color + 'b3' }]}>
+                  {gradeIntervals[g.q] ?? ''}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
         </View>
-      )}
-      <View style={styles.gradeBar}>
-        <Text style={styles.gradeLabel}>{t('study.gradePrompt')}</Text>
-        <View style={styles.gradeButtons}>
-          {GRADES.map((g) => (
-            <Pressable
-              key={g.labelKey}
-              style={[styles.gradeBtn, { backgroundColor: g.bg, borderColor: g.border }]}
-              onPress={() => grade(g.q)}
-              disabled={!card || gradeSaving || !!gradeError || checkpointBusy || checkpointFailed}
-            >
-              <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
-              <Text style={[styles.gradeBtnInterval, { color: g.color + 'b3' }]}>
-                {gradeIntervals[g.q] ?? ''}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  sessionScroll: { flexGrow: 1, paddingBottom: 16 },
+  stacked: { flexDirection: 'column', alignItems: 'stretch', gap: 12 },
+  noFlex: { flex: 0 },
+  wrapped: { flexWrap: 'wrap' },
   saveError: { padding: 12, gap: 8 },
   wrap: { flex: 1, backgroundColor: colors.bg },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 20 },
@@ -960,7 +1016,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   sessionBackBtn: {
-    minHeight: 34,
+    minHeight: 48,
+    alignSelf: 'flex-start',
     justifyContent: 'center',
     paddingHorizontal: 10,
     borderRadius: 17,
@@ -991,8 +1048,8 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   favoriteBtn: {
-    width: 34,
-    height: 34,
+    width: 48,
+    height: 48,
     borderRadius: 17,
     backgroundColor: 'rgba(255,218,0,0.12)',
     borderWidth: 1.5,
@@ -1040,6 +1097,7 @@ const styles = StyleSheet.create({
   },
   regionChip: {
     minHeight: 34,
+    paddingVertical: 6,
     justifyContent: 'center',
     paddingHorizontal: 13,
     borderRadius: 17,
@@ -1093,7 +1151,8 @@ const styles = StyleSheet.create({
   swipeEasy: { color: 'rgba(16,185,129,0.72)', fontSize: 12, fontWeight: '800' },
 
   cardArea: {
-    flex: 1,
+    flexGrow: 1,
+    flexShrink: 0,
     paddingHorizontal: 18,
     gap: 10,
   },

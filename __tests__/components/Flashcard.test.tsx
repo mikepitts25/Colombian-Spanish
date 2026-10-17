@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react-native';
-import { Animated, PanResponder } from 'react-native';
+import { Animated, PanResponder, Dimensions } from 'react-native';
 let mockReducedMotion = true;
 jest.mock('../../src/hooks/useReducedMotion', () => ({
   useReducedMotion: () => mockReducedMotion,
@@ -278,4 +278,52 @@ it.each([
   expect(grade).toHaveBeenCalledWith(quality);
   timing.mockRestore();
   responder.mockRestore();
+});
+
+// Enlarged cards must use an immediate, single-face layout without losing reveal state.
+test('large text flips immediately and keeps the revealed face across live size changes', () => {
+  const window = Dimensions.get('window'),
+    screen = Dimensions.get('screen');
+  mockReducedMotion = false;
+  act(() =>
+    Dimensions.set({ window: { ...window, fontScale: 3 }, screen: { ...screen, fontScale: 3 } }),
+  );
+  const timing = jest.spyOn(Animated, 'timing');
+  const onGrade = jest.fn();
+  const ui = render(<Flashcard card={makeCard()} onGrade={onGrade} expandForLargeText />);
+  try {
+    fireEvent.press(ui.getByRole('button', { name: /Voltear tarjeta: chimba/ }));
+    expect(timing).not.toHaveBeenCalled();
+    expect(ui.getByRole('button', { name: /Voltear tarjeta: awesome/ })).toBeTruthy();
+    expect(ui.queryByText('chimba', { includeHiddenElements: true })).toBeNull();
+    act(() =>
+      Dimensions.set({
+        window: { ...window, fontScale: 3.5 },
+        screen: { ...screen, fontScale: 3.5 },
+      }),
+    );
+    expect(ui.getByRole('button', { name: /Voltear tarjeta: awesome/ })).toBeTruthy();
+    expect(onGrade).not.toHaveBeenCalled();
+  } finally {
+    ui.unmount();
+    act(() => Dimensions.set({ window, screen }));
+  }
+});
+
+test('keeps the existing card presentation for consumers that have not enabled expanded layout', () => {
+  const window = Dimensions.get('window'),
+    screen = Dimensions.get('screen');
+  mockReducedMotion = false;
+  act(() =>
+    Dimensions.set({ window: { ...window, fontScale: 3 }, screen: { ...screen, fontScale: 3 } }),
+  );
+  const timing = jest.spyOn(Animated, 'timing');
+  const ui = render(<Flashcard card={makeCard()} onGrade={jest.fn()} />);
+  try {
+    fireEvent.press(ui.getByRole('button', { name: /Voltear tarjeta: chimba/ }));
+    expect(timing).toHaveBeenCalled();
+  } finally {
+    ui.unmount();
+    act(() => Dimensions.set({ window, screen }));
+  }
 });

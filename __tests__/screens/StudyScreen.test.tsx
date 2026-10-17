@@ -1,6 +1,6 @@
 import '@testing-library/jest-native/extend-expect';
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, ScrollView } from 'react-native';
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
 import StudyScreen from '../../src/screens/StudyScreen';
 import { FlashCard, Deck } from '../../src/types';
@@ -1070,5 +1070,95 @@ test('retains the landing search across live text-size changes without starting 
   } finally {
     screen.unmount();
     act(() => Dimensions.set({ window, screen: screenMetrics }));
+  }
+});
+
+test('region controls expose their selected state through a live text-size change', async () => {
+  const window = Dimensions.get('window'),
+    screenMetrics = Dimensions.get('screen');
+  const screen = renderStudyScreen();
+  await openCommunicationSession(screen);
+  const writes = mockSaveLastStudySession.mock.calls.length;
+  try {
+    await act(async () =>
+      Dimensions.set({
+        window: { ...window, fontScale: 3 },
+        screen: { ...screenMetrics, fontScale: 3 },
+      }),
+    );
+    expect(screen.getByRole('button', { name: 'Todo' })).toHaveAccessibilityState({
+      selected: true,
+      disabled: false,
+    });
+    expect(screen.getByRole('button', { name: 'Paisa' })).toHaveAccessibilityState({
+      selected: false,
+      disabled: false,
+    });
+    expect(screen.getByText('hola')).toBeTruthy();
+    expect(mockSaveLastStudySession).toHaveBeenCalledTimes(writes);
+    expect(screen.recordAnswer).not.toHaveBeenCalled();
+  } finally {
+    screen.unmount();
+    act(() => Dimensions.set({ window, screen: screenMetrics }));
+  }
+});
+
+test('live session resizing preserves a pending grade and prevents duplicate submissions', async () => {
+  const window = Dimensions.get('window'),
+    screenMetrics = Dimensions.get('screen');
+  let finish!: () => void;
+  const recordAnswer = jest.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  const screen = renderStudyScreen({ recordAnswer });
+  await openCommunicationSession(screen);
+  fireEvent.press(screen.getByText('Bien'));
+  try {
+    await act(async () =>
+      Dimensions.set({
+        window: { ...window, fontScale: 3 },
+        screen: { ...screenMetrics, fontScale: 3 },
+      }),
+    );
+    expect(screen.getByText('Bien')).toBeDisabled();
+    fireEvent.press(screen.getByText('Bien'));
+    expect(recordAnswer).toHaveBeenCalledTimes(1);
+    expect(screen.getByText('hola')).toBeTruthy();
+    await act(async () => finish());
+    expect(await screen.findByText('adios')).toBeTruthy();
+    expect(recordAnswer).toHaveBeenCalledTimes(1);
+  } finally {
+    screen.unmount();
+    act(() => Dimensions.set({ window, screen: screenMetrics }));
+  }
+});
+
+test('advancing after a saved grade returns the viewport to the next card only after success', async () => {
+  const scrollTo = jest.spyOn(ScrollView.prototype, 'scrollTo');
+  let finish!: () => void;
+  const recordAnswer = jest.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  const screen = renderStudyScreen({ recordAnswer });
+  try {
+    await openCommunicationSession(screen);
+    fireEvent(screen.getByTestId('study-card-area'), 'layout', {
+      nativeEvent: { layout: { y: 620 } },
+    });
+    scrollTo.mockClear();
+    fireEvent.press(screen.getByText('Bien'));
+    expect(scrollTo).not.toHaveBeenCalled();
+    await act(async () => finish());
+    expect(await screen.findByText('adios')).toBeTruthy();
+    expect(scrollTo).toHaveBeenCalledWith({ y: 620, animated: false });
+  } finally {
+    screen.unmount();
+    scrollTo.mockRestore();
   }
 });
