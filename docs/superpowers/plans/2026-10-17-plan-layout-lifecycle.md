@@ -14,14 +14,14 @@
 
 - [ ] Narrow iPhone: English/Spanish Home, review, applied prompt/input/keyboard/feedback/complete; scroll and touch access at default/large text, safe areas and recovery/end controls.
 - [ ] Tablet: matching flow at default/large text, keyboard and scroll; preserve exact phase through navigation and OS background/cold restart.
-- [ ] Pin actual regressions before fixing, verify failure then pass; preserve pending write/retry identity, uncertain timing and no SRS inflation.
+- [x] Pin actual regressions before fixing, verify failure then pass; preserve pending write/retry identity, uncertain timing and no SRS inflation.
 - [ ] Full appropriate checks/review, evidence report and master status, merge/push and CI. Do not close a mixed gate solely from iOS evidence.
 
 ## Execution record
 
 Observed RED parent End enabled during pending linked answer; GREEN after synchronous player saving notifications and parent guard. Observed RED player unmount never releases parent saving gate; GREEN with paired notifications independent of local mounted state and a parent pending counter. Native RED tablet largest live text clipped all labels; the existing app pattern of font-scale keyed presentation reflows fixes it without remounting player state. Automated check preserves entered text and exact run through scale changes, including a pending answer. Native RED narrow screen pinned End consumes roughly half the screen; structural regression fails before moving recovery actions into the same safe-area/keyboard-aware response scroll, then passes.
 
-Final local: 90 suites / 876 tests, types/lint/format/calendar/data/editorial pass. Native evidence includes tablet Spanish default review/applied and largest live reflow; narrow English review/applied keyboard/submit, cold feedback resume, navigation away/back, English→Spanish feedback and completion at largest text. Daily/SRS/events unchanged through final completion. Tablet final keyboard/completion and complete-screen touch scrolling are still unverified; Device Hub Raise returned noWindowsAvailable after reattachment. Do not close the broad mixed acceptance gate. Fresh review and integration pending.
+Final local: 90 suites / 876 tests, types/lint/format/calendar/data/editorial pass. Native evidence includes tablet Spanish default review/applied and largest live reflow; narrow English review/applied keyboard/submit, cold feedback resume, navigation away/back, English→Spanish feedback and completion at largest text. Daily/SRS/events unchanged through final completion. Tablet final keyboard/completion and complete-screen touch scrolling are still unverified; Device Hub Raise returned noWindowsAvailable after reattachment. Do not close the broad mixed acceptance gate. One fresh review of 33501a9..156b217 found no blockers and independently passed 17 affected-screen tests. Integration/CI pending.
 
 Ruling: recovery/End scrolls with the response instead of remaining pinned — fixes cramped large-text/keyboard layouts; ending may require scrolling to the action.
 
