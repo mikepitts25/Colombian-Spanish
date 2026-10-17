@@ -27,3 +27,9 @@ The [test-only entry wrapper](native-harness.jsx) ran from an isolated copy, tem
 ## Limits
 
 Draft retention is in memory while the editor stays mounted, not a promise that unsaved edits survive process death. Broader OS interruption, actual low-storage hardware behavior, Android, tablet/keyboard and broad touch-scroll/accessibility acceptance remain separate open work. Automated checks cover rapid conflicts; native checks cover held/failing saves, Back, text-size changes, visible retry and cold persistence. The master roadmap remains active.
+
+## Integrated verification
+
+Implementation `72bb908` merged and pushed to main. The first main-checkout test run exposed stale installed YAML3 dependencies from the earlier advisory migration; strict clean `npm ci --ignore-scripts --strict-peer-deps` installed the committed YAML4.3.2 graph, then all **93 suites / 906 tests** passed on main. No source/lockfile change was needed. The existing 51 high dependency findings remain tracked separately in B01.8.
+
+[CI39047838986](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39047838986) passed all four jobs: quality/content, iOS generation/export, Android generation/export and validation summary. [Board39047839005](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39047839005) also passed. These bundle checks do not establish Android emulator or signed-device acceptance.
