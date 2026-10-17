@@ -368,3 +368,28 @@ describe('selectDifficultCards', () => {
     ]);
   });
 });
+
+test('regional daily queues keep due reviews first and prefer regional then general new cards', () => {
+  const cards = [
+    makeCard({ id: 'other', createdAt: 0, regions: ['rolo'] }),
+    makeCard({ id: 'general', createdAt: 1, regions: ['general'] }),
+    makeCard({ id: 'local', createdAt: 2, regions: ['paisa'] }),
+    makeCard({ id: 'due', reps: 2, interval: 3, due: NOW - 1, regions: ['rolo'] }),
+    makeCard({ id: 'future', reps: 2, interval: 3, due: NOW + 1, regions: ['paisa'] }),
+  ];
+  expect(
+    buildSessionQueue(cards, { now: NOW, size: 3, newLimit: 2, preferredRegion: 'paisa' }).map(
+      (c) => c.id,
+    ),
+  ).toEqual(['due', 'local', 'general']);
+  expect(
+    buildSessionQueue(cards, { now: NOW, size: 3, newLimit: 0, preferredRegion: 'paisa' }).map(
+      (c) => c.id,
+    ),
+  ).toEqual(['due']);
+  expect(
+    buildSessionQueue(cards, { now: NOW, size: 3, newLimit: 2, preferredRegion: 'all' }).map(
+      (c) => c.id,
+    ),
+  ).toEqual(['due', 'other', 'general']);
+});

@@ -98,6 +98,7 @@ export default function StudyScreen() {
   const [checkpointFailed, setCheckpointFailed] = useState(false);
   const checkpointBlocked = useRef(false);
   const pendingCheckpoint = useRef<Omit<LastStudySession, 'updatedAt'> | undefined>(undefined);
+  const newCardRegion = useRef<RegionFilterId>('all');
   const requestedQueue = useRef<StudyQueueSnapshot | undefined>(undefined);
   const sessionLimits = useRef({ cardLimit: 15, newLimit: 15 });
   const boundedLimits = useRef<StudyQueueSnapshot['limits']>(undefined);
@@ -183,6 +184,7 @@ export default function StudyScreen() {
       pendingCheckpoint.current = undefined;
       checkpointBlocked.current = false;
       requestedQueue.current = undefined;
+      newCardRegion.current = 'all';
       learningSession.current = createLearningSessionId();
       boundedLimits.current = undefined;
       sessionLimits.current = { cardLimit: 15, newLimit: 15 };
@@ -196,7 +198,11 @@ export default function StudyScreen() {
       setQueuedCardIds([]);
       return;
     }
-    const filtered = getStudyBatch(activeRegion === 'all' ? 15 : 100).filter((card) =>
+    const eligible =
+      activeRegion === 'all' && newCardRegion.current !== 'all'
+        ? getStudyBatch(15, { preferredRegion: newCardRegion.current })
+        : getStudyBatch(activeRegion === 'all' ? 15 : 100);
+    const filtered = eligible.filter((card) =>
       cardMatchesRegion(card, activeRegion, activeDeck.name),
     );
     const preferred =
@@ -340,13 +346,17 @@ export default function StudyScreen() {
     deckId: string,
     cardId?: string,
     saved?: LastStudySession,
-    limits?: { cardLimit?: unknown; newLimit?: unknown },
+    limits?: { cardLimit?: unknown; newLimit?: unknown; preferredRegion?: unknown },
   ) {
     if (grading.current || pendingGrade.current || checkpointBlocked.current) return;
     sessionVersion.current += 1;
     queueDeckId.current = deckId;
     pendingGrade.current = undefined;
     requestedQueue.current = saved?.queue;
+    newCardRegion.current =
+      !saved && REGION_FILTERS.some((region) => region.id === limits?.preferredRegion)
+        ? (limits!.preferredRegion as RegionFilterId)
+        : 'all';
     const validLimit = (value: unknown, minimum: number) =>
       typeof value === 'number' && Number.isInteger(value) && value >= minimum && value <= 15;
     const requestedLimits = {
@@ -381,12 +391,14 @@ export default function StudyScreen() {
       startSession(autoStartDeckId, undefined, undefined, {
         cardLimit: route.params?.sessionCardLimit,
         newLimit: route.params?.sessionNewLimit,
+        preferredRegion: route.params?.sessionPreferredRegion,
       });
     }
     nav.setParams({
       autoStartDeckId: undefined,
       sessionCardLimit: undefined,
       sessionNewLimit: undefined,
+      sessionPreferredRegion: undefined,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, autoStartDeckId]);
@@ -398,7 +410,7 @@ export default function StudyScreen() {
 
   function changeRegion(region: RegionFilterId) {
     if (
-      region === activeRegion ||
+      (region === activeRegion && newCardRegion.current === 'all') ||
       grading.current ||
       pendingGrade.current ||
       checkpointBlocked.current
@@ -412,6 +424,8 @@ export default function StudyScreen() {
     setCheckpointBusy(true);
     setCheckpointFailed(false);
     setStartCardId(undefined);
+    newCardRegion.current = 'all';
+    setSeed((value) => value + 1);
     setActiveRegion(region);
   }
 

@@ -571,6 +571,7 @@ it('opens the requested deck session directly from a Home handoff', async () => 
     autoStartDeckId: undefined,
     sessionCardLimit: undefined,
     sessionNewLimit: undefined,
+    sessionPreferredRegion: undefined,
   });
 });
 
@@ -1160,5 +1161,91 @@ test('advancing after a saved grade returns the viewport to the next card only a
   } finally {
     screen.unmount();
     scrollTo.mockRestore();
+  }
+});
+
+test('passes the Home regional preference to initial selection and clears it for explicit filters', async () => {
+  const getStudyBatch = jest.fn(() => GREETINGS_DECK.cards);
+  mockRouteParams = {
+    autoStartDeckId: GREETINGS_DECK.id,
+    sessionCardLimit: 4,
+    sessionNewLimit: 2,
+    sessionPreferredRegion: 'paisa',
+  };
+  const screen = renderStudyScreen({ getStudyBatch });
+  try {
+    await screen.findByText('hola');
+    await waitFor(() =>
+      expect(getStudyBatch).toHaveBeenCalledWith(15, { preferredRegion: 'paisa' }),
+    );
+    fireEvent.press(screen.getByRole('button', { name: 'General' }));
+    await waitFor(() => expect(getStudyBatch).toHaveBeenLastCalledWith(100));
+    expect(screen.recordAnswer).not.toHaveBeenCalled();
+  } finally {
+    screen.unmount();
+  }
+});
+
+test('resumes the exact saved mixed-region queue even when current eligible suggestions differ', async () => {
+  const other = makeCard('other', { front: 'rolo-saved', regions: ['rolo'] });
+  const local = makeCard('local', { front: 'paisa-saved', regions: ['paisa'] });
+  const changed = { ...GREETINGS_DECK, cards: [other, local, makeCard('additional')] };
+  mockGetLastStudySession.mockResolvedValue({
+    deckId: changed.id,
+    cardId: 'other',
+    updatedAt: 1000,
+    queue: {
+      schemaVersion: 1,
+      cardIds: ['other', 'local'],
+      region: 'all',
+      sessionId: 'saved-regional-plan',
+      limits: { cardLimit: 4, newLimit: 2 },
+    },
+  });
+  const screen = renderStudyScreen({
+    decks: [changed],
+    activeDeck: changed,
+    getStudyBatch: () => [local],
+  });
+  try {
+    fireEvent.press(await screen.findByText('Continuar'));
+    expect(await screen.findByText('rolo-saved')).toBeTruthy();
+    await waitFor(() =>
+      expect(mockSaveLastStudySession).toHaveBeenCalledWith(
+        expect.objectContaining({
+          queue: expect.objectContaining({
+            cardIds: ['other', 'local'],
+            sessionId: 'saved-regional-plan',
+            limits: { cardLimit: 4, newLimit: 2 },
+          }),
+        }),
+      ),
+    );
+    expect(screen.recordAnswer).not.toHaveBeenCalled();
+  } finally {
+    screen.unmount();
+  }
+});
+
+test('explicit All clears a Home new-card preference even when All is already selected', async () => {
+  const getStudyBatch = jest.fn(() => GREETINGS_DECK.cards);
+  mockRouteParams = {
+    autoStartDeckId: GREETINGS_DECK.id,
+    sessionPreferredRegion: 'paisa',
+    sessionCardLimit: 4,
+    sessionNewLimit: 2,
+  };
+  const screen = renderStudyScreen({ getStudyBatch });
+  try {
+    await screen.findByText('hola');
+    await waitFor(() =>
+      expect(getStudyBatch).toHaveBeenCalledWith(15, { preferredRegion: 'paisa' }),
+    );
+    await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    fireEvent.press(screen.getByRole('button', { name: 'Todo', selected: true }));
+    await waitFor(() => expect(getStudyBatch).toHaveBeenLastCalledWith(15));
+    expect(screen.recordAnswer).not.toHaveBeenCalled();
+  } finally {
+    screen.unmount();
   }
 });

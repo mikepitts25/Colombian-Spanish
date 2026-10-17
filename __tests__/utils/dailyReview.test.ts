@@ -90,3 +90,58 @@ test('estimates the selected workload rather than claiming a full budget for one
     recommendDailyReview([deck('one', [card('a')])], { ...prefs, studyMinutes: 10 }, 10, now),
   ).toMatchObject({ cardCount: 1, estimatedMinutes: 1 });
 });
+
+test('regional suggestions count only preferred/general new cards and fall back across decks', () => {
+  const work = deck('deck-business', [
+    card('other', { regions: ['rolo'] }),
+    card('general', { regions: ['general'] }),
+    card('local', { regions: ['paisa'] }),
+  ]);
+  expect(recommendDailyReview([work], prefs, 10, now)).toMatchObject({
+    deckId: work.id,
+    cardCount: 2,
+    newCount: 2,
+    preferredRegion: 'paisa',
+  });
+  expect(
+    recommendDailyReview(
+      [
+        deck('deck-business', [card('other', { regions: ['rolo'] })]),
+        deck('general', [card('g', { regions: ['general'] })]),
+      ],
+      prefs,
+      10,
+      now,
+    ),
+  ).toMatchObject({ deckId: 'general', cardCount: 1 });
+  const due = deck('due', [card('review', { regions: ['rolo'], reps: 1, interval: 1 })]);
+  expect(recommendDailyReview([due], prefs, 0, now)).toMatchObject({
+    deckId: due.id,
+    dueCount: 1,
+    newCount: 0,
+  });
+});
+
+test.each([
+  ['travel', 'deck-travel'],
+  ['move', 'deck-useful-phrases'],
+  ['love', 'deck-dating'],
+  ['work', 'deck-business'],
+  ['culture', 'deck-culture'],
+  ['general', 'deck-greetings'],
+] as const)(
+  'uses the %s purpose when eligible general content exists',
+  (learningReason, expectedDeck) => {
+    const decks = [
+      'deck-greetings',
+      'deck-business',
+      'deck-culture',
+      'deck-dating',
+      'deck-useful-phrases',
+      'deck-travel',
+    ].map((id) => deck(id, [card(id, { regions: ['general'] })]));
+    expect(recommendDailyReview(decks, { ...prefs, learningReason }, 5, now)?.deckId).toBe(
+      expectedDeck,
+    );
+  },
+);

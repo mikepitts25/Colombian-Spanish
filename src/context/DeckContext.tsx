@@ -15,6 +15,7 @@ import { createLearningSessionId } from '../storage/learningEvents';
 import { Deck, FlashCard } from '../types';
 import { StorageStatus } from '../components/StorageGate';
 import { buildSessionQueue } from '../utils/srs';
+import type { RegionFilterId } from '../utils/regions';
 
 // Try to import ALL_DECKS from src/data/decks (static build-time import)
 let SEED_DECKS: Deck[] = [];
@@ -32,7 +33,7 @@ type Ctx = {
   activeDeck: Deck | undefined;
   activeDeckId: string | undefined;
   setActiveDeckId: (id: string) => void;
-  getStudyBatch: (size?: number) => FlashCard[];
+  getStudyBatch: (size?: number, options?: { preferredRegion?: RegionFilterId }) => FlashCard[];
   recordAnswer: (
     cardId: string,
     quality: 0 | 1 | 2 | 3 | 4 | 5,
@@ -150,10 +151,12 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     [decks, activeDeckId],
   );
 
-  function getStudyBatch(size = 15) {
+  function getStudyBatch(size = 15, options?: { preferredRegion?: RegionFilterId }) {
     if (!activeDeck) return [] as FlashCard[];
     return buildSessionQueue(activeDeck.cards, {
       size,
+      preferredRegion: options?.preferredRegion,
+      deckName: activeDeck.name,
       newLimit: Math.max(0, newCardsPerDay - newIntroducedToday),
     });
   }

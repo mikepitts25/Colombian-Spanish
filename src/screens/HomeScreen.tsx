@@ -195,7 +195,13 @@ export default function HomeScreen() {
       nav.navigate('Study', {
         autoStartDeckId: deckId,
         ...(bounded && recommendation
-          ? { sessionCardLimit: recommendation.cardLimit, sessionNewLimit: recommendation.newLimit }
+          ? {
+              sessionCardLimit: recommendation.cardLimit,
+              sessionNewLimit: recommendation.newLimit,
+              ...(recommendation.preferredRegion !== 'all'
+                ? { sessionPreferredRegion: recommendation.preferredRegion }
+                : {}),
+            }
           : {}),
       });
     } catch {

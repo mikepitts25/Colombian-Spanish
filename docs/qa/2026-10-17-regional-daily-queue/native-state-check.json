@@ -1,0 +1,224 @@
+[
+  {
+    "phase": "before-regional-preference",
+    "daily": {
+      "date": "2026-10-17",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1801",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1801", "1802", "1803", "1804", "1805", "1806", "1807", "1808"],
+        "region": "all",
+        "sessionId": "mvbext41-8-h5hpb0obwe"
+      },
+      "updatedAt": 1792209908007
+    },
+    "eventCount": 6,
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all"
+    },
+    "deckHash": "6ee02bd50aaa189b8d1ab8e7b00a98958aa5546218be558d18f6bd14ccfda511"
+  },
+  {
+    "phase": "after-home-handoff",
+    "daily": {
+      "date": "2026-10-17",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046"],
+        "region": "all",
+        "sessionId": "mvcbilaa-2-b0i3xjpjf5h",
+        "limits": {
+          "cardLimit": 4,
+          "newLimit": 3
+        }
+      },
+      "updatedAt": 1792236799862
+    },
+    "eventCount": 6,
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "paisa"
+    },
+    "deckHash": "6ee02bd50aaa189b8d1ab8e7b00a98958aa5546218be558d18f6bd14ccfda511"
+  },
+  {
+    "phase": "after-explicit-all",
+    "daily": {
+      "date": "2026-10-17",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046"],
+        "region": "all",
+        "sessionId": "mvcbk0gq-7-nbmx27u0nc",
+        "limits": {
+          "cardLimit": 4,
+          "newLimit": 3
+        }
+      },
+      "updatedAt": 1792236866165
+    },
+    "eventCount": 6,
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "paisa"
+    },
+    "deckHash": "6ee02bd50aaa189b8d1ab8e7b00a98958aa5546218be558d18f6bd14ccfda511"
+  },
+  {
+    "phase": "after-cold-resume",
+    "daily": {
+      "date": "2026-10-17",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046"],
+        "region": "all",
+        "sessionId": "mvcbk0gq-7-nbmx27u0nc",
+        "limits": {
+          "cardLimit": 4,
+          "newLimit": 3
+        }
+      },
+      "updatedAt": 1792236959162
+    },
+    "eventCount": 6,
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "paisa"
+    },
+    "deckHash": "6ee02bd50aaa189b8d1ab8e7b00a98958aa5546218be558d18f6bd14ccfda511"
+  },
+  {
+    "phase": "after-cleanup-restore",
+    "daily": {
+      "date": "2026-10-17",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1801",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1801", "1802", "1803", "1804", "1805", "1806", "1807", "1808"],
+        "region": "all",
+        "sessionId": "mvbext41-8-h5hpb0obwe"
+      },
+      "updatedAt": 1792209908007
+    },
+    "eventCount": 6,
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "en",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all"
+    },
+    "deckHash": "6ee02bd50aaa189b8d1ab8e7b00a98958aa5546218be558d18f6bd14ccfda511"
+  },
+  {
+    "phase": "after-cleanup-spanish",
+    "daily": {
+      "date": "2026-10-17",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1801",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1801", "1802", "1803", "1804", "1805", "1806", "1807", "1808"],
+        "region": "all",
+        "sessionId": "mvbext41-8-h5hpb0obwe"
+      },
+      "updatedAt": 1792209908007
+    },
+    "eventCount": 6,
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all"
+    },
+    "deckHash": "6ee02bd50aaa189b8d1ab8e7b00a98958aa5546218be558d18f6bd14ccfda511"
+  }
+]

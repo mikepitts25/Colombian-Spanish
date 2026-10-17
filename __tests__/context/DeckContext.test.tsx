@@ -683,3 +683,35 @@ it('keeps corrupt startup decks and shows a recovery error instead of reseeding'
   await findByText('Reintentar / Try again');
   expect(await AsyncStorage.getItem('SRS_DECKS_V3')).toBe('corrupt');
 });
+
+test('regional provider queues retain due reviews and enforce the stored daily new-card budget', async () => {
+  const cards = [
+    makeCard('due-other', { reps: 2, interval: 3, due: Date.now() - 1000, regions: ['rolo'] }),
+    makeCard('other-new', { createdAt: 0, regions: ['rolo'] }),
+    makeCard('general-new', { createdAt: 1, regions: ['general'] }),
+    makeCard('local-new', { createdAt: 2, regions: ['paisa'] }),
+  ];
+  await AsyncStorage.setItem(
+    'SRS_DECKS_V3',
+    JSON.stringify([makeStoredDeck('custom-regional', cards)]),
+  );
+  await AsyncStorage.setItem('SRS_PREFS_V1', JSON.stringify({ newCardsPerDay: 1 }));
+  let context!: ReturnType<typeof useDeckContext>;
+  const screen = renderWithProvider(
+    <Consumer
+      onReady={(ctx) => {
+        context = ctx;
+      }}
+    />,
+  );
+  try {
+    await waitFor(() => expect(context?.ready).toBe(true));
+    expect(context.getStudyBatch(4, { preferredRegion: 'paisa' }).map((card) => card.id)).toEqual([
+      'due-other',
+      'local-new',
+    ]);
+    expect(context.getStudyBatch(4).map((card) => card.id)).toEqual(['due-other', 'other-new']);
+  } finally {
+    screen.unmount();
+  }
+});

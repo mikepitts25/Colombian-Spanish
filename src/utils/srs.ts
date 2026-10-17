@@ -2,6 +2,7 @@
 // Minimal SM-2–style scheduler with sensible bounds.
 
 import { FlashCard } from '../types';
+import { cardMatchesRegion, REGION_FILTERS, RegionFilterId } from './regions';
 
 const DAY = 24 * 60 * 60 * 1000;
 
@@ -103,6 +104,9 @@ export function formatIntervalShort(days: number): string {
 }
 
 export type SessionQueueOptions = {
+  /** Preferred regional new material, with general fallback; due reviews stay unfiltered. */
+  preferredRegion?: RegionFilterId;
+  deckName?: string;
   size?: number;
   /** Max never-studied cards to introduce in this batch (after due reviews). */
   newLimit?: number;
@@ -126,9 +130,25 @@ export function buildSessionQueue(cards: FlashCard[], opts: SessionQueueOptions 
 
   if (dueReviews.length >= size) return dueReviews.slice(0, size);
 
+  const preferredRegion = REGION_FILTERS.some((region) => region.id === opts.preferredRegion)
+    ? opts.preferredRegion!
+    : 'all';
+  const matches = (card: FlashCard, region: RegionFilterId) =>
+    cardMatchesRegion(card, region, opts.deckName);
+  const priority = (card: FlashCard) =>
+    preferredRegion === 'all' || matches(card, preferredRegion) ? 0 : 1;
   const fresh = cards
-    .filter((c) => isNewCard(c))
-    .sort((a, b) => (a.createdAt ?? 0) - (b.createdAt ?? 0) || a.id.localeCompare(b.id))
+    .filter(
+      (c) =>
+        isNewCard(c) &&
+        (preferredRegion === 'all' || matches(c, preferredRegion) || matches(c, 'general')),
+    )
+    .sort(
+      (a, b) =>
+        priority(a) - priority(b) ||
+        (a.createdAt ?? 0) - (b.createdAt ?? 0) ||
+        a.id.localeCompare(b.id),
+    )
     .slice(0, Math.max(0, Math.min(newLimit, size - dueReviews.length)));
 
   return [...dueReviews, ...fresh];

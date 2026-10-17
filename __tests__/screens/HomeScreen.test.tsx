@@ -442,6 +442,7 @@ it('uses saved purpose/time and refreshes the recommendation after foreground pr
       autoStartDeckId: business.id,
       sessionCardLimit: 5,
       sessionNewLimit: 3,
+      sessionPreferredRegion: 'paisa',
     }),
   );
   prefs.mockResolvedValue({
