@@ -35,3 +35,7 @@ Ruling: no native phase claim — this package has no learner-facing phase UI. T
 ## Follow-on work
 
 B05.3-B2b must construct the plan from actual preference/budget/content availability, wire exact linked Study resume and direct applied handoff, preserve manual browsing, complete only the linked real applied run, calibrate activity-specific active duration, and capture restart/error/bilingual layout evidence. Draft authored content must remain development-gated pending real acceptance. Android runtime, signed builds, hardware and human learning/editorial evidence remain separate gates.
+
+## Integration
+
+Implementation `4ad3116` was fast-forward merged and pushed to main after the merged tree passed 84 suites / 842 tests. [GitHub Actions 39031868821](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39031868821) passed all four quality/content, iOS/Android project-generation and production-JS-bundle, and summary jobs. [Checklist board deployment 39031868713](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39031868713) passed. This contract package does not establish whole-plan native UI or Android runtime/hardware acceptance.

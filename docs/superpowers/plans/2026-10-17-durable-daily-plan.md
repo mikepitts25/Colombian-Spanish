@@ -46,4 +46,6 @@ Files: modify `src/storage/portableState.ts`; tests dailyPlans plus existing bac
 
 - [x] Pin parse/capture/restore roundtrip, malformed plan rejection, legacy full-state reset and deck-only preservation with RED→GREEN.
 - [x] Add optional portable field and empty default, pass full tests/static/calendar/content checks, obtain fresh review, resolve findings.
-- [ ] Mark only contract subpackage complete. Merge/push main under standing authorization, verify CI, record actual outcomes. Continue to B05.3-B2b UI/applied integration afterward.
+- [x] Mark only contract subpackage complete. Merge/push main under standing authorization, verify CI, record actual outcomes. Continue to B05.3-B2b UI/applied integration afterward.
+
+Verified: 84 suites / 842 tests; static/calendar/content checks and fresh review passed. Implementation `4ad3116` merged/pushed; CI39031868821 all four jobs and board deployment passed. Remaining phase UI/applied timing is tracked under B05.3-B2b.
