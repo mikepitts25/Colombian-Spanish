@@ -19,7 +19,7 @@ Draft gate unchanged. No SRS, daily-count or learning-event inflation. Old/unkno
 - [x] RED/GREEN timing schema, eligible shape, median/filter/threshold/clamps; engine accumulation, null propagation and replay identity. Commit.
 - [x] RED/GREEN atomic sample completion/recovery/retention/portable backup; preview and fresh factory share estimate and preserve saved plans. Commit.
 - [x] RED/GREEN actual MissionScreen timing lifecycle, hints/retries/save failure and cold resume; localize honest measured activity note. Commit.
-- [ ] Full checks, one fresh branch review/fixes, available native evidence; update master checklist, merge/push and verify CI.
+- [x] Full checks, one fresh branch review/fixes, available native evidence; update master checklist, merge/push and verify CI.
 
 ## Execution record
 
@@ -27,6 +27,6 @@ Engine/calibration tests: observed RED missing timing module, then GREEN 16 test
 
 Ruling: the calibration measures actionable response time and excludes feedback reading — this matches the written-response workload; the estimate may be conservative if the learner spends longer reading feedback. Existing wall-clock answer-event duration is retained as a separate legacy observation, never used for calibration.
 
-Ruling: keep at most100 samples in the existing portable mission envelope — avoids an extra storage/backup subsystem; calibration uses only the latest30 matching samples in30days.
+Ruling: keep at most100 samples in the existing portable mission envelope — avoids an extra storage/backup subsystem; calibration uses only the latest30 matching samples in 30 days.
 
-Fresh whole-branch review of c2883cc..9f87d46 found no blocking regressions. Actual fresh iOS27 fixture completed two review grades, measured a hint plus written reply with background exclusion, cold-resumed feedback and committed one sample with plan completion. Sample45,228ms; hint→answer wall89,937ms vs active39,422ms; confirmed background32.75sec. Daily2/5, three events and deck hash unchanged by completion. Full report records limits. Merge/CI pending.
+Fresh whole-branch review of c2883cc..9f87d46 found no blocking regressions. Actual fresh iOS27 fixture completed two review grades, measured a hint plus written reply with background exclusion, cold-resumed feedback and committed one sample with plan completion. Sample45,228ms; hint→answer wall 89,937ms vs active 39,422ms; confirmed background 32.75sec. Daily 2/5, three events and deck hash unchanged by completion. Full report records limits. Merged/pushed implementation 9f87d46 plus evidence 0cd546a. Merged full 89/872 and format passed. CI 39035133880 all four jobs and board 39035133892 passed. All four bounded package tasks complete; broader layout/lifecycle acceptance remains explicitly open.
