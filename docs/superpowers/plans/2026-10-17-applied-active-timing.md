@@ -28,3 +28,5 @@ Engine/calibration tests: observed RED missing timing module, then GREEN 16 test
 Ruling: the calibration measures actionable response time and excludes feedback reading — this matches the written-response workload; the estimate may be conservative if the learner spends longer reading feedback. Existing wall-clock answer-event duration is retained as a separate legacy observation, never used for calibration.
 
 Ruling: keep at most100 samples in the existing portable mission envelope — avoids an extra storage/backup subsystem; calibration uses only the latest30 matching samples in30days.
+
+Fresh whole-branch review of c2883cc..9f87d46 found no blocking regressions. Actual fresh iOS27 fixture completed two review grades, measured a hint plus written reply with background exclusion, cold-resumed feedback and committed one sample with plan completion. Sample45,228ms; hint→answer wall89,937ms vs active39,422ms; confirmed background32.75sec. Daily2/5, three events and deck hash unchanged by completion. Full report records limits. Merge/CI pending.

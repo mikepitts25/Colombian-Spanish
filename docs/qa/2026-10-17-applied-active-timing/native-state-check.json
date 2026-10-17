@@ -1,0 +1,437 @@
+[
+  {
+    "phase": "hint-before-background",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvceluka-9-5bd2nl9h3xa",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792241990627,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvceluka-a-tyg5is3uj8e",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792242039119
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvceluka-b-l1h3n7mf11a"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvceluka-b-l1h3n7mf11a",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "greeting",
+          "revision": 1,
+          "hintsUsed": 1,
+          "assisted": true,
+          "modelAnswerRevealed": false,
+          "completed": false,
+          "activeTiming": {
+            "durationMs": 5806
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792242068324,
+          "lastOperation": {
+            "id": "mvcenihw-60tib69d2oi",
+            "key": "[\"mvceluka-b-l1h3n7mf11a\",\"greeting\",0,\"hint\",null,5806]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792242075.988859,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 2,
+      "target": 5,
+      "newCount": 2
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvceluka-a-tyg5is3uj8e",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792242039122
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcemnd3-i-t5378k8kf8c",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvceluka-a-tyg5is3uj8e",
+        "planId": "mvceluka-9-5bd2nl9h3xa",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792242028011,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 37114
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcemvxu-n-m7zoudib7t",
+        "sessionId": "mvceluka-a-tyg5is3uj8e",
+        "planId": "mvceluka-9-5bd2nl9h3xa",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792242039122,
+        "hintsUsed": null,
+        "durationMs": 10990
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "deckHash": "912c710e0198214bbb6969e9eedfcd7fad7fc97b309f33eb8f0d5c24e63850fe"
+  },
+  {
+    "phase": "measured-feedback",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvceluka-9-5bd2nl9h3xa",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792241990627,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvceluka-a-tyg5is3uj8e",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792242039119
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvceluka-b-l1h3n7mf11a"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvceluka-b-l1h3n7mf11a",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "greeting",
+          "revision": 2,
+          "hintsUsed": 1,
+          "assisted": true,
+          "modelAnswerRevealed": false,
+          "completed": false,
+          "activeTiming": {
+            "durationMs": 45228
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792242158261,
+          "lastOperation": {
+            "id": "mvcepfw5-ojkea325k5",
+            "key": "[\"mvceluka-b-l1h3n7mf11a\",\"greeting\",1,\"answer\",\"correct\",39422]"
+          },
+          "feedback": {
+            "status": "correct",
+            "answerIndex": 0
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792242167.852522,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 2,
+      "target": 5,
+      "newCount": 2
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvceluka-a-tyg5is3uj8e",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792242039122
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcemnd3-i-t5378k8kf8c",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvceluka-a-tyg5is3uj8e",
+        "planId": "mvceluka-9-5bd2nl9h3xa",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792242028011,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 37114
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcemvxu-n-m7zoudib7t",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvceluka-a-tyg5is3uj8e",
+        "planId": "mvceluka-9-5bd2nl9h3xa",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792242039122,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 10990
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvceluka-b-l1h3n7mf11a\",\"morning-greeting\",1]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvceluka-b-l1h3n7mf11a",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792242158261,
+        "hintsUsed": 1,
+        "durationMs": 95753,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "deckHash": "912c710e0198214bbb6969e9eedfcd7fad7fc97b309f33eb8f0d5c24e63850fe"
+  },
+  {
+    "phase": "completed-after-cold-feedback",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvceluka-9-5bd2nl9h3xa",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792241990627,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvceluka-a-tyg5is3uj8e",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792242039119
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvceluka-b-l1h3n7mf11a"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvceluka-b-l1h3n7mf11a",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 3,
+          "hintsUsed": 0,
+          "assisted": true,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": 45228
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792242196476,
+          "lastOperation": {
+            "id": "mvceq9do-v3wxt49v6x",
+            "key": "[\"mvceluka-b-l1h3n7mf11a\",\"greeting\",2,\"advance\",null]"
+          }
+        }
+      ],
+      "timings": [
+        {
+          "runId": "mvceluka-b-l1h3n7mf11a",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "occurredAt": 1792242196476,
+          "durationMs": 45228
+        }
+      ]
+    },
+    "capturedAt": 1792242207.478514,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 2,
+      "target": 5,
+      "newCount": 2
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvceluka-a-tyg5is3uj8e",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792242039122
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcemnd3-i-t5378k8kf8c",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvceluka-a-tyg5is3uj8e",
+        "planId": "mvceluka-9-5bd2nl9h3xa",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792242028011,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 37114
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcemvxu-n-m7zoudib7t",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvceluka-a-tyg5is3uj8e",
+        "planId": "mvceluka-9-5bd2nl9h3xa",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792242039122,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 10990
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvceluka-b-l1h3n7mf11a\",\"morning-greeting\",1]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvceluka-b-l1h3n7mf11a",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792242158261,
+        "hintsUsed": 1,
+        "durationMs": 95753,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "deckHash": "912c710e0198214bbb6969e9eedfcd7fad7fc97b309f33eb8f0d5c24e63850fe"
+  }
+]
