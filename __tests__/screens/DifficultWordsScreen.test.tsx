@@ -1,5 +1,6 @@
 import React from 'react';
-import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import { Dimensions, ScrollView } from 'react-native';
+import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
 import DifficultWordsScreen from '../../src/screens/DifficultWordsScreen';
 import { Deck, FlashCard } from '../../src/types';
 
@@ -104,7 +105,7 @@ it('keeps one stable attempt through a failed save and retry', async () => {
 });
 
 it('does not skip the next difficult card when grading changes eligibility', async () => {
-  const second = makeCard('second', { ease: 2.0, reps: 1 });
+  const second = makeCard('second', { ease: 2.0, reps: 1, due: NOW + 2000 });
   const context = {
     ready: true,
     decks: [{ ...DECK, cards: [{ ...DECK.cards[0], due: NOW - 1000 }, second] }],
@@ -126,4 +127,79 @@ it('does not skip the next difficult card when grading changes eligibility', asy
   const screen = render(<DifficultWordsScreen />);
   await act(async () => fireEvent.press(await screen.findByText('Bien')));
   expect(await screen.findByText('second')).toBeTruthy();
+});
+
+it('keeps the current card and disables grading during a save across live resizing', async () => {
+  const window = Dimensions.get('window'),
+    metrics = Dimensions.get('screen');
+  let finish!: () => void;
+  const recordAnswer = jest.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  mockUseDeck.mockReturnValue({ ready: true, decks: [DECK], recordAnswer });
+  const screen = render(<DifficultWordsScreen />);
+  try {
+    fireEvent.press(await screen.findByText('Bien'));
+    act(() =>
+      Dimensions.set({ window: { ...window, fontScale: 3 }, screen: { ...metrics, fontScale: 3 } }),
+    );
+    expect(screen.getByRole('button', { name: /Bien/ })).toBeDisabled();
+    fireEvent.press(screen.getByText('Bien'));
+    expect(recordAnswer).toHaveBeenCalledTimes(1);
+    expect(screen.getByText('parce')).toBeTruthy();
+    await act(async () => finish());
+    expect(await screen.findByText('No hay palabras difíciles')).toBeTruthy();
+  } finally {
+    screen.unmount();
+    act(() => Dimensions.set({ window, screen: metrics }));
+  }
+});
+
+it('reveals the next difficult card viewport only after a successful grade', async () => {
+  const scrollTo = jest.spyOn(ScrollView.prototype, 'scrollTo');
+  let finish!: () => void;
+  const recordAnswer = jest.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  const second = makeCard('second', { ease: 2.0, reps: 1, due: NOW + 2000 });
+  mockUseDeck.mockReturnValue({
+    ready: true,
+    decks: [{ ...DECK, cards: [DECK.cards[0], second] }],
+    recordAnswer,
+  });
+  const screen = render(<DifficultWordsScreen />);
+  try {
+    await screen.findByText('parce');
+    fireEvent(screen.getByTestId('difficult-card-area'), 'layout', {
+      nativeEvent: { layout: { y: 400 } },
+    });
+    scrollTo.mockClear();
+    fireEvent.press(screen.getByText('Bien'));
+    expect(scrollTo).not.toHaveBeenCalled();
+    await act(async () => finish());
+    expect(await screen.findByText('second')).toBeTruthy();
+    expect(scrollTo).toHaveBeenCalledWith({ y: 400, animated: false });
+  } finally {
+    screen.unmount();
+    scrollTo.mockRestore();
+  }
+});
+
+it('shows scheduler intervals for the current difficult card rather than fixed estimates', async () => {
+  const screen = render(<DifficultWordsScreen />);
+  try {
+    await screen.findByText('parce');
+    expect(within(screen.getByRole('button', { name: /Otra vez/ })).getByText('15m')).toBeTruthy();
+    expect(within(screen.getByRole('button', { name: /Difícil/ })).getByText('12h')).toBeTruthy();
+    expect(within(screen.getByRole('button', { name: /Bien/ })).getByText('2d')).toBeTruthy();
+    expect(within(screen.getByRole('button', { name: /Fácil/ })).getByText('2d')).toBeTruthy();
+  } finally {
+    screen.unmount();
+  }
 });

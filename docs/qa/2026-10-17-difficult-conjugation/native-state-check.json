@@ -1,0 +1,68 @@
+[
+  {
+    "phase": "after-native-difficult-grade",
+    "daily": {
+      "date": "2026-10-17",
+      "count": 4,
+      "target": 5,
+      "newCount": 3
+    },
+    "session": {
+      "deckId": "deck-routines",
+      "cardId": "0081",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0081", "0063", "0064", "0065", "0066", "0067", "0068", "0069"],
+        "region": "all",
+        "sessionId": "mvc9xxol-18-w3477uc6mc"
+      },
+      "updatedAt": 1792234156524
+    },
+    "eventCount": 6,
+    "cardCount": 1392
+  },
+  {
+    "phase": "after-conjugation-checks",
+    "daily": {
+      "date": "2026-10-17",
+      "count": 4,
+      "target": 5,
+      "newCount": 3
+    },
+    "session": {
+      "deckId": "deck-routines",
+      "cardId": "0081",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0081", "0063", "0064", "0065", "0066", "0067", "0068", "0069"],
+        "region": "all",
+        "sessionId": "mvc9xxol-18-w3477uc6mc"
+      },
+      "updatedAt": 1792234445511
+    },
+    "eventCount": 6,
+    "cardCount": 1392
+  },
+  {
+    "phase": "restored-original-fixture",
+    "daily": {
+      "date": "2026-10-17",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "session": {
+      "deckId": "deck-business",
+      "cardId": "1801",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["1801", "1802", "1803", "1804", "1805", "1806", "1807", "1808"],
+        "region": "all",
+        "sessionId": "mvbext41-8-h5hpb0obwe"
+      },
+      "updatedAt": 1792209908007
+    },
+    "eventCount": 6,
+    "cardCount": 1392
+  }
+]

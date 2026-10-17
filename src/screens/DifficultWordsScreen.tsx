@@ -1,10 +1,10 @@
-import React, { useMemo, useRef, useState } from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import React, { useMemo, useRef, useState, useLayoutEffect } from 'react';
+import { StyleSheet, Text, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../styles/theme';
 import Flashcard from '../components/Flashcard';
 import { useDeck } from '../hooks/useDeck';
-import { selectDifficultCards } from '../utils/srs';
+import { selectDifficultCards, formatIntervalShort, previewInterval } from '../utils/srs';
 import { createLearningSessionId } from '../storage/learningEvents';
 import { AnswerAttempt } from '../storage/flashcardAnswer';
 import { FlashCard } from '../types';
@@ -13,7 +13,6 @@ import { useLanguage } from '../context/LanguageContext';
 const GRADES = [
   {
     labelKey: 'grades.again',
-    interval: '<1d',
     color: '#f87171',
     bg: 'rgba(206,17,38,0.3)',
     border: '#CE1126',
@@ -21,7 +20,6 @@ const GRADES = [
   },
   {
     labelKey: 'grades.hard',
-    interval: '1d',
     color: '#fb923c',
     bg: 'rgba(251,146,60,0.25)',
     border: '#fb923c',
@@ -29,7 +27,6 @@ const GRADES = [
   },
   {
     labelKey: 'grades.good',
-    interval: '3d',
     color: '#FFDA00',
     bg: 'rgba(255,218,0,0.22)',
     border: '#FFDA00',
@@ -37,7 +34,6 @@ const GRADES = [
   },
   {
     labelKey: 'grades.easy',
-    interval: '7d',
     color: '#10b981',
     bg: 'rgba(16,185,129,0.25)',
     border: '#10b981',
@@ -52,6 +48,11 @@ type DifficultRow = {
 };
 
 export default function DifficultWordsScreen() {
+  const { fontScale } = useWindowDimensions();
+  const largeText = fontScale >= 1.4;
+  const scroll = useRef<ScrollView>(null);
+  const cardTop = useRef(0);
+  const [gradeSaving, setGradeSaving] = useState(false);
   const { ready, decks, recordAnswer } = useDeck();
   const { t } = useLanguage();
   const [idx, setIdx] = useState(0);
@@ -93,9 +94,14 @@ export default function DifficultWordsScreen() {
   const current = difficultRows[idx] ?? null;
   const count = difficultRows.length;
 
+  useLayoutEffect(() => {
+    if (idx > 0) scroll.current?.scrollTo({ y: cardTop.current, animated: false });
+  }, [idx]);
+
   async function grade(q: 0 | 1 | 2 | 3 | 4 | 5) {
     if (!current || grading.current) return;
     grading.current = true;
+    setGradeSaving(true);
     const attempt = pendingGrade.current ?? {
       attemptId: createLearningSessionId(),
       sessionId: sessionId.current,
@@ -115,15 +121,18 @@ export default function DifficultWordsScreen() {
       setGradeError(true);
     } finally {
       grading.current = false;
+      setGradeSaving(false);
     }
   }
 
   if (!ready) {
     return (
       <SafeAreaView style={styles.wrap}>
-        <View style={styles.center}>
-          <Text style={styles.loadingText}>{t('common.loading')}</Text>
-        </View>
+        <ScrollView contentContainerStyle={styles.center}>
+          <View key={fontScale} style={styles.emptyContent}>
+            <Text style={styles.loadingText}>{t('common.loading')}</Text>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -131,79 +140,102 @@ export default function DifficultWordsScreen() {
   if (!current) {
     return (
       <SafeAreaView style={styles.wrap}>
-        <View style={styles.center}>
-          <Text style={styles.emptyEmoji}>🎉</Text>
-          <Text style={styles.emptyTitle}>{t('difficult.emptyTitle')}</Text>
-          <Text style={styles.emptySub}>{t('difficult.emptySub')}</Text>
-        </View>
+        <ScrollView contentContainerStyle={styles.center}>
+          <View key={fontScale} style={styles.emptyContent}>
+            <Text style={styles.emptyEmoji}>🎉</Text>
+            <Text style={styles.emptyTitle}>{t('difficult.emptyTitle')}</Text>
+            <Text style={styles.emptySub}>{t('difficult.emptySub')}</Text>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.title}>{t('difficult.title')}</Text>
-          <Text style={styles.sub}>
-            {t('difficult.count', {
-              count,
-              wordPlural: count === 1 ? '' : 's',
-              adjectivePlural: count === 1 ? '' : 'es',
-            })}
-          </Text>
+      <ScrollView ref={scroll} contentContainerStyle={styles.sessionContent}>
+        <View key={`header-${fontScale}`} style={[styles.header, largeText && styles.stacked]}>
+          <View>
+            <Text style={styles.title}>{t('difficult.title')}</Text>
+            <Text style={styles.sub}>
+              {t('difficult.count', {
+                count,
+                wordPlural: count === 1 ? '' : 's',
+                adjectivePlural: count === 1 ? '' : 'es',
+              })}
+            </Text>
+          </View>
+          <View style={styles.counterPill}>
+            <Text style={styles.counterText}>
+              {idx + 1}/{count}
+            </Text>
+          </View>
         </View>
-        <View style={styles.counterPill}>
-          <Text style={styles.counterText}>
-            {idx + 1}/{count}
-          </Text>
+
+        <View key={`deck-${fontScale}`} style={styles.deckPill}>
+          <Text style={styles.deckPillText}>{current.deckName}</Text>
         </View>
-      </View>
 
-      <View style={styles.deckPill}>
-        <Text style={styles.deckPillText}>{current.deckName}</Text>
-      </View>
-
-      <View style={styles.cardArea}>
-        <Flashcard key={current.card.id} card={current.card} onGrade={grade} />
-      </View>
-
-      {gradeError && (
-        <View style={{ padding: 12, gap: 8 }}>
-          <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
-            {t('practice.saveError')}
-          </Text>
-          <Pressable
-            accessibilityRole="button"
-            onPress={() => grade(pendingGrade.current?.quality ?? 1)}
-          >
-            <Text style={{ color: colors.brand }}>{t('practice.retrySave')}</Text>
-          </Pressable>
+        <View
+          testID="difficult-card-area"
+          style={styles.cardArea}
+          onLayout={(event) => {
+            cardTop.current = event.nativeEvent.layout.y;
+          }}
+        >
+          <Flashcard key={current.card.id} card={current.card} onGrade={grade} expandForLargeText />
         </View>
-      )}
-      <View style={styles.gradeBar}>
-        <Text style={styles.gradeLabel}>{t('difficult.reviewPrompt')}</Text>
-        <View style={styles.gradeButtons}>
-          {GRADES.map((g) => (
+
+        {gradeError && (
+          <View style={{ padding: 12, gap: 8 }}>
+            <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
+              {t('practice.saveError')}
+            </Text>
             <Pressable
-              key={g.labelKey}
-              disabled={gradeError}
-              style={[styles.gradeBtn, { backgroundColor: g.bg, borderColor: g.border }]}
-              onPress={() => grade(g.q)}
+              accessibilityRole="button"
+              disabled={gradeSaving}
+              onPress={() => grade(pendingGrade.current?.quality ?? 1)}
             >
-              <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
-              <Text style={[styles.gradeBtnInterval, { color: g.color + 'b3' }]}>{g.interval}</Text>
+              <Text style={{ color: colors.brand }}>{t('practice.retrySave')}</Text>
             </Pressable>
-          ))}
+          </View>
+        )}
+        <View key={`grades-${fontScale}`} style={styles.gradeBar}>
+          <Text style={styles.gradeLabel}>{t('difficult.reviewPrompt')}</Text>
+          <View style={[styles.gradeButtons, largeText && styles.stacked]}>
+            {GRADES.map((g) => (
+              <Pressable
+                key={g.labelKey}
+                accessibilityRole="button"
+                accessibilityState={{ disabled: gradeError || gradeSaving }}
+                disabled={gradeError || gradeSaving}
+                style={[
+                  styles.gradeBtn,
+                  largeText && styles.noFlex,
+                  { backgroundColor: g.bg, borderColor: g.border },
+                ]}
+                onPress={() => grade(g.q)}
+              >
+                <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
+                <Text style={[styles.gradeBtnInterval, { color: g.color + 'b3' }]}>
+                  {formatIntervalShort(previewInterval(current.card, g.q))}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg },
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 24 },
+  sessionContent: { flexGrow: 1 },
+  stacked: { flexDirection: 'column', alignItems: 'stretch', gap: 12 },
+  noFlex: { flex: 0 },
+  emptyContent: { alignItems: 'center', gap: 10 },
+  center: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 24 },
   loadingText: { color: colors.textSecondary, fontSize: 16 },
   emptyEmoji: { fontSize: 48 },
   emptyTitle: { color: colors.textPrimary, fontSize: 22, fontWeight: '900' },
@@ -238,7 +270,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accentBlue,
   },
   deckPillText: { color: colors.textPrimary, fontSize: 12, fontWeight: '800' },
-  cardArea: { flex: 1, paddingHorizontal: 20, justifyContent: 'center' },
+  cardArea: { flexGrow: 1, flexShrink: 0, paddingHorizontal: 20, justifyContent: 'center' },
 
   gradeBar: {
     backgroundColor: '#0f172a',
@@ -261,6 +293,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 2,
+    minHeight: 48,
     paddingVertical: 10,
     borderRadius: 16,
     borderWidth: 1.5,

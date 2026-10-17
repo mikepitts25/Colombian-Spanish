@@ -7,6 +7,7 @@ import {
   Modal,
   Pressable,
   ScrollView,
+  useWindowDimensions,
 } from 'react-native';
 import { lookupConjugation } from '../data/conjugations';
 import { colors, spacing, radius, typography } from '../styles/theme';
@@ -34,6 +35,8 @@ const tenseLabelKeys = {
 
 export default function ConjugationPanel({ infinitive, compact = false }: ConjugationPanelProps) {
   const { t } = useLanguage();
+  const { fontScale } = useWindowDimensions();
+  const largeText = fontScale >= 1.4;
   const [modalVisible, setModalVisible] = useState(false);
   const [activeTense, setActiveTense] = useState<'presente' | 'preterito' | 'futuro'>('presente');
 
@@ -49,8 +52,10 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
     <>
       {/* Compact trigger button */}
       <TouchableOpacity
+        accessibilityRole="button"
         style={[
           compact ? styles.compactButton : styles.triggerButton,
+          largeText && styles.stacked,
           isIrregular && (compact ? styles.irregularButton : styles.irregularTriggerButton),
         ]}
         onPress={() => setModalVisible(true)}
@@ -79,8 +84,8 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             {/* Header */}
-            <View style={styles.modalHeader}>
-              <View style={styles.headerLeft}>
+            <View key={`header-${fontScale}`} style={styles.modalHeader}>
+              <View style={[styles.headerLeft, largeText && styles.stacked]}>
                 <Text style={styles.modalTitle}>{infinitive}</Text>
                 {isIrregular && (
                   <View style={styles.irregularPill}>
@@ -88,56 +93,79 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
                   </View>
                 )}
               </View>
-              <Pressable onPress={() => setModalVisible(false)} style={styles.closeButton}>
-                <Text style={styles.closeButtonText}>✕</Text>
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={t('common.close')}
+                onPress={() => setModalVisible(false)}
+                style={styles.closeButton}
+              >
+                <Text allowFontScaling={false} accessible={false} style={styles.closeButtonText}>
+                  ✕
+                </Text>
               </Pressable>
             </View>
 
-            {/* Irregular note */}
-            {isIrregular && conjugation.irregularNote && (
-              <View style={styles.noteBox}>
-                <Text style={styles.noteText}>{conjugation.irregularNote}</Text>
-              </View>
-            )}
-
-            {/* Tense selector */}
-            <View style={styles.tabContainer}>
-              {(Object.keys(tenseLabelKeys) as ('presente' | 'preterito' | 'futuro')[]).map(
-                (tense) => (
-                  <TouchableOpacity
-                    key={tense}
-                    style={[styles.tab, activeTense === tense && styles.activeTab]}
-                    onPress={() => setActiveTense(tense)}
-                  >
-                    <Text style={[styles.tabText, activeTense === tense && styles.activeTabText]}>
-                      {t(tenseLabelKeys[tense])}
-                    </Text>
-                  </TouchableOpacity>
-                ),
-              )}
-            </View>
-
-            {/* Conjugation table */}
-            <ScrollView style={styles.tableContainer}>
-              {pronouns.map(({ key, label, highlight }) => (
-                <View key={key} style={styles.row} testID={`conjugation-row-${key}`}>
-                  <View style={styles.pronounCell}>
-                    <Text style={[styles.pronoun, highlight && styles.highlightPronoun]}>
-                      {label}
-                    </Text>
-                    {highlight && <Text style={styles.colombiaTag}>🇨🇴</Text>}
+            <ScrollView style={styles.bodyScroll} contentContainerStyle={styles.bodyContent}>
+              <View key={`body-${fontScale}`}>
+                {/* Irregular note */}
+                {isIrregular && conjugation.irregularNote && (
+                  <View style={styles.noteBox}>
+                    <Text style={styles.noteText}>{conjugation.irregularNote}</Text>
                   </View>
-                  <Text style={styles.verbForm}>
-                    {conjugation[activeTense][key] ?? t('conjugation.unavailable')}
-                  </Text>
-                </View>
-              ))}
-            </ScrollView>
+                )}
 
-            {/* Colombia note */}
-            <View style={styles.colombiaNote}>
-              <Text style={styles.colombiaNoteText}>{t('conjugation.colombiaNote')}</Text>
-            </View>
+                {/* Tense selector */}
+                <View style={[styles.tabContainer, largeText && styles.stacked]}>
+                  {(Object.keys(tenseLabelKeys) as ('presente' | 'preterito' | 'futuro')[]).map(
+                    (tense) => (
+                      <TouchableOpacity
+                        accessibilityRole="tab"
+                        accessibilityState={{ selected: activeTense === tense }}
+                        key={tense}
+                        style={[
+                          styles.tab,
+                          largeText && styles.noFlex,
+                          activeTense === tense && styles.activeTab,
+                        ]}
+                        onPress={() => setActiveTense(tense)}
+                      >
+                        <Text
+                          style={[styles.tabText, activeTense === tense && styles.activeTabText]}
+                        >
+                          {t(tenseLabelKeys[tense])}
+                        </Text>
+                      </TouchableOpacity>
+                    ),
+                  )}
+                </View>
+
+                {/* Conjugation table */}
+                <View>
+                  {pronouns.map(({ key, label, highlight }) => (
+                    <View
+                      key={key}
+                      style={[styles.row, largeText && styles.stacked]}
+                      testID={`conjugation-row-${key}`}
+                    >
+                      <View style={styles.pronounCell}>
+                        <Text style={[styles.pronoun, highlight && styles.highlightPronoun]}>
+                          {label}
+                        </Text>
+                        {highlight && <Text style={styles.colombiaTag}>🇨🇴</Text>}
+                      </View>
+                      <Text style={styles.verbForm}>
+                        {conjugation[activeTense][key] ?? t('conjugation.unavailable')}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+
+                {/* Colombia note */}
+                <View style={styles.colombiaNote}>
+                  <Text style={styles.colombiaNoteText}>{t('conjugation.colombiaNote')}</Text>
+                </View>
+              </View>
+            </ScrollView>
           </View>
         </View>
       </Modal>
@@ -146,8 +174,14 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
 }
 
 const styles = StyleSheet.create({
+  stacked: { flexDirection: 'column', alignItems: 'stretch', gap: 12 },
+  noFlex: { flex: 0 },
+  bodyScroll: { flexShrink: 1 },
+  bodyContent: { paddingBottom: 24 },
   // Compact button (for inline use)
   compactButton: {
+    minHeight: 48,
+    justifyContent: 'center',
     paddingVertical: spacing(1),
     paddingHorizontal: spacing(2),
     backgroundColor: colors.surfaceElevated,
@@ -171,6 +205,7 @@ const styles = StyleSheet.create({
 
   // Trigger button
   triggerButton: {
+    minHeight: 48,
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: spacing(1.5),
@@ -213,7 +248,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: radius['2xl'],
     borderTopRightRadius: radius['2xl'],
     padding: spacing(4),
-    maxHeight: '80%',
+    height: '80%',
   },
   modalHeader: {
     flexDirection: 'row',
@@ -222,6 +257,8 @@ const styles = StyleSheet.create({
     marginBottom: spacing(3),
   },
   headerLeft: {
+    flex: 1,
+    flexShrink: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing(2),
@@ -245,8 +282,8 @@ const styles = StyleSheet.create({
     fontWeight: typography.weight.bold,
   },
   closeButton: {
-    width: 36,
-    height: 36,
+    width: 48,
+    height: 48,
     borderRadius: radius.full,
     backgroundColor: colors.surfaceElevated,
     alignItems: 'center',
@@ -282,6 +319,7 @@ const styles = StyleSheet.create({
     padding: spacing(1),
   },
   tab: {
+    minHeight: 48,
     flex: 1,
     paddingVertical: spacing(2),
     alignItems: 'center',
@@ -306,9 +344,6 @@ const styles = StyleSheet.create({
   },
 
   // Table
-  tableContainer: {
-    maxHeight: 300,
-  },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
