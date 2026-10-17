@@ -602,5 +602,153 @@
       "homeRegion": "all"
     },
     "deckHash": "e7080f81b0839e047b3979cee321befb16047d07f78a42edd00a1adac0acfcde"
+  },
+  {
+    "phase": "tablet-completed-large-es",
+    "device": "B51A3777-8E81-4049-B101-C2B18390E2B1",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcf6sfh-8-nauvm5dshp",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792242967568,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792243010574
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcf6sfh-a-6veg4o2wnm5"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvcf6sfh-a-6veg4o2wnm5",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": true,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": null
+          },
+          "reviewCardIds": ["0010"],
+          "updatedAt": 1792244711942,
+          "lastOperation": {
+            "id": "mvcg86bq-6dw58k32z58",
+            "key": "[\"mvcf6sfh-a-6veg4o2wnm5\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792244721.1220648,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 2,
+      "target": 5,
+      "newCount": 2
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792243010577
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7jol-h-ioghcalh57",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243003023,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 35139
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcf7piq-m-ydw9u4oywkf",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcf6sfh-9-1pmyjf1a4ec",
+        "planId": "mvcf6sfh-8-nauvm5dshp",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243010577,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7430
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcf6sfh-a-6veg4o2wnm5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcf6sfh-a-6veg4o2wnm5",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "answer-checked",
+        "occurredAt": 1792244691125,
+        "hintsUsed": 0,
+        "durationMs": 834959,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "deckHash": "2b01383669a251058d5619ff3a72a14ea6131066d7f5b9aec0702860a7d6000d"
   }
 ]
