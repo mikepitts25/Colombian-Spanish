@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Pressable, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AudioPreferencesScreen from '../screens/AudioPreferencesScreen';
 import ListeningScreen from '../screens/ListeningScreen';
@@ -49,11 +49,14 @@ const TABS: { name: string; labelKey: TranslationKey; icon: string }[] = [
 
 function CustomTabBar({ state, descriptors, navigation }: any) {
   const insets = useSafeAreaInsets();
+  const { fontScale } = useWindowDimensions();
+  const expandedText = fontScale >= 1.4;
   const { t } = useLanguage();
 
   return (
     <View style={[styles.tabBarOuter, { paddingBottom: Math.max(insets.bottom, 8) }]}>
-      <View style={styles.tabPill}>
+      {/* Recreate native text measurements when Dynamic Type changes live. */}
+      <View key={fontScale} style={[styles.tabPill, expandedText && styles.tabPillExpanded]}>
         {state.routes.map((route: any, index: number) => {
           const focused = state.index === index;
           const tab = TABS[index];
@@ -64,11 +67,17 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
               accessibilityRole="tab"
               accessibilityLabel={t(tab.labelKey)}
               accessibilityState={{ selected: focused }}
-              style={[styles.tabItem, focused && styles.tabItemActive]}
+              style={[
+                styles.tabItem,
+                expandedText && styles.tabItemExpanded,
+                focused && styles.tabItemActive,
+              ]}
               onPress={() => navigation.navigate(route.name)}
               android_ripple={null}
             >
-              <Text style={styles.tabIcon}>{tab.icon}</Text>
+              <Text style={styles.tabIcon} allowFontScaling={false} accessible={false}>
+                {tab.icon}
+              </Text>
               <Text style={[styles.tabLabel, focused && styles.tabLabelActive]}>
                 {t(tab.labelKey)}
               </Text>
@@ -244,6 +253,8 @@ const styles = StyleSheet.create({
     gap: 2,
     borderRadius: 26,
   },
+  tabPillExpanded: { flexWrap: 'wrap' },
+  tabItemExpanded: { flexBasis: '45%' },
   tabItemActive: {
     backgroundColor: colors.brand,
   },
@@ -251,6 +262,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   tabLabel: {
+    textAlign: 'center',
+    flexShrink: 1,
     fontSize: 12,
     fontWeight: '600',
     color: colors.textSecondary,

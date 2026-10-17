@@ -145,3 +145,37 @@ test('a late minute refresh cannot replace a newer foreground snapshot', async (
   expect(hook.result.current.value).toBe(resumed);
   expect(resumed).toBe(new Date(2026, 9, 17, 12, 2).getTime());
 });
+
+test.each([
+  { state: null, elapsed: 60000 },
+  { state: 'active' as const, elapsed: 60000 },
+  { state: 'inactive' as const, elapsed: 0 },
+  { state: 'background' as const, elapsed: 0 },
+])(
+  'respects native startup state $state before the first lifecycle event',
+  async ({ state, elapsed }) => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date(2026, 9, 17, 12));
+    const previousState = Object.getOwnPropertyDescriptor(AppState, 'currentState')!;
+    Object.defineProperty(AppState, 'currentState', { configurable: true, value: state });
+    // Restore RN's original mock descriptor after this individual native-state fixture.
+    const restoreState = () => Object.defineProperty(AppState, 'currentState', previousState);
+    const load = async () => Date.now();
+    try {
+      const hook = renderHook(() => useFocusedAsync(load, 0));
+      await act(async () => {});
+      const initial = hook.result.current.value;
+      await act(async () => {
+        jest.advanceTimersByTime(60000);
+      });
+      expect(hook.result.current.value).toBe(initial + elapsed);
+      await act(async () => {
+        onStateChange('active');
+      });
+      expect(hook.result.current.value).toBe(initial + 60000);
+      hook.unmount();
+    } finally {
+      restoreState();
+    }
+  },
+);
