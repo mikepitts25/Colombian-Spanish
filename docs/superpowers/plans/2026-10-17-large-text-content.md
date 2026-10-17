@@ -12,4 +12,4 @@ Ruling: these are authorized corrections to existing B08 accessibility behavior,
 
 - [x] Reproduce native before states and pass targeted baseline; add preservation regressions for search and backup preview/pending actions across font changes. Native screenshots establish glyph-layout RED; avoid style-mirroring Jest tests.
 - [x] Correct the narrow layout/measurement failures. Verify Spanish/English default/large/maximum live transitions, full category actions and underlying learning state. Larger activity/screen-reader/platform acceptance remains open.
-- [ ] Full/static/calendar/content checks, one fresh whole-package review; update master/QA, merge/push under standing authorization, verify CI.
+- [x] Full/static/calendar/content checks, one fresh whole-package review; update master/QA, merge/push under standing authorization, verify CI.
