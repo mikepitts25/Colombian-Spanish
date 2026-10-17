@@ -90,3 +90,7 @@ Generate with `EAS_BUILD_PROFILE=development npx expo prebuild --platform ios --
 A generated debug app defaults to Metro8081. If another project owns that port, point only the ignored/generated debug AppDelegate's `RCTBundleURLProvider.sharedSettings().jsLocation` to your dedicated local server before building; do not stop the other project. This local test used127.0.0.1:8098. On this host, `NODE_OPTIONS=--dns-result-order=ipv4first npx expo start --localhost --port 8098` binds the IPv4 address emitted in the manifest; default Node resolution bound only::1. This is a child-process flag, not a host network change.
 
 Unsigned simulator builds can report missing-keychain-entitlement warnings from notifications. That is not a push-registration or signed-release pass. Production/preview microphone access remains blocked; development declares the explicit local recording purpose. Refer to the dated SDK 55 QA report for exact commands, build limits and verified flows.
+
+### Repeatable learner fixtures
+
+Run `npm run test:fixtures` for the fresh/returning, large-library, difficult-card, empty-filter, corruption, long-text and upgrade fixture catalog. The [coverage matrix](docs/qa/2026-10-18-learner-fixtures/REPORT.md) maps individual assertions and native evidence. All automated fixture writes use Jest’s mock storage; this command does not reset a simulator. The 10,000-card test checks correctness, not hardware performance or signed upgrade acceptance.

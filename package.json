@@ -23,7 +23,8 @@
     "release:preflight": "node scripts/release-content.js --check",
     "eas-build-post-install": "node scripts/release-content.js --build-hook",
     "test:calendar": "node scripts/test-calendar-zones.js",
-    "security:pack-braces": "node scripts/pack-braces-patch.js"
+    "security:pack-braces": "node scripts/pack-braces-patch.js",
+    "test:fixtures": "jest --runInBand --watchman=false --runTestsByPath __tests__/context/DeckContext.test.tsx __tests__/context/LargeLibraryIntegration.test.tsx __tests__/screens/StudyLifecycleIntegration.test.tsx __tests__/screens/DifficultWordsScreen.test.tsx __tests__/screens/QuizScreen.test.tsx __tests__/storage/legacyBackupRecovery.test.ts __tests__/storage/portableBackup.test.ts"
   },
   "dependencies": {
     "@expo/config-plugins": "~57.0.0",

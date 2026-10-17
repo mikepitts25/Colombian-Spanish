@@ -377,7 +377,8 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 
 **Package:** maintain one repeatable test script and evidence matrix; rerun affected cases for each candidate. AI writes the script, builds, diagnoses, and fixes failures. Device access and sensory judgments may require a person.
 
-- [ ] **B12.1 [AI, SIM]** Establish fixtures for fresh/returning learners, large libraries, difficult cards, empty filters, corrupted data, long text, and upgrades. Record tested OS versions and build identifiers.
+- [x] **B12.1 [AI, SIM]** Establish fixtures for fresh/returning learners, large libraries, difficult cards, empty filters, corrupted data, long text, and upgrades. Record tested OS versions and build identifiers.
+  - [x] **B12.1-F [AI, SIM]** Map all named fixtures to repeatable assertions and recorded OS/build evidence; add a real-provider 100-deck/10,000-card long-Unicode library with exact remount, one-grade/idempotency and backup preservation checks. `npm run test:fixtures` runs the catalog. [Coverage and native limits](docs/qa/2026-10-18-learner-fixtures/REPORT.md). Fixture establishment does not close native scale/performance, signed upgrade or B12.2–B12.8 acceptance.
   - [x] **B12.1-M [AI, SIM]** Replace the Settings placeholder with actual native version/build, distinct Expo Go host labels and localized unknown handling; remove the inactive store action. Native Spanish/English label matches binary 1.0.0/build1.0.0. [QA](docs/qa/2026-10-16-native-build-metadata/REPORT.md).
 - [ ] **B12.2 [AI, DEVICE]** Test a physical iPhone on each promised support boundary; cover an older/lower-performance supported device and a current device where feasible. Record gaps explicitly.
 - [ ] **B12.3 [AI, DEVICE]** Test physical Android hardware if Android ships, including a lower-performance supported device and relevant vendor battery restrictions. Emulator results are supplementary.
