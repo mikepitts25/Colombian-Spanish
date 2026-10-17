@@ -1,0 +1,149 @@
+import React from 'react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import StudyScreen from '../../src/screens/StudyScreen';
+import { DeckProvider, useDeckContext } from '../../src/context/DeckContext';
+import { getDailyProgress, getLastStudySession, loadDecks } from '../../src/storage/storage';
+import { getLearningEvents } from '../../src/storage/learningEvents';
+import { Deck, FlashCard } from '../../src/types';
+
+let mockParams: Record<string, unknown> = {};
+jest.mock('@react-navigation/native', () => ({
+  usePreventRemove: jest.fn(),
+  useFocusEffect: (callback: any) => require('react').useEffect(callback, [callback]),
+  useNavigation: () => ({
+    navigate: jest.fn(),
+    setParams: (patch: Record<string, unknown>) => Object.assign(mockParams, patch),
+  }),
+  useRoute: () => ({ params: mockParams }),
+}));
+jest.mock('../../src/data/decks', () => ({ ALL_DECKS: [] }));
+
+let current: ReturnType<typeof useDeckContext>;
+function Probe() {
+  const context = useDeckContext();
+  React.useLayoutEffect(() => {
+    current = context;
+  }, [context]);
+  return null;
+}
+function App() {
+  return (
+    <DeckProvider>
+      <Probe />
+      <StudyScreen />
+    </DeckProvider>
+  );
+}
+function card(id: string, overrides: Partial<FlashCard> = {}): FlashCard {
+  return {
+    id,
+    front: `phrase ${id}`,
+    back: `answer ${id}`,
+    createdAt: 0,
+    due: 0,
+    reps: 0,
+    interval: 0,
+    ease: 2.5,
+    ...overrides,
+  };
+}
+beforeEach(async () => {
+  await AsyncStorage.clear();
+  mockParams = { autoStartDeckId: 'alpha' };
+});
+afterEach(() => jest.restoreAllMocks());
+
+test.each([
+  ['Otra vez', 1, 15 * 60 * 1000],
+  ['Difícil', 2, 12 * 60 * 60 * 1000],
+] as const)(
+  '%s becomes due without refilling a saved in-progress queue',
+  async (label, quality, delay) => {
+    let now = Date.now();
+    jest.spyOn(Date, 'now').mockImplementation(() => now);
+    const decks: Deck[] = [{ id: 'alpha', name: 'Alpha', cards: [card('first'), card('second')] }];
+    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(decks));
+    let screen = render(<App />);
+    await screen.findByText('phrase first');
+    await waitFor(() => expect(screen.getByText(label)).not.toBeDisabled());
+    const initial = await getLastStudySession();
+    expect(initial?.queue?.cardIds).toEqual(['first', 'second']);
+    await act(async () => fireEvent.press(screen.getByText(label)));
+    await screen.findByText('phrase second');
+    const graded = (await loadDecks())[0].cards[0];
+    expect(graded.due).toBe(now + delay);
+    expect(current.getStudyBatch().map((c) => c.id)).toEqual(['second']);
+    now += delay - 1;
+    expect(current.getStudyBatch().map((c) => c.id)).toEqual(['second']);
+    now += 1;
+    expect(current.getStudyBatch().map((c) => c.id)).toEqual(['first', 'second']);
+    expect(screen.getByText('1 restantes')).toBeTruthy();
+    const events = await getLearningEvents();
+    expect(events).toEqual([expect.objectContaining({ cardId: 'first', quality })]);
+    screen.unmount();
+    screen = render(<App />);
+    fireEvent.press(await screen.findByText('Continuar'));
+    await screen.findByText('phrase second');
+    await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    expect((await getLastStudySession())?.queue).toEqual({
+      ...initial?.queue,
+      cardIds: ['second'],
+    });
+    expect(await getLearningEvents()).toEqual(events);
+    expect(await getDailyProgress()).toMatchObject({ count: 1, newCount: 1 });
+    await act(async () => fireEvent.press(screen.getByText('Bien')));
+    await screen.findByText('Sesión terminada');
+    expect((await getLastStudySession())?.queue?.cardIds).toEqual([]);
+    expect((await loadDecks())[0].cards[0]).toEqual(graded);
+    expect(await getDailyProgress()).toMatchObject({ count: 2, newCount: 2 });
+    expect((await getLearningEvents()).map((e) => e.cardId)).toEqual(['first', 'second']);
+  },
+);
+
+test('cross-deck new-card cap permits due reviews and later relearning without new credit', async () => {
+  let now = Date.now();
+  jest.spyOn(Date, 'now').mockImplementation(() => now);
+  const betaReview = card('beta-review', { reps: 3, interval: 4 });
+  const betaNew = card('beta-new');
+  const decks: Deck[] = [
+    { id: 'alpha', name: 'Alpha', cards: [card('alpha-new')] },
+    { id: 'beta', name: 'Beta', cards: [betaReview, betaNew] },
+  ];
+  await AsyncStorage.setItem('SRS_PREFS_V1', JSON.stringify({ newCardsPerDay: 1 }));
+  await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(decks));
+  const screen = render(<App />);
+  await screen.findByText('phrase alpha-new');
+  await waitFor(() => expect(screen.getByText('Otra vez')).not.toBeDisabled());
+  const alphaSession = (await getLastStudySession())?.queue?.sessionId;
+  await act(async () => fireEvent.press(screen.getByText('Otra vez')));
+  await screen.findByText('Sesión terminada');
+  expect(await getDailyProgress()).toMatchObject({ count: 1, newCount: 1 });
+  await act(async () => current.setActiveDeckId('beta'));
+  await screen.findByText('phrase beta-review');
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  const betaSession = await getLastStudySession();
+  expect(betaSession?.queue?.sessionId).not.toBe(alphaSession);
+  expect(betaSession?.queue?.cardIds).toEqual(['beta-review']);
+  expect(current.getStudyBatch().map((c) => c.id)).toEqual(['beta-review']);
+  await act(async () => fireEvent.press(screen.getByText('Bien')));
+  await screen.findByText('Sesión terminada');
+  expect(await getDailyProgress()).toMatchObject({ count: 2, newCount: 1 });
+  expect((await loadDecks())[1].cards[1]).toEqual(betaNew);
+  const betaAfter = (await loadDecks())[1];
+  now += 15 * 60 * 1000;
+  await act(async () => current.setActiveDeckId('alpha'));
+  await screen.findByText('phrase alpha-new');
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  expect((await getLastStudySession())?.queue?.sessionId).not.toBe(alphaSession);
+  expect((await getLastStudySession())?.queue?.cardIds).toEqual(['alpha-new']);
+  await act(async () => fireEvent.press(screen.getByText('Bien')));
+  await screen.findByText('Sesión terminada');
+  expect(await getDailyProgress()).toMatchObject({ count: 3, newCount: 1 });
+  expect((await loadDecks())[1]).toEqual(betaAfter);
+  expect((await getLearningEvents()).map((e) => [e.cardId, e.quality])).toEqual([
+    ['alpha-new', 1],
+    ['beta-review', 4],
+    ['alpha-new', 4],
+  ]);
+});

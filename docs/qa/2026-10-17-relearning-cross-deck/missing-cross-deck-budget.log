@@ -1,0 +1,34 @@
+FAIL __tests__/screens/StudyLifecycleIntegration.test.tsx
+  ✕ cross-deck new-card cap permits due reviews and later relearning without new credit (242 ms)
+  ○ skipped Otra vez becomes due without refilling a saved in-progress queue
+  ○ skipped Difícil becomes due without refilling a saved in-progress queue
+
+  ● cross-deck new-card cap permits due reviews and later relearning without new credit
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Array [
+        "beta-review",
+    +   "beta-new",
+      ]
+
+      125 |   const betaSession = await getLastStudySession();
+      126 |   expect(betaSession?.queue?.sessionId).not.toBe(alphaSession);
+    > 127 |   expect(betaSession?.queue?.cardIds).toEqual(['beta-review']);
+          |                                       ^
+      128 |   expect(current.getStudyBatch().map((c) => c.id)).toEqual(['beta-review']);
+      129 |   await act(async () => fireEvent.press(screen.getByText('Bien')));
+      130 |   await screen.findByText('Sesión terminada');
+
+      at Object.toEqual (__tests__/screens/StudyLifecycleIntegration.test.tsx:127:39)
+      at asyncGeneratorStep (../../../../../../../Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../../../Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 skipped, 3 total
+Snapshots:   0 total
+Time:        1.547 s, estimated 6 s
+Ran all test suites matching /__tests__\/screens\/StudyLifecycleIntegration.test.tsx/i with tests matching "cross-deck".

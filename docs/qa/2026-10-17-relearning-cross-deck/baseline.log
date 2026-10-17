@@ -1,0 +1,10 @@
+PASS __tests__/screens/StudyLifecycleIntegration.test.tsx (5.329 s)
+  ✓ Otra vez becomes due without refilling a saved in-progress queue (2196 ms)
+  ✓ Difícil becomes due without refilling a saved in-progress queue (156 ms)
+  ✓ cross-deck new-card cap permits due reviews and later relearning without new credit (108 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        6.004 s
+Ran all test suites matching /__tests__\/screens\/StudyLifecycleIntegration.test.tsx/i.

@@ -1,0 +1,68 @@
+FAIL __tests__/screens/StudyLifecycleIntegration.test.tsx
+  ✕ Otra vez becomes due without refilling a saved in-progress queue (326 ms)
+  ✕ Difícil becomes due without refilling a saved in-progress queue (134 ms)
+  ○ skipped cross-deck new-card cap permits due reviews and later relearning without new credit
+
+  ● Otra vez becomes due without refilling a saved in-progress queue
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Object {
+        "cardIds": Array [
+          "second",
+    +     "first",
+        ],
+        "region": "all",
+        "schemaVersion": 1,
+        "sessionId": "mvcws7qf-4-v4ub45t5hb",
+      }
+
+      87 |     await screen.findByText('phrase second');
+      88 |     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    > 89 |     expect((await getLastStudySession())?.queue).toEqual({
+         |                                                  ^
+      90 |       ...initial?.queue,
+      91 |       cardIds: ['second'],
+      92 |     });
+
+      at toEqual (__tests__/screens/StudyLifecycleIntegration.test.tsx:89:50)
+      at asyncGeneratorStep (../../../../../../../Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../../../Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● Difícil becomes due without refilling a saved in-progress queue
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Object {
+        "cardIds": Array [
+          "second",
+    +     "first",
+        ],
+        "region": "all",
+        "schemaVersion": 1,
+        "sessionId": "mvcws7zm-l-9dsby9qyil",
+      }
+
+      87 |     await screen.findByText('phrase second');
+      88 |     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    > 89 |     expect((await getLastStudySession())?.queue).toEqual({
+         |                                                  ^
+      90 |       ...initial?.queue,
+      91 |       cardIds: ['second'],
+      92 |     });
+
+      at toEqual (__tests__/screens/StudyLifecycleIntegration.test.tsx:89:50)
+      at asyncGeneratorStep (../../../../../../../Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../../../Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 1 skipped, 3 total
+Snapshots:   0 total
+Time:        2.048 s
+Ran all test suites matching /__tests__\/screens\/StudyLifecycleIntegration.test.tsx/i with tests matching "without refilling".
