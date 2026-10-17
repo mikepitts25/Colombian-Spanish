@@ -10,6 +10,7 @@ import { Deck, FlashCard } from '../../src/types';
 
 let mockParams: Record<string, unknown> = {};
 jest.mock('@react-navigation/native', () => ({
+  usePreventRemove: jest.fn(),
   useFocusEffect: (callback: any) => require('react').useEffect(callback, [callback]),
   useNavigation: () => ({
     navigate: jest.fn(),
@@ -232,3 +233,49 @@ test.each([false, true])(
     );
   },
 );
+
+test('failed filtered editor save retains its row and draft after another transaction recovers the journal', async () => {
+  const screen = render(
+    <DeckProvider>
+      <Probe />
+      <ReviewScreen />
+    </DeckProvider>,
+  );
+  await screen.findByText('saludo uno');
+  fireEvent.press(screen.getByText('Sin revisar'));
+  fireEvent.changeText(screen.getByPlaceholderText('Traducción en inglés'), 'correction to retain');
+  const remove = AsyncStorage.removeItem as jest.Mock;
+  const original = remove.getMockImplementation()!;
+  let fail = true;
+  remove.mockImplementation(async (key) => {
+    if (key === 'SRS_WRITE_JOURNAL_V1' && fail) {
+      fail = false;
+      throw new Error('QA acknowledgement failure');
+    }
+    return original(key);
+  });
+  try {
+    await act(async () => fireEvent.press(screen.getByText('Guardar y seguir')));
+    await screen.findByText('No se pudieron guardar los cambios. Reintenta antes de continuar.');
+    const persisted = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!)[0].cards[0];
+    await act(async () => current.renameDeck('editor-qa', 'Recovered editor QA'));
+    expect(current.activeDeck?.cards[0].reviewStatus).toBe('reviewed');
+    expect(screen.getByText('saludo uno')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Traducción en inglés')).toHaveProp(
+      'value',
+      'correction to retain',
+    );
+    expect(screen.getByText('Saltar')).toBeDisabled();
+    await act(async () => fireEvent.press(screen.getByText('Intentar guardar de nuevo')));
+    await screen.findByText('saludo dos');
+    expect((await loadDecks())[0].cards[0]).toMatchObject({
+      back: 'correction to retain',
+      reviewedAt: persisted.reviewedAt,
+      reps: 0,
+    });
+    expect((await getDailyProgress()).count).toBe(0);
+    expect(await getLearningEvents()).toEqual([]);
+  } finally {
+    remove.mockImplementation(original);
+  }
+});

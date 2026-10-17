@@ -1,0 +1,1757 @@
+[
+  {
+    "phase": "before-native-edit-save",
+    "device": "C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792251828.5831912,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 3,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-3",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [
+          "catchup-3",
+          "catchup-4",
+          "catchup-5",
+          "catchup-6",
+          "catchup-7",
+          "catchup-8",
+          "catchup-9"
+        ],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792249803008
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792246528211,
+        "hintsUsed": null,
+        "durationMs": 227435
+      }
+    ],
+    "cardCount": 1402,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "catchup-0",
+        "front": "Hola 0",
+        "back": "Hello 0",
+        "createdAt": 0,
+        "due": 1793109768065,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249575606
+      },
+      {
+        "id": "catchup-1",
+        "front": "Hola 1",
+        "back": "Hello 1",
+        "createdAt": 0,
+        "due": 1793109860352,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249608373
+      },
+      {
+        "id": "catchup-2",
+        "front": "Hola 2",
+        "back": "Hello 2",
+        "createdAt": 0,
+        "due": 1793110528206,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-3",
+        "front": "Hola 3",
+        "back": "Hello 3",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-4",
+        "front": "Hola 4",
+        "back": "Hello 4",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "1016648a46c4703e10563011690472fb0ed436d282898425b6cf3f96a6f87f60"
+  },
+  {
+    "phase": "held-native-save",
+    "device": "C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792252025.2634208,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 3,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-3",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [
+          "catchup-3",
+          "catchup-4",
+          "catchup-5",
+          "catchup-6",
+          "catchup-7",
+          "catchup-8",
+          "catchup-9"
+        ],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792249803008
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792246528211,
+        "hintsUsed": null,
+        "durationMs": 227435
+      }
+    ],
+    "cardCount": 1402,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "catchup-0",
+        "front": "Hola 0",
+        "back": "Hello 0",
+        "createdAt": 0,
+        "due": 1793109768065,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249575606
+      },
+      {
+        "id": "catchup-1",
+        "front": "Hola 1",
+        "back": "Hello 1",
+        "createdAt": 0,
+        "due": 1793109860352,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249608373
+      },
+      {
+        "id": "catchup-2",
+        "front": "Hola 2",
+        "back": "Hello 2",
+        "createdAt": 0,
+        "due": 1793110528206,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-3",
+        "front": "Hola 3",
+        "back": "Hello 3",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-4",
+        "front": "Hola 4",
+        "back": "Hello 4",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "1016648a46c4703e10563011690472fb0ed436d282898425b6cf3f96a6f87f60"
+  },
+  {
+    "phase": "after-native-retry",
+    "device": "C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792252374.115662,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 3,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-3",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [
+          "catchup-3",
+          "catchup-4",
+          "catchup-5",
+          "catchup-6",
+          "catchup-7",
+          "catchup-8",
+          "catchup-9"
+        ],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792249803008
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792246528211,
+        "hintsUsed": null,
+        "durationMs": 227435
+      }
+    ],
+    "cardCount": 1402,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "catchup-0",
+        "front": "Hola 0",
+        "back": "Hello 0",
+        "createdAt": 0,
+        "due": 1793109768065,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249575606
+      },
+      {
+        "id": "catchup-1",
+        "front": "Hola 1",
+        "back": "Hello 1",
+        "createdAt": 0,
+        "due": 1793109860352,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249608373
+      },
+      {
+        "id": "catchup-2",
+        "front": "Hola 2",
+        "back": "Hello 2 \u2014 QA retry draft",
+        "createdAt": 0,
+        "due": 1793110528206,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792251873155
+      },
+      {
+        "id": "catchup-3",
+        "front": "Hola 3",
+        "back": "Hello 3",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-4",
+        "front": "Hola 4",
+        "back": "Hello 4",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "9ccaea0e56080a9282effba1ae9b2f1db417e2182c0821e01911575d41772aa9"
+  },
+  {
+    "phase": "largest-native-error",
+    "device": "C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792252760.697161,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 3,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-3",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [
+          "catchup-3",
+          "catchup-4",
+          "catchup-5",
+          "catchup-6",
+          "catchup-7",
+          "catchup-8",
+          "catchup-9"
+        ],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792249803008
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792246528211,
+        "hintsUsed": null,
+        "durationMs": 227435
+      }
+    ],
+    "cardCount": 1402,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "catchup-0",
+        "front": "Hola 0",
+        "back": "Hello 0",
+        "createdAt": 0,
+        "due": 1793109768065,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249575606
+      },
+      {
+        "id": "catchup-1",
+        "front": "Hola 1",
+        "back": "Hello 1",
+        "createdAt": 0,
+        "due": 1793109860352,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249608373
+      },
+      {
+        "id": "catchup-2",
+        "front": "Hola 2",
+        "back": "Hello 2 \u2014 QA retry draft",
+        "createdAt": 0,
+        "due": 1793110528206,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792251873155
+      },
+      {
+        "id": "catchup-3",
+        "front": "Hola 3",
+        "back": "Hello 3 \u2014 large-text retry",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792252552610
+      },
+      {
+        "id": "catchup-4",
+        "front": "Hola 4",
+        "back": "Hello 4",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "a85c5a41c3dd7e452016be63bb166531ef543bd10ff5fbcde68c90fd2e591168"
+  },
+  {
+    "phase": "normal-entry-cold-restart",
+    "device": "C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792252832.6192799,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 3,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-3",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [
+          "catchup-3",
+          "catchup-4",
+          "catchup-5",
+          "catchup-6",
+          "catchup-7",
+          "catchup-8",
+          "catchup-9"
+        ],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792249803008
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792246528211,
+        "hintsUsed": null,
+        "durationMs": 227435
+      }
+    ],
+    "cardCount": 1402,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "catchup-0",
+        "front": "Hola 0",
+        "back": "Hello 0",
+        "createdAt": 0,
+        "due": 1793109768065,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249575606
+      },
+      {
+        "id": "catchup-1",
+        "front": "Hola 1",
+        "back": "Hello 1",
+        "createdAt": 0,
+        "due": 1793109860352,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249608373
+      },
+      {
+        "id": "catchup-2",
+        "front": "Hola 2",
+        "back": "Hello 2 \u2014 QA retry draft",
+        "createdAt": 0,
+        "due": 1793110528206,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792251873155
+      },
+      {
+        "id": "catchup-3",
+        "front": "Hola 3",
+        "back": "Hello 3 \u2014 large-text retry",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792252552610
+      },
+      {
+        "id": "catchup-4",
+        "front": "Hola 4",
+        "back": "Hello 4 \u2014 visible retry",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792252726744
+      },
+      {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "3aa5caebf80c5e52bcf0055ce8165a54ffda9cb526c369b2d38937e1a096797b"
+  },
+  {
+    "phase": "normal-entry-cold-resume",
+    "device": "C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792252871.408602,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 3,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-3",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [
+          "catchup-3",
+          "catchup-4",
+          "catchup-5",
+          "catchup-6",
+          "catchup-7",
+          "catchup-8",
+          "catchup-9"
+        ],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792252858590
+    },
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "correct",
+        "quality": 4,
+        "occurredAt": 1792246528211,
+        "hintsUsed": null,
+        "durationMs": 227435
+      }
+    ],
+    "cardCount": 1402,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "catchup-0",
+        "front": "Hola 0",
+        "back": "Hello 0",
+        "createdAt": 0,
+        "due": 1793109768065,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249575606
+      },
+      {
+        "id": "catchup-1",
+        "front": "Hola 1",
+        "back": "Hello 1",
+        "createdAt": 0,
+        "due": 1793109860352,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792249608373
+      },
+      {
+        "id": "catchup-2",
+        "front": "Hola 2",
+        "back": "Hello 2 \u2014 QA retry draft",
+        "createdAt": 0,
+        "due": 1793110528206,
+        "reps": 4,
+        "interval": 10,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792251873155
+      },
+      {
+        "id": "catchup-3",
+        "front": "Hola 3",
+        "back": "Hello 3 \u2014 large-text retry",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792252552610
+      },
+      {
+        "id": "catchup-4",
+        "front": "Hola 4",
+        "back": "Hello 4 \u2014 visible retry",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5,
+        "flagged": false,
+        "reviewStatus": "reviewed",
+        "reviewedAt": 1792252726744
+      },
+      {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 3,
+        "interval": 4,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "3aa5caebf80c5e52bcf0055ce8165a54ffda9cb526c369b2d38937e1a096797b"
+  }
+]

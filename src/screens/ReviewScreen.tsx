@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -8,9 +8,10 @@ import {
   Pressable,
   ScrollView,
   TextInput,
+  useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, usePreventRemove } from '@react-navigation/native';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { speakCard } from '../services/tts';
@@ -18,6 +19,13 @@ import { FlashCard } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 
 type CardRow = { deckId: string; deckName: string; card: FlashCard };
+type ReviewSave = {
+  row: CardRow;
+  index: number;
+  total: number;
+  filter: ReviewFilter;
+  patch: Pick<FlashCard, 'back' | 'example' | 'flagged' | 'reviewStatus' | 'reviewedAt'>;
+};
 
 const REVIEW_FILTERS = [
   { id: 'all', labelKey: 'review.all' },
@@ -47,12 +55,29 @@ export default function ReviewScreen() {
   const { ready, decks, updateCardReview } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
+  const { fontScale } = useWindowDimensions();
+  const largeText = fontScale >= 1.4;
 
   const [deckFilter, setDeckFilter] = useState<string>('all');
   const [reviewFilter, setReviewFilter] = useState<ReviewFilter>('all');
   const [index, setIndex] = useState(0);
   const [draftBack, setDraftBack] = useState('');
   const [draftExample, setDraftExample] = useState('');
+  const [pendingSave, setPendingSave] = useState<ReviewSave | null>(null);
+  const pending = useRef<ReviewSave | null>(null);
+  const content = useRef<ScrollView>(null);
+  const saving = useRef(false);
+  const mounted = useRef(true);
+  const [saveBusy, setSaveBusy] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const blocked = pendingSave !== null;
+  usePreventRemove(blocked, () => {});
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const allCards = useMemo<CardRow[]>(() => {
     const source =
@@ -78,7 +103,7 @@ export default function ReviewScreen() {
     [decks, t],
   );
 
-  const current = allCards[index] ?? null;
+  const current = pendingSave?.row ?? allCards[index] ?? null;
   const total = allCards.length;
   const selectedDeckName =
     deckOptions.find((deck) => deck.id === deckFilter)?.name ?? t('review.allDecks');
@@ -88,28 +113,32 @@ export default function ReviewScreen() {
 
   const editorKey = JSON.stringify([current?.card.id, current?.card.back, current?.card.example]);
   const [previousEditorKey, setPreviousEditorKey] = useState<string | null>(null);
-  if (editorKey !== previousEditorKey) {
+  if (!pendingSave && editorKey !== previousEditorKey) {
     setPreviousEditorKey(editorKey);
     setDraftBack(current?.card.back ?? '');
     setDraftExample(current?.card.example ?? '');
   }
 
-  if (index > 0 && index >= total) setIndex(Math.max(0, total - 1));
+  if (!pendingSave && index > 0 && index >= total) setIndex(Math.max(0, total - 1));
 
   function go(delta: number) {
+    if (pending.current) return;
     setIndex((value) => Math.max(0, Math.min(total - 1, value + delta)));
   }
 
   function goNext() {
+    if (pending.current) return;
     setIndex((value) => (value >= total - 1 ? value : value + 1));
   }
 
   function changeDeck(id: string) {
+    if (pending.current) return;
     setDeckFilter(id);
     setIndex(0);
   }
 
   function changeReviewFilter(id: ReviewFilter) {
+    if (pending.current) return;
     setReviewFilter(id);
     setIndex(0);
   }
@@ -119,6 +148,7 @@ export default function ReviewScreen() {
   }
 
   function leaveReview() {
+    if (pending.current) return;
     if (nav.canGoBack()) {
       nav.goBack();
       return;
@@ -126,20 +156,101 @@ export default function ReviewScreen() {
     nav.navigate('ManageDecks', undefined, { pop: true });
   }
 
-  async function saveReview(reviewStatus: 'reviewed' | 'needs_native') {
-    if (!current) return;
-    const example = draftExample.trim();
-    const patch = {
-      back: draftBack.trim(),
-      example: example || undefined,
-      flagged: reviewStatus === 'needs_native',
-      reviewStatus,
-      reviewedAt: Date.now(),
-    };
-    await updateCardReview(current.card.id, patch);
-    // A removed row already shifts its successor into this index.
-    if (matchesReviewFilter({ ...current.card, ...patch }, reviewFilter)) goNext();
+  async function persistReview(attempt: ReviewSave) {
+    if (saving.current) return;
+    saving.current = true;
+    setSaveBusy(true);
+    setSaveError(false);
+    try {
+      await updateCardReview(attempt.row.card.id, attempt.patch);
+      if (!mounted.current) return;
+      const retained = matchesReviewFilter(
+        { ...attempt.row.card, ...attempt.patch },
+        attempt.filter,
+      );
+      setIndex(retained ? Math.min(attempt.total - 1, attempt.index + 1) : attempt.index);
+      pending.current = null;
+      setPendingSave(null);
+      content.current?.scrollTo({ y: 0, animated: false });
+    } catch {
+      if (mounted.current) setSaveError(true);
+    } finally {
+      saving.current = false;
+      if (mounted.current) setSaveBusy(false);
+    }
   }
+
+  function saveReview(reviewStatus: 'reviewed' | 'needs_native') {
+    if (!current || pending.current) return;
+    const attempt: ReviewSave = {
+      row: current,
+      index,
+      total,
+      filter: reviewFilter,
+      patch: {
+        back: draftBack.trim(),
+        example: draftExample.trim() || undefined,
+        flagged: reviewStatus === 'needs_native',
+        reviewStatus,
+        reviewedAt: Date.now(),
+      },
+    };
+    pending.current = attempt;
+    setPendingSave(attempt);
+    void persistReview(attempt);
+  }
+
+  const actions = (
+    <View style={styles.actionBar}>
+      <View style={[styles.controls, largeText && styles.stacked]}>
+        <Pressable
+          style={[
+            styles.navBtn,
+            largeText && styles.fullWidth,
+            (blocked || index === 0) && styles.navBtnDisabled,
+          ]}
+          onPress={() => go(-1)}
+          disabled={blocked || index === 0}
+        >
+          <Text style={styles.navBtnText}>{t('review.prev')}</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.navBtn, largeText && styles.fullWidth, blocked && styles.controlDisabled]}
+          onPress={goNext}
+          disabled={blocked || !current}
+        >
+          <Text style={styles.navBtnText}>{t('review.skip')}</Text>
+        </Pressable>
+      </View>
+
+      <View style={[styles.reviewActions, largeText && styles.stacked]}>
+        <Pressable
+          style={[
+            styles.actionBtn,
+            largeText && styles.fullWidth,
+            styles.nativeBtn,
+            (blocked || !current) && styles.actionBtnDisabled,
+          ]}
+          onPress={() => saveReview('needs_native')}
+          disabled={blocked || !current}
+        >
+          <Text style={styles.actionBtnText}>{t('review.needsNativeCheck')}</Text>
+        </Pressable>
+        <Pressable
+          style={[
+            styles.actionBtn,
+            largeText && styles.fullWidth,
+            styles.saveBtn,
+            (blocked || !current) && styles.actionBtnDisabled,
+          ]}
+          onPress={() => saveReview('reviewed')}
+          disabled={blocked || !current}
+        >
+          <Text style={styles.actionBtnText}>{t('review.saveNext')}</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
 
   if (!ready) {
     return (
@@ -156,19 +267,56 @@ export default function ReviewScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView
+          key={fontScale}
+          ref={content}
+          onContentSizeChange={() => {
+            if (saveError) content.current?.scrollTo({ y: 0, animated: false });
+          }}
           style={styles.content}
           contentContainerStyle={styles.contentBody}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
+          {saveBusy && (
+            <Text accessibilityLiveRegion="polite" style={styles.sub}>
+              {t('review.saving')}
+            </Text>
+          )}
+          {saveError && (
+            <View>
+              <Text accessibilityRole="alert" style={styles.sub}>
+                {t('review.saveError')}
+              </Text>
+              <Pressable
+                accessibilityRole="button"
+                disabled={saveBusy}
+                onPress={() => {
+                  if (pending.current) void persistReview(pending.current);
+                }}
+              >
+                <Text style={styles.saveRetry}>{t('practice.retrySave')}</Text>
+              </Pressable>
+            </View>
+          )}
           <View style={styles.header}>
-            <View style={styles.headerActions}>
-              <Pressable style={styles.backBtn} onPress={leaveReview}>
+            <View style={[styles.headerActions, largeText && styles.stacked]}>
+              <Pressable
+                style={[styles.backBtn, blocked && styles.controlDisabled]}
+                onPress={leaveReview}
+                disabled={blocked}
+              >
                 <Text style={styles.backBtnText}>{t('review.back')}</Text>
               </Pressable>
               <Pressable
-                style={[styles.flaggedBtn, flaggedCount > 0 && styles.flaggedBtnActive]}
-                onPress={() => nav.navigate('Flagged')}
+                style={[
+                  styles.flaggedBtn,
+                  flaggedCount > 0 && styles.flaggedBtnActive,
+                  blocked && styles.controlDisabled,
+                ]}
+                disabled={blocked}
+                onPress={() => {
+                  if (!pending.current) nav.navigate('Flagged');
+                }}
               >
                 <Text style={styles.flaggedBtnText}>
                   {t('review.flaggedCount', { count: flaggedCount })}
@@ -188,14 +336,19 @@ export default function ReviewScreen() {
             </View>
             <ScrollView
               horizontal
-              style={styles.filterScroller}
+              style={[styles.filterScroller, { height: Math.ceil(38 * Math.max(1, fontScale)) }]}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.filterRow}
             >
               {deckOptions.map((deck) => (
                 <Pressable
                   key={deck.id}
-                  style={[styles.chip, deckFilter === deck.id && styles.chipActive]}
+                  style={[
+                    styles.chip,
+                    deckFilter === deck.id && styles.chipActive,
+                    blocked && styles.controlDisabled,
+                  ]}
+                  disabled={blocked}
                   onPress={() => changeDeck(deck.id)}
                 >
                   <Text
@@ -218,14 +371,19 @@ export default function ReviewScreen() {
             </View>
             <ScrollView
               horizontal
-              style={styles.filterScroller}
+              style={[styles.filterScroller, { height: Math.ceil(38 * Math.max(1, fontScale)) }]}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.filterRow}
             >
               {REVIEW_FILTERS.map((filter) => (
                 <Pressable
                   key={filter.id}
-                  style={[styles.chip, reviewFilter === filter.id && styles.reviewChipActive]}
+                  style={[
+                    styles.chip,
+                    reviewFilter === filter.id && styles.reviewChipActive,
+                    blocked && styles.controlDisabled,
+                  ]}
+                  disabled={blocked}
                   onPress={() => changeReviewFilter(filter.id)}
                 >
                   <Text
@@ -239,14 +397,14 @@ export default function ReviewScreen() {
             </ScrollView>
           </View>
 
-          <View style={styles.queueSummary}>
+          <View style={[styles.queueSummary, largeText && styles.stacked]}>
             <Text style={styles.queueSummaryLabel}>{t('review.currentCard')}</Text>
             <Text style={styles.progress}>{total > 0 ? `${index + 1} / ${total}` : '0 / 0'}</Text>
           </View>
 
           {current ? (
             <View style={[styles.card, current.card.flagged && styles.cardFlagged]}>
-              <View style={styles.cardTopRow}>
+              <View style={[styles.cardTopRow, largeText && styles.stacked]}>
                 <View style={styles.deckBadge}>
                   <Text style={styles.deckBadgeText} numberOfLines={1}>
                     {current.deckName}
@@ -267,8 +425,8 @@ export default function ReviewScreen() {
                 </View>
               )}
 
-              <View style={styles.wordRow}>
-                <Text style={styles.spanish} selectable>
+              <View style={[styles.wordRow, largeText && styles.stacked]}>
+                <Text style={[styles.spanish, largeText && styles.fullWidth]} selectable>
                   {current.card.front}
                 </Text>
                 <Pressable style={styles.speakBtn} onPress={speak}>
@@ -285,8 +443,12 @@ export default function ReviewScreen() {
               <Text style={styles.label}>{t('review.english')}</Text>
               <TextInput
                 style={styles.input}
+                multiline={largeText}
                 value={draftBack}
-                onChangeText={setDraftBack}
+                editable={!blocked}
+                onChangeText={(value) => {
+                  if (!pending.current) setDraftBack(value);
+                }}
                 placeholder={t('review.englishPlaceholder')}
                 placeholderTextColor="#64748b"
               />
@@ -295,7 +457,10 @@ export default function ReviewScreen() {
               <TextInput
                 style={[styles.input, styles.exampleInput]}
                 value={draftExample}
-                onChangeText={setDraftExample}
+                editable={!blocked}
+                onChangeText={(value) => {
+                  if (!pending.current) setDraftExample(value);
+                }}
                 placeholder={t('review.examplePlaceholder')}
                 placeholderTextColor="#64748b"
                 multiline
@@ -316,39 +481,10 @@ export default function ReviewScreen() {
               <Text style={styles.emptyText}>{t('review.empty')}</Text>
             </View>
           )}
+          {largeText && actions}
         </ScrollView>
 
-        <View style={styles.actionBar}>
-          <View style={styles.controls}>
-            <Pressable
-              style={[styles.navBtn, index === 0 && styles.navBtnDisabled]}
-              onPress={() => go(-1)}
-              disabled={index === 0}
-            >
-              <Text style={styles.navBtnText}>{t('review.prev')}</Text>
-            </Pressable>
-            <Pressable style={styles.navBtn} onPress={goNext} disabled={!current}>
-              <Text style={styles.navBtnText}>{t('review.skip')}</Text>
-            </Pressable>
-          </View>
-
-          <View style={styles.reviewActions}>
-            <Pressable
-              style={[styles.actionBtn, styles.nativeBtn, !current && styles.actionBtnDisabled]}
-              onPress={() => saveReview('needs_native')}
-              disabled={!current}
-            >
-              <Text style={styles.actionBtnText}>{t('review.needsNativeCheck')}</Text>
-            </Pressable>
-            <Pressable
-              style={[styles.actionBtn, styles.saveBtn, !current && styles.actionBtnDisabled]}
-              onPress={() => saveReview('reviewed')}
-              disabled={!current}
-            >
-              <Text style={styles.actionBtnText}>{t('review.saveNext')}</Text>
-            </Pressable>
-          </View>
-        </View>
+        {!largeText && actions}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -356,6 +492,10 @@ export default function ReviewScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg },
+  stacked: { flexDirection: 'column', alignItems: 'stretch' },
+  fullWidth: { flex: 0, width: '100%' },
+  controlDisabled: { opacity: 0.45 },
+  saveRetry: { color: colors.brand, fontWeight: '700', paddingVertical: 12 },
   keyboardWrap: { flex: 1 },
   content: { flex: 1 },
   contentBody: { padding: spacing(2), paddingBottom: spacing(2), gap: spacing(1.5) },

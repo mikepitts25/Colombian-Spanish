@@ -1,0 +1,52 @@
+FAIL __tests__/screens/ReviewScreen.test.tsx
+  ✕ submits one editorial intent and blocks conflicting controls while saving (12 ms)
+  ✕ keeps a failed editorial draft and retries the exact original intent (10 ms)
+  ReviewScreen review queue
+    ✓ saves inline edits as reviewed (219 ms)
+    ✓ marks a card as needing a native check (9 ms)
+    ✓ filters to cards missing an English example (12 ms)
+
+  ● submits one editorial intent and blocks conflicting controls while saving
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 2
+
+      137 |   fireEvent.press(screen.getByText('Guardar y seguir'));
+      138 |   fireEvent.press(screen.getByText('Necesita revisión nativa'));
+    > 139 |   expect(updateCardReview).toHaveBeenCalledTimes(1);
+          |                            ^
+      140 |   expect(screen.getByText('Saltar')).toBeDisabled();
+      141 |   expect(screen.getByText('Sin revisar')).toBeDisabled();
+      142 |   expect(screen.getByPlaceholderText('Traducción en inglés')).toHaveProp('editable', false);
+
+      at Object.toHaveBeenCalledTimes (__tests__/screens/ReviewScreen.test.tsx:139:28)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● keeps a failed editorial draft and retries the exact original intent
+
+    disk full
+
+      148 |   const updateCardReview = jest
+      149 |     .fn()
+    > 150 |     .mockRejectedValueOnce(new Error('disk full'))
+          |                            ^
+      151 |     .mockResolvedValue(undefined);
+      152 |   const screen = renderReviewScreen({ updateCardReview });
+      153 |   fireEvent.changeText(screen.getByPlaceholderText('Traducción en inglés'), 'retained correction');
+
+      at Object.<anonymous> (__tests__/screens/ReviewScreen.test.tsx:150:28)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 3 passed, 5 total
+Snapshots:   0 total
+Time:        1.966 s
+Ran all test suites matching /__tests__\/screens\/ReviewScreen.test.tsx/i.

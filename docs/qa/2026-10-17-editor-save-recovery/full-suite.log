@@ -1,0 +1,309 @@
+
+> colombian-spanish-srs@1.0.0 test:coverage
+> jest --coverage --runInBand
+
+watchman warning:  Recrawled this watch 15 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish'`
+
+PASS __tests__/screens/MissionScreen.test.tsx (6.149 s)
+PASS __tests__/screens/StudyEditorIntegration.test.tsx
+PASS __tests__/scripts/validate-project.test.js
+PASS __tests__/scripts/export-content-review.test.js
+PASS __tests__/screens/StudyScreen.test.tsx
+  ● Console
+
+    console.error
+      An update to StudyScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      322 |             plan.review?.session.queue?.sessionId === session?.queue?.sessionId &&
+      323 |             plan.review?.session.deckId === session?.deckId;
+    > 324 |           setResumeSession(linked ? plan!.review!.session : session);
+          |           ^
+      325 |           setResumePlanId(linked ? plan!.id : undefined);
+      326 |         }
+      327 |       },
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6208:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
+      at setResumeSession (src/screens/StudyScreen.tsx:324:11)
+
+    console.error
+      An update to StudyScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      323 |             plan.review?.session.deckId === session?.deckId;
+      324 |           setResumeSession(linked ? plan!.review!.session : session);
+    > 325 |           setResumePlanId(linked ? plan!.id : undefined);
+          |           ^
+      326 |         }
+      327 |       },
+      328 |       () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6208:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
+      at setResumePlanId (src/screens/StudyScreen.tsx:325:11)
+
+PASS __tests__/screens/HomeScreen.test.tsx
+PASS __tests__/context/DeckContext.test.tsx
+PASS __tests__/screens/ListeningScreen.test.tsx
+PASS __tests__/screens/QuizScreen.test.tsx
+PASS __tests__/scripts/editorial-release.test.js
+PASS __tests__/screens/AudioPreferencesScreen.test.tsx
+PASS __tests__/navigation/RootNavigator.test.tsx
+PASS __tests__/screens/DailyPlanLifecycle.test.tsx
+PASS __tests__/screens/ReviewScreen.test.tsx
+PASS __tests__/screens/VoicePracticeScreen.test.tsx
+PASS __tests__/screens/LearningPreferencesScreen.test.tsx
+PASS __tests__/screens/SettingsScreen.test.tsx
+PASS __tests__/utils/calendarDay.test.ts
+PASS __tests__/navigation/reviewSaveBoundary.test.tsx
+PASS __tests__/screens/DifficultWordsScreen.test.tsx
+  ● Console
+
+    console.error
+      The current testing environment is not configured to support act(...)
+
+      14 |     AccessibilityInfo.isReduceMotionEnabled().then(
+      15 |       (value) => {
+    > 16 |         if (active && !changed) setReduced(value);
+         |                                 ^
+      17 |       },
+      18 |       () => {
+      19 |         /* Keep conservative default. */
+
+      at isConcurrentActEnvironment (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11999:17)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14399:7)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6208:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
+      at setReduced (src/hooks/useReducedMotion.ts:16:33)
+
+    console.error
+      The current testing environment is not configured to support act(...)
+
+      14 |     AccessibilityInfo.isReduceMotionEnabled().then(
+      15 |       (value) => {
+    > 16 |         if (active && !changed) setReduced(value);
+         |                                 ^
+      17 |       },
+      18 |       () => {
+      19 |         /* Keep conservative default. */
+
+      at isConcurrentActEnvironment (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11999:17)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14399:7)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6208:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
+      at setReduced (src/hooks/useReducedMotion.ts:16:33)
+
+PASS __tests__/screens/DailyPlanScreen.test.tsx
+PASS __tests__/screens/OnboardingRecovery.test.tsx
+PASS __tests__/missions/listening.test.ts
+PASS __tests__/services/crashReporting.test.ts
+Without `from` option PostCSS could generate wrong source map and will not find Browserslist config. Set it to CSS file path or to `undefined` to prevent this warning.
+PASS __tests__/tooling/postcssSecurity.test.js
+PASS __tests__/components/FlashcardAudio.test.tsx
+PASS __tests__/screens/ProgressScreen.test.tsx
+PASS __tests__/scripts/nyc-yaml.test.js
+PASS __tests__/services/tts.test.ts
+PASS __tests__/hooks/useFocusedAsync.test.tsx
+PASS __tests__/components/Flashcard.test.tsx
+PASS __tests__/scripts/generate-elevenlabs-audio.test.js
+PASS __tests__/scripts/xcode-uuid.test.js
+PASS __tests__/components/StorageGate.test.tsx
+PASS __tests__/storage/recommendedPlan.test.ts
+PASS __tests__/screens/HomeWorkload.integration.test.tsx
+PASS __tests__/components/ConjugationPanel.test.tsx
+PASS __tests__/screens/FocusedDueRefresh.integration.test.tsx
+PASS __tests__/screens/PhrasesScreen.test.tsx
+PASS __tests__/screens/MissionAudio.test.tsx
+PASS __tests__/screens/NotificationsScreen.test.tsx
+PASS __tests__/screens/ManageDecksScreen.test.tsx
+PASS __tests__/components/ProgressBar.test.tsx
+PASS __tests__/storage/learningEvents.test.ts
+PASS __tests__/screens/AddCardScreen.test.tsx
+PASS __tests__/storage/activityTimings.test.ts
+PASS __tests__/hooks/useReducedMotion.test.tsx
+PASS __tests__/components/AudioButton.test.tsx
+PASS __tests__/lint/noDeprecatedSafeAreaView.test.ts
+PASS __tests__/services/voicePractice.test.ts
+PASS __tests__/hooks/useActiveStudyTime.test.tsx
+PASS __tests__/storage/dailyPlans.test.ts
+PASS __tests__/exercises/production.test.ts
+PASS __tests__/storage/missions.test.ts
+PASS __tests__/missions/engine.test.ts
+PASS __tests__/storage/flashcardAnswer.test.ts
+PASS __tests__/storage/portableBackup.test.ts
+PASS __tests__/storage/deckMutations.test.ts
+PASS __tests__/storage/studySessionSnapshot.test.ts
+PASS __tests__/screens/OnboardingScreen.test.tsx
+PASS __tests__/services/notifications.test.ts
+PASS __tests__/storage/backupRestore.test.ts
+PASS __tests__/missions/activeTiming.test.ts
+PASS __tests__/storage/storage.test.ts
+PASS __tests__/storage/onboarding.test.ts
+PASS __tests__/storage/appliedPlan.test.ts
+PASS __tests__/storage/calendarTransitions.test.ts
+PASS __tests__/storage/concurrentState.test.ts
+PASS __tests__/storage/learningProfile.test.ts
+PASS __tests__/utils/srs.test.ts
+PASS __tests__/storage/durableStorage.test.ts
+PASS __tests__/storage/backupSnapshot.test.ts
+PASS __tests__/services/backupFiles.test.ts
+PASS __tests__/data/conjugationForms.test.ts
+PASS __tests__/missions/firstMorning.test.ts
+PASS __tests__/speaking/voicePractice.test.ts
+PASS __tests__/utils/reviewPace.test.ts
+PASS __tests__/storage/prefs.test.ts
+PASS __tests__/utils/deckCategories.test.ts
+PASS __tests__/data/exampleTranslations.test.ts
+PASS __tests__/utils/wordOfDay.test.ts
+PASS __tests__/data/phraseContent.test.ts
+PASS __tests__/utils/dailyReview.test.ts
+PASS __tests__/data/conjugationCopy.test.ts
+PASS __tests__/utils/register.test.ts
+PASS __tests__/navigation/stackReturn.test.ts
+PASS __tests__/config/recordingPermissions.test.js
+PASS __tests__/utils/regions.test.ts
+PASS __tests__/config/runtimeCompatibility.test.js
+PASS __tests__/utils/phraseTopics.test.ts
+PASS __tests__/utils/shuffle.test.ts
+PASS __tests__/utils/practiceEvidence.test.ts
+PASS __tests__/utils/exampleText.test.ts
+--------------------------------|---------|----------|---------|---------|------------------------------------------------------------
+File                            | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                          
+--------------------------------|---------|----------|---------|---------|------------------------------------------------------------
+All files                       |   88.56 |    85.01 |   84.92 |   90.39 |                                                            
+ src                            |     100 |      100 |     100 |     100 |                                                            
+  config.ts                     |     100 |      100 |     100 |     100 |                                                            
+ src/components                 |   86.25 |    86.01 |    82.6 |   87.39 |                                                            
+  AudioButton.tsx               |     100 |      100 |     100 |     100 |                                                            
+  ConjugationPanel.tsx          |   89.47 |    93.33 |   85.71 |   89.47 | 46,82                                                      
+  ConjugationTable.tsx          |       0 |        0 |       0 |       0 | 5-66                                                       
+  ErrorBoundary.tsx             |       0 |        0 |       0 |       0 | 17-52                                                      
+  Flashcard.tsx                 |   92.45 |    84.69 |   90.47 |   93.81 | 140-142,152-161                                            
+  MissionAudio.tsx              |   94.44 |       90 |     100 |   96.82 | 83-84                                                      
+  MissionFollowUp.tsx           |   92.85 |     90.9 |     100 |     100 | 20                                                         
+  ProgressBar.tsx               |     100 |      100 |     100 |     100 |                                                            
+  StorageGate.tsx               |     100 |    83.33 |     100 |     100 | 14-17                                                      
+  Tag.tsx                       |       0 |      100 |       0 |       0 | 6-13                                                       
+ src/context                    |   84.51 |    76.81 |   75.92 |   85.71 |                                                            
+  DeckContext.tsx               |   93.33 |    78.46 |   90.69 |   96.46 | 191-197                                                    
+  LanguageContext.tsx           |      25 |       50 |   18.18 |      25 | 30-64                                                      
+ src/exercises                  |   95.74 |    97.29 |     100 |   95.55 |                                                            
+  production.ts                 |   95.74 |    97.29 |     100 |   95.55 | 104,154                                                    
+ src/hooks                      |     100 |    94.91 |   97.29 |     100 |                                                            
+  useActiveStudyTime.ts         |     100 |      100 |     100 |     100 |                                                            
+  useCardAudio.ts               |     100 |       95 |   92.85 |     100 | 69                                                         
+  useDeck.ts                    |     100 |      100 |     100 |     100 |                                                            
+  useFocusedAsync.ts            |     100 |    92.85 |     100 |     100 | 25                                                         
+  useReducedMotion.ts           |     100 |    83.33 |     100 |     100 | 12                                                         
+ src/i18n                       |     100 |      100 |     100 |     100 |                                                            
+  translations.ts               |     100 |      100 |     100 |     100 |                                                            
+ src/missions                   |   92.33 |    94.97 |     100 |   94.39 |                                                            
+  activeTiming.ts               |   96.77 |    97.56 |     100 |     100 | 53                                                         
+  dailyResponse.ts              |     100 |      100 |     100 |     100 |                                                            
+  engine.ts                     |   89.78 |    93.83 |     100 |    91.8 | 58,120,128,153,156,164,171-172,174,349                     
+  firstMorning.ts               |     100 |      100 |     100 |     100 |                                                            
+  listeningBasics.ts            |     100 |      100 |     100 |     100 |                                                            
+  schema.ts                     |   93.25 |    95.94 |     100 |   95.94 | 149,171,198                                                
+ src/screens                    |    83.2 |    78.08 |   74.95 |   84.99 |                                                            
+  AddCardScreen.tsx             |    32.6 |        5 |      20 |   31.81 | 29-59,67-189                                               
+  AudioPreferencesScreen.tsx    |   92.85 |    73.58 |   94.11 |    94.8 | 84,95-97                                                   
+  DailyGoalScreen.tsx           |       0 |        0 |       0 |       0 | 11-140                                                     
+  DailyPlanScreen.tsx           |   93.75 |    88.37 |    90.9 |   95.45 | 52,86                                                      
+  DifficultWordsScreen.tsx      |   96.87 |    84.78 |     100 |   98.18 | 129                                                        
+  ExploreScreen.tsx             |       0 |        0 |       0 |       0 | 9-62                                                       
+  FlaggedScreen.tsx             |       0 |        0 |       0 |       0 | 12-131                                                     
+  HomeScreen.tsx                |    84.8 |    77.71 |   78.78 |    86.2 | 50,179,241-247,260-261,294-295,300-302,341,471,504-522,570 
+  LearningPreferencesScreen.tsx |    92.1 |    76.56 |    90.9 |   96.92 | 135,145                                                    
+  ListeningScreen.tsx           |     100 |      100 |     100 |     100 |                                                            
+  ManageDecksScreen.tsx         |    37.2 |       25 |   21.05 |    37.5 | 24-67,78,121-172                                           
+  MissionScreen.tsx             |   95.48 |    90.39 |   95.23 |   97.29 | 90,456-465                                                 
+  NotificationsScreen.tsx       |   79.16 |    83.33 |      60 |   78.26 | 108,138-176                                                
+  OnboardingScreen.tsx          |   93.65 |     88.4 |   86.66 |   96.29 | 240-266                                                    
+  PhrasebookScreen.tsx          |       0 |        0 |       0 |       0 | 10-95                                                      
+  PhrasesScreen.tsx             |   92.85 |    56.25 |   93.75 |      92 | 22,39                                                      
+  ProgressScreen.tsx            |   90.76 |    80.35 |   91.66 |   94.54 | 106,116,174                                                
+  QuizScreen.tsx                |   95.58 |    81.06 |   93.87 |   97.79 | 226,302,381,506                                            
+  ReviewScreen.tsx              |   75.91 |    75.42 |   68.29 |   83.48 | 125-137,147-156,212,273,318,352,472                        
+  SettingsScreen.tsx            |   83.49 |    90.41 |   74.19 |   84.53 | 115,160,199,222,226,234,258,320-372,390                    
+  StudyScreen.tsx               |      94 |    85.71 |      90 |   94.92 | 388,396-397,452,460,462,543,612-620,647,677-691,732        
+  VoicePracticeScreen.tsx       |   87.71 |    82.35 |   79.16 |   91.66 | 37,48,62,104                                               
+ src/services                   |   92.94 |    78.26 |     100 |   97.69 |                                                            
+  backupFiles.ts                |   89.58 |    81.08 |     100 |     100 | 14,28,31,50,63,74-83                                       
+  crashReporting.ts             |     100 |    68.75 |     100 |     100 | 18-38                                                      
+  notifications.ts              |      90 |       70 |     100 |   90.69 | 42,50-51,72                                                
+  tts.ts                        |    98.5 |    92.68 |     100 |     100 | 26,38-43                                                   
+  voicePractice.ts              |   91.13 |       75 |     100 |   98.57 | 53                                                         
+ src/speaking                   |   89.74 |    82.35 |     100 |   95.95 |                                                            
+  voicePractice.ts              |   89.74 |    82.35 |     100 |   95.95 | 145,151-152,178                                            
+ src/storage                    |   95.85 |    94.09 |   98.03 |      98 |                                                            
+  backupRestore.ts              |   95.23 |       92 |     100 |   96.87 | 21                                                         
+  backupSnapshot.ts             |   92.59 |       92 |     100 |   95.65 | 75                                                         
+  backupValidation.ts           |   96.87 |    98.27 |     100 |     100 | 30                                                         
+  dailyPlanSchema.ts            |   93.54 |    94.02 |     100 |    93.1 | 34,74                                                      
+  dailyPlans.ts                 |   95.83 |    95.23 |     100 |   97.67 | 25                                                         
+  durableStorage.ts             |   96.36 |    91.66 |     100 |     100 | 90,100                                                     
+  flashcardAnswer.ts            |   97.72 |    96.42 |     100 |     100 | 86,129                                                     
+  learningEventSchema.ts        |   94.44 |    98.73 |     100 |     100 | 120                                                        
+  learningEvents.ts             |     100 |      100 |     100 |     100 |                                                            
+  learningProfile.ts            |     100 |      100 |     100 |     100 |                                                            
+  missions.ts                   |   86.84 |     82.6 |   84.21 |   91.93 | 82-84,142,153                                              
+  onboarding.ts                 |     100 |      100 |     100 |     100 |                                                            
+  portableState.ts              |   97.61 |    98.18 |     100 |     100 | 47,96                                                      
+  prefs.ts                      |     100 |      100 |     100 |     100 |                                                            
+  recommendedPlan.ts            |   95.65 |    89.28 |     100 |     100 | 22-24,42                                                   
+  storage.ts                    |   97.08 |    88.48 |      98 |   98.21 | 295,335,358                                                
+  studySession.ts               |     100 |      100 |     100 |     100 |                                                            
+ src/utils                      |   91.21 |    83.22 |   94.18 |   91.35 |                                                            
+  calendarDay.ts                |     100 |      100 |     100 |     100 |                                                            
+  dailyReview.ts                |     100 |    92.45 |     100 |     100 | 35,66,69,78                                                
+  deckCategories.ts             |   73.33 |    61.11 |     100 |   78.94 | 263,265,267,275,278,280,283,286                            
+  exampleText.ts                |     100 |      100 |     100 |     100 |                                                            
+  learningProfile.ts            |     100 |      100 |     100 |     100 |                                                            
+  phraseTopics.ts               |     100 |    83.33 |     100 |     100 | 108                                                        
+  practiceEvidence.ts           |     100 |      100 |     100 |     100 |                                                            
+  regionMetadata.ts             |     100 |      100 |     100 |     100 |                                                            
+  regions.ts                    |   93.75 |       90 |   88.88 |   92.85 | 70                                                         
+  register.ts                   |   93.75 |    90.47 |     100 |     100 | 22,24                                                      
+  reviewPace.ts                 |     100 |      100 |     100 |     100 |                                                            
+  shuffle.ts                    |     100 |      100 |     100 |     100 |                                                            
+  srs.ts                        |     100 |    81.66 |     100 |     100 | 26-29,38,81,128-129,149,162-165,174-175                    
+  verbUtils.ts                  |    7.69 |        0 |      20 |    7.69 | 16-46                                                      
+  wordOfDay.ts                  |     100 |    69.23 |     100 |     100 | 17-36,39-40                                                
+--------------------------------|---------|----------|---------|---------|------------------------------------------------------------
+
+Test Suites: 93 passed, 93 total
+Tests:       906 passed, 906 total
+Snapshots:   0 total
+Time:        37.793 s
+Ran all test suites.
