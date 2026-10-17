@@ -35,3 +35,7 @@ The unsigned client's known expo-notifications missing-keychain-entitlement warn
 ## Remaining whole-plan work
 
 B05.3 and B05.3-B remain open. This package calibrates the review phase; one applied activity, durable progression across phases, activity-specific timing, accepted content integration and wider catch-up/platform validation remain B05.3-B2 and related existing gates. No draft activity was promoted to accepted production content.
+
+## Integration
+
+Implementation `b5c0217` was merged and pushed to main after the merged tree passed 83 suites / 824 tests. [GitHub Actions 39031013262](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39031013262) passed all four quality/content, iOS/Android project-generation and production-JS-bundle, and summary jobs. [Checklist board deployment 39031013246](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39031013246) passed. Native Android runtime, signed builds and physical-device acceptance remain separate.
