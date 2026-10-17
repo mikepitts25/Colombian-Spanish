@@ -1,0 +1,931 @@
+FAIL __tests__/screens/StudyEditorIntegration.test.tsx (6.602 s)
+  ✓ grade-first preserves a real Study queue, current edits and exactly-once evidence across remount (367 ms)
+  ✓ editor-first preserves a real Study queue, current edits and exactly-once evidence across remount (145 ms)
+  ✓ editor recovery of a partial grade keeps the pending retry exactly once (82 ms)
+  ✕ saving removes the current row from Sin revisar without skipping its successor (1079 ms)
+  ✕ saving removes the current row from Marcadas without skipping its successor (1070 ms)
+  ✕ saving removes the current row from Revisión nativa without skipping its successor (1075 ms)
+  ✕ saving removes the current row from Falta ejemplo EN without skipping its successor (1079 ms)
+
+  ● saving removes the current row from Sin revisar without skipping its successor
+
+    Unable to find an element with text: saludo dos
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m‹ Atrás[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mMarcadas 2[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mRevisión de Traducciones[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mEdita traducciones, ejemplos y estado de revisión desde una cola.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mDeck[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mTodos los decks[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTScrollView>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mTodos los decks[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mEditor QA[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</RCTScrollView>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mCola[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mSin revisar[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTScrollView>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mTodas[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mSin revisar[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mMarcadas[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mRevisión nativa[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mFalta ejemplo EN[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</RCTScrollView>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mTarjeta actual[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0m2 / 2[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mEditor QA[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMarcada para revisión[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0msaludo tres[0m
+                [36m</Text>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mEscuchar[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mInglés[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33mplaceholder[39m=[32m"Traducción en inglés"[39m
+                [33mvalue[39m=[32m"answer three"[39m
+              [36m/>[39m
+              [36m<Text>[39m
+                [0mEjemplo[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33mplaceholder[39m=[32m"Ejemplo con inglés después de |"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mAnterior[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mSaltar[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mNecesita revisión nativa[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mGuardar y seguir[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      193 |     );
+      194 |     await act(async () => fireEvent.press(screen.getByText('Guardar y seguir')));
+    > 195 |     await waitFor(() => expect(screen.getByText('saludo dos')).toBeTruthy());
+          |                  ^
+      196 |     expect((await loadDecks())[0].cards[0]).toMatchObject({
+      197 |       reviewStatus: 'reviewed',
+      198 |       flagged: false,
+
+      at __tests__/screens/StudyEditorIntegration.test.tsx:195:18
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● saving removes the current row from Marcadas without skipping its successor
+
+    Unable to find an element with text: saludo dos
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m‹ Atrás[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mMarcadas 2[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mRevisión de Traducciones[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mEdita traducciones, ejemplos y estado de revisión desde una cola.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mDeck[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mTodos los decks[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTScrollView>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mTodos los decks[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mEditor QA[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</RCTScrollView>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mCola[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mMarcadas[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTScrollView>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mTodas[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mSin revisar[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mMarcadas[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mRevisión nativa[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mFalta ejemplo EN[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</RCTScrollView>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mTarjeta actual[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0m2 / 2[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mEditor QA[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMarcada para revisión[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0msaludo tres[0m
+                [36m</Text>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mEscuchar[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mInglés[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33mplaceholder[39m=[32m"Traducción en inglés"[39m
+                [33mvalue[39m=[32m"answer three"[39m
+              [36m/>[39m
+              [36m<Text>[39m
+                [0mEjemplo[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33mplaceholder[39m=[32m"Ejemplo con inglés después de |"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mAnterior[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mSaltar[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mNecesita revisión nativa[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mGuardar y seguir[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      193 |     );
+      194 |     await act(async () => fireEvent.press(screen.getByText('Guardar y seguir')));
+    > 195 |     await waitFor(() => expect(screen.getByText('saludo dos')).toBeTruthy());
+          |                  ^
+      196 |     expect((await loadDecks())[0].cards[0]).toMatchObject({
+      197 |       reviewStatus: 'reviewed',
+      198 |       flagged: false,
+
+      at __tests__/screens/StudyEditorIntegration.test.tsx:195:18
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● saving removes the current row from Revisión nativa without skipping its successor
+
+    Unable to find an element with text: saludo dos
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m‹ Atrás[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mMarcadas 2[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mRevisión de Traducciones[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mEdita traducciones, ejemplos y estado de revisión desde una cola.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mDeck[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mTodos los decks[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTScrollView>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mTodos los decks[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mEditor QA[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</RCTScrollView>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mCola[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mRevisión nativa[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTScrollView>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mTodas[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mSin revisar[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mMarcadas[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mRevisión nativa[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mFalta ejemplo EN[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</RCTScrollView>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mTarjeta actual[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0m2 / 2[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mEditor QA[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mneeds native[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMarcada para revisión[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0msaludo tres[0m
+                [36m</Text>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mEscuchar[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mInglés[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33mplaceholder[39m=[32m"Traducción en inglés"[39m
+                [33mvalue[39m=[32m"answer three"[39m
+              [36m/>[39m
+              [36m<Text>[39m
+                [0mEjemplo[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33mplaceholder[39m=[32m"Ejemplo con inglés después de |"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mAnterior[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mSaltar[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mNecesita revisión nativa[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mGuardar y seguir[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      193 |     );
+      194 |     await act(async () => fireEvent.press(screen.getByText('Guardar y seguir')));
+    > 195 |     await waitFor(() => expect(screen.getByText('saludo dos')).toBeTruthy());
+          |                  ^
+      196 |     expect((await loadDecks())[0].cards[0]).toMatchObject({
+      197 |       reviewStatus: 'reviewed',
+      198 |       flagged: false,
+
+      at __tests__/screens/StudyEditorIntegration.test.tsx:195:18
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● saving removes the current row from Falta ejemplo EN without skipping its successor
+
+    Unable to find an element with text: saludo dos
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m‹ Atrás[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mMarcadas 2[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mRevisión de Traducciones[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mEdita traducciones, ejemplos y estado de revisión desde una cola.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mDeck[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mTodos los decks[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTScrollView>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mTodos los decks[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mEditor QA[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</RCTScrollView>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mCola[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mFalta ejemplo EN[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTScrollView>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mTodas[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mSin revisar[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mMarcadas[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mRevisión nativa[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mFalta ejemplo EN[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</RCTScrollView>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mTarjeta actual[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0m2 / 2[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mEditor QA[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMarcada para revisión[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0msaludo tres[0m
+                [36m</Text>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mEscuchar[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mInglés[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33mplaceholder[39m=[32m"Traducción en inglés"[39m
+                [33mvalue[39m=[32m"answer three"[39m
+              [36m/>[39m
+              [36m<Text>[39m
+                [0mEjemplo[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33mplaceholder[39m=[32m"Ejemplo con inglés después de |"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mAnterior[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mSaltar[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mNecesita revisión nativa[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mGuardar y seguir[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      193 |     );
+      194 |     await act(async () => fireEvent.press(screen.getByText('Guardar y seguir')));
+    > 195 |     await waitFor(() => expect(screen.getByText('saludo dos')).toBeTruthy());
+          |                  ^
+      196 |     expect((await loadDecks())[0].cards[0]).toMatchObject({
+      197 |       reviewStatus: 'reviewed',
+      198 |       flagged: false,
+
+      at __tests__/screens/StudyEditorIntegration.test.tsx:195:18
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 3 passed, 7 total
+Snapshots:   0 total
+Time:        6.775 s
+Ran all test suites matching /__tests__\/screens\/StudyEditorIntegration.test.tsx/i.

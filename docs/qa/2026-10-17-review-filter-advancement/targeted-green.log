@@ -1,0 +1,8 @@
+PASS __tests__/screens/StudyEditorIntegration.test.tsx
+PASS __tests__/screens/ReviewScreen.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        3.186 s, estimated 7 s
+Ran all test suites matching /__tests__\/screens\/StudyEditorIntegration.test.tsx|__tests__\/screens\/ReviewScreen.test.tsx/i.

@@ -26,3 +26,7 @@ After restoration, the [full suite](full-suite.log) passed **92 suites / 895 tes
 ## Remaining acceptance boundary
 
 This proves React/provider/storage integration under controlled concurrent operations and interrupted-write recovery. Component/provider remount is not a native process restart. Provider method calls are not a native editor-navigation test. The prior native exact-queue evidence remains separate; B02.4-B2 stays open for broader relearning, cross-deck/editor navigation and OS interruptions. No physical-device, Android, signed-candidate or human language acceptance is claimed.
+
+## Integrated verification
+
+`a40d382` merged/pushed. [CI39043123531](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39043123531) passed all four jobs; [board39043123541](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39043123541) passed. The subsequent adjacent filtered-editor investigation is recorded separately in [its report](../2026-10-17-review-filter-advancement/REPORT.md).

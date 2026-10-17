@@ -129,14 +129,16 @@ export default function ReviewScreen() {
   async function saveReview(reviewStatus: 'reviewed' | 'needs_native') {
     if (!current) return;
     const example = draftExample.trim();
-    await updateCardReview(current.card.id, {
+    const patch = {
       back: draftBack.trim(),
       example: example || undefined,
       flagged: reviewStatus === 'needs_native',
       reviewStatus,
       reviewedAt: Date.now(),
-    });
-    goNext();
+    };
+    await updateCardReview(current.card.id, patch);
+    // A removed row already shifts its successor into this index.
+    if (matchesReviewFilter({ ...current.card, ...patch }, reviewFilter)) goNext();
   }
 
   if (!ready) {

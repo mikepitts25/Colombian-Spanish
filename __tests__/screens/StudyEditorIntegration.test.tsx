@@ -2,6 +2,7 @@ import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StudyScreen from '../../src/screens/StudyScreen';
+import ReviewScreen from '../../src/screens/ReviewScreen';
 import { DeckProvider, useDeckContext } from '../../src/context/DeckContext';
 import { getDailyProgress, getLastStudySession, loadDecks } from '../../src/storage/storage';
 import { getLearningEvents } from '../../src/storage/learningEvents';
@@ -161,3 +162,73 @@ test('editor recovery of a partial grade keeps the pending retry exactly once', 
     write.mockImplementation(original);
   }
 });
+
+test.each(['Sin revisar', 'Marcadas', 'Revisión nativa', 'Falta ejemplo EN'])(
+  'saving removes the current row from %s without skipping its successor',
+  async (filter) => {
+    const cards = [
+      card('one', 'saludo uno'),
+      card('two', 'saludo dos'),
+      card('three', 'saludo tres'),
+    ].map((value) => ({
+      ...value,
+      flagged: true,
+      ...(filter === 'Revisión nativa' ? { reviewStatus: 'needs_native' as const } : {}),
+    }));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([{ id: 'editor-qa', name: 'Editor QA', cards }]),
+    );
+    const screen = render(
+      <DeckProvider>
+        <Probe />
+        <ReviewScreen />
+      </DeckProvider>,
+    );
+    await screen.findByText('saludo uno');
+    fireEvent.press(screen.getByText(filter));
+    fireEvent.changeText(
+      screen.getByPlaceholderText('Ejemplo con inglés después de |'),
+      'Hola. | Hello.',
+    );
+    await act(async () => fireEvent.press(screen.getByText('Guardar y seguir')));
+    await waitFor(() => expect(screen.getByText('saludo dos')).toBeTruthy());
+    expect((await loadDecks())[0].cards[0]).toMatchObject({
+      reviewStatus: 'reviewed',
+      flagged: false,
+      example: 'Hola. | Hello.',
+    });
+    expect((await loadDecks())[0].cards[1].reps).toBe(0);
+    expect(await getLearningEvents()).toEqual([]);
+  },
+);
+
+test.each([false, true])(
+  'saving a retained editorial row advances normally (flagged filter: %s)',
+  async (flagged) => {
+    const cards = [
+      card('one', 'saludo uno'),
+      card('two', 'saludo dos'),
+      card('three', 'saludo tres'),
+    ].map((value) => ({ ...value, flagged: true }));
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([{ id: 'editor-qa', name: 'Editor QA', cards }]),
+    );
+    const screen = render(
+      <DeckProvider>
+        <Probe />
+        <ReviewScreen />
+      </DeckProvider>,
+    );
+    await screen.findByText('saludo uno');
+    if (flagged) fireEvent.press(screen.getByText('Marcadas'));
+    await act(async () =>
+      fireEvent.press(screen.getByText(flagged ? 'Necesita revisión nativa' : 'Guardar y seguir')),
+    );
+    await screen.findByText('saludo dos');
+    expect((await loadDecks())[0].cards[0].reviewStatus).toBe(
+      flagged ? 'needs_native' : 'reviewed',
+    );
+  },
+);
