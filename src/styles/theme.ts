@@ -46,8 +46,8 @@ export const colors = {
 
   // Text
   textPrimary: palette.slate[50],
-  textSecondary: palette.slate[400],
-  textTertiary: palette.slate[500],
+  textSecondary: palette.slate[300],
+  textTertiary: palette.slate[400],
   textInverse: palette.slate[950],
 
   // Brand - Colombian yellow

@@ -1,0 +1,76 @@
+{
+  "cases": [
+    {
+      "name": "textPrimary on bg",
+      "foreground": "#f8fafc",
+      "ratio": 19.281,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "textPrimary on surface",
+      "foreground": "#f8fafc",
+      "ratio": 17.063,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "textPrimary on surfaceElevated",
+      "foreground": "#f8fafc",
+      "ratio": 13.982,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "textSecondary on bg",
+      "foreground": "#94a3b8",
+      "ratio": 7.868,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "textSecondary on surface",
+      "foreground": "#94a3b8",
+      "ratio": 6.963,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "textSecondary on surfaceElevated",
+      "foreground": "#94a3b8",
+      "ratio": 5.705,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "textTertiary on bg",
+      "foreground": "#64748b",
+      "ratio": 4.239,
+      "minimum": 4.5,
+      "pass": false
+    },
+    {
+      "name": "textTertiary on surface",
+      "foreground": "#64748b",
+      "ratio": 3.751,
+      "minimum": 4.5,
+      "pass": false
+    },
+    {
+      "name": "textTertiary on surfaceElevated",
+      "foreground": "#64748b",
+      "ratio": 3.074,
+      "minimum": 4.5,
+      "pass": false
+    },
+    {
+      "name": "Progress in-review value on actual composited panel",
+      "foreground": "#60a5fa",
+      "ratio": 7.542,
+      "minimum": 4.5,
+      "pass": true
+    }
+  ],
+  "passed": 7,
+  "total": 10
+}
