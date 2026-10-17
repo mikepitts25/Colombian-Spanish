@@ -1,6 +1,7 @@
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
+import { Dimensions } from 'react-native';
 import OnboardingScreen from '../../src/screens/OnboardingScreen';
 import { completeOnboarding } from '../../src/storage/onboarding';
 import { translate, TranslationKey } from '../../src/i18n/translations';
@@ -90,4 +91,37 @@ test('does not navigate after unmount while saving', async () => {
     release();
   });
   expect(mockReset).not.toHaveBeenCalled();
+});
+
+test('keeps setup intent and a single pending save through live text-size changes', async () => {
+  const window = Dimensions.get('window');
+  const screen = Dimensions.get('screen');
+  let release!: () => void;
+  save.mockImplementationOnce(() => new Promise<void>((resolve) => (release = resolve)));
+  const ui = setup();
+  try {
+    fireEvent.press(ui.getByText('20'));
+    act(() =>
+      Dimensions.set({
+        window: { ...window, fontScale: 3 },
+        screen: { ...screen, fontScale: 3 },
+      }),
+    );
+    expect(ui.getByText('How many cards a day?')).toBeTruthy();
+    fireEvent.press(ui.getByText(label('onboarding.start')));
+    expect(save).toHaveBeenCalledWith({ reason: 'travel', region: 'all', target: 20 });
+    act(() => Dimensions.set({ window, screen }));
+    expect(ui.getByText(label('onboarding.start'))).toBeDisabled();
+    fireEvent.press(ui.getByText(label('onboarding.start')));
+    fireEvent.press(ui.getByText('Back'));
+    fireEvent.press(ui.getByText('5'));
+    expect(save).toHaveBeenCalledTimes(1);
+    expect(mockReset).not.toHaveBeenCalled();
+    await act(async () => release());
+    expect(mockReset).toHaveBeenCalledTimes(1);
+    expect(mockSetActiveDeckId).toHaveBeenCalledWith('deck-travel');
+  } finally {
+    ui.unmount();
+    act(() => Dimensions.set({ window, screen }));
+  }
 });

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
@@ -104,6 +104,7 @@ export function recommendDeckId(
 const TOTAL_STEPS = 3;
 
 export default function OnboardingScreen() {
+  const { fontScale } = useWindowDimensions();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
   const { decks, setActiveDeckId } = useDeck();
@@ -167,7 +168,11 @@ export default function OnboardingScreen() {
         <View style={[styles.flagBand, { backgroundColor: '#CE1126', flex: 1 }]} />
       </View>
 
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        key={fontScale}
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+      >
         {step === 0 && (
           <View style={styles.hero}>
             <Text style={styles.heroEmoji}>🇨🇴</Text>
@@ -257,7 +262,7 @@ export default function OnboardingScreen() {
           {t('onboarding.saveError')}
         </Text>
       )}
-      <View style={styles.footer}>
+      <View key={`footer-${fontScale}`} style={styles.footer}>
         {step > 0 ? (
           <Pressable
             style={styles.backBtn}
