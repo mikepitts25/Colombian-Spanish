@@ -820,8 +820,7 @@ test('saved bounded queue resumes its membership without fresh default filling',
     },
   });
   const ui = renderStudyScreen({ decks: [{ ...GREETINGS_DECK, cards }] });
-  await ui.findByText('Continuar sesión');
-  fireEvent.press(ui.getByText('Continuar'));
+  fireEvent.press(await ui.findByText('Continuar'));
   await waitFor(() => expect(ui.getByText('2 restantes')).toBeTruthy());
   await waitFor(() =>
     expect(mockSaveLastStudySession).toHaveBeenCalledWith(

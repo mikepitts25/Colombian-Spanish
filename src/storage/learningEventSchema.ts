@@ -7,6 +7,7 @@ export interface LearningEvent {
   cardId: string;
   deckId: string;
   sessionId: string;
+  planId?: string;
   missionId?: string;
   assistance?: 'model-answer';
   transcriptAssisted?: boolean;
@@ -57,6 +58,11 @@ export function normalizeEvent(value: unknown): LearningEvent {
         event.quality !== undefined)) ||
     ![event.id, event.cardId, event.deckId, event.sessionId].every(text) ||
     (event.missionId !== undefined && !text(event.missionId)) ||
+    (event.planId !== undefined &&
+      (!text(event.planId) ||
+        event.planId.length > 200 ||
+        event.modality !== 'recall' ||
+        event.evidence !== 'self-rated')) ||
     !['recognition', 'recall', 'listening', 'speaking'].includes(event.modality) ||
     !['correct', 'incorrect'].includes(event.outcome) ||
     !['self-rated', 'answer-checked'].includes(event.evidence) ||
@@ -89,6 +95,7 @@ export function normalizeEvent(value: unknown): LearningEvent {
     cardId: event.cardId,
     deckId: event.deckId,
     sessionId: event.sessionId,
+    ...(event.planId === undefined ? {} : { planId: event.planId }),
     ...(event.missionId === undefined ? {} : { missionId: event.missionId }),
     ...(event.exercise === undefined ? {} : { exercise: { ...event.exercise } }),
     ...(event.assistance === undefined ? {} : { assistance: event.assistance }),

@@ -1,10 +1,12 @@
 import { validateMissionEnvelope } from '../missions/engine';
+import { validateDailyPlanEnvelope } from './dailyPlanSchema';
 import { LEARNING_LEVELS, STUDY_MINUTES, isTripDate } from '../utils/learningProfile';
 import { isValidStudySession } from './studySession';
 import { storedDayKey } from '../utils/calendarDay';
 import { StorageAccess } from './durableStorage';
 
 const FIELDS = {
+  dailyPlan: { key: 'SRS_DAILY_PLAN_V1', empty: { schemaVersion: 1, current: null } },
   missions: { key: 'SRS_MISSIONS_V1', empty: { schemaVersion: 1, runs: [] } },
   prefs: { key: 'SRS_PREFS_V1', empty: {} },
   daily: {
@@ -17,8 +19,12 @@ const FIELDS = {
   lastSession: { key: 'SRS_LAST_STUDY_SESSION_V1', empty: {} },
   notificationPrefs: { key: 'SRS_NOTIFICATION_PREFS_V1', empty: {} },
 } as const;
-export type PortableState = Record<Exclude<keyof typeof FIELDS, 'missions'>, unknown | null> & {
+export type PortableState = Record<
+  Exclude<keyof typeof FIELDS, 'missions' | 'dailyPlan'>,
+  unknown | null
+> & {
   missions?: unknown | null;
+  dailyPlan?: unknown | null;
 };
 const names = Object.keys(FIELDS) as (keyof PortableState)[];
 const record = (v: unknown): v is Record<string, unknown> =>
@@ -48,6 +54,14 @@ function uniqueRows(
 }
 function valid(name: keyof PortableState, value: unknown): boolean {
   if (value === null) return true;
+  if (name === 'dailyPlan') {
+    try {
+      validateDailyPlanEnvelope(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }
   if (name === 'missions') {
     try {
       validateMissionEnvelope(value);
@@ -156,7 +170,7 @@ export function validatePortableState(value: unknown): asserts value is Portable
     Object.keys(value).some((name) => !names.includes(name as keyof PortableState)) ||
     !names.every(
       (name) =>
-        (name === 'missions' && value[name] === undefined) ||
+        (['missions', 'dailyPlan'].includes(name) && value[name] === undefined) ||
         (Object.prototype.hasOwnProperty.call(value, name) && valid(name, value[name])),
     )
   )

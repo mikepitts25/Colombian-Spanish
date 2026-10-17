@@ -113,6 +113,7 @@ it('recovers all state after a partial restore before the next application read'
   const backup = await captureBackupSnapshot();
   expect((backup as any).applicationState).toEqual({
     ...state,
+    dailyPlan: { schemaVersion: 1, current: null },
     missions: { schemaVersion: 1, runs: [] },
   });
   expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();

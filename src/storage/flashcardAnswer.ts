@@ -1,4 +1,5 @@
 import { copySessionInput } from './studySession';
+import { advancePlanReview } from './dailyPlans';
 import { CardQuality, Deck } from '../types';
 import { gradeCard, isNewCard } from '../utils/srs';
 import { withStorageTransaction } from './durableStorage';
@@ -28,6 +29,7 @@ export class DailyNewCardLimitError extends Error {
 }
 
 export interface AnswerAttempt {
+  planId?: string;
   attemptId: string;
   sessionId: string;
   cardId: string;
@@ -37,7 +39,7 @@ export interface AnswerAttempt {
 }
 export type AnswerOptions = Pick<
   AnswerAttempt,
-  'attemptId' | 'sessionId' | 'nextSession' | 'durationMs'
+  'attemptId' | 'sessionId' | 'nextSession' | 'durationMs' | 'planId'
 >;
 
 export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
@@ -46,6 +48,10 @@ export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
       (value) => typeof value === 'string' && value.trim(),
     ) ||
     ![0, 1, 2, 3, 4, 5].includes(attempt.quality) ||
+    (attempt.planId !== undefined &&
+      (typeof attempt.planId !== 'string' ||
+        !attempt.planId.trim() ||
+        attempt.planId.length > 200)) ||
     (attempt.durationMs != null &&
       (!Number.isSafeInteger(attempt.durationMs) || attempt.durationMs < 0))
   )
@@ -65,6 +71,7 @@ export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
           prior.cardId !== input.cardId ||
           prior.sessionId !== input.sessionId ||
           prior.quality !== input.quality ||
+          prior.planId !== input.planId ||
           prior.durationMs !== (input.durationMs ?? null) ||
           prior.modality !== 'recall' ||
           prior.evidence !== 'self-rated'
@@ -75,11 +82,17 @@ export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
       }
       const deck = decks.find((item) => item.cards.some((card) => card.id === input.cardId));
       const card = deck?.cards.find((item) => item.id === input.cardId);
-      if (!deck || !card) return undefined;
+      if (!deck || !card) {
+        if (input.planId !== undefined) throw new Error('Daily plan card unavailable');
+        return undefined;
+      }
+      if (input.planId !== undefined && input.nextSession?.deckId !== deck.id)
+        throw new Error('Daily plan card moved to another deck');
       const daily = await getDailyProgress(tx);
       if (isNewCard(card) && daily.newCount >= (await getPrefs(tx)).newCardsPerDay) {
         throw new DailyNewCardLimitError();
       }
+      await advancePlanReview(tx, input);
       const nextDecks: Deck[] = decks.map((item) =>
         item.id === deck.id
           ? {
@@ -108,6 +121,7 @@ export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
         schemaVersion: 1,
         id: input.attemptId,
         sessionId: input.sessionId,
+        ...(input.planId === undefined ? {} : { planId: input.planId }),
         cardId: card.id,
         deckId: deck.id,
         modality: 'recall',
