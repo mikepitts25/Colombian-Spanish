@@ -230,15 +230,47 @@ export default function HomeScreen() {
     try {
       // Match the queue provider to the current day's stored budget/preferences.
       await reload({ requireFreshBudget: true });
+      let freshRecommendation = recommendation;
+      if (bounded) {
+        // Home may have crossed midnight or another activity may have saved since rendering.
+        const fresh = await loadHomeProgress();
+        if (
+          fresh.plan &&
+          (fresh.plan.phase !== 'complete' || fresh.plan.day === localDayKey(new Date(fresh.now)))
+        ) {
+          nav.navigate(
+            fresh.plan.phase === 'review' ? 'Study' : 'DailyPlan',
+            fresh.plan.phase === 'review'
+              ? { dailyPlanId: fresh.plan.id }
+              : { planId: fresh.plan.id },
+          );
+          return;
+        }
+        freshRecommendation = recommendDailyReview(
+          decks || [],
+          fresh.profile,
+          Math.min(totalNew, Math.max(0, fresh.newLimit - fresh.newIntroduced)),
+          fresh.now,
+          activeDeckId,
+          fresh.measuredSeconds,
+          response ? (calibratedActivitySeconds(fresh.timings, response, fresh.now) ?? 60) : 0,
+          fresh.lastStudyDay,
+        );
+        if (!freshRecommendation) {
+          nav.navigate('Study');
+          return;
+        }
+        deckId = freshRecommendation.deckId;
+      }
       setActiveDeckId(deckId);
       nav.navigate('Study', {
         autoStartDeckId: deckId,
-        ...(bounded && recommendation
+        ...(bounded && freshRecommendation
           ? {
-              sessionCardLimit: recommendation.cardLimit,
-              sessionNewLimit: recommendation.newLimit,
-              ...(recommendation.preferredRegion !== 'all'
-                ? { sessionPreferredRegion: recommendation.preferredRegion }
+              sessionCardLimit: freshRecommendation.cardLimit,
+              sessionNewLimit: freshRecommendation.newLimit,
+              ...(freshRecommendation.preferredRegion !== 'all'
+                ? { sessionPreferredRegion: freshRecommendation.preferredRegion }
                 : {}),
             }
           : {}),

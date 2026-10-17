@@ -639,3 +639,29 @@ it.each(['en', 'es'] as const)(
     );
   },
 );
+
+it('refreshes the catch-up boundary when Start crosses midnight after Home loads', async () => {
+  const clock = jest.spyOn(Date, 'now').mockReturnValue(new Date(2026, 2, 28, 23, 59).getTime());
+  require('../../src/storage/storage').getLastStudyDay.mockResolvedValue('2026-03-22');
+  mockUseDeck.mockReturnValue({
+    ...mockUseDeck(),
+    decks: [
+      { ...DECK, cards: [makeCard('due', { reps: 3, interval: 4, due: 0 }), makeCard('new')] },
+    ],
+  });
+  const ui = render(<HomeScreen />);
+  await ui.findByText('Study due cards');
+  expect(
+    ui.queryByText(
+      'Ease back into reviews. This plan uses familiar cards; new cards remain available separately.',
+    ),
+  ).toBeNull();
+  clock.mockReturnValue(new Date(2026, 2, 29, 0, 1).getTime());
+  fireEvent.press(ui.getByText('Study due cards'));
+  await waitFor(() =>
+    expect(mockNavigate).toHaveBeenCalledWith(
+      'Study',
+      expect.objectContaining({ sessionNewLimit: 0 }),
+    ),
+  );
+});

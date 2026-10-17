@@ -211,7 +211,7 @@ async function readStoredStreak(
   }
 }
 
-/** Last recorded flashcard review day; unknown history must not imply an absence. */
+/** Last recorded study day (flashcard or quiz); unknown history must not imply an absence. */
 export async function getLastStudyDay(
   access: StorageAccess = AsyncStorage,
 ): Promise<string | undefined> {

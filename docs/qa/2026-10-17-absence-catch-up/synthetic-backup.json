@@ -1,0 +1,134 @@
+{
+  "kind": "colombian-spanish-backup",
+  "version": 3,
+  "exportedAt": "2026-10-17T13:56:16.828915+00:00",
+  "applicationState": {
+    "prefs": {
+      "uiLanguage": "en",
+      "studyMinutes": 3,
+      "learningLevel": "beginner",
+      "learningReason": "general",
+      "homeRegion": "all",
+      "newCardsPerDay": 10,
+      "autoSpeak": false,
+      "onboardingDone": true
+    },
+    "daily": { "date": "2026-10-17", "count": 0, "target": 5, "newCount": 0 },
+    "streak": { "streak": 5, "freezes": 1, "lastStudyDate": "2026-10-08" },
+    "seenWords": [],
+    "quizHistory": [],
+    "lastSession": {},
+    "notificationPrefs": {},
+    "missions": { "schemaVersion": 1, "runs": [] },
+    "dailyPlan": { "schemaVersion": 1, "current": null }
+  },
+  "decks": [
+    {
+      "id": "catchup-qa",
+      "name": "Catch-up QA",
+      "cards": [
+        {
+          "id": "catchup-0",
+          "front": "Hola 0",
+          "back": "Hello 0",
+          "createdAt": 0,
+          "due": 0,
+          "reps": 3,
+          "interval": 4,
+          "ease": 2.5
+        },
+        {
+          "id": "catchup-1",
+          "front": "Hola 1",
+          "back": "Hello 1",
+          "createdAt": 0,
+          "due": 0,
+          "reps": 3,
+          "interval": 4,
+          "ease": 2.5
+        },
+        {
+          "id": "catchup-2",
+          "front": "Hola 2",
+          "back": "Hello 2",
+          "createdAt": 0,
+          "due": 0,
+          "reps": 3,
+          "interval": 4,
+          "ease": 2.5
+        },
+        {
+          "id": "catchup-3",
+          "front": "Hola 3",
+          "back": "Hello 3",
+          "createdAt": 0,
+          "due": 0,
+          "reps": 3,
+          "interval": 4,
+          "ease": 2.5
+        },
+        {
+          "id": "catchup-4",
+          "front": "Hola 4",
+          "back": "Hello 4",
+          "createdAt": 0,
+          "due": 0,
+          "reps": 3,
+          "interval": 4,
+          "ease": 2.5
+        },
+        {
+          "id": "catchup-5",
+          "front": "Hola 5",
+          "back": "Hello 5",
+          "createdAt": 0,
+          "due": 0,
+          "reps": 3,
+          "interval": 4,
+          "ease": 2.5
+        },
+        {
+          "id": "catchup-6",
+          "front": "Hola 6",
+          "back": "Hello 6",
+          "createdAt": 0,
+          "due": 0,
+          "reps": 0,
+          "interval": 0,
+          "ease": 2.5
+        },
+        {
+          "id": "catchup-7",
+          "front": "Hola 7",
+          "back": "Hello 7",
+          "createdAt": 0,
+          "due": 0,
+          "reps": 0,
+          "interval": 0,
+          "ease": 2.5
+        },
+        {
+          "id": "catchup-8",
+          "front": "Hola 8",
+          "back": "Hello 8",
+          "createdAt": 0,
+          "due": 0,
+          "reps": 0,
+          "interval": 0,
+          "ease": 2.5
+        },
+        {
+          "id": "catchup-9",
+          "front": "Hola 9",
+          "back": "Hello 9",
+          "createdAt": 0,
+          "due": 0,
+          "reps": 0,
+          "interval": 0,
+          "ease": 2.5
+        }
+      ]
+    }
+  ],
+  "learningEvents": []
+}
