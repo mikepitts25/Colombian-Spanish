@@ -1,0 +1,43 @@
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish'`
+
+FAIL __tests__/scripts/nyc-yaml.test.js
+  ✓ coverage YAML preserves extends, kebab-case fields, aliases and thresholds (90 ms)
+  ✕ coverage YAML rejects JavaScript-specific object tags (74 ms)
+  ✓ coverage config fails closed on malformed YAML and circular extends (147 ms)
+
+  ● coverage YAML rejects JavaScript-specific object tags
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+      Object {
+    -   "error": "YAMLException",
+    +   "config": Object {
+    +     "cwd": "/var/folders/4n/7fmkpxss2flc76_9np4q7xdw0000gn/T/colombian-nyc-yaml-xShEbZ",
+    +     "exclude": Array [
+    +       Object {},
+    +     ],
+    +   },
+      }
+
+      49 |
+      50 | test('coverage YAML rejects JavaScript-specific object tags', () => {
+    > 51 |   expect(load({ '.nycrc.yaml': 'exclude: !!js/regexp /secret/i\n' })).toEqual({
+         |                                                                       ^
+      52 |     error: 'YAMLException',
+      53 |   });
+      54 | });
+
+      at Object.toEqual (__tests__/scripts/nyc-yaml.test.js:51:71)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 passed, 3 total
+Snapshots:   0 total
+Time:        1.203 s
+Ran all test suites matching /__tests__\/scripts\/nyc-yaml.test.js/i.
