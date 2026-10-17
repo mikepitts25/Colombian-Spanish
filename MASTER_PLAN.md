@@ -6,11 +6,11 @@
 
 **Architecture:** Build on the existing Expo / React Native app and its offline local storage. Connect existing study tools through a shared learning-event model and guided missions. Add network services only for capabilities that need them, with offline alternatives and explicit data handling.
 
-**Tech stack:** Expo SDK 54, React Native, TypeScript, React Navigation, AsyncStorage, expo-audio, expo-speech, expo-notifications, Jest, React Native Testing Library, GitHub Actions, EAS.
+**Tech stack:** Expo SDK 57, React Native, TypeScript, React Navigation, AsyncStorage, expo-audio, expo-speech, expo-notifications, Jest, React Native Testing Library, GitHub Actions, EAS.
 
 **Brief:** Product assessment and user request in this chat on October 14, 2026. Major new subsystems get a focused design and implementation plan when selected; do not predesign the entire roadmap or invent future interfaces now.
 
-**Last updated:** 2026-10-15. **Status:** Foundation, learning correctness, recoverable draft missions, follow-up practice, audio preferences and initial accessibility batches merged/pushed with successful CI. iPhone/iPad simulator evidence is recorded. Remaining AI implementation and human/device gates are tracked below; the roadmap is not all complete.
+**Last updated:** 2026-10-17. **Status:** Foundation, learning correctness, recoverable draft missions, follow-up practice, audio preferences and initial accessibility batches merged/pushed with successful CI. iPhone/iPad simulator evidence is recorded. Remaining AI implementation and human/device gates are tracked below; the roadmap is not all complete.
 
 ## How to use this checklist
 
@@ -673,3 +673,5 @@ B08.2-B1 / B02.6-C1: translated large-text tabs now wrap into two rows, and nati
 B08.2-B2 corrects live text remeasurement in Home/Settings/Study landing, separates the large due count/unit and expands category labels into full-width tiles. Implementation `879173c` merged/pushed; full and merged80 suites/787 tests, static/content checks, calendar16 and [CI39022477969](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39022477969) all four jobs passed. [QA](docs/qa/2026-10-17-large-text-content/REPORT.md) records representative bilingual default/large/maximum screenshots, retained search/backup preview, normal backup restore and exact recovered QA session/counters. Scroll positions reset on font changes. Every activity/row, session/region/resume maximum layouts, narrow/landscape/tablet/Android runtime, signed/physical and screen-reader acceptance remain open.
 
 B05.2-B2 completes the preference-aware recommendation contract together with B05.2-A/B1: the existing editor includes purpose, region, level, available time and optional trip date; Home and Study now agree about eligible fresh cards. Final local verification passed 81 suites / 811 tests, types/lint/calendar/content checks, and independent review. iOS verified a three-minute general-content fallback, explicit All override, and exact cold resume without grades; the original QA fixture was restored and compared. Applied activities/calibration (B05.3-B), wider catch-up (B05.4-B), and timezone/platform acceptance (B05.5-B) remain open. Trip urgency is not implemented by this change. [Report](docs/qa/2026-10-17-regional-daily-queue/REPORT.md).
+
+B05.2 regional queue implementation `e985aa9` is merged/pushed. The merged main tree passed 81 suites / 811 tests. [CI39029832429](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39029832429) passed all four quality/native-project/JS-bundle/summary jobs; the checklist board deployment also passed. Broader AI implementation and genuine human/account/device gates remain open.

@@ -32,3 +32,7 @@ The native Travel deck is general content: this proves the fallback and preferen
 ## Checklist scope
 
 B05.2-A/B1/B2 together complete B05.2 and B05.2-B: editable profile, purpose/region recommendations, general fallback, time/new-card bounds and exact resume. B05.3-B, B05.4-B and B05.5-B remain open for their broader contracts.
+
+## Integration
+
+Implementation `e985aa9` was fast-forward merged and pushed to main after the merged tree passed all 81 suites / 811 tests. [GitHub Actions 39029832429](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39029832429) passed all four jobs: quality/content, iOS project generation and JS bundle, Android project generation and JS bundle, and validation summary. [Checklist board deployment 39029832363](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39029832363) passed. These CI bundle checks do not establish Android native runtime, signing or hardware acceptance.
