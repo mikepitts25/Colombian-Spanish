@@ -24,6 +24,6 @@ Ruling: this is a bounded correction of the existing due-now refresh contract al
 - [x] Minimal shared timer correction; targeted 8 pass, full80/781, calendar16, types/lint/format/content checks pass. Existing unrelated act warnings retained and documented.
 - [x] Fresh iOS27 bundle, retained queue, one normal grade, Home/Progress and background-return totals verified; read-only state/screenshots saved.
 - [x] One independent review: no Critical/Important findings. Minor deferred: explicit native startup AppState fixtures.
-- [ ] Merge/push and remote CI acceptance.
+- [x] Merge/push and remote CI acceptance: a4a05d4, merged 80/781, CI39001364728 all four jobs passed.
 
 Review rulings: native timezone/clock injection, Android/signed/physical, and full fresh/empty/returning/upgrade matrix remain open. Controlled timing and the targeted native run do not establish those behaviors; the cost is unverified edge cases/platforms, not claimed acceptance.
