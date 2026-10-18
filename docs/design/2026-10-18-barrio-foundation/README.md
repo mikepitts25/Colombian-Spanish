@@ -1,8 +1,8 @@
 # Barrio foundation: review proposal
 
-Status: **direction A selected by the owner; this concrete design is awaiting review.** This is a design proposal, not an approved implementation spec or evidence of a changed app. Base: `de3926a99e4e6be5331247252f57448e51282a62`.
+Status: **direction A and the recommended concrete foundation approved by the owner on 2026-10-18; written spec review is pending.** This is a design proposal, not an approved implementation spec or evidence of a changed app. Base: `de3926a99e4e6be5331247252f57448e51282a62`.
 
-The intended result is a warmer, clearer Colombian Spanish practice app: one obvious daily action, readable controls and consistent appearances, while preserving existing learning, recovery and navigation behavior. The owner selected Barrio on 2026-10-18. System appearance, saved overrides and the architecture below are proposed choices, not decisions already made by that answer.
+The intended result is a warmer, clearer Colombian Spanish practice app: one obvious daily action, readable controls and consistent appearances, while preserving existing learning, recovery and navigation behavior. The owner selected Barrio on 2026-10-18. The owner subsequently approved the recommended coordinated foundation and saved System/Light/Dark setting. Detailed requirements are in the [written spec](../../superpowers/specs/2026-10-18-barrio-foundation-design.md), awaiting its own review.
 
 ## Review boards
 
@@ -51,4 +51,4 @@ The renderer calculates sRGB relative luminance and contrast for 54 explicit opa
 
 ## Review requested
 
-Review the recommended coordinated foundation, both appearances and the System/Light/Dark persistence/error behavior. Approval of this proposal permits writing the architectural spec; that written spec and its later implementation plan still need their respective reviews before product code changes, under the applicable brainstorming workflow.
+The owner approved the recommended coordinated foundation, both appearances and the saved System/Light/Dark setting. The architectural spec is now written; that spec and its later implementation plan still need their respective reviews before product code changes, under the applicable brainstorming workflow.

@@ -1,0 +1,56 @@
+[
+  {
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+    "device": "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB",
+    "name": "Colombian Spanish Catch-up QA",
+    "state": "Shutdown"
+  },
+  {
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+    "device": "C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0",
+    "name": "Colombian Spanish Editor Recovery QA",
+    "state": "Shutdown"
+  },
+  {
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+    "device": "6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1",
+    "name": "Colombian Spanish Maximum Grading QA",
+    "state": "Shutdown"
+  },
+  {
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+    "device": "5E9A8854-135A-4675-A437-4EFCA043F656",
+    "name": "Colombian Spanish Plan Narrow QA",
+    "state": "Shutdown"
+  },
+  {
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+    "device": "738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04",
+    "name": "Colombian Spanish Restore Recovery QA",
+    "state": "Shutdown"
+  },
+  {
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+    "device": "DABA2821-3619-4F4A-B0C3-54E70B31511F",
+    "name": "Colombian Spanish Fresh Mission Keyboard QA",
+    "state": "Booted"
+  },
+  {
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+    "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "name": "Colombian Spanish Keyboard Tablet QA",
+    "state": "Shutdown"
+  },
+  {
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+    "device": "AFCA5E93-0434-45B1-911C-E06B2B3A0BC8",
+    "name": "QUARANTINED - Mission Keyboard Alias",
+    "state": "Shutdown"
+  },
+  {
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+    "device": "E66076BE-D9F8-49FB-870F-F29B57C4CA40",
+    "name": "Colombian Spanish Mini Tablet QA",
+    "state": "Booted"
+  }
+]

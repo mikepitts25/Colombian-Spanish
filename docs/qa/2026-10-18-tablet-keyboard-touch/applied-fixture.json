@@ -1,0 +1,6 @@
+{
+  "mode": "v3 original plus prior applied dailyPlan/missions only",
+  "backupSHA256": "3c5ecdf6066068c0836df0f12635459aa360f72c7a30d2dca04ca84a8b38f27f",
+  "characters": 376487,
+  "changedFields": ["dailyPlan", "missions"]
+}
