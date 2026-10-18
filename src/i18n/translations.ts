@@ -601,7 +601,7 @@ export const translations = {
     'settings.file.importSub': 'Vista previa antes de reemplazar o añadir tarjetas',
     'settings.file.previewTitle': 'Vista previa del respaldo',
     'settings.file.preview':
-      'Exportado: {date}\n{decks} decks · {cards} tarjetas · {events} observaciones.\nAñadir tarjetas nuevas conserva el contenido y los intervalos existentes. Reemplazar decks los sobrescribe. El historial de aprendizaje se combina en ambos modos.',
+      'Exportado: {date}\n{decks} decks · {cards} tarjetas · {events} observaciones.\nAñadir tarjetas nuevas conserva el contenido y los intervalos existentes. Reemplazar decks los sobrescribe. Todas las opciones combinan el historial de aprendizaje; se conservan las observaciones locales más recientes.',
     'settings.file.stateIncluded':
       'Incluye preferencias, metas, racha, palabras vistas, resultados y sesión guardada. Solo Restaurar estado de la app los reemplaza junto con los decks; añadir o reemplazar decks conserva el estado local. Los datos ausentes se restablecen. Requiere reiniciar. Los permisos del dispositivo no se importan.',
     'settings.file.stateOmitted':
@@ -1276,7 +1276,7 @@ export const translations = {
     'settings.file.importSub': 'Preview before replacing or adding cards',
     'settings.file.previewTitle': 'Backup preview',
     'settings.file.preview':
-      'Exported: {date}\n{decks} decks · {cards} cards · {events} observations.\nAdd new cards keeps existing content and schedules. Replace decks overwrites them. Learning history is merged in both modes.',
+      'Exported: {date}\n{decks} decks · {cards} cards · {events} observations.\nAdd new cards keeps existing content and schedules. Replace decks overwrites them. Every option merges learning history and keeps newer local observations.',
     'settings.file.stateIncluded':
       'Includes preferences, daily goals, streak, seen words, results and saved session. Only Restore app state replaces these along with decks; adding or replacing decks keeps local app state. Missing source values reset to defaults. Restart required. Device permissions are not imported.',
     'settings.file.stateOmitted': 'This older backup omits preferences and other app state.',

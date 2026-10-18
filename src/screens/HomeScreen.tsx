@@ -561,14 +561,18 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <View>
+          <View style={[styles.sectionHeader, largeText && styles.stackedHeader]}>
+            <View style={styles.sectionHeading}>
               <Text style={styles.sectionTitle}>{t('home.dueDecks')}</Text>
               <Text style={styles.sectionSub}>
                 {quickDecks.length > 0 ? t('home.dueDecksSub') : t('home.noDueDecksSub')}
               </Text>
             </View>
-            <Pressable onPress={() => nav.navigate('Study')}>
+            <Pressable
+              accessibilityRole="button"
+              style={[styles.browseAction, largeText && styles.browseActionLarge]}
+              onPress={() => nav.navigate('Study')}
+            >
               <Text style={styles.browseLink}>{t('home.browseAllDecks')}</Text>
             </Pressable>
           </View>
@@ -831,6 +835,9 @@ const makeStyles = ({ colors }: AppTheme) =>
       alignItems: 'flex-start',
       gap: 12,
     },
+    sectionHeading: { minWidth: 0, flexShrink: 1 },
+    browseAction: { minWidth: 0, flexShrink: 1 },
+    browseActionLarge: { minHeight: 48, justifyContent: 'center' },
     sectionTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
     sectionSub: { color: colors.textSecondary, fontSize: 12, marginTop: 2 },
     browseLink: { color: colors.brand, fontSize: 12, fontWeight: '800' },

@@ -1,6 +1,6 @@
 # Barrio control consistency — B08.2-B20/B21
 
-The approved foundation’s two deferred polish items now have implementation and independent review on `codex/barrio-control-consistency` (runtime `e72ae87`, test-import cleanup `592971a`). Integration is pending until final checks and publication succeed.
+The approved foundation’s two deferred polish items now have implementation and independent review on `codex/barrio-control-consistency` (runtime `e72ae87`, test-import cleanup `592971a`). Merged/pushed in [PR12](https://github.com/mikepitts25/Colombian-Spanish/pull/12), merge `3559f49`, after all four candidate CI checks passed (run39126945480).
 
 Quiz Next/Finish uses the existing Barrio pressed/disabled surface and ink. The existing advance guard already prevents duplicate Finish requests; saving state now mirrors that guarded operation, so a held result save also exposes disabled/busy semantics. Failure still retains the same session/answer for deliberate retry. No persistence operation was added. Classic colors remain unchanged.
 
