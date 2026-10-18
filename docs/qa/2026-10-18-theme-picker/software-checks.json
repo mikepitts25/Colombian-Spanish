@@ -5,20 +5,14 @@
       "command": "npm test -- --runInBand --watchman=false",
       "exitCode": 0,
       "logSHA256": "f90b00688912f3e457929a72ca3cb7c1b9d4189bb9d404425c1c21efcd81d1ce",
-      "summary": [
-        "Test Suites: 115 passed, 115 total",
-        "Tests:       1084 passed, 1084 total"
-      ],
+      "summary": ["Test Suites: 115 passed, 115 total", "Tests:       1084 passed, 1084 total"],
       "verifiedAtRuntimeCommit": "a51907646673b16d2484e18b66d6c37b896c0d5d"
     },
     {
       "command": "npm run test:fixtures",
       "exitCode": 0,
       "logSHA256": "cae963b1c8ebf014e8f23ed28ffc03634d24b7586625353cfcc6f577904e018b",
-      "summary": [
-        "Test Suites: 7 passed, 7 total",
-        "Tests:       105 passed, 105 total"
-      ],
+      "summary": ["Test Suites: 7 passed, 7 total", "Tests:       105 passed, 105 total"],
       "verifiedAtRuntimeCommit": "fd5384e9c284027237e3038671082888ce1d02f4"
     },
     {
@@ -39,10 +33,7 @@
       "command": "npm run format:check",
       "exitCode": 0,
       "logSHA256": "463b072bbc8eba96806231be96df3120572e6f592fbfb2dee91b19f2857c81e1",
-      "summary": [
-        "Checking formatting...",
-        "All matched files use Prettier code style!"
-      ],
+      "summary": ["Checking formatting...", "All matched files use Prettier code style!"],
       "verifiedAtRuntimeCommit": "a51907646673b16d2484e18b66d6c37b896c0d5d"
     },
     {
