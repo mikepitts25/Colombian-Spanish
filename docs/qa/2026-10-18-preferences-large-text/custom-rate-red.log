@@ -1,0 +1,198 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/AudioPreferencesScreen.test.tsx
+
+FAIL __tests__/screens/AudioPreferencesScreen.test.tsx
+  ✓ loads existing speed, previews selected unsaved speed and explicitly saves only that preference (399 ms)
+  ✓ explicit repeat is labeled and stop cancels a pending preview without stale status (59 ms)
+  ✓ load failure offers retry without editable defaults or writes; save failure retains selection (219 ms)
+  ✓ reports device fallback and its single-play limit honestly (113 ms)
+  ✓ automatic speech is opt-in, saved with speed, and does not play on enabling or reopening (174 ms)
+  ✓ retains unsaved speed, automatic speech and one pending save across live font changes (81 ms)
+  ✓ does not restart or cancel preview merely on resize and keeps Stop authoritative over late results (64 ms)
+  ✕ keeps a valid loaded custom rate selectable and allows restoring the supported default rate (54 ms)
+
+  ● keeps a valid loaded custom rate selectable and allows restoring the supported default rate
+
+    Unable to find an element with role: radio, name: 0.9×, checked state: true
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mBack[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<Text[39m
+            [33maccessibilityRole[39m=[32m"header"[39m
+          [36m>[39m
+            [0mAudio preferences[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mSave a speed for pronunciation clips and device speech. Their perceived tempo can differ.[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mSelected speed: 0.9×[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityRole[39m=[32m"radiogroup"[39m
+          [36m>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"radio"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "checked": false,
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m0.75[0m
+                [0m×[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"radio"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "checked": false,
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m1[0m
+                [0m×[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"radio"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "checked": false,
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m1.25[0m
+                [0m×[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Speak after revealing a flashcard"[39m
+            [33maccessibilityRole[39m=[32m"switch"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "checked": false,
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mSpeak after revealing a flashcard[0m
+              [0m · [0m
+              [0mOff[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mOff by default. When enabled and saved, revealing an answer speaks the Spanish. Opening or resuming the app stays silent. Use Stop audio to cancel.[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mSave audio preferences[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mPronunciation preview[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mPreview buenos días before saving. Bundled clips use generated audio and support repeat. Device speech plays once and may need an installed voice.[0m
+            [36m</Text>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Repeat clip"[39m
+              [33maccessibilityRole[39m=[32m"switch"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "checked": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mRepeat clip[0m
+                [0m · [0m
+                [0mOff[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mPreview pronunciation[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mStop audio[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      181 |   const ui = render(<AudioPreferencesScreen />);
+      182 |   await ui.findByText('Save audio preferences');
+    > 183 |   expect(ui.getByRole('radio', { name: '0.9×', checked: true })).toBeTruthy();
+          |             ^
+      184 |   fireEvent.press(ui.getByRole('radio', { name: '0.75×' }));
+      185 |   expect(ui.getByRole('radio', { name: '0.9×', checked: false })).toBeTruthy();
+      186 |   fireEvent.press(ui.getByRole('radio', { name: '0.98×' }));
+
+      at Object.getByRole (__tests__/screens/AudioPreferencesScreen.test.tsx:183:13)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 7 passed, 8 total
+Snapshots:   0 total
+Time:        1.919 s
+Ran all test suites within paths "__tests__/screens/AudioPreferencesScreen.test.tsx".

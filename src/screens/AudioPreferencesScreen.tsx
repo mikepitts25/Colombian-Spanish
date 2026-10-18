@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useLanguage } from '../context/LanguageContext';
@@ -9,7 +9,9 @@ import { colors } from '../styles/theme';
 export default function AudioPreferencesScreen() {
   const { t } = useLanguage(),
     nav = useNavigation<any>();
+  const { fontScale } = useWindowDimensions();
   const [autoSpeak, setAutoSpeak] = useState(false);
+  const [loadedRate, setLoadedRate] = useState(0.98);
   const [rate, setRate] = useState(0.98),
     [loading, setLoading] = useState(true),
     [loadError, setLoadError] = useState(false),
@@ -34,6 +36,7 @@ export default function AudioPreferencesScreen() {
       const prefs = await getPrefs();
       if (mounted.current && request === loadId.current) {
         setRate(prefs.speechRate);
+        setLoadedRate(prefs.speechRate);
         setAutoSpeak(prefs.autoSpeak);
       }
     } catch {
@@ -64,7 +67,10 @@ export default function AudioPreferencesScreen() {
     setSaveStatus(undefined);
     try {
       await setPrefs({ speechRate: rate, autoSpeak });
-      if (mounted.current) setSaveStatus('saved');
+      if (mounted.current) {
+        setLoadedRate(rate);
+        setSaveStatus('saved');
+      }
     } catch {
       if (mounted.current) setSaveStatus('error');
     } finally {
@@ -86,7 +92,7 @@ export default function AudioPreferencesScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.wrap}>
+    <SafeAreaView key={fontScale} style={styles.wrap}>
       <ScrollView contentContainerStyle={styles.content}>
         {
           <ActionButton
@@ -127,22 +133,24 @@ export default function AudioPreferencesScreen() {
           <>
             <Text style={styles.body}>{t('audio.selected', { rate })}</Text>
             <View accessibilityRole="radiogroup" style={styles.options}>
-              {[0.75, 1, 1.25].map((value) => (
-                <Pressable
-                  key={value}
-                  accessibilityRole="radio"
-                  accessibilityState={{ checked: rate === value, disabled: saving }}
-                  disabled={saving}
-                  onPress={() => {
-                    cancel();
-                    setRate(value);
-                    setSaveStatus(undefined);
-                  }}
-                  style={[styles.option, rate === value && styles.selected]}
-                >
-                  <Text style={styles.optionText}>{value}×</Text>
-                </Pressable>
-              ))}
+              {[...new Set([0.75, 0.98, 1, 1.25, loadedRate])]
+                .sort((a, b) => a - b)
+                .map((value) => (
+                  <Pressable
+                    key={value}
+                    accessibilityRole="radio"
+                    accessibilityState={{ checked: rate === value, disabled: saving }}
+                    disabled={saving}
+                    onPress={() => {
+                      cancel();
+                      setRate(value);
+                      setSaveStatus(undefined);
+                    }}
+                    style={[styles.option, rate === value && styles.selected]}
+                  >
+                    <Text style={styles.optionText}>{value}×</Text>
+                  </Pressable>
+                ))}
             </View>
             <Pressable
               accessibilityRole="switch"

@@ -1,10 +1,13 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
 import LearningPreferencesScreen from '../../src/screens/LearningPreferencesScreen';
 import { getPrefs } from '../../src/storage/prefs';
 import { saveLearningProfile } from '../../src/storage/learningProfile';
 const mockBack = jest.fn();
+const originalWindow = Dimensions.get('window');
+afterEach(() => act(() => Dimensions.set({ window: originalWindow })));
 jest.mock('@react-navigation/native', () => ({ useNavigation: () => ({ goBack: mockBack }) }));
 jest.mock('../../src/context/LanguageContext', () => ({
   useLanguage: () => ({
@@ -96,4 +99,38 @@ test('blocks overlapping writes and local exit, then allows cancelling without a
   });
   fireEvent.press(ui.getByText('Back'));
   expect(mockBack).toHaveBeenCalledTimes(1);
+});
+
+test('retains dirty choices, trip text and one pending save across live text changes', async () => {
+  let release!: () => void;
+  save.mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        release = resolve;
+      }),
+  );
+  const ui = render(<LearningPreferencesScreen />);
+  await ui.findByText('Save');
+  fireEvent.press(ui.getByRole('radio', { name: 'I know the basics' }));
+  fireEvent.press(ui.getByRole('radio', { name: '10 minutes' }));
+  fireEvent.changeText(ui.getByLabelText('Trip date (optional, YYYY-MM-DD)'), '2028-02-29');
+  act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
+  expect(ui.getByRole('radio', { name: 'I know the basics', checked: true })).toBeTruthy();
+  expect(ui.getByDisplayValue('2028-02-29')).toBeTruthy();
+  fireEvent.press(ui.getByRole('button', { name: 'Save' }));
+  act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 1.8 } }));
+  expect(ui.getByRole('radio', { name: '10 minutes', checked: true, disabled: true })).toBeTruthy();
+  expect(ui.getByRole('button', { name: 'Back', disabled: true })).toBeTruthy();
+  expect(ui.getByDisplayValue('2028-02-29').props.editable).toBe(false);
+  fireEvent.press(ui.getByRole('button', { name: 'Save' }));
+  expect(save).toHaveBeenCalledTimes(1);
+  expect(save).toHaveBeenCalledWith({
+    ...profile,
+    learningLevel: 'basic',
+    studyMinutes: 10,
+    tripDate: '2028-02-29',
+  });
+  await act(async () => release());
+  await ui.findByText('Preferences saved.');
+  expect(mockBack).not.toHaveBeenCalled();
 });

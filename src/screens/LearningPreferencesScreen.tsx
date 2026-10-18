@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   View,
+  useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +20,7 @@ import { LEARNING_LEVELS, STUDY_MINUTES } from '../utils/learningProfile';
 
 export default function LearningPreferencesScreen() {
   const nav = useNavigation<any>();
+  const { fontScale } = useWindowDimensions();
   const { t } = useLanguage();
   const [profile, setProfile] = useState<LearningProfile | null>(null);
   const [trip, setTrip] = useState('');
@@ -84,7 +86,7 @@ export default function LearningPreferencesScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.wrap}>
+    <SafeAreaView key={fontScale} style={styles.wrap}>
       <Pressable
         accessibilityRole="button"
         disabled={saving}
@@ -221,7 +223,7 @@ export default function LearningPreferencesScreen() {
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg },
   content: { padding: 20, paddingBottom: 40, gap: 12 },
-  back: { alignSelf: 'flex-start', minHeight: 44, justifyContent: 'center', paddingHorizontal: 20 },
+  back: { alignSelf: 'flex-start', minHeight: 48, justifyContent: 'center', paddingHorizontal: 20 },
   title: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
   body: { color: colors.textSecondary, fontSize: 16, lineHeight: 23 },
   section: { gap: 8, marginTop: 12 },

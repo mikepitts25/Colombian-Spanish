@@ -1,0 +1,23 @@
+# Learning and audio preferences: live text resizing
+
+Base: `7f8b40c`. Dedicated iPad mini A17 Pro, iPadOS 26.0, unsigned Expo SDK 57 development app, Metro 8098. Bounded coverage of B08.2-B and B08.5-B; broader forms/platforms remain open.
+
+## Changes and evidence
+
+Both forms retained stale native measurements after default-to-maximum text-size changes: see `profile-es-live-max-before.png` and `audio-es-live-max-before.png`. Keying each measured SafeAreaView by fontScale rebuilds native content while leaving draft values, pending-save refs and preview lifecycle effects in the screen owner. Focus and scroll position may reset on a font-size change. Learning Preferences Back now has a 48-point minimum target.
+
+Spanish profile checks retained basic level, 10 minutes and synthetic leap date 2028-02-29 through live enlargement, then saved. `profile-es-live-max-after.png` and `profile-es-max-lower.png` show the readable upper/lower layout and Save. English reopening retained saved values; `profile-en-max-after.png` and `profile-en-max-lower.png` show the restoration draft. Restored beginner, 5 minutes and no trip date via the UI; reason travel and home region Paisa stayed unchanged.
+
+Audio checks retained an unsaved 0.75×/automatic-speech-on/repeat-on draft through resizing and explicit preview. Native source metadata reported generated clip; an actual coordinate Stop tap cleared that metadata (`audio-stopped-ax.txt`). This establishes UI dispatch/status behavior, not audible quality or physical playback continuity. `audio-es-live-max-after.png` and `audio-es-max-preview.png` were captured before the rate-picker extension below; their lower preview layout is representative, but they do not establish final picker geometry.
+
+Restoration exposed a separate defect: the stored default 0.98× could not be selected. The picker now includes 0.98× and any valid loaded custom rate, deduplicated/sorted. That loaded choice remains available while editing and is replaced after successful save. A custom 0.9× regression failed before correction (`custom-rate-red.log`) and passes after correction. Final picker captures are `audio-en-max-default-choice.png`, `audio-es-max-default-choice.png` and `audio-es-cold-restored.png`; the maximum-size captures show the top viewport, with the last rate partly below the fold. They do not establish complete touch-only navigation of every control.
+
+Saved 0.75×/automatic speech on, reopened in English, then restored 0.98×/automatic speech off through the UI. Repeat resets off on reopening. Restored Spanish UI and text size 3, terminated/relaunched the app, navigated by coordinates to Settings and Audio Preferences, and observed the restored selection and switches. The cold launch displayed the existing unsigned expo-notifications registration warning; it was dismissed. No signing or delivery acceptance is claimed.
+
+## Durable state and verification
+
+`native-state-check.json` contains eleven read-only own-app storage snapshots. Run `python3 docs/qa/2026-10-18-preferences-large-text/verify-state.py`: exact expected temporary preference changes, ten other logical-key hashes unchanged throughout, and all eleven hashes identical to baseline before and after cold launch. Daily count 1/new count 1/target 5, four learning events, three quiz summaries, streak, 1,392 cards and the exact nine-card Weather queue remain unchanged. No grades or learning credit were added.
+
+The 12 initial state/lifecycle characterization tests also pass on the original screen source (`baseline-state-tests.log`); native screenshots establish the layout defect. The additional custom-rate regression supplies RED→GREEN evidence. Final focused tests: 2 suites / 13 tests (`green.log`). Full suite: 100 suites / 959 tests (`full-suite.log`). Typecheck, lint, project-data validation and editorial-ledger validation passed; all 1,392 cards still require human editorial acceptance. Full formatting and diff checks passed. Independent whole-branch review found no Critical or Important issues; the stale plan checkboxes were corrected. Integration uses the owner-authorized main merge/push workflow.
+
+Navigation combined accessibility actions and coordinates; a drag attempt did not move the audio viewport. No full touch-only, VoiceOver, narrow-phone, Android, physical audio, interruption or store-build acceptance is claimed. Security task B01.8-C2g remains access-blocked by the owner-reported Codex error; it was not retried. Downloadable audio design approval, recordings/rights, Android license, accounts and physical-device work remain separate gates.
