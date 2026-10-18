@@ -194,9 +194,9 @@ const states = [
     true,
   ],
   [
-    'Read / start error',
-    'Could not open your plan',
-    ['Keep the saved checkpoint.', 'Retry the existing operation.'],
+    'Read error',
+    'Could not read your plan',
+    ['Keep the saved checkpoint.', 'Retry loading the current plan.'],
     'Try again',
     false,
   ],
