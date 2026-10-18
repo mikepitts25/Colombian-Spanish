@@ -1,0 +1,12 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false __tests__/screens/AddCardScreen.test.tsx __tests__/screens/ManageDecksScreen.test.tsx
+
+PASS __tests__/screens/AddCardScreen.test.tsx
+PASS __tests__/screens/ManageDecksScreen.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       16 passed, 16 total
+Snapshots:   0 total
+Time:        1.361 s, estimated 2 s
+Ran all test suites matching /__tests__\/screens\/AddCardScreen.test.tsx|__tests__\/screens\/ManageDecksScreen.test.tsx/i.
