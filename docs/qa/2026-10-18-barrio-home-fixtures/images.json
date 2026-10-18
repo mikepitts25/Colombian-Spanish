@@ -1,0 +1,58 @@
+[
+  {
+    "file": "native/phone-barrio-return.png",
+    "sha256": "b75d33cf2f19277eff24d02b9ecab184a0752f620b5494e9af08b27d8c6ea337"
+  },
+  {
+    "file": "native/phone-cap-browse.png",
+    "sha256": "0b3db56b48f101d0ec05e248b7a3dca9a41cf1db8ba08fa66f61c2c0253c362c"
+  },
+  {
+    "file": "native/phone-classic-roundtrip.png",
+    "sha256": "358ccde1bd2406397e4ff886c9661c73dbbe29cd85a6ab446db33ae6c784d52e"
+  },
+  {
+    "file": "native/phone-original-restored.png",
+    "sha256": "a9a46fcbf5b402b60874a8bb40c95aa69a0d261bf751f4f29a7a3abba94a3841"
+  },
+  {
+    "file": "native/phone-production-js-cap-home.png",
+    "sha256": "b992aaea78123f0119cccec72bc1c91d488e45f1a0b763b7339857e531762a3f"
+  },
+  {
+    "file": "native/phone-production-js-review-only-home.png",
+    "sha256": "79379eff70984b7c31f34e437bea5297c63492c9bda9bdf03188e665a688ab7e"
+  },
+  {
+    "file": "native/phone-production-js-study.png",
+    "sha256": "95b08e00c7d495de05b838806cf329a64baf0f56985211e0a6231dd95017b69b"
+  },
+  {
+    "file": "native/phone-review-home.png",
+    "sha256": "dd24753c86843c6ad9cf6ba294219ba175e7a2e7ff41151cd64370b0ea0f40bb"
+  },
+  {
+    "file": "native/phone-review-resumed.png",
+    "sha256": "3faa17d50fbdfe909fac15cacba9ef340664233dd70ae30b347c9cda105a8bc4"
+  },
+  {
+    "file": "native/phone-system-cold.png",
+    "sha256": "baa565f2c22ad358c00e36de916cf77f0c843cab41d5d83699806db0b76561e1"
+  },
+  {
+    "file": "native/phone-system-dark.png",
+    "sha256": "f5da54e9f189647760be0e231f89a7c292b48fd4a835fd5b5a5016d79834742a"
+  },
+  {
+    "file": "native/phone-system-light.png",
+    "sha256": "d9959e19bac17a01d8d6e7541ca8c82c175f1a19a80b6e3467febe46852c37a8"
+  },
+  {
+    "file": "native/phone-unavailable-home.png",
+    "sha256": "e8d910381cc8604e598b7412a5ae9231d628320bd552b7127431424895b5acac"
+  },
+  {
+    "file": "native/phone-unavailable-recovery.png",
+    "sha256": "69cca173874766f409ac0ef3230c66e6c3f6ace76dd70ea2a4e0b9fe33b5c851"
+  }
+]

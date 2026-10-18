@@ -1,0 +1,116 @@
+{
+  "sourceMain": "8ba8f61",
+  "runtimeHead": "ecf1a2e",
+  "metroPort": 8099,
+  "nativeChanges": false,
+  "originalBackupSha256": "15b148f13e926ed3c8dc4571e283116f6de366b8b9b1dab27f5ad0d4f8efde53",
+  "fixtures": [
+    {
+      "kind": "unavailable",
+      "hostFile": "/tmp/barrio-home-unavailable-fixture.json",
+      "sha256": "74ae38c4a68bdd534f7045424f372fd0e136e290e45694e5a891fe284b59bc3a",
+      "expectedKeyHashes": {
+        "SRS_DECKS_V3": "4089507d856f2e9866fb42f2cb63959287ec47dfa94ca3e659abb68ffa31fecb",
+        "SRS_DAILY_PLAN_V1": "7a3c90ac91cdfa0179caf7361a40c1a594a734129ce1c985193de43b5a89970c",
+        "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+        "SRS_PREFS_V1": "738e4ef490410958741e68fff3807a571c65039d99c6aafe6730dc46731f045b",
+        "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+        "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+        "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+        "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "SRS_LAST_STUDY_SESSION_V1": "564a2142ad2ef29f2fab88631bc665563447bdafe39f7b0f508815d1f0d4e266",
+        "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+      },
+      "decks": 48,
+      "cards": 1402,
+      "events": 10
+    },
+    {
+      "kind": "empty",
+      "hostFile": "/tmp/barrio-home-empty-fixture.json",
+      "sha256": "2a7e6300c62f95c58b70b9826ad5c021a19cd6b2f86249a8f7646c5cb8412d8e",
+      "expectedKeyHashes": {
+        "SRS_DECKS_V3": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "SRS_DAILY_PLAN_V1": "0c424c65a0154d590c3549e11079c7668f9965e8778435ad48e47e39f3610f62",
+        "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+        "SRS_PREFS_V1": "738e4ef490410958741e68fff3807a571c65039d99c6aafe6730dc46731f045b",
+        "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+        "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+        "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+        "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "SRS_LAST_STUDY_SESSION_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+      },
+      "decks": 0,
+      "cards": 0,
+      "events": 10
+    },
+    {
+      "kind": "cap",
+      "hostFile": "/tmp/barrio-home-cap-fixture.json",
+      "sha256": "a89ecd7f232d583492fb95dc443f0816a7a2d94697534a4f7db1c18b90bad1b1",
+      "expectedKeyHashes": {
+        "SRS_DECKS_V3": "7474d769d4f21d39633d728e85f166e88a15311e14f658529d50628c74d51398",
+        "SRS_DAILY_PLAN_V1": "0c424c65a0154d590c3549e11079c7668f9965e8778435ad48e47e39f3610f62",
+        "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+        "SRS_PREFS_V1": "21df8a523a11ce7ee5ece1c6329be14e44d0a0de8393976a8b83a7e187c9d29f",
+        "SRS_DAILY_PROGRESS_V1": "5e59834f4fe784282af8973390ae2a558ae13ebbd951ce83ef7847fbc7ff47ef",
+        "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+        "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+        "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "SRS_LAST_STUDY_SESSION_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+      },
+      "decks": 48,
+      "cards": 1402,
+      "events": 10
+    },
+    {
+      "kind": "long-review",
+      "hostFile": "/tmp/barrio-home-long-review-valid-fixture.json",
+      "sha256": "08f0525e46820eef5f7abf618238ed7dba1d7b358a773d2c27d054e9bfb34bcb",
+      "expectedKeyHashes": {
+        "SRS_DECKS_V3": "824baf7a1beb3892df3d3dbc70b72f8ee9bfd0daf98e5fb953bb18363ab38d85",
+        "SRS_DAILY_PLAN_V1": "71eed0687172faa8dc2f59d436db215610c23fc36984f5fd89d0cdbd3940b160",
+        "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+        "SRS_PREFS_V1": "738e4ef490410958741e68fff3807a571c65039d99c6aafe6730dc46731f045b",
+        "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+        "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+        "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+        "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "SRS_LAST_STUDY_SESSION_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+      },
+      "decks": 48,
+      "cards": 1402,
+      "events": 10
+    }
+  ],
+  "launchModes": {
+    "development": ["-RCT_jsLocation", "localhost:8099"],
+    "productionJS": ["-RCT_jsLocation", "localhost:8099", "-RCT_enableDev", "NO"]
+  },
+  "flagAuthority": "node_modules/react-native/React/Base/RCTBundleURLProvider.mm: RCT_enableDev NSUserDefaults bool controls dev URL query; process launch argument only, no defaults file edit. src/config.ts SHOW_REVIEW_TOOLS uses __DEV__. Debug binary remains unsigned simulator.",
+  "devices": [
+    {
+      "uuid": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+      "name": "Colombian Spanish Barrio Phone QA",
+      "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPhone-SE-3rd-generation",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "appPath": "/Users/mike/Library/Developer/CoreSimulator/Devices/2EDF21F0-7DBD-4B09-8D5F-85560FD0E730/data/Containers/Bundle/Application/7371F52C-60D7-44FE-8767-E61A74355768/ColombianSpanish.app",
+      "binarySha256": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb"
+    },
+    {
+      "uuid": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+      "name": "Colombian Spanish Applied Mini QA",
+      "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPad-mini-A17-Pro",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "appPath": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Bundle/Application/6C806BF0-1AA4-426C-9964-75177799B8C2/ColombianSpanish.app",
+      "binarySha256": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb"
+    }
+  ]
+}
