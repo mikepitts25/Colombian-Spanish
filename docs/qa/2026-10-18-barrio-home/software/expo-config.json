@@ -1,0 +1,56 @@
+{
+  "name": "Colombian Spanish",
+  "slug": "colombian-spanish",
+  "version": "1.0.0",
+  "orientation": "portrait",
+  "icon": "./assets/icon.png",
+  "userInterfaceStyle": "automatic",
+  "splash": {
+    "image": "./assets/splash.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#0f172a",
+    "dark": { "image": "./assets/splash.png", "backgroundColor": "#0f172a" }
+  },
+  "assetBundlePatterns": ["**/*"],
+  "ios": {
+    "supportsTablet": true,
+    "bundleIdentifier": "com.mikepitts.colombianspanish",
+    "buildNumber": "1.0.0",
+    "infoPlist": { "ITSAppUsesNonExemptEncryption": false }
+  },
+  "android": {
+    "package": "com.mikepitts.colombianspanish",
+    "versionCode": 1,
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/adaptive-icon.png",
+      "backgroundColor": "#0f172a"
+    },
+    "blockedPermissions": [],
+    "permissions": [
+      "android.permission.RECORD_AUDIO",
+      "android.permission.MODIFY_AUDIO_SETTINGS",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+    ]
+  },
+  "web": { "bundler": "metro", "favicon": "./assets/favicon.png" },
+  "extra": { "eas": { "projectId": "7be19314-d592-4ab7-b792-4941c7c08cf6" } },
+  "runtimeVersion": { "policy": "fingerprint" },
+  "updates": { "url": "https://u.expo.dev/7be19314-d592-4ab7-b792-4941c7c08cf6" },
+  "plugins": [
+    "@sentry/react-native",
+    "expo-sharing",
+    "expo-status-bar",
+    ["expo-build-properties", { "ios": { "enableSceneSupport": true } }],
+    [
+      "expo-audio",
+      {
+        "microphonePermission": "Allow Colombian Spanish to access the microphone only when you explicitly record a local practice take.",
+        "recordAudioAndroid": true,
+        "enableBackgroundRecording": false
+      }
+    ]
+  ],
+  "sdkVersion": "57.0.0",
+  "platforms": ["ios", "android"]
+}

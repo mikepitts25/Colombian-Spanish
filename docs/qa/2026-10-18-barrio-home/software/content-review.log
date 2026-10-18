@@ -1,0 +1,5 @@
+
+> colombian-spanish-srs@1.0.0 content:review
+> node scripts/export-content-review.js --output docs/editorial/content-review.json
+
+Exported 1392 cards to /Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/docs/editorial/content-review.json
