@@ -1,0 +1,47 @@
+[
+  {
+    "file": "english-default-keyboard.png",
+    "sha256": "806a0a04880aa9ba3a041629fb080b1c42f1b7fb6be2e2e28d816f8e5d71108f",
+    "dimensions": [1488, 2266]
+  },
+  {
+    "file": "english-max-landscape-dismissed.png",
+    "sha256": "9081e7253c597ee2ed8681a459096263df31c732ed094eed91af4cf80452e7f8",
+    "dimensions": [2266, 1488]
+  },
+  {
+    "file": "english-max-landscape-keyboard.png",
+    "sha256": "a40609ac82e9fb1cb03afa20b341645c8b4db55173f5c924777a0c9cc25ba63f",
+    "dimensions": [2266, 1488]
+  },
+  {
+    "file": "english-max-portrait-keyboard.png",
+    "sha256": "efecdccb9ce2bd0c9ec1b0af7bd289220c126ff07fdd43034f74ce89078d5dc7",
+    "dimensions": [1488, 2266]
+  },
+  {
+    "file": "final-home.png",
+    "sha256": "5a41308ce97d8211498684e3a99b758be51f8252ed977bd846ef39a22ef13d6e",
+    "dimensions": [1488, 2266]
+  },
+  {
+    "file": "spanish-default-keyboard.png",
+    "sha256": "137a7781ce610411275f9929a808146f9bc59341c5e39cb77008a0564cb7a480",
+    "dimensions": [1488, 2266]
+  },
+  {
+    "file": "spanish-max-landscape-dismissed.png",
+    "sha256": "035e9bad304b8cee6d27dbc552f6789ea208c6f618a9c575690dd6007f02b596",
+    "dimensions": [2266, 1488]
+  },
+  {
+    "file": "spanish-max-landscape-keyboard.png",
+    "sha256": "ae0d6ebcc3f6781c43444183bfb98489c7c5d61dc18ec5c1c882920a1e733414",
+    "dimensions": [2266, 1488]
+  },
+  {
+    "file": "spanish-max-portrait-keyboard.png",
+    "sha256": "d02a409112711541bfa5447ce901787740c55f71fc9ea921bea35544a0816124",
+    "dimensions": [1488, 2266]
+  }
+]

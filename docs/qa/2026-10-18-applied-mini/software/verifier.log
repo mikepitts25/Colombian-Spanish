@@ -1,0 +1,1 @@
+PASS: actual mini; eight snapshots/11 unchanged events; exact target-fixture restore/cold; five own-path preflights/nine image digests.
