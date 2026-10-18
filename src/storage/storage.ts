@@ -1,5 +1,11 @@
 import AsyncStorage, { StorageAccess, withStorageTransaction } from './durableStorage';
-import { LastStudySession, isValidStudySession, copySessionInput } from './studySession';
+import {
+  LastStudySession,
+  isValidStudySession,
+  copySessionInput,
+  StaleStudySessionError,
+  sameStudySession,
+} from './studySession';
 import { Deck, FlashCard } from '../types';
 import { localDayKey, storedDayKey, dayDistance } from '../utils/calendarDay';
 import { createLearningSessionId } from './learningEvents';
@@ -51,6 +57,25 @@ export async function saveLastStudySession(
   if (!isValidStudySession(next)) throw new Error('Invalid study session snapshot');
   await access.setItem(LAST_STUDY_SESSION_KEY, JSON.stringify(next));
   return next;
+}
+
+/** Resume only the checkpoint the learner selected, not one replaced by restore. */
+export async function saveResumedStudySession(
+  session: Omit<LastStudySession, 'updatedAt'>,
+  expected: Omit<LastStudySession, 'updatedAt'>,
+): Promise<LastStudySession> {
+  const input = copySessionInput(session);
+  const previous = copySessionInput(expected);
+  return withStorageTransaction(async (tx) => {
+    const stored = await getLastStudySession(tx);
+    if (!sameStudySession(stored, previous)) {
+      // A failed write may already have committed this exact filtered remainder.
+      // Acknowledge its current after-image without replaying or refreshing it.
+      if (stored && sameStudySession(stored, input)) return stored;
+      throw new StaleStudySessionError();
+    }
+    return saveLastStudySession(input, tx);
+  });
 }
 
 /** Read fresh decks and journal one edit without racing grades, restores or other editors. */

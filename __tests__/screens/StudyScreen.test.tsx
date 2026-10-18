@@ -23,6 +23,9 @@ jest.mock('../../src/hooks/useDeck', () => ({
 }));
 
 jest.mock('../../src/storage/storage', () => ({
+  saveResumedStudySession: jest.fn((session) =>
+    require('../../src/storage/storage').saveLastStudySession(session),
+  ),
   getDailyProgress: jest.fn().mockResolvedValue({ count: 3, target: 10 }),
   incrementDailyProgress: jest.fn().mockResolvedValue({ count: 4, target: 10 }),
   getLastStudySession: jest.fn().mockResolvedValue(undefined),
@@ -44,6 +47,7 @@ import {
   getLastStudySession,
   incrementDailyProgress,
   saveLastStudySession,
+  saveResumedStudySession,
 } from '../../src/storage/storage';
 
 const mockUseDeck = useDeck as jest.Mock;
@@ -647,6 +651,10 @@ it('resumes only the saved ordered queue and learning-session identity', async (
   fireEvent.press(await screen.findByText('Continuar'));
   await waitFor(() => expect(screen.getByText('como vas')).toBeTruthy());
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  expect(saveResumedStudySession).toHaveBeenCalledWith(
+    expect.objectContaining({ deckId: 'deck-greetings' }),
+    expect.objectContaining({ queue: expect.objectContaining({ cardIds: ['c3', 'c2'] }) }),
+  );
   expect(screen.getByText('2 restantes')).toBeTruthy();
   await act(async () => fireEvent.press(screen.getByText('Bien')));
   expect(screen.recordAnswer).toHaveBeenCalledWith(
