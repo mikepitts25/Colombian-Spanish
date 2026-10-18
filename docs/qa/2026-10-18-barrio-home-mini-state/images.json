@@ -1,0 +1,38 @@
+[
+  {
+    "file": "native/mini-barrio-return.png",
+    "sha256": "54a1d0132c4edd925cd67efbae77cf5417773105452540ac19e49e7816096ab3"
+  },
+  {
+    "file": "native/mini-classic.png",
+    "sha256": "2e68550672fe60c144507acc7cb516ee9f64a631ef9ca1097394089bb8b398a9"
+  },
+  {
+    "file": "native/mini-completed-home-light.png",
+    "sha256": "00800da556bc7222cf8c8e5eebfdc535ea52b4a2a51e7e2ddd8a01a24dd78f13"
+  },
+  {
+    "file": "native/mini-completed-opened.png",
+    "sha256": "fd8c859637e0fd91f37f8a024ed04dee06514033ef10f88afc4617eebdbed0fd"
+  },
+  {
+    "file": "native/mini-completed-system-dark.png",
+    "sha256": "c0b2f762e1fbc7c30936eb8c5e353302819590cb8e3d9021d168d89d5c10bfa5"
+  },
+  {
+    "file": "native/mini-due-deck-opened.png",
+    "sha256": "94973b020470c435a5f99f28442f00d67243d405057ec019c47b788a018a5c69"
+  },
+  {
+    "file": "native/mini-max-touch-bottom.png",
+    "sha256": "a34882dc09fe918f2e614d6395ca0d843ae0fd610fbc272cb65a5272f55257a5"
+  },
+  {
+    "file": "native/mini-restored.png",
+    "sha256": "67a4b46c2b1f5c0a744ebb352a8f5108cb90113ebc4fd53b0f59b3bb355d498e"
+  },
+  {
+    "file": "native/mini-touch-bottom.png",
+    "sha256": "bf73920d6ec83f283acff9a4898313b42fc351f33b5815a8fff9b5eff04a77fa"
+  }
+]
