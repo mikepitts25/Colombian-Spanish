@@ -1,6 +1,6 @@
 # Barrio-only plan-first Home
 
-Status: written specification for owner review. The owner approved the [composition proposal](../../design/2026-10-18-barrio-home/README.md) in this chat on 2026-10-18. That approves this writing stage, not runtime implementation. Written-spec approval is required before preparing the implementation plan; plan review/execution choice follows. Classic remains default and permanently available.
+Status: owner approved this written specification in this chat on 2026-10-18. The owner approved the [composition proposal](../../design/2026-10-18-barrio-home/README.md) in this chat on 2026-10-18. That approves this writing stage, not runtime implementation. Written-spec approval is recorded; implementation-plan review/execution choice follows. Classic remains default and permanently available.
 
 ## Intent and success
 
@@ -153,4 +153,4 @@ Classic remains the migration default. Barrio users receive this optional Home c
 
 After owner review of this written spec, create a focused implementation plan with three linked bundles: selector/copy contracts; Barrio-only presentation/controller integration; native matrix/review/integration. The plan must name exact files/test fixtures and identify changes that require a new native build. Owner selects execution method before runtime implementation. One fresh read-only whole-branch review is required before merge; address all Critical/Important findings, update B08.3 with exact evidence and merge/push under standing authorization. B08.3 cannot be closed by this spec or the board package.
 
-Self-review: no unresolved placeholders; all proposal routes map to real destinations; exact queue and unavailable-production handling have explicit priority; new counts/estimates are bounded to their sources; Classic and runtime approvals remain distinct. User review of this written artifact is still pending.
+Self-review: no unresolved placeholders; all proposal routes map to real destinations; exact queue and unavailable-production handling have explicit priority; new counts/estimates are bounded to their sources; Classic and runtime approvals remain distinct. Owner review approved this written artifact; implementation-plan review is the next gate.
