@@ -15,7 +15,7 @@ Names, roles, pronouns, relationship and setting need product/language review. N
 
 ## Five beats within one existing mission
 
-| Existing step     | Proposed story function                                                                                      | Learning and evidence boundary                                                                                                                                   |
+| Narrative beat    | Proposed story function                                                                                      | Learning and evidence boundary                                                                                                                                   |
 | ----------------- | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Welcome/greeting  | The learner arrives; Ana acknowledges their arrival, and Nico leaves the greeting to them.                   | Context establishes who/where without revealing the required greeting before the attempt. Optional help is labeled and recorded.                                 |
 | Request           | The learner makes a clear, polite request. Nico handles the tray while the learner handles the order.        | A small cooperative moment supplies personality without adding a score, timer or assumed cultural custom. Exact accepted variants stay editorial decisions.      |
@@ -23,7 +23,7 @@ Names, roles, pronouns, relationship and setting need product/language review. N
 | Alternative       | The learner adapts the request. Optional help is always available.                                           | Adaptation supplies the practical win. No penalty for asking for help; a supported qualifying response is labeled supported.                                     |
 | Thanks/completion | The learner closes the exchange; the scene acknowledges the outcome and, if eligible, offers the café stamp. | Commit first, then show the earned result. A merely reviewed or incomplete outcome keeps its learning record and receives a clear optional practice handoff.     |
 
-This is a narrative outline, not five newly approved dialogue lines. Any added line, changed answer, hint, branch or model requires a new content review/version/fingerprint under the current release workflow. Do not silently alter accepted transcripts or reuse a performer’s voice for words they did not record and authorize.
+The unavailable-item and alternative beats both fit the current `unavailable` choice node, whose accepted alternative proceeds to thanks. The proposal adds no separate alternative production step. These are five narrative beats, not five separate existing assessed nodes or newly approved dialogue lines. Any added line, changed answer, hint, branch or model requires a new content review/version/fingerprint under the current release workflow. Do not silently alter accepted transcripts or reuse a performer’s voice for words they did not record and authorize.
 
 ## Tone and review questions for the editor
 
