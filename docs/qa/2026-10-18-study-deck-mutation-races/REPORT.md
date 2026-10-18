@@ -1,0 +1,20 @@
+# Study and unrelated deck reset/delete concurrency
+
+B02.4-B2o extends the actual StudyScreen/DeckProvider/storage audit with four interleavings. All four pass against existing product code: this is additional regression coverage, not a RED→GREEN product fix. No dependency, content, runtime or native UI change. Baselinef4b08fe CI39104096493 and board39104096457 passed.
+
+The parameterized integration cases seed alpha with two fresh cards, beta with a scheduled/reviewed/favorite/flagged card, and an untouched gamma deck. Each starts a real alpha Study session and presses its Good grade. Actual provider reset/delete methods act on beta; no management-screen confirmation or native destructive flow is simulated.
+
+| Grade boundary                                                                                                     | Concurrent mutation | Required result                                                                                                       |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Hold the grade's learning-event journal write, queue mutation, release                                             | Reset beta          | Alpha grade persists once; beta schedule resets while content/editorial/favorite/flag fields survive; gamma is exact. |
+| Same held journal boundary                                                                                         | Delete beta         | Beta remains absent; alpha grade survives once; gamma and deck order are exact.                                       |
+| Persist the grade journal, reject its first deck afterimage; mutation recovers the journal, then original UI Retry | Reset beta          | Retry acknowledges the recovered original grade without overwriting beta reset or adding events/credit.               |
+| Same interrupted-apply/recovery/retry boundary                                                                     | Delete beta         | Retry preserves beta deletion and does not resurrect its deck or duplicate the alpha grade.                           |
+
+Every case checks actual provider/durable deck agreement, active alpha identity, untouched second alpha card, exactly one Good event on first, count1/newCount1 and no remaining journal. The remaining queue keeps the original session/configuration and only second. React unmount/remount plus visible Continue preserves that exact queue and all stored decks/events/daily counters. Held writes are released and storage implementation restored during teardown even on assertion failure. The interception is restricted to the grade learning-event journal, not startup checkpoint writes. Interrupted cases inspect the real journal before invoking mutation, then compare recovered state against post-Retry state.
+
+Run `npx jest --runInBand --watchman=false --runTestsByPath __tests__/screens/StudyLifecycleIntegration.test.tsx`. Targeted file9/9 passes, including its five previous lifecycle/editor cases. Logs accompany this report. These controlled in-memory AsyncStorage observations do not prove native disk/process death, management confirmation, active-deck deletion/reset, backup import conflicts, every ordering, full simulator/assistive/platform or physical acceptance. B02.4-B2 stays open for its remaining broader scope. No simulator UI changed, so no new native screenshots or fault result is claimed.
+
+Security B01.8-C2g stays access-blocked and skipped without retry/bypass. Android agreements, downloadable-audio design approval, product/editorial/recording rights, accounts/signing and actual human/device gates remain separate.
+
+Validation: full101 suites /1001 tests pass; TypeScript, zero-warning lint, repository formatting and whitespace checks pass. Independent before-merge review found no Critical, Important or Minor issues after checking transaction ordering/recovery, assertions, report and checklist scope.

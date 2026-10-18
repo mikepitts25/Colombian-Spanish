@@ -1,0 +1,16 @@
+PASS __tests__/screens/StudyLifecycleIntegration.test.tsx
+  ✓ Otra vez becomes due without refilling a saved in-progress queue (354 ms)
+  ✓ Difícil becomes due without refilling a saved in-progress queue (146 ms)
+  ✓ cross-deck new-card cap permits due reviews and later relearning without new credit (109 ms)
+  ✓ edits queued behind an in-flight grade preserve content and the frozen remaining queue (133 ms)
+  ✓ an editor recovers an interrupted grade and UI retry acknowledges it without losing the edit (142 ms)
+  ✓ reset of another deck during a held grade preserves exactly-once progress (119 ms)
+  ✓ delete of another deck during a held grade preserves exactly-once progress (118 ms)
+  ✓ reset of another deck during a interrupted grade preserves exactly-once progress (136 ms)
+  ✓ delete of another deck during a interrupted grade preserves exactly-once progress (155 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       9 passed, 9 total
+Snapshots:   0 total
+Time:        3.159 s
+Ran all test suites within paths "__tests__/screens/StudyLifecycleIntegration.test.tsx".
