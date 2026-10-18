@@ -4,7 +4,7 @@ Runtime `3b9b62b` corrects a reproduced maximum-text Home clipping defect and cl
 
 ## Reproduction and correction
 
-On fresh own-container iPad mini / iPadOS26 `F9BC32B5-9591-4CEA-9363-707D3A7E204D`, Barrio Dark / Spanish / OS Light, changed native Text Size3→11. A coordinate drag `[1100,960]→[1100,370]` in Device Hub reached lower Home content. `home-max-lower.png` shows the original right-clipped “Ver todos los decks”. The row placed two unbounded children side by side at maximum scale.
+On fresh own-container iPad Pro 13-inch M4 / iPadOS26 `F9BC32B5-9591-4CEA-9363-707D3A7E204D`, Barrio Dark / Spanish / OS Light, changed native Text Size3→11. A coordinate drag `[1100,960]→[1100,370]` in Device Hub reached lower Home content. `home-max-lower.png` shows the original right-clipped “Ver todos los decks”. The row placed two unbounded children side by side at maximum scale.
 
 The correction reuses the existing stacked-header layout at large text, lets both children shrink at other sizes and gives the large-text browse action a minimum48-point height and button role. Colors, fonts, theme identity and navigation callback remain. No learning/storage behavior changed. These reversible layout/copy changes use existing tests and direct native reproduction; no implementation-mirroring style tests were added.
 
@@ -27,3 +27,5 @@ Native clipboard preview initially reported an empty simulator clipboard. Sent t
 - Reviewer declined independent native/coordinate verification (handled here); full matrix, assistive technology, signed builds, Android and security were outside this scoped review and remain open. Security B01.8-C2g was skipped. Home touch success does not establish full route/platform/physical acceptance. Existing unsigned notification-entitlement banners were dismissed before the corrected capture.
 
 Run `python3 docs/qa/2026-10-18-tablet-post-cold/verify-evidence.py` for passive snapshot/image checks. This bounded check advances the tablet matrix; it does not close B08.5-B or B05 keyboard/activity coverage.
+
+Device-label correction: official inventory/device.plist identify F9BC32B5 as iPad Pro13 M4, not the mini previously named here. Pixel dimensions2064×2752 agree. The following keyboard-reveal QA records the model evidence; this report does not establish mini acceptance.

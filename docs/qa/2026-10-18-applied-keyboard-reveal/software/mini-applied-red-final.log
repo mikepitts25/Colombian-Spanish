@@ -1,0 +1,64 @@
+FAIL __tests__/screens/MissionScreen.test.tsx (6.66 s)
+  ✓ choice actions keep stable React list keys (633 ms)
+  ✓ complete draft flow records three assessed recalls and one recognition without changing daily/SRS state (618 ms)
+  ✓ retains failed submission for retry and resumes exact feedback without persisting raw text (333 ms)
+  ✓ hints are counted on explicit retries and incorrect answers permit assisted continuation (376 ms)
+  ✓ load failure offers retry and production gate prevents accessing draft content (108 ms)
+  ✓ blocks rapid actions and local exit during a pending checkpoint (58 ms)
+  ✓ preserves partial input when revealing a hint (213 ms)
+  ✓ allows local exit after a settled checkpoint failure while retaining retry (215 ms)
+  ✓ offers difficult-phrase recall/reveal without writing extra events or changing the completed checkpoint (599 ms)
+  ✓ a linked one-response activity starts its planned run and completes only that plan (218 ms)
+  ✓ times only actionable foreground segments, preserving hint/save retry timing without counting waits (321 ms)
+  ✓ cold response resume with feedback=false never invents a lost timing segment (266 ms)
+  ✓ cold response resume with feedback=true never invents a lost timing segment (267 ms)
+  ✓ notifies the parent when a pending save settles even after the player unmounts (55 ms)
+  ✓ a held response checkpoint retains draft and exactly one command across identity changes (170 ms)
+  ✕ reveals the measured focused response when the software keyboard opens without recording an answer (162 ms)
+  ✕ waits for current response geometry after rotation and live text changes, retaining the ungraded draft (163 ms)
+
+  ● reveals the measured focused response when the software keyboard opens without recording an answer
+
+    expect(jest.fn()).toHaveBeenLastCalledWith(...expected)
+
+    Expected: {"animated": false, "y": 984}
+
+    Number of calls: 0
+
+      400 |     DeviceEventEmitter.emit('keyboardDidShow', { endCoordinates: { screenY: 400, height: 267 } }),
+      401 |   );
+    > 402 |   expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 984, animated: false });
+          |                           ^
+      403 |   expect(ui.getByDisplayValue('Buenos dias')).toBeTruthy();
+      404 |   expect(await getLearningEvents()).toEqual([]);
+      405 |   fireEvent(input, 'blur');
+
+      at Object.toHaveBeenLastCalledWith (__tests__/screens/MissionScreen.test.tsx:402:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● waits for current response geometry after rotation and live text changes, retaining the ungraded draft
+
+    expect(jest.fn()).toHaveBeenLastCalledWith(...expected)
+
+    Expected: {"animated": false, "y": 734}
+
+    Number of calls: 0
+
+      441 |     expect(scroll().scrollTo).not.toHaveBeenCalled();
+      442 |     await measure('input', 150);
+    > 443 |     expect(scroll().scrollTo).toHaveBeenLastCalledWith({ y: 734, animated: false });
+          |                               ^
+      444 |     await act(async () => Dimensions.set({ window: { ...originalWindow, fontScale: 3 } }));
+      445 |     scroll().scrollTo.mockClear();
+      446 |     fireEvent(ui.getByLabelText('Your response'), 'focus');
+
+      at Object.toHaveBeenLastCalledWith (__tests__/screens/MissionScreen.test.tsx:443:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 15 passed, 17 total
+Snapshots:   0 total
+Time:        6.847 s, estimated 7 s
+Ran all test suites within paths "__tests__/screens/MissionScreen.test.tsx".

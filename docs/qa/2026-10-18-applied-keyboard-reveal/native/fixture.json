@@ -1,0 +1,33 @@
+{
+  "sourceContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/F9BC32B5-9591-4CEA-9363-707D3A7E204D/data/Containers/Data/Application/8071D4FD-959A-41FF-8481-688F426C8D32",
+  "backupSHA256": "2c4a26c908771a2a25ebb7267b54cac3a4e710ef43a95a7ae1ba30facaeb4cac",
+  "characters": 376947,
+  "deckCount": 48,
+  "cardCount": 1402,
+  "eventCount": 11,
+  "applicationStateFields": [
+    "dailyPlan",
+    "missions",
+    "prefs",
+    "daily",
+    "streak",
+    "seenWords",
+    "quizHistory",
+    "lastSession",
+    "notificationPrefs"
+  ],
+  "normalizedFields": [],
+  "sourceKeyHashes": {
+    "SRS_DECKS_V3": "f8a072a2c06fa5eaac7d4cfa9347f8f7ae3281b220296bb08cfc1ecb0d70f386",
+    "SRS_DAILY_PLAN_V1": "9a205cd703b2e5f091300a43619bb6100dcba85730120daa72c99ab057847908",
+    "SRS_MISSIONS_V1": "dda005e7f63fd5035df0d065b488295aad003596a4bab04af421803dae4dcfce",
+    "SRS_PREFS_V1": "d7785209fd2bb58309bd54c8fcfe3c5106adf32b508d692061b075a2017f33ad",
+    "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+    "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+    "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+    "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "SRS_LAST_STUDY_SESSION_V1": "038415fb75da3f6f96a446a4593df1360a134d41dbcf4275152e4b41e4780541",
+    "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "SRS_LEARNING_EVENTS_V1": "943cd4efe0c963ccb8c73cc5fe79d4a07319e528fa06b0345fc047d5abcf66e7"
+  }
+}

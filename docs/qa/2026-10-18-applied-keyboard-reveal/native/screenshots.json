@@ -1,0 +1,42 @@
+[
+  {
+    "file": "english-default-keyboard.png",
+    "sha256": "e81a20397b40d0642fd9cf44545fc1e0c17c0bfbace7d7663b6de720379f8e69",
+    "dimensions": [2064, 2752]
+  },
+  {
+    "file": "english-max-keyboard-landscape-before.png",
+    "sha256": "beae075d55198745a14be53f3c1de4d11e032022f91af65f9ad053f0980e1be4",
+    "dimensions": [2752, 2064]
+  },
+  {
+    "file": "english-max-keyboard-portrait.png",
+    "sha256": "510ae703ec115f80d3e03b83a062563d55fc2357e0c94461bafc982ab0694ac1",
+    "dimensions": [2064, 2752]
+  },
+  {
+    "file": "english-max-landscape-dismissed.png",
+    "sha256": "c895dfc766392734867a99547bc62a538a81327cb1320d466642e79cbc129301",
+    "dimensions": [2752, 2064]
+  },
+  {
+    "file": "final-home.png",
+    "sha256": "050682bcc2d77928631d990f72a177dd86f3e4c3fb3e2bd8c99e6677e2b46f77",
+    "dimensions": [2064, 2752]
+  },
+  {
+    "file": "fixed-max-landscape-keyboard.png",
+    "sha256": "9ac3b0d69777b209ac3f1890a035bb72440383833afe5afd2c0599f4ad9e4f13",
+    "dimensions": [2752, 2064]
+  },
+  {
+    "file": "fixed-max-portrait-ax-focus.png",
+    "sha256": "1edbf61287cd6c2d4dc4297e0d1634ebb97e92020c73ccf16542ea219ae4f476",
+    "dimensions": [2064, 2752]
+  },
+  {
+    "file": "fixed-max-portrait-coordinate-focus.png",
+    "sha256": "fc63a5a53523e5985dc000070ebd422f86995d0ff9209d883506f3357386f100",
+    "dimensions": [2064, 2752]
+  }
+]
