@@ -1,0 +1,5 @@
+
+> colombian-spanish-srs@1.0.0 content:validate-reviews
+> node scripts/release-content.js --validate
+
+Validated editorial ledger for 1392 cards; 1392 await current acceptance.

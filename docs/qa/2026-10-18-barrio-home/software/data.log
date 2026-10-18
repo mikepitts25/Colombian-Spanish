@@ -1,0 +1,5 @@
+
+> colombian-spanish-srs@1.0.0 validate:data
+> node scripts/validate-project.js
+
+Validated 47 decks, 1392 cards, 1392 audio entries; configured PNG headers/dimensions valid.

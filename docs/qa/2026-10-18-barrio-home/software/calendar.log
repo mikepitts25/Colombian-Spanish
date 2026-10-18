@@ -1,0 +1,52 @@
+
+> colombian-spanish-srs@1.0.0 test:calendar
+> node scripts/test-calendar-zones.js
+
+Calendar integration: Europe/Berlin
+PASS __tests__/storage/calendarTransitions.test.ts
+  ✓ keeps daily limits and streaks across the short calendar day in the active zone (5 ms)
+  ✓ keeps daily limits and streaks across the long calendar day in the active zone (1 ms)
+  ✓ migrates same-day legacy UTC instants once without losing daily work or earning another streak
+  ✓ starts a fresh learner and preserves a returning learner target after a long absence (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.421 s, estimated 1 s
+Ran all test suites within paths "__tests__/storage/calendarTransitions.test.ts".
+Calendar integration: America/Bogota
+PASS __tests__/storage/calendarTransitions.test.ts
+  ✓ keeps daily limits and streaks across the short calendar day in the active zone (5 ms)
+  ✓ keeps daily limits and streaks across the long calendar day in the active zone (1 ms)
+  ✓ migrates same-day legacy UTC instants once without losing daily work or earning another streak
+  ✓ starts a fresh learner and preserves a returning learner target after a long absence (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.38 s, estimated 1 s
+Ran all test suites within paths "__tests__/storage/calendarTransitions.test.ts".
+Calendar integration: America/New_York
+PASS __tests__/storage/calendarTransitions.test.ts
+  ✓ keeps daily limits and streaks across the short calendar day in the active zone (5 ms)
+  ✓ keeps daily limits and streaks across the long calendar day in the active zone (2 ms)
+  ✓ migrates same-day legacy UTC instants once without losing daily work or earning another streak
+  ✓ starts a fresh learner and preserves a returning learner target after a long absence (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.366 s, estimated 1 s
+Ran all test suites within paths "__tests__/storage/calendarTransitions.test.ts".
+Calendar integration: Pacific/Auckland
+PASS __tests__/storage/calendarTransitions.test.ts
+  ✓ keeps daily limits and streaks across the short calendar day in the active zone (5 ms)
+  ✓ keeps daily limits and streaks across the long calendar day in the active zone (1 ms)
+  ✓ migrates same-day legacy UTC instants once without losing daily work or earning another streak (1 ms)
+  ✓ starts a fresh learner and preserves a returning learner target after a long absence (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.373 s, estimated 1 s
+Ran all test suites within paths "__tests__/storage/calendarTransitions.test.ts".

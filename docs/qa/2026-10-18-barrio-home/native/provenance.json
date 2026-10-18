@@ -1,0 +1,34 @@
+{
+  "runtimeHead": "9bd079b",
+  "nativeChanges": false,
+  "binaryPath": "/tmp/colombian-theme-picker-build/Build/Products/Debug-iphonesimulator/ColombianSpanish.app",
+  "bundle": "com.mikepitts.colombianspanish",
+  "binarySha256": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb",
+  "devices": [
+    {
+      "UDID": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+      "name": "Colombian Spanish Barrio Phone QA",
+      "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPhone-SE-3rd-generation",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "installedBinarySha256": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb",
+      "sameFoundationBinary": true
+    },
+    {
+      "UDID": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+      "name": "Colombian Spanish Applied Mini QA",
+      "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPad-mini-A17-Pro",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "installedBinarySha256": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb",
+      "sameFoundationBinary": true
+    }
+  ],
+  "metro": {
+    "port": 8099,
+    "root": "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish",
+    "actualDependencies": true,
+    "ciModeCacheClearedAfterRuntimeChange": true,
+    "launchArguments": ["-RCT_jsLocation", "localhost:8099"]
+  },
+  "finalRuntimeHead": "ecf1a2e",
+  "matrixRuntimeHead": "9bd079b"
+}

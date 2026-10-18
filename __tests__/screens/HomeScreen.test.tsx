@@ -668,15 +668,22 @@ it('refreshes the catch-up boundary when Start crosses midnight after Home loads
   );
 });
 
-it('theme identity repaints Home while its recommendation and route remain the same', async () => {
+it('theme identity changes Home composition while preserving recommendation routes and Classic return', async () => {
   const ui = renderWithTheme(<HomeScreen />);
-  const label = await ui.findByText('Study due cards');
+  await ui.findByText('Study due cards');
   ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
-  expect(label).toHaveStyle({ color: '#FFFFFF' });
-  await act(async () => fireEvent.press(label));
-  await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
+  expect(ui.queryByText('Study due cards')).toBeNull();
+  const primary = ui.getByRole('button', { name: 'Start my plan' });
+  expect(ui.getByText('Start my plan')).toHaveStyle({ color: '#FFFFFF' });
+  await act(async () => fireEvent.press(primary));
+  await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
+  const barrioRoute = mockNavigate.mock.calls[0];
+  mockNavigate.mockClear();
   ui.applyTheme({ themeId: 'classic', appearanceMode: 'dark' });
-  expect(label).toHaveStyle({ color: '#020617' });
+  const classic = ui.getByText('Study due cards');
+  expect(classic).toHaveStyle({ color: '#020617' });
+  await act(async () => fireEvent.press(classic));
+  await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(...barrioRoute));
 });
 
 test('Barrio audio entry uses the common decorative icon while Classic retains its glyph', async () => {
@@ -691,4 +698,128 @@ test('Barrio audio entry uses the common decorative icon while Classic retains i
   expect(mockSpeakCard).toHaveBeenCalledTimes(1);
   screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
   expect(screen.getAllByText('🔊').length).toBeGreaterThan(0);
+});
+
+it('Barrio keeps one held production start through theme, language and live text changes', async () => {
+  require('../../src/storage/prefs').getPrefs.mockResolvedValue({
+    newCardsPerDay: 2,
+    studyMinutes: 3,
+    learningLevel: 'basic',
+  });
+  let release!: () => void;
+  mockReload.mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        release = resolve;
+      }),
+  );
+  const ui = renderWithTheme(<HomeScreen />);
+  await ui.findByText('Study due cards');
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  const startButton = ui.getByRole('button', { name: 'Start my plan' });
+  act(() => {
+    fireEvent.press(startButton);
+    fireEvent.press(startButton);
+  });
+  fireEvent.press(ui.getByRole('button', { name: 'Loading...' }));
+  expect(mockReload).toHaveBeenCalledTimes(1);
+  expect(ui.getByRole('button', { name: 'Loading...' }).props.accessibilityState).toMatchObject({
+    disabled: true,
+    busy: true,
+  });
+  const window = Dimensions.get('window'),
+    screen = Dimensions.get('screen');
+  try {
+    mockLanguage = 'es';
+    ui.applyTheme({ themeId: 'barrio', appearanceMode: 'dark' });
+    act(() =>
+      Dimensions.set({ window: { ...window, fontScale: 3 }, screen: { ...screen, fontScale: 3 } }),
+    );
+    expect(ui.getByRole('button', { name: 'Cargando...' })).toBeDisabled();
+    ui.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+    ui.applyTheme({ themeId: 'barrio', appearanceMode: 'system' });
+    expect(ui.getByRole('button', { name: 'Cargando...' })).toBeDisabled();
+    expect(mockReload).toHaveBeenCalledTimes(1);
+    await act(async () => release());
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
+    expect(mockNavigate).toHaveBeenCalledWith('Study', {
+      autoStartDeckId: DECK.id,
+      sessionCardLimit: 5,
+      sessionNewLimit: 2,
+    });
+  } finally {
+    ui.unmount();
+    act(() => Dimensions.set({ window, screen }));
+  }
+});
+
+it('Barrio retries a rejected start while its original controller remains mounted', async () => {
+  mockReload.mockRejectedValueOnce(new Error('budget failure'));
+  const ui = renderWithTheme(<HomeScreen />);
+  await ui.findByText('Study due cards');
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  fireEvent.press(ui.getByRole('button', { name: 'Start my plan' }));
+  await ui.findByText('Could not open your practice. Try opening it again.');
+  expect(mockNavigate).not.toHaveBeenCalled();
+  ui.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+  expect(ui.getByText('Could not prepare the session. Please try again.')).toBeTruthy();
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'dark' });
+  fireEvent.press(ui.getByRole('button', { name: 'Retry' }));
+  await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
+  expect(mockReload).toHaveBeenCalledTimes(2);
+});
+
+it('Barrio read failure overrides a pending presentation snapshot', async () => {
+  let release!: () => void;
+  mockReload.mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        release = resolve;
+      }),
+  );
+  const ui = renderWithTheme(<HomeScreen />);
+  await ui.findByText('Study due cards');
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  fireEvent.press(ui.getByRole('button', { name: 'Start my plan' }));
+  require('../../src/storage/storage').getDailyProgress.mockRejectedValueOnce(
+    new Error('read failed'),
+  );
+  const foreground = (AppState.addEventListener as jest.Mock).mock.calls.at(-1)![1];
+  await act(async () => foreground('active'));
+  try {
+    expect(ui.queryByText('Could not read your plan')).not.toBeNull();
+    expect(ui.queryByText('One step for today')).toBeNull();
+    expect(ui.queryByRole('button', { name: /Greetings,.*review/ })).toBeNull();
+    fireEvent.press(ui.getByRole('button', { name: 'Loading...' }));
+    expect(mockReload).toHaveBeenCalledTimes(1);
+  } finally {
+    await act(async () => release());
+    ui.unmount();
+  }
+});
+it('Barrio Retry repeats the selected direct deck start', async () => {
+  const other = {
+    ...DECK,
+    id: 'other-deck',
+    name: 'Other deck',
+    cards: [makeCard('other', { reps: 1, interval: 1 })],
+  };
+  mockUseDeck.mockReturnValue({
+    ready: true,
+    decks: [DECK, other],
+    activeDeckId: DECK.id,
+    activeDeck: DECK,
+    setActiveDeckId: jest.fn(),
+    reload: mockReload,
+  });
+  mockReload.mockRejectedValueOnce(new Error('read failed'));
+  const ui = renderWithTheme(<HomeScreen />);
+  await ui.findByText('Study due cards');
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  fireEvent.press(ui.getByRole('button', { name: /Other deck,/ }));
+  await ui.findByText('Could not open your practice. Try opening it again.');
+  fireEvent.press(ui.getByRole('button', { name: 'Retry' }));
+  await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
+  expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: 'other-deck' });
+  ui.unmount();
 });
