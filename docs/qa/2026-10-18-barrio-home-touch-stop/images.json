@@ -1,0 +1,14 @@
+[
+  {
+    "file": "native/mini-max-focused-primary.png",
+    "sha256": "e65684e618b57fc84d03e0bcbdccd91fc5d46e8a68228fa578ff3dbee98c1105"
+  },
+  {
+    "file": "native/mini-max-middle-hero.png",
+    "sha256": "971e6fccf0db58d178646533d7fab970fdc411aa13a26c0b626efb07041c7c8d"
+  },
+  {
+    "file": "native/mini-max-primary-voiceover-off.png",
+    "sha256": "46d15a80d369000697d2c4d124b2365dacd4c64b51118244cb25ff5799a191ed"
+  }
+]
