@@ -1,0 +1,37 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/ManageDecksScreen.test.tsx --testNamePattern=retains rejected rename
+
+FAIL __tests__/screens/ManageDecksScreen.test.tsx
+  ✕ retains rejected rename text for exact retry and preserves the list query (332 ms)
+  ○ skipped keeps one rename and its draft across pending writes and live font changes
+  ○ skipped handles failed confirmed Eliminar and ignores duplicate confirmation callbacks
+  ○ skipped handles failed confirmed Reiniciar and ignores duplicate confirmation callbacks
+  ManageDecksScreen navigation
+    ○ skipped navigates directly to the Home tab
+    ○ skipped opens the translation review screen
+
+  ● retains rejected rename text for exact retry and preserves the list query
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 2
+    Received number of calls: 1
+
+      105 |   expect(ui.getByDisplayValue('Nombre nuevo')).toBeTruthy();
+      106 |   fireEvent.press(ui.getByRole('button', { name: 'Reintentar guardado', disabled: false }));
+    > 107 |   expect(rename).toHaveBeenCalledTimes(2);
+          |                  ^
+      108 |   expect(ui.getByDisplayValue('Nombre nuevo').props.editable).toBe(false);
+      109 |   await act(async () => finishRetry());
+      110 |   expect(ui.queryByDisplayValue('Nombre nuevo')).toBeNull();
+
+      at Object.toHaveBeenCalledTimes (__tests__/screens/ManageDecksScreen.test.tsx:107:18)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 skipped, 6 total
+Snapshots:   0 total
+Time:        1.242 s
+Ran all test suites within paths "__tests__/screens/ManageDecksScreen.test.tsx".

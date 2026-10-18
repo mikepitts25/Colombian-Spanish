@@ -1,15 +1,12 @@
 
 > colombian-spanish-srs@1.0.0 test
-> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/FlaggedScreen.test.tsx
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/ManageDecksScreen.test.tsx __tests__/screens/FlaggedScreen.test.tsx
 
+PASS __tests__/screens/ManageDecksScreen.test.tsx
 PASS __tests__/screens/FlaggedScreen.test.tsx
-  ✓ catches clipboard failure, reports no success, and permits a deliberate retry (333 ms)
-  ✓ exports one exact quoted snapshot and blocks overlap until acknowledged (8 ms)
-  ✓ holds a single clear across duplicate confirmations and font changes (11 ms)
-  ✓ handles uncertain clear failure without automatic replay and requires fresh confirmation (7 ms)
 
-Test Suites: 1 passed, 1 total
-Tests:       4 passed, 4 total
+Test Suites: 2 passed, 2 total
+Tests:       11 passed, 11 total
 Snapshots:   0 total
-Time:        1.157 s
-Ran all test suites within paths "__tests__/screens/FlaggedScreen.test.tsx".
+Time:        1.271 s, estimated 2 s
+Ran all test suites within paths "__tests__/screens/ManageDecksScreen.test.tsx", "__tests__/screens/FlaggedScreen.test.tsx".

@@ -73,22 +73,41 @@ test('keeps one rename and its draft across pending writes and live font changes
 });
 
 test('retains rejected rename text for exact retry and preserves the list query', async () => {
+  let rejectFirst!: (error: Error) => void;
+  let finishRetry!: () => void;
   const rename = jest
     .fn()
-    .mockRejectedValueOnce(new Error('disk full'))
-    .mockResolvedValue(undefined);
+    .mockImplementationOnce(
+      () =>
+        new Promise<void>((_resolve, reject) => {
+          rejectFirst = reject;
+        }),
+    )
+    .mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          finishRetry = resolve;
+        }),
+    );
   mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [oneDeck], renameDeck: rename });
   const ui = render(<ManageDecksScreen />);
   fireEvent.changeText(ui.getByPlaceholderText('Buscar decks...'), 'Prueba');
   fireEvent.press(ui.getByText('Renombrar'));
   fireEvent.changeText(ui.getByPlaceholderText('Nombre del deck'), 'Nombre nuevo');
   fireEvent.press(ui.getByText('Guardar'));
-  await ui.findByText(
-    'No se pudo confirmar el guardado. Tu borrador se conserva. Reintenta el mismo guardado.',
-  );
+  expect(rename).toHaveBeenCalledTimes(1);
+  await act(async () => rejectFirst(new Error('disk full')));
+  expect(
+    ui.getByText(
+      'No se pudo confirmar el guardado. Tu borrador se conserva. Reintenta el mismo guardado.',
+    ),
+  ).toBeTruthy();
   expect(ui.getByDisplayValue('Nombre nuevo')).toBeTruthy();
-  fireEvent.press(ui.getByRole('button', { name: 'Reintentar guardado' }));
-  await waitFor(() => expect(ui.queryByDisplayValue('Nombre nuevo')).toBeNull());
+  fireEvent.press(ui.getByRole('button', { name: 'Reintentar guardado', disabled: false }));
+  expect(rename).toHaveBeenCalledTimes(2);
+  expect(ui.getByDisplayValue('Nombre nuevo').props.editable).toBe(false);
+  await act(async () => finishRetry());
+  expect(ui.queryByDisplayValue('Nombre nuevo')).toBeNull();
   expect(rename.mock.calls).toEqual([
     ['d1', 'Nombre nuevo'],
     ['d1', 'Nombre nuevo'],

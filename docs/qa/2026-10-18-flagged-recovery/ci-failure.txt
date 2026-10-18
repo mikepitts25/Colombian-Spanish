@@ -1,0 +1,22 @@
+Summary of all failing tests
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9713649Z FAIL __tests__/screens/ManageDecksScreen.test.tsx
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9716668Z   ● retains rejected rename text for exact retry and preserves the list query
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9717277Z 
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9717552Z     expect(received).toBeNull()
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9717856Z 
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9740226Z     Received: {"_fiber": {"_debugHookTypes": null, "_debugInfo": null, "_debugNeedsRemount": false, "_debugOwner": [FiberNode], "_debugStack": [Error: react-stack-top-frame], "_debugTask": null, "actualDuration": 0, "actualStartTime": 1792290586622, "alternate": [FiberNode], "child": null, "childLanes": 0, "deletions": null, "dependencies": null, "elementType": "TextInput", "flags": 4, "index": 0, "key": null, "lanes": 0, "memoizedProps": [Object], "memoizedState": null, "mode": 3, "pendingProps": [Object], "ref": null, "refCleanup": null, "return": [FiberNode], "selfBaseDuration": 0, "sibling": null, "stateNode": [Object], "subtreeFlags": 0, "tag": 5, "treeBaseDuration": 0, "type": "TextInput", "updateQueue": null}}
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9743133Z 
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9744434Z     ^[[0m ^[[90m 89 |^[[39m   expect(ui^[[33m.^[[39mgetByDisplayValue(^[[32m'Nombre nuevo'^[[39m))^[[33m.^[[39mtoBeTruthy()^[[33m;^[[39m
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9745956Z      ^[[90m 90 |^[[39m   fireEvent^[[33m.^[[39mpress(ui^[[33m.^[[39mgetByRole(^[[32m'button'^[[39m^[[33m,^[[39m { name^[[33m:^[[39m ^[[32m'Reintentar guardado'^[[39m }))^[[33m;^[[39m
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9747384Z     ^[[31m^[[1m>^[[22m^[[39m^[[90m 91 |^[[39m   ^[[36mawait^[[39m waitFor(() ^[[33m=>^[[39m expect(ui^[[33m.^[[39mqueryByDisplayValue(^[[32m'Nombre nuevo'^[[39m))^[[33m.^[[39mtoBeNull())^[[33m;^[[39m
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9748325Z      ^[[90m    |^[[39m                ^[[31m^[[1m^^[[22m^[[39m
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9749639Z      ^[[90m 92 |^[[39m   expect(rename^[[33m.^[[39mmock^[[33m.^[[39mcalls)^[[33m.^[[39mtoEqual([
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9752757Z      ^[[90m 93 |^[[39m     [^[[32m'd1'^[[39m^[[33m,^[[39m ^[[32m'Nombre nuevo'^[[39m]^[[33m,^[[39m
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9756211Z      ^[[90m 94 |^[[39m     [^[[32m'd1'^[[39m^[[33m,^[[39m ^[[32m'Nombre nuevo'^[[39m]^[[33m,^[[39m^[[0m
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9756755Z 
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9758878Z       at Object.<anonymous> (__tests__/screens/ManageDecksScreen.test.tsx:91:16)
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9762092Z       at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9764893Z       at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9765393Z 
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9765448Z 
+Types, lint, formatting, tests, and content	Run npm test -- --runInBand	2026-10-18T02:30:10.9773702Z 

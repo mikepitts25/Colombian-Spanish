@@ -29,4 +29,10 @@ Run `python3 docs/qa/2026-10-18-flagged-recovery/verify-state.py`. Five read-onl
 
 Native empty-state rendering, controlled native rejected writes, full touch/assistive/narrow/theme/platform acceptance and the rapid-navigation diagnostic remain open in their broad parents. The empty-state copy is changed without pretending the existing flagged list is empty. Security B01.8-C2g remains blocked and was not retried. Downloadable audio approval, Android licensing, recordings/accounts/signing and physical/human acceptance remain separate.
 
-Prior evidence commit48bbe1f is merged/pushed and its CI39089097184 and board39089097162 succeeded. This batch will be merged/pushed after final evidence review/static checks.
+Prior evidence commit48bbe1f is merged/pushed and its CI39089097184 and board39089097162 succeeded. Implementation14a63f8 is merged/pushed; merged101/990 passed. CI follow-up is recorded below.
+
+## CI synchronization follow-up
+
+[CI39090172813](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39090172813) passed iOS/Android project generation/bundles but failed the earlier Manage Decks rename-retry test at its implicit polling-based modal-dismissal assertion; Flagged tests passed. `ci-failure.txt` retains the failure. This did not reproduce locally, so it is not claimed as a diagnosed production defect.
+
+The test now explicitly rejects the held first save within async act, requires enabled Retry and an immediate second write, verifies the locked retained draft while that write is held, then resolves it and asserts modal closure, exact two payloads and retained query. No application code changed. Removing the retry invocation makes the test fail at expected2calls/received1 (`ci-retry-mutation.log`); restored implementation passes focused11tests and full101/990. Fresh review found no weakening or other issues. The synchronized test and evidence are pushed for a fresh CI result.
