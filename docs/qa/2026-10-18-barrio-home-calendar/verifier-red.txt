@@ -1,0 +1,95 @@
+..FFFFFFFFFF
+======================================================================
+FAIL: test_rejects_complete_session_divergence_despite_matching_hash (test_home_fixture_evidence.HomeFixtureEvidenceTests.test_rejects_complete_session_divergence_despite_matching_hash) (name='deck')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/scripts/tests/test_home_fixture_evidence.py", line 55, in test_rejects_complete_session_divergence_despite_matching_hash
+    with self.subTest(name=name), self.assertRaises(AssertionError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_complete_session_divergence_despite_matching_hash (test_home_fixture_evidence.HomeFixtureEvidenceTests.test_rejects_complete_session_divergence_despite_matching_hash) (name='card_order')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/scripts/tests/test_home_fixture_evidence.py", line 55, in test_rejects_complete_session_divergence_despite_matching_hash
+    with self.subTest(name=name), self.assertRaises(AssertionError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_complete_session_divergence_despite_matching_hash (test_home_fixture_evidence.HomeFixtureEvidenceTests.test_rejects_complete_session_divergence_despite_matching_hash) (name='extra_card')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/scripts/tests/test_home_fixture_evidence.py", line 55, in test_rejects_complete_session_divergence_despite_matching_hash
+    with self.subTest(name=name), self.assertRaises(AssertionError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_complete_session_divergence_despite_matching_hash (test_home_fixture_evidence.HomeFixtureEvidenceTests.test_rejects_complete_session_divergence_despite_matching_hash) (name='card_limit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/scripts/tests/test_home_fixture_evidence.py", line 55, in test_rejects_complete_session_divergence_despite_matching_hash
+    with self.subTest(name=name), self.assertRaises(AssertionError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_complete_session_divergence_despite_matching_hash (test_home_fixture_evidence.HomeFixtureEvidenceTests.test_rejects_complete_session_divergence_despite_matching_hash) (name='new_limit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/scripts/tests/test_home_fixture_evidence.py", line 55, in test_rejects_complete_session_divergence_despite_matching_hash
+    with self.subTest(name=name), self.assertRaises(AssertionError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_complete_session_divergence_despite_matching_hash (test_home_fixture_evidence.HomeFixtureEvidenceTests.test_rejects_complete_session_divergence_despite_matching_hash) (name='session_identity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/scripts/tests/test_home_fixture_evidence.py", line 55, in test_rejects_complete_session_divergence_despite_matching_hash
+    with self.subTest(name=name), self.assertRaises(AssertionError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_complete_session_divergence_despite_matching_hash (test_home_fixture_evidence.HomeFixtureEvidenceTests.test_rejects_complete_session_divergence_despite_matching_hash) (name='region')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/scripts/tests/test_home_fixture_evidence.py", line 55, in test_rejects_complete_session_divergence_despite_matching_hash
+    with self.subTest(name=name), self.assertRaises(AssertionError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_complete_session_divergence_despite_matching_hash (test_home_fixture_evidence.HomeFixtureEvidenceTests.test_rejects_complete_session_divergence_despite_matching_hash) (name='schema')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/scripts/tests/test_home_fixture_evidence.py", line 55, in test_rejects_complete_session_divergence_despite_matching_hash
+    with self.subTest(name=name), self.assertRaises(AssertionError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_complete_session_divergence_despite_matching_hash (test_home_fixture_evidence.HomeFixtureEvidenceTests.test_rejects_complete_session_divergence_despite_matching_hash) (name='missing_queue')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/scripts/tests/test_home_fixture_evidence.py", line 55, in test_rejects_complete_session_divergence_despite_matching_hash
+    with self.subTest(name=name), self.assertRaises(AssertionError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_complete_session_divergence_despite_matching_hash (test_home_fixture_evidence.HomeFixtureEvidenceTests.test_rejects_complete_session_divergence_despite_matching_hash) (name='unexpected_field')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish/scripts/tests/test_home_fixture_evidence.py", line 55, in test_rejects_complete_session_divergence_despite_matching_hash
+    with self.subTest(name=name), self.assertRaises(AssertionError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.078s
+
+FAILED (failures=10)
