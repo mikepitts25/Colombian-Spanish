@@ -1,0 +1,1 @@
+PASS: independent source/destination paths; exact deck-only import; 20→0 flag-only clear survives cold launch; ten destination records and eleven source records preserved
