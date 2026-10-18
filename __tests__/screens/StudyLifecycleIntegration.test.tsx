@@ -961,7 +961,6 @@ test.each([
       await screen.findByText(
         'Alcanzaste el límite diario de tarjetas nuevas. Vuelve a los decks para repasar tarjetas estudiadas.',
       );
-    else if (target === 'removed') await screen.findByText('phrase second');
     else
       await screen.findByText(
         'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
@@ -977,9 +976,23 @@ test.each([
       expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
     };
     await assertRestored();
-    if (target === 'edited' || target === 'moved' || target === 'replaced-deck') {
+    if (target === 'removed') {
+      expect(screen.getByText('Volver')).toBeDisabled();
+      fireEvent.press(screen.getByText('Volver'));
+      expect(screen.queryByText('Continuar')).toBeNull();
+      await assertRestored();
+    }
+    if (
+      target === 'removed' ||
+      target === 'edited' ||
+      target === 'moved' ||
+      target === 'replaced-deck'
+    ) {
       expect(screen.queryByText('Intentar guardar de nuevo')).toBeNull();
-      if ((target === 'edited' || target === 'replaced-deck') && boundary === 'held') {
+      if (
+        (target === 'removed' || target === 'edited' || target === 'replaced-deck') &&
+        boundary === 'held'
+      ) {
         const read = AsyncStorage.getItem as jest.Mock;
         const originalRead = read.getMockImplementation()!;
         let fail = true;

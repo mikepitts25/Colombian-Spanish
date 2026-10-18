@@ -1,5 +1,7 @@
 # Stale, uncommitted grades after restore
 
+Follow-up: [B02.4-B2v](../2026-10-18-study-removed-target/REPORT.md) closes the removed-target screen path. This PR29 report preserves its original evidence; context-free legacy missing-card no-ops remain compatible, while current grading screens now recover as stale.
+
 Base: `34772b5` (main after PR28). Runtime repair for B02.4; Classic and Barrio use the same safe transaction.
 
 ## Reproduction and cause

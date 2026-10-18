@@ -271,3 +271,37 @@ it('reloads after stale meaning without resubmitting the old grade, including re
   });
   expect(reload).toHaveBeenCalledTimes(2);
 });
+
+it('retains reload recovery when the removed card disappears during a failed read', async () => {
+  const { StaleGradeError } = require('../../src/storage/flashcardAnswer');
+  const recordAnswer = jest.fn().mockRejectedValue(new StaleGradeError());
+  const reload = jest
+    .fn()
+    .mockImplementationOnce(async () => {
+      mockUseDeck.mockReturnValue({ ready: true, decks: [], recordAnswer, reload });
+      throw new Error('fresh budget read failed');
+    })
+    .mockResolvedValue(undefined);
+  mockUseDeck.mockReturnValue({ ready: true, decks: [DECK], recordAnswer, reload });
+  const screen = render(<DifficultWordsScreen />);
+  await screen.findByText('Bien');
+  await act(async () => {
+    fireEvent.press(screen.getByText('Bien'));
+  });
+  await screen.findByText('Recargar tarjetas');
+  await act(async () => {
+    fireEvent.press(screen.getByText('Recargar tarjetas'));
+  });
+  screen.rerender(<DifficultWordsScreen />);
+  expect(screen.queryByText('parce')).toBeNull();
+  expect(
+    screen.getByText('La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.'),
+  ).toBeTruthy();
+  expect(screen.getByText('Recargar tarjetas')).not.toBeDisabled();
+  await act(async () => {
+    fireEvent.press(screen.getByText('Recargar tarjetas'));
+  });
+  expect(screen.queryByText('Recargar tarjetas')).toBeNull();
+  expect(recordAnswer).toHaveBeenCalledTimes(1);
+  expect(reload).toHaveBeenCalledTimes(2);
+});

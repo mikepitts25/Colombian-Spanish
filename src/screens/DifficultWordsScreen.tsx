@@ -170,6 +170,28 @@ export default function DifficultWordsScreen() {
     }
   }
 
+  const gradeStatus = gradeError && (
+    <View style={{ padding: 12, gap: 8 }}>
+      <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
+        {t(gradeError === 'stale' ? 'practice.staleGrade' : 'practice.saveError')}
+      </Text>
+      <Pressable
+        accessibilityRole="button"
+        disabled={gradeSaving}
+        style={{ minHeight: 48, minWidth: 48, justifyContent: 'center' }}
+        onPress={
+          gradeError === 'stale'
+            ? reloadStaleCards
+            : () => grade(pendingGrade.current?.quality ?? 1)
+        }
+      >
+        <Text style={{ color: colors.brand }}>
+          {t(gradeError === 'stale' ? 'practice.reloadCards' : 'practice.retrySave')}
+        </Text>
+      </Pressable>
+    </View>
+  );
+
   if (!ready) {
     return (
       <SafeAreaView style={styles.wrap}>
@@ -187,9 +209,15 @@ export default function DifficultWordsScreen() {
       <SafeAreaView style={styles.wrap}>
         <ScrollView contentContainerStyle={styles.center}>
           <View key={fontScale} style={styles.emptyContent}>
-            <Text style={styles.emptyEmoji}>🎉</Text>
-            <Text style={styles.emptyTitle}>{t('difficult.emptyTitle')}</Text>
-            <Text style={styles.emptySub}>{t('difficult.emptySub')}</Text>
+            {gradeError === 'stale' ? (
+              gradeStatus
+            ) : (
+              <>
+                <Text style={styles.emptyEmoji}>🎉</Text>
+                <Text style={styles.emptyTitle}>{t('difficult.emptyTitle')}</Text>
+                <Text style={styles.emptySub}>{t('difficult.emptySub')}</Text>
+              </>
+            )}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -231,27 +259,7 @@ export default function DifficultWordsScreen() {
           <Flashcard key={current.card.id} card={current.card} onGrade={grade} expandForLargeText />
         </View>
 
-        {gradeError && (
-          <View style={{ padding: 12, gap: 8 }}>
-            <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
-              {t(gradeError === 'stale' ? 'practice.staleGrade' : 'practice.saveError')}
-            </Text>
-            <Pressable
-              accessibilityRole="button"
-              disabled={gradeSaving}
-              style={{ minHeight: 48, minWidth: 48, justifyContent: 'center' }}
-              onPress={
-                gradeError === 'stale'
-                  ? reloadStaleCards
-                  : () => grade(pendingGrade.current?.quality ?? 1)
-              }
-            >
-              <Text style={{ color: colors.brand }}>
-                {t(gradeError === 'stale' ? 'practice.reloadCards' : 'practice.retrySave')}
-              </Text>
-            </Pressable>
-          </View>
-        )}
+        {gradeStatus}
         <View key={`grades-${fontScale}`} style={styles.gradeBar}>
           <Text style={styles.gradeLabel}>{t('difficult.reviewPrompt')}</Text>
           <View style={[styles.gradeButtons, largeText && styles.stacked]}>
