@@ -1,3 +1,7 @@
+import ThemedTextInput from '../components/ThemedTextInput';
+import { controlSurface, controlText } from '../styles/controlStates';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import {
   Alert,
@@ -6,7 +10,6 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   View,
   FlatList,
   ScrollView,
@@ -17,7 +20,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { usePreventRemove } from '@react-navigation/native';
 import { HeaderHeightContext } from '@react-navigation/elements';
-import { colors, spacing } from '../styles/theme';
+import { spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { FlashCard } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -36,20 +39,28 @@ function Action({
   onPress: () => void;
   disabled?: boolean;
 }) {
+  const styles = useThemedStyles(makeStyles);
+  const theme = useAppTheme();
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ disabled }}
       disabled={disabled}
       onPress={onPress}
-      style={[styles.action, disabled && styles.disabled]}
+      style={({ pressed }) => [
+        styles.action,
+        disabled && styles.disabled,
+        controlSurface(theme, pressed, disabled),
+      ]}
     >
-      <Text style={styles.actionText}>{label}</Text>
+      <Text style={[styles.actionText, controlText(theme, disabled)]}>{label}</Text>
     </Pressable>
   );
 }
 
 export default function AddCardScreen() {
+  const styles = useThemedStyles(makeStyles);
+  const { colors } = useAppTheme();
   const { ready, decks, activeDeckId, addCardToDeck, createDeck } = useDeck();
   const { t } = useLanguage();
   const { fontScale } = useWindowDimensions();
@@ -279,11 +290,12 @@ export default function AddCardScreen() {
           {fields.map((field, index) => (
             <View
               key={field.label}
+              testID={`add-card-field-${index}`}
               style={styles.field}
               onLayout={(event) => recordFieldLayout(index, 'fieldY', event.nativeEvent.layout.y)}
             >
               <Text style={styles.label}>{field.label}</Text>
-              <TextInput
+              <ThemedTextInput
                 accessibilityLabel={field.label}
                 onLayout={(event) => recordFieldLayout(index, 'inputY', event.nativeEvent.layout.y)}
                 onFocus={() => {
@@ -397,7 +409,7 @@ export default function AddCardScreen() {
                 {t('addCard.newDeckTitle')}
               </Text>
               {newDeckOpen && status}
-              <TextInput
+              <ThemedTextInput
                 accessibilityLabel={t('addCard.newDeckPlaceholder')}
                 placeholder={t('addCard.newDeckPlaceholder')}
                 placeholderTextColor={colors.textSecondary}
@@ -431,60 +443,61 @@ export default function AddCardScreen() {
     </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({
-  flex: { flex: 1 },
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: spacing(2), paddingBottom: 40, gap: 12 },
-  h1: { color: colors.textPrimary, fontSize: 24, fontWeight: '800' },
-  field: { gap: 6 },
-  label: { color: colors.textPrimary, fontSize: 16, fontWeight: '700' },
-  body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
-  input: {
-    backgroundColor: colors.surface,
-    color: colors.textPrimary,
-    borderRadius: 12,
-    padding: 14,
-    fontSize: 16,
-    minHeight: 48,
-    textAlignVertical: 'top',
-  },
-  action: {
-    minHeight: 48,
-    backgroundColor: colors.brand,
-    borderRadius: 12,
-    padding: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 6,
-  },
-  actionText: { color: colors.bg, fontSize: 16, fontWeight: '800' },
-  disabled: { opacity: 0.6 },
-  select: {
-    minHeight: 48,
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  modalBackdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  modalBody: {
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: 14,
-    padding: 16,
-    maxHeight: '85%',
-  },
-  modalContent: { gap: 12 },
-  modalTitle: { color: colors.textPrimary, fontSize: 22, fontWeight: '800' },
-  modalRow: {
-    minHeight: 48,
-    paddingVertical: 14,
-    borderBottomColor: colors.border,
-    borderBottomWidth: 1,
-  },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    flex: { flex: 1 },
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    content: { padding: spacing(2), paddingBottom: 40, gap: 12 },
+    h1: { color: colors.textPrimary, fontSize: 24, fontWeight: '800' },
+    field: { gap: 6 },
+    label: { color: colors.textPrimary, fontSize: 16, fontWeight: '700' },
+    body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
+    input: {
+      backgroundColor: colors.surface,
+      color: colors.textPrimary,
+      borderRadius: 12,
+      padding: 14,
+      fontSize: 16,
+      minHeight: 48,
+      textAlignVertical: 'top',
+    },
+    action: {
+      minHeight: 48,
+      backgroundColor: colors.brand,
+      borderRadius: 12,
+      padding: 14,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginVertical: 6,
+    },
+    actionText: { color: colors.onBrand, fontSize: 16, fontWeight: '800' },
+    disabled: { opacity: 0.6 },
+    select: {
+      minHeight: 48,
+      backgroundColor: colors.surface,
+      borderRadius: 12,
+      padding: 14,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    modalBackdrop: {
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.6)',
+      justifyContent: 'center',
+      padding: 20,
+    },
+    modalBody: {
+      backgroundColor: colors.surfaceElevated,
+      borderRadius: 14,
+      padding: 16,
+      maxHeight: '85%',
+    },
+    modalContent: { gap: 12 },
+    modalTitle: { color: colors.textPrimary, fontSize: 22, fontWeight: '800' },
+    modalRow: {
+      minHeight: 48,
+      paddingVertical: 14,
+      borderBottomColor: colors.border,
+      borderBottomWidth: 1,
+    },
+  });

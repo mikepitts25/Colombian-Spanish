@@ -1,8 +1,10 @@
+import { useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { colors } from '../styles/theme';
+
 import { useLanguage } from '../context/LanguageContext';
 import { useDeck } from '../hooks/useDeck';
 import { HomeRegion, LearningReason } from '../storage/prefs';
@@ -104,6 +106,7 @@ export function recommendDeckId(
 const TOTAL_STEPS = 3;
 
 export default function OnboardingScreen() {
+  const styles = useThemedStyles(makeStyles);
   const { fontScale } = useWindowDimensions();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
@@ -292,92 +295,93 @@ export default function OnboardingScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  saveError: { color: colors.textPrimary, marginHorizontal: 20, marginBottom: 8 },
-  flagStripe: { flexDirection: 'row', height: 3 },
-  flagBand: { height: 3 },
-  scroll: { padding: 20, paddingBottom: 24 },
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    saveError: { color: colors.textPrimary, marginHorizontal: 20, marginBottom: 8 },
+    flagStripe: { flexDirection: 'row', height: 3 },
+    flagBand: { height: 3 },
+    scroll: { padding: 20, paddingBottom: 24 },
 
-  hero: { alignItems: 'center', gap: 6, marginBottom: 20, marginTop: 10 },
-  heroEmoji: { fontSize: 56 },
-  heroTitle: { color: colors.textPrimary, fontSize: 26, fontWeight: '900', textAlign: 'center' },
-  heroSub: { color: colors.textSecondary, fontSize: 14, textAlign: 'center', lineHeight: 20 },
+    hero: { alignItems: 'center', gap: 6, marginBottom: 20, marginTop: 10 },
+    heroEmoji: { fontSize: 56 },
+    heroTitle: { color: colors.textPrimary, fontSize: 26, fontWeight: '900', textAlign: 'center' },
+    heroSub: { color: colors.textSecondary, fontSize: 14, textAlign: 'center', lineHeight: 20 },
 
-  stepLabel: {
-    color: colors.brand,
-    fontSize: 12,
-    fontWeight: '800',
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-    marginBottom: 6,
-  },
-  question: { color: colors.textPrimary, fontSize: 22, fontWeight: '800', marginBottom: 6 },
-  questionSub: { color: colors.textSecondary, fontSize: 13, lineHeight: 18, marginBottom: 10 },
+    stepLabel: {
+      color: colors.brand,
+      fontSize: 12,
+      fontWeight: '800',
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+      marginBottom: 6,
+    },
+    question: { color: colors.textPrimary, fontSize: 22, fontWeight: '800', marginBottom: 6 },
+    questionSub: { color: colors.textSecondary, fontSize: 13, lineHeight: 18, marginBottom: 10 },
 
-  optionList: { gap: 10, marginTop: 10 },
-  option: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-    backgroundColor: colors.surface,
-    borderWidth: 1.5,
-    borderColor: colors.border,
-    borderRadius: 16,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-  optionActive: {
-    borderColor: colors.brand,
-    backgroundColor: 'rgba(255,218,0,0.08)',
-  },
-  optionEmoji: { fontSize: 24 },
-  optionTextWrap: { flex: 1, gap: 2 },
-  optionLabel: { color: colors.textPrimary, fontSize: 15, fontWeight: '700', flexShrink: 1 },
-  optionLabelActive: { color: colors.brand },
-  optionSub: { color: colors.textSecondary, fontSize: 12, fontStyle: 'italic' },
+    optionList: { gap: 10, marginTop: 10 },
+    option: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 14,
+      backgroundColor: colors.surface,
+      borderWidth: 1.5,
+      borderColor: colors.border,
+      borderRadius: 16,
+      paddingVertical: 14,
+      paddingHorizontal: 16,
+    },
+    optionActive: {
+      borderColor: colors.brand,
+      backgroundColor: colors.onboardingWash,
+    },
+    optionEmoji: { fontSize: 24 },
+    optionTextWrap: { flex: 1, gap: 2 },
+    optionLabel: { color: colors.textPrimary, fontSize: 15, fontWeight: '700', flexShrink: 1 },
+    optionLabelActive: { color: colors.brand },
+    optionSub: { color: colors.textSecondary, fontSize: 12, fontStyle: 'italic' },
 
-  goalRow: { flexDirection: 'row', gap: 8, marginTop: 10 },
-  goalBtn: {
-    flex: 1,
-    alignItems: 'center',
-    gap: 3,
-    paddingVertical: 16,
-    borderRadius: 16,
-    backgroundColor: colors.surface,
-    borderWidth: 1.5,
-    borderColor: colors.border,
-  },
-  goalBtnActive: { backgroundColor: colors.brand, borderColor: colors.brand },
-  goalValue: { color: colors.textSecondary, fontSize: 22, fontWeight: '800' },
-  goalValueActive: { color: colors.textInverse },
-  goalLabel: { color: colors.textSecondary, fontSize: 11, fontWeight: '600' },
-  goalLabelActive: { color: colors.textInverse, fontWeight: '800' },
+    goalRow: { flexDirection: 'row', gap: 8, marginTop: 10 },
+    goalBtn: {
+      flex: 1,
+      alignItems: 'center',
+      gap: 3,
+      paddingVertical: 16,
+      borderRadius: 16,
+      backgroundColor: colors.surface,
+      borderWidth: 1.5,
+      borderColor: colors.border,
+    },
+    goalBtnActive: { backgroundColor: colors.brand, borderColor: colors.brand },
+    goalValue: { color: colors.textSecondary, fontSize: 22, fontWeight: '800' },
+    goalValueActive: { color: colors.textInverse },
+    goalLabel: { color: colors.textSecondary, fontSize: 11, fontWeight: '600' },
+    goalLabelActive: { color: colors.textInverse, fontWeight: '800' },
 
-  footer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 12,
-    paddingHorizontal: 20,
-    paddingVertical: 14,
-  },
-  backBtn: {
-    minWidth: 80,
-    minHeight: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 24,
-  },
-  backBtnText: { color: colors.textSecondary, fontSize: 15, fontWeight: '700' },
-  nextBtn: {
-    flex: 1,
-    minHeight: 52,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 26,
-    backgroundColor: colors.brand,
-  },
-  nextBtnDisabled: { opacity: 0.4 },
-  nextBtnText: { color: colors.textInverse, fontSize: 16, fontWeight: '900' },
-});
+    footer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 12,
+      paddingHorizontal: 20,
+      paddingVertical: 14,
+    },
+    backBtn: {
+      minWidth: 80,
+      minHeight: 48,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 24,
+    },
+    backBtnText: { color: colors.textSecondary, fontSize: 15, fontWeight: '700' },
+    nextBtn: {
+      flex: 1,
+      minHeight: 52,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 26,
+      backgroundColor: colors.brand,
+    },
+    nextBtnDisabled: { opacity: 0.4 },
+    nextBtnText: { color: colors.textInverse, fontSize: 16, fontWeight: '900' },
+  });

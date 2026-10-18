@@ -7,6 +7,24 @@ type LegacyColors = {
   gradient: { [K in keyof typeof classicColors.gradient]: readonly string[] };
 };
 export type ThemeColors = LegacyColors & {
+  audioSurface: string;
+  audioText: string;
+  tagSurface: string;
+  tagText: string;
+  progressSuccess: string;
+  progressTrack: string;
+  cardSurface: string;
+  cardBorder: string;
+  cardGlow: string;
+  audioTint: string;
+  audioBorder: string;
+  tabBorder: string;
+  brandWash: string;
+  softBrandBorder: string;
+  onboardingWash: string;
+  managementWarning: string;
+  restoreDanger: string;
+
   onBrand: string;
   brandPressed: string;
   focus: string;
@@ -38,6 +56,24 @@ const classic: AppTheme = immutable({
   iconStyle: 'emoji',
   colors: {
     ...classicColors,
+    audioSurface: '#1f2937',
+    audioText: '#fff',
+    tagSurface: '#0b1220',
+    tagText: '#93c5fd',
+    progressSuccess: '#22c55e',
+    progressTrack: '#1f2937',
+    cardSurface: '#111827',
+    cardBorder: 'rgba(148,163,184,0.16)',
+    cardGlow: 'rgba(255,218,0,0.2)',
+    audioTint: 'rgba(255,218,0,0.1)',
+    audioBorder: 'rgba(255,218,0,0.36)',
+    tabBorder: 'rgba(255,218,0,0.4)',
+    brandWash: 'rgba(255,218,0,0.06)',
+    softBrandBorder: 'rgba(255,218,0,0.2)',
+    onboardingWash: 'rgba(255,218,0,0.08)',
+    managementWarning: '#f59e0b',
+    restoreDanger: '#f87171',
+
     onBrand: classicColors.bg,
     brandPressed: classicColors.brandDark,
     focus: classicColors.brandLight,
@@ -104,6 +140,23 @@ function barrio(palette: typeof light, appearance: 'light' | 'dark'): AppTheme {
     appearance,
     iconStyle: 'line',
     colors: {
+      audioSurface: palette.raised,
+      audioText: palette.text,
+      tagSurface: palette.infoMuted,
+      tagText: palette.info,
+      progressSuccess: palette.success,
+      progressTrack: palette.raised,
+      cardSurface: palette.surface,
+      cardBorder: palette.border,
+      cardGlow: palette.primary,
+      audioTint: palette.raised,
+      audioBorder: palette.border,
+      tabBorder: palette.border,
+      brandWash: palette.raised,
+      softBrandBorder: palette.border,
+      onboardingWash: palette.raised,
+      managementWarning: palette.warning,
+      restoreDanger: palette.danger,
       bg: palette.bg,
       surface: palette.surface,
       surfaceElevated: palette.raised,

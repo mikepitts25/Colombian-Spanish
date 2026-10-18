@@ -1,3 +1,6 @@
+import ThemedTextInput from '../components/ThemedTextInput';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -6,19 +9,20 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
   useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useLanguage } from '../context/LanguageContext';
-import { colors } from '../styles/theme';
+
 import { getPrefs, HOME_REGIONS, LEARNING_REASONS } from '../storage/prefs';
 import { isTripDate, LearningProfile, saveLearningProfile } from '../storage/learningProfile';
 import { LEARNING_LEVELS, STUDY_MINUTES } from '../utils/learningProfile';
 
 export default function LearningPreferencesScreen() {
+  const styles = useThemedStyles(makeStyles);
+  const { colors } = useAppTheme();
   const nav = useNavigation<any>();
   const { fontScale } = useWindowDimensions();
   const { t } = useLanguage();
@@ -172,7 +176,7 @@ export default function LearningPreferencesScreen() {
               <Text accessibilityRole="header" style={styles.heading}>
                 {t('profile.trip')}
               </Text>
-              <TextInput
+              <ThemedTextInput
                 accessibilityLabel={t('profile.trip')}
                 placeholder="YYYY-MM-DD"
                 placeholderTextColor={colors.textSecondary}
@@ -220,45 +224,51 @@ export default function LearningPreferencesScreen() {
     </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: 20, paddingBottom: 40, gap: 12 },
-  back: { alignSelf: 'flex-start', minHeight: 48, justifyContent: 'center', paddingHorizontal: 20 },
-  title: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
-  body: { color: colors.textSecondary, fontSize: 16, lineHeight: 23 },
-  section: { gap: 8, marginTop: 12 },
-  heading: { color: colors.textPrimary, fontSize: 19, fontWeight: '700' },
-  choice: {
-    minHeight: 48,
-    padding: 14,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surface,
-  },
-  selected: { borderColor: colors.brand, borderWidth: 2 },
-  choiceText: { color: colors.textPrimary, fontSize: 16 },
-  input: {
-    minHeight: 48,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 12,
-    color: colors.textPrimary,
-    padding: 14,
-    fontSize: 16,
-  },
-  action: {
-    minHeight: 48,
-    padding: 14,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.brand,
-  },
-  backText: { color: colors.brand, fontWeight: '700', fontSize: 16 },
-  buttonText: { color: colors.textInverse, fontWeight: '700', fontSize: 16 },
-  disabled: { opacity: 0.5 },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    content: { padding: 20, paddingBottom: 40, gap: 12 },
+    back: {
+      alignSelf: 'flex-start',
+      minHeight: 48,
+      justifyContent: 'center',
+      paddingHorizontal: 20,
+    },
+    title: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
+    body: { color: colors.textSecondary, fontSize: 16, lineHeight: 23 },
+    section: { gap: 8, marginTop: 12 },
+    heading: { color: colors.textPrimary, fontSize: 19, fontWeight: '700' },
+    choice: {
+      minHeight: 48,
+      padding: 14,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: colors.border,
+      backgroundColor: colors.surface,
+    },
+    selected: { borderColor: colors.brand, borderWidth: 2 },
+    choiceText: { color: colors.textPrimary, fontSize: 16 },
+    input: {
+      minHeight: 48,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 12,
+      color: colors.textPrimary,
+      padding: 14,
+      fontSize: 16,
+    },
+    action: {
+      minHeight: 48,
+      padding: 14,
+      borderRadius: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.brand,
+    },
+    backText: { color: colors.brand, fontWeight: '700', fontSize: 16 },
+    buttonText: { color: colors.textInverse, fontWeight: '700', fontSize: 16 },
+    disabled: { opacity: 0.5 },
+  });
 
 function Choices<T extends string | number>({
   title,
@@ -275,6 +285,7 @@ function Choices<T extends string | number>({
   onChoose: (value: T) => void;
   saving: boolean;
 }) {
+  const styles = useThemedStyles(makeStyles);
   return (
     <View style={styles.section}>
       <Text accessibilityRole="header" style={styles.heading}>

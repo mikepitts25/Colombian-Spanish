@@ -1,3 +1,6 @@
+import { controlSurface, controlText } from '../styles/controlStates';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -5,8 +8,9 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useLanguage } from '../context/LanguageContext';
 import { getPrefs, setPrefs } from '../storage/prefs';
 import { speakCard, stop, PlaybackResult } from '../services/tts';
-import { colors } from '../styles/theme';
+
 export default function AudioPreferencesScreen() {
+  const styles = useThemedStyles(makeStyles);
   const { t } = useLanguage(),
     nav = useNavigation<any>();
   const { fontScale } = useWindowDimensions();
@@ -217,36 +221,39 @@ export default function AudioPreferencesScreen() {
     </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: 20, gap: 18, paddingBottom: 60 },
-  title: { fontSize: 28, fontWeight: '800', color: colors.textPrimary },
-  heading: { fontSize: 22, fontWeight: '700', color: colors.textPrimary },
-  body: { fontSize: 16, lineHeight: 24, color: colors.textSecondary },
-  button: {
-    minHeight: 48,
-    padding: 14,
-    backgroundColor: colors.brand,
-    borderRadius: 12,
-    justifyContent: 'center',
-  },
-  buttonText: { fontSize: 16, fontWeight: '700', color: colors.textInverse, textAlign: 'center' },
-  disabled: { opacity: 0.5 },
-  options: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  option: {
-    minHeight: 48,
-    minWidth: 80,
-    padding: 14,
-    borderWidth: 2,
-    borderColor: colors.borderActive,
-    borderRadius: 12,
-  },
-  selected: { borderColor: colors.brand, backgroundColor: colors.brandMuted },
-  optionText: { fontSize: 18, color: colors.textPrimary },
-  card: { padding: 20, gap: 16, backgroundColor: colors.surface, borderRadius: 20 },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    content: { padding: 20, gap: 18, paddingBottom: 60 },
+    title: { fontSize: 28, fontWeight: '800', color: colors.textPrimary },
+    heading: { fontSize: 22, fontWeight: '700', color: colors.textPrimary },
+    body: { fontSize: 16, lineHeight: 24, color: colors.textSecondary },
+    button: {
+      minHeight: 48,
+      padding: 14,
+      backgroundColor: colors.brand,
+      borderRadius: 12,
+      justifyContent: 'center',
+    },
+    buttonText: { fontSize: 16, fontWeight: '700', color: colors.textInverse, textAlign: 'center' },
+    disabled: { opacity: 0.5 },
+    options: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+    option: {
+      minHeight: 48,
+      minWidth: 80,
+      padding: 14,
+      borderWidth: 2,
+      borderColor: colors.borderActive,
+      borderRadius: 12,
+    },
+    selected: { borderColor: colors.brand, backgroundColor: colors.brandMuted },
+    optionText: { fontSize: 18, color: colors.textPrimary },
+    card: { padding: 20, gap: 16, backgroundColor: colors.surface, borderRadius: 20 },
+  });
 
 function ActionButton({ label, action, off }: { label: string; action: () => void; off: boolean }) {
+  const styles = useThemedStyles(makeStyles);
+  const theme = useAppTheme();
   return (
     <Pressable
       key={label}
@@ -254,9 +261,13 @@ function ActionButton({ label, action, off }: { label: string; action: () => voi
       accessibilityState={{ disabled: off }}
       disabled={off}
       onPress={action}
-      style={[styles.button, off && styles.disabled]}
+      style={({ pressed }) => [
+        styles.button,
+        off && styles.disabled,
+        controlSurface(theme, pressed, off),
+      ]}
     >
-      <Text style={styles.buttonText}>{label}</Text>
+      <Text style={[styles.buttonText, controlText(theme, off)]}>{label}</Text>
     </Pressable>
   );
 }

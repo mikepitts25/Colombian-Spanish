@@ -1,3 +1,5 @@
+import { useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useState } from 'react';
 import {
   View,
@@ -10,7 +12,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { lookupConjugation } from '../data/conjugations';
-import { colors, spacing, radius, typography } from '../styles/theme';
+import { spacing, radius, typography } from '../styles/theme';
 import { useLanguage } from '../context/LanguageContext';
 
 interface ConjugationPanelProps {
@@ -34,6 +36,7 @@ const tenseLabelKeys = {
 } as const;
 
 export default function ConjugationPanel({ infinitive, compact = false }: ConjugationPanelProps) {
+  const styles = useThemedStyles(makeStyles);
   const { t } = useLanguage();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale >= 1.4;
@@ -173,225 +176,226 @@ export default function ConjugationPanel({ infinitive, compact = false }: Conjug
   );
 }
 
-const styles = StyleSheet.create({
-  stacked: { flexDirection: 'column', alignItems: 'stretch', gap: 12 },
-  noFlex: { flex: 0 },
-  bodyScroll: { flexShrink: 1 },
-  bodyContent: { paddingBottom: 24 },
-  // Compact button (for inline use)
-  compactButton: {
-    minHeight: 48,
-    justifyContent: 'center',
-    paddingVertical: spacing(1),
-    paddingHorizontal: spacing(2),
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.border,
-    alignSelf: 'flex-start',
-  },
-  irregularButton: {
-    backgroundColor: colors.warningMuted,
-    borderColor: colors.warning,
-  },
-  compactButtonText: {
-    fontSize: typography.size.sm,
-    color: colors.brand,
-    fontWeight: typography.weight.medium,
-  },
-  irregularButtonText: {
-    color: colors.warning,
-  },
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    stacked: { flexDirection: 'column', alignItems: 'stretch', gap: 12 },
+    noFlex: { flex: 0 },
+    bodyScroll: { flexShrink: 1 },
+    bodyContent: { paddingBottom: 24 },
+    // Compact button (for inline use)
+    compactButton: {
+      minHeight: 48,
+      justifyContent: 'center',
+      paddingVertical: spacing(1),
+      paddingHorizontal: spacing(2),
+      backgroundColor: colors.surfaceElevated,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      borderColor: colors.border,
+      alignSelf: 'flex-start',
+    },
+    irregularButton: {
+      backgroundColor: colors.warningMuted,
+      borderColor: colors.warning,
+    },
+    compactButtonText: {
+      fontSize: typography.size.sm,
+      color: colors.brand,
+      fontWeight: typography.weight.medium,
+    },
+    irregularButtonText: {
+      color: colors.warning,
+    },
 
-  // Trigger button
-  triggerButton: {
-    minHeight: 48,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: spacing(1.5),
-    paddingHorizontal: spacing(3),
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.border,
-    alignSelf: 'center',
-    marginTop: spacing(2),
-  },
-  irregularTriggerButton: {
-    backgroundColor: colors.warningMuted,
-    borderColor: colors.warning,
-  },
-  triggerButtonText: {
-    fontSize: typography.size.base,
-    color: colors.brand,
-    fontWeight: typography.weight.semibold,
-  },
-  irregularTriggerText: {
-    color: colors.warning,
-  },
-  irregularBadge: {
-    marginLeft: spacing(1.5),
-    fontSize: typography.size.xs,
-    color: colors.warning,
-    fontWeight: typography.weight.bold,
-    textTransform: 'uppercase',
-  },
+    // Trigger button
+    triggerButton: {
+      minHeight: 48,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: spacing(1.5),
+      paddingHorizontal: spacing(3),
+      backgroundColor: colors.surfaceElevated,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.border,
+      alignSelf: 'center',
+      marginTop: spacing(2),
+    },
+    irregularTriggerButton: {
+      backgroundColor: colors.warningMuted,
+      borderColor: colors.warning,
+    },
+    triggerButtonText: {
+      fontSize: typography.size.base,
+      color: colors.brand,
+      fontWeight: typography.weight.semibold,
+    },
+    irregularTriggerText: {
+      color: colors.warning,
+    },
+    irregularBadge: {
+      marginLeft: spacing(1.5),
+      fontSize: typography.size.xs,
+      color: colors.warning,
+      fontWeight: typography.weight.bold,
+      textTransform: 'uppercase',
+    },
 
-  // Modal
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end',
-  },
-  modalContent: {
-    backgroundColor: colors.surface,
-    borderTopLeftRadius: radius['2xl'],
-    borderTopRightRadius: radius['2xl'],
-    padding: spacing(4),
-    height: '80%',
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing(3),
-  },
-  headerLeft: {
-    flex: 1,
-    flexShrink: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing(2),
-  },
-  modalTitle: {
-    fontSize: typography.size['2xl'],
-    fontWeight: typography.weight.bold,
-    color: colors.textPrimary,
-  },
-  irregularPill: {
-    backgroundColor: colors.warningMuted,
-    paddingHorizontal: spacing(2),
-    paddingVertical: spacing(0.5),
-    borderRadius: radius.full,
-    borderWidth: 1,
-    borderColor: colors.warning,
-  },
-  irregularPillText: {
-    fontSize: typography.size.xs,
-    color: colors.warning,
-    fontWeight: typography.weight.bold,
-  },
-  closeButton: {
-    width: 48,
-    height: 48,
-    borderRadius: radius.full,
-    backgroundColor: colors.surfaceElevated,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  closeButtonText: {
-    fontSize: typography.size.lg,
-    color: colors.textSecondary,
-    fontWeight: typography.weight.bold,
-  },
+    // Modal
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'flex-end',
+    },
+    modalContent: {
+      backgroundColor: colors.surface,
+      borderTopLeftRadius: radius['2xl'],
+      borderTopRightRadius: radius['2xl'],
+      padding: spacing(4),
+      height: '80%',
+    },
+    modalHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing(3),
+    },
+    headerLeft: {
+      flex: 1,
+      flexShrink: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing(2),
+    },
+    modalTitle: {
+      fontSize: typography.size['2xl'],
+      fontWeight: typography.weight.bold,
+      color: colors.textPrimary,
+    },
+    irregularPill: {
+      backgroundColor: colors.warningMuted,
+      paddingHorizontal: spacing(2),
+      paddingVertical: spacing(0.5),
+      borderRadius: radius.full,
+      borderWidth: 1,
+      borderColor: colors.warning,
+    },
+    irregularPillText: {
+      fontSize: typography.size.xs,
+      color: colors.warning,
+      fontWeight: typography.weight.bold,
+    },
+    closeButton: {
+      width: 48,
+      height: 48,
+      borderRadius: radius.full,
+      backgroundColor: colors.surfaceElevated,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    closeButtonText: {
+      fontSize: typography.size.lg,
+      color: colors.textSecondary,
+      fontWeight: typography.weight.bold,
+    },
 
-  // Note box
-  noteBox: {
-    backgroundColor: colors.infoMuted,
-    padding: spacing(2),
-    borderRadius: radius.lg,
-    marginBottom: spacing(3),
-    borderLeftWidth: 4,
-    borderLeftColor: colors.info,
-  },
-  noteText: {
-    fontSize: typography.size.sm,
-    color: colors.textPrimary,
-    fontStyle: 'italic',
-  },
+    // Note box
+    noteBox: {
+      backgroundColor: colors.infoMuted,
+      padding: spacing(2),
+      borderRadius: radius.lg,
+      marginBottom: spacing(3),
+      borderLeftWidth: 4,
+      borderLeftColor: colors.info,
+    },
+    noteText: {
+      fontSize: typography.size.sm,
+      color: colors.textPrimary,
+      fontStyle: 'italic',
+    },
 
-  // Tabs
-  tabContainer: {
-    flexDirection: 'row',
-    marginBottom: spacing(3),
-    borderRadius: radius.lg,
-    backgroundColor: colors.surfaceElevated,
-    padding: spacing(1),
-  },
-  tab: {
-    minHeight: 48,
-    flex: 1,
-    paddingVertical: spacing(2),
-    alignItems: 'center',
-    borderRadius: radius.md,
-  },
-  activeTab: {
-    backgroundColor: colors.surface,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  tabText: {
-    fontSize: typography.size.sm,
-    color: colors.textSecondary,
-    fontWeight: typography.weight.medium,
-  },
-  activeTabText: {
-    color: colors.brand,
-    fontWeight: typography.weight.bold,
-  },
+    // Tabs
+    tabContainer: {
+      flexDirection: 'row',
+      marginBottom: spacing(3),
+      borderRadius: radius.lg,
+      backgroundColor: colors.surfaceElevated,
+      padding: spacing(1),
+    },
+    tab: {
+      minHeight: 48,
+      flex: 1,
+      paddingVertical: spacing(2),
+      alignItems: 'center',
+      borderRadius: radius.md,
+    },
+    activeTab: {
+      backgroundColor: colors.surface,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+      elevation: 2,
+    },
+    tabText: {
+      fontSize: typography.size.sm,
+      color: colors.textSecondary,
+      fontWeight: typography.weight.medium,
+    },
+    activeTabText: {
+      color: colors.brand,
+      fontWeight: typography.weight.bold,
+    },
 
-  // Table
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: spacing(2),
-    paddingHorizontal: spacing(3),
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: radius.lg,
-    marginBottom: spacing(1),
-  },
-  pronounCell: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing(1),
-  },
-  pronoun: {
-    fontSize: typography.size.base,
-    color: colors.textSecondary,
-    fontStyle: 'italic',
-  },
-  highlightPronoun: {
-    color: colors.brand,
-    fontWeight: typography.weight.semibold,
-  },
-  colombiaTag: {
-    fontSize: 12,
-  },
-  verbForm: {
-    fontSize: typography.size.lg,
-    fontWeight: typography.weight.bold,
-    color: colors.textPrimary,
-  },
+    // Table
+    row: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: spacing(2),
+      paddingHorizontal: spacing(3),
+      backgroundColor: colors.surfaceElevated,
+      borderRadius: radius.lg,
+      marginBottom: spacing(1),
+    },
+    pronounCell: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing(1),
+    },
+    pronoun: {
+      fontSize: typography.size.base,
+      color: colors.textSecondary,
+      fontStyle: 'italic',
+    },
+    highlightPronoun: {
+      color: colors.brand,
+      fontWeight: typography.weight.semibold,
+    },
+    colombiaTag: {
+      fontSize: 12,
+    },
+    verbForm: {
+      fontSize: typography.size.lg,
+      fontWeight: typography.weight.bold,
+      color: colors.textPrimary,
+    },
 
-  // Colombia note
-  colombiaNote: {
-    marginTop: spacing(3),
-    padding: spacing(2),
-    backgroundColor: colors.successMuted,
-    borderRadius: radius.lg,
-    borderLeftWidth: 4,
-    borderLeftColor: colors.success,
-  },
-  colombiaNoteText: {
-    fontSize: typography.size.sm,
-    color: colors.textPrimary,
-    textAlign: 'center',
-  },
-  bold: {
-    fontWeight: typography.weight.bold,
-  },
-});
+    // Colombia note
+    colombiaNote: {
+      marginTop: spacing(3),
+      padding: spacing(2),
+      backgroundColor: colors.successMuted,
+      borderRadius: radius.lg,
+      borderLeftWidth: 4,
+      borderLeftColor: colors.success,
+    },
+    colombiaNoteText: {
+      fontSize: typography.size.sm,
+      color: colors.textPrimary,
+      textAlign: 'center',
+    },
+    bold: {
+      fontWeight: typography.weight.bold,
+    },
+  });

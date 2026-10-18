@@ -1,3 +1,6 @@
+import { controlSurface, controlText } from '../styles/controlStates';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AppState, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
@@ -5,7 +8,6 @@ import { ListeningNode } from '../missions/schema';
 import { MissionRun } from '../missions/engine';
 import { speakCard, stop } from '../services/tts';
 import { useLanguage } from '../context/LanguageContext';
-import { colors } from '../styles/theme';
 
 export default function MissionAudio({
   node,
@@ -18,6 +20,7 @@ export default function MissionAudio({
   disabled: boolean;
   onCommand: (type: 'playback' | 'transcript') => void;
 }) {
+  const styles = useThemedStyles(makeStyles);
   const { t } = useLanguage();
   const [playing, setPlaying] = useState(false),
     [played, setPlayed] = useState(false),
@@ -165,34 +168,37 @@ export default function MissionAudio({
     </View>
   );
 }
-const styles = StyleSheet.create({
-  wrap: { gap: 12 },
-  note: { fontSize: 15, lineHeight: 22, color: colors.textSecondary },
-  transcript: { fontSize: 22, lineHeight: 30, color: colors.textPrimary },
-  rates: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  rate: {
-    minHeight: 48,
-    minWidth: 64,
-    padding: 12,
-    borderWidth: 2,
-    borderColor: colors.borderActive,
-    borderRadius: 10,
-    justifyContent: 'center',
-  },
-  selected: { borderColor: colors.brand },
-  rateText: { fontSize: 16, color: colors.textPrimary },
-  button: {
-    minHeight: 48,
-    padding: 14,
-    backgroundColor: colors.brand,
-    borderRadius: 12,
-    justifyContent: 'center',
-  },
-  buttonText: { fontSize: 16, color: colors.textInverse, fontWeight: '700', textAlign: 'center' },
-  disabled: { opacity: 0.5 },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { gap: 12 },
+    note: { fontSize: 15, lineHeight: 22, color: colors.textSecondary },
+    transcript: { fontSize: 22, lineHeight: 30, color: colors.textPrimary },
+    rates: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+    rate: {
+      minHeight: 48,
+      minWidth: 64,
+      padding: 12,
+      borderWidth: 2,
+      borderColor: colors.borderActive,
+      borderRadius: 10,
+      justifyContent: 'center',
+    },
+    selected: { borderColor: colors.brand },
+    rateText: { fontSize: 16, color: colors.textPrimary },
+    button: {
+      minHeight: 48,
+      padding: 14,
+      backgroundColor: colors.brand,
+      borderRadius: 12,
+      justifyContent: 'center',
+    },
+    buttonText: { fontSize: 16, color: colors.textInverse, fontWeight: '700', textAlign: 'center' },
+    disabled: { opacity: 0.5 },
+  });
 
 function ActionButton({ label, action, off }: { label: string; action: () => void; off: boolean }) {
+  const styles = useThemedStyles(makeStyles);
+  const theme = useAppTheme();
   return (
     <Pressable
       key={label}
@@ -200,9 +206,13 @@ function ActionButton({ label, action, off }: { label: string; action: () => voi
       accessibilityState={{ disabled: off }}
       disabled={off}
       onPress={action}
-      style={[styles.button, off && styles.disabled]}
+      style={({ pressed }) => [
+        styles.button,
+        off && styles.disabled,
+        controlSurface(theme, pressed, off),
+      ]}
     >
-      <Text style={styles.buttonText}>{label}</Text>
+      <Text style={[styles.buttonText, controlText(theme, off)]}>{label}</Text>
     </Pressable>
   );
 }

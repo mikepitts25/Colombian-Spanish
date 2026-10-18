@@ -184,7 +184,7 @@ test('reveals the focused input after keyboard layout using measured input posit
   const scroll = ui.UNSAFE_getAllByType(ScrollView)[0].instance;
   const tags = ui.UNSAFE_getAllByType(TextInput)[3];
   scroll.scrollTo.mockClear();
-  fireEvent(tags.parent!, 'layout', {
+  fireEvent(ui.getByTestId('add-card-field-3'), 'layout', {
     persist: () => {},
     nativeEvent: { layout: { x: 0, y: 1600, width: 343, height: 108 } },
   });
@@ -215,7 +215,7 @@ test('ignores pre-resize field coordinates until both current field and input la
   const ui = render(<AddCardScreen />);
   const first = ui.UNSAFE_getAllByType(TextInput)[3];
   fireEvent.changeText(first, 'Q');
-  fireEvent(first.parent!, 'layout', {
+  fireEvent(ui.getByTestId('add-card-field-3'), 'layout', {
     persist: () => {},
     nativeEvent: { layout: { x: 0, y: 420, width: 343, height: 108 } },
   });
@@ -229,7 +229,7 @@ test('ignores pre-resize field coordinates until both current field and input la
   const tags = ui.UNSAFE_getAllByType(TextInput)[3];
   scroll.scrollTo.mockClear();
   fireEvent(tags, 'focus');
-  fireEvent(tags.parent!, 'layout', {
+  fireEvent(ui.getByTestId('add-card-field-3'), 'layout', {
     persist: () => {},
     nativeEvent: { layout: { x: 0, y: 1600, width: 343, height: 108 } },
   });
