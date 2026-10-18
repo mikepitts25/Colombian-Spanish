@@ -1,5 +1,6 @@
+import { controlSurface, controlText } from '../styles/controlStates';
 import Pressable from '../components/ThemedPressable';
-import { useThemedStyles } from '../context/ThemeContext';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { AppState, Linking, ScrollView, StyleSheet, Text, useWindowDimensions } from 'react-native';
@@ -17,6 +18,7 @@ export default function VoicePracticeScreen() {
   return SHOW_REVIEW_TOOLS ? <VoicePracticeDraft /> : <Text>{t('mission.unavailable')}</Text>;
 }
 function VoicePracticeDraft() {
+  const theme = useAppTheme();
   const styles = useThemedStyles(makeStyles);
   const { t } = useLanguage(),
     nav = useNavigation<any>();
@@ -76,9 +78,13 @@ function VoicePracticeDraft() {
       accessibilityState={{ disabled, ...(expanded === undefined ? {} : { expanded }) }}
       disabled={disabled}
       onPress={action}
-      style={[styles.button, disabled && styles.disabled]}
+      style={({ pressed }) => [
+        styles.button,
+        disabled && styles.disabled,
+        controlSurface(theme, pressed, disabled),
+      ]}
     >
-      <Text style={styles.buttonText}>{label}</Text>
+      <Text style={[styles.buttonText, controlText(theme, disabled)]}>{label}</Text>
     </Pressable>
   );
   const sample = LISTENING_BASICS.nodes.find((n) => n.kind === 'listening');

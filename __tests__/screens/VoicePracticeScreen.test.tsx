@@ -1,3 +1,4 @@
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import { AppState, Dimensions } from 'react-native';
 import { act, fireEvent, render } from '@testing-library/react-native';
@@ -141,4 +142,21 @@ test('live text resizing retains one pending permission request and a replayable
   await act(async () => {});
   expect(mockDiscard).toHaveBeenCalledTimes(1);
   expect(mockBack).toHaveBeenCalledTimes(1);
+});
+
+test('Barrio unavailable voice actions use readable disabled colors without requesting microphone access', () => {
+  const ui = renderWithTheme(<VoicePracticeScreen />);
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  for (const label of ['Replay my take', 'Delete my take']) {
+    expect(ui.getByRole('button', { name: label, disabled: true })).toHaveStyle({
+      backgroundColor: '#E8E5DD',
+      opacity: 1,
+    });
+    expect(ui.getByText(label)).toHaveStyle({ color: '#58675E' });
+  }
+  expect(mockPermission).not.toHaveBeenCalled();
+  ui.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+  expect(ui.getByRole('button', { name: 'Replay my take', disabled: true })).toHaveStyle({
+    opacity: 0.5,
+  });
 });
