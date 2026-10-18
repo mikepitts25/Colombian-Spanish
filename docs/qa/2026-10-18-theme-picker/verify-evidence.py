@@ -25,7 +25,7 @@ for row in rows:
     assert prefs == original, row['phase']
     assert row['cardCount'] == 1402 and row['deckCount'] == 48 and len(row['flaggedCards']) == 20
 for source, target in [('phone','source-phone-after'), ('tablet','source-tablet-after'),
-                       ('phone','phone-final-restored-before-cold'), ('phone','phone-final-restored-after-cold'),
+                       ('phone','phone-final-restored-before-cold'), ('phone','phone-final-restored-after-cold'), ('phone','phone-final-review-restored-after-cold'),
                        ('tablet','tablet-import-original'), ('tablet','tablet-original-cold')]:
     assert phases[f'source-{source}-before']['keyHashes'] == phases[target]['keyHashes'], target
 assert phases['phone-study-revealed-before-identity']['session'] == phases['phone-classic-retained-face']['session']
@@ -52,5 +52,7 @@ for item in manifest:
     assert hashlib.sha256(data).hexdigest() == item['sha256']
 checks=json.loads((root/'software-checks.json').read_text())
 assert all(c['exitCode']==0 for c in checks['checks'])
-assert checks['checks'][0]['summary'] == ['Test Suites: 115 passed, 115 total','Tests:       1084 passed, 1084 total']
+for check in checks['checks']:
+    assert hashlib.sha256((root/'software'/check['logFile']).read_bytes()).hexdigest() == check['logSHA256']
+assert checks['checks'][0]['summary'] == ['Test Suites: 115 passed, 115 total','Tests:       1091 passed, 1091 total']
 print(f'PASS: {len(rows)} state snapshots, source/final restoration, intentional preferences, exact Study queue, {len(manifest)} screenshots, preflights, build and software summaries.')

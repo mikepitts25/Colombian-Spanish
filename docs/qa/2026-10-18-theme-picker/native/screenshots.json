@@ -10,16 +10,6 @@
     "sha256": "1808ee15220708359e7dca0f9dc5aa8b489a2bbfe3300f80e43b9adcb8ec4a06"
   },
   {
-    "file": "phone-barrio-difficult-en.png",
-    "dimensions": [750, 1334],
-    "sha256": "27911ee35868ee82011c69279ac7ffc0cf1495c143638330b3f3e8db90c42518"
-  },
-  {
-    "file": "phone-barrio-flagged-en.png",
-    "dimensions": [750, 1334],
-    "sha256": "3096e15f1319abb7fcaf07c3de7a337553c57e28f17bdabb60e24f12e8855d93"
-  },
-  {
     "file": "phone-barrio-light-alert-os-dark.png",
     "dimensions": [750, 1334],
     "sha256": "5bc2aac04f8aeb44500b28525d5604150880050f3a156866d1f2e34434ad3474"
@@ -43,11 +33,6 @@
     "file": "phone-barrio-quiz-unanswered-en.png",
     "dimensions": [750, 1334],
     "sha256": "c4f3b58927181ac9bf82c8e2cd7aa9e40ff8d4a982c9d6504ab20960c2fea5c2"
-  },
-  {
-    "file": "phone-barrio-review-en.png",
-    "dimensions": [750, 1334],
-    "sha256": "f5c4d2f45ea8062ea9e843f79a966bebda8d5c05bd78393a8dcb0bb10eb5a9bb"
   },
   {
     "file": "phone-classic-first-run.png",
@@ -80,6 +65,26 @@
     "sha256": "df43f46772007c54876086215a6de821f5fec11a929447d40be0b3bb7c9ab206"
   },
   {
+    "file": "phone-difficult-badge-contrast-red.png",
+    "dimensions": [750, 1334],
+    "sha256": "27911ee35868ee82011c69279ac7ffc0cf1495c143638330b3f3e8db90c42518"
+  },
+  {
+    "file": "phone-difficult-badge-dark-green.png",
+    "dimensions": [750, 1334],
+    "sha256": "328919b2a99bdf26c29425f0a50230b83bd7ae323a71719cbade83eb20c0bd38"
+  },
+  {
+    "file": "phone-flagged-badge-dark-green.png",
+    "dimensions": [750, 1334],
+    "sha256": "02f8c96751d05f0d31b4dec014b83f3a7d53089418617a64eb5403c878980481"
+  },
+  {
+    "file": "phone-flagged-contrast-red.png",
+    "dimensions": [750, 1334],
+    "sha256": "3096e15f1319abb7fcaf07c3de7a337553c57e28f17bdabb60e24f12e8855d93"
+  },
+  {
     "file": "phone-picker-retained-draft-es-maximum.png",
     "dimensions": [750, 1334],
     "sha256": "adee10acf862543d9d18fce8c6dedab7b9c9e28693c5d16f091037dcc75cb6be"
@@ -98,6 +103,16 @@
     "file": "phone-rename-light-stale-keyboard-en.png",
     "dimensions": [750, 1334],
     "sha256": "08da87d3aed0ca520a1a62b1c643e9ea0a2317d572b16c32467c8fef5f35a424"
+  },
+  {
+    "file": "phone-review-filter-clipping-red.png",
+    "dimensions": [750, 1334],
+    "sha256": "f5c4d2f45ea8062ea9e843f79a966bebda8d5c05bd78393a8dcb0bb10eb5a9bb"
+  },
+  {
+    "file": "phone-review-filter-frame-dark-green.png",
+    "dimensions": [750, 1334],
+    "sha256": "8c64b3aaff9a5511fbb8b4ad4408f92dff4fa6d5ca803273e0ca606aea0c9bd2"
   },
   {
     "file": "phone-system-dark-home-es-maximum.png",

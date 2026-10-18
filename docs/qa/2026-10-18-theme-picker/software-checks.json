@@ -1,40 +1,45 @@
 {
-  "runtimeCommit": "a51907646673b16d2484e18b66d6c37b896c0d5d",
+  "runtimeCommit": "1047736486f93210f911bca4de753afecb7360f5",
   "checks": [
     {
       "command": "npm test -- --runInBand --watchman=false",
       "exitCode": 0,
-      "logSHA256": "f90b00688912f3e457929a72ca3cb7c1b9d4189bb9d404425c1c21efcd81d1ce",
-      "summary": ["Test Suites: 115 passed, 115 total", "Tests:       1084 passed, 1084 total"],
-      "verifiedAtRuntimeCommit": "a51907646673b16d2484e18b66d6c37b896c0d5d"
+      "logSHA256": "fc8792ee6db0176b0f4641b3c5cfcff0b16318645c5ed9202c00368a502f2803",
+      "summary": ["Test Suites: 115 passed, 115 total", "Tests:       1091 passed, 1091 total"],
+      "verifiedAtRuntimeCommit": "1047736486f93210f911bca4de753afecb7360f5",
+      "logFile": "final-review-full-tests.log"
     },
     {
       "command": "npm run test:fixtures",
       "exitCode": 0,
-      "logSHA256": "cae963b1c8ebf014e8f23ed28ffc03634d24b7586625353cfcc6f577904e018b",
-      "summary": ["Test Suites: 7 passed, 7 total", "Tests:       105 passed, 105 total"],
-      "verifiedAtRuntimeCommit": "fd5384e9c284027237e3038671082888ce1d02f4"
+      "logSHA256": "3501cf661763da22288c9324f469c4a680b2b0fdb26b3ff919a5c7bb10bff6db",
+      "summary": ["Test Suites: 7 passed, 7 total", "Tests:       107 passed, 107 total"],
+      "verifiedAtRuntimeCommit": "1047736486f93210f911bca4de753afecb7360f5",
+      "logFile": "final-review-fixtures.log"
     },
     {
       "command": "npm run typecheck",
       "exitCode": 0,
       "logSHA256": "23121729ef0464c4223699e75b4ec405b129ab908dad78e4da6191e788a6090f",
       "summary": [],
-      "verifiedAtRuntimeCommit": "a51907646673b16d2484e18b66d6c37b896c0d5d"
+      "verifiedAtRuntimeCommit": "1047736486f93210f911bca4de753afecb7360f5",
+      "logFile": "final-review-types.log"
     },
     {
       "command": "npm run lint",
       "exitCode": 0,
       "logSHA256": "028a569cb23b03387e5c94e6eaeac8bb51be94c4d33bb79a4ebe31a65ef77199",
       "summary": [],
-      "verifiedAtRuntimeCommit": "a51907646673b16d2484e18b66d6c37b896c0d5d"
+      "verifiedAtRuntimeCommit": "1047736486f93210f911bca4de753afecb7360f5",
+      "logFile": "final-review-lint.log"
     },
     {
       "command": "npm run format:check",
       "exitCode": 0,
       "logSHA256": "463b072bbc8eba96806231be96df3120572e6f592fbfb2dee91b19f2857c81e1",
       "summary": ["Checking formatting...", "All matched files use Prettier code style!"],
-      "verifiedAtRuntimeCommit": "a51907646673b16d2484e18b66d6c37b896c0d5d"
+      "verifiedAtRuntimeCommit": "a51907646673b16d2484e18b66d6c37b896c0d5d",
+      "logFile": "task-6-final-format.log"
     },
     {
       "command": "npm run validate:data",
@@ -43,7 +48,8 @@
       "summary": [
         "Validated 47 decks, 1392 cards, 1392 audio entries; configured PNG headers/dimensions valid."
       ],
-      "verifiedAtRuntimeCommit": "fd5384e9c284027237e3038671082888ce1d02f4"
+      "verifiedAtRuntimeCommit": "fd5384e9c284027237e3038671082888ce1d02f4",
+      "logFile": "task-5-data.log"
     },
     {
       "command": "npm run test:calendar",
@@ -59,12 +65,13 @@
         "Test Suites: 1 passed, 1 total",
         "Tests:       4 passed, 4 total"
       ],
-      "verifiedAtRuntimeCommit": "fd5384e9c284027237e3038671082888ce1d02f4"
+      "verifiedAtRuntimeCommit": "fd5384e9c284027237e3038671082888ce1d02f4",
+      "logFile": "task-5-calendar.log"
     }
   ],
   "lintNote": "zero warnings",
   "testNotes": "Existing asynchronous act/PostCSS fixture warnings remain; test success is not a zero-console-warning claim.",
-  "colorAudit": "254 classified literals, 405 composited role pairs; all Barrio pairs pass, 63 preserved Classic exceptions.",
+  "colorAudit": "255 classified literals, 415 composited role pairs including reviewed actual badge/control combinations; all Barrio pairs pass, 63 preserved Classic exceptions.",
   "native": "Separate rebuilt candidate validation; not inferred from software checks.",
   "logDirectory": "software"
 }
