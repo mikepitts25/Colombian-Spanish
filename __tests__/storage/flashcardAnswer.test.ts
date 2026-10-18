@@ -119,3 +119,64 @@ it('keeps unknown-card calls as no-ops', async () => {
   expect(await getLearningEvents()).toEqual([]);
   expect(await getSeenWords()).toEqual([]);
 });
+
+it('rejects a changed queue even when card meaning and session ID are retained', async () => {
+  const session = {
+    deckId: 'd1',
+    cardId: 'c1',
+    queue: {
+      schemaVersion: 1 as const,
+      cardIds: ['c1', 'c2'],
+      region: 'all' as const,
+      sessionId: 'study1',
+    },
+  };
+  await AsyncStorage.setItem(
+    'SRS_LAST_STUDY_SESSION_V1',
+    JSON.stringify({
+      ...session,
+      updatedAt: 100,
+      queue: { ...session.queue, cardIds: ['c1'] },
+    }),
+  );
+  const before = await AsyncStorage.multiGet(await AsyncStorage.getAllKeys());
+  await expect(
+    commitFlashcardAnswer({
+      ...attempt,
+      context: { deckId: 'd1', front: 'hola', back: 'hello', session },
+    }),
+  ).rejects.toThrow('Displayed card or study queue changed');
+  expect(await AsyncStorage.multiGet(await AsyncStorage.getAllKeys())).toEqual(before);
+});
+
+it('allows metadata and scheduling changes without invalidating displayed meaning', async () => {
+  await AsyncStorage.setItem(
+    'SRS_DECKS_V3',
+    JSON.stringify([
+      {
+        id: 'd1',
+        name: 'Renamed',
+        cards: [card('c1'), card('c2')].map((c) => ({
+          ...c,
+          flagged: true,
+          reviewedAt: 100,
+          reviewStatus: 'approved',
+          reps: 3,
+          interval: 5,
+        })),
+      },
+    ]),
+  );
+  await commitFlashcardAnswer({
+    ...attempt,
+    context: { deckId: 'd1', front: 'hola', back: 'hello' },
+  });
+  expect((await loadDecks())[0]).toMatchObject({
+    name: 'Renamed',
+    cards: [
+      expect.objectContaining({ flagged: true, reviewedAt: 100, reps: 4 }),
+      expect.objectContaining({ flagged: true, reviewedAt: 100, reps: 3 }),
+    ],
+  });
+  expect(await getLearningEvents()).toHaveLength(1);
+});

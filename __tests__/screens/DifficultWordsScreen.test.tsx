@@ -228,3 +228,46 @@ test.each(['light', 'dark'] as const)(
     });
   },
 );
+
+it('reloads after stale meaning without resubmitting the old grade, including read failure', async () => {
+  const { StaleGradeError } = require('../../src/storage/flashcardAnswer');
+  const recordAnswer = jest.fn().mockRejectedValue(new StaleGradeError());
+  const reload = jest
+    .fn()
+    .mockRejectedValueOnce(new Error('read failed'))
+    .mockResolvedValue(undefined);
+  mockUseDeck.mockReturnValue({ ready: true, decks: [DECK], recordAnswer, reload });
+  const screen = render(<DifficultWordsScreen />);
+  await screen.findByText('Bien');
+  await act(async () => {
+    fireEvent.press(screen.getByText('Bien'));
+  });
+  await screen.findByText(
+    'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
+  );
+  expect(screen.queryByText('Intentar guardar de nuevo')).toBeNull();
+  expect(screen.getByText('Bien')).toBeDisabled();
+  const Flashcard = require('../../src/components/Flashcard').default;
+  await act(async () => {
+    screen.UNSAFE_getByType(Flashcard).props.onGrade(4);
+  });
+  expect(recordAnswer).toHaveBeenCalledTimes(1);
+  await act(async () => {
+    fireEvent.press(screen.getByText('Recargar tarjetas'));
+  });
+  expect(screen.getByText('Recargar tarjetas')).not.toBeDisabled();
+  expect(screen.getByText('Bien')).toBeDisabled();
+  await act(async () => {
+    fireEvent.press(screen.getByText('Recargar tarjetas'));
+  });
+  expect(screen.queryByText('Recargar tarjetas')).toBeNull();
+  expect(screen.getByText('Bien')).not.toBeDisabled();
+  expect(recordAnswer).toHaveBeenCalledTimes(1);
+  expect(recordAnswer.mock.calls[0][2].context).toEqual({
+    deckId: 'deck-a',
+    front: 'parce',
+    back: 'translation-parce',
+    example: undefined,
+  });
+  expect(reload).toHaveBeenCalledTimes(2);
+});

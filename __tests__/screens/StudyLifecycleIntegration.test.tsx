@@ -852,6 +852,11 @@ test.each([
   ['removed', 'interrupted'],
   ['capped', 'held'],
   ['capped', 'interrupted'],
+  ['edited', 'held'],
+  ['edited', 'interrupted'],
+  ['moved', 'held'],
+  ['moved', 'interrupted'],
+  ['replaced-deck', 'held'],
 ] as const)(
   'a %s card after a %s restore cannot earn stale Study credit',
   async (target, boundary) => {
@@ -865,15 +870,29 @@ test.each([
     await screen.findByText('phrase first');
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     const backup = await captureBackupSnapshot();
+    const replacement = card('first', {
+      front: 'restored prompt',
+      back: 'restored answer',
+      reps: 7,
+      interval: 18,
+      ease: 2.1,
+      due: now + 18 * 86400000,
+    });
+    const restoredDeckId = target === 'replaced-deck' ? 'restored-alpha' : 'alpha';
     const restoredDecks: Deck[] = [
       {
-        id: 'alpha',
+        id: restoredDeckId,
         name: 'Restored Alpha',
-        cards: [...(target === 'capped' ? [card('first')] : []), card('restored-next')],
+        cards: [
+          ...(target === 'capped' ? [card('first')] : []),
+          ...(['edited', 'replaced-deck'].includes(target) ? [replacement] : []),
+          card('restored-next'),
+        ],
       },
+      ...(target === 'moved' ? [{ id: 'beta', name: 'Restored Beta', cards: [replacement] }] : []),
     ];
     const restoredSession = {
-      deckId: 'alpha',
+      deckId: restoredDeckId,
       cardId: 'restored-next',
       updatedAt: now - 1000,
       queue: {
@@ -925,6 +944,8 @@ test.each([
       expect(JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!)).toEqual(originalDecks);
     }
     expect(current.decks).toEqual(originalDecks);
+    expect(screen.getByText('phrase first')).toBeTruthy();
+    expect(screen.queryByText('restored prompt')).toBeNull();
     await act(async () => {
       fireEvent.press(screen.getByText('Bien'));
       if (boundary === 'held') {
@@ -940,11 +961,15 @@ test.each([
       await screen.findByText(
         'Alcanzaste el límite diario de tarjetas nuevas. Vuelve a los decks para repasar tarjetas estudiadas.',
       );
-    else await screen.findByText('phrase second');
+    else if (target === 'removed') await screen.findByText('phrase second');
+    else
+      await screen.findByText(
+        'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
+      );
     const assertRestored = async (resumed = false) => {
       const snapshot = await captureBackupSnapshot();
-      expect(snapshot.decks).toEqual(restoredDecks);
       expect(snapshot.learningEvents).toEqual([]);
+      expect(snapshot.decks).toEqual(restoredDecks);
       expect(snapshot.applicationState).toEqual({
         ...restoredState,
         lastSession: resumed ? { ...restoredSession, updatedAt: now } : restoredSession,
@@ -952,7 +977,35 @@ test.each([
       expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
     };
     await assertRestored();
-    await act(async () => current.reload());
+    if (target === 'edited' || target === 'moved' || target === 'replaced-deck') {
+      expect(screen.queryByText('Intentar guardar de nuevo')).toBeNull();
+      if ((target === 'edited' || target === 'replaced-deck') && boundary === 'held') {
+        const read = AsyncStorage.getItem as jest.Mock;
+        const originalRead = read.getMockImplementation()!;
+        let fail = true;
+        read.mockImplementation(async (key: string) => {
+          if (fail && key === 'SRS_PREFS_V1') {
+            fail = false;
+            throw new Error('reload read failed');
+          }
+          return originalRead(key);
+        });
+        try {
+          await act(async () => {
+            fireEvent.press(screen.getByText('Recargar tarjetas'));
+          });
+          await assertRestored();
+          expect(screen.getByText('Recargar tarjetas')).not.toBeDisabled();
+          expect(screen.getByText('Bien')).toBeDisabled();
+        } finally {
+          read.mockImplementation(originalRead);
+        }
+      }
+      await act(async () => {
+        fireEvent.press(screen.getByText('Recargar tarjetas'));
+      });
+      await screen.findByText('Continuar');
+    } else await act(async () => current.reload());
     expect(current.decks).toEqual(restoredDecks);
     await assertRestored();
     screen.unmount();

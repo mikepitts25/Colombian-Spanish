@@ -1,0 +1,67 @@
+{
+  "base": "34772b5e23d58b86c7f16a43d222bad404f0f23e",
+  "runtimeChanges": true,
+  "newDurableKeys": 0,
+  "newDependencies": 0,
+  "red": {
+    "command": "npm test -- --runInBand --watchman=false --runTestsByPath __tests__/screens/StudyLifecycleIntegration.test.tsx -t 'cannot earn stale Study credit'",
+    "failed": 4,
+    "passed": 4,
+    "failures": [
+      {
+        "name": "a edited card after a held restore cannot earn stale Study credit",
+        "reason": "Expected no learning events; received a new self-rated recall event for the restored target"
+      },
+      {
+        "name": "a edited card after a interrupted restore cannot earn stale Study credit",
+        "reason": "Expected no learning events; received a new self-rated recall event for the restored target"
+      },
+      {
+        "name": "a moved card after a held restore cannot earn stale Study credit",
+        "reason": "Expected no learning events; received a new self-rated recall event for the restored target"
+      },
+      {
+        "name": "a moved card after a interrupted restore cannot earn stale Study credit",
+        "reason": "Expected no learning events; received a new self-rated recall event for the restored target"
+      }
+    ]
+  },
+  "additionalRed": {
+    "swipe": "Expected one provider call; received two",
+    "reviewFinding": "Expected imported restore-before-grade-session; received newly generated Study session ID after failed reload removed original deck"
+  },
+  "review": {
+    "reviewer": "/root/stale_restore_grade_final_review",
+    "critical": 0,
+    "important": 1,
+    "minor": 0,
+    "importantFix": "Keep session-boundary/checkpoint effect suppressed while stale recovery persists, including failed reload; exact imported session invariant RED→GREEN",
+    "fixPasses": 1
+  },
+  "nativeInteractions": false,
+  "simulatorAcceptance": "Open; Device Hub listed running, previous UI reads timed out; no UI interaction or direct storage write",
+  "final": {
+    "focusedSuites": 5,
+    "focusedTests": 68,
+    "fullSuites": 117,
+    "fullTests": 1148,
+    "status": "passed",
+    "staticChecks": [
+      "typecheck",
+      "lint",
+      "format:check",
+      "audit-theme-colors",
+      "validate:data",
+      "diff --check"
+    ],
+    "actDiagnosticBlocks": 0,
+    "pythonCases": 14,
+    "calendarCases": 16,
+    "colorAudit": {
+      "classified": 255,
+      "compositedPairs": 418,
+      "classicExceptions": 63,
+      "errors": 0
+    }
+  }
+}

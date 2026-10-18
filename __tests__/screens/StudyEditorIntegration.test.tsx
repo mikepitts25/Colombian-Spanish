@@ -85,6 +85,23 @@ test.each(['grade-first', 'editor-first'])(
         await editing;
       }
     });
+    // The answer changed while the original grade waited behind editorial IO.
+    // It must be shown again before a fresh answer can earn credit.
+    await screen.findByText(
+      'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
+    );
+    expect(await getLearningEvents()).toEqual([]);
+    expect((await getLastStudySession())?.queue).toEqual(initial?.queue);
+    await act(async () => {
+      fireEvent.press(screen.getByText('Recargar tarjetas'));
+    });
+    fireEvent.press(await screen.findByText('Continuar'));
+    await screen.findByText('saludo uno');
+    await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    expect(current.activeDeck?.cards[0].back).toBe('corrected first answer');
+    await act(async () => {
+      fireEvent.press(screen.getByText('Bien'));
+    });
     await waitFor(() => expect(screen.getByText('saludo dos')).toBeTruthy());
     expect(screen.getByText('1 restantes')).toBeTruthy();
     const after = await getLastStudySession();
