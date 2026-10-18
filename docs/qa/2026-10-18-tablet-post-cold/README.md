@@ -1,6 +1,6 @@
 # Tablet post-cold Home follow-up — B08.2-B22/B23
 
-Runtime `3b9b62b` corrects a reproduced maximum-text Home clipping defect and clarifies existing backup behavior in both languages. Integration remains pending.
+Runtime `3b9b62b` corrects a reproduced maximum-text Home clipping defect and clarifies existing backup behavior in both languages. Merged/pushed in [PR13](https://github.com/mikepitts25/Colombian-Spanish/pull/13), merge `b634e70`, after all four candidate CI checks passed (run39127717655).
 
 ## Reproduction and correction
 
@@ -21,7 +21,7 @@ Native clipboard preview initially reported an empty simulator clipboard. Sent t
 ## Validation and limits
 
 - Four existing Home/Settings/backupRestore/portableBackup suites:122 tests pass, independently rerun by a read-only reviewer. No Critical, Important or Minor findings.
-- Types, zero-warning lint and formatting pass; full suite:115 suites/1,095 tests. Candidate CI and final integration results are recorded with publication.
+- Types, zero-warning lint and formatting pass; full suite:115 suites/1,095 tests. All four candidate CI jobs passed before merge.
 - Source color audit unchanged:255 literals,418 composited pairs,63 preserved Classic exceptions,zero errors.
 - Three read-only state snapshots:48 decks/1,402 cards/11 observations, all11 logical record hashes identical before, after fixed cold launch, and final default-text Home. Own-container checks before/after each launch. No journal. The saved Barrio/Dark pair remains exactly as it was; original source devices/aliases were not operated.
 - Reviewer declined independent native/coordinate verification (handled here); full matrix, assistive technology, signed builds, Android and security were outside this scoped review and remain open. Security B01.8-C2g was skipped. Home touch success does not establish full route/platform/physical acceptance. Existing unsigned notification-entitlement banners were dismissed before the corrected capture.
