@@ -512,10 +512,15 @@ export const translations = {
     'flagged.clearAll': 'Borrar todo',
     'flagged.hint':
       'Columnas CSV: Deck · ID · Español · Inglés · Ejemplo\nPégalo en Google Sheets, corrige traducciones y luego actualiza los archivos del deck.',
-    'flagged.empty': 'Nada marcado: todas las traducciones se ven bien.',
+    'flagged.empty': 'No hay tarjetas marcadas. Esto no confirma la revisión de las traducciones.',
     'flagged.copied.title': '¡Copiado!',
     'flagged.copied.message':
       '{count} tarjeta{plural} marcada{plural} copiada{plural} como CSV. Pégalo en Google Sheets o Notes.',
+    'flagged.copying': 'Copiando CSV…',
+    'flagged.clearing': 'Borrando marcas…',
+    'flagged.copyError': 'No se pudo copiar el CSV. Inténtalo de nuevo.',
+    'flagged.clearError':
+      'No se pudo confirmar el borrado de marcas. Revisa la lista antes de intentarlo de nuevo.',
     'flagged.clear.title': '¿Borrar todas las marcas?',
     'flagged.clear.message':
       'Esto quitará la marca de {count} tarjeta{plural}. No se puede deshacer.',
@@ -1163,10 +1168,16 @@ export const translations = {
     'flagged.clearAll': 'Clear All',
     'flagged.hint':
       'CSV columns: Deck · Card ID · Spanish · English · Example\nPaste into Google Sheets, fix translations, then update the deck files.',
-    'flagged.empty': 'Nothing flagged: all translations look good.',
+    'flagged.empty':
+      'No cards are flagged. This does not confirm that translations have been reviewed.',
     'flagged.copied.title': 'Copied!',
     'flagged.copied.message':
       '{count} flagged card{plural} copied as CSV. Paste into Google Sheets or Notes.',
+    'flagged.copying': 'Copying CSV…',
+    'flagged.clearing': 'Clearing flags…',
+    'flagged.copyError': 'Could not copy the CSV. Try again.',
+    'flagged.clearError':
+      'Could not confirm clearing the flags. Check the list before trying again.',
     'flagged.clear.title': 'Clear all flags?',
     'flagged.clear.message': 'This will unflag all {count} card{plural}. You cannot undo this.',
     'review.all': 'All',

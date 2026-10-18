@@ -1,0 +1,117 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/FlaggedScreen.test.tsx
+
+FAIL __tests__/screens/FlaggedScreen.test.tsx
+  ✕ catches clipboard failure, reports no success, and permits a deliberate retry (248 ms)
+  ✕ exports one exact quoted snapshot and blocks overlap until acknowledged (9 ms)
+  ✕ holds a single clear across duplicate confirmations and font changes (3 ms)
+  ✕ handles uncertain clear failure without automatic replay and requires fresh confirmation (3 ms)
+
+  ● catches clipboard failure, reports no success, and permits a deliberate retry
+
+    expect(received).resolves.toBeUndefined()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [Error: clipboard unavailable]
+
+      47 |   const screen = render(<FlaggedScreen />);
+      48 |   await act(async () => {
+    > 49 |     await expect(invokePress(screen, '📋 Copiar CSV')).resolves.toBeUndefined();
+         |           ^
+      50 |   });
+      51 |   expect(alerts).not.toHaveBeenCalled();
+      52 |   expect(screen.getByText('No se pudo copiar el CSV. Inténtalo de nuevo.')).toBeTruthy();
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at expect (__tests__/screens/FlaggedScreen.test.tsx:49:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at callback (node_modules/@testing-library/react-native/src/act.ts:31:24)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at Object.<anonymous> (__tests__/screens/FlaggedScreen.test.tsx:48:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● exports one exact quoted snapshot and blocks overlap until acknowledged
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 2
+
+      69 |   fireEvent.press(screen.getByText('📋 Copiar CSV'));
+      70 |   fireEvent.press(screen.getByText('Borrar todo'));
+    > 71 |   expect(mockCopy).toHaveBeenCalledTimes(1);
+         |                    ^
+      72 |   expect(alerts).not.toHaveBeenCalled();
+      73 |   expect(mockPreventRemove).toHaveBeenLastCalledWith(true, expect.any(Function));
+      74 |   expect(mockCopy).toHaveBeenCalledWith(
+
+      at Object.toHaveBeenCalledTimes (__tests__/screens/FlaggedScreen.test.tsx:71:20)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● holds a single clear across duplicate confirmations and font changes
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 2
+
+       97 |   act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 2 } }));
+       98 |   fireEvent.press(screen.getByText('📋 Copiar CSV'));
+    >  99 |   expect(clear).toHaveBeenCalledTimes(1);
+          |                 ^
+      100 |   expect(mockCopy).not.toHaveBeenCalled();
+      101 |   expect(mockPreventRemove).toHaveBeenLastCalledWith(true, expect.any(Function));
+      102 |   await act(async () => release());
+
+      at Object.toHaveBeenCalledTimes (__tests__/screens/FlaggedScreen.test.tsx:99:17)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● handles uncertain clear failure without automatic replay and requires fresh confirmation
+
+    expect(received).resolves.toBeUndefined()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [Error: storage unavailable]
+
+      110 |   fireEvent.press(screen.getByText('Borrar todo'));
+      111 |   await act(async () => {
+    > 112 |     await expect(alerts.mock.calls[0][2]![1].onPress!()).resolves.toBeUndefined();
+          |           ^
+      113 |   });
+      114 |   expect(
+      115 |     screen.getByText(
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at expect (__tests__/screens/FlaggedScreen.test.tsx:112:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at callback (node_modules/@testing-library/react-native/src/act.ts:31:24)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at Object.<anonymous> (__tests__/screens/FlaggedScreen.test.tsx:111:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 4 total
+Snapshots:   0 total
+Time:        1.015 s
+Ran all test suites within paths "__tests__/screens/FlaggedScreen.test.tsx".

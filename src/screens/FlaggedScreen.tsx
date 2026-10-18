@@ -1,49 +1,83 @@
-import React, { useMemo } from 'react';
-import { Alert, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Alert,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { usePreventRemove } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useLanguage } from '../context/LanguageContext';
+import type { FlashCard } from '../types';
 
-type FlaggedRow = { deckName: string; card: any };
+type FlaggedRow = { deckName: string; card: FlashCard };
 
 export default function FlaggedScreen() {
   const { ready, decks, clearAllFlags } = useDeck();
   const { t } = useLanguage();
+  const { fontScale } = useWindowDimensions();
+  const [operation, setOperation] = useState<'copy' | 'clear' | null>(null);
+  const [error, setError] = useState<'copy' | 'clear' | null>(null);
+  const busy = useRef(false);
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+  usePreventRemove(operation !== null, () => {});
+  const flagged = useMemo<FlaggedRow[]>(
+    () =>
+      (decks || []).flatMap((deck) =>
+        (deck.cards || [])
+          .filter((card) => card.flagged)
+          .map((card) => ({ deckName: deck.name, card })),
+      ),
+    [decks],
+  );
 
-  const flagged = useMemo<FlaggedRow[]>(() => {
-    return (decks || []).flatMap((d) =>
-      (d.cards || [])
-        .filter((c: any) => c.flagged)
-        .map((c: any) => ({ deckName: d.name, card: c })),
-    );
-  }, [decks]);
-
-  async function copyCSV() {
-    if (flagged.length === 0) return;
-    const header = 'Deck,Card ID,Spanish,English,Example';
-    const rows = flagged.map(({ deckName, card }) => {
-      const escape = (s: string) => `"${(s ?? '').replace(/"/g, '""')}"`;
-      return [
-        escape(deckName),
-        escape(card.id),
-        escape(card.front),
-        escape(card.back),
-        escape(card.example ?? ''),
-      ].join(',');
-    });
-    await Clipboard.setStringAsync([header, ...rows].join('\n'));
-    Alert.alert(
-      t('flagged.copied.title'),
-      t('flagged.copied.message', {
-        count: flagged.length,
-        plural: flagged.length === 1 ? '' : 's',
-      }),
-    );
+  async function run(kind: 'copy' | 'clear') {
+    if (busy.current || !ready || flagged.length === 0) return;
+    busy.current = true;
+    setOperation(kind);
+    setError(null);
+    try {
+      if (kind === 'copy') {
+        const escape = (value?: string) => `"${(value ?? '').replace(/"/g, '""')}"`;
+        const snapshot = flagged.map(({ deckName, card }) =>
+          [deckName, card.id, card.front, card.back, card.example].map(escape).join(','),
+        );
+        await Clipboard.setStringAsync(
+          ['Deck,Card ID,Spanish,English,Example', ...snapshot].join('\n'),
+        );
+        if (mounted.current)
+          Alert.alert(
+            t('flagged.copied.title'),
+            t('flagged.copied.message', {
+              count: snapshot.length,
+              plural: snapshot.length === 1 ? '' : 's',
+            }),
+          );
+      } else {
+        await clearAllFlags();
+      }
+    } catch {
+      if (mounted.current) setError(kind);
+    } finally {
+      busy.current = false;
+      if (mounted.current) setOperation(null);
+    }
   }
 
   function confirmClear() {
+    if (busy.current || !ready || flagged.length === 0) return;
     Alert.alert(
       t('flagged.clear.title'),
       t('flagged.clear.message', {
@@ -52,58 +86,81 @@ export default function FlaggedScreen() {
       }),
       [
         { text: t('common.cancel'), style: 'cancel' },
-        {
-          text: t('flagged.clearAll'),
-          style: 'destructive',
-          onPress: () => clearAllFlags(),
-        },
+        { text: t('flagged.clearAll'), style: 'destructive', onPress: () => run('clear') },
       ],
     );
   }
 
-  if (!ready) {
+  if (!ready)
     return (
-      <SafeAreaView style={styles.wrap}>
+      <SafeAreaView key={fontScale} style={styles.wrap}>
         <Text style={styles.h1}>{t('common.loading')}</Text>
       </SafeAreaView>
     );
-  }
-
   return (
-    <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>{t('flagged.title')}</Text>
-      <Text style={styles.sub}>
-        {flagged.length === 0
-          ? t('flagged.emptySub')
-          : t('flagged.countSub', {
-              count: flagged.length,
-              plural: flagged.length === 1 ? '' : 's',
-              verbPlural: flagged.length === 1 ? '' : 'n',
-            })}
-      </Text>
-
-      {flagged.length > 0 && (
-        <View style={styles.actions}>
-          <Pressable style={styles.exportBtn} onPress={copyCSV}>
-            <Text style={styles.exportBtnText}>{t('flagged.copyCsv')}</Text>
-          </Pressable>
-          <Pressable style={styles.clearBtn} onPress={confirmClear}>
-            <Text style={styles.clearBtnText}>{t('flagged.clearAll')}</Text>
-          </Pressable>
-        </View>
-      )}
-
-      <View style={styles.hint}>
-        <Text style={styles.hintText}>{t('flagged.hint')}</Text>
-      </View>
-
+    <SafeAreaView key={fontScale} style={styles.wrap}>
       <FlatList
         data={flagged}
-        keyExtractor={(x) => x.card.id}
+        keyExtractor={(item) => item.card.id}
         contentContainerStyle={{ paddingBottom: spacing(4) }}
+        ListHeaderComponent={
+          <>
+            <Text accessibilityRole="header" style={styles.h1}>
+              {t('flagged.title')}
+            </Text>
+            <Text style={styles.sub}>
+              {flagged.length === 0
+                ? t('flagged.emptySub')
+                : t('flagged.countSub', {
+                    count: flagged.length,
+                    plural: flagged.length === 1 ? '' : 's',
+                    verbPlural: flagged.length === 1 ? '' : 'n',
+                  })}
+            </Text>
+            {operation && (
+              <Text accessibilityRole="alert" style={styles.sub}>
+                {t(operation === 'copy' ? 'flagged.copying' : 'flagged.clearing')}
+              </Text>
+            )}
+            {error && (
+              <Text accessibilityRole="alert" style={styles.sub}>
+                {t(error === 'copy' ? 'flagged.copyError' : 'flagged.clearError')}
+              </Text>
+            )}
+            {flagged.length > 0 && (
+              <View style={[styles.actions, fontScale >= 1.4 && styles.stacked]}>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={t('flagged.copyCsv')}
+                  accessibilityState={{ disabled: operation !== null }}
+                  disabled={operation !== null}
+                  style={[styles.exportBtn, operation && styles.disabled]}
+                  onPress={() => run('copy')}
+                >
+                  <Text style={styles.exportBtnText}>{t('flagged.copyCsv')}</Text>
+                </Pressable>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={t('flagged.clearAll')}
+                  accessibilityState={{ disabled: operation !== null }}
+                  disabled={operation !== null}
+                  style={[styles.clearBtn, operation && styles.disabled]}
+                  onPress={confirmClear}
+                >
+                  <Text style={styles.clearBtnText}>{t('flagged.clearAll')}</Text>
+                </Pressable>
+              </View>
+            )}
+            <View style={styles.hint}>
+              <Text style={styles.hintText}>{t('flagged.hint')}</Text>
+            </View>
+          </>
+        }
         ListEmptyComponent={
           <View style={styles.emptyWrap}>
-            <Text style={styles.emptyEmoji}>✅</Text>
+            <Text allowFontScaling={false} style={styles.emptyEmoji}>
+              ✅
+            </Text>
             <Text style={styles.emptyText}>{t('flagged.empty')}</Text>
           </View>
         }
@@ -118,7 +175,7 @@ export default function FlaggedScreen() {
               </View>
               <Text style={styles.spanish}>{item.card.front}</Text>
               <Text style={styles.english}>{item.card.back}</Text>
-              {item.card.example ? <Text style={styles.example}>"{item.card.example}"</Text> : null}
+              {item.card.example ? <Text style={styles.example}>“{item.card.example}”</Text> : null}
               <Text style={styles.cardId}>ID: {item.card.id}</Text>
             </View>
           </View>
@@ -133,20 +190,26 @@ const styles = StyleSheet.create({
   h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
   sub: { color: colors.textSecondary, marginBottom: spacing(1.5) },
 
-  actions: { flexDirection: 'row', gap: 10, marginBottom: spacing(1.5) },
+  actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: spacing(1.5) },
+  stacked: { flexDirection: 'column' },
+  disabled: { opacity: 0.6 },
   exportBtn: {
-    flex: 1,
-    backgroundColor: '#1d4ed8',
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    backgroundColor: colors.surfacePressed,
     borderRadius: 12,
+    minHeight: 48,
     paddingVertical: 12,
     alignItems: 'center',
   },
   exportBtnText: { color: 'white', fontWeight: '900' },
   clearBtn: {
-    backgroundColor: '#0b1220',
+    justifyContent: 'center',
+    backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: '#ef4444',
     borderRadius: 12,
+    minHeight: 48,
     paddingVertical: 12,
     paddingHorizontal: 16,
     alignItems: 'center',
@@ -154,19 +217,19 @@ const styles = StyleSheet.create({
   clearBtnText: { color: '#ef4444', fontWeight: '900' },
 
   hint: {
-    backgroundColor: '#0b1220',
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: '#1e293b',
+    borderColor: colors.border,
     borderRadius: 10,
     padding: spacing(1.25),
     marginBottom: spacing(1.5),
   },
-  hintText: { color: '#475569', fontSize: 12, lineHeight: 18 },
+  hintText: { color: colors.textSecondary, fontSize: 12, lineHeight: 18 },
 
   row: {
     flexDirection: 'row',
     gap: 12,
-    backgroundColor: '#0f172a',
+    backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: '#ef4444',
     borderRadius: 12,
@@ -174,8 +237,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   rowNum: {
-    width: 28,
-    height: 28,
+    alignSelf: 'flex-start',
+    minWidth: 28,
+    minHeight: 28,
+    padding: 4,
     borderRadius: 14,
     backgroundColor: 'rgba(239,68,68,0.15)',
     alignItems: 'center',
@@ -184,19 +249,19 @@ const styles = StyleSheet.create({
   rowNumText: { color: '#f87171', fontWeight: '900', fontSize: 13 },
 
   deckBadge: {
-    backgroundColor: '#1e293b',
+    backgroundColor: colors.border,
     borderRadius: 6,
     paddingVertical: 3,
     paddingHorizontal: 8,
     alignSelf: 'flex-start',
     marginBottom: 6,
   },
-  deckBadgeText: { color: '#94a3b8', fontSize: 11, fontWeight: '700' },
+  deckBadgeText: { color: colors.textTertiary, fontSize: 11, fontWeight: '700' },
 
-  spanish: { color: '#f8fafc', fontSize: 18, fontWeight: '900', marginBottom: 2 },
+  spanish: { color: colors.textPrimary, fontSize: 18, fontWeight: '900', marginBottom: 2 },
   english: { color: '#93c5fd', fontSize: 15, fontWeight: '700', marginBottom: 4 },
-  example: { color: '#64748b', fontStyle: 'italic', fontSize: 13, marginBottom: 6 },
-  cardId: { color: '#334155', fontSize: 11, fontFamily: 'monospace' },
+  example: { color: colors.textSecondary, fontStyle: 'italic', fontSize: 13, marginBottom: 6 },
+  cardId: { color: colors.textTertiary, fontSize: 11, fontFamily: 'monospace' },
 
   emptyWrap: { alignItems: 'center', paddingTop: spacing(6) },
   emptyEmoji: { fontSize: 48, marginBottom: spacing(1) },
