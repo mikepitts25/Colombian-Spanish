@@ -1,0 +1,24 @@
+{
+  "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPad-mini-A17-Pro",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+  "name": "Colombian Spanish Applied Mini QA",
+  "uiValidation": "not performed",
+  "beforeLaunch": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "afterLaunch": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "recordedAt": "2026-10-18T13:10:55.421158+00:00"
+}

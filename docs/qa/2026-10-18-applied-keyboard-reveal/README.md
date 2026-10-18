@@ -1,6 +1,6 @@
 # Applied reply keyboard reveal and rotation — B05.3-B2b2-B2e
 
-Base main `4ac2dac`; runtime `83fe543` plus review corrections `e7bef82` on `codex/tablet-applied-matrix`. Integration pending. This advances the existing daily-plan/native matrix; the broader parent remains open.
+Base main `4ac2dac`; runtime `83fe543` plus review corrections `e7bef82` on `codex/tablet-applied-matrix`. Merged/pushed in [PR14](https://github.com/mikepitts25/Colombian-Spanish/pull/14), merge `529976e`, after all four candidate CI jobs passed (run39130137877). This advances the existing daily-plan/native matrix; the broader parent remains open.
 
 ## Native reproduction
 
@@ -37,3 +37,5 @@ Software: final115 suites/1099 tests,23 focused tests, types and zero-warning li
 Accent-popup entry, Spanish corrected-layout capture, narrow-phone/window and broader bilingual/assistive/activity matrix remain AI/native work; Android tooling/agreements, signing, physical feedback/audio and editorial/product/account gates remain distinct. This does not close B05.3-B2b2-B2 or certify learner pace/proficiency. Security B01.8-C2g remains access-blocked and was skipped without retry or bypass.
 
 Device-label correction: an earlier working description called this device a mini. Official `simctl list devices --json` and its device.plist identify the13-inch M4 (`native/device-provenance.json`); screenshot2064×2752 dimensions agree. The preceding tablet post-cold report had the same carried-forward label and is corrected in this change. These runs do not establish smaller-tablet acceptance.
+
+Next-device preparation only: fresh iPad mini A17 Pro `DF3686C1-A2E7-4870-B127-A83A8B67541D` was created/booted, installed with the same unchanged Debug binary, and launched on reviewed JS8099. The own-path before/after preflights and official model are recorded in `native/prepared-mini.json`. No mini UI/keyboard acceptance is claimed; B2f tracks that separate work.
