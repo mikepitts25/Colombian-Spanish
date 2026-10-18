@@ -1,6 +1,14 @@
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
-import { Alert, Dimensions } from 'react-native';
+import {
+  Alert,
+  Dimensions,
+  KeyboardAvoidingView,
+  View,
+  StyleSheet,
+  DeviceEventEmitter,
+} from 'react-native';
+import { HeaderHeightContext } from '@react-navigation/elements';
 import AddCardScreen from '../../src/screens/AddCardScreen';
 
 let mockLanguage: 'es' | 'en' = 'en';
@@ -145,4 +153,26 @@ test('can return to the retained draft after a target disappears without automat
   expect(ui.getByDisplayValue('¿Listo?').props.editable).toBe(true);
   expect(save).toHaveBeenCalledTimes(1);
   expect(ui.queryByRole('button', { name: 'Retry save' })).toBeNull();
+});
+
+test('keeps the keyboard viewport above the keyboard when the native header occupies 74 points', async () => {
+  const ui = render(
+    <HeaderHeightContext.Provider value={74}>
+      <AddCardScreen />
+    </HeaderHeightContext.Provider>,
+  );
+  const avoiding = ui.UNSAFE_getAllByType(KeyboardAvoidingView)[0];
+  await act(async () => {
+    fireEvent(avoiding.findByType(View), 'layout', {
+      persist: () => {},
+      nativeEvent: { layout: { x: 0, y: 20, width: 375, height: 573 } },
+    });
+    DeviceEventEmitter.emit('keyboardWillShow', {
+      duration: 0,
+      endCoordinates: { screenX: 0, screenY: 407, width: 375, height: 260 },
+    });
+  });
+  // Global top = header 74 + local y20. Only 313 points fit before y407.
+  const padding = StyleSheet.flatten(avoiding.findByType(View).props.style).paddingBottom;
+  expect(573 - padding).toBe(313);
 });

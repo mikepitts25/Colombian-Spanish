@@ -1,0 +1,19 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/AddCardScreen.test.tsx
+
+PASS __tests__/screens/AddCardScreen.test.tsx
+  ✓ keeps one pending card intent and blocks edits through live resizing until confirmed saved (15 ms)
+  ✓ retains the exact failed card payload and identity for retry instead of losing or duplicating it (66 ms)
+  ✓ blocks missing selected deck without discarding entered card fields (8 ms)
+  ✓ new-deck retry retains one identity and modal draft through failure and resizing (77 ms)
+  ✓ can return to the retained draft after a target disappears without automatically submitting another create (62 ms)
+  AddCardScreen localization
+    ✓ renders Add Card labels in English by default (265 ms)
+    ✓ renders Add Card labels in Spanish when UI language is Spanish (4 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        1.43 s
+Ran all test suites within paths "__tests__/screens/AddCardScreen.test.tsx".

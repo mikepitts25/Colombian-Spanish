@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Modal,
@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { usePreventRemove } from '@react-navigation/native';
+import { HeaderHeightContext } from '@react-navigation/elements';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { FlashCard } from '../types';
@@ -51,6 +52,7 @@ export default function AddCardScreen() {
   const { ready, decks, activeDeckId, addCardToDeck, createDeck } = useDeck();
   const { t } = useLanguage();
   const { fontScale } = useWindowDimensions();
+  const headerHeight = useContext(HeaderHeightContext) ?? 0;
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
   const [example, setExample] = useState('');
@@ -206,12 +208,14 @@ export default function AddCardScreen() {
     <SafeAreaView key={fontScale} style={styles.wrap}>
       <KeyboardAvoidingView
         style={styles.flex}
+        keyboardVerticalOffset={headerHeight}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView
           ref={content}
           contentContainerStyle={styles.content}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="always"
+          keyboardDismissMode="interactive"
         >
           <Text accessibilityRole="header" style={styles.h1}>
             {t('addCard.title')}

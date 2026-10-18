@@ -1,0 +1,38 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/AddCardScreen.test.tsx
+
+FAIL __tests__/screens/AddCardScreen.test.tsx
+  ✓ keeps one pending card intent and blocks edits through live resizing until confirmed saved (22 ms)
+  ✓ retains the exact failed card payload and identity for retry instead of losing or duplicating it (67 ms)
+  ✓ blocks missing selected deck without discarding entered card fields (9 ms)
+  ✓ new-deck retry retains one identity and modal draft through failure and resizing (78 ms)
+  ✓ can return to the retained draft after a target disappears without automatically submitting another create (62 ms)
+  ✕ keeps the keyboard viewport above the keyboard when the native header occupies 74 points (4 ms)
+  AddCardScreen localization
+    ✓ renders Add Card labels in English by default (145 ms)
+    ✓ renders Add Card labels in Spanish when UI language is Spanish (4 ms)
+
+  ● keeps the keyboard viewport above the keyboard when the native header occupies 74 points
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 313
+    Received: 387
+
+      168 |   // Global top = header 74 + local y20. Only 313 points fit before y407.
+      169 |   const padding = StyleSheet.flatten(avoiding.findByType(View).props.style).paddingBottom;
+    > 170 |   expect(573 - padding).toBe(313);
+          |                         ^
+      171 | });
+      172 |
+
+      at Object.toBe (__tests__/screens/AddCardScreen.test.tsx:170:25)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 7 passed, 8 total
+Snapshots:   0 total
+Time:        1.508 s, estimated 2 s
+Ran all test suites within paths "__tests__/screens/AddCardScreen.test.tsx".
