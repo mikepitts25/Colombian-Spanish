@@ -41,4 +41,4 @@ Files: src/screens/NotificationsScreen.tsx; src/i18n/translations.ts; **tests**/
 - [x] Verify focused and full suite, types/lint/format/data/editorial validation.
 - [x] Capture representative native Spanish/English default/maximum layouts, no inadvertent storage/learning changes and cold launch; retain permission/delivery limits.
 - [x] Fresh independent whole-branch review and checklist/evidence update.
-- [ ] Owner-authorized merge/push main, merged full suite and CI verification.
+- [x] Owner-authorized merge/push main, merged full suite and CI verification. Implementation `29670c8`, checklist `0a226b5`: merged 100 suites/971 tests; CI39085506893 all four jobs and board39085506865 succeeded.
