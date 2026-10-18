@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getLearningEvents } from '../../src/storage/learningEvents';
-import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
+import { act, fireEvent, waitFor, within } from '@testing-library/react-native';
 import { Dimensions, ScrollView } from 'react-native';
 import QuizScreen from '../../src/screens/QuizScreen';
 import { Deck, FlashCard } from '../../src/types';
