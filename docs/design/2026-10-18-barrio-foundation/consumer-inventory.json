@@ -1,0 +1,193 @@
+{
+  "base": "de3926a99e4e6be5331247252f57448e51282a62",
+  "scope": "tsx imports from styles/theme; literal matches are inventory, not proof each should migrate",
+  "consumerCount": 31,
+  "consumers": [
+    {
+      "path": "src/components/AudioButton.tsx",
+      "imports": ["{ spacing }"],
+      "literalColorOccurrences": 2,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/components/ConjugationPanel.tsx",
+      "imports": ["{ colors, spacing, radius, typography }"],
+      "literalColorOccurrences": 2,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/components/ErrorBoundary.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/components/Flashcard.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 19,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/components/MissionAudio.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/components/MissionFollowUp.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/components/ProgressBar.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 2,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/components/StorageGate.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/components/Tag.tsx",
+      "imports": ["{ spacing }"],
+      "literalColorOccurrences": 2,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/navigation/index.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 2,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/AddCardScreen.tsx",
+      "imports": ["{ colors, spacing }"],
+      "literalColorOccurrences": 1,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/AudioPreferencesScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/DailyGoalScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 4,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/DailyPlanScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/DifficultWordsScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 16,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/ExploreScreen.tsx",
+      "imports": ["{ colors, spacing, radius }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/FlaggedScreen.tsx",
+      "imports": ["{ colors, spacing }"],
+      "literalColorOccurrences": 6,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/HomeScreen.tsx",
+      "imports": ["{ colors, radius }"],
+      "literalColorOccurrences": 23,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/LearningPreferencesScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/ManageDecksScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 2,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/MissionScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/NotificationsScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 1,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/OnboardingScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 4,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/PhrasebookScreen.tsx",
+      "imports": ["{ colors, spacing }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/PhrasesScreen.tsx",
+      "imports": ["{ colors, radius, spacing }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/ProgressScreen.tsx",
+      "imports": ["{ colors, radius }"],
+      "literalColorOccurrences": 29,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/QuizScreen.tsx",
+      "imports": ["{ colors, spacing, radius, typography, elevation }"],
+      "literalColorOccurrences": 6,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/ReviewScreen.tsx",
+      "imports": ["{ colors, spacing }"],
+      "literalColorOccurrences": 55,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/SettingsScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 2,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/StudyScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 25,
+      "moduleStyleSheet": true
+    },
+    {
+      "path": "src/screens/VoicePracticeScreen.tsx",
+      "imports": ["{ colors }"],
+      "literalColorOccurrences": 0,
+      "moduleStyleSheet": true
+    }
+  ]
+}

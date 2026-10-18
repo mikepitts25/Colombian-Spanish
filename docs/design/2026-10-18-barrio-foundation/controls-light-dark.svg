@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1170" viewBox="0 0 1440 1170"><rect x="0" y="0" width="1440" height="1170" rx="0" fill="#E8E9E3" stroke="none" stroke-width="1"/>
+<text x="44" y="52" fill="#18352F" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="start">Barrio · controls and semantic states</text>
+<text x="44" y="85" fill="#486258" font-family="Arial, sans-serif" font-size="16" font-weight="400" text-anchor="start">Minimum 48-point actions · Scalable text · Labels plus color · System fonts · No required animation</text>
+<rect x="44" y="120" width="654" height="985" rx="24" fill="#F7F3EA" stroke="none" stroke-width="1"/>
+<text x="68" y="164" fill="#18352F" font-family="Arial, sans-serif" font-size="24" font-weight="700" text-anchor="start">Light appearance</text>
+<rect x="68" y="184" width="106" height="44" rx="10" fill="#F7F3EA" stroke="#748779" stroke-width="1"/>
+<text x="68" y="248" fill="#486258" font-family="Arial, sans-serif" font-size="12" font-weight="400" text-anchor="start">Background</text>
+<text x="68" y="268" fill="#18352F" font-family="Arial, sans-serif" font-size="12" font-weight="700" text-anchor="start">#F7F3EA</text>
+<rect x="191" y="184" width="106" height="44" rx="10" fill="#FFFFFF" stroke="#748779" stroke-width="1"/>
+<text x="191" y="248" fill="#486258" font-family="Arial, sans-serif" font-size="12" font-weight="400" text-anchor="start">Surface</text>
+<text x="191" y="268" fill="#18352F" font-family="Arial, sans-serif" font-size="12" font-weight="700" text-anchor="start">#FFFFFF</text>
+<rect x="314" y="184" width="106" height="44" rx="10" fill="#18352F" stroke="#748779" stroke-width="1"/>
+<text x="314" y="248" fill="#486258" font-family="Arial, sans-serif" font-size="12" font-weight="400" text-anchor="start">Text</text>
+<text x="314" y="268" fill="#18352F" font-family="Arial, sans-serif" font-size="12" font-weight="700" text-anchor="start">#18352F</text>
+<rect x="437" y="184" width="106" height="44" rx="10" fill="#23624E" stroke="#748779" stroke-width="1"/>
+<text x="437" y="248" fill="#486258" font-family="Arial, sans-serif" font-size="12" font-weight="400" text-anchor="start">Primary</text>
+<text x="437" y="268" fill="#18352F" font-family="Arial, sans-serif" font-size="12" font-weight="700" text-anchor="start">#23624E</text>
+<rect x="560" y="184" width="106" height="44" rx="10" fill="#AC4E2B" stroke="#748779" stroke-width="1"/>
+<text x="560" y="248" fill="#486258" font-family="Arial, sans-serif" font-size="12" font-weight="400" text-anchor="start">Accent</text>
+<text x="560" y="268" fill="#18352F" font-family="Arial, sans-serif" font-size="12" font-weight="700" text-anchor="start">#AC4E2B</text>
+<text x="68" y="331" fill="#486258" font-family="Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start">Normal</text>
+<rect x="217" y="303" width="449" height="48" rx="12" fill="#23624E" stroke="none" stroke-width="1"/>
+<text x="441.5" y="333" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Start daily plan</text>
+<text x="68" y="403" fill="#486258" font-family="Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start">Pressed</text>
+<rect x="217" y="375" width="449" height="48" rx="12" fill="#184A3A" stroke="none" stroke-width="1"/>
+<text x="441.5" y="405" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Start daily plan</text>
+<text x="68" y="475" fill="#486258" font-family="Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start">Focus</text>
+<rect x="212" y="442" width="459" height="58" rx="17" fill="none" stroke="#A04B25" stroke-width="2"/>
+<rect x="217" y="447" width="449" height="48" rx="12" fill="#23624E" stroke="none" stroke-width="1"/>
+<text x="441.5" y="477" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Start daily plan</text>
+<text x="68" y="547" fill="#486258" font-family="Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start">Disabled</text>
+<rect x="217" y="519" width="449" height="48" rx="12" fill="#E8E5DD" stroke="none" stroke-width="1"/>
+<text x="441.5" y="549" fill="#58675E" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Audio unavailable</text>
+<text x="68" y="628" fill="#18352F" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="start">Your answer</text>
+<rect x="68" y="644" width="606" height="62" rx="12" fill="#FFFFFF" stroke="#748779" stroke-width="1.5"/>
+<text x="86" y="683" fill="#18352F" font-family="Arial, sans-serif" font-size="20" font-weight="400" text-anchor="start">Buenos días</text>
+<rect x="63" y="639" width="616" height="72" rx="17" fill="none" stroke="#A04B25" stroke-width="2"/>
+<text x="68" y="736" fill="#486258" font-family="Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start">Visible focus · preserved input · no color-only errors</text>
+<rect x="68" y="760" width="606" height="126" rx="16" fill="#FBE8E5" stroke="#A63135" stroke-width="1"/>
+<text x="88" y="795" fill="#A63135" font-family="Arial, sans-serif" font-size="18" font-weight="700" text-anchor="start">!  Could not save</text>
+<text x="88" y="822" fill="#A63135" font-family="Arial, sans-serif" font-size="16" font-weight="400" text-anchor="start">Your response is retained. Try again.</text>
+<text x="88" y="860" fill="#A63135" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="start">Retry save →</text>
+<rect x="68" y="912" width="194" height="58" rx="12" fill="#E5EEE7" stroke="none" stroke-width="1"/>
+<text x="80" y="948" fill="#23624E" font-family="Arial, sans-serif" font-size="15" font-weight="700" text-anchor="start">Success</text>
+<rect x="272" y="912" width="194" height="58" rx="12" fill="#E4EDF3" stroke="none" stroke-width="1"/>
+<text x="284" y="948" fill="#285F81" font-family="Arial, sans-serif" font-size="15" font-weight="700" text-anchor="start">Information</text>
+<rect x="476" y="912" width="194" height="58" rx="12" fill="#FFF0CF" stroke="none" stroke-width="1"/>
+<text x="488" y="948" fill="#7B570E" font-family="Arial, sans-serif" font-size="15" font-weight="700" text-anchor="start">Warning</text>
+<text x="68" y="1013" fill="#486258" font-family="Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start">Decorative accents never replace a label or state icon.</text>
+<text x="68" y="1040" fill="#486258" font-family="Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start">Runtime layouts must grow, scroll and respect reduced motion.</text>
+<rect x="742" y="120" width="654" height="985" rx="24" fill="#141F1B" stroke="none" stroke-width="1"/>
+<text x="766" y="164" fill="#F7F3EA" font-family="Arial, sans-serif" font-size="24" font-weight="700" text-anchor="start">Dark appearance</text>
+<rect x="766" y="184" width="106" height="44" rx="10" fill="#141F1B" stroke="#718A77" stroke-width="1"/>
+<text x="766" y="248" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="12" font-weight="400" text-anchor="start">Background</text>
+<text x="766" y="268" fill="#F7F3EA" font-family="Arial, sans-serif" font-size="12" font-weight="700" text-anchor="start">#141F1B</text>
+<rect x="889" y="184" width="106" height="44" rx="10" fill="#1C2B24" stroke="#718A77" stroke-width="1"/>
+<text x="889" y="248" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="12" font-weight="400" text-anchor="start">Surface</text>
+<text x="889" y="268" fill="#F7F3EA" font-family="Arial, sans-serif" font-size="12" font-weight="700" text-anchor="start">#1C2B24</text>
+<rect x="1012" y="184" width="106" height="44" rx="10" fill="#F7F3EA" stroke="#718A77" stroke-width="1"/>
+<text x="1012" y="248" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="12" font-weight="400" text-anchor="start">Text</text>
+<text x="1012" y="268" fill="#F7F3EA" font-family="Arial, sans-serif" font-size="12" font-weight="700" text-anchor="start">#F7F3EA</text>
+<rect x="1135" y="184" width="106" height="44" rx="10" fill="#A7D6B2" stroke="#718A77" stroke-width="1"/>
+<text x="1135" y="248" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="12" font-weight="400" text-anchor="start">Primary</text>
+<text x="1135" y="268" fill="#F7F3EA" font-family="Arial, sans-serif" font-size="12" font-weight="700" text-anchor="start">#A7D6B2</text>
+<rect x="1258" y="184" width="106" height="44" rx="10" fill="#F2B496" stroke="#718A77" stroke-width="1"/>
+<text x="1258" y="248" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="12" font-weight="400" text-anchor="start">Accent</text>
+<text x="1258" y="268" fill="#F7F3EA" font-family="Arial, sans-serif" font-size="12" font-weight="700" text-anchor="start">#F2B496</text>
+<text x="766" y="331" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start">Normal</text>
+<rect x="915" y="303" width="449" height="48" rx="12" fill="#A7D6B2" stroke="none" stroke-width="1"/>
+<text x="1139.5" y="333" fill="#14291F" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Start daily plan</text>
+<text x="766" y="403" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start">Pressed</text>
+<rect x="915" y="375" width="449" height="48" rx="12" fill="#8DC59B" stroke="none" stroke-width="1"/>
+<text x="1139.5" y="405" fill="#14291F" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Start daily plan</text>
+<text x="766" y="475" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start">Focus</text>
+<rect x="910" y="442" width="459" height="58" rx="17" fill="none" stroke="#EBC177" stroke-width="2"/>
+<rect x="915" y="447" width="449" height="48" rx="12" fill="#A7D6B2" stroke="none" stroke-width="1"/>
+<text x="1139.5" y="477" fill="#14291F" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Start daily plan</text>
+<text x="766" y="547" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start">Disabled</text>
+<rect x="915" y="519" width="449" height="48" rx="12" fill="#2E3A32" stroke="none" stroke-width="1"/>
+<text x="1139.5" y="549" fill="#AAB7AA" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Audio unavailable</text>
+<text x="766" y="628" fill="#F7F3EA" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="start">Your answer</text>
+<rect x="766" y="644" width="606" height="62" rx="12" fill="#1C2B24" stroke="#718A77" stroke-width="1.5"/>
+<text x="784" y="683" fill="#F7F3EA" font-family="Arial, sans-serif" font-size="20" font-weight="400" text-anchor="start">Buenos días</text>
+<rect x="761" y="639" width="616" height="72" rx="17" fill="none" stroke="#EBC177" stroke-width="2"/>
+<text x="766" y="736" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start">Visible focus · preserved input · no color-only errors</text>
+<rect x="766" y="760" width="606" height="126" rx="16" fill="#45262A" stroke="#FFB4AE" stroke-width="1"/>
+<text x="786" y="795" fill="#FFB4AE" font-family="Arial, sans-serif" font-size="18" font-weight="700" text-anchor="start">!  Could not save</text>
+<text x="786" y="822" fill="#FFB4AE" font-family="Arial, sans-serif" font-size="16" font-weight="400" text-anchor="start">Your response is retained. Try again.</text>
+<text x="786" y="860" fill="#FFB4AE" font-family="Arial, sans-serif" font-size="16" font-weight="700" text-anchor="start">Retry save →</text>
+<rect x="766" y="912" width="194" height="58" rx="12" fill="#263D2D" stroke="none" stroke-width="1"/>
+<text x="778" y="948" fill="#A7D6B2" font-family="Arial, sans-serif" font-size="15" font-weight="700" text-anchor="start">Success</text>
+<rect x="970" y="912" width="194" height="58" rx="12" fill="#243946" stroke="none" stroke-width="1"/>
+<text x="982" y="948" fill="#A7D2EC" font-family="Arial, sans-serif" font-size="15" font-weight="700" text-anchor="start">Information</text>
+<rect x="1174" y="912" width="194" height="58" rx="12" fill="#3D321F" stroke="none" stroke-width="1"/>
+<text x="1186" y="948" fill="#EBC177" font-family="Arial, sans-serif" font-size="15" font-weight="700" text-anchor="start">Warning</text>
+<text x="766" y="1013" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start">Decorative accents never replace a label or state icon.</text>
+<text x="766" y="1040" fill="#CCD7C8" font-family="Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start">Runtime layouts must grow, scroll and respect reduced motion.</text>
+<text x="44" y="1142" fill="#486258" font-family="Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start">Static design only · Explicit color-pair calculations are in contrast-report.json · Runtime, keyboard and device checks remain separate.</text></svg>
