@@ -1,0 +1,24 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/storage/dailyGoalSettings.test.ts
+
+FAIL __tests__/storage/dailyGoalSettings.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../../src/storage/dailyGoalSettings' from '__tests__/storage/dailyGoalSettings.test.ts'
+
+      1 | import AsyncStorage from '@react-native-async-storage/async-storage';
+    > 2 | import { loadDailyGoalSettings, saveDailyGoalSettings } from '../../src/storage/dailyGoalSettings';
+        | ^
+      3 | import { getDailyProgress, incrementDailyProgress } from '../../src/storage/storage';
+      4 | import { getPrefs } from '../../src/storage/prefs';
+      5 | const write = AsyncStorage.setItem as jest.Mock;
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (__tests__/storage/dailyGoalSettings.test.ts:2:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.642 s
+Ran all test suites within paths "__tests__/storage/dailyGoalSettings.test.ts".

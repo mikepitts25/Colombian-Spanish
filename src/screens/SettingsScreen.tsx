@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   Alert,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
 import { getDailyProgress, loadDecks } from '../storage/storage';
 import { getLearningEvents, validateLearningEvents } from '../storage/learningEvents';
@@ -90,14 +90,25 @@ export default function SettingsScreen() {
   const [fileError, setFileError] = useState<string | null>(null);
   const [newPerDay, setNewPerDay] = useState(10);
 
-  useEffect(() => {
-    (async () => {
-      const dp = await getDailyProgress();
-      setTarget(dp.target ?? 10);
-      const prefs = await getPrefs();
-      setNewPerDay(prefs.newCardsPerDay);
-    })();
-  }, []);
+  const [summaryError, setSummaryError] = useState(false);
+  useFocusEffect(
+    useCallback(() => {
+      let active = true;
+      void Promise.all([getDailyProgress(), getPrefs()])
+        .then(([daily, prefs]) => {
+          if (!active) return;
+          setTarget(daily.target ?? 10);
+          setNewPerDay(prefs.newCardsPerDay);
+          setSummaryError(false);
+        })
+        .catch(() => {
+          if (active) setSummaryError(true);
+        });
+      return () => {
+        active = false;
+      };
+    }, []),
+  );
 
   async function exportBackup() {
     try {
@@ -354,14 +365,22 @@ export default function SettingsScreen() {
           <SettingsRow
             emoji="🎯"
             title={t('settings.dailyGoal.title')}
-            subtitle={t('settings.dailyGoal.subtitle', { count: target })}
+            subtitle={
+              summaryError
+                ? t('settings.learningSummaryUnavailable')
+                : t('settings.dailyGoal.subtitle', { count: target })
+            }
             onPress={() => nav.navigate('DailyGoal')}
           />
           <Divider />
           <SettingsRow
             emoji="🃏"
             title={t('settings.newCards.title')}
-            subtitle={t('settings.newCards.subtitle', { count: newPerDay })}
+            subtitle={
+              summaryError
+                ? t('settings.learningSummaryUnavailable')
+                : t('settings.newCards.subtitle', { count: newPerDay })
+            }
             onPress={() => nav.navigate('DailyGoal')}
           />
           <Divider />

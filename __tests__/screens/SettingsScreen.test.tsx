@@ -31,9 +31,13 @@ jest.mock('../../src/storage/backupRestore', () => {
 });
 
 const mockNavigate = jest.fn();
+let mockFocusEpoch = 0;
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
+  useFocusEffect: (callback: () => void) => {
+    require('react').useEffect(callback, [callback, mockFocusEpoch]);
+  },
 }));
 
 jest.mock('../../src/storage/storage', () => ({
@@ -76,6 +80,7 @@ const mockAlert = Alert.alert as jest.Mock;
 beforeEach(async () => {
   await AsyncStorage.clear();
   jest.clearAllMocks();
+  mockFocusEpoch = 0;
   mockLanguage = 'es';
   Object.assign(jest.requireMock('expo-application'), {
     nativeApplicationVersion: '1.2.3',
@@ -699,4 +704,46 @@ it('shows unavailable when native build values are missing or blank', async () =
   });
   const screen = render(<SettingsScreen />);
   expect(await screen.findByText('No disponible · compilación No disponible')).toBeTruthy();
+});
+
+test('refreshes saved goal and cap when returning to Settings and ignores stale focus reads', async () => {
+  await AsyncStorage.setItem('SRS_PREFS_V1', JSON.stringify({ newCardsPerDay: 10 }));
+  mockGetDailyProgress.mockResolvedValue({ target: 5, count: 1 });
+  const screen = render(<SettingsScreen />);
+  await screen.findByText('5 tarjetas por día');
+  await screen.findByText('10 por día');
+  let resolveOld!: (value: { target: number }) => void;
+  mockGetDailyProgress.mockImplementationOnce(
+    () =>
+      new Promise((resolve) => {
+        resolveOld = resolve;
+      }),
+  );
+  mockFocusEpoch++;
+  screen.rerender(<SettingsScreen />);
+  await AsyncStorage.setItem('SRS_PREFS_V1', JSON.stringify({ newCardsPerDay: 15 }));
+  mockGetDailyProgress.mockResolvedValue({ target: 20 });
+  mockFocusEpoch++;
+  screen.rerender(<SettingsScreen />);
+  await screen.findByText('20 tarjetas por día');
+  await screen.findByText('15 por día');
+  await act(async () => resolveOld({ target: 5 }));
+  expect(screen.getByText('20 tarjetas por día')).toBeTruthy();
+  expect(screen.getByText('15 por día')).toBeTruthy();
+});
+
+test('marks goal summaries unavailable on focus read failure and recovers on the next focus', async () => {
+  const screen = render(<SettingsScreen />);
+  await screen.findByText('10 tarjetas por día');
+  mockGetDailyProgress.mockRejectedValueOnce(new Error('read failed'));
+  mockFocusEpoch++;
+  screen.rerender(<SettingsScreen />);
+  await waitFor(() =>
+    expect(screen.getAllByText('No disponible · abre para reintentar')).toHaveLength(2),
+  );
+  mockGetDailyProgress.mockResolvedValue({ target: 20 });
+  mockFocusEpoch++;
+  screen.rerender(<SettingsScreen />);
+  await screen.findByText('20 tarjetas por día');
+  expect(screen.queryByText('No disponible · abre para reintentar')).toBeNull();
 });

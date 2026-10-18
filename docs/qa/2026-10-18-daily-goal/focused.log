@@ -1,0 +1,13 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/DailyGoalScreen.test.tsx __tests__/storage/dailyGoalSettings.test.ts __tests__/screens/SettingsScreen.test.tsx
+
+PASS __tests__/storage/dailyGoalSettings.test.ts
+PASS __tests__/screens/SettingsScreen.test.tsx
+PASS __tests__/screens/DailyGoalScreen.test.tsx
+
+Test Suites: 3 passed, 3 total
+Tests:       76 passed, 76 total
+Snapshots:   0 total
+Time:        2.471 s, estimated 3 s
+Ran all test suites within paths "__tests__/screens/DailyGoalScreen.test.tsx", "__tests__/storage/dailyGoalSettings.test.ts", "__tests__/screens/SettingsScreen.test.tsx".

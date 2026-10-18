@@ -1,0 +1,521 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/DailyGoalScreen.test.tsx
+
+FAIL __tests__/screens/DailyGoalScreen.test.tsx
+  ✕ retains one selected save intent and pending controls through live text resizing (1246 ms)
+  ✕ keeps the failed intent and retries without claiming success or changing its values (1008 ms)
+  ✕ does not allow a failed load to overwrite existing settings with defaults (1012 ms)
+
+  ● retains one selected save intent and pending controls through live text resizing
+
+    Unable to find an element with role: button, name: 5 cards per day, selected state: true
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m←[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mSettings[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mDaily Goal[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mSave[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m🎯[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m5[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mcards per day[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m5[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mCasual[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m10[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mRegular[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m20[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mSerious[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m50[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mIntense[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mNEW CARDS PER DAY[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mNew per session[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mMax new cards per day[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m−[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<Text>[39m
+                  [0m10[0m
+                [36m</Text>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m+[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mPresentation order[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMixed ›[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m💪[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mEvery card counts![0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mStudying 5 cards a day builds fluency in 6 months.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      47 | test('retains one selected save intent and pending controls through live text resizing', async () => {
+      48 |   const screen = render(<DailyGoalScreen />);
+    > 49 |   await waitFor(() =>
+         |                ^
+      50 |     expect(screen.getByRole('button', { name: '5 cards per day', selected: true })).toBeTruthy(),
+      51 |   );
+      52 |   fireEvent.press(screen.getByRole('button', { name: '20 cards per day' }));
+
+      at Object.<anonymous> (__tests__/screens/DailyGoalScreen.test.tsx:49:16)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● keeps the failed intent and retries without claiming success or changing its values
+
+    Unable to find an element with role: button, name: 5 cards per day, selected state: true
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m←[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mSettings[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mDaily Goal[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mSave[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m🎯[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m5[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mcards per day[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m5[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mCasual[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m10[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mRegular[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m20[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mSerious[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m50[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mIntense[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mNEW CARDS PER DAY[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mNew per session[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mMax new cards per day[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m−[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<Text>[39m
+                  [0m10[0m
+                [36m</Text>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m+[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mPresentation order[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMixed ›[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m💪[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mEvery card counts![0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mStudying 5 cards a day builds fluency in 6 months.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      87 | test('keeps the failed intent and retries without claiming success or changing its values', async () => {
+      88 |   const screen = render(<DailyGoalScreen />);
+    > 89 |   await waitFor(() => screen.getByRole('button', { name: '5 cards per day', selected: true }));
+         |                ^
+      90 |   fireEvent.press(screen.getByRole('button', { name: '10 cards per day' }));
+      91 |   write.mockRejectedValueOnce(new Error('disk full'));
+      92 |   fireEvent.press(screen.getByRole('button', { name: 'Save' }));
+
+      at Object.<anonymous> (__tests__/screens/DailyGoalScreen.test.tsx:89:16)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● does not allow a failed load to overwrite existing settings with defaults
+
+    read failed
+
+      103 | test('does not allow a failed load to overwrite existing settings with defaults', async () => {
+      104 |   const read = AsyncStorage.getItem as jest.Mock;
+    > 105 |   read.mockRejectedValueOnce(new Error('read failed'));
+          |                              ^
+      106 |   const screen = render(<DailyGoalScreen />);
+      107 |   await screen.findByRole('alert');
+      108 |   expect(screen.queryByRole('button', { name: 'Save' })).toBeNull();
+
+      at Object.<anonymous> (__tests__/screens/DailyGoalScreen.test.tsx:105:30)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● does not allow a failed load to overwrite existing settings with defaults
+
+    Unable to find an element with role: alert
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m←[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mSettings[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mDaily Goal[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mSave[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m🎯[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m10[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mcards per day[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m5[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mCasual[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m10[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mRegular[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m20[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mSerious[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m50[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mIntense[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mNEW CARDS PER DAY[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mNew per session[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mMax new cards per day[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m−[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<Text>[39m
+                  [0m10[0m
+                [36m</Text>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0m+[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mPresentation order[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMixed ›[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m💪[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mEvery card counts![0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mStudying 10 cards a day builds fluency in 3 months.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      105 |   read.mockRejectedValueOnce(new Error('read failed'));
+      106 |   const screen = render(<DailyGoalScreen />);
+    > 107 |   await screen.findByRole('alert');
+          |                ^
+      108 |   expect(screen.queryByRole('button', { name: 'Save' })).toBeNull();
+      109 |   fireEvent.press(screen.getByRole('button', { name: 'Retry' }));
+      110 |   await waitFor(() => screen.getByRole('button', { name: '5 cards per day', selected: true }));
+
+      at Object.findByRole (__tests__/screens/DailyGoalScreen.test.tsx:107:16)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 3 total
+Snapshots:   0 total
+Time:        4.108 s
+Ran all test suites within paths "__tests__/screens/DailyGoalScreen.test.tsx".

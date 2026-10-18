@@ -1,0 +1,179 @@
+Window: "Colombian Spanish Mini Tablet QA", App: Device Hub.
+0 standard window Colombian Spanish Mini Tablet QA – iPadOS 26.0, ID: com.apple.dt.DeviceKit.DeviceManagementWindow-AppWindow-6, Secondary Actions: Raise
+	1 split group
+		2 split group com.apple.dt.DeviceKit.DeviceManagementWindow-AppWindow-6, SidebarNavigationSplitView
+			3 scroll area Secondary Actions: Scroll Up, Scroll Down
+				4 list Sidebar
+					5 row (selectable) Description: Available, Value: Expanded
+					6 row (selected) Description: Ipad, Value: Colombian Spanish Mini Tablet QA
+26.0
+Simulator
+					7 row (selectable) Description: Ipad, Value: Colombian Spanish Keyboard Tablet QA
+26.0
+Simulator
+					8 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Maximum Grading QA
+26.0
+Simulator
+					9 row (selectable) Description: Ipad, Value: Michael’s iPad
+27.0.1
+--
+					10 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Applied Timing QA
+27.0
+Simulator
+					11 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Catch-up QA
+26.0
+Simulator
+					12 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Editor Recovery QA
+26.0
+Simulator
+					13 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Plan Narrow QA
+26.0
+Simulator
+					14 row (selectable) Description: Ipad, Value: Colombian Spanish Plan Tablet QA
+26.0
+Simulator
+					15 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Restore Recovery QA
+26.0
+Simulator
+					16 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK57 iOS27 QA
+27.0
+Simulator
+					17 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Timing QA
+27.0
+Simulator
+					18 row (selectable) Description: Iphone, Third Generation, Value: DestinationPacker QA
+26.0
+Simulator
+					19 row (selectable) Description: Iphone, Third Generation, Value: DestinationPacker Screens
+26.0
+Simulator
+					20 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Fresh QA
+26.0
+Simulator
+					21 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK55 QA
+26.0
+Simulator
+					22 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK57 QA
+26.0
+Simulator
+					23 row (selectable) Description: Iphone, Third Generation, Value: iPhone 18 Pro
+27.0
+Simulator
+					24 row (selectable) Description: Ipad, Value: Colombian Spanish Tablet QA
+26.0
+Simulator
+					25 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish QA
+26.0
+Simulator
+					26 row (selectable) Description: Iphone, Third Generation, Value: SpiceSync iOS QA Large
+26.0
+Simulator
+					27 row (selectable) Description: Iphone, First Generation, Value: SpiceSync iOS QA Small
+26.0
+Simulator
+					28 row (selectable) Description: Iphone, Third Generation, Value: iPhone 17 Pro
+26.0
+Simulator
+					29 row (selectable) Description: Iphone, Third Generation, Value: iPhone 17 Pro Max
+26.0
+Simulator
+					30 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro-Detox
+18.4
+Simulator
+					31 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro
+18.4
+Simulator
+					32 row (selectable) Description: Iphone, Value: iPhone 16e
+26.0
+Simulator
+					33 row (selectable) Description: Ipad, Value: iPad Pro 13-inch (M4)
+26.0
+Simulator
+					34 row (selectable) Description: Ipad, Value: iPad Air 13-inch (M3)
+26.0
+Simulator
+					35 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro Max
+18.3.1
+Simulator
+					36 row (selectable) Description: Iphone, First Generation, Value: iPhone SE (3rd generation)
+18.3.1
+Simulator
+				37 scroll bar (settable, float) 0
+					38 value indicator (settable, float) 0
+					39 increment arrow button
+					40 decrement arrow button
+					41 increment page button
+					42 decrement page button
+			43 search text field (settable) Search
+				44 button Search
+			45 splitter (disabled, settable, float) 239.5
+			46 container
+				47 container
+					48 text Description: ⚙️ Ajustes, Secondary Actions: Cancel
+					49 text Description: APRENDIZAJE, Secondary Actions: Cancel
+					50 element Description: 🧭, Tus preferencias de aprendizaje, ›, Secondary Actions: Cancel
+					51 element Description: 🎯, Meta Diaria, 5 tarjetas por día, ›, Secondary Actions: Cancel
+					52 element Description: 🃏, Nuevas Tarjetas, 10 por día, ›, Secondary Actions: Cancel
+					53 element Description: 🔔, Recordatorios, 8:00 AM todos los días, ›, Secondary Actions: Cancel
+					54 element Description: 📚, Gestionar Decks, Organiza y edita tus decks, ›, Secondary Actions: Cancel
+					55 text Description: APLICACIÓN, Secondary Actions: Cancel
+					56 element Description: 🔊, Preferencias de audio, Velocidad y vista previa de pronunciación, ›, Secondary Actions: Cancel
+					57 element Description: 🌐, Idioma de interfaz, Español, ›, Secondary Actions: Cancel
+					58 element Description: 💾, Exportar respaldo, Copia tus decks y resultados de práctica al portapapeles, ›, Secondary Actions: Cancel
+					59 element Description: 📥, Importar respaldo, Restaurar desde portapapeles, ›, Secondary Actions: Cancel
+					60 element Description: 📄, Guardar archivo de respaldo, Decks, historial y estado de la app · JSON, ›, Secondary Actions: Cancel
+					61 element Description: 📂, Importar archivo de respaldo, Vista previa antes de reemplazar o añadir tarjetas, ›, Secondary Actions: Cancel
+					62 text Description: SOBRE LA APP, Secondary Actions: Cancel
+					63 element Description: 📋, Versión, 1.0.0 · compilación 1.0.0, Secondary Actions: Cancel
+					64 element Description: INICIO, Secondary Actions: Cancel
+					65 element Description: ESTUDIAR, Secondary Actions: Cancel
+					66 element Description: PROGRESO, Secondary Actions: Cancel
+					67 element (selected) Description: AJUSTES, Secondary Actions: Cancel
+				68 button Description: Home, ID: app.grid.3x3
+				69 button Description: Screenshot, ID: camera.viewfinder
+				70 button Description: Record, ID: record.circle
+				71 button Rotate Left
+		72 splitter (disabled, settable, float) 780
+		73 container
+			74 scroll area Description: Appearance, ID: Inspector.com.apple.devicekit.inspector.appearance
+				75 container
+					76 pop up button Appearance, Value: Light
+					77 slider (settable, float) Text Size, Value: 3
+					78 switch Reduce Motion, Value: off
+					79 switch Increase Contrast, Value: off
+					80 switch Show Borders, Value: off
+					81 switch Reduce Transparency, Value: off
+					82 switch VoiceOver, Value: off
+				83 pop up button Location, Value: None
+				84 container
+					85 slider (settable, float) Sound, Value: 0.6
+					86 pop up button Output, Value: System
+					87 pop up button Input, Value: System
+	88 toolbar
+		89 menu button Add Device, ID: plus
+		90 toggle button Description: Filter, Help: Sort and Filter, Value: off
+		91 button Description: Hide Sidebar, Secondary Actions: Increment, Decrement, Delete, Cancel
+		92 toggle button Description: Capture Keyboard, Value: off
+		93 toggle button (disabled) Description: Resize mode, Help: Enter resize mode, Value: off
+		94 Zoom
+			95 radio button Description: Zoom Out, Value: 0, ID: minus.magnifyingglass
+			96 radio button Description: Up, Right, Down, And Left Triangles In A Magnifying Glass, Help: Zoom to Fit, Value: 1, ID: arrowtriangles.up.right.down.left.magnifyingglass
+			97 radio button Description: Zoom To Actual Size, Help: Physical Size, Value: 0, ID: 1.magnifyingglass
+			98 radio button Description: Zoom In, Value: 0, ID: plus.magnifyingglass
+		99 button Description: Switch to compact window, Secondary Actions: Increment, Decrement, Delete, Cancel, Move previous, Move next, Remove from toolbar
+		100 menu button More Actions, ID: ellipsis
+		101 Inspector Category
+			102 radio button Description: Edit, Help: Settings, Value: 1, ID: slider.horizontal.3
+			103 radio button Description: Text Document, Help: Reports, Value: 0, ID: text.document
+			104 radio button Description: Info, Value: 0, ID: info
+	105 text Colombian Spanish Mini Tablet QA iPadOS 26.0
+	106 menu button Window sharing
+107 menu bar
+	108 Device Hub
+	109 File
+	110 Edit
+	111 View
+	112 Device
+	113 Controls
+	114 Window
+	115 Help

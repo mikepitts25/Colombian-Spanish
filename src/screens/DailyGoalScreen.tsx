@@ -1,10 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Pressable, Alert } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Pressable,
+  Alert,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
-import { getDailyProgress, setDailyTarget } from '../storage/storage';
-import { getPrefs, setPrefs } from '../storage/prefs';
+import {
+  DailyGoalSettings,
+  loadDailyGoalSettings,
+  saveDailyGoalSettings,
+} from '../storage/dailyGoalSettings';
 import { useLanguage } from '../context/LanguageContext';
 import { useDeck } from '../hooks/useDeck';
 
@@ -19,119 +30,242 @@ export default function DailyGoalScreen() {
   const nav = useNavigation<any>();
   const { t } = useLanguage();
   const { reload } = useDeck();
-  const [goal, setGoal] = useState(10);
-  const [newCards, setNewCards] = useState(10);
+  const { fontScale } = useWindowDimensions();
+  const expanded = fontScale >= 1.4;
+  const [values, setValues] = useState<DailyGoalSettings | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    getDailyProgress().then((dp) => setGoal(dp.target ?? 10));
-    getPrefs().then((p) => setNewCards(p.newCardsPerDay));
+  const [saveError, setSaveError] = useState(false);
+  const mounted = useRef(true);
+  const submitting = useRef(false);
+  const intent = useRef<DailyGoalSettings | null>(null);
+  const load = useCallback(async () => {
+    try {
+      const next = await loadDailyGoalSettings();
+      if (mounted.current) setValues(next);
+    } catch {
+      if (mounted.current) setLoadError(true);
+    } finally {
+      if (mounted.current) setLoading(false);
+    }
   }, []);
-
-  async function handleSave() {
-    setSaving(true);
-    await setDailyTarget(goal);
-    await setPrefs({ newCardsPerDay: newCards });
-    await reload();
-    setSaving(false);
-    Alert.alert(t('dailyGoal.saved.title'), t('dailyGoal.saved.message', { count: goal }));
-    nav.goBack();
+  useEffect(() => {
+    mounted.current = true;
+    // Load persisted external state after asynchronous storage access.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void load();
+    return () => {
+      mounted.current = false;
+    };
+  }, [load]);
+  const locked = saving || saveError;
+  function edit(patch: Partial<DailyGoalSettings>) {
+    if (submitting.current || intent.current) return;
+    setValues((current) => (current ? { ...current, ...patch } : null));
   }
-
-  const fluencyTime =
-    goal >= 50
-      ? t('dailyGoal.time.oneMonth')
-      : goal >= 20
-        ? t('dailyGoal.time.twoMonths')
-        : goal >= 10
-          ? t('dailyGoal.time.threeMonths')
-          : t('dailyGoal.time.sixMonths');
-
+  async function save() {
+    if (!values || submitting.current) return;
+    const snapshot = intent.current ?? { ...values };
+    intent.current = snapshot;
+    submitting.current = true;
+    setSaving(true);
+    setSaveError(false);
+    try {
+      await saveDailyGoalSettings(snapshot);
+      await reload({ requireFreshBudget: true });
+      if (mounted.current) {
+        intent.current = null;
+        Alert.alert(
+          t('dailyGoal.saved.title'),
+          t('dailyGoal.saved.message', { count: snapshot.target }),
+        );
+        nav.goBack();
+      }
+    } catch {
+      if (mounted.current) setSaveError(true);
+    } finally {
+      submitting.current = false;
+      if (mounted.current) setSaving(false);
+    }
+  }
   return (
     <SafeAreaView style={styles.wrap}>
-      {/* Nav bar */}
-      <View style={styles.navBar}>
-        <Pressable style={styles.backBtn} onPress={() => nav.goBack()}>
-          <Text style={styles.backArrow}>←</Text>
-          <Text style={styles.backLabel}>{t('dailyGoal.back')}</Text>
-        </Pressable>
-        <Text style={styles.navTitle}>{t('dailyGoal.title')}</Text>
-        <Pressable style={styles.saveBtn} onPress={handleSave} disabled={saving}>
-          <Text style={styles.saveBtnText}>{saving ? '…' : t('common.save')}</Text>
-        </Pressable>
-      </View>
-
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        {/* Goal hero */}
-        <View style={styles.goalHero}>
-          <Text style={styles.goalEmoji}>🎯</Text>
-          <Text style={styles.goalNumber}>{goal}</Text>
-          <Text style={styles.goalUnit}>{t('dailyGoal.unit')}</Text>
-        </View>
-
-        {/* Preset buttons */}
-        <View style={styles.presetsRow}>
-          {GOAL_PRESETS.map((preset) => (
-            <Pressable
-              key={preset.value}
-              style={[styles.presetBtn, goal === preset.value && styles.presetBtnActive]}
-              onPress={() => setGoal(preset.value)}
-            >
-              <Text style={[styles.presetValue, goal === preset.value && styles.presetValueActive]}>
-                {preset.value}
-              </Text>
-              <Text style={[styles.presetLabel, goal === preset.value && styles.presetLabelActive]}>
-                {t(preset.labelKey)}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
-
-        {/* New cards section */}
-        <Text style={styles.groupLabel}>{t('dailyGoal.newPerDay')}</Text>
-        <View style={styles.groupCard}>
-          <View style={styles.stepperRow}>
-            <View style={styles.stepperInfo}>
-              <Text style={styles.stepperTitle}>{t('dailyGoal.newPerSession')}</Text>
-              <Text style={styles.stepperSub}>{t('dailyGoal.newPerSessionSub')}</Text>
-            </View>
-            <View style={styles.stepper}>
-              <Pressable
-                style={styles.stepperBtn}
-                onPress={() => setNewCards((n) => Math.max(1, n - 5))}
-              >
-                <Text style={styles.stepperBtnText}>−</Text>
-              </Pressable>
-              <Text style={styles.stepperValue}>{newCards}</Text>
-              <Pressable
-                style={[styles.stepperBtn, styles.stepperBtnAdd]}
-                onPress={() => setNewCards((n) => Math.min(100, n + 5))}
-              >
-                <Text style={[styles.stepperBtnText, { color: '#020617' }]}>+</Text>
-              </Pressable>
-            </View>
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.orderRow}>
-            <Text style={styles.stepperTitle}>{t('dailyGoal.order')}</Text>
-            <View style={styles.orderPill}>
-              <Text style={styles.orderPillText}>{t('dailyGoal.mixed')}</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* Motivation */}
-        <View style={styles.motivationCard}>
-          <Text style={styles.motivIcon}>💪</Text>
-          <View style={styles.motivInfo}>
-            <Text style={styles.motivTitle}>{t('dailyGoal.motivation')}</Text>
-            <Text style={styles.motivText}>
-              {t('dailyGoal.motivationText', { count: goal, time: fluencyTime })}
+      <ScrollView key={fontScale} contentContainerStyle={styles.scroll}>
+        <View style={[styles.navBar, expanded && styles.stacked]}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t('dailyGoal.back')}
+            accessibilityState={{ disabled: saving }}
+            disabled={saving}
+            style={styles.backBtn}
+            onPress={() => {
+              if (!submitting.current) nav.goBack();
+            }}
+          >
+            <Text allowFontScaling={false} style={styles.backArrow}>
+              ←
             </Text>
-          </View>
+            <Text style={styles.backLabel}>{t('dailyGoal.back')}</Text>
+          </Pressable>
+          <Text accessibilityRole="header" style={styles.navTitle}>
+            {t('dailyGoal.title')}
+          </Text>
+          {values && !loading && !loadError && !saveError ? (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={t('common.save')}
+              accessibilityState={{ disabled: saving, busy: saving }}
+              disabled={saving}
+              style={styles.saveBtn}
+              onPress={() => void save()}
+            >
+              <Text style={styles.saveBtnText}>{t('common.save')}</Text>
+            </Pressable>
+          ) : null}
         </View>
+        {loading ? (
+          <Text style={styles.stepperTitle}>{t('common.loading')}</Text>
+        ) : loadError ? (
+          <View>
+            <Text accessibilityRole="alert" style={styles.stepperTitle}>
+              {t('dailyGoal.loadError')}
+            </Text>
+            <Pressable
+              accessibilityRole="button"
+              style={styles.saveBtn}
+              onPress={() => {
+                setLoading(true);
+                setLoadError(false);
+                void load();
+              }}
+            >
+              <Text style={styles.saveBtnText}>{t('study.resume.retry')}</Text>
+            </Pressable>
+          </View>
+        ) : values ? (
+          <>
+            {saveError ? (
+              <View>
+                <Text accessibilityRole="alert" style={styles.stepperTitle}>
+                  {t('dailyGoal.saveError')}
+                </Text>
+                <Pressable
+                  accessibilityRole="button"
+                  style={styles.saveBtn}
+                  onPress={() => void save()}
+                >
+                  <Text style={styles.saveBtnText}>{t('dailyGoal.retrySave')}</Text>
+                </Pressable>
+              </View>
+            ) : null}
+            <View style={styles.goalHero}>
+              <Text allowFontScaling={false} style={styles.goalEmoji}>
+                🎯
+              </Text>
+              <Text style={styles.goalNumber}>{values.target}</Text>
+              <Text style={styles.goalUnit}>{t('dailyGoal.unit')}</Text>
+            </View>
+            <View style={[styles.presetsRow, expanded && styles.wrapped]}>
+              {GOAL_PRESETS.map((preset) => (
+                <Pressable
+                  key={preset.value}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('dailyGoal.presetLabel', { count: preset.value })}
+                  accessibilityState={{
+                    selected: values.target === preset.value,
+                    disabled: locked,
+                  }}
+                  disabled={locked}
+                  style={[
+                    styles.presetBtn,
+                    expanded && styles.widePreset,
+                    values.target === preset.value && styles.presetBtnActive,
+                  ]}
+                  onPress={() => edit({ target: preset.value })}
+                >
+                  <Text
+                    style={[
+                      styles.presetValue,
+                      values.target === preset.value && styles.presetValueActive,
+                    ]}
+                  >
+                    {preset.value}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.presetLabel,
+                      values.target === preset.value && styles.presetLabelActive,
+                    ]}
+                  >
+                    {t(preset.labelKey)}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+            <Text style={styles.groupLabel}>{t('dailyGoal.newPerDay')}</Text>
+            <View style={styles.groupCard}>
+              <View style={[styles.stepperRow, expanded && styles.stacked]}>
+                <View style={[styles.stepperInfo, expanded && styles.unflexed]}>
+                  <Text style={styles.stepperTitle}>{t('dailyGoal.newPerSession')}</Text>
+                  <Text style={styles.stepperSub}>{t('dailyGoal.newPerSessionSub')}</Text>
+                </View>
+                <View style={styles.stepper}>
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel={t('dailyGoal.decrease')}
+                    accessibilityState={{ disabled: locked || values.newCardsPerDay <= 1 }}
+                    disabled={locked || values.newCardsPerDay <= 1}
+                    style={styles.stepperBtn}
+                    onPress={() => edit({ newCardsPerDay: Math.max(1, values.newCardsPerDay - 5) })}
+                  >
+                    <Text allowFontScaling={false} style={styles.stepperBtnText}>
+                      −
+                    </Text>
+                  </Pressable>
+                  <Text
+                    accessibilityLabel={t('dailyGoal.limitValue', { count: values.newCardsPerDay })}
+                    style={styles.stepperValue}
+                  >
+                    {values.newCardsPerDay}
+                  </Text>
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel={t('dailyGoal.increase')}
+                    accessibilityState={{ disabled: locked || values.newCardsPerDay >= 100 }}
+                    disabled={locked || values.newCardsPerDay >= 100}
+                    style={[styles.stepperBtn, styles.stepperBtnAdd]}
+                    onPress={() =>
+                      edit({ newCardsPerDay: Math.min(100, values.newCardsPerDay + 5) })
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={[styles.stepperBtnText, { color: colors.textInverse }]}
+                    >
+                      +
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+              <View style={styles.divider} />
+              <View style={styles.orderRow}>
+                <Text style={styles.stepperSub}>{t('dailyGoal.orderDescription')}</Text>
+              </View>
+            </View>
+            <View style={styles.motivationCard}>
+              <Text allowFontScaling={false} style={styles.motivIcon}>
+                💪
+              </Text>
+              <View style={styles.motivInfo}>
+                <Text style={styles.motivTitle}>{t('dailyGoal.motivation')}</Text>
+                <Text style={styles.motivText}>
+                  {t('dailyGoal.motivationText', { count: values.target })}
+                </Text>
+              </View>
+            </View>
+          </>
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
@@ -152,6 +286,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
     padding: 8,
+    minHeight: 48,
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
     borderRadius: 20,
     backgroundColor: colors.surface,
   },
@@ -159,12 +296,14 @@ const styles = StyleSheet.create({
   backLabel: { color: colors.brand, fontSize: 14, fontWeight: '600' },
   navTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
   saveBtn: {
+    minHeight: 48,
+    justifyContent: 'center',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
     backgroundColor: colors.brand,
   },
-  saveBtnText: { color: '#020617', fontSize: 14, fontWeight: '800' },
+  saveBtnText: { color: colors.textInverse, fontSize: 14, fontWeight: '800' },
 
   scroll: { padding: 16, paddingBottom: 40 },
 
@@ -182,12 +321,17 @@ const styles = StyleSheet.create({
   goalNumber: { color: colors.brand, fontSize: 56, fontWeight: '800', lineHeight: 62 },
   goalUnit: { color: colors.textSecondary, fontSize: 14 },
 
+  stacked: { flexDirection: 'column', alignItems: 'stretch', gap: 12 },
+  unflexed: { flex: 0 },
+  wrapped: { flexWrap: 'wrap' },
+  widePreset: { flex: 0, flexBasis: '45%', flexGrow: 1 },
   presetsRow: { flexDirection: 'row', gap: 8, marginBottom: 28 },
   presetBtn: {
     flex: 1,
     alignItems: 'center',
     gap: 3,
     paddingVertical: 12,
+    minHeight: 48,
     borderRadius: 16,
     backgroundColor: colors.surface,
     borderWidth: 1,
@@ -195,9 +339,9 @@ const styles = StyleSheet.create({
   },
   presetBtnActive: { backgroundColor: colors.brand, borderColor: colors.brand },
   presetValue: { color: colors.textSecondary, fontSize: 20, fontWeight: '800' },
-  presetValueActive: { color: '#020617' },
+  presetValueActive: { color: colors.textInverse },
   presetLabel: { color: colors.textSecondary, fontSize: 10, fontWeight: '600' },
-  presetLabelActive: { color: '#020617', fontWeight: '800' },
+  presetLabelActive: { color: colors.textInverse, fontWeight: '800' },
 
   groupLabel: {
     color: colors.textTertiary,
@@ -227,8 +371,8 @@ const styles = StyleSheet.create({
   stepperSub: { color: colors.textSecondary, fontSize: 12 },
   stepper: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   stepperBtn: {
-    width: 32,
-    height: 32,
+    minWidth: 48,
+    minHeight: 48,
     borderRadius: 10,
     backgroundColor: colors.surfaceElevated,
     alignItems: 'center',
@@ -251,16 +395,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
-  orderPill: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    backgroundColor: 'rgba(0,56,147,0.15)',
-    borderWidth: 1,
-    borderColor: colors.accentBlue,
-  },
-  orderPillText: { color: '#60a5fa', fontSize: 12, fontWeight: '700' },
-
   motivationCard: {
     flexDirection: 'row',
     alignItems: 'center',
