@@ -1,0 +1,3049 @@
+[
+  {
+    "capturePath": "/Users/mike/Library/Developer/CoreSimulator/Devices/2EDF21F0-7DBD-4B09-8D5F-85560FD0E730/data/Containers/Data/Application/5F437B65-7217-48DC-85CD-67AE3C6C69B0",
+    "pathMatchesRequestedDevice": true,
+    "phase": "source-before",
+    "device": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792363744.2289448,
+    "daily": {
+      "date": "2026-10-19",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-7",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792310003366
+    },
+    "quizHistory": [],
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792246528211,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 227435
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwf708-a-fjxccvlxnb4",
+        "cardId": "catchup-3",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792271913306,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 87391
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwgyk0-f-24dcbcquua2",
+        "cardId": "catchup-4",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792271995662,
+        "quality": 1,
+        "hintsUsed": null,
+        "durationMs": 82258
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwkikg-7-23hiksw9xg6",
+        "cardId": "catchup-5",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792272161572,
+        "quality": 2,
+        "hintsUsed": null,
+        "durationMs": 30643
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcxdb87-7-o0qt2c7bqel",
+        "cardId": "catchup-6",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792273505092,
+        "quality": 2,
+        "hintsUsed": null,
+        "durationMs": 1303066
+      }
+    ],
+    "cardCount": 1402,
+    "notificationPrefs": {},
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.85,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "e374b8b532e0e7ccbdad2feafebefd47dfd0f528da2516b23a732954fd80ebbe",
+    "keyHashes": {
+      "SRS_DECKS_V3": "4089507d856f2e9866fb42f2cb63959287ec47dfa94ca3e659abb68ffa31fecb",
+      "SRS_DAILY_PLAN_V1": "3edd9c565e61c5d971b758f88aa85642565619595f6ae32522f7ca860fc3cf10",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_PREFS_V1": "77055397846d78338d34eb796687d65baa95cba8212bdb440f1cfdeb82d97c10",
+      "SRS_DAILY_PROGRESS_V1": "0f8606873ab21991981365abb9d20269e218eb27d1cfc53f9c160c8cce0478f8",
+      "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+      "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "564a2142ad2ef29f2fab88631bc665563447bdafe39f7b0f508815d1f0d4e266",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+    },
+    "journal": null,
+    "restoreCard": {
+      "id": "catchup-0",
+      "front": "Hola 0",
+      "back": "Hello 0 [restore QA]",
+      "createdAt": 0,
+      "due": 1793109768065,
+      "reps": 4,
+      "interval": 10,
+      "ease": 2.5,
+      "flagged": false,
+      "reviewStatus": "reviewed",
+      "reviewedAt": 1792249575606
+    },
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 48,
+    "deckWithoutFlagsHash": "698917007463998ea251fc095e8d128860a40175ec39de72f881913287c90429",
+    "expectedClearedDeckHash": "56e5194f0f872f3f8972d70e672463f51c6025e5ea5470d8fca96e1d53d42746",
+    "deckVariants": {
+      "absent": "4089507d856f2e9866fb42f2cb63959287ec47dfa94ca3e659abb68ffa31fecb",
+      "false": "32aa95b61f23632cb917e3fafaaa9643335b843894167f32fb6202dba99b291b",
+      "true": "e5971ca6d20842febb0503b6f8ff8e5ee01b6e5987939845b4c00a20bf34a02d"
+    },
+    "taskCards": {
+      "catchup-5": {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 1792315361567,
+        "reps": 2,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "catchup-6": {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 1792316705085,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "catchup-7": {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      "catchup-8": {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      "catchup-9": {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    "deckNames": [
+      {
+        "id": "catchup-qa",
+        "name": "Catch-up QA",
+        "cardCount": 10
+      },
+      {
+        "id": "deck-core-verbs",
+        "name": "Verbos Esenciales",
+        "cardCount": 38
+      },
+      {
+        "id": "deck-actions",
+        "name": "Actions",
+        "cardCount": 28
+      },
+      {
+        "id": "deck-accommodation-phrases",
+        "name": "Hotel & Accommodation Phrases",
+        "cardCount": 35
+      },
+      {
+        "id": "deck-body",
+        "name": "Body",
+        "cardCount": 17
+      },
+      {
+        "id": "deck-business",
+        "name": "Negocios & Trabajo",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-clothing",
+        "name": "Clothing",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-colombian-food",
+        "name": "Comida T\u00edpica Colombiana",
+        "cardCount": 46
+      },
+      {
+        "id": "deck-colors",
+        "name": "Colors",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-communication",
+        "name": "Comunicaci\u00f3n",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-conversation",
+        "name": "Frases de Conversaci\u00f3n",
+        "cardCount": 71
+      },
+      {
+        "id": "deck-costeno",
+        "name": "Coste\u00f1o Slang (Caribe)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-culture",
+        "name": "Cultura & Festivales",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-daily_life",
+        "name": "Vida Diaria",
+        "cardCount": 28
+      },
+      {
+        "id": "deck-dating",
+        "name": "Ligando & Relaciones",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-dates_time",
+        "name": "Dates/Time",
+        "cardCount": 26
+      },
+      {
+        "id": "deck-emotions",
+        "name": "Emociones",
+        "cardCount": 21
+      },
+      {
+        "id": "deck-expressions",
+        "name": "Expresiones Colombianas",
+        "cardCount": 61
+      },
+      {
+        "id": "deck-family",
+        "name": "La Familia",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-food",
+        "name": "Comida y Bebida",
+        "cardCount": 32
+      },
+      {
+        "id": "deck-greetings",
+        "name": "Saludos",
+        "cardCount": 13
+      },
+      {
+        "id": "deck-health",
+        "name": "Salud",
+        "cardCount": 18
+      },
+      {
+        "id": "deck-holidays",
+        "name": "Holidays",
+        "cardCount": 10
+      },
+      {
+        "id": "deck-house",
+        "name": "La Casa",
+        "cardCount": 33
+      },
+      {
+        "id": "deck-llanero",
+        "name": "Llanero Slang (Los Llanos)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-medical-phrases",
+        "name": "Medical & Emergency Phrases",
+        "cardCount": 35
+      },
+      {
+        "id": "deck-nature",
+        "name": "Nature",
+        "cardCount": 24
+      },
+      {
+        "id": "deck-numbers",
+        "name": "Numbers",
+        "cardCount": 16
+      },
+      {
+        "id": "deck-paisa",
+        "name": "Paisa Slang (Medell\u00edn)",
+        "cardCount": 56
+      },
+      {
+        "id": "deck-piropos",
+        "name": "Piropos & Compliments",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-places",
+        "name": "Places",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-professions",
+        "name": "Professions",
+        "cardCount": 29
+      },
+      {
+        "id": "deck-rolo",
+        "name": "Rolo Slang (Bogot\u00e1)",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-rolo-slang",
+        "name": "Rolo Slang (Bogot\u00e1)",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-restaurant-phrases",
+        "name": "Restaurant & Dining Phrases",
+        "cardCount": 48
+      },
+      {
+        "id": "deck-routines",
+        "name": "Rutinas y Verbos",
+        "cardCount": 29
+      },
+      {
+        "id": "deck-school",
+        "name": "School",
+        "cardCount": 24
+      },
+      {
+        "id": "deck-shopping",
+        "name": "Shopping",
+        "cardCount": 19
+      },
+      {
+        "id": "deck-slang",
+        "name": "Jerga Colombiana",
+        "cardCount": 61
+      },
+      {
+        "id": "deck-social-phrases",
+        "name": "Social & Going Out Phrases",
+        "cardCount": 40
+      },
+      {
+        "id": "deck-sports",
+        "name": "Sports",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-technology",
+        "name": "Tecnolog\u00eda",
+        "cardCount": 21
+      },
+      {
+        "id": "deck-transport",
+        "name": "Transporte",
+        "cardCount": 23
+      },
+      {
+        "id": "deck-transport-phrases",
+        "name": "Transportation Phrases",
+        "cardCount": 38
+      },
+      {
+        "id": "deck-travel",
+        "name": "Travel",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-useful-phrases",
+        "name": "Essential Phrases",
+        "cardCount": 43
+      },
+      {
+        "id": "deck-valluno",
+        "name": "Valluno Slang (Cali)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-weather",
+        "name": "Clima",
+        "cardCount": 27
+      }
+    ],
+    "taskCardNormalizedDeckHash": "de47c86ff3baf291c863d250580982e4289b8e3abf3a51b76f78168d8ed373c6"
+  },
+  {
+    "capturePath": "/Users/mike/Library/Developer/CoreSimulator/Devices/BF511B0E-479F-429E-83B7-4134E910847F/data/Containers/Data/Application/77D86906-220A-4801-9E47-AA7B6AC55DEC",
+    "pathMatchesRequestedDevice": true,
+    "phase": "destination-onboarded",
+    "device": "BF511B0E-479F-429E-83B7-4134E910847F",
+    "plan": null,
+    "missions": null,
+    "capturedAt": 1792363929.165534,
+    "daily": {
+      "date": "2026-10-19",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "deck-slang",
+      "cardId": "0161",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0161", "0162", "0163", "0164", "0165", "0166", "0167", "0168", "0169", "0170"],
+        "region": "all",
+        "sessionId": "mvef6liw-2-dva1fmfsapu"
+      },
+      "updatedAt": 1792363891112
+    },
+    "quizHistory": null,
+    "events": [],
+    "cardCount": 1392,
+    "notificationPrefs": null,
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "streak": null,
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "7b690ac565beedd76a805151a56017b6f56c832d147d91e9c4385b1e6ebccf3e",
+    "keyHashes": {
+      "SRS_DECKS_V3": "124c5d6a9dcf33148621c04f913adec3b74de313b2c43ac2d4ea896788ab28eb",
+      "SRS_DAILY_PLAN_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_MISSIONS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_PREFS_V1": "651a361831b061deba98a6eacdf28a60cbebfd2824c98ab8e9af53c954f12b42",
+      "SRS_DAILY_PROGRESS_V1": "0f8606873ab21991981365abb9d20269e218eb27d1cfc53f9c160c8cce0478f8",
+      "SRS_STUDY_STREAK_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_SEEN_WORDS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LAST_STUDY_SESSION_V1": "1fd41cb94538119a00a111bc332af158a78c4da351ffbc80ed7d7d12610377f4",
+      "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LEARNING_EVENTS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    "journal": null,
+    "restoreCard": {
+      "id": "1850",
+      "front": "ser",
+      "back": "to be (identity/permanent)",
+      "example": "Soy de Medell\u00edn. | I'm from Medell\u00edn.",
+      "tags": ["core-verbs", "essential"],
+      "createdAt": 1754759195954,
+      "due": 1754759195954,
+      "reps": 0,
+      "interval": 0,
+      "ease": 2.5
+    },
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 47,
+    "deckWithoutFlagsHash": "ad96dd9e0736f10c19896b12a2f5c217b839f3eb7c442566da62495c1a84a39f",
+    "expectedClearedDeckHash": "816c40bd6b7ae28794d8197ad2eebb89e3b831ace173d54d0f5d9cd9a7f824d1",
+    "deckVariants": {
+      "absent": "124c5d6a9dcf33148621c04f913adec3b74de313b2c43ac2d4ea896788ab28eb",
+      "false": "b1de7d868e4cca1729bc55c8e5bf171876ac88831f9a730098f69c429fb28432",
+      "true": "c93ece4367b3be6e885b19e8e6cfed9c01bcb59fb3c0839ac987134aa45f78ca"
+    },
+    "taskCards": {},
+    "deckNames": [
+      {
+        "id": "deck-core-verbs",
+        "name": "Verbos Esenciales",
+        "cardCount": 38
+      },
+      {
+        "id": "deck-actions",
+        "name": "Actions",
+        "cardCount": 28
+      },
+      {
+        "id": "deck-accommodation-phrases",
+        "name": "Hotel & Accommodation Phrases",
+        "cardCount": 35
+      },
+      {
+        "id": "deck-body",
+        "name": "Body",
+        "cardCount": 17
+      },
+      {
+        "id": "deck-business",
+        "name": "Negocios & Trabajo",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-clothing",
+        "name": "Clothing",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-colombian-food",
+        "name": "Comida T\u00edpica Colombiana",
+        "cardCount": 46
+      },
+      {
+        "id": "deck-colors",
+        "name": "Colors",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-communication",
+        "name": "Comunicaci\u00f3n",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-conversation",
+        "name": "Frases de Conversaci\u00f3n",
+        "cardCount": 71
+      },
+      {
+        "id": "deck-costeno",
+        "name": "Coste\u00f1o Slang (Caribe)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-culture",
+        "name": "Cultura & Festivales",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-daily_life",
+        "name": "Vida Diaria",
+        "cardCount": 28
+      },
+      {
+        "id": "deck-dating",
+        "name": "Ligando & Relaciones",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-dates_time",
+        "name": "Dates/Time",
+        "cardCount": 26
+      },
+      {
+        "id": "deck-emotions",
+        "name": "Emociones",
+        "cardCount": 21
+      },
+      {
+        "id": "deck-expressions",
+        "name": "Expresiones Colombianas",
+        "cardCount": 61
+      },
+      {
+        "id": "deck-family",
+        "name": "La Familia",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-food",
+        "name": "Comida y Bebida",
+        "cardCount": 32
+      },
+      {
+        "id": "deck-greetings",
+        "name": "Saludos",
+        "cardCount": 13
+      },
+      {
+        "id": "deck-health",
+        "name": "Salud",
+        "cardCount": 18
+      },
+      {
+        "id": "deck-holidays",
+        "name": "Holidays",
+        "cardCount": 10
+      },
+      {
+        "id": "deck-house",
+        "name": "La Casa",
+        "cardCount": 33
+      },
+      {
+        "id": "deck-llanero",
+        "name": "Llanero Slang (Los Llanos)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-medical-phrases",
+        "name": "Medical & Emergency Phrases",
+        "cardCount": 35
+      },
+      {
+        "id": "deck-nature",
+        "name": "Nature",
+        "cardCount": 24
+      },
+      {
+        "id": "deck-numbers",
+        "name": "Numbers",
+        "cardCount": 16
+      },
+      {
+        "id": "deck-paisa",
+        "name": "Paisa Slang (Medell\u00edn)",
+        "cardCount": 56
+      },
+      {
+        "id": "deck-piropos",
+        "name": "Piropos & Compliments",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-places",
+        "name": "Places",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-professions",
+        "name": "Professions",
+        "cardCount": 29
+      },
+      {
+        "id": "deck-rolo",
+        "name": "Rolo Slang (Bogot\u00e1)",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-rolo-slang",
+        "name": "Rolo Slang (Bogot\u00e1)",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-restaurant-phrases",
+        "name": "Restaurant & Dining Phrases",
+        "cardCount": 48
+      },
+      {
+        "id": "deck-routines",
+        "name": "Rutinas y Verbos",
+        "cardCount": 29
+      },
+      {
+        "id": "deck-school",
+        "name": "School",
+        "cardCount": 24
+      },
+      {
+        "id": "deck-shopping",
+        "name": "Shopping",
+        "cardCount": 19
+      },
+      {
+        "id": "deck-slang",
+        "name": "Jerga Colombiana",
+        "cardCount": 61
+      },
+      {
+        "id": "deck-social-phrases",
+        "name": "Social & Going Out Phrases",
+        "cardCount": 40
+      },
+      {
+        "id": "deck-sports",
+        "name": "Sports",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-technology",
+        "name": "Tecnolog\u00eda",
+        "cardCount": 21
+      },
+      {
+        "id": "deck-transport",
+        "name": "Transporte",
+        "cardCount": 23
+      },
+      {
+        "id": "deck-transport-phrases",
+        "name": "Transportation Phrases",
+        "cardCount": 38
+      },
+      {
+        "id": "deck-travel",
+        "name": "Travel",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-useful-phrases",
+        "name": "Essential Phrases",
+        "cardCount": 43
+      },
+      {
+        "id": "deck-valluno",
+        "name": "Valluno Slang (Cali)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-weather",
+        "name": "Clima",
+        "cardCount": 27
+      }
+    ],
+    "taskCardNormalizedDeckHash": "124c5d6a9dcf33148621c04f913adec3b74de313b2c43ac2d4ea896788ab28eb"
+  },
+  {
+    "capturePath": "/Users/mike/Library/Developer/CoreSimulator/Devices/BF511B0E-479F-429E-83B7-4134E910847F/data/Containers/Data/Application/77D86906-220A-4801-9E47-AA7B6AC55DEC",
+    "pathMatchesRequestedDevice": true,
+    "phase": "destination-imported",
+    "device": "BF511B0E-479F-429E-83B7-4134E910847F",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792364298.485638,
+    "daily": {
+      "date": "2026-10-19",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-7",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
+        "region": "all",
+        "sessionId": "native-fresh-study-editor-20261019"
+      },
+      "updatedAt": 1792363716380
+    },
+    "quizHistory": [],
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792246528211,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 227435
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwf708-a-fjxccvlxnb4",
+        "cardId": "catchup-3",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792271913306,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 87391
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwgyk0-f-24dcbcquua2",
+        "cardId": "catchup-4",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792271995662,
+        "quality": 1,
+        "hintsUsed": null,
+        "durationMs": 82258
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwkikg-7-23hiksw9xg6",
+        "cardId": "catchup-5",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792272161572,
+        "quality": 2,
+        "hintsUsed": null,
+        "durationMs": 30643
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcxdb87-7-o0qt2c7bqel",
+        "cardId": "catchup-6",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792273505092,
+        "quality": 2,
+        "hintsUsed": null,
+        "durationMs": 1303066
+      }
+    ],
+    "cardCount": 1402,
+    "notificationPrefs": {},
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.85,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "d487c47f24ea3e25099e96192310cd840ce9504f5e260d9de53244e554047fab",
+    "keyHashes": {
+      "SRS_DECKS_V3": "de47c86ff3baf291c863d250580982e4289b8e3abf3a51b76f78168d8ed373c6",
+      "SRS_DAILY_PLAN_V1": "3edd9c565e61c5d971b758f88aa85642565619595f6ae32522f7ca860fc3cf10",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_PREFS_V1": "77055397846d78338d34eb796687d65baa95cba8212bdb440f1cfdeb82d97c10",
+      "SRS_DAILY_PROGRESS_V1": "0f8606873ab21991981365abb9d20269e218eb27d1cfc53f9c160c8cce0478f8",
+      "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+      "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "ecf2dcfc8a05c7215271de82368fe77a6426a064febccf6f64a6d241790290de",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+    },
+    "journal": null,
+    "restoreCard": {
+      "id": "catchup-0",
+      "front": "Hola 0",
+      "back": "Hello 0 [restore QA]",
+      "createdAt": 0,
+      "due": 1793109768065,
+      "reps": 4,
+      "interval": 10,
+      "ease": 2.5,
+      "flagged": false,
+      "reviewStatus": "reviewed",
+      "reviewedAt": 1792249575606
+    },
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 48,
+    "deckWithoutFlagsHash": "12e8f086faa0b971be6437949490e6b7d899c625cbf493688e11bd34795d4e88",
+    "expectedClearedDeckHash": "fed9f2568c902e09a38be1cffad82a882cb4e8c1fcee7f7ea3c23c29a0410bb2",
+    "deckVariants": {
+      "absent": "de47c86ff3baf291c863d250580982e4289b8e3abf3a51b76f78168d8ed373c6",
+      "false": "c91c8cfd22b7ad36e881b3955714aa0676aac8034fece0bec480a0a83be282be",
+      "true": "246c6c1833e0bbd8d0bcabaf9768e20e99b34b3ba3017bee17d9803d57e6a142"
+    },
+    "taskCards": {
+      "catchup-5": {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 1792315361567,
+        "reps": 2,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "catchup-6": {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 1792316705085,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "catchup-7": {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 1792274400000,
+        "reps": 3,
+        "interval": 1,
+        "ease": 2.5
+      },
+      "catchup-8": {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 1792274400000,
+        "reps": 3,
+        "interval": 1,
+        "ease": 2.5
+      },
+      "catchup-9": {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 1792274400000,
+        "reps": 3,
+        "interval": 1,
+        "ease": 2.5
+      }
+    },
+    "deckNames": [
+      {
+        "id": "catchup-qa",
+        "name": "Catch-up QA",
+        "cardCount": 10
+      },
+      {
+        "id": "deck-core-verbs",
+        "name": "Verbos Esenciales",
+        "cardCount": 38
+      },
+      {
+        "id": "deck-actions",
+        "name": "Actions",
+        "cardCount": 28
+      },
+      {
+        "id": "deck-accommodation-phrases",
+        "name": "Hotel & Accommodation Phrases",
+        "cardCount": 35
+      },
+      {
+        "id": "deck-body",
+        "name": "Body",
+        "cardCount": 17
+      },
+      {
+        "id": "deck-business",
+        "name": "Negocios & Trabajo",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-clothing",
+        "name": "Clothing",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-colombian-food",
+        "name": "Comida T\u00edpica Colombiana",
+        "cardCount": 46
+      },
+      {
+        "id": "deck-colors",
+        "name": "Colors",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-communication",
+        "name": "Comunicaci\u00f3n",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-conversation",
+        "name": "Frases de Conversaci\u00f3n",
+        "cardCount": 71
+      },
+      {
+        "id": "deck-costeno",
+        "name": "Coste\u00f1o Slang (Caribe)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-culture",
+        "name": "Cultura & Festivales",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-daily_life",
+        "name": "Vida Diaria",
+        "cardCount": 28
+      },
+      {
+        "id": "deck-dating",
+        "name": "Ligando & Relaciones",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-dates_time",
+        "name": "Dates/Time",
+        "cardCount": 26
+      },
+      {
+        "id": "deck-emotions",
+        "name": "Emociones",
+        "cardCount": 21
+      },
+      {
+        "id": "deck-expressions",
+        "name": "Expresiones Colombianas",
+        "cardCount": 61
+      },
+      {
+        "id": "deck-family",
+        "name": "La Familia",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-food",
+        "name": "Comida y Bebida",
+        "cardCount": 32
+      },
+      {
+        "id": "deck-greetings",
+        "name": "Saludos",
+        "cardCount": 13
+      },
+      {
+        "id": "deck-health",
+        "name": "Salud",
+        "cardCount": 18
+      },
+      {
+        "id": "deck-holidays",
+        "name": "Holidays",
+        "cardCount": 10
+      },
+      {
+        "id": "deck-house",
+        "name": "La Casa",
+        "cardCount": 33
+      },
+      {
+        "id": "deck-llanero",
+        "name": "Llanero Slang (Los Llanos)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-medical-phrases",
+        "name": "Medical & Emergency Phrases",
+        "cardCount": 35
+      },
+      {
+        "id": "deck-nature",
+        "name": "Nature",
+        "cardCount": 24
+      },
+      {
+        "id": "deck-numbers",
+        "name": "Numbers",
+        "cardCount": 16
+      },
+      {
+        "id": "deck-paisa",
+        "name": "Paisa Slang (Medell\u00edn)",
+        "cardCount": 56
+      },
+      {
+        "id": "deck-piropos",
+        "name": "Piropos & Compliments",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-places",
+        "name": "Places",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-professions",
+        "name": "Professions",
+        "cardCount": 29
+      },
+      {
+        "id": "deck-rolo",
+        "name": "Rolo Slang (Bogot\u00e1)",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-rolo-slang",
+        "name": "Rolo Slang (Bogot\u00e1)",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-restaurant-phrases",
+        "name": "Restaurant & Dining Phrases",
+        "cardCount": 48
+      },
+      {
+        "id": "deck-routines",
+        "name": "Rutinas y Verbos",
+        "cardCount": 29
+      },
+      {
+        "id": "deck-school",
+        "name": "School",
+        "cardCount": 24
+      },
+      {
+        "id": "deck-shopping",
+        "name": "Shopping",
+        "cardCount": 19
+      },
+      {
+        "id": "deck-slang",
+        "name": "Jerga Colombiana",
+        "cardCount": 61
+      },
+      {
+        "id": "deck-social-phrases",
+        "name": "Social & Going Out Phrases",
+        "cardCount": 40
+      },
+      {
+        "id": "deck-sports",
+        "name": "Sports",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-technology",
+        "name": "Tecnolog\u00eda",
+        "cardCount": 21
+      },
+      {
+        "id": "deck-transport",
+        "name": "Transporte",
+        "cardCount": 23
+      },
+      {
+        "id": "deck-transport-phrases",
+        "name": "Transportation Phrases",
+        "cardCount": 38
+      },
+      {
+        "id": "deck-travel",
+        "name": "Travel",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-useful-phrases",
+        "name": "Essential Phrases",
+        "cardCount": 43
+      },
+      {
+        "id": "deck-valluno",
+        "name": "Valluno Slang (Cali)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-weather",
+        "name": "Clima",
+        "cardCount": 27
+      }
+    ],
+    "taskCardNormalizedDeckHash": "de47c86ff3baf291c863d250580982e4289b8e3abf3a51b76f78168d8ed373c6"
+  },
+  {
+    "capturePath": "/Users/mike/Library/Developer/CoreSimulator/Devices/BF511B0E-479F-429E-83B7-4134E910847F/data/Containers/Data/Application/77D86906-220A-4801-9E47-AA7B6AC55DEC",
+    "pathMatchesRequestedDevice": true,
+    "phase": "destination-fixture-cold",
+    "device": "BF511B0E-479F-429E-83B7-4134E910847F",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792364358.811199,
+    "daily": {
+      "date": "2026-10-19",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-7",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
+        "region": "all",
+        "sessionId": "native-fresh-study-editor-20261019"
+      },
+      "updatedAt": 1792363716380
+    },
+    "quizHistory": [],
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792246528211,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 227435
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwf708-a-fjxccvlxnb4",
+        "cardId": "catchup-3",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792271913306,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 87391
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwgyk0-f-24dcbcquua2",
+        "cardId": "catchup-4",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792271995662,
+        "quality": 1,
+        "hintsUsed": null,
+        "durationMs": 82258
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwkikg-7-23hiksw9xg6",
+        "cardId": "catchup-5",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792272161572,
+        "quality": 2,
+        "hintsUsed": null,
+        "durationMs": 30643
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcxdb87-7-o0qt2c7bqel",
+        "cardId": "catchup-6",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792273505092,
+        "quality": 2,
+        "hintsUsed": null,
+        "durationMs": 1303066
+      }
+    ],
+    "cardCount": 1402,
+    "notificationPrefs": {},
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.85,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "d487c47f24ea3e25099e96192310cd840ce9504f5e260d9de53244e554047fab",
+    "keyHashes": {
+      "SRS_DECKS_V3": "de47c86ff3baf291c863d250580982e4289b8e3abf3a51b76f78168d8ed373c6",
+      "SRS_DAILY_PLAN_V1": "3edd9c565e61c5d971b758f88aa85642565619595f6ae32522f7ca860fc3cf10",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_PREFS_V1": "77055397846d78338d34eb796687d65baa95cba8212bdb440f1cfdeb82d97c10",
+      "SRS_DAILY_PROGRESS_V1": "0f8606873ab21991981365abb9d20269e218eb27d1cfc53f9c160c8cce0478f8",
+      "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+      "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "ecf2dcfc8a05c7215271de82368fe77a6426a064febccf6f64a6d241790290de",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+    },
+    "journal": null,
+    "restoreCard": {
+      "id": "catchup-0",
+      "front": "Hola 0",
+      "back": "Hello 0 [restore QA]",
+      "createdAt": 0,
+      "due": 1793109768065,
+      "reps": 4,
+      "interval": 10,
+      "ease": 2.5,
+      "flagged": false,
+      "reviewStatus": "reviewed",
+      "reviewedAt": 1792249575606
+    },
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 48,
+    "deckWithoutFlagsHash": "12e8f086faa0b971be6437949490e6b7d899c625cbf493688e11bd34795d4e88",
+    "expectedClearedDeckHash": "fed9f2568c902e09a38be1cffad82a882cb4e8c1fcee7f7ea3c23c29a0410bb2",
+    "deckVariants": {
+      "absent": "de47c86ff3baf291c863d250580982e4289b8e3abf3a51b76f78168d8ed373c6",
+      "false": "c91c8cfd22b7ad36e881b3955714aa0676aac8034fece0bec480a0a83be282be",
+      "true": "246c6c1833e0bbd8d0bcabaf9768e20e99b34b3ba3017bee17d9803d57e6a142"
+    },
+    "taskCards": {
+      "catchup-5": {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 1792315361567,
+        "reps": 2,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "catchup-6": {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 1792316705085,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "catchup-7": {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 1792274400000,
+        "reps": 3,
+        "interval": 1,
+        "ease": 2.5
+      },
+      "catchup-8": {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 1792274400000,
+        "reps": 3,
+        "interval": 1,
+        "ease": 2.5
+      },
+      "catchup-9": {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 1792274400000,
+        "reps": 3,
+        "interval": 1,
+        "ease": 2.5
+      }
+    },
+    "deckNames": [
+      {
+        "id": "catchup-qa",
+        "name": "Catch-up QA",
+        "cardCount": 10
+      },
+      {
+        "id": "deck-core-verbs",
+        "name": "Verbos Esenciales",
+        "cardCount": 38
+      },
+      {
+        "id": "deck-actions",
+        "name": "Actions",
+        "cardCount": 28
+      },
+      {
+        "id": "deck-accommodation-phrases",
+        "name": "Hotel & Accommodation Phrases",
+        "cardCount": 35
+      },
+      {
+        "id": "deck-body",
+        "name": "Body",
+        "cardCount": 17
+      },
+      {
+        "id": "deck-business",
+        "name": "Negocios & Trabajo",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-clothing",
+        "name": "Clothing",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-colombian-food",
+        "name": "Comida T\u00edpica Colombiana",
+        "cardCount": 46
+      },
+      {
+        "id": "deck-colors",
+        "name": "Colors",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-communication",
+        "name": "Comunicaci\u00f3n",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-conversation",
+        "name": "Frases de Conversaci\u00f3n",
+        "cardCount": 71
+      },
+      {
+        "id": "deck-costeno",
+        "name": "Coste\u00f1o Slang (Caribe)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-culture",
+        "name": "Cultura & Festivales",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-daily_life",
+        "name": "Vida Diaria",
+        "cardCount": 28
+      },
+      {
+        "id": "deck-dating",
+        "name": "Ligando & Relaciones",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-dates_time",
+        "name": "Dates/Time",
+        "cardCount": 26
+      },
+      {
+        "id": "deck-emotions",
+        "name": "Emociones",
+        "cardCount": 21
+      },
+      {
+        "id": "deck-expressions",
+        "name": "Expresiones Colombianas",
+        "cardCount": 61
+      },
+      {
+        "id": "deck-family",
+        "name": "La Familia",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-food",
+        "name": "Comida y Bebida",
+        "cardCount": 32
+      },
+      {
+        "id": "deck-greetings",
+        "name": "Saludos",
+        "cardCount": 13
+      },
+      {
+        "id": "deck-health",
+        "name": "Salud",
+        "cardCount": 18
+      },
+      {
+        "id": "deck-holidays",
+        "name": "Holidays",
+        "cardCount": 10
+      },
+      {
+        "id": "deck-house",
+        "name": "La Casa",
+        "cardCount": 33
+      },
+      {
+        "id": "deck-llanero",
+        "name": "Llanero Slang (Los Llanos)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-medical-phrases",
+        "name": "Medical & Emergency Phrases",
+        "cardCount": 35
+      },
+      {
+        "id": "deck-nature",
+        "name": "Nature",
+        "cardCount": 24
+      },
+      {
+        "id": "deck-numbers",
+        "name": "Numbers",
+        "cardCount": 16
+      },
+      {
+        "id": "deck-paisa",
+        "name": "Paisa Slang (Medell\u00edn)",
+        "cardCount": 56
+      },
+      {
+        "id": "deck-piropos",
+        "name": "Piropos & Compliments",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-places",
+        "name": "Places",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-professions",
+        "name": "Professions",
+        "cardCount": 29
+      },
+      {
+        "id": "deck-rolo",
+        "name": "Rolo Slang (Bogot\u00e1)",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-rolo-slang",
+        "name": "Rolo Slang (Bogot\u00e1)",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-restaurant-phrases",
+        "name": "Restaurant & Dining Phrases",
+        "cardCount": 48
+      },
+      {
+        "id": "deck-routines",
+        "name": "Rutinas y Verbos",
+        "cardCount": 29
+      },
+      {
+        "id": "deck-school",
+        "name": "School",
+        "cardCount": 24
+      },
+      {
+        "id": "deck-shopping",
+        "name": "Shopping",
+        "cardCount": 19
+      },
+      {
+        "id": "deck-slang",
+        "name": "Jerga Colombiana",
+        "cardCount": 61
+      },
+      {
+        "id": "deck-social-phrases",
+        "name": "Social & Going Out Phrases",
+        "cardCount": 40
+      },
+      {
+        "id": "deck-sports",
+        "name": "Sports",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-technology",
+        "name": "Tecnolog\u00eda",
+        "cardCount": 21
+      },
+      {
+        "id": "deck-transport",
+        "name": "Transporte",
+        "cardCount": 23
+      },
+      {
+        "id": "deck-transport-phrases",
+        "name": "Transportation Phrases",
+        "cardCount": 38
+      },
+      {
+        "id": "deck-travel",
+        "name": "Travel",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-useful-phrases",
+        "name": "Essential Phrases",
+        "cardCount": 43
+      },
+      {
+        "id": "deck-valluno",
+        "name": "Valluno Slang (Cali)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-weather",
+        "name": "Clima",
+        "cardCount": 27
+      }
+    ],
+    "taskCardNormalizedDeckHash": "de47c86ff3baf291c863d250580982e4289b8e3abf3a51b76f78168d8ed373c6"
+  },
+  {
+    "capturePath": "/Users/mike/Library/Developer/CoreSimulator/Devices/2EDF21F0-7DBD-4B09-8D5F-85560FD0E730/data/Containers/Data/Application/5F437B65-7217-48DC-85CD-67AE3C6C69B0",
+    "pathMatchesRequestedDevice": true,
+    "phase": "source-after-cold",
+    "device": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792364366.521805,
+    "daily": {
+      "date": "2026-10-19",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-7",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792310003366
+    },
+    "quizHistory": [],
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792246528211,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 227435
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwf708-a-fjxccvlxnb4",
+        "cardId": "catchup-3",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792271913306,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 87391
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwgyk0-f-24dcbcquua2",
+        "cardId": "catchup-4",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792271995662,
+        "quality": 1,
+        "hintsUsed": null,
+        "durationMs": 82258
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwkikg-7-23hiksw9xg6",
+        "cardId": "catchup-5",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792272161572,
+        "quality": 2,
+        "hintsUsed": null,
+        "durationMs": 30643
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcxdb87-7-o0qt2c7bqel",
+        "cardId": "catchup-6",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792273505092,
+        "quality": 2,
+        "hintsUsed": null,
+        "durationMs": 1303066
+      }
+    ],
+    "cardCount": 1402,
+    "notificationPrefs": {},
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.85,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "e374b8b532e0e7ccbdad2feafebefd47dfd0f528da2516b23a732954fd80ebbe",
+    "keyHashes": {
+      "SRS_DECKS_V3": "4089507d856f2e9866fb42f2cb63959287ec47dfa94ca3e659abb68ffa31fecb",
+      "SRS_DAILY_PLAN_V1": "3edd9c565e61c5d971b758f88aa85642565619595f6ae32522f7ca860fc3cf10",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_PREFS_V1": "77055397846d78338d34eb796687d65baa95cba8212bdb440f1cfdeb82d97c10",
+      "SRS_DAILY_PROGRESS_V1": "0f8606873ab21991981365abb9d20269e218eb27d1cfc53f9c160c8cce0478f8",
+      "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+      "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "564a2142ad2ef29f2fab88631bc665563447bdafe39f7b0f508815d1f0d4e266",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+    },
+    "journal": null,
+    "restoreCard": {
+      "id": "catchup-0",
+      "front": "Hola 0",
+      "back": "Hello 0 [restore QA]",
+      "createdAt": 0,
+      "due": 1793109768065,
+      "reps": 4,
+      "interval": 10,
+      "ease": 2.5,
+      "flagged": false,
+      "reviewStatus": "reviewed",
+      "reviewedAt": 1792249575606
+    },
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 48,
+    "deckWithoutFlagsHash": "698917007463998ea251fc095e8d128860a40175ec39de72f881913287c90429",
+    "expectedClearedDeckHash": "56e5194f0f872f3f8972d70e672463f51c6025e5ea5470d8fca96e1d53d42746",
+    "deckVariants": {
+      "absent": "4089507d856f2e9866fb42f2cb63959287ec47dfa94ca3e659abb68ffa31fecb",
+      "false": "32aa95b61f23632cb917e3fafaaa9643335b843894167f32fb6202dba99b291b",
+      "true": "e5971ca6d20842febb0503b6f8ff8e5ee01b6e5987939845b4c00a20bf34a02d"
+    },
+    "taskCards": {
+      "catchup-5": {
+        "id": "catchup-5",
+        "front": "Hola 5",
+        "back": "Hello 5",
+        "createdAt": 0,
+        "due": 1792315361567,
+        "reps": 2,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "catchup-6": {
+        "id": "catchup-6",
+        "front": "Hola 6",
+        "back": "Hello 6",
+        "createdAt": 0,
+        "due": 1792316705085,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "catchup-7": {
+        "id": "catchup-7",
+        "front": "Hola 7",
+        "back": "Hello 7",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      "catchup-8": {
+        "id": "catchup-8",
+        "front": "Hola 8",
+        "back": "Hello 8",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      "catchup-9": {
+        "id": "catchup-9",
+        "front": "Hola 9",
+        "back": "Hello 9",
+        "createdAt": 0,
+        "due": 0,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    "deckNames": [
+      {
+        "id": "catchup-qa",
+        "name": "Catch-up QA",
+        "cardCount": 10
+      },
+      {
+        "id": "deck-core-verbs",
+        "name": "Verbos Esenciales",
+        "cardCount": 38
+      },
+      {
+        "id": "deck-actions",
+        "name": "Actions",
+        "cardCount": 28
+      },
+      {
+        "id": "deck-accommodation-phrases",
+        "name": "Hotel & Accommodation Phrases",
+        "cardCount": 35
+      },
+      {
+        "id": "deck-body",
+        "name": "Body",
+        "cardCount": 17
+      },
+      {
+        "id": "deck-business",
+        "name": "Negocios & Trabajo",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-clothing",
+        "name": "Clothing",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-colombian-food",
+        "name": "Comida T\u00edpica Colombiana",
+        "cardCount": 46
+      },
+      {
+        "id": "deck-colors",
+        "name": "Colors",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-communication",
+        "name": "Comunicaci\u00f3n",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-conversation",
+        "name": "Frases de Conversaci\u00f3n",
+        "cardCount": 71
+      },
+      {
+        "id": "deck-costeno",
+        "name": "Coste\u00f1o Slang (Caribe)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-culture",
+        "name": "Cultura & Festivales",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-daily_life",
+        "name": "Vida Diaria",
+        "cardCount": 28
+      },
+      {
+        "id": "deck-dating",
+        "name": "Ligando & Relaciones",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-dates_time",
+        "name": "Dates/Time",
+        "cardCount": 26
+      },
+      {
+        "id": "deck-emotions",
+        "name": "Emociones",
+        "cardCount": 21
+      },
+      {
+        "id": "deck-expressions",
+        "name": "Expresiones Colombianas",
+        "cardCount": 61
+      },
+      {
+        "id": "deck-family",
+        "name": "La Familia",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-food",
+        "name": "Comida y Bebida",
+        "cardCount": 32
+      },
+      {
+        "id": "deck-greetings",
+        "name": "Saludos",
+        "cardCount": 13
+      },
+      {
+        "id": "deck-health",
+        "name": "Salud",
+        "cardCount": 18
+      },
+      {
+        "id": "deck-holidays",
+        "name": "Holidays",
+        "cardCount": 10
+      },
+      {
+        "id": "deck-house",
+        "name": "La Casa",
+        "cardCount": 33
+      },
+      {
+        "id": "deck-llanero",
+        "name": "Llanero Slang (Los Llanos)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-medical-phrases",
+        "name": "Medical & Emergency Phrases",
+        "cardCount": 35
+      },
+      {
+        "id": "deck-nature",
+        "name": "Nature",
+        "cardCount": 24
+      },
+      {
+        "id": "deck-numbers",
+        "name": "Numbers",
+        "cardCount": 16
+      },
+      {
+        "id": "deck-paisa",
+        "name": "Paisa Slang (Medell\u00edn)",
+        "cardCount": 56
+      },
+      {
+        "id": "deck-piropos",
+        "name": "Piropos & Compliments",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-places",
+        "name": "Places",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-professions",
+        "name": "Professions",
+        "cardCount": 29
+      },
+      {
+        "id": "deck-rolo",
+        "name": "Rolo Slang (Bogot\u00e1)",
+        "cardCount": 50
+      },
+      {
+        "id": "deck-rolo-slang",
+        "name": "Rolo Slang (Bogot\u00e1)",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-restaurant-phrases",
+        "name": "Restaurant & Dining Phrases",
+        "cardCount": 48
+      },
+      {
+        "id": "deck-routines",
+        "name": "Rutinas y Verbos",
+        "cardCount": 29
+      },
+      {
+        "id": "deck-school",
+        "name": "School",
+        "cardCount": 24
+      },
+      {
+        "id": "deck-shopping",
+        "name": "Shopping",
+        "cardCount": 19
+      },
+      {
+        "id": "deck-slang",
+        "name": "Jerga Colombiana",
+        "cardCount": 61
+      },
+      {
+        "id": "deck-social-phrases",
+        "name": "Social & Going Out Phrases",
+        "cardCount": 40
+      },
+      {
+        "id": "deck-sports",
+        "name": "Sports",
+        "cardCount": 9
+      },
+      {
+        "id": "deck-technology",
+        "name": "Tecnolog\u00eda",
+        "cardCount": 21
+      },
+      {
+        "id": "deck-transport",
+        "name": "Transporte",
+        "cardCount": 23
+      },
+      {
+        "id": "deck-transport-phrases",
+        "name": "Transportation Phrases",
+        "cardCount": 38
+      },
+      {
+        "id": "deck-travel",
+        "name": "Travel",
+        "cardCount": 15
+      },
+      {
+        "id": "deck-useful-phrases",
+        "name": "Essential Phrases",
+        "cardCount": 43
+      },
+      {
+        "id": "deck-valluno",
+        "name": "Valluno Slang (Cali)",
+        "cardCount": 20
+      },
+      {
+        "id": "deck-weather",
+        "name": "Clima",
+        "cardCount": 27
+      }
+    ],
+    "taskCardNormalizedDeckHash": "de47c86ff3baf291c863d250580982e4289b8e3abf3a51b76f78168d8ed373c6"
+  }
+]

@@ -37,3 +37,7 @@ The production catalog stays empty until accepted content/rights and a publicati
 On this turn, the existing five saved-evidence verifiers pass; all 18 report links/rows and four bounded repeat references were read and checked. The prior main product baseline is PR29: 117 suites/1,148 tests and all four main CI checks passed. No product source changed, so this documentation pass does not claim a new app test or native pass.
 
 A fresh CUA `getApp("com.apple.dt.Devices")` observation timed out after 30 seconds and reset the tool kernel. This is a UI-observation failure, not proof that the app or simulator stopped or that the Mac is locked. No device/app restart, fixture import, screenshot acceptance or simulator data write followed. The prior UI-availability question remains pending; elapsed time is not a response.
+
+## October19 fresh R1/R2 preparation
+
+[Fresh SE3 checkpoint](../2026-10-19-fresh-study-editor/README.md) records normal onboarding, supported full-state fixture import, all eleven destination hashes through cold launch and all eleven original phone hashes through its separate actual cold launch. The private session is prepared with previously studied cards7/8/9. No grades, deck lifecycle or editor saves occurred; R1/R2 stay open. Device Hub switched to another project between actions twice, so input is paused pending shared-UI availability. This supersedes the old all-UI-observation timeout as the current constraint; no physical device is required for these remaining iOS checks. Recheck source protection after future graded/editor actions.
