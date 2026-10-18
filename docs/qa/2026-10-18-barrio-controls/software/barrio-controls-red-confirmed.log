@@ -1,0 +1,145 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/QuizScreen.test.tsx __tests__/screens/HomeScreen.test.tsx __tests__/screens/StudyScreen.test.tsx __tests__/screens/PhrasesScreen.test.tsx
+
+FAIL __tests__/screens/StudyScreen.test.tsx
+  ● Console
+
+    console.error
+      An update to StudyScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      338 |             plan.review?.session.queue?.sessionId === session?.queue?.sessionId &&
+      339 |             plan.review?.session.deckId === session?.deckId;
+    > 340 |           setResumeSession(linked ? plan!.review!.session : session);
+          |           ^
+      341 |           setResumePlanId(linked ? plan!.id : undefined);
+      342 |         }
+      343 |       },
+
+      at ../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at dispatchSetStateInternal (../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6208:13)
+      at dispatchSetState (../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
+      at setResumeSession (src/screens/StudyScreen.tsx:340:11)
+
+    console.error
+      An update to StudyScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      339 |             plan.review?.session.deckId === session?.deckId;
+      340 |           setResumeSession(linked ? plan!.review!.session : session);
+    > 341 |           setResumePlanId(linked ? plan!.id : undefined);
+          |           ^
+      342 |         }
+      343 |       },
+      344 |       () => {
+
+      at ../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at dispatchSetStateInternal (../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6208:13)
+      at dispatchSetState (../../../../AppIdeas/Colombian-Spanish/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
+      at setResumePlanId (src/screens/StudyScreen.tsx:341:11)
+
+  ● Barrio audio entry uses the common decorative icon while Classic retains its glyph
+
+    No instances found
+
+      1395 |   fireEvent.changeText(await screen.findByPlaceholderText('Busca palabras, frases o decks...'), 'hola');
+      1396 |   screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+    > 1397 |   expect(screen.UNSAFE_getAllByType(ThemeIcon).some(icon => icon.props.name === 'audio')).toBe(true);
+           |                 ^
+      1398 |   expect(screen.queryAllByText('🔊')).toHaveLength(0);
+      1399 |   screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+      1400 |   expect(screen.getAllByText('🔊').length).toBeGreaterThan(0);
+
+      at Object.UNSAFE_getAllByType (__tests__/screens/StudyScreen.test.tsx:1397:17)
+      at asyncGeneratorStep (../../../../AppIdeas/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../AppIdeas/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL __tests__/screens/HomeScreen.test.tsx
+  ● Barrio audio entry uses the common decorative icon while Classic retains its glyph
+
+    No instances found
+
+      684 |   await screen.findByText('Study due cards');
+      685 |   screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+    > 686 |   expect(screen.UNSAFE_getAllByType(ThemeIcon).some(icon => icon.props.name === 'audio')).toBe(true);
+          |                 ^
+      687 |   expect(screen.queryAllByText('🔊')).toHaveLength(0);
+      688 |   screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+      689 |   expect(screen.getAllByText('🔊').length).toBeGreaterThan(0);
+
+      at Object.UNSAFE_getAllByType (__tests__/screens/HomeScreen.test.tsx:686:17)
+      at asyncGeneratorStep (../../../../AppIdeas/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../AppIdeas/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL __tests__/screens/QuizScreen.test.tsx
+  ● Barrio Finish shows pressed and pending paint while preserving one result write and Classic paint
+
+    expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "backgroundColor": "#184A3A",
+    +   "backgroundColor": "#23624E",
+      }
+
+      442 |   const finish = await screen.findByText('See results');
+      443 |   const button = screen.UNSAFE_getAllByType(Pressable).find(node => node.findAllByProps({ children: 'See results' }).length)!;
+    > 444 |   expect(StyleSheet.flatten(typeof button.props.style === 'function' ? button.props.style({ pressed: true }) : button.props.style)).toMatchObject({ backgroundColor: '#184A3A' });
+          |                                                                                                                                     ^
+      445 |   fireEvent.press(finish);
+      446 |   fireEvent.press(finish);
+      447 |   expect(recordQuizResult).toHaveBeenCalledTimes(1);
+
+      at Object.toMatchObject (__tests__/screens/QuizScreen.test.tsx:444:133)
+      at asyncGeneratorStep (../../../../AppIdeas/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../AppIdeas/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL __tests__/screens/PhrasesScreen.test.tsx
+  ● Barrio audio entry uses the common decorative icon while Classic retains its glyph
+
+    No instances found
+
+      194 |   fireEvent.press(screen.getByText('Weather today'));
+      195 |   screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+    > 196 |   expect(screen.UNSAFE_getAllByType(ThemeIcon).some(icon => icon.props.name === 'audio')).toBe(true);
+          |                 ^
+      197 |   expect(screen.queryAllByText('🔊')).toHaveLength(0);
+      198 |   screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+      199 |   expect(screen.getAllByText('🔊').length).toBeGreaterThan(0);
+
+      at Object.UNSAFE_getAllByType (__tests__/screens/PhrasesScreen.test.tsx:196:17)
+      at asyncGeneratorStep (../../../../AppIdeas/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../AppIdeas/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at ../../../../AppIdeas/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (../../../../AppIdeas/Colombian-Spanish/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 4 failed, 4 total
+Tests:       4 failed, 112 passed, 116 total
+Snapshots:   0 total
+Time:        7.114 s, estimated 19 s
+Ran all test suites within paths "__tests__/screens/QuizScreen.test.tsx", "__tests__/screens/HomeScreen.test.tsx", "__tests__/screens/StudyScreen.test.tsx", "__tests__/screens/PhrasesScreen.test.tsx".
