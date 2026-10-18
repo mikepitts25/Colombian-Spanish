@@ -1,0 +1,17 @@
+[
+  {
+    "file": "backup-preview-es.png",
+    "sha256": "591005757a2538b04fa97810f30541450bed03a0fc037e0580f085781c9823f6",
+    "dimensions": [2064, 2752]
+  },
+  {
+    "file": "home-max-lower-fixed.png",
+    "sha256": "16f3184016bec692a55c1768c7d0ea15ebf3fbb25f146372c455a3cd85bb41da",
+    "dimensions": [2064, 2752]
+  },
+  {
+    "file": "home-max-lower.png",
+    "sha256": "887ecacf6ed248aaf43fb547491695f6c7962842890c2f4721f98dc2003f5b7b",
+    "dimensions": [2064, 2752]
+  }
+]
