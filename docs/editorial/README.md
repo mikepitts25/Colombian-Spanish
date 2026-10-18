@@ -8,6 +8,8 @@ Each row contains the stable card/deck IDs, Spanish, English, example, tags, exp
 
 The separate [review ledger and release workflow](RELEASE_WORKFLOW.md) binds actual attributed decisions to exact teaching versions. Regenerate the inventory after changing source or the ledger. The development library is not release-approved.
 
+The [short grammar-note candidate packet](GRAMMAR_EXPLANATIONS_DRAFT.md) attaches four bilingual drafts to existing phrases: requests, questions, address forms and a past event. It records exact source identities and reviewer questions; none is accepted or displayed in the app yet.
+
 ## What the editor supplies
 
 For each accepted/corrected card, record stable ID, corrected text/translation/example, actual regional applicability (including shared usage), relationship/register guidance, reviewer attribution, review date, and unresolved questions. Review tú/vos/usted guidance in context. Do not assume deck membership proves exclusive regional usage.
