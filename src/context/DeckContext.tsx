@@ -2,10 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState, ReactNo
 import {
   loadDecks,
   mutateDecks,
-  upsertDeck,
-  addCard as addCardStorage,
   removeDeckById,
-  renameDeckById,
   resetDeckProgressById,
   getDailyProgress,
 } from '../storage/storage';
@@ -13,6 +10,7 @@ import { getPrefs } from '../storage/prefs';
 import { commitFlashcardAnswer, AnswerOptions } from '../storage/flashcardAnswer';
 import { createLearningSessionId } from '../storage/learningEvents';
 import { Deck, FlashCard } from '../types';
+import { createLocalId } from '../utils/localId';
 import { StorageStatus } from '../components/StorageGate';
 import { buildSessionQueue } from '../utils/srs';
 import type { RegionFilterId } from '../utils/regions';
@@ -50,7 +48,7 @@ type Ctx = {
     deckId: string,
     card: Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'>,
   ) => Promise<void>;
-  createDeck: (name: string, description?: string) => Promise<Deck | undefined>;
+  createDeck: (name: string, description?: string, intentId?: string) => Promise<Deck | undefined>;
   renameDeck: (deckId: string, name: string) => Promise<void>;
   deleteDeck: (deckId: string) => Promise<void>;
   resetDeckProgress: (deckId: string) => Promise<void>;
@@ -227,39 +225,52 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     deckId: string,
     newCard: Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'>,
   ) {
-    const card: FlashCard = {
-      ...newCard,
-      createdAt: Date.now(),
-      due: Date.now(),
-      reps: 0,
-      interval: 0,
-      ease: 2.5,
-    } as FlashCard;
-    await addCardStorage(deckId, card);
-    const updated = await loadDecks();
+    const card: FlashCard = JSON.parse(
+      JSON.stringify({
+        ...newCard,
+        createdAt: Date.now(),
+        due: Date.now(),
+        reps: 0,
+        interval: 0,
+        ease: 2.5,
+      }),
+    );
+    const updated = await mutateDecks((stored) => {
+      const target = stored.find((deck) => deck.id === deckId);
+      if (!target) throw new Error('Selected deck no longer exists');
+      // A recovered create is acknowledged by its original intent identity.
+      // Never replace later edits or grading on an already-created card.
+      if (target.cards.some((existing) => existing.id === card.id)) return stored;
+      if (stored.some((deck) => deck.cards.some((existing) => existing.id === card.id))) {
+        throw new Error('Card identity belongs to another deck');
+      }
+      target.cards.push(card);
+      return stored;
+    });
     setDecks(updated);
   }
 
-  async function createDeck(name: string, description?: string): Promise<Deck | undefined> {
-    const id =
-      name
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '') +
-      '-' +
-      Date.now();
+  async function createDeck(
+    name: string,
+    description?: string,
+    intentId?: string,
+  ): Promise<Deck | undefined> {
+    const id = intentId ?? createLocalId('deck');
     const newDeck: Deck = { id, name: name.trim(), description: description || '', cards: [] };
-    await upsertDeck(newDeck);
-    const updated = await loadDecks();
+    const updated = await mutateDecks((stored) =>
+      stored.some((deck) => deck.id === id) ? stored : [...stored, newDeck],
+    );
     setDecks(updated);
-    if (!activeDeckId) setActiveDeckId(newDeck.id);
-    return newDeck;
+    if (!activeDeckId) setActiveDeckId(id);
+    return updated.find((deck) => deck.id === id);
   }
 
   async function renameDeck(deckId: string, name: string) {
-    await renameDeckById(deckId, name);
-    const updated = await loadDecks();
+    const updated = await mutateDecks((stored) => {
+      if (!stored.some((deck) => deck.id === deckId))
+        throw new Error('Selected deck no longer exists');
+      return stored.map((deck) => (deck.id === deckId ? { ...deck, name } : deck));
+    });
     setDecks(updated);
   }
 

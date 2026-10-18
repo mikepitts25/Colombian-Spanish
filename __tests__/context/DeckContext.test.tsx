@@ -715,3 +715,147 @@ test('regional provider queues retain due reviews and enforce the stored daily n
     screen.unmount();
   }
 });
+
+describe('custom create intent recovery', () => {
+  async function provider() {
+    let current!: ReturnType<typeof useDeckContext>;
+    renderWithProvider(
+      <Consumer
+        onReady={(value) => {
+          current = value;
+        }}
+      />,
+    );
+    await waitFor(() => expect(current?.ready).toBe(true));
+    return () => current;
+  }
+
+  it('rejects adding a card when the selected deck no longer exists', async () => {
+    const context = await provider();
+    await act(async () => {
+      await expect(
+        context().addCardToDeck('removed', { id: 'custom-missing', front: 'hola', back: 'hello' }),
+      ).rejects.toThrow();
+    });
+    expect(
+      context()
+        .decks.flatMap((d) => d.cards)
+        .map((c) => c.id),
+    ).toEqual(['s001']);
+  });
+
+  it('retries the same card once after journal recovery without resetting later edits or grading', async () => {
+    const context = await provider();
+    const write = AsyncStorage.setItem as jest.Mock;
+    const original = write.getMockImplementation()!;
+    let failed = false;
+    write.mockImplementation(async (key, value) => {
+      if (key === 'SRS_DECKS_V3' && !failed) {
+        failed = true;
+        throw new Error('interrupted apply');
+      }
+      return original(key, value);
+    });
+    const card = { id: 'custom-retry', front: 'parce', back: 'friend', tags: ['custom'] };
+    try {
+      await act(async () => {
+        await expect(context().addCardToDeck('deck-seed', card)).rejects.toThrow(
+          'interrupted apply',
+        );
+      });
+    } finally {
+      write.mockImplementation(original);
+    }
+    const { commitFlashcardAnswer } = require('../../src/storage/flashcardAnswer');
+    const { mutateDecks, loadDecks } = require('../../src/storage/storage');
+    await commitFlashcardAnswer({
+      cardId: 'custom-retry',
+      quality: 4,
+      attemptId: 'custom-grade',
+      sessionId: 'custom-session',
+    });
+    await mutateDecks((decks: Deck[]) =>
+      decks.map((deck) => ({
+        ...deck,
+        cards: deck.cards.map((item) =>
+          item.id === card.id ? { ...item, back: 'edited friend' } : item,
+        ),
+      })),
+    );
+    await act(async () => {
+      await context().addCardToDeck('deck-seed', card);
+    });
+    const stored = await loadDecks();
+    expect(stored[0].cards).toHaveLength(2);
+    expect(stored[0].cards[1]).toMatchObject({
+      id: 'custom-retry',
+      back: 'edited friend',
+      reps: 1,
+    });
+    expect(context().decks).toEqual(stored);
+    expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
+  });
+
+  it('creates distinct decks when independent intents share a name, clock and random sample', async () => {
+    const context = await provider();
+    const clock = jest.spyOn(Date, 'now').mockReturnValue(1792288000000);
+    const random = jest.spyOn(Math, 'random').mockReturnValue(0.5);
+    try {
+      await act(async () => {
+        await context().createDeck('Repeated name');
+        await context().createDeck('Repeated name');
+      });
+      const custom = context().decks.filter((d) => d.name === 'Repeated name');
+      expect(custom).toHaveLength(2);
+      expect(new Set(custom.map((d) => d.id)).size).toBe(2);
+    } finally {
+      clock.mockRestore();
+      random.mockRestore();
+    }
+  });
+
+  it('reuses a supplied deck intent without replacing cards or subsequent rename', async () => {
+    const context = await provider();
+    let first!: Deck;
+    await act(async () => {
+      first = (await (context().createDeck as any)('Original', '', 'custom-deck-intent'))!;
+    });
+    await act(async () => {
+      await context().addCardToDeck(first.id, {
+        id: 'inside-custom',
+        front: 'hola',
+        back: 'hello',
+      });
+      await context().renameDeck(first.id, 'Later name');
+    });
+    let retried!: Deck;
+    await act(async () => {
+      retried = (await (context().createDeck as any)('Original', '', 'custom-deck-intent'))!;
+    });
+    const { loadDecks } = require('../../src/storage/storage');
+    const stored = await loadDecks();
+    expect(stored).toHaveLength(2);
+    expect(retried).toMatchObject({
+      id: first.id,
+      name: 'Later name',
+      cards: [{ id: 'inside-custom' }],
+    });
+    expect(context().decks).toEqual(stored);
+  });
+});
+
+test('rename rejects a removed target rather than confirming a no-op', async () => {
+  let current!: ReturnType<typeof useDeckContext>;
+  renderWithProvider(
+    <Consumer
+      onReady={(value) => {
+        current = value;
+      }}
+    />,
+  );
+  await waitFor(() => expect(current?.ready).toBe(true));
+  await act(async () => {
+    await expect(current.renameDeck('removed-target', 'New name')).rejects.toThrow();
+  });
+  expect(current.decks[0].name).toBe('Seed Deck');
+});

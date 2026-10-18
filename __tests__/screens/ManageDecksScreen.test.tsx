@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import { Alert, Dimensions } from 'react-native';
 import ManageDecksScreen from '../../src/screens/ManageDecksScreen';
 import { useDeck } from '../../src/hooks/useDeck';
 
@@ -7,6 +8,7 @@ const mockNavigate = jest.fn();
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
+  usePreventRemove: jest.fn(),
 }));
 
 jest.mock('../../src/hooks/useDeck', () => ({
@@ -44,3 +46,75 @@ describe('ManageDecksScreen navigation', () => {
     expect(mockNavigate).toHaveBeenCalledWith('Review');
   });
 });
+
+const originalWindow = Dimensions.get('window');
+afterEach(() => act(() => Dimensions.set({ window: originalWindow })));
+const oneDeck = { id: 'd1', name: 'Prueba', cards: [] };
+
+test('keeps one rename and its draft across pending writes and live font changes', async () => {
+  let release!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  const rename = jest.fn(() => pending);
+  mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [oneDeck], renameDeck: rename });
+  const ui = render(<ManageDecksScreen />);
+  fireEvent.press(ui.getByText('Renombrar'));
+  fireEvent.changeText(ui.getByPlaceholderText('Nombre del deck'), 'Nombre nuevo');
+  fireEvent.press(ui.getByText('Guardar'));
+  fireEvent.press(ui.getByText('Guardar'));
+  expect(rename).toHaveBeenCalledTimes(1);
+  act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
+  expect(ui.getByDisplayValue('Nombre nuevo').props.editable).toBe(false);
+  expect(ui.getByRole('button', { name: 'Cancelar', disabled: true })).toBeTruthy();
+  await act(async () => release());
+  await waitFor(() => expect(ui.queryByDisplayValue('Nombre nuevo')).toBeNull());
+  expect(rename).toHaveBeenCalledWith('d1', 'Nombre nuevo');
+});
+
+test('retains rejected rename text for exact retry and preserves the list query', async () => {
+  const rename = jest
+    .fn()
+    .mockRejectedValueOnce(new Error('disk full'))
+    .mockResolvedValue(undefined);
+  mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [oneDeck], renameDeck: rename });
+  const ui = render(<ManageDecksScreen />);
+  fireEvent.changeText(ui.getByPlaceholderText('Buscar decks...'), 'Prueba');
+  fireEvent.press(ui.getByText('Renombrar'));
+  fireEvent.changeText(ui.getByPlaceholderText('Nombre del deck'), 'Nombre nuevo');
+  fireEvent.press(ui.getByText('Guardar'));
+  await ui.findByText(
+    'No se pudo confirmar el guardado. Tu borrador se conserva. Reintenta el mismo guardado.',
+  );
+  expect(ui.getByDisplayValue('Nombre nuevo')).toBeTruthy();
+  fireEvent.press(ui.getByRole('button', { name: 'Reintentar guardado' }));
+  await waitFor(() => expect(ui.queryByDisplayValue('Nombre nuevo')).toBeNull());
+  expect(rename.mock.calls).toEqual([
+    ['d1', 'Nombre nuevo'],
+    ['d1', 'Nombre nuevo'],
+  ]);
+  expect(ui.getByDisplayValue('Prueba')).toBeTruthy();
+});
+
+test.each([
+  ['Eliminar', 'deleteDeck'],
+  ['Reiniciar', 'resetDeckProgress'],
+])(
+  'handles failed confirmed %s and ignores duplicate confirmation callbacks',
+  async (label, method) => {
+    const operation = jest.fn().mockRejectedValue(new Error('disk full'));
+    mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [oneDeck], [method]: operation });
+    const ui = render(<ManageDecksScreen />);
+    fireEvent.press(ui.getByText(label));
+    const buttons = (Alert.alert as jest.Mock).mock.calls.at(-1)![2];
+    const confirm = buttons.find((button: any) => button.style === 'destructive').onPress;
+    await act(async () => {
+      await Promise.allSettled([confirm(), confirm()]);
+    });
+    expect(operation).toHaveBeenCalledTimes(1);
+    await ui.findByText(
+      'No se pudo confirmar el cambio. Revisa el deck antes de intentarlo otra vez.',
+    );
+    expect(ui.getByRole('button', { name: 'Inicio', disabled: false })).toBeTruthy();
+  },
+);

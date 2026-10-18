@@ -1,0 +1,136 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/context/DeckContext.test.tsx
+
+FAIL __tests__/context/DeckContext.test.tsx
+  ✓ keeps provider state unchanged when the grade journal cannot be saved (66 ms)
+  ✓ keeps concurrent favorite toggles and review/flag patches without losing grades (56 ms)
+  ✓ offers a retry after startup merge fails without discarding stored decks (59 ms)
+  ✓ keeps corrupt startup decks and shows a recovery error instead of reseeding (52 ms)
+  ✓ regional provider queues retain due reviews and enforce the stored daily new-card budget (53 ms)
+  DeckProvider initialization
+    ✓ sets ready=true after mounting (261 ms)
+    ✓ seeds from ALL_DECKS when storage is empty (51 ms)
+    ✓ does not duplicate existing seed decks on re-mount (52 ms)
+    ✓ merges a new seed deck without removing existing user data (51 ms)
+    ✓ refreshes updated seed card content while preserving stored progress (55 ms)
+    ✓ preserves reviewed translation edits during seed content refreshes (53 ms)
+    ✓ sets activeDeckId to first deck (54 ms)
+  getStudyBatch
+    ✓ returns due cards from the active deck (53 ms)
+    ✓ respects size parameter (53 ms)
+  recordAnswer
+    ✓ updates card progress fields after grading (60 ms)
+    ✓ records the reviewed card as a seen word for quiz sessions (55 ms)
+    ✓ updates the study streak when a card is reviewed (53 ms)
+    ✓ does nothing for an unknown cardId (53 ms)
+    ✓ updates a matching card even when it is not in the active deck (56 ms)
+  toggleFavorite
+    ✓ sets favorite=true on first toggle (54 ms)
+    ✓ sets favorite=false on second toggle (56 ms)
+  updateCardReview
+    ✓ updates translation fields and review status for a matching card (55 ms)
+  createDeck
+    ✓ adds a new deck with an empty cards array (55 ms)
+    ✓ persists the new deck to AsyncStorage (56 ms)
+  deleteDeck
+    ✓ removes the deck from state and storage (53 ms)
+  resetDeckProgress
+    ✓ resets all card progress in the target deck (53 ms)
+  custom create intent recovery
+    ✕ rejects adding a card when the selected deck no longer exists (54 ms)
+    ✕ retries the same card once after journal recovery without resetting later edits or grading (59 ms)
+    ✕ creates distinct decks when independent intents share a name, clock and random sample (54 ms)
+    ✕ reuses a supplied deck intent without replacing cards or subsequent rename (57 ms)
+
+  ● custom create intent recovery › rejects adding a card when the selected deck no longer exists
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: undefined
+
+      728 |     const context = await provider();
+      729 |     await act(async () => {
+    > 730 |       await expect(context().addCardToDeck('removed', { id: 'custom-missing', front: 'hola', back: 'hello' })).rejects.toThrow();
+          |             ^
+      731 |     });
+      732 |     expect(context().decks.flatMap((d) => d.cards).map((c) => c.id)).toEqual(['s001']);
+      733 |   });
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at expect (__tests__/context/DeckContext.test.tsx:730:13)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at callback (node_modules/@testing-library/react-native/src/act.ts:31:24)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at Object.<anonymous> (__tests__/context/DeckContext.test.tsx:729:14)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● custom create intent recovery › retries the same card once after journal recovery without resetting later edits or grading
+
+    Duplicate card ID
+
+      76 |       }
+      77 |       const cardId = card.id as string;
+    > 78 |       if (cardIds.has(cardId)) throw new Error('Duplicate card ID');
+         |                                      ^
+      79 |       cardIds.add(cardId);
+      80 |     }
+      81 |   }
+
+      at _loop (src/storage/backupValidation.ts:78:38)
+      at _loop (src/storage/backupValidation.ts:46:34)
+      at src/storage/storage.ts:61:24
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● custom create intent recovery › creates distinct decks when independent intents share a name, clock and random sample
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 2
+    Received length: 1
+    Received array:  [{"cards": [], "description": "", "id": "repeated-name-1792288000000", "name": "Repeated name"}]
+
+      768 |       });
+      769 |       const custom = context().decks.filter((d) => d.name === 'Repeated name');
+    > 770 |       expect(custom).toHaveLength(2);
+          |                      ^
+      771 |       expect(new Set(custom.map((d) => d.id)).size).toBe(2);
+      772 |     } finally { clock.mockRestore(); random.mockRestore(); }
+      773 |   });
+
+      at Object.toHaveLength (__tests__/context/DeckContext.test.tsx:770:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● custom create intent recovery › reuses a supplied deck intent without replacing cards or subsequent rename
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 2
+    Received length: 3
+    Received array:  [{"cards": [{"back": "hello", "createdAt": 0, "due": 0, "ease": 2.5, "example": "Hola, ¿cómo estás? | Hello, how are you?", "front": "hola", "id": "s001", "interval": 0, "reps": 0}], "id": "deck-seed", "name": "Seed Deck"}, {"cards": [{"back": "hello", "createdAt": 1792287037148, "due": 1792287037148, "ease": 2.5, "front": "hola", "id": "inside-custom", "interval": 0, "reps": 0}], "description": "", "id": "original-1792287037147", "name": "Later name"}, {"cards": [], "description": "", "id": "original-1792287037150", "name": "Original"}]
+
+      785 |     const { loadDecks } = require('../../src/storage/storage');
+      786 |     const stored = await loadDecks();
+    > 787 |     expect(stored).toHaveLength(2);
+          |                    ^
+      788 |     expect(retried).toMatchObject({ id: first.id, name: 'Later name', cards: [{ id: 'inside-custom' }] });
+      789 |     expect(context().decks).toEqual(stored);
+      790 |   });
+
+      at Object.toHaveLength (__tests__/context/DeckContext.test.tsx:787:20)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 26 passed, 30 total
+Snapshots:   0 total
+Time:        2.657 s
+Ran all test suites within paths "__tests__/context/DeckContext.test.tsx".

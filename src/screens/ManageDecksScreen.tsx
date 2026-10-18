@@ -1,291 +1,375 @@
-import React, { useMemo, useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, TextInput, View, FlatList, Pressable } from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  FlatList,
+  Pressable,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
-import { colors, spacing } from '../styles/theme';
+import { useNavigation, usePreventRemove } from '@react-navigation/native';
+import { colors } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { Deck } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { SHOW_REVIEW_TOOLS } from '../config';
 
+type RenameIntent = { id: string; name: string };
+function Action({
+  label,
+  accessibilityLabel,
+  onPress,
+  disabled,
+  danger,
+}: {
+  label: string;
+  accessibilityLabel?: string;
+  onPress: () => void;
+  disabled: boolean;
+  danger?: boolean;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      style={[styles.button, danger && styles.danger, disabled && styles.disabled]}
+      onPress={onPress}
+    >
+      <Text style={styles.buttonText}>{label}</Text>
+    </Pressable>
+  );
+}
 export default function ManageDecksScreen() {
-  const { ready, decks, renameDeck, deleteDeck, resetDeckProgress, setActiveDeckId } = useDeck();
+  const { ready, decks, activeDeckId, renameDeck, deleteDeck, resetDeckProgress, setActiveDeckId } =
+    useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
+  const { fontScale } = useWindowDimensions();
   const [q, setQ] = useState('');
-
   const [renameOpen, setRenameOpen] = useState(false);
   const [renameDeckId, setRenameDeckId] = useState<string | null>(null);
   const [renameValue, setRenameValue] = useState('');
-
+  const [pendingRename, setPendingRename] = useState<RenameIntent | null>(null);
+  const pending = useRef<RenameIntent | null>(null);
+  const writing = useRef(false);
+  const mounted = useRef(true);
+  const [busy, setBusy] = useState(false);
+  const [renameError, setRenameError] = useState(false);
+  const [operationError, setOperationError] = useState(false);
+  const blocked = busy || pendingRename !== null;
+  usePreventRemove(blocked, () => {});
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
-    if (!query) return decks;
-    return (decks || []).filter((d) => (d.name || '').toLowerCase().includes(query));
+    return query ? decks.filter((deck) => deck.name.toLowerCase().includes(query)) : decks;
   }, [decks, q]);
-
+  function closeRename() {
+    if (writing.current) return;
+    pending.current = null;
+    setPendingRename(null);
+    setRenameError(false);
+    setRenameOpen(false);
+  }
   function openRename(deck: Deck) {
+    if (writing.current || pending.current) return;
     setRenameDeckId(deck.id);
     setRenameValue(deck.name);
+    setRenameError(false);
     setRenameOpen(true);
   }
-
-  async function submitRename() {
-    const next = renameValue.trim();
-    if (!renameDeckId) return;
-    if (!next)
+  async function persistRename(intent: RenameIntent) {
+    if (writing.current) return;
+    writing.current = true;
+    setBusy(true);
+    setRenameError(false);
+    try {
+      await renameDeck(intent.id, intent.name);
+      if (!mounted.current) return;
+      pending.current = null;
+      setPendingRename(null);
+      setRenameOpen(false);
+      setRenameDeckId(null);
+      setRenameValue('');
+    } catch {
+      if (mounted.current) setRenameError(true);
+    } finally {
+      writing.current = false;
+      if (mounted.current) setBusy(false);
+    }
+  }
+  function submitRename() {
+    if (writing.current || pending.current || !renameDeckId) return;
+    const name = renameValue.trim();
+    if (!name)
       return Alert.alert(
         t('manage.alert.missingName.title'),
         t('manage.alert.missingName.message'),
       );
-    await renameDeck(renameDeckId, next);
-    setRenameOpen(false);
-    setRenameDeckId(null);
-    setRenameValue('');
+    const intent = { id: renameDeckId, name };
+    pending.current = intent;
+    setPendingRename(intent);
+    void persistRename(intent);
   }
-
-  function confirmDelete(deck: Deck) {
-    Alert.alert(
-      t('manage.alert.delete.title'),
-      t('manage.alert.delete.message', { deck: deck.name }),
-      [
-        { text: t('common.cancel'), style: 'cancel' },
-        { text: t('manage.delete'), style: 'destructive', onPress: () => deleteDeck(deck.id) },
-      ],
-    );
+  async function mutate(operation: () => Promise<void>) {
+    if (writing.current || pending.current) return;
+    writing.current = true;
+    setBusy(true);
+    setOperationError(false);
+    try {
+      await operation();
+    } catch {
+      if (mounted.current) setOperationError(true);
+    } finally {
+      writing.current = false;
+      if (mounted.current) setBusy(false);
+    }
   }
-
-  function confirmReset(deck: Deck) {
+  function confirm(deck: Deck, kind: 'delete' | 'reset') {
+    if (writing.current || pending.current) return;
     Alert.alert(
-      t('manage.alert.reset.title'),
-      t('manage.alert.reset.message', { deck: deck.name }),
+      t(kind === 'delete' ? 'manage.alert.delete.title' : 'manage.alert.reset.title'),
+      t(kind === 'delete' ? 'manage.alert.delete.message' : 'manage.alert.reset.message', {
+        deck: deck.name,
+      }),
       [
         { text: t('common.cancel'), style: 'cancel' },
         {
-          text: t('manage.reset'),
+          text: t(kind === 'delete' ? 'manage.delete' : 'manage.reset'),
           style: 'destructive',
-          onPress: () => resetDeckProgress(deck.id),
+          onPress: () => {
+            void mutate(() =>
+              kind === 'delete' ? deleteDeck(deck.id) : resetDeckProgress(deck.id),
+            );
+          },
         },
       ],
     );
   }
-
-  function goHome() {
-    nav.navigate('Root', { screen: 'Home' }, { pop: true });
-  }
-
-  if (!ready)
-    return (
-      <SafeAreaView style={styles.wrap}>
-        <View style={styles.content}>
-          <Text style={styles.h1}>{t('common.loading')}</Text>
-        </View>
-      </SafeAreaView>
-    );
-
-  return (
-    <SafeAreaView style={styles.wrap}>
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <Pressable style={styles.homeBtn} onPress={goHome}>
-            <Text style={styles.homeBtnText}>{t('manage.home')}</Text>
-          </Pressable>
-          <Text style={styles.h1} numberOfLines={1} adjustsFontSizeToFit>
-            {t('manage.title')}
-          </Text>
-          <Text style={styles.sub}>{t('manage.sub')}</Text>
-        </View>
-
-        {SHOW_REVIEW_TOOLS && (
-          <Pressable style={styles.reviewBanner} onPress={() => nav.navigate('Review')}>
-            <View style={styles.reviewBannerText}>
-              <Text style={styles.reviewBannerTitle}>{t('manage.reviewTitle')}</Text>
-              <Text style={styles.reviewBannerSub}>{t('manage.reviewSub')}</Text>
-            </View>
-            <Text style={styles.reviewBannerArrow}>→</Text>
-          </Pressable>
-        )}
-
-        <TextInput
-          value={q}
-          onChangeText={setQ}
-          placeholder={t('manage.searchPlaceholder')}
-          placeholderTextColor={colors.textSecondary}
-          style={styles.search}
-          autoCapitalize="none"
-          autoCorrect={false}
+  const header = (
+    <View style={styles.header}>
+      <Action
+        label={t('manage.home')}
+        disabled={blocked}
+        onPress={() => {
+          if (!writing.current && !pending.current)
+            nav.navigate('Root', { screen: 'Home' }, { pop: true });
+        }}
+      />
+      <Text accessibilityRole="header" style={styles.h1}>
+        {t('manage.title')}
+      </Text>
+      <Text style={styles.body}>{t('manage.sub')}</Text>
+      {busy && (
+        <Text accessibilityLiveRegion="polite" style={styles.body}>
+          {t('editing.saving')}
+        </Text>
+      )}
+      {operationError && (
+        <Text accessibilityRole="alert" style={styles.body}>
+          {t('manage.operationError')}
+        </Text>
+      )}
+      {SHOW_REVIEW_TOOLS && (
+        <Action
+          label={t('manage.reviewTitle')}
+          disabled={blocked}
+          onPress={() => {
+            if (!writing.current && !pending.current) nav.navigate('Review');
+          }}
         />
-
+      )}
+      <TextInput
+        accessibilityLabel={t('manage.searchPlaceholder')}
+        value={q}
+        editable={!blocked}
+        onChangeText={(value) => {
+          if (!writing.current && !pending.current) setQ(value);
+        }}
+        placeholder={t('manage.searchPlaceholder')}
+        placeholderTextColor={colors.textSecondary}
+        style={styles.input}
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+    </View>
+  );
+  return (
+    <SafeAreaView key={fontScale} style={styles.wrap}>
+      {!ready ? (
+        <Text style={styles.h1}>{t('common.loading')}</Text>
+      ) : (
         <FlatList
           data={filtered}
-          keyExtractor={(d) => d.id}
-          contentContainerStyle={{ paddingBottom: spacing(3) }}
+          keyExtractor={(deck) => deck.id}
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+          ListHeaderComponent={header}
+          ListEmptyComponent={<Text style={styles.body}>{t('manage.empty')}</Text>}
           renderItem={({ item }) => (
             <View style={styles.row}>
-              <Pressable style={{ flex: 1 }} onPress={() => setActiveDeckId(item.id)}>
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={item.name}
+                accessibilityState={{ selected: activeDeckId === item.id, disabled: blocked }}
+                disabled={blocked}
+                style={styles.select}
+                onPress={() => {
+                  if (!writing.current && !pending.current) setActiveDeckId(item.id);
+                }}
+              >
                 <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.meta}>
+                <Text style={styles.body}>
                   {t('manage.cardCount', {
                     count: item.cards.length,
                     plural: item.cards.length === 1 ? '' : 's',
                   })}
                 </Text>
               </Pressable>
-
-              <View style={styles.actions}>
-                <Pressable style={styles.btn} onPress={() => openRename(item)}>
-                  <Text style={styles.btnText}>{t('manage.rename')}</Text>
-                </Pressable>
-                <Pressable style={styles.btnWarn} onPress={() => confirmReset(item)}>
-                  <Text style={styles.btnText}>{t('manage.reset')}</Text>
-                </Pressable>
-                <Pressable style={styles.btnDanger} onPress={() => confirmDelete(item)}>
-                  <Text style={styles.btnText}>{t('manage.delete')}</Text>
-                </Pressable>
+              <View style={[styles.actions, fontScale > 1.3 && styles.stacked]}>
+                <Action
+                  label={t('manage.rename')}
+                  accessibilityLabel={`${t('manage.rename')}: ${item.name}`}
+                  disabled={blocked}
+                  onPress={() => openRename(item)}
+                />
+                <Action
+                  label={t('manage.reset')}
+                  accessibilityLabel={`${t('manage.reset')}: ${item.name}`}
+                  disabled={blocked}
+                  onPress={() => confirm(item, 'reset')}
+                  danger
+                />
+                <Action
+                  label={t('manage.delete')}
+                  accessibilityLabel={`${t('manage.delete')}: ${item.name}`}
+                  disabled={blocked}
+                  onPress={() => confirm(item, 'delete')}
+                  danger
+                />
               </View>
             </View>
           )}
-          ListEmptyComponent={<Text style={styles.sub}>{t('manage.empty')}</Text>}
         />
-      </View>
-
-      <Modal
-        visible={renameOpen}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setRenameOpen(false)}
-      >
-        <View style={styles.modalBackdrop}>
+      )}
+      <Modal visible={renameOpen} transparent animationType="fade" onRequestClose={closeRename}>
+        <KeyboardAvoidingView
+          style={styles.modalBackdrop}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
           <View style={styles.modalBody}>
-            <Text style={styles.modalTitle}>{t('manage.renameDeck')}</Text>
-            <TextInput
-              value={renameValue}
-              onChangeText={setRenameValue}
-              placeholder={t('manage.deckNamePlaceholder')}
-              placeholderTextColor={colors.textSecondary}
-              style={styles.input}
-              autoFocus
-            />
-            <View style={styles.modalRow}>
-              <Pressable
-                style={[styles.modalBtn, styles.modalBtnGhost]}
-                onPress={() => setRenameOpen(false)}
-              >
-                <Text style={[styles.modalBtnText, { color: '#cbd5e1' }]}>
-                  {t('common.cancel')}
+            <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.header}>
+              <Text accessibilityRole="header" style={styles.h1}>
+                {t('manage.renameDeck')}
+              </Text>
+              {busy && (
+                <Text accessibilityLiveRegion="polite" style={styles.body}>
+                  {t('editing.saving')}
                 </Text>
-              </Pressable>
-              <Pressable style={[styles.modalBtn, styles.modalBtnPrimary]} onPress={submitRename}>
-                <Text style={styles.modalBtnText}>{t('common.save')}</Text>
-              </Pressable>
-            </View>
+              )}
+              {renameError && (
+                <>
+                  <Text accessibilityRole="alert" style={styles.body}>
+                    {t('editing.saveError')}
+                  </Text>
+                  <Action
+                    label={t('editing.retry')}
+                    disabled={busy}
+                    onPress={() => {
+                      if (pending.current) void persistRename(pending.current);
+                    }}
+                  />
+                  <Text style={styles.body}>{t('editing.uncertain')}</Text>
+                </>
+              )}
+              <TextInput
+                accessibilityLabel={t('manage.deckNamePlaceholder')}
+                editable={!blocked}
+                value={renameValue}
+                onChangeText={(value) => {
+                  if (!writing.current && !pending.current) setRenameValue(value);
+                }}
+                placeholder={t('manage.deckNamePlaceholder')}
+                placeholderTextColor={colors.textSecondary}
+                style={styles.input}
+                multiline
+                autoFocus
+              />
+              <Action label={t('common.cancel')} disabled={busy} onPress={closeRename} />
+              <Action label={t('common.save')} disabled={blocked} onPress={submitRename} />
+            </ScrollView>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg },
-  content: { flex: 1, padding: spacing(2) },
-  header: { gap: spacing(1), marginBottom: spacing(1.25) },
-  h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
-  sub: { color: colors.textSecondary },
-  homeBtn: {
-    alignSelf: 'flex-end',
-    backgroundColor: '#0b1220',
+  content: { padding: 20, paddingBottom: 40 },
+  header: { gap: 12, marginBottom: 16 },
+  h1: { color: colors.textPrimary, fontSize: 24, fontWeight: '900' },
+  body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
+  input: {
+    minHeight: 48,
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: '#334155',
-    borderRadius: 14,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  homeBtnText: { color: '#e2e8f0', fontWeight: '900', fontSize: 13 },
-  search: {
-    backgroundColor: '#0b1220',
-    borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: colors.border,
     borderRadius: 12,
-    padding: spacing(1.25),
+    padding: 14,
     color: colors.textPrimary,
-    marginBottom: spacing(1.5),
+    fontSize: 16,
+    textAlignVertical: 'top',
   },
   row: {
     backgroundColor: colors.surfaceElevated,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: colors.border,
     borderRadius: 12,
-    padding: spacing(1.25),
-    marginBottom: 10,
-    gap: 10,
+    padding: 14,
+    marginBottom: 12,
+    gap: 12,
   },
-  name: { color: colors.textPrimary, fontWeight: '900', fontSize: 16 },
-  meta: { color: colors.textSecondary, marginTop: 2 },
-  actions: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
-  btn: {
-    backgroundColor: '#0b1220',
+  name: { color: colors.textPrimary, fontWeight: '800', fontSize: 18 },
+  select: { minHeight: 48, justifyContent: 'center' },
+  actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  stacked: { flexDirection: 'column', alignItems: 'stretch' },
+  button: {
+    minHeight: 48,
+    padding: 14,
+    borderRadius: 12,
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: '#1f2937',
-    borderRadius: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
+    borderColor: colors.border,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  btnWarn: {
-    backgroundColor: '#0b1220',
-    borderWidth: 1,
-    borderColor: '#f59e0b',
-    borderRadius: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-  },
-  btnDanger: {
-    backgroundColor: '#0b1220',
-    borderWidth: 1,
-    borderColor: '#ef4444',
-    borderRadius: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-  },
-  btnText: { color: '#e2e8f0', fontWeight: '900' },
-
+  buttonText: { color: colors.textPrimary, fontSize: 16, fontWeight: '700' },
+  danger: { borderColor: '#f59e0b' },
+  disabled: { opacity: 0.6 },
   modalBackdrop: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.6)',
     justifyContent: 'center',
-    padding: spacing(2),
+    padding: 20,
   },
-  modalBody: { backgroundColor: colors.surfaceElevated, borderRadius: 14, padding: spacing(2) },
-  modalTitle: { color: colors.textPrimary, fontWeight: '900', marginBottom: spacing(1) },
-  input: {
-    backgroundColor: '#0b1220',
-    color: colors.textPrimary,
-    borderRadius: 12,
-    padding: spacing(1.25),
-    borderWidth: 1,
-    borderColor: '#1f2937',
+  modalBody: {
+    maxHeight: '85%',
+    backgroundColor: colors.surfaceElevated,
+    borderRadius: 14,
+    padding: 16,
   },
-  modalRow: { flexDirection: 'row', gap: 10, marginTop: spacing(1.25) },
-  modalBtn: { flex: 1, borderRadius: 12, paddingVertical: 12, alignItems: 'center' },
-  modalBtnGhost: { backgroundColor: '#0b1220', borderWidth: 1, borderColor: '#1f2937' },
-  modalBtnPrimary: { backgroundColor: '#2563eb' },
-  modalBtnText: { color: 'white', fontWeight: '900' },
-
-  reviewBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: 'rgba(239,68,68,0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(239,68,68,0.4)',
-    borderRadius: 12,
-    padding: spacing(1.5),
-    marginBottom: spacing(1.5),
-  },
-  reviewBannerText: { flex: 1 },
-  reviewBannerTitle: { color: '#fca5a5', fontWeight: '900', fontSize: 15, marginBottom: 2 },
-  reviewBannerSub: { color: '#64748b', fontSize: 13 },
-  reviewBannerArrow: { color: '#fca5a5', fontWeight: '900', fontSize: 20 },
 });

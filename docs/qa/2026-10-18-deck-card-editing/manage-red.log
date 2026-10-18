@@ -1,0 +1,222 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/ManageDecksScreen.test.tsx
+
+FAIL __tests__/screens/ManageDecksScreen.test.tsx
+  ✕ keeps one rename and its draft across pending writes and live font changes (18 ms)
+  ✕ retains rejected rename text for exact retry and preserves the list query (1016 ms)
+  ✕ handles failed confirmed Eliminar and ignores duplicate confirmation callbacks (6 ms)
+  ✕ handles failed confirmed Reiniciar and ignores duplicate confirmation callbacks (6 ms)
+  ManageDecksScreen navigation
+    ✓ navigates directly to the Home tab (240 ms)
+    ✓ opens the translation review screen (3 ms)
+
+  ● keeps one rename and its draft across pending writes and live font changes
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 2
+
+      61 |   fireEvent.press(ui.getByText('Guardar'));
+      62 |   fireEvent.press(ui.getByText('Guardar'));
+    > 63 |   expect(rename).toHaveBeenCalledTimes(1);
+         |                  ^
+      64 |   act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
+      65 |   expect(ui.getByDisplayValue('Nombre nuevo').props.editable).toBe(false);
+      66 |   expect(ui.getByRole('button', { name: 'Cancelar', disabled: true })).toBeTruthy();
+
+      at Object.toHaveBeenCalledTimes (__tests__/screens/ManageDecksScreen.test.tsx:63:18)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● retains rejected rename text for exact retry and preserves the list query
+
+    disk full
+
+      71 |
+      72 | test('retains rejected rename text for exact retry and preserves the list query', async () => {
+    > 73 |   const rename = jest.fn().mockRejectedValueOnce(new Error('disk full')).mockResolvedValue(undefined);
+         |                                                  ^
+      74 |   mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [oneDeck], renameDeck: rename });
+      75 |   const ui = render(<ManageDecksScreen />);
+      76 |   fireEvent.changeText(ui.getByPlaceholderText('Buscar decks...'), 'Prueba');
+
+      at Object.<anonymous> (__tests__/screens/ManageDecksScreen.test.tsx:73:50)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● retains rejected rename text for exact retry and preserves the list query
+
+    Unable to find an element with text: No se pudo confirmar el guardado. Tu borrador se conserva. Reintenta el mismo guardado.
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mInicio[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mGestionar Decks[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mRenombra, elimina y reinicia el progreso.[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m🚩 Revisar Traducciones[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mMarca tarjetas con traducciones malas para corregirlas[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0m→[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<TextInput[39m
+          [33mplaceholder[39m=[32m"Buscar decks..."[39m
+          [33mvalue[39m=[32m"Prueba"[39m
+        [36m/>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mPrueba[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0m0 tarjetas[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mRenombrar[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mReiniciar[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mEliminar[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+      [36m<Modal>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mRenombrar deck[0m
+            [36m</Text>[39m
+            [36m<TextInput[39m
+              [33mplaceholder[39m=[32m"Nombre del deck"[39m
+              [33mvalue[39m=[32m"Nombre nuevo"[39m
+            [36m/>[39m
+            [36m<View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mCancelar[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mGuardar[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</Modal>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      78 |   fireEvent.changeText(ui.getByPlaceholderText('Nombre del deck'), 'Nombre nuevo');
+      79 |   fireEvent.press(ui.getByText('Guardar'));
+    > 80 |   await ui.findByText('No se pudo confirmar el guardado. Tu borrador se conserva. Reintenta el mismo guardado.');
+         |            ^
+      81 |   expect(ui.getByDisplayValue('Nombre nuevo')).toBeTruthy();
+      82 |   fireEvent.press(ui.getByRole('button', { name: 'Reintentar guardado' }));
+      83 |   await waitFor(() => expect(ui.queryByDisplayValue('Nombre nuevo')).toBeNull());
+
+      at Object.findByText (__tests__/screens/ManageDecksScreen.test.tsx:80:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● handles failed confirmed Eliminar and ignores duplicate confirmation callbacks
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 2
+
+      94 |   const confirm = buttons.find((button: any) => button.style === 'destructive').onPress;
+      95 |   await act(async () => { await Promise.allSettled([confirm(), confirm()]); });
+    > 96 |   expect(operation).toHaveBeenCalledTimes(1);
+         |                     ^
+      97 |   await ui.findByText('No se pudo confirmar el cambio. Revisa el deck antes de intentarlo otra vez.');
+      98 |   expect(ui.getByRole('button', { name: 'Inicio', disabled: false })).toBeTruthy();
+      99 | });
+
+      at toHaveBeenCalledTimes (__tests__/screens/ManageDecksScreen.test.tsx:96:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● handles failed confirmed Reiniciar and ignores duplicate confirmation callbacks
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 2
+
+      94 |   const confirm = buttons.find((button: any) => button.style === 'destructive').onPress;
+      95 |   await act(async () => { await Promise.allSettled([confirm(), confirm()]); });
+    > 96 |   expect(operation).toHaveBeenCalledTimes(1);
+         |                     ^
+      97 |   await ui.findByText('No se pudo confirmar el cambio. Revisa el deck antes de intentarlo otra vez.');
+      98 |   expect(ui.getByRole('button', { name: 'Inicio', disabled: false })).toBeTruthy();
+      99 | });
+
+      at toHaveBeenCalledTimes (__tests__/screens/ManageDecksScreen.test.tsx:96:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 2 passed, 6 total
+Snapshots:   0 total
+Time:        2.067 s
+Ran all test suites within paths "__tests__/screens/ManageDecksScreen.test.tsx".

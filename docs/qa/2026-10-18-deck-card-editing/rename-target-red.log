@@ -1,0 +1,79 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/context/DeckContext.test.tsx -t rename rejects
+
+FAIL __tests__/context/DeckContext.test.tsx
+  ✕ rename rejects a removed target rather than confirming a no-op (254 ms)
+  ○ skipped keeps provider state unchanged when the grade journal cannot be saved
+  ○ skipped keeps concurrent favorite toggles and review/flag patches without losing grades
+  ○ skipped offers a retry after startup merge fails without discarding stored decks
+  ○ skipped keeps corrupt startup decks and shows a recovery error instead of reseeding
+  ○ skipped regional provider queues retain due reviews and enforce the stored daily new-card budget
+  DeckProvider initialization
+    ○ skipped sets ready=true after mounting
+    ○ skipped seeds from ALL_DECKS when storage is empty
+    ○ skipped does not duplicate existing seed decks on re-mount
+    ○ skipped merges a new seed deck without removing existing user data
+    ○ skipped refreshes updated seed card content while preserving stored progress
+    ○ skipped preserves reviewed translation edits during seed content refreshes
+    ○ skipped sets activeDeckId to first deck
+  getStudyBatch
+    ○ skipped returns due cards from the active deck
+    ○ skipped respects size parameter
+  recordAnswer
+    ○ skipped updates card progress fields after grading
+    ○ skipped records the reviewed card as a seen word for quiz sessions
+    ○ skipped updates the study streak when a card is reviewed
+    ○ skipped does nothing for an unknown cardId
+    ○ skipped updates a matching card even when it is not in the active deck
+  toggleFavorite
+    ○ skipped sets favorite=true on first toggle
+    ○ skipped sets favorite=false on second toggle
+  updateCardReview
+    ○ skipped updates translation fields and review status for a matching card
+  createDeck
+    ○ skipped adds a new deck with an empty cards array
+    ○ skipped persists the new deck to AsyncStorage
+  deleteDeck
+    ○ skipped removes the deck from state and storage
+  resetDeckProgress
+    ○ skipped resets all card progress in the target deck
+  custom create intent recovery
+    ○ skipped rejects adding a card when the selected deck no longer exists
+    ○ skipped retries the same card once after journal recovery without resetting later edits or grading
+    ○ skipped creates distinct decks when independent intents share a name, clock and random sample
+    ○ skipped reuses a supplied deck intent without replacing cards or subsequent rename
+
+  ● rename rejects a removed target rather than confirming a no-op
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: undefined
+
+      849 |   renderWithProvider(<Consumer onReady={(value) => { current = value; }} />);
+      850 |   await waitFor(() => expect(current?.ready).toBe(true));
+    > 851 |   await act(async () => { await expect(current.renameDeck('removed-target', 'New name')).rejects.toThrow(); });
+          |                                 ^
+      852 |   expect(current.decks[0].name).toBe('Seed Deck');
+      853 | });
+      854 |
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at expect (__tests__/context/DeckContext.test.tsx:851:33)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at callback (node_modules/@testing-library/react-native/src/act.ts:31:24)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at Object.<anonymous> (__tests__/context/DeckContext.test.tsx:851:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 30 skipped, 31 total
+Snapshots:   0 total
+Time:        1.117 s, estimated 2 s
+Ran all test suites within paths "__tests__/context/DeckContext.test.tsx".

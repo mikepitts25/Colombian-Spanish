@@ -1,0 +1,50 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/context/DeckContext.test.tsx
+
+PASS __tests__/context/DeckContext.test.tsx
+  ✓ keeps provider state unchanged when the grade journal cannot be saved (71 ms)
+  ✓ keeps concurrent favorite toggles and review/flag patches without losing grades (56 ms)
+  ✓ offers a retry after startup merge fails without discarding stored decks (59 ms)
+  ✓ keeps corrupt startup decks and shows a recovery error instead of reseeding (53 ms)
+  ✓ regional provider queues retain due reviews and enforce the stored daily new-card budget (54 ms)
+  DeckProvider initialization
+    ✓ sets ready=true after mounting (264 ms)
+    ✓ seeds from ALL_DECKS when storage is empty (51 ms)
+    ✓ does not duplicate existing seed decks on re-mount (52 ms)
+    ✓ merges a new seed deck without removing existing user data (53 ms)
+    ✓ refreshes updated seed card content while preserving stored progress (54 ms)
+    ✓ preserves reviewed translation edits during seed content refreshes (54 ms)
+    ✓ sets activeDeckId to first deck (54 ms)
+  getStudyBatch
+    ✓ returns due cards from the active deck (53 ms)
+    ✓ respects size parameter (54 ms)
+  recordAnswer
+    ✓ updates card progress fields after grading (59 ms)
+    ✓ records the reviewed card as a seen word for quiz sessions (58 ms)
+    ✓ updates the study streak when a card is reviewed (56 ms)
+    ✓ does nothing for an unknown cardId (53 ms)
+    ✓ updates a matching card even when it is not in the active deck (55 ms)
+  toggleFavorite
+    ✓ sets favorite=true on first toggle (56 ms)
+    ✓ sets favorite=false on second toggle (54 ms)
+  updateCardReview
+    ✓ updates translation fields and review status for a matching card (54 ms)
+  createDeck
+    ✓ adds a new deck with an empty cards array (55 ms)
+    ✓ persists the new deck to AsyncStorage (53 ms)
+  deleteDeck
+    ✓ removes the deck from state and storage (52 ms)
+  resetDeckProgress
+    ✓ resets all card progress in the target deck (53 ms)
+  custom create intent recovery
+    ✓ rejects adding a card when the selected deck no longer exists (67 ms)
+    ✓ retries the same card once after journal recovery without resetting later edits or grading (60 ms)
+    ✓ creates distinct decks when independent intents share a name, clock and random sample (54 ms)
+    ✓ reuses a supplied deck intent without replacing cards or subsequent rename (58 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       30 passed, 30 total
+Snapshots:   0 total
+Time:        2.697 s, estimated 3 s
+Ran all test suites within paths "__tests__/context/DeckContext.test.tsx".

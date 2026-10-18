@@ -1,0 +1,144 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/AddCardScreen.test.tsx -t can return
+
+FAIL __tests__/screens/AddCardScreen.test.tsx
+  ✕ can return to the retained draft after a target disappears without automatically submitting another create (321 ms)
+  ○ skipped keeps one pending card intent and blocks edits through live resizing until confirmed saved
+  ○ skipped retains the exact failed card payload and identity for retry instead of losing or duplicating it
+  ○ skipped blocks missing selected deck without discarding entered card fields
+  ○ skipped new-deck retry retains one identity and modal draft through failure and resizing
+  AddCardScreen localization
+    ○ skipped renders Add Card labels in English by default
+    ○ skipped renders Add Card labels in Spanish when UI language is Spanish
+
+  ● can return to the retained draft after a target disappears without automatically submitting another create
+
+    Unable to find an element with role: button, name: Return to editing
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<Text[39m
+              [33maccessibilityRole[39m=[32m"header"[39m
+            [36m>[39m
+              [0mAdd new card[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<Text[39m
+                [33maccessibilityRole[39m=[32m"alert"[39m
+              [36m>[39m
+                [0mCould not confirm the save. Your draft is kept. Retry the same save.[0m
+              [36m</Text>[39m
+              [36m<View[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mRetry save[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<Text>[39m
+              [0mDeck[0m
+            [36m</Text>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Choose a deck"[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessibilityValue[39m=[32m{
+                {
+                  "text": "Saludos",
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mSaludos[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mFront (Colombian Spanish)[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33maccessibilityLabel[39m=[32m"Front (Colombian Spanish)"[39m
+                [33mplaceholder[39m=[32m"¿Qué más pues?"[39m
+                [33mvalue[39m=[32m"¿Listo?"[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mBack (English)[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33maccessibilityLabel[39m=[32m"Back (English)"[39m
+                [33mplaceholder[39m=[32m"What’s up?"[39m
+                [33mvalue[39m=[32m"Ready?"[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mExample sentence (optional)[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33maccessibilityLabel[39m=[32m"Example sentence (optional)"[39m
+                [33mplaceholder[39m=[32m"¡Qué chimba de concierto!"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mTags (comma-separated)[0m
+              [36m</Text>[39m
+              [36m<TextInput[39m
+                [33maccessibilityLabel[39m=[32m"Tags (comma-separated)"[39m
+                [33mplaceholder[39m=[32m"slang, Medellín"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mSave card ✓[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      142 |   fireEvent.press(ui.getByText('Save card ✓'));
+      143 |   await ui.findByText('Could not confirm the save. Your draft is kept. Retry the same save.');
+    > 144 |   fireEvent.press(ui.getByRole('button', { name: 'Return to editing' }));
+          |                      ^
+      145 |   expect(ui.getByDisplayValue('¿Listo?').props.editable).toBe(true);
+      146 |   expect(save).toHaveBeenCalledTimes(1);
+      147 |   expect(ui.queryByRole('button', { name: 'Retry save' })).toBeNull();
+
+      at Object.getByRole (__tests__/screens/AddCardScreen.test.tsx:144:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 6 skipped, 7 total
+Snapshots:   0 total
+Time:        1.275 s, estimated 2 s
+Ran all test suites within paths "__tests__/screens/AddCardScreen.test.tsx".

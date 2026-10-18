@@ -1,0 +1,13 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/ManageDecksScreen.test.tsx __tests__/screens/AddCardScreen.test.tsx __tests__/context/DeckContext.test.tsx
+
+PASS __tests__/context/DeckContext.test.tsx
+PASS __tests__/screens/ManageDecksScreen.test.tsx
+PASS __tests__/screens/AddCardScreen.test.tsx
+
+Test Suites: 3 passed, 3 total
+Tests:       44 passed, 44 total
+Snapshots:   0 total
+Time:        4.455 s
+Ran all test suites within paths "__tests__/screens/ManageDecksScreen.test.tsx", "__tests__/screens/AddCardScreen.test.tsx", "__tests__/context/DeckContext.test.tsx".

@@ -237,6 +237,15 @@ export const translations = {
     'quiz.retrySave': 'Intentar guardar de nuevo',
     'quiz.feedback.correct': 'Correcto',
     'quiz.feedback.answer': 'Respuesta: {answer}',
+    'editing.saving': 'Guardando…',
+    'editing.saveError':
+      'No se pudo confirmar el guardado. Tu borrador se conserva. Reintenta el mismo guardado.',
+    'editing.retry': 'Reintentar guardado',
+    'editing.uncertain':
+      'El cambio puede haberse guardado. Revisa el deck antes de iniciar un guardado diferente.',
+    'editing.editDraft': 'Volver a editar',
+    'manage.operationError':
+      'No se pudo confirmar el cambio. Revisa el deck antes de intentarlo otra vez.',
     'addCard.title': 'Agregar tarjeta',
     'addCard.deck': 'Deck',
     'addCard.selectDeck': 'Selecciona un deck',
@@ -884,6 +893,13 @@ export const translations = {
     'quiz.retrySave': 'Try saving again',
     'quiz.feedback.correct': 'Correct',
     'quiz.feedback.answer': 'Answer: {answer}',
+    'editing.saving': 'Saving…',
+    'editing.saveError': 'Could not confirm the save. Your draft is kept. Retry the same save.',
+    'editing.retry': 'Retry save',
+    'editing.uncertain':
+      'The change may already be saved. Check the deck before starting a different save.',
+    'editing.editDraft': 'Return to editing',
+    'manage.operationError': 'Could not confirm the change. Check the deck before trying again.',
     'addCard.title': 'Add new card',
     'addCard.deck': 'Deck',
     'addCard.selectDeck': 'Select a deck',

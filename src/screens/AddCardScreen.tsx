@@ -1,14 +1,56 @@
-import React, { useMemo, useState } from 'react';
-import { Alert, Modal, Pressable, StyleSheet, Text, TextInput, View, FlatList } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Alert,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  FlatList,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { usePreventRemove } from '@react-navigation/native';
 import { colors, spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
-import { Deck, FlashCard } from '../types';
+import { FlashCard } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { createLocalId } from '../utils/localId';
+
+type NewCard = Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'>;
+type CreateIntent =
+  | { kind: 'card'; deckId: string; deckName: string; card: NewCard }
+  | { kind: 'deck'; name: string; id: string };
+function Action({
+  label,
+  onPress,
+  disabled = false,
+}: {
+  label: string;
+  onPress: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      onPress={onPress}
+      style={[styles.action, disabled && styles.disabled]}
+    >
+      <Text style={styles.actionText}>{label}</Text>
+    </Pressable>
+  );
+}
 
 export default function AddCardScreen() {
-  const { decks, activeDeckId, addCardToDeck, createDeck } = useDeck();
+  const { ready, decks, activeDeckId, addCardToDeck, createDeck } = useDeck();
   const { t } = useLanguage();
+  const { fontScale } = useWindowDimensions();
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
   const [example, setExample] = useState('');
@@ -16,126 +58,253 @@ export default function AddCardScreen() {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [newDeckOpen, setNewDeckOpen] = useState(false);
   const [newDeckName, setNewDeckName] = useState('');
-
   const [selectedDeckId, setSelectedDeckId] = useState<string | undefined>(activeDeckId);
+  const [pendingSave, setPendingSave] = useState<CreateIntent | null>(null);
+  const pending = useRef<CreateIntent | null>(null);
+  const writing = useRef(false);
+  const mounted = useRef(true);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const content = useRef<ScrollView>(null);
+  const selectedDeck = decks.find((deck) => deck.id === (selectedDeckId ?? activeDeckId));
+  const blocked = pendingSave !== null;
+  usePreventRemove(blocked, () => {});
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
-  // 🔧 FIX: annotate types so TS doesn't complain about implicit any for "d"
-  const selectedDeck = useMemo<Deck | undefined>(
-    () => decks.find((d: Deck) => d.id === selectedDeckId),
-    [decks, selectedDeckId],
-  );
-
-  async function save() {
-    if (!front.trim() || !back.trim()) {
+  async function persist(intent: CreateIntent) {
+    if (writing.current) return;
+    writing.current = true;
+    setSaving(true);
+    setSaveError(false);
+    try {
+      if (intent.kind === 'card') {
+        await addCardToDeck(intent.deckId, intent.card);
+        if (!mounted.current) return;
+        setFront('');
+        setBack('');
+        setExample('');
+        setTags('');
+        Alert.alert(
+          t('addCard.alert.added.title'),
+          t('addCard.alert.added.message', { deck: intent.deckName }),
+        );
+      } else {
+        const deck = await createDeck(intent.name, undefined, intent.id);
+        if (!deck) throw new Error('Deck was not confirmed');
+        if (!mounted.current) return;
+        setSelectedDeckId(deck.id);
+        setNewDeckName('');
+        setNewDeckOpen(false);
+      }
+      pending.current = null;
+      setPendingSave(null);
+    } catch {
+      if (mounted.current) {
+        setSaveError(true);
+        content.current?.scrollTo({ y: 0, animated: false });
+      }
+    } finally {
+      writing.current = false;
+      if (mounted.current) setSaving(false);
+    }
+  }
+  function begin(intent: CreateIntent) {
+    if (pending.current || !ready) return;
+    pending.current = intent;
+    setPendingSave(intent);
+    void persist(intent);
+  }
+  function save() {
+    if (pending.current || !ready) return;
+    if (!front.trim() || !back.trim())
       return Alert.alert(t('addCard.alert.missing.title'), t('addCard.alert.missing.message'));
-    }
-    if (!selectedDeckId)
+    if (!selectedDeck)
       return Alert.alert(t('addCard.alert.pickDeck.title'), t('addCard.alert.pickDeck.message'));
-    const newCard: Omit<FlashCard, 'createdAt' | 'due' | 'reps' | 'interval' | 'ease'> = {
-      id: String(Date.now()),
-      front,
-      back,
-      example: example || undefined,
-      tags: tags ? tags.split(',').map((t) => t.trim()) : [],
-    } as any;
-    await addCardToDeck(selectedDeckId, newCard);
-    setFront('');
-    setBack('');
-    setExample('');
-    setTags('');
-    Alert.alert(
-      t('addCard.alert.added.title'),
-      t('addCard.alert.added.message', { deck: selectedDeck?.name ?? 'deck' }),
-    );
+    begin({
+      kind: 'card',
+      deckId: selectedDeck.id,
+      deckName: selectedDeck.name,
+      card: {
+        id: createLocalId('card'),
+        front: front.trim(),
+        back: back.trim(),
+        example: example.trim() || undefined,
+        tags: tags
+          .split(',')
+          .map((tag) => tag.trim())
+          .filter(Boolean),
+      },
+    });
   }
+  const status = (
+    <>
+      {saving && (
+        <Text accessibilityLiveRegion="polite" style={styles.body}>
+          {t('editing.saving')}
+        </Text>
+      )}
+      {saveError && (
+        <View>
+          <Text accessibilityRole="alert" style={styles.body}>
+            {t('editing.saveError')}
+          </Text>
+          <Action
+            label={t('editing.retry')}
+            disabled={saving}
+            onPress={() => {
+              if (pending.current) void persist(pending.current);
+            }}
+          />
 
-  async function createNewDeck() {
-    const name = newDeckName.trim();
-    if (!name) return;
-    const d = await createDeck(name);
-    if (d) {
-      setSelectedDeckId(d.id);
-      setNewDeckName('');
-      setNewDeckOpen(false);
-    }
-  }
-
+          <Text style={styles.body}>{t('editing.uncertain')}</Text>
+          <Action
+            label={t('editing.editDraft')}
+            disabled={saving}
+            onPress={() => {
+              if (writing.current) return;
+              pending.current = null;
+              setPendingSave(null);
+              setSaveError(false);
+            }}
+          />
+        </View>
+      )}
+    </>
+  );
+  const fields = [
+    {
+      label: t('addCard.front'),
+      placeholder: t('addCard.frontPlaceholder'),
+      value: front,
+      setter: setFront,
+    },
+    {
+      label: t('addCard.back'),
+      placeholder: t('addCard.backPlaceholder'),
+      value: back,
+      setter: setBack,
+    },
+    {
+      label: t('addCard.example'),
+      placeholder: t('addCard.examplePlaceholder'),
+      value: example,
+      setter: setExample,
+    },
+    {
+      label: t('addCard.tags'),
+      placeholder: t('addCard.tagsPlaceholder'),
+      value: tags,
+      setter: setTags,
+    },
+  ];
   return (
-    <SafeAreaView style={styles.wrap}>
-      <Text style={styles.h1}>{t('addCard.title')}</Text>
-      <Text style={styles.label}>{t('addCard.deck')}</Text>
-      <Pressable style={styles.select} onPress={() => setPickerOpen(true)}>
-        <Text style={styles.selectText}>{selectedDeck?.name ?? t('addCard.selectDeck')}</Text>
-      </Pressable>
-
-      <View style={styles.field}>
-        <Text style={styles.label}>{t('addCard.front')}</Text>
-        <TextInput
-          value={front}
-          onChangeText={setFront}
-          placeholder={t('addCard.frontPlaceholder')}
-          placeholderTextColor={colors.textSecondary}
-          style={styles.input}
-        />
-      </View>
-      <View style={styles.field}>
-        <Text style={styles.label}>{t('addCard.back')}</Text>
-        <TextInput
-          value={back}
-          onChangeText={setBack}
-          placeholder={t('addCard.backPlaceholder')}
-          placeholderTextColor={colors.textSecondary}
-          style={styles.input}
-        />
-      </View>
-      <View style={styles.field}>
-        <Text style={styles.label}>{t('addCard.example')}</Text>
-        <TextInput
-          value={example}
-          onChangeText={setExample}
-          placeholder={t('addCard.examplePlaceholder')}
-          placeholderTextColor={colors.textSecondary}
-          style={styles.input}
-        />
-      </View>
-      <View style={styles.field}>
-        <Text style={styles.label}>{t('addCard.tags')}</Text>
-        <TextInput
-          value={tags}
-          onChangeText={setTags}
-          placeholder={t('addCard.tagsPlaceholder')}
-          placeholderTextColor={colors.textSecondary}
-          style={styles.input}
-        />
-      </View>
-
-      <Text onPress={save} style={styles.save}>
-        {t('addCard.save')}
-      </Text>
-
-      {/* Deck picker modal */}
+    <SafeAreaView key={fontScale} style={styles.wrap}>
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView
+          ref={content}
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Text accessibilityRole="header" style={styles.h1}>
+            {t('addCard.title')}
+          </Text>
+          {!ready && <Text style={styles.body}>{t('common.loading')}</Text>}
+          {!newDeckOpen && status}
+          <Text style={styles.label}>{t('addCard.deck')}</Text>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t('addCard.chooseDeck')}
+            accessibilityValue={{ text: selectedDeck?.name ?? t('addCard.selectDeck') }}
+            accessibilityState={{ disabled: blocked || !ready }}
+            disabled={blocked || !ready}
+            style={styles.select}
+            onPress={() => {
+              if (!pending.current) setPickerOpen(true);
+            }}
+          >
+            <Text style={styles.body}>{selectedDeck?.name ?? t('addCard.selectDeck')}</Text>
+          </Pressable>
+          {fields.map((field) => (
+            <View key={field.label} style={styles.field}>
+              <Text style={styles.label}>{field.label}</Text>
+              <TextInput
+                accessibilityLabel={field.label}
+                value={field.value}
+                editable={!blocked && ready}
+                onChangeText={(value) => {
+                  if (!pending.current) field.setter(value);
+                }}
+                placeholder={field.placeholder}
+                placeholderTextColor={colors.textSecondary}
+                style={styles.input}
+                multiline
+              />
+            </View>
+          ))}
+          <Action label={t('addCard.save')} onPress={save} disabled={blocked || !ready} />
+        </ScrollView>
+      </KeyboardAvoidingView>
       <Modal
         visible={pickerOpen}
         transparent
         animationType="fade"
-        onRequestClose={() => setPickerOpen(false)}
+        onRequestClose={() => {
+          if (!pending.current) setPickerOpen(false);
+        }}
       >
         <View style={styles.modalBackdrop}>
           <View style={styles.modalBody}>
-            <Text style={styles.modalTitle}>{t('addCard.chooseDeck')}</Text>
             <FlatList
               data={decks}
-              keyExtractor={(d: Deck) => d.id}
-              renderItem={({ item }: { item: Deck }) => (
+              keyExtractor={(deck) => deck.id}
+              keyboardShouldPersistTaps="handled"
+              ListHeaderComponent={
+                <>
+                  <Text accessibilityRole="header" style={styles.modalTitle}>
+                    {t('addCard.chooseDeck')}
+                  </Text>
+                  <Action
+                    label={t('addCard.newDeck')}
+                    disabled={blocked}
+                    onPress={() => {
+                      if (pending.current) return;
+                      setPickerOpen(false);
+                      setNewDeckOpen(true);
+                    }}
+                  />
+                  <Text style={styles.body}>{t('addCard.newDeckSub')}</Text>
+                  <Action
+                    label={t('common.close')}
+                    disabled={blocked}
+                    onPress={() => {
+                      if (!pending.current) setPickerOpen(false);
+                    }}
+                  />
+                </>
+              }
+              renderItem={({ item }) => (
                 <Pressable
+                  accessibilityRole="radio"
+                  accessibilityLabel={item.name}
+                  accessibilityState={{ checked: item.id === selectedDeck?.id, disabled: blocked }}
+                  disabled={blocked}
                   style={styles.modalRow}
                   onPress={() => {
+                    if (pending.current) return;
                     setSelectedDeckId(item.id);
                     setPickerOpen(false);
                   }}
                 >
-                  <Text style={styles.modalRowTitle}>{item.name}</Text>
-                  <Text style={styles.modalRowSub}>
+                  <Text style={styles.label}>{item.name}</Text>
+                  <Text style={styles.body}>
                     {t('addCard.cardCount', {
                       count: item.cards.length,
                       plural: item.cards.length === 1 ? '' : 's',
@@ -143,110 +312,119 @@ export default function AddCardScreen() {
                   </Text>
                 </Pressable>
               )}
-              ListFooterComponent={
-                <Pressable
-                  style={[styles.modalRow, { borderTopColor: '#1f2937', borderTopWidth: 1 }]}
-                  onPress={() => {
-                    setPickerOpen(false);
-                    setNewDeckOpen(true);
-                  }}
-                >
-                  <Text style={[styles.modalRowTitle, { color: '#a7f3d0' }]}>
-                    {t('addCard.newDeck')}
-                  </Text>
-                  <Text style={[styles.modalRowSub, { color: '#6ee7b7' }]}>
-                    {t('addCard.newDeckSub')}
-                  </Text>
-                </Pressable>
-              }
             />
-            <Text onPress={() => setPickerOpen(false)} style={styles.modalClose}>
-              {t('common.close')}
-            </Text>
           </View>
         </View>
       </Modal>
-
-      {/* New deck modal */}
       <Modal
         visible={newDeckOpen}
         transparent
         animationType="fade"
-        onRequestClose={() => setNewDeckOpen(false)}
+        onRequestClose={() => {
+          if (!pending.current) setNewDeckOpen(false);
+        }}
       >
-        <View style={styles.modalBackdrop}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          style={styles.modalBackdrop}
+        >
           <View style={styles.modalBody}>
-            <Text style={styles.modalTitle}>{t('addCard.newDeckTitle')}</Text>
-            <TextInput
-              placeholder={t('addCard.newDeckPlaceholder')}
-              placeholderTextColor={colors.textSecondary}
-              value={newDeckName}
-              onChangeText={setNewDeckName}
-              style={styles.input}
-            />
-            <View style={{ flexDirection: 'row', gap: 8, marginTop: spacing(1) }}>
-              <Text
-                onPress={() => setNewDeckOpen(false)}
-                style={[styles.modalClose, { flex: 1, textAlign: 'center' }]}
-              >
-                {t('common.cancel')}
+            <ScrollView
+              keyboardShouldPersistTaps="handled"
+              contentContainerStyle={styles.modalContent}
+            >
+              <Text accessibilityRole="header" style={styles.modalTitle}>
+                {t('addCard.newDeckTitle')}
               </Text>
-              <Text onPress={createNewDeck} style={[styles.save, { flex: 1 }]}>
-                {t('common.create')}
-              </Text>
-            </View>
+              {newDeckOpen && status}
+              <TextInput
+                accessibilityLabel={t('addCard.newDeckPlaceholder')}
+                placeholder={t('addCard.newDeckPlaceholder')}
+                placeholderTextColor={colors.textSecondary}
+                value={newDeckName}
+                editable={!blocked}
+                onChangeText={(value) => {
+                  if (!pending.current) setNewDeckName(value);
+                }}
+                style={styles.input}
+                multiline
+              />
+              <Action
+                label={t('common.cancel')}
+                disabled={blocked}
+                onPress={() => {
+                  if (!pending.current) setNewDeckOpen(false);
+                }}
+              />
+              <Action
+                label={t('common.create')}
+                disabled={blocked || !newDeckName.trim()}
+                onPress={() => {
+                  if (newDeckName.trim())
+                    begin({ kind: 'deck', name: newDeckName.trim(), id: createLocalId('deck') });
+                }}
+              />
+            </ScrollView>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '800', marginBottom: spacing(2) },
-  field: { marginBottom: spacing(1.5) },
-  label: { color: colors.textPrimary, fontWeight: '700', marginBottom: 6 },
+  flex: { flex: 1 },
+  wrap: { flex: 1, backgroundColor: colors.bg },
+  content: { padding: spacing(2), paddingBottom: 40, gap: 12 },
+  h1: { color: colors.textPrimary, fontSize: 24, fontWeight: '800' },
+  field: { gap: 6 },
+  label: { color: colors.textPrimary, fontSize: 16, fontWeight: '700' },
+  body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
   input: {
-    backgroundColor: '#0b1220',
+    backgroundColor: colors.surface,
     color: colors.textPrimary,
     borderRadius: 12,
-    padding: spacing(1.5),
+    padding: 14,
+    fontSize: 16,
+    minHeight: 48,
+    textAlignVertical: 'top',
   },
-  save: {
-    backgroundColor: '#10b981',
-    color: '#052e2b',
-    padding: spacing(1.5),
-    textAlign: 'center',
+  action: {
+    minHeight: 48,
+    backgroundColor: colors.brand,
     borderRadius: 12,
-    fontWeight: '800',
-    marginTop: spacing(1),
+    padding: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 6,
   },
+  actionText: { color: colors.bg, fontSize: 16, fontWeight: '800' },
+  disabled: { opacity: 0.6 },
   select: {
-    backgroundColor: '#0b1220',
+    minHeight: 48,
+    backgroundColor: colors.surface,
     borderRadius: 12,
-    padding: spacing(1.5),
-    marginBottom: spacing(1.5),
+    padding: 14,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: colors.border,
   },
-  selectText: { color: colors.textPrimary, fontWeight: '700' },
-
   modalBackdrop: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.6)',
     justifyContent: 'center',
-    padding: spacing(2),
+    padding: 20,
   },
   modalBody: {
     backgroundColor: colors.surfaceElevated,
     borderRadius: 14,
-    padding: spacing(2),
-    maxHeight: '80%',
+    padding: 16,
+    maxHeight: '85%',
   },
-  modalTitle: { color: colors.textPrimary, fontWeight: '800', marginBottom: spacing(1) },
-  modalRow: { paddingVertical: spacing(1), borderBottomColor: '#1f2937', borderBottomWidth: 1 },
-  modalRowTitle: { color: colors.textPrimary, fontWeight: '700' },
-  modalRowSub: { color: colors.textSecondary },
-  modalClose: { color: colors.textSecondary, textAlign: 'center', marginTop: spacing(1.5) },
+  modalContent: { gap: 12 },
+  modalTitle: { color: colors.textPrimary, fontSize: 22, fontWeight: '800' },
+  modalRow: {
+    minHeight: 48,
+    paddingVertical: 14,
+    borderBottomColor: colors.border,
+    borderBottomWidth: 1,
+  },
 });
