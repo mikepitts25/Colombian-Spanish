@@ -1,6 +1,6 @@
 # Optional offline audio packs
 
-Status: proposed design for owner review, not implementation approval or shipped capability. Master task B06.4. Baseline `a87d7e0` (Expo SDK 57 / React Native 0.86). The owner has requested completion of actionable AI work, simulator validation and main integration. This document makes the new subsystem reviewable before implementation; no hosting, spend, publication or language acceptance is authorized by it.
+Status: proposed design for owner review, not implementation approval or shipped capability. Isolation instructions refreshed on 2026-10-18 against `4d31de5`; this does not change the proposed product scope. Master task B06.4. Baseline `a87d7e0` (Expo SDK 57 / React Native 0.86). The owner has requested completion of actionable AI work, simulator validation and main integration. This document makes the new subsystem reviewable before implementation; no hosting, spend, publication or language acceptance is authorized by it.
 
 ## Intended outcome
 
@@ -64,7 +64,7 @@ Automated tests must prove catalog rejection before filesystem/network work; cor
 
 UI tests cover bilingual status/actions, empty catalog, pending/failed/retry/cancel states, named controls and large text, with exactly-once actions. Production export inspection must prove that the local QA catalog/host and fixture controls are absent.
 
-Native simulator acceptance uses a dedicated clone and controlled local fixture server: visible size/progress, actual Cancel, retry, checksum mismatch, termination during transfer/commit, cold verification, server stopped after successful install, offline replay/Stop, remove and re-download. Read-only app-data inspection verifies actual files/receipts and unchanged learning keys. Native playback start is not evidence of physical audibility, pronunciation quality or supported audio routes.
+Native simulator acceptance uses a fresh `simctl create` device with the feature’s rebuilt authorized development-client binary installed (including the digest module), an explicit UUID, passing [own-container preflight](../../qa/SIMULATOR_PREFLIGHT.md) before and after first launch, and a controlled local fixture server. Do not clone or operate a quarantined alias. Keep actual source and destination paths distinct; collect direct source/destination learning-state hashes before fixture work and after their own cold launches. Import disposable learning fixtures only through the supported app UI, never by writing app-storage files. Verify these flows: visible size/progress, actual Cancel, retry, checksum mismatch, termination during transfer/commit, cold verification, server stopped after successful install, offline replay/Stop, remove and re-download. Read-only app-data inspection verifies actual files/receipts and unchanged learning keys. Native playback start is not evidence of physical audibility, pronunciation quality or supported audio routes.
 
 ## Work split and completion
 
