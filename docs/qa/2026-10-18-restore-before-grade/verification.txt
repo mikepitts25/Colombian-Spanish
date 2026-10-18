@@ -1,0 +1,18 @@
+Base: e7c59e0afeca1bd6fd76cd2efd98a28257af2650
+Scope: test-only audit, MASTER_PLAN.md and QA documentation; no runtime source changes.
+
+Focused StudyLifecycleIntegration: 22 passed / 22 total.
+Temporary mutation: bypass fresh stored daily-new-card limit in flashcardAnswer.ts.
+Mutation result: both new capped-restore cases fail; mutation reverted.
+Post-mutation focused run: 22 passed / 22 total.
+Full command: npm test -- --runInBand --watchman=false
+Full result: 101 suites passed; 1014 tests passed; 0 snapshots; exit 0.
+Typecheck: npm run typecheck; exit 0.
+Lint: npm run lint; exit 0.
+Formatting: npm run format:check; all matched files use Prettier style; exit 0.
+Diff whitespace: git diff --check; exit 0.
+Native simulator: not run; software audit only.
+
+Previous main e7c59e0 CI: 39110422406 success; board deployment 39110422634 success.
+These prior-main checks do not verify the new test additions.
+Fresh independent review: no blocking or nonblocking findings; reviewer reran focused 22/22 and diff whitespace checks. Runtime/native/movement/other-mode limits explicitly remain open.

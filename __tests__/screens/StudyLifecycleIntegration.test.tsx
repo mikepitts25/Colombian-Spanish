@@ -789,3 +789,126 @@ test.each(['held', 'interrupted'] as const)(
     expect(await getLearningEvents()).toEqual(events);
   },
 );
+
+// Restore must win before the stale screen's grade is evaluated. These cases
+// intentionally do not reload the provider until after the old UI submits.
+test.each([
+  ['removed', 'held'],
+  ['removed', 'interrupted'],
+  ['capped', 'held'],
+  ['capped', 'interrupted'],
+] as const)(
+  'a %s card after a %s restore cannot earn stale Study credit',
+  async (target, boundary) => {
+    const now = Date.now();
+    jest.spyOn(Date, 'now').mockReturnValue(now);
+    const originalDecks: Deck[] = [
+      { id: 'alpha', name: 'Alpha', cards: [card('first'), card('second')] },
+    ];
+    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(originalDecks));
+    let screen = render(<App />);
+    await screen.findByText('phrase first');
+    await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    const backup = await captureBackupSnapshot();
+    const restoredDecks: Deck[] = [
+      {
+        id: 'alpha',
+        name: 'Restored Alpha',
+        cards: [...(target === 'capped' ? [card('first')] : []), card('restored-next')],
+      },
+    ];
+    const restoredSession = {
+      deckId: 'alpha',
+      cardId: 'restored-next',
+      updatedAt: now - 1000,
+      queue: {
+        schemaVersion: 1 as const,
+        cardIds: ['restored-next'],
+        region: 'all',
+        sessionId: 'restore-before-grade-session',
+      },
+    };
+    const restoredState = {
+      ...backup.applicationState!,
+      prefs: { uiLanguage: 'es', newCardsPerDay: 3, speechRate: 0.85 },
+      daily: { date: localDayKey(new Date(now)), count: 7, target: 12, newCount: 3 },
+      streak: { streak: 4, freezes: 1, lastStudyDate: new Date(now).toISOString() },
+      seenWords: [],
+      quizHistory: [],
+      lastSession: restoredSession,
+      notificationPrefs: { masterOn: false },
+      missions: { schemaVersion: 1, runs: [] },
+      dailyPlan: { schemaVersion: 1, current: null },
+    };
+    const write = AsyncStorage.setItem as jest.Mock;
+    let intercepted = false;
+    write.mockImplementation(async (key: string, value: string) => {
+      if (!intercepted && key === (boundary === 'held' ? 'SRS_WRITE_JOURNAL_V1' : 'SRS_DECKS_V3')) {
+        intercepted = true;
+        if (boundary === 'held')
+          await new Promise<void>((resolve) => {
+            releaseHeldWrite = resolve;
+          });
+        else throw new Error('simulated interrupted restore before old Study submission');
+      }
+      return defaultStorageWrite(key, value);
+    });
+    let restoring!: Promise<void>;
+    let restoreSettled = false;
+    if (boundary === 'held') {
+      restoring = restoreBackup(restoredDecks, [], 'replace-state', restoredState).then(() => {
+        restoreSettled = true;
+      });
+      await waitFor(() => expect(intercepted).toBe(true));
+      expect(restoreSettled).toBe(false);
+      expect(JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!)).toEqual(originalDecks);
+    } else {
+      await expect(
+        restoreBackup(restoredDecks, [], 'replace-state', restoredState),
+      ).rejects.toThrow('simulated interrupted restore');
+      expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).not.toBeNull();
+      expect(JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!)).toEqual(originalDecks);
+    }
+    expect(current.decks).toEqual(originalDecks);
+    await act(async () => {
+      fireEvent.press(screen.getByText('Bien'));
+      if (boundary === 'held') {
+        await Promise.resolve();
+        expect(restoreSettled).toBe(false);
+        expect(JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!)).toEqual(originalDecks);
+        releaseHeldWrite!();
+        releaseHeldWrite = undefined;
+        await restoring;
+      }
+    });
+    if (target === 'capped')
+      await screen.findByText(
+        'Alcanzaste el límite diario de tarjetas nuevas. Vuelve a los decks para repasar tarjetas estudiadas.',
+      );
+    else await screen.findByText('phrase second');
+    const assertRestored = async (resumed = false) => {
+      const snapshot = await captureBackupSnapshot();
+      expect(snapshot.decks).toEqual(restoredDecks);
+      expect(snapshot.learningEvents).toEqual([]);
+      expect(snapshot.applicationState).toEqual({
+        ...restoredState,
+        lastSession: resumed ? { ...restoredSession, updatedAt: now } : restoredSession,
+      });
+      expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
+    };
+    await assertRestored();
+    await act(async () => current.reload());
+    expect(current.decks).toEqual(restoredDecks);
+    await assertRestored();
+    screen.unmount();
+    mockParams = {};
+    screen = render(<App />);
+    fireEvent.press(await screen.findByText('Continuar'));
+    await screen.findByText('phrase restored-next');
+    await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    expect(screen.getByText('1 restantes')).toBeTruthy();
+    expect(screen.queryByText('phrase first')).toBeNull();
+    expect(screen.queryByText('phrase second')).toBeNull();
+    await assertRestored(true);
+  },
+);
