@@ -178,7 +178,13 @@ describe('StudyScreen landing', () => {
     expect(mockGetDailyProgress).not.toHaveBeenCalled();
   });
 
-  it('shows the no-deck state when activeDeck is undefined', () => {
+  it('shows the no-deck state when activeDeck is undefined', async () => {
+    let finishResume!: (value: undefined) => void;
+    mockGetLastStudySession.mockReturnValueOnce(
+      new Promise<undefined>((resolve) => {
+        finishResume = resolve;
+      }),
+    );
     const { getByText } = renderStudyScreen({
       activeDeck: undefined,
       activeDeckId: undefined,
@@ -187,6 +193,7 @@ describe('StudyScreen landing', () => {
 
     expect(getByText('Selecciona un deck')).toBeTruthy();
     expect(mockGetDailyProgress).not.toHaveBeenCalled();
+    await act(async () => finishResume(undefined));
   });
 
   it('opens on the Study landing with search, categories, and resume', async () => {
