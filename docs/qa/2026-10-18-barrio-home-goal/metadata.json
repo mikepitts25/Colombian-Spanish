@@ -1,0 +1,20 @@
+{
+  "baseMain": "9a6e1a041bf7cac46f3902d53343e21808155670",
+  "runtimeHead": "ecf1a2e",
+  "productChanges": false,
+  "nativeChanges": false,
+  "productionJS": false,
+  "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPad-mini-A17-Pro",
+  "binarySha256": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb",
+  "normalPort": 8099,
+  "harnessPort": 8100,
+  "harnessCopy": "/tmp/colombian-home-fault-wly09pkt",
+  "harnessEntry": "docs/qa/2026-10-18-barrio-home-goal/native-harness.jsx",
+  "executedHarnessSha256": "f88a7eda1326ce6b92ba560f20441dd3045602ab1eb559a8d7385a0192c0a58c",
+  "originalBackupSha256": "2c4a26c908771a2a25ebb7267b54cac3a4e710ef43a95a7ae1ba30facaeb4cac",
+  "fault": "hold/reject exactly one AsyncStorage.getItem(SRS_DAILY_PLAN_V1); original data returned after release; no storage writes injected",
+  "harnessServerStopped": true,
+  "committedHarnessSha256": "8f2754db8bf189742d39af32c17e3a466121b18ad67a1b9250e50a1990cde17f",
+  "harnessFormattingOnly": true
+}

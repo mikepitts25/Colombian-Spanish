@@ -1,0 +1,34 @@
+[
+  {
+    "file": "native/mini-final-normal.png",
+    "sha256": "48e9c693cdcdaa07c26e2ad9260f8b609077c1c2e46b770a35e76573b634f938"
+  },
+  {
+    "file": "native/mini-goal-saved-home.png",
+    "sha256": "e28a4445010cf78c58dbd795f183b04f2cbeac9f5150c9ee67e1cfdf48bf73f0"
+  },
+  {
+    "file": "native/mini-refresh-rejected.png",
+    "sha256": "8b7e86f25f632624e2a6dae21d2366205bf251839ec629a3dac288b025277ea2"
+  },
+  {
+    "file": "native/mini-refresh-retried.png",
+    "sha256": "d4de74c1be608ce30e0f8735afc17fb6550648354b403cccfa4815708258149e"
+  },
+  {
+    "file": "native/mini-restored.png",
+    "sha256": "b56959c1897f58d03607201e525ac1631a14a57d74a2f327981b1306298011b0"
+  },
+  {
+    "file": "native/mini-start-held.png",
+    "sha256": "ee35b824d6bc4cdd82e5407868429b64530f9ba0902a460aafea7e0934ff04be"
+  },
+  {
+    "file": "native/mini-start-rejected.png",
+    "sha256": "a8f624b73cdbaa17432f762ca724889be0c938a6e6b8def34c3827082f367f55"
+  },
+  {
+    "file": "native/mini-start-retried.png",
+    "sha256": "ac39baefe68cb7c4c4a4b92b1605c768d3d30713f10c20d4eb48d0c0d429ac97"
+  }
+]
