@@ -73,5 +73,15 @@
   "testNotes": "Existing asynchronous act/PostCSS fixture warnings remain; test success is not a zero-console-warning claim.",
   "colorAudit": "255 classified literals, 415 composited role pairs including reviewed actual badge/control combinations; all Barrio pairs pass, 63 preserved Classic exceptions.",
   "native": "Separate rebuilt candidate validation; not inferred from software checks.",
-  "logDirectory": "software"
+  "logDirectory": "software",
+  "mergedMainVerification": {
+    "commit": "d7d5c478ea243fecd89a192d9d354f1988b18fd7",
+    "command": "npm test -- --runInBand --watchman=false",
+    "exitCode": 0,
+    "suites": 115,
+    "tests": 1091,
+    "logFile": "merged-main-tests.log",
+    "logSHA256": "26d28440ce8d91079325227f20656baa3cdb53a8b621623c7d5446c41d7d1116",
+    "candidateCI": "https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39124622375"
+  }
 }
