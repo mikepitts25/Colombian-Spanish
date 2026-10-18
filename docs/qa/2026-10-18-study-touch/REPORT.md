@@ -1,0 +1,13 @@
+# Study touch-only positioning follow-up — 2026-10-18
+
+B12.5-C remains **open**. This follow-up verifies a retained ordinary queue and records a control limitation; it does not close the maximum-text Again/Hard touch-only positioning gap.
+
+Dedicated iPhone SE 3 / iOS26 grading QA `6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1`, existing unsigned development client, Metro8098/worktree based on `dd1969c`. No app code, storage file or clock was modified. CUA controlled Device Hub; official simctl handled screenshot, cold terminate/launch and read-only own-app storage. VoiceOver and Capture Keyboard remained off. Device started/finished with Spanish Home, native Light/app dark and Text Size3.
+
+From default Study, a touch drag `[1207,938]→[1207,470]` exposed the saved-session entry. Coordinate Continue restored Hola7 with exactly catchup-7/8/9, same session identity. At native Text Size11, a touch drag over the heading `[1010,590]→[1010,340]` scrolled to the bottom, showing complete **Bien/1d** and **Fácil/1d** above the fixed tabs. [Native capture](good-easy-max-touch-es.png). No grade action was intentionally activated or recorded.
+
+Downward drag attempts from the gap `[1010,514]` to y548/y664, and within Good `[1010,405]→[1010,610]`, did not visibly reposition earlier labels. A right-gutter upward drag and an upward wheel attempt also did not move the content. These attempts do not distinguish Device Hub input behavior from an app scrolling issue; no speculative layout fix is justified. The Again/Hard full-label touch-only check is still unverified. Future work should change the input/control route rather than repeat these coordinates. A CUA request for Simulator by display name returned `Invalid app`; no unsupported UI automation was substituted.
+
+Restoring size3 exposed all four complete default labels/intervals. Returned Home, cold terminated/launched and dismissed the known unsigned expo-notifications banner. Read-only checkpoints show ten other logical records unchanged; only `SRS_LAST_STUDY_SESSION_V1.updatedAt` advanced due to Continue. Card ID, complete queue/order, region and session identity remain identical. The entire post-scroll eleven-key snapshot survives cold launch unchanged. No learning event, daily/new count, schedule, mission or linked plan changed.
+
+Run `python3 docs/qa/2026-10-18-study-touch/verify-state.py`. The verifier checks stored observations, not layout or UI action provenance. No runtime change or new behavior test was introduced. Security B01.8-C2g remains blocked; broader language/platform/assistive/physical checks remain open. This is additional evidence, not a new completed checklist item.
