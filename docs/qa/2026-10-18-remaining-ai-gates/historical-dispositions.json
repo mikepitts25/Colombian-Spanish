@@ -1,0 +1,172 @@
+{
+  "base": "4d31de5935d5aa0a6c2bbec9bc0ca56ca1658d20",
+  "indexedReports": 18,
+  "provenanceNotices": 16,
+  "reports": [
+    {
+      "report": "docs/qa/2026-10-17-absence-catch-up/REPORT.md",
+      "knownAliases": ["E66A88D6-CC87-4F46-A197-3F97EE9ED8CB"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R1",
+      "boundedRepeatReports": [],
+      "scope": "Catch-up fixture grading and cold resume observed on alias; independently protected narrow grading repeat remains open.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-17-braces-depth/REPORT.md",
+      "knownAliases": ["738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04"],
+      "historicalAction": "metadata reference indexed only; security report not edited",
+      "disposition": "excluded-security",
+      "boundedRepeatReports": [],
+      "scope": "Metadata-only device reference; security report and blocked work untouched.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-17-editor-save-recovery/REPORT.md",
+      "knownAliases": ["C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0"],
+      "historicalAction": "provenance notice added",
+      "disposition": "bounded-repeat",
+      "boundedRepeatReports": ["docs/qa/2026-10-18-independent-editor-recovery/REPORT.md"],
+      "scope": "Held/rejected editor intent, journal retry and source cold protection repeated on fresh installed tablet; full narrow/editor matrix remains R2.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-17-maximum-text-focus/REPORT.md",
+      "knownAliases": ["6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R1",
+      "boundedRepeatReports": [],
+      "scope": "Same-store focus, grading and cold queue observations retained; do not claim isolated original source.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-17-native-midnight/REPORT.md",
+      "knownAliases": ["6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R4",
+      "boundedRepeatReports": [],
+      "scope": "Recorded local-day transition retained; live zone/DST and current source-protected native acceptance remain open.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-17-native-restore-recovery/REPORT.md",
+      "knownAliases": ["738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04"],
+      "historicalAction": "provenance notice added",
+      "disposition": "bounded-repeat",
+      "boundedRepeatReports": ["docs/qa/2026-10-18-independent-state-restore/REPORT.md"],
+      "scope": "Full-state import, interrupted journal/recovery, exact queue and source cold protection independently repeated.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-17-native-scroll-keyboard/REPORT.md",
+      "knownAliases": [
+        "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+        "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB"
+      ],
+      "historicalAction": "provenance notice added",
+      "disposition": "partial-repeat",
+      "boundedRepeatReports": ["docs/qa/2026-10-18-independent-plan-tablet/REPORT.md"],
+      "scope": "Tablet applied draft/answer/cold feedback repeated on own path; whole source-cold protection and narrow keyboard matrix remain R1/R3.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-17-review-filter-advancement/REPORT.md",
+      "knownAliases": ["E66A88D6-CC87-4F46-A197-3F97EE9ED8CB"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R2",
+      "boundedRepeatReports": ["docs/qa/2026-10-18-independent-editor-recovery/REPORT.md"],
+      "scope": "Bounded editor retry has fresh source protection; successive saves in the unreviewed filter need their own native repeat.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-17-study-maximum-grading/REPORT.md",
+      "knownAliases": ["6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R1",
+      "boundedRepeatReports": [],
+      "scope": "Same-store grade/credit/queue observations retained; narrow graded fixture with actual source cold protection remains open.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-18-deck-native-lifecycle/REPORT.md",
+      "knownAliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R2",
+      "boundedRepeatReports": [],
+      "scope": "Create/rename/add/delete and interrupted lifecycle need fresh source-protected repetition, alongside remaining keyboard checks.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-18-flagged-native-clear/REPORT.md",
+      "knownAliases": ["E66A88D6-CC87-4F46-A197-3F97EE9ED8CB"],
+      "historicalAction": "provenance notice added",
+      "disposition": "bounded-repeat",
+      "boundedRepeatReports": ["docs/qa/2026-10-18-independent-flag-clear/REPORT.md"],
+      "scope": "Deck-only import, 20-to-0 flag-only clear, destination cold persistence and actual source cold protection independently repeated.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-18-large-text-keyboard/REPORT.md",
+      "knownAliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R3",
+      "boundedRepeatReports": [],
+      "scope": "Observed draft/layout transitions retain their scope; full keyboard-open, accent and source-protection acceptance remains open.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-18-max-text-modals/REPORT.md",
+      "knownAliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R2",
+      "boundedRepeatReports": [],
+      "scope": "Observed default/maximum modal drafts and cancellation retained; broader keyboard-open Save/Cancel/source protection remains open.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-18-simulator-isolation/REPORT.md",
+      "knownAliases": ["AFCA5E93-0434-45B1-911C-E06B2B3A0BC8"],
+      "historicalAction": "already explicitly documents aliases; linked from audit",
+      "disposition": "recovery-evidence",
+      "boundedRepeatReports": ["docs/qa/2026-10-18-simulator-isolation/REPORT.md"],
+      "scope": "Alias incident, supported source restore, actual source cold equality and fresh installation remain explicit evidence; alias is never reused.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-18-study-touch/REPORT.md",
+      "knownAliases": ["6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R1",
+      "boundedRepeatReports": [],
+      "scope": "Good/Easy bounded touch observations retained; Again/Hard exact touch positioning remains unverified and must change input route.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-18-tablet-keyboard/REPORT.md",
+      "knownAliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+      "historicalAction": "provenance notice added",
+      "disposition": "partial-repeat",
+      "boundedRepeatReports": ["docs/qa/2026-10-18-independent-plan-tablet/REPORT.md"],
+      "scope": "Fresh installed tablet repeats default software entry, feedback, cold exact feedback and assisted completion; maximum keyboard-open/accent/source-cold remain R3.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-18-tablet-window/REPORT.md",
+      "knownAliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R3",
+      "boundedRepeatReports": [],
+      "scope": "Original window/size observations and smaller-tablet smoke stay bounded; actual windowed/rotation acceptance and historical clone protection not inferred.",
+      "historicalIsolationRetroactivelyProved": false
+    },
+    {
+      "report": "docs/qa/2026-10-18-voice-large-text/REPORT.md",
+      "knownAliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+      "historicalAction": "provenance notice added",
+      "disposition": "R3",
+      "boundedRepeatReports": [],
+      "scope": "Text-alternative draft/layout observations retained; no recording/audio-route or independently protected source acceptance inferred.",
+      "historicalIsolationRetroactivelyProved": false
+    }
+  ]
+}
