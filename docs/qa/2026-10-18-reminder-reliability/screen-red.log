@@ -1,0 +1,885 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/NotificationsScreen.test.tsx
+
+FAIL __tests__/screens/NotificationsScreen.test.tsx (5.946 s)
+  ✕ locks controls until the saved choices are loaded and supports retry after read failure (250 ms)
+  ✕ blocks duplicate edits and Back through a pending save and live font changes, preserving legacy fields (1012 ms)
+  ✕ rolls back a failed durable save and lets the learner retry the change (1005 ms)
+  ✕ retains saved choices when scheduling fails and offers a working retry without changing them (1009 ms)
+  ✕ shows denied permission as distinct from an unsaved preference and does not prompt on screen opening (1009 ms)
+  ✕ offers only implemented reminders and accurately explains daily timing and the finite morning window (1009 ms)
+
+  ● locks controls until the saved choices are loaded and supports retry after read failure
+
+    expect(element).toBeDisabled()
+
+    Received element is not disabled:
+      [36m<RCTSwitch[39m
+        [33maccessibilityRole[39m=[32m"switch"[39m
+        [33monChange[39m=[32m{[Function]}[39m
+        [33monResponderTerminationRequest[39m=[32m{[Function]}[39m
+        [33monStartShouldSetResponder[39m=[32m{[Function]}[39m
+        [33monTintColor[39m=[32m"#FFDA00"[39m
+        [33mstyle[39m=[32m{
+          [
+            {
+              "alignSelf": "flex-start",
+            },
+            {
+              "backgroundColor": "#1e293b",
+              "borderRadius": 16,
+            },
+          ]
+        }[39m
+        [33mtestID[39m=[32m"notification-master-toggle"[39m
+        [33mthumbTintColor[39m=[32m"#020617"[39m
+        [33mtintColor[39m=[32m"#1e293b"[39m
+        [33mvalue[39m=[32m{true}[39m
+      [36m/>[39m
+
+      30 |   jest.spyOn(AsyncStorage, 'getItem').mockRejectedValueOnce(new Error('read failed'));
+      31 |   const ui = render(<NotificationsScreen />);
+    > 32 |   expect(ui.getByTestId('notification-master-toggle')).toBeDisabled();
+         |                                                        ^
+      33 |   await ui.findByText('Could not load reminder preferences. Your settings have not changed.');
+      34 |   expect(ui.getByTestId('notification-master-toggle')).toBeDisabled();
+      35 |   fireEvent.press(ui.getByRole('button', { name: 'Retry' }));
+
+      at Object.toBeDisabled (__tests__/screens/NotificationsScreen.test.tsx:32:56)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● locks controls until the saved choices are loaded and supports retry after read failure
+
+    read failed
+
+      28 |
+      29 | it('locks controls until the saved choices are loaded and supports retry after read failure', async () => {
+    > 30 |   jest.spyOn(AsyncStorage, 'getItem').mockRejectedValueOnce(new Error('read failed'));
+         |                                                             ^
+      31 |   const ui = render(<NotificationsScreen />);
+      32 |   expect(ui.getByTestId('notification-master-toggle')).toBeDisabled();
+      33 |   await ui.findByText('Could not load reminder preferences. Your settings have not changed.');
+
+      at Object.<anonymous> (__tests__/screens/NotificationsScreen.test.tsx:30:61)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● blocks duplicate edits and Back through a pending save and live font changes, preserving legacy fields
+
+    Unable to find an element with role: switch, name: Notifications, disabled state: false
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m←[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mSettings[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mNotifications[0m
+        [36m</Text>[39m
+        [36m<View />[39m
+      [36m</View>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔔 Notifications[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mGet study reminders[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<RCTSwitch[39m
+              [33maccessibilityRole[39m=[32m"switch"[39m
+              [33mtestID[39m=[32m"notification-master-toggle"[39m
+              [33mvalue[39m=[32m{true}[39m
+            [36m/>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mREMINDERS[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🌅[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMorning Reminder[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m8:00 AM[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-morning-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🌃[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mNight Reminder[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m9:00 PM[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-night-toggle"[39m
+                [33mvalue[39m=[32m{false}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m📆[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mStudy Days[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mMon • Tue • Wed • Thu • Fri[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0m›[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mALERTS[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔥[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mStreak Alert[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mWhen you are about to lose your streak[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-streak-toggle"[39m
+                [33mvalue[39m=[32m{false}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🏆[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mAchievements Unlocked[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mCelebrate every goal you hit[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-achievements-toggle"[39m
+                [33mvalue[39m=[32m{false}[39m
+              [36m/>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m💡 Notifications help you keep your study streak. Keep them on![0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      44 |   (Notifications.cancelAllScheduledNotificationsAsync as jest.Mock).mockImplementationOnce(() => held);
+      45 |   const ui = render(<NotificationsScreen />);
+    > 46 |   await ui.findByRole('switch', { name: 'Notifications', disabled: false });
+         |            ^
+      47 |   fireEvent(ui.getByTestId('notification-master-toggle'), 'valueChange', false);
+      48 |   act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
+      49 |   expect(ui.getByRole('switch', { name: 'Notifications', checked: false, disabled: true })).toBeTruthy();
+
+      at Object.findByRole (__tests__/screens/NotificationsScreen.test.tsx:46:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● rolls back a failed durable save and lets the learner retry the change
+
+    Unable to find an element with role: switch, name: Notifications, disabled state: false
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m←[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mSettings[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mNotifications[0m
+        [36m</Text>[39m
+        [36m<View />[39m
+      [36m</View>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔔 Notifications[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mGet study reminders[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<RCTSwitch[39m
+              [33maccessibilityRole[39m=[32m"switch"[39m
+              [33mtestID[39m=[32m"notification-master-toggle"[39m
+              [33mvalue[39m=[32m{true}[39m
+            [36m/>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mREMINDERS[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🌅[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMorning Reminder[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m8:00 AM[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-morning-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🌃[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mNight Reminder[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m9:00 PM[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-night-toggle"[39m
+                [33mvalue[39m=[32m{false}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m📆[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mStudy Days[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mMon • Tue • Wed • Thu • Fri[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0m›[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mALERTS[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔥[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mStreak Alert[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mWhen you are about to lose your streak[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-streak-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🏆[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mAchievements Unlocked[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mCelebrate every goal you hit[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-achievements-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m💡 Notifications help you keep your study streak. Keep them on![0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      63 | it('rolls back a failed durable save and lets the learner retry the change', async () => {
+      64 |   const ui = render(<NotificationsScreen />);
+    > 65 |   await ui.findByRole('switch', { name: 'Notifications', disabled: false });
+         |            ^
+      66 |   jest.spyOn(AsyncStorage, 'setItem').mockRejectedValueOnce(new Error('disk full'));
+      67 |   fireEvent(ui.getByTestId('notification-master-toggle'), 'valueChange', false);
+      68 |   await ui.findByText('Could not save preferences. Previous choices are shown. Try the change again.');
+
+      at Object.findByRole (__tests__/screens/NotificationsScreen.test.tsx:65:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● retains saved choices when scheduling fails and offers a working retry without changing them
+
+    Unable to find an element with role: switch, name: Notifications, disabled state: false
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m←[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mSettings[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mNotifications[0m
+        [36m</Text>[39m
+        [36m<View />[39m
+      [36m</View>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔔 Notifications[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mGet study reminders[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<RCTSwitch[39m
+              [33maccessibilityRole[39m=[32m"switch"[39m
+              [33mtestID[39m=[32m"notification-master-toggle"[39m
+              [33mvalue[39m=[32m{true}[39m
+            [36m/>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mREMINDERS[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🌅[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMorning Reminder[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m8:00 AM[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-morning-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🌃[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mNight Reminder[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m9:00 PM[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-night-toggle"[39m
+                [33mvalue[39m=[32m{false}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m📆[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mStudy Days[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mMon • Tue • Wed • Thu • Fri[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0m›[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mALERTS[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔥[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mStreak Alert[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mWhen you are about to lose your streak[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-streak-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🏆[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mAchievements Unlocked[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mCelebrate every goal you hit[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-achievements-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m💡 Notifications help you keep your study streak. Keep them on![0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      76 | it('retains saved choices when scheduling fails and offers a working retry without changing them', async () => {
+      77 |   const ui = render(<NotificationsScreen />);
+    > 78 |   await ui.findByRole('switch', { name: 'Notifications', disabled: false });
+         |            ^
+      79 |   (Notifications.scheduleNotificationAsync as jest.Mock).mockRejectedValueOnce(new Error('OS failure'));
+      80 |   fireEvent(ui.getByTestId('notification-night-toggle'), 'valueChange', true);
+      81 |   await ui.findByText('Preferences saved, but reminders could not be scheduled. Retry to apply them.');
+
+      at Object.findByRole (__tests__/screens/NotificationsScreen.test.tsx:78:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● shows denied permission as distinct from an unsaved preference and does not prompt on screen opening
+
+    Unable to find an element with role: switch, name: Notifications, disabled state: false
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m←[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mSettings[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mNotifications[0m
+        [36m</Text>[39m
+        [36m<View />[39m
+      [36m</View>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔔 Notifications[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mGet study reminders[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<RCTSwitch[39m
+              [33maccessibilityRole[39m=[32m"switch"[39m
+              [33mtestID[39m=[32m"notification-master-toggle"[39m
+              [33mvalue[39m=[32m{true}[39m
+            [36m/>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mREMINDERS[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🌅[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMorning Reminder[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m8:00 AM[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-morning-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🌃[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mNight Reminder[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m9:00 PM[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-night-toggle"[39m
+                [33mvalue[39m=[32m{false}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m📆[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mStudy Days[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mMon • Tue • Wed • Thu • Fri[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0m›[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mALERTS[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔥[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mStreak Alert[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mWhen you are about to lose your streak[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-streak-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🏆[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mAchievements Unlocked[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mCelebrate every goal you hit[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-achievements-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m💡 Notifications help you keep your study streak. Keep them on![0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      90 |   (Notifications.getPermissionsAsync as jest.Mock).mockResolvedValue({ status: 'denied', canAskAgain: false });
+      91 |   const ui = render(<NotificationsScreen />);
+    > 92 |   await ui.findByRole('switch', { name: 'Notifications', disabled: false });
+         |            ^
+      93 |   expect(Notifications.getPermissionsAsync).not.toHaveBeenCalled();
+      94 |   fireEvent(ui.getByTestId('notification-night-toggle'), 'valueChange', true);
+      95 |   await ui.findByText('Preferences saved. Allow notifications in system settings to receive reminders.');
+
+      at Object.findByRole (__tests__/screens/NotificationsScreen.test.tsx:92:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● offers only implemented reminders and accurately explains daily timing and the finite morning window
+
+    Unable to find an element with role: switch, name: Notifications, disabled state: false
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m←[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mSettings[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mNotifications[0m
+        [36m</Text>[39m
+        [36m<View />[39m
+      [36m</View>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔔 Notifications[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mGet study reminders[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<RCTSwitch[39m
+              [33maccessibilityRole[39m=[32m"switch"[39m
+              [33mtestID[39m=[32m"notification-master-toggle"[39m
+              [33mvalue[39m=[32m{true}[39m
+            [36m/>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mREMINDERS[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🌅[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mMorning Reminder[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m8:00 AM[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-morning-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🌃[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mNight Reminder[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m9:00 PM[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-night-toggle"[39m
+                [33mvalue[39m=[32m{false}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m📆[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mStudy Days[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mMon • Tue • Wed • Thu • Fri[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0m›[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mALERTS[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🔥[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mStreak Alert[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mWhen you are about to lose your streak[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-streak-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m🏆[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mAchievements Unlocked[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mCelebrate every goal you hit[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<RCTSwitch[39m
+                [33maccessibilityRole[39m=[32m"switch"[39m
+                [33mtestID[39m=[32m"notification-achievements-toggle"[39m
+                [33mvalue[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m💡 Notifications help you keep your study streak. Keep them on![0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      102 | it('offers only implemented reminders and accurately explains daily timing and the finite morning window', async () => {
+      103 |   const ui = render(<NotificationsScreen />);
+    > 104 |   await ui.findByRole('switch', { name: 'Notifications', disabled: false });
+          |            ^
+      105 |   expect(ui.getAllByRole('switch')).toHaveLength(3);
+      106 |   expect(ui.getByText(/next seven calendar days/)).toBeTruthy();
+      107 |   expect(ui.getByText(/Streak and achievement alerts are not sent/)).toBeTruthy();
+
+      at Object.findByRole (__tests__/screens/NotificationsScreen.test.tsx:104:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       6 failed, 6 total
+Snapshots:   0 total
+Time:        6.128 s
+Ran all test suites within paths "__tests__/screens/NotificationsScreen.test.tsx".

@@ -1,186 +1,233 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Pressable, Switch } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Pressable,
+  Switch,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
 import {
   DEFAULT_NOTIFICATION_PREFS,
   NotificationPreferences,
+  NotificationScheduleResult,
   getNotificationPreferences,
   saveAndScheduleNotificationPreferences,
 } from '../services/notifications';
 import { useLanguage } from '../context/LanguageContext';
 
-function Toggle({
-  value,
-  onValueChange,
-  testID,
-}: {
-  value: boolean;
-  onValueChange: (v: boolean) => void;
-  testID?: string;
-}) {
-  return (
-    <Switch
-      testID={testID}
-      value={value}
-      onValueChange={onValueChange}
-      trackColor={{ false: colors.border, true: colors.brand }}
-      thumbColor={value ? '#020617' : colors.textTertiary}
-      ios_backgroundColor={colors.border}
-    />
-  );
-}
-
-function NotifRow({
-  emoji,
+function ReminderSwitch({
   title,
   subtitle,
   value,
-  onValueChange,
-  chevron,
+  disabled,
+  onChange,
   testID,
+  expanded,
 }: {
-  emoji: string;
   title: string;
-  subtitle?: string;
-  value?: boolean;
-  onValueChange?: (v: boolean) => void;
-  chevron?: boolean;
-  testID?: string;
+  subtitle: string;
+  value: boolean;
+  disabled: boolean;
+  onChange: (value: boolean) => void;
+  testID: string;
+  expanded: boolean;
 }) {
   return (
-    <View style={styles.notifRow}>
-      <Text style={styles.rowEmoji}>{emoji}</Text>
-      <View style={styles.rowInfo}>
+    <View style={[styles.row, expanded && styles.expandedRow]}>
+      <View style={styles.info}>
         <Text style={styles.rowTitle}>{title}</Text>
-        {subtitle ? (
-          <Text style={styles.rowSubtitle} numberOfLines={2}>
-            {subtitle}
-          </Text>
-        ) : null}
+        <Text style={styles.body}>{subtitle}</Text>
       </View>
-      {chevron ? (
-        <Text style={styles.chevron}>›</Text>
-      ) : (
-        <Toggle
+      <View style={styles.switchTarget}>
+        <Switch
+          accessibilityLabel={title}
+          accessibilityState={{ checked: value, disabled }}
+          hitSlop={10}
           testID={testID}
-          value={value ?? false}
-          onValueChange={onValueChange ?? (() => {})}
+          value={value}
+          disabled={disabled}
+          onValueChange={onChange}
+          trackColor={{ false: colors.border, true: colors.brand }}
+          thumbColor={value ? '#020617' : colors.textTertiary}
+          ios_backgroundColor={colors.border}
         />
-      )}
+      </View>
     </View>
   );
 }
 
-function Divider() {
-  return <View style={styles.divider} />;
-}
-
 export default function NotificationsScreen() {
   const nav = useNavigation<any>();
+  const { fontScale } = useWindowDimensions();
   const { t } = useLanguage();
   const [prefs, setPrefs] = useState<NotificationPreferences>(DEFAULT_NOTIFICATION_PREFS);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [status, setStatus] = useState<NotificationScheduleResult | 'save-error'>();
+  const mounted = useRef(false);
+  const reading = useRef(false);
+  const submitting = useRef(false);
 
-  useEffect(() => {
-    let mounted = true;
-    getNotificationPreferences().then((storedPrefs) => {
-      if (mounted) setPrefs(storedPrefs);
-    });
-    return () => {
-      mounted = false;
-    };
+  const load = useCallback(async () => {
+    if (reading.current || submitting.current) return;
+    reading.current = true;
+    try {
+      const saved = await getNotificationPreferences();
+      if (mounted.current) setPrefs(saved);
+    } catch {
+      if (mounted.current) setLoadError(true);
+    } finally {
+      reading.current = false;
+      if (mounted.current) setLoading(false);
+    }
   }, []);
 
-  function updatePreference<K extends keyof NotificationPreferences>(
-    key: K,
-    value: NotificationPreferences[K],
-  ) {
-    const next = { ...prefs, [key]: value };
+  useEffect(() => {
+    mounted.current = true;
+    // Read persisted external state; all state updates follow the async read.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void load();
+    return () => {
+      mounted.current = false;
+    };
+  }, [load]);
+
+  async function save(next: NotificationPreferences) {
+    if (reading.current || submitting.current || loading || loadError) return;
+    submitting.current = true;
+    setSaving(true);
+    setStatus(undefined);
+    const previous = prefs;
     setPrefs(next);
-    void saveAndScheduleNotificationPreferences(next);
+    try {
+      const result = await saveAndScheduleNotificationPreferences(next);
+      if (mounted.current) setStatus(result);
+    } catch {
+      if (mounted.current) {
+        setPrefs(previous);
+        setStatus('save-error');
+      }
+    } finally {
+      submitting.current = false;
+      if (mounted.current) setSaving(false);
+    }
   }
 
+  function update(key: 'masterOn' | 'morningOn' | 'nightOn', value: boolean) {
+    if (key !== 'masterOn' && !prefs.masterOn) return;
+    void save({ ...prefs, [key]: value });
+  }
+
+  const locked = loading || loadError || saving;
+  const expanded = fontScale > 1.3;
+  const statusText =
+    status === 'save-error'
+      ? t('notifications.saveError')
+      : status === 'scheduled'
+        ? t('notifications.scheduled')
+        : status === 'off'
+          ? t('notifications.off')
+          : status === 'denied'
+            ? t('notifications.denied')
+            : status === 'error'
+              ? t('notifications.scheduleError')
+              : undefined;
+
   return (
-    <SafeAreaView style={styles.wrap}>
-      {/* Nav bar */}
-      <View style={styles.navBar}>
-        <Pressable style={styles.backBtn} onPress={() => nav.goBack()}>
-          <Text style={styles.backArrow}>←</Text>
-          <Text style={styles.backLabel}>{t('notifications.back')}</Text>
+    <SafeAreaView key={fontScale} style={styles.wrap}>
+      <ScrollView contentContainerStyle={styles.content}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('notifications.back')}
+          accessibilityState={{ disabled: saving }}
+          disabled={saving}
+          onPress={() => {
+            if (!submitting.current) nav.goBack();
+          }}
+          style={styles.back}
+        >
+          <Text style={styles.backText}>{t('notifications.back')}</Text>
         </Pressable>
-        <Text style={styles.navTitle}>{t('notifications.title')}</Text>
-        <View style={styles.navSpacer} />
-      </View>
-
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        {/* Master toggle */}
-        <View style={styles.masterCard}>
-          <View style={styles.masterInfo}>
-            <Text style={styles.masterTitle}>{t('notifications.masterTitle')}</Text>
-            <Text style={styles.masterSubtitle}>{t('notifications.masterSub')}</Text>
-          </View>
-          <Toggle
-            testID="notification-master-toggle"
+        <Text accessibilityRole="header" style={styles.title}>
+          {t('notifications.title')}
+        </Text>
+        {loading && (
+          <Text accessibilityLiveRegion="polite" style={styles.body}>
+            {t('notifications.loading')}
+          </Text>
+        )}
+        {loadError && (
+          <Text accessibilityRole="alert" style={styles.body}>
+            {t('notifications.loadError')}
+          </Text>
+        )}
+        {saving && (
+          <Text accessibilityLiveRegion="polite" style={styles.body}>
+            {t('notifications.saving')}
+          </Text>
+        )}
+        {statusText && (
+          <Text accessibilityLiveRegion="polite" style={styles.body}>
+            {statusText}
+          </Text>
+        )}
+        {(loadError || status === 'error' || status === 'denied') && (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityState={{ disabled: saving || loading }}
+            disabled={saving || loading}
+            onPress={() => {
+              if (loadError) {
+                setLoading(true);
+                setLoadError(false);
+                void load();
+              } else void save(prefs);
+            }}
+            style={styles.back}
+          >
+            <Text style={styles.backText}>{t('notifications.retry')}</Text>
+          </Pressable>
+        )}
+        <View style={styles.card}>
+          <ReminderSwitch
+            title={t('notifications.masterTitle')}
+            subtitle={t('notifications.masterSub')}
             value={prefs.masterOn}
-            onValueChange={(value) => updatePreference('masterOn', value)}
+            disabled={locked}
+            onChange={(value) => update('masterOn', value)}
+            testID="notification-master-toggle"
+            expanded={expanded}
           />
         </View>
-
-        {/* Reminder times */}
-        <Text style={styles.groupLabel}>{t('notifications.reminders')}</Text>
-        <View style={[styles.groupCard, !prefs.masterOn && styles.groupCardDisabled]}>
-          <NotifRow
-            emoji="🌅"
+        <Text style={styles.groupTitle}>{t('notifications.reminders')}</Text>
+        <View style={styles.card}>
+          <ReminderSwitch
             title={t('notifications.morningReminder')}
-            subtitle="8:00 AM"
-            value={prefs.masterOn && prefs.morningOn}
-            onValueChange={(value) => updatePreference('morningOn', value)}
+            subtitle={t('notifications.morningTime')}
+            value={prefs.morningOn}
+            disabled={locked || !prefs.masterOn}
+            onChange={(value) => update('morningOn', value)}
             testID="notification-morning-toggle"
+            expanded={expanded}
           />
-          <Divider />
-          <NotifRow
-            emoji="🌃"
+          <View style={styles.divider} />
+          <ReminderSwitch
             title={t('notifications.nightReminder')}
-            subtitle="9:00 PM"
-            value={prefs.masterOn && prefs.nightOn}
-            onValueChange={(value) => updatePreference('nightOn', value)}
+            subtitle={t('notifications.nightTime')}
+            value={prefs.nightOn}
+            disabled={locked || !prefs.masterOn}
+            onChange={(value) => update('nightOn', value)}
             testID="notification-night-toggle"
-          />
-          <Divider />
-          <NotifRow
-            emoji="📆"
-            title={t('notifications.studyDays')}
-            subtitle={t('notifications.weekdays')}
-            chevron
+            expanded={expanded}
           />
         </View>
-
-        {/* Alerts */}
-        <Text style={styles.groupLabel}>{t('notifications.alerts')}</Text>
-        <View style={[styles.groupCard, !prefs.masterOn && styles.groupCardDisabled]}>
-          <NotifRow
-            emoji="🔥"
-            title={t('notifications.streakAlert')}
-            subtitle={t('notifications.streakSub')}
-            value={prefs.masterOn && prefs.streakOn}
-            onValueChange={(value) => updatePreference('streakOn', value)}
-            testID="notification-streak-toggle"
-          />
-          <Divider />
-          <NotifRow
-            emoji="🏆"
-            title={t('notifications.achievements')}
-            subtitle={t('notifications.achieveSub')}
-            value={prefs.masterOn && prefs.achieveOn}
-            onValueChange={(value) => updatePreference('achieveOn', value)}
-            testID="notification-achievements-toggle"
-          />
-        </View>
-
-        <View style={styles.noteCard}>
-          <Text style={styles.noteText}>{t('notifications.note')}</Text>
-        </View>
+        <Text style={styles.body}>{t('notifications.note')}</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -188,82 +235,29 @@ export default function NotificationsScreen() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.bg },
-
-  navBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  content: { padding: 20, paddingBottom: 40, gap: 16 },
+  back: {
+    alignSelf: 'flex-start',
+    minHeight: 48,
     paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  backBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    padding: 8,
-    borderRadius: 20,
+    justifyContent: 'center',
     backgroundColor: colors.surface,
+    borderRadius: 12,
   },
-  backArrow: { color: colors.brand, fontSize: 16, fontWeight: '700' },
-  backLabel: { color: colors.brand, fontSize: 14, fontWeight: '600' },
-  navTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
-  navSpacer: { width: 80 },
-
-  scroll: { padding: 16, paddingBottom: 40 },
-
-  masterCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-    backgroundColor: 'rgba(255,218,0,0.06)',
-    borderWidth: 1.5,
-    borderColor: 'rgba(255,218,0,0.4)',
-    borderRadius: 20,
-    padding: 16,
-    marginBottom: 24,
-  },
-  masterInfo: { flex: 1, gap: 3 },
-  masterTitle: { color: colors.textPrimary, fontSize: 15, fontWeight: '800' },
-  masterSubtitle: { color: colors.textSecondary, fontSize: 12 },
-
-  groupLabel: {
-    color: colors.textTertiary,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1,
-    marginBottom: 6,
-    marginLeft: 4,
-  },
-  groupCard: {
+  backText: { color: colors.brand, fontSize: 16, fontWeight: '700' },
+  title: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
+  groupTitle: { color: colors.textSecondary, fontSize: 14, fontWeight: '700' },
+  card: {
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 16,
-    marginBottom: 20,
-    overflow: 'hidden',
   },
-  groupCardDisabled: { opacity: 0.4 },
-
-  notifRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-  rowEmoji: { fontSize: 18 },
-  rowInfo: { flex: 1, gap: 2 },
-  rowTitle: { color: colors.textPrimary, fontSize: 14, fontWeight: '600' },
-  rowSubtitle: { color: colors.textSecondary, fontSize: 12, lineHeight: 16 },
-  chevron: { color: colors.textSecondary, fontSize: 22, fontWeight: '300' },
-  divider: { height: 1, backgroundColor: colors.border, marginLeft: 46 },
-
-  noteCard: {
-    backgroundColor: 'rgba(255,218,0,0.06)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,218,0,0.2)',
-    borderRadius: 14,
-    padding: 14,
-  },
-  noteText: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 16 },
+  expandedRow: { flexDirection: 'column', alignItems: 'stretch' },
+  info: { flex: 1, gap: 6 },
+  rowTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '700' },
+  body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
+  switchTarget: { minHeight: 48, minWidth: 48, justifyContent: 'center', alignSelf: 'flex-start' },
+  divider: { height: 1, backgroundColor: colors.border },
 });

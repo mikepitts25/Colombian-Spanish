@@ -113,3 +113,128 @@ describe('refreshScheduledNotifications', () => {
     expect(mockSchedule).not.toHaveBeenCalled();
   });
 });
+
+test('a newer disable waits for an in-flight launch refresh and leaves no stale reminders', async () => {
+  let release!: () => void;
+  const held = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  let started!: () => void;
+  const firstSchedule = new Promise<void>((resolve) => {
+    started = resolve;
+  });
+  const active: unknown[] = [];
+  mockCancelAll.mockImplementation(async () => {
+    active.length = 0;
+  });
+  mockSchedule.mockImplementation(async (request) => {
+    if (!active.length) {
+      started();
+      await held;
+    }
+    active.push(request);
+    return 'id';
+  });
+  try {
+    const refreshing = refreshScheduledNotifications();
+    await firstSchedule;
+    const disabling = saveAndScheduleNotificationPreferences({
+      ...DEFAULT_NOTIFICATION_PREFS,
+      masterOn: false,
+    });
+    await new Promise<void>((resolve) => setImmediate(resolve));
+    release();
+    await Promise.all([refreshing, disabling]);
+    expect(active).toEqual([]);
+    expect((await getNotificationPreferences()).masterOn).toBe(false);
+  } finally {
+    mockCancelAll.mockResolvedValue(undefined);
+    mockSchedule.mockResolvedValue('notification-id');
+  }
+});
+
+test('retains saved choices on partial OS scheduling failure, cancels partial requests and recovers on retry', async () => {
+  mockSchedule
+    .mockResolvedValueOnce('morning-1')
+    .mockResolvedValueOnce('morning-2')
+    .mockRejectedValueOnce(new Error('OS schedule failure'));
+  const choices = { ...DEFAULT_NOTIFICATION_PREFS, nightOn: true };
+  await expect(saveAndScheduleNotificationPreferences(choices)).resolves.toBe('error');
+  expect(await getNotificationPreferences()).toEqual(choices);
+  expect(mockSchedule).toHaveBeenCalledTimes(3);
+  expect(mockCancelAll).toHaveBeenCalledTimes(2);
+  await expect(saveAndScheduleNotificationPreferences(choices)).resolves.toBe('scheduled');
+});
+
+test('a failed durable write does not touch the OS schedule and does not poison later saves', async () => {
+  (AsyncStorage.setItem as jest.Mock).mockRejectedValueOnce(new Error('disk full'));
+  await expect(
+    saveAndScheduleNotificationPreferences({ ...DEFAULT_NOTIFICATION_PREFS, masterOn: false }),
+  ).rejects.toThrow('disk full');
+  expect(mockCancelAll).not.toHaveBeenCalled();
+  await expect(
+    saveAndScheduleNotificationPreferences({ ...DEFAULT_NOTIFICATION_PREFS, masterOn: false }),
+  ).resolves.toBe('off');
+});
+
+test('denied permission with cannot-ask-again preserves choices without another prompt', async () => {
+  mockGetPermissions.mockResolvedValue({ status: 'denied', canAskAgain: false });
+  await expect(saveAndScheduleNotificationPreferences(DEFAULT_NOTIFICATION_PREFS)).resolves.toBe(
+    'denied',
+  );
+  expect(mockRequestPermissions).not.toHaveBeenCalled();
+  expect(mockSchedule).not.toHaveBeenCalled();
+  expect(await getNotificationPreferences()).toEqual(DEFAULT_NOTIFICATION_PREFS);
+});
+
+test('no enabled reminder choices clears requests without asking for permission', async () => {
+  await expect(
+    saveAndScheduleNotificationPreferences({
+      ...DEFAULT_NOTIFICATION_PREFS,
+      morningOn: false,
+      nightOn: false,
+    }),
+  ).resolves.toBe('off');
+  expect(mockGetPermissions).not.toHaveBeenCalled();
+  expect(mockSchedule).not.toHaveBeenCalled();
+});
+
+test('normalizes known stored boolean fields and ignores malformed field values', async () => {
+  await AsyncStorage.setItem(
+    'SRS_NOTIFICATION_PREFS_V1',
+    JSON.stringify({
+      masterOn: 'false',
+      morningOn: false,
+      nightOn: null,
+      streakOn: false,
+      achieveOn: 1,
+      extra: true,
+    }),
+  );
+  expect(await getNotificationPreferences()).toEqual({
+    masterOn: true,
+    morningOn: false,
+    nightOn: false,
+    streakOn: false,
+    achieveOn: true,
+  });
+});
+
+test('morning window includes the next seven local calendar mornings before 08:00, and six after', async () => {
+  jest.useFakeTimers();
+  try {
+    jest.setSystemTime(new Date(2026, 9, 18, 7, 59));
+    await saveAndScheduleNotificationPreferences(DEFAULT_NOTIFICATION_PREFS);
+    expect(morningCalls().map(([arg]) => arg.trigger.date.getDate())).toEqual([
+      18, 19, 20, 21, 22, 23, 24,
+    ]);
+    mockSchedule.mockClear();
+    jest.setSystemTime(new Date(2026, 9, 18, 8, 0));
+    await saveAndScheduleNotificationPreferences(DEFAULT_NOTIFICATION_PREFS);
+    expect(morningCalls().map(([arg]) => arg.trigger.date.getDate())).toEqual([
+      19, 20, 21, 22, 23, 24,
+    ]);
+  } finally {
+    jest.useRealTimers();
+  }
+});

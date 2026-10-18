@@ -1,0 +1,240 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/services/notifications.test.ts
+
+FAIL __tests__/services/notifications.test.ts
+  ✕ a newer disable waits for an in-flight launch refresh and leaves no stale reminders (8 ms)
+  ✕ retains saved choices on partial OS scheduling failure, cancels partial requests and recovers on retry (1 ms)
+  ✕ a failed durable write does not touch the OS schedule and does not poison later saves (1 ms)
+  ✕ denied permission with cannot-ask-again preserves choices without another prompt (3 ms)
+  ✕ no enabled reminder choices clears requests without asking for permission
+  ✕ normalizes known stored boolean fields and ignores malformed field values (1 ms)
+  ✓ morning window includes the next seven local calendar mornings before 08:00, and six after (4 ms)
+  notification preferences
+    ✓ returns default notification preferences when nothing is stored (2 ms)
+    ✓ persists preferences and schedules word-of-day mornings plus a nightly reminder (14 ms)
+    ✓ cancels scheduled reminders when notifications are disabled
+  refreshScheduledNotifications
+    ✓ re-schedules the rolling window from saved prefs without prompting (3 ms)
+    ✓ is a no-op when notification permission was never granted
+
+  ● a newer disable waits for an in-flight launch refresh and leaves no stale reminders
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 79
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "content": Object {
+    +       "body": "¿Recuerdas qué significa \"tinto\"? Repásala y mantén tu racha.",
+    +       "sound": true,
+    +       "title": "🇨🇴 Palabra del día: tinto",
+    +     },
+    +     "trigger": Object {
+    +       "date": 2026-10-18T06:00:00.000Z,
+    +       "type": "date",
+    +     },
+    +   },
+    +   Object {
+    +     "content": Object {
+    +       "body": "¿Recuerdas qué significa \"meter presión\"? Repásala y mantén tu racha.",
+    +       "sound": true,
+    +       "title": "🇨🇴 Palabra del día: meter presión",
+    +     },
+    +     "trigger": Object {
+    +       "date": 2026-10-19T06:00:00.000Z,
+    +       "type": "date",
+    +     },
+    +   },
+    +   Object {
+    +     "content": Object {
+    +       "body": "¿Recuerdas qué significa \"cansón/cansona\"? Repásala y mantén tu racha.",
+    +       "sound": true,
+    +       "title": "🇨🇴 Palabra del día: cansón/cansona",
+    +     },
+    +     "trigger": Object {
+    +       "date": 2026-10-20T06:00:00.000Z,
+    +       "type": "date",
+    +     },
+    +   },
+    +   Object {
+    +     "content": Object {
+    +       "body": "¿Recuerdas qué significa \"camellar\"? Repásala y mantén tu racha.",
+    +       "sound": true,
+    +       "title": "🇨🇴 Palabra del día: camellar",
+    +     },
+    +     "trigger": Object {
+    +       "date": 2026-10-21T06:00:00.000Z,
+    +       "type": "date",
+    +     },
+    +   },
+    +   Object {
+    +     "content": Object {
+    +       "body": "¿Recuerdas qué significa \"jato\"? Repásala y mantén tu racha.",
+    +       "sound": true,
+    +       "title": "🇨🇴 Palabra del día: jato",
+    +     },
+    +     "trigger": Object {
+    +       "date": 2026-10-22T06:00:00.000Z,
+    +       "type": "date",
+    +     },
+    +   },
+    +   Object {
+    +     "content": Object {
+    +       "body": "¿Recuerdas qué significa \"Hablar mierda\"? Repásala y mantén tu racha.",
+    +       "sound": true,
+    +       "title": "🇨🇴 Palabra del día: Hablar mierda",
+    +     },
+    +     "trigger": Object {
+    +       "date": 2026-10-23T06:00:00.000Z,
+    +       "type": "date",
+    +     },
+    +   },
+    +   Object {
+    +     "content": Object {
+    +       "body": "¿Recuerdas qué significa \"más inútil que bolsillo de saquito\"? Repásala y mantén tu racha.",
+    +       "sound": true,
+    +       "title": "🇨🇴 Palabra del día: más inútil que bolsillo de saquito",
+    +     },
+    +     "trigger": Object {
+    +       "date": 2026-10-24T06:00:00.000Z,
+    +       "type": "date",
+    +     },
+    +   },
+    + ]
+
+      134 |     release();
+      135 |     await Promise.all([refreshing, disabling]);
+    > 136 |     expect(active).toEqual([]);
+          |                    ^
+      137 |     expect((await getNotificationPreferences()).masterOn).toBe(false);
+      138 |   } finally {
+      139 |     mockCancelAll.mockResolvedValue(undefined);
+
+      at Object.toEqual (__tests__/services/notifications.test.ts:136:20)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● retains saved choices on partial OS scheduling failure, cancels partial requests and recovers on retry
+
+    expect(received).resolves.toBe()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [Error: OS schedule failure]
+
+      145 |   mockSchedule.mockRejectedValueOnce(new Error('OS schedule failure'));
+      146 |   const choices = { ...DEFAULT_NOTIFICATION_PREFS, nightOn: true };
+    > 147 |   await expect(saveAndScheduleNotificationPreferences(choices)).resolves.toBe('error');
+          |         ^
+      148 |   expect(await getNotificationPreferences()).toEqual(choices);
+      149 |   expect(mockCancelAll).toHaveBeenCalledTimes(2);
+      150 |   await expect(saveAndScheduleNotificationPreferences(choices)).resolves.toBe('scheduled');
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at Object.expect (__tests__/services/notifications.test.ts:147:9)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● a failed durable write does not touch the OS schedule and does not poison later saves
+
+    expect(received).resolves.toBe(expected) // Object.is equality
+
+    Expected: "off"
+    Received: undefined
+
+      156 |   expect(mockCancelAll).not.toHaveBeenCalled();
+      157 |   write.mockRestore();
+    > 158 |   await expect(saveAndScheduleNotificationPreferences({ ...DEFAULT_NOTIFICATION_PREFS, masterOn: false })).resolves.toBe('off');
+          |                                                                                                                     ^
+      159 | });
+      160 |
+      161 | test('denied permission with cannot-ask-again preserves choices without another prompt', async () => {
+
+      at Object.toBe (node_modules/expect/build/index.js:174:22)
+      at Object.toBe (__tests__/services/notifications.test.ts:158:117)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● denied permission with cannot-ask-again preserves choices without another prompt
+
+    expect(received).resolves.toBe(expected) // Object.is equality
+
+    Expected: "denied"
+    Received: undefined
+
+      161 | test('denied permission with cannot-ask-again preserves choices without another prompt', async () => {
+      162 |   mockGetPermissions.mockResolvedValue({ status: 'denied', canAskAgain: false });
+    > 163 |   await expect(saveAndScheduleNotificationPreferences(DEFAULT_NOTIFICATION_PREFS)).resolves.toBe('denied');
+          |                                                                                             ^
+      164 |   expect(mockRequestPermissions).not.toHaveBeenCalled();
+      165 |   expect(mockSchedule).not.toHaveBeenCalled();
+      166 |   expect(await getNotificationPreferences()).toEqual(DEFAULT_NOTIFICATION_PREFS);
+
+      at Object.toBe (node_modules/expect/build/index.js:174:22)
+      at Object.toBe (__tests__/services/notifications.test.ts:163:93)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● no enabled reminder choices clears requests without asking for permission
+
+    expect(received).resolves.toBe(expected) // Object.is equality
+
+    Expected: "off"
+    Received: undefined
+
+      168 |
+      169 | test('no enabled reminder choices clears requests without asking for permission', async () => {
+    > 170 |   await expect(saveAndScheduleNotificationPreferences({ ...DEFAULT_NOTIFICATION_PREFS, morningOn: false, nightOn: false })).resolves.toBe('off');
+          |                                                                                                                                      ^
+      171 |   expect(mockGetPermissions).not.toHaveBeenCalled();
+      172 |   expect(mockSchedule).not.toHaveBeenCalled();
+      173 | });
+
+      at Object.toBe (node_modules/expect/build/index.js:174:22)
+      at Object.toBe (__tests__/services/notifications.test.ts:170:134)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● normalizes known stored boolean fields and ignores malformed field values
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+        "achieveOn": true,
+        "masterOn": true,
+    -   "morningOn": false,
+    +   "morningOn": true,
+        "nightOn": false,
+    -   "streakOn": false,
+    +   "streakOn": true,
+      }
+
+      175 | test('normalizes known stored boolean fields and ignores malformed field values', async () => {
+      176 |   await AsyncStorage.setItem('SRS_NOTIFICATION_PREFS_V1', JSON.stringify({ masterOn: 'false', morningOn: false, nightOn: null, streakOn: false, achieveOn: 1, extra: true }));
+    > 177 |   expect(await getNotificationPreferences()).toEqual({ masterOn: true, morningOn: false, nightOn: false, streakOn: false, achieveOn: true });
+          |                                              ^
+      178 | });
+      179 |
+      180 | test('morning window includes the next seven local calendar mornings before 08:00, and six after', async () => {
+
+      at Object.toEqual (__tests__/services/notifications.test.ts:177:46)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       6 failed, 6 passed, 12 total
+Snapshots:   0 total
+Time:        0.767 s, estimated 1 s
+Ran all test suites within paths "__tests__/services/notifications.test.ts".

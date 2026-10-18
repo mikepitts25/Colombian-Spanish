@@ -1,0 +1,13 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/NotificationsScreen.test.tsx __tests__/services/notifications.test.ts __tests__/screens/SettingsScreen.test.tsx
+
+PASS __tests__/screens/NotificationsScreen.test.tsx
+PASS __tests__/screens/SettingsScreen.test.tsx
+PASS __tests__/services/notifications.test.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       82 passed, 82 total
+Snapshots:   0 total
+Time:        2.709 s, estimated 3 s
+Ran all test suites within paths "__tests__/screens/NotificationsScreen.test.tsx", "__tests__/services/notifications.test.ts", "__tests__/screens/SettingsScreen.test.tsx".

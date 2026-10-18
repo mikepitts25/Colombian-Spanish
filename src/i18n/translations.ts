@@ -385,7 +385,7 @@ export const translations = {
       'Tu meta de {count} tarjetas registra práctica de memoria, no fluidez. Usa lo aprendido en conversaciones reales.',
     'notifications.back': 'Ajustes',
     'notifications.title': 'Notificaciones',
-    'notifications.masterTitle': '🔔 Notificaciones',
+    'notifications.masterTitle': 'Notificaciones',
     'notifications.masterSub': 'Recibe recordatorios de estudio',
     'notifications.reminders': 'RECORDATORIOS',
     'notifications.morningReminder': 'Recordatorio Mañana',
@@ -397,8 +397,24 @@ export const translations = {
     'notifications.streakSub': 'Cuando estés a punto de perder tu racha',
     'notifications.achievements': 'Logros Desbloqueados',
     'notifications.achieveSub': 'Celebra cada meta alcanzada',
+    'notifications.loading': 'Cargando preferencias de recordatorios…',
+    'notifications.loadError':
+      'No se pudieron cargar tus preferencias. Tus ajustes no han cambiado.',
+    'notifications.saving': 'Guardando preferencias de recordatorios…',
+    'notifications.retry': 'Reintentar',
+    'notifications.saveError':
+      'No se pudieron guardar las preferencias. Se muestran las opciones anteriores. Intenta el cambio otra vez.',
+    'notifications.scheduled':
+      'Preferencias guardadas. Recordatorios programados; la entrega depende de los ajustes del sistema.',
+    'notifications.off': 'Preferencias guardadas. No se solicitaron recordatorios.',
+    'notifications.denied':
+      'Preferencias guardadas. Permite las notificaciones en los ajustes del sistema para recibir recordatorios.',
+    'notifications.scheduleError':
+      'Preferencias guardadas, pero no se pudieron programar los recordatorios. Reintenta para aplicarlas.',
+    'notifications.morningTime': '08:00 · hora local · ventana de siete días',
+    'notifications.nightTime': '21:00 · hora local · todos los días',
     'notifications.note':
-      '💡 Las notificaciones te ayudan a mantener tu racha de estudio. ¡No las desactives!',
+      'Los recordatorios de la palabra del día cubren los próximos siete días del calendario y se renuevan al abrir la app. Los recordatorios nocturnos se repiten cada día a las 21:00, hora local. No se envían alertas de racha ni de logros.',
     'phrasebook.title': 'Favoritas',
     'phrasebook.sub': 'Tus tarjetas guardadas de todos los decks (offline y privadas).',
     'phrasebook.searchPlaceholder': 'Buscar (es/en/etiquetas)...',
@@ -529,7 +545,7 @@ export const translations = {
     'settings.newCards.title': 'Nuevas Tarjetas',
     'settings.newCards.subtitle': '{count} por día',
     'settings.reminders.title': 'Recordatorios',
-    'settings.reminders.subtitle': '8:00 AM todos los días',
+    'settings.reminders.subtitle': 'Recordatorios de estudio por la mañana y por la noche',
     'settings.manageDecks.title': 'Gestionar Decks',
     'settings.manageDecks.subtitle': 'Organiza y edita tus decks',
     'settings.language.title': 'Idioma de interfaz',
@@ -1013,7 +1029,7 @@ export const translations = {
       'Your {count}-card goal tracks recall practice, not fluency. Use what you learn in real conversations.',
     'notifications.back': 'Settings',
     'notifications.title': 'Notifications',
-    'notifications.masterTitle': '🔔 Notifications',
+    'notifications.masterTitle': 'Notifications',
     'notifications.masterSub': 'Get study reminders',
     'notifications.reminders': 'REMINDERS',
     'notifications.morningReminder': 'Morning Reminder',
@@ -1025,7 +1041,24 @@ export const translations = {
     'notifications.streakSub': 'When you are about to lose your streak',
     'notifications.achievements': 'Achievements Unlocked',
     'notifications.achieveSub': 'Celebrate every goal you hit',
-    'notifications.note': '💡 Notifications help you keep your study streak. Keep them on!',
+    'notifications.loading': 'Loading reminder preferences…',
+    'notifications.loadError':
+      'Could not load reminder preferences. Your settings have not changed.',
+    'notifications.saving': 'Saving reminder preferences…',
+    'notifications.retry': 'Retry',
+    'notifications.saveError':
+      'Could not save preferences. Previous choices are shown. Try the change again.',
+    'notifications.scheduled':
+      'Preferences saved. Reminders scheduled; delivery depends on system settings.',
+    'notifications.off': 'Preferences saved. No reminders requested.',
+    'notifications.denied':
+      'Preferences saved. Allow notifications in system settings to receive reminders.',
+    'notifications.scheduleError':
+      'Preferences saved, but reminders could not be scheduled. Retry to apply them.',
+    'notifications.morningTime': '08:00 · local time · rolling seven-day window',
+    'notifications.nightTime': '21:00 · local time · every day',
+    'notifications.note':
+      'Morning word-of-day reminders cover the next seven calendar days and refresh when you open the app. Evening reminders repeat daily at 21:00 local time. Streak and achievement alerts are not sent.',
     'phrasebook.title': 'Favorites',
     'phrasebook.sub': 'Your starred cards across all decks (offline + private).',
     'phrasebook.searchPlaceholder': 'Search (es/en/tags)…',
@@ -1155,7 +1188,7 @@ export const translations = {
     'settings.newCards.title': 'New Cards',
     'settings.newCards.subtitle': '{count} per day',
     'settings.reminders.title': 'Reminders',
-    'settings.reminders.subtitle': '8:00 AM every day',
+    'settings.reminders.subtitle': 'Morning and evening study reminders',
     'settings.manageDecks.title': 'Manage Decks',
     'settings.manageDecks.subtitle': 'Organize and edit your decks',
     'settings.language.title': 'UI language',

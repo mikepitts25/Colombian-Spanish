@@ -1,0 +1,25 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/services/notifications.test.ts
+
+PASS __tests__/services/notifications.test.ts
+  ✓ a newer disable waits for an in-flight launch refresh and leaves no stale reminders (3 ms)
+  ✓ retains saved choices on partial OS scheduling failure, cancels partial requests and recovers on retry (4 ms)
+  ✓ a failed durable write does not touch the OS schedule and does not poison later saves (6 ms)
+  ✓ denied permission with cannot-ask-again preserves choices without another prompt (1 ms)
+  ✓ no enabled reminder choices clears requests without asking for permission
+  ✓ normalizes known stored boolean fields and ignores malformed field values
+  ✓ morning window includes the next seven local calendar mornings before 08:00, and six after (6 ms)
+  notification preferences
+    ✓ returns default notification preferences when nothing is stored (2 ms)
+    ✓ persists preferences and schedules word-of-day mornings plus a nightly reminder (14 ms)
+    ✓ cancels scheduled reminders when notifications are disabled
+  refreshScheduledNotifications
+    ✓ re-schedules the rolling window from saved prefs without prompting (3 ms)
+    ✓ is a no-op when notification permission was never granted
+
+Test Suites: 1 passed, 1 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        0.637 s, estimated 1 s
+Ran all test suites within paths "__tests__/services/notifications.test.ts".

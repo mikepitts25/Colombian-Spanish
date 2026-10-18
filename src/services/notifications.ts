@@ -33,11 +33,15 @@ export async function getNotificationPreferences(): Promise<NotificationPreferen
   if (!raw) return DEFAULT_NOTIFICATION_PREFS;
 
   try {
-    const parsed = JSON.parse(raw) as Partial<NotificationPreferences>;
-    return {
-      ...DEFAULT_NOTIFICATION_PREFS,
-      ...parsed,
-    };
+    const parsed: unknown = JSON.parse(raw);
+    const result = { ...DEFAULT_NOTIFICATION_PREFS };
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+      for (const key of Object.keys(result) as (keyof NotificationPreferences)[]) {
+        const value = (parsed as Record<string, unknown>)[key];
+        if (typeof value === 'boolean') result[key] = value;
+      }
+    }
+    return result;
   } catch {
     return DEFAULT_NOTIFICATION_PREFS;
   }
@@ -46,6 +50,7 @@ export async function getNotificationPreferences(): Promise<NotificationPreferen
 async function ensureNotificationPermission(): Promise<boolean> {
   const current = await Notifications.getPermissionsAsync();
   if (current.status === 'granted') return true;
+  if (current.canAskAgain === false) return false;
 
   const requested = await Notifications.requestPermissionsAsync();
   return requested.status === 'granted';
@@ -110,19 +115,19 @@ async function scheduleMorningWordOfDayWindow(language: UiLanguage) {
   }
 }
 
-export async function scheduleNotificationPreferences(
+async function applyNotificationPreferences(
   prefs: NotificationPreferences,
   { requestPermission = true }: { requestPermission?: boolean } = {},
-) {
+): Promise<NotificationScheduleResult> {
   await Notifications.cancelAllScheduledNotificationsAsync();
 
-  if (!prefs.masterOn) return;
+  if (!prefs.masterOn || (!prefs.morningOn && !prefs.nightOn)) return 'off';
   if (requestPermission) {
     const allowed = await ensureNotificationPermission();
-    if (!allowed) return;
+    if (!allowed) return 'denied';
   } else {
     const current = await Notifications.getPermissionsAsync();
-    if (current.status !== 'granted') return;
+    if (current.status !== 'granted') return 'denied';
   }
 
   const { uiLanguage } = await getPrefs();
@@ -141,19 +146,60 @@ export async function scheduleNotificationPreferences(
         : 'Review a few cards before the day ends.',
     );
   }
+  return 'scheduled';
 }
 
-export async function saveAndScheduleNotificationPreferences(prefs: NotificationPreferences) {
-  await AsyncStorage.setItem(NOTIFICATION_PREFS_KEY, JSON.stringify(prefs));
-  await scheduleNotificationPreferences(prefs);
+export type NotificationScheduleResult = 'scheduled' | 'off' | 'denied' | 'error';
+
+// A startup refresh and a later settings change must finish in intent order.
+// Storage serialization alone cannot protect asynchronous native scheduling.
+let scheduling: Promise<unknown> = Promise.resolve();
+function ordered<T>(operation: () => Promise<T>): Promise<T> {
+  const result = scheduling.then(operation);
+  scheduling = result.catch(() => {});
+  return result;
 }
 
-/**
- * Re-schedule the rolling word-of-day window using saved preferences.
- * Called on app launch. Never prompts for permission — if the user hasn't
- * granted notifications yet, this is a no-op.
- */
-export async function refreshScheduledNotifications() {
-  const prefs = await getNotificationPreferences();
-  await scheduleNotificationPreferences(prefs, { requestPermission: false });
+async function scheduleSafely(
+  prefs: NotificationPreferences,
+  options?: { requestPermission?: boolean },
+): Promise<NotificationScheduleResult> {
+  try {
+    return await applyNotificationPreferences(prefs, options);
+  } catch {
+    // Avoid retaining a partially created morning window when the OS rejects
+    // one request. A cleanup failure remains an error, never a success claim.
+    try {
+      await Notifications.cancelAllScheduledNotificationsAsync();
+    } catch {}
+    return 'error';
+  }
+}
+
+export function scheduleNotificationPreferences(
+  prefs: NotificationPreferences,
+  options?: { requestPermission?: boolean },
+): Promise<NotificationScheduleResult> {
+  const intent = { ...prefs };
+  return ordered(() => scheduleSafely(intent, options));
+}
+
+export function saveAndScheduleNotificationPreferences(
+  prefs: NotificationPreferences,
+): Promise<NotificationScheduleResult> {
+  const intent = { ...prefs };
+  return ordered(async () => {
+    // Failed persistence rejects without modifying the existing OS requests.
+    await AsyncStorage.setItem(NOTIFICATION_PREFS_KEY, JSON.stringify(intent));
+    return scheduleSafely(intent);
+  });
+}
+
+/** Refresh the rolling window on launch, without a permission prompt. */
+export function refreshScheduledNotifications(): Promise<NotificationScheduleResult> {
+  return ordered(async () => {
+    // Read inside the queue so a refresh cannot carry stale saved choices.
+    const prefs = await getNotificationPreferences();
+    return scheduleSafely(prefs, { requestPermission: false });
+  });
 }
