@@ -76,8 +76,8 @@ export default function MissionScreen({
   const content = useRef<ScrollView>(null);
   const focusedResponse = useRef<string | undefined>(undefined);
   const responseIdentity =
-    run && !run.feedback && !run.completed ? `${run.id}:${run.nodeId}:${run.revision}` : undefined;
-  const layoutKey = `${responseIdentity}:${language}:${fontScale}:${width}`;
+    run && !run.feedback && !run.completed ? `${run.id}:${run.nodeId}` : undefined;
+  const layoutKey = `${responseIdentity}:${fontScale}:${width}`;
   const responseLayout = useRef<{ key: string; cardY?: number; inputY?: number }>({ key: '' });
   const revealResponse = useCallback(() => {
     const layout = responseLayout.current;
