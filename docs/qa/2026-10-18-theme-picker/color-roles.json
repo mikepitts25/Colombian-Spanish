@@ -1570,7 +1570,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Colombianisms",
       "value": "#FFDA00",
-      "line": 58,
+      "line": 60,
       "disposition": "classic-only"
     },
     {
@@ -1580,7 +1580,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Essentials",
       "value": "#60a5fa",
-      "line": 59,
+      "line": 61,
       "disposition": "classic-only"
     },
     {
@@ -1590,7 +1590,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'People & Relationships'",
       "value": "#f472b6",
-      "line": 60,
+      "line": 62,
       "disposition": "classic-only"
     },
     {
@@ -1600,7 +1600,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Places & Travel'",
       "value": "#34d399",
-      "line": 61,
+      "line": 63,
       "disposition": "classic-only"
     },
     {
@@ -1610,7 +1610,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Home & Daily Life'",
       "value": "#a78bfa",
-      "line": 62,
+      "line": 64,
       "disposition": "classic-only"
     },
     {
@@ -1620,7 +1620,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Food & Drink'",
       "value": "#fb923c",
-      "line": 63,
+      "line": 65,
       "disposition": "classic-only"
     },
     {
@@ -1630,7 +1630,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Communication",
       "value": "#38bdf8",
-      "line": 64,
+      "line": 66,
       "disposition": "classic-only"
     },
     {
@@ -1640,7 +1640,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Health",
       "value": "#f87171",
-      "line": 65,
+      "line": 67,
       "disposition": "classic-only"
     },
     {
@@ -1650,7 +1650,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Nature",
       "value": "#4ade80",
-      "line": 66,
+      "line": 68,
       "disposition": "classic-only"
     },
     {
@@ -1660,7 +1660,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Work & School'",
       "value": "#94a3b8",
-      "line": 67,
+      "line": 69,
       "disposition": "classic-only"
     },
     {
@@ -1670,7 +1670,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Numbers & Time'",
       "value": "#c084fc",
-      "line": 68,
+      "line": 70,
       "disposition": "classic-only"
     },
     {
@@ -1680,7 +1680,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Fun & Culture'",
       "value": "#fbbf24",
-      "line": 69,
+      "line": 71,
       "disposition": "classic-only"
     },
     {
@@ -1690,7 +1690,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Tech",
       "value": "#22d3ee",
-      "line": 70,
+      "line": 72,
       "disposition": "classic-only"
     },
     {
@@ -1700,7 +1700,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Other",
       "value": "#64748b",
-      "line": 71,
+      "line": 73,
       "disposition": "classic-only"
     },
     {
@@ -1710,7 +1710,7 @@
       "declaration": "render",
       "property": "backgroundColor",
       "value": "#FFDA00",
-      "line": 331,
+      "line": 421,
       "disposition": "meaningful-flag-art"
     },
     {
@@ -1720,7 +1720,7 @@
       "declaration": "render",
       "property": "backgroundColor",
       "value": "#003893",
-      "line": 332,
+      "line": 422,
       "disposition": "meaningful-flag-art"
     },
     {
@@ -1730,7 +1730,7 @@
       "declaration": "render",
       "property": "backgroundColor",
       "value": "#CE1126",
-      "line": 333,
+      "line": 423,
       "disposition": "meaningful-flag-art"
     },
     {
@@ -5637,350 +5637,350 @@
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 481
+      "line": 571
     },
     {
       "key": "src/screens/HomeScreen.tsx|audioSurface|1",
       "base": "src/screens/HomeScreen.tsx|audioSurface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "audioSurface",
-      "line": 493
+      "line": 583
     },
     {
       "key": "src/screens/HomeScreen.tsx|audioText|1",
       "base": "src/screens/HomeScreen.tsx|audioText",
       "path": "src/screens/HomeScreen.tsx",
       "role": "audioText",
-      "line": 502
+      "line": 592
     },
     {
       "key": "src/screens/HomeScreen.tsx|mutedInk|1",
       "base": "src/screens/HomeScreen.tsx|mutedInk",
       "path": "src/screens/HomeScreen.tsx",
       "role": "mutedInk",
-      "line": 583
+      "line": 673
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|1",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 592
+      "line": 682
     },
     {
       "key": "src/screens/HomeScreen.tsx|surfaceElevated|1",
       "base": "src/screens/HomeScreen.tsx|surfaceElevated",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surfaceElevated",
-      "line": 602
+      "line": 692
     },
     {
       "key": "src/screens/HomeScreen.tsx|bg|1",
       "base": "src/screens/HomeScreen.tsx|bg",
       "path": "src/screens/HomeScreen.tsx",
       "role": "bg",
-      "line": 647
+      "line": 737
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|1",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 650
+      "line": 740
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|1",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 666
+      "line": 756
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|2",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 667
+      "line": 757
     },
     {
       "key": "src/screens/HomeScreen.tsx|flagHighlight|1",
       "base": "src/screens/HomeScreen.tsx|flagHighlight",
       "path": "src/screens/HomeScreen.tsx",
       "role": "flagHighlight",
-      "line": 672
+      "line": 762
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|1",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 681
+      "line": 771
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|2",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 684
+      "line": 774
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|2",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 695
+      "line": 785
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|2",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 702
+      "line": 792
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|3",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 704
+      "line": 794
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|3",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 710
+      "line": 800
     },
     {
       "key": "src/screens/HomeScreen.tsx|surfaceElevated|2",
       "base": "src/screens/HomeScreen.tsx|surfaceElevated",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surfaceElevated",
-      "line": 713
+      "line": 803
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|3",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 716
+      "line": 806
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|4",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 721
+      "line": 811
     },
     {
       "key": "src/screens/HomeScreen.tsx|subtlePanel|1",
       "base": "src/screens/HomeScreen.tsx|subtlePanel",
       "path": "src/screens/HomeScreen.tsx",
       "role": "subtlePanel",
-      "line": 726
+      "line": 816
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|4",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 736
+      "line": 826
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|5",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 738
+      "line": 828
     },
     {
       "key": "src/screens/HomeScreen.tsx|surfaceElevated|3",
       "base": "src/screens/HomeScreen.tsx|surfaceElevated",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surfaceElevated",
-      "line": 746
+      "line": 836
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|3",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 752
+      "line": 842
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|4",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 757
+      "line": 847
     },
     {
       "key": "src/screens/HomeScreen.tsx|textInverse|1",
       "base": "src/screens/HomeScreen.tsx|textInverse",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textInverse",
-      "line": 763
+      "line": 853
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|2",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 771
+      "line": 861
     },
     {
       "key": "src/screens/HomeScreen.tsx|softHighlightEdge|1",
       "base": "src/screens/HomeScreen.tsx|softHighlightEdge",
       "path": "src/screens/HomeScreen.tsx",
       "role": "softHighlightEdge",
-      "line": 774
+      "line": 864
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|5",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 785
+      "line": 875
     },
     {
       "key": "src/screens/HomeScreen.tsx|accentBlue|1",
       "base": "src/screens/HomeScreen.tsx|accentBlue",
       "path": "src/screens/HomeScreen.tsx",
       "role": "accentBlue",
-      "line": 794
+      "line": 884
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|6",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 799
+      "line": 889
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|5",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 800
+      "line": 890
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|3",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 815
+      "line": 905
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|4",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 817
+      "line": 907
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|6",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 821
+      "line": 911
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|7",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 826
+      "line": 916
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|8",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 841
+      "line": 931
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|6",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 842
+      "line": 932
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|7",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 843
+      "line": 933
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|4",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 850
+      "line": 940
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|5",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 852
+      "line": 942
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|9",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 865
+      "line": 955
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|7",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 866
+      "line": 956
     },
     {
       "key": "src/screens/HomeScreen.tsx|troubleWash|1",
       "base": "src/screens/HomeScreen.tsx|troubleWash",
       "path": "src/screens/HomeScreen.tsx",
       "role": "troubleWash",
-      "line": 868
+      "line": 958
     },
     {
       "key": "src/screens/HomeScreen.tsx|restoreDanger|1",
       "base": "src/screens/HomeScreen.tsx|restoreDanger",
       "path": "src/screens/HomeScreen.tsx",
       "role": "restoreDanger",
-      "line": 873
+      "line": 963
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|5",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 875
+      "line": 965
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|6",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 877
+      "line": 967
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|10",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 882
+      "line": 972
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|8",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 883
+      "line": 973
     },
     {
       "key": "src/screens/LearningPreferencesScreen.tsx|textSecondary|1",

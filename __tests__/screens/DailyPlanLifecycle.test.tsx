@@ -100,3 +100,28 @@ test('plan recovery action shares the response scroll area instead of consuming 
   expect(scrollParent(input)).toBeDefined();
   expect(scrollParent(ui.getByText('End plan (keep learning progress)'))).toBe(scrollParent(input));
 });
+
+test('an unavailable saved content version keeps explicit End/Home recovery without creating a run', async () => {
+  await AsyncStorage.clear();
+  await startDailyPlan({
+    id: 'plan',
+    day: '2001-01-01',
+    minutes: 3,
+    createdAt: 1000,
+    phase: 'applied',
+    applied: { missionId: DAILY_RESPONSE.id, contentVersion: 99, runId: 'retained-run' },
+  });
+  const ui = render(<DailyPlanScreen />);
+  await ui.findByText(
+    'This activity is unavailable in this build. You can end the plan and keep your learning progress.',
+  );
+  expect(ui.queryByText('Start draft reply')).toBeNull();
+  expect((await readDailyPlan())?.applied?.runId).toBe('retained-run');
+  fireEvent.press(ui.getByText('Return Home'));
+  expect(mockNavigate).toHaveBeenCalledWith('Root', { screen: 'Home' }, { pop: true });
+  expect(await readDailyPlan()).toBeDefined();
+  fireEvent.press(ui.getByText('End plan (keep learning progress)'));
+  await waitFor(async () => expect(await readDailyPlan()).toBeUndefined());
+  expect(await AsyncStorage.getItem('SRS_MISSIONS_V1')).toBeNull();
+  expect(await AsyncStorage.getItem('SRS_LEARNING_EVENTS_V1')).toBeNull();
+});

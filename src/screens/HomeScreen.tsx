@@ -1,4 +1,6 @@
 import ThemeIcon from '../components/ThemeIcon';
+import BarrioHomeContent from '../components/BarrioHomeContent';
+import { deriveHomePresentation, HomePresentation } from '../utils/homePresentation';
 import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
@@ -131,6 +133,7 @@ export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId, reload } = useDeck();
   const nav = useNavigation<any>();
   const starting = useRef(false);
+  const barrioPending = useRef<HomePresentation | undefined>(undefined);
   const [studyStarting, setStudyStarting] = useState(false);
   const [studyStartError, setStudyStartError] = useState(false);
   const { t } = useLanguage();
@@ -313,6 +316,25 @@ export default function HomeScreen() {
     }
   };
 
+  const barrioModel =
+    appTheme.id === 'barrio'
+      ? deriveHomePresentation({
+          ready,
+          loaded: activity.loaded,
+          readError: error,
+          now: activity.now,
+          plan: activity.plan,
+          response,
+          recommendation,
+          recommendedDeck,
+          totalCards: (decks || []).reduce((sum, deck) => sum + deck.cards.length, 0),
+          totalNew,
+          newAvailableToday,
+          starting: studyStarting,
+          startError: studyStartError,
+        })
+      : undefined;
+
   if (!ready) {
     return (
       <SafeAreaView style={styles.wrap}>
@@ -320,6 +342,74 @@ export default function HomeScreen() {
           <Text style={styles.loadingFlag}>🇨🇴</Text>
           <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (barrioModel) {
+    const presentation =
+      studyStarting && barrioPending.current
+        ? { ...barrioPending.current, pending: true, startError: false }
+        : barrioModel;
+    const primary = () => {
+      if (starting.current || presentation.pending || presentation.action === 'none') return;
+      if (presentation.action === 'retryRead') {
+        setReadAttempt((value) => value + 1);
+        return;
+      }
+      if (presentation.action === 'browse') {
+        nav.navigate('Study');
+        return;
+      }
+      // Display-only snapshot. The original operation still refreshes its own inputs atomically.
+      barrioPending.current = { ...presentation, startError: false };
+      const operation =
+        activity.plan || response ? startPlan() : startStudy(recommendedDeck?.id, true);
+      void operation.finally(() => {
+        barrioPending.current = undefined;
+      });
+    };
+    return (
+      <SafeAreaView style={styles.wrap}>
+        <BarrioHomeContent
+          presentation={presentation}
+          greeting={t(greeting.textKey)}
+          activity={
+            activity.loaded && !error
+              ? {
+                  dailyCount,
+                  dailyTarget,
+                  streak,
+                  freezes,
+                  totalDue,
+                  totalNew,
+                  newAvailableToday,
+                }
+              : undefined
+          }
+          word={wordOfDay}
+          dueDecks={quickDecks.map((deck) => ({
+            id: deck.id,
+            name: getDeckDisplayName(deck),
+            cardCount: deck.cards.length,
+            dueCount: deck.dueCount,
+          }))}
+          reviewMeasured={activity.measuredSeconds !== undefined}
+          replyMeasured={responseSeconds !== undefined}
+          showDevelopment={SHOW_REVIEW_TOOLS}
+          onPrimary={primary}
+          onManagePlan={(planId) => {
+            if (!starting.current) nav.navigate('DailyPlan', { planId });
+          }}
+          onBrowseStudy={() => nav.navigate('Study')}
+          onDeckPress={(deckId) => {
+            void startStudy(deckId);
+          }}
+          onWordAudio={(card) => {
+            void speakCard(card);
+          }}
+          onTool={(route) => nav.navigate(route)}
+        />
       </SafeAreaView>
     );
   }
