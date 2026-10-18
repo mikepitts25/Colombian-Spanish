@@ -14,7 +14,7 @@ This is a reviewable design package, not a shipped theme or navigation change. A
 | B · Noche                | Refines the current dark presentation, retaining a yellow primary action and familiar contrast. Lowest visual migration cost.                                     | Less distinct from the existing app; dark-only delivery would leave light-mode work open.                                                                                                                                   |
 | C · Ruta                 | A two-step review→response motif makes the daily sequence visible without fictional rewards.                                                                      | Can become cluttered when plans have different phases; route graphics must derive from the actual plan, never imply an invented curriculum or proficiency level.                                                            |
 
-Use A as the candidate for owner choice; retain B as a continuity option. These are hypotheses about clarity and engagement, not measured effectiveness results. No market research or competitor claims are added in this package.
+The owner selected A — Barrio in this chat on 2026-10-18 as the direction guiding the next UI design; retain B as a continuity reference. These are hypotheses about clarity and engagement, not measured effectiveness results. No market research or competitor claims are added in this package.
 
 ## Grounding and boundaries
 
@@ -52,4 +52,4 @@ Both 1320×1100 PNGs were rendered and inspected: all three Home variants and th
 
 Editable sources: `home-directions.svg`, `barrio-flow.svg`; source generator `render.cjs` (verified with Node v24.5.0 and `@resvg/resvg-js` 2.6.2). Render with Node plus `@resvg/resvg-js` available outside the app tree, for example `node render.cjs /absolute/path/to/@resvg/resvg-js`. No renderer dependency is added to the app. Run project Prettier on the generator after editing. Same-machine regeneration was checked byte-for-byte. The rendered files are review artifacts; renderer/font differences can alter rasterization across machines.
 
-**Human choice still open:** approve A, B or C (or specify changes) before product architecture/implementation. Review the suggested route labels, cultural character and rights approach. This closes AI preparation B08.1-A1 only; B08.1 and all implementation/native acceptance parents remain open.
+**Direction selected:** A — Barrio, owner reply in this chat on 2026-10-18. Use the bundles above to develop the semantic foundation and concrete screens. This selection resolves the direction question; exact bilingual route labels, cultural/brand character, focused implementation designs and release acceptance remain separate. B08.1-A1 preparation and B08.1-A2 direction choice are complete; B08.1 and all implementation/native acceptance parents remain open.

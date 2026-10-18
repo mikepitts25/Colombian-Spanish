@@ -1,0 +1,20 @@
+[
+  {
+    "device": "5E9A8854-135A-4675-A437-4EFCA043F656",
+    "name": "Colombian Spanish Plan Narrow QA",
+    "type": "com.apple.CoreSimulator.SimDeviceType.iPhone-SE-3rd-generation",
+    "state": "Shutdown"
+  },
+  {
+    "device": "DABA2821-3619-4F4A-B0C3-54E70B31511F",
+    "name": "Colombian Spanish Fresh Mission Keyboard QA",
+    "type": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-8GB",
+    "state": "Booted"
+  },
+  {
+    "device": "E66076BE-D9F8-49FB-870F-F29B57C4CA40",
+    "name": "Colombian Spanish Mini Tablet QA",
+    "type": "com.apple.CoreSimulator.SimDeviceType.iPad-mini-A17-Pro",
+    "state": "Booted"
+  }
+]

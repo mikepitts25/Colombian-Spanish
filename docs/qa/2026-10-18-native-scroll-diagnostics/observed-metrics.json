@@ -1,0 +1,119 @@
+[
+  {
+    "phase": "default-before-drag",
+    "probe": "initial",
+    "viewport": {
+      "x": 0,
+      "y": 20,
+      "width": 375,
+      "height": 565
+    },
+    "content": [375, 624]
+  },
+  {
+    "phase": "default-after-drag",
+    "probe": "initial",
+    "viewport": {
+      "x": 0,
+      "y": 20,
+      "width": 375,
+      "height": 565
+    },
+    "content": [375, 624],
+    "touches": 1,
+    "drag": {
+      "x": 0,
+      "y": 0
+    },
+    "offset": {
+      "x": 0,
+      "y": 59.482078424609746
+    }
+  },
+  {
+    "phase": "live-maximum-after-drag",
+    "probe": "initial",
+    "viewport": {
+      "x": 0,
+      "y": 20,
+      "width": 375,
+      "height": 335
+    },
+    "content": [375, 1892],
+    "touches": 2,
+    "drag": {
+      "x": 0,
+      "y": 59
+    },
+    "offset": {
+      "x": 0,
+      "y": 59.482078424609746
+    }
+  },
+  {
+    "phase": "fresh-maximum-bottom",
+    "probe": "initial",
+    "viewport": {
+      "x": 0,
+      "y": 20,
+      "width": 375,
+      "height": 335
+    },
+    "content": [375, 1892],
+    "touches": 4,
+    "drag": {
+      "x": 0,
+      "y": 0
+    },
+    "offset": {
+      "x": 0,
+      "y": 1557.4486647389754
+    }
+  },
+  {
+    "phase": "fresh-maximum-downward-no-move",
+    "probe": "initial",
+    "viewport": {
+      "x": 0,
+      "y": 20,
+      "width": 375,
+      "height": 335
+    },
+    "content": [375, 1892],
+    "touches": 5,
+    "drag": {
+      "x": 0,
+      "y": 1557
+    },
+    "offset": {
+      "x": 0,
+      "y": 1557.4486647389754
+    }
+  },
+  {
+    "phase": "refined-live-maximum-drag",
+    "probe": "refined",
+    "viewport": {
+      "x": 0,
+      "y": 20,
+      "width": 375,
+      "height": 335
+    },
+    "content": [375, 1892],
+    "touches": 1,
+    "drag": {
+      "offset": {
+        "x": 0,
+        "y": 0
+      },
+      "content": {
+        "width": 375,
+        "height": 1892
+      },
+      "viewport": {
+        "width": 375,
+        "height": 335
+      }
+    }
+  }
+]

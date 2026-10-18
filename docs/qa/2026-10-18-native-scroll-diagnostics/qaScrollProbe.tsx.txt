@@ -1,0 +1,16 @@
+import React from 'react';
+import { Text } from 'react-native';
+export function useScrollProbe() {
+  const [data, setData] = React.useState({});
+  const update = (patch) => setData(old => { const next = { ...old, ...patch }; return JSON.stringify(old) === JSON.stringify(next) ? old : next; });
+  const handlers = {
+    onLayout: e => update({ viewport: e.nativeEvent.layout }),
+    onContentSizeChange: (w,h) => update({ content: [w,h] }),
+    onScrollBeginDrag: e => update({ drag: { offset: e.nativeEvent.contentOffset, content: e.nativeEvent.contentSize, viewport: e.nativeEvent.layoutMeasurement } }),
+    onScroll: e => update({ offset: e.nativeEvent.contentOffset }),
+    onTouchStart: () => setData(old => ({...old, touches: (old.touches || 0) + 1})),
+    scrollEventThrottle: 32,
+  };
+  const overlay = <Text pointerEvents="none" allowFontScaling={false} style={{position:'absolute',top:0,right:0,width:155,zIndex:10000,backgroundColor:'white',color:'black',fontSize:9}}>QA scroll {JSON.stringify(data)}</Text>;
+  return {handlers, overlay};
+}
