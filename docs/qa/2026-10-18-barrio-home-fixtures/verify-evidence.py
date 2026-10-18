@@ -38,6 +38,12 @@ resumed = states['phone-review-resumed']
 assert review['plan'] == resumed['plan']
 assert review['plan']['current']['review']['session']['queue']['cardIds'] == ['catchup-5', 'catchup-6']
 assert resumed['session']['cardId'] == 'catchup-5'
+# A resume may refresh its checkpoint time, but must retain the complete
+# intended deck/card/queue/session/region/limits contract without extra fields.
+expected_session = review['plan']['current']['review']['session']
+assert {k: v for k, v in resumed['session'].items() if k != 'updatedAt'} == {
+    k: v for k, v in expected_session.items() if k != 'updatedAt'
+}, 'Resumed ordinary session diverges from the retained review session'
 assert {k for k, v in review['keyHashes'].items() if resumed['keyHashes'][k] != v} == {'SRS_LAST_STUDY_SESSION_V1'}
 assert states['phone-system-light']['keyHashes'] == states['phone-system-dark']['keyHashes']
 assert states['phone-system-dark']['keyHashes'] == states['phone-barrio-return']['keyHashes'] == states['phone-system-cold']['keyHashes']
