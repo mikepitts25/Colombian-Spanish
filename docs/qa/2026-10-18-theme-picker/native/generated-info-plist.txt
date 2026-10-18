@@ -1,0 +1,62 @@
+{
+  "CADisableMinimumFrameDurationOnPhone" => true
+  "CFBundleDevelopmentRegion" => "$(DEVELOPMENT_LANGUAGE)"
+  "CFBundleDisplayName" => "Colombian Spanish"
+  "CFBundleExecutable" => "$(EXECUTABLE_NAME)"
+  "CFBundleIdentifier" => "$(PRODUCT_BUNDLE_IDENTIFIER)"
+  "CFBundleInfoDictionaryVersion" => "6.0"
+  "CFBundleName" => "$(PRODUCT_NAME)"
+  "CFBundlePackageType" => "$(PRODUCT_BUNDLE_PACKAGE_TYPE)"
+  "CFBundleShortVersionString" => "1.0.0"
+  "CFBundleSignature" => "????"
+  "CFBundleURLTypes" => [
+    0 => {
+      "CFBundleURLSchemes" => [
+        0 => "com.mikepitts.colombianspanish"
+      ]
+    }
+  ]
+  "CFBundleVersion" => "1.0.0"
+  "ITSAppUsesNonExemptEncryption" => false
+  "LSMinimumSystemVersion" => "12.0"
+  "LSRequiresIPhoneOS" => true
+  "NSAppTransportSecurity" => {
+    "NSAllowsArbitraryLoads" => false
+    "NSAllowsLocalNetworking" => true
+  }
+  "NSMicrophoneUsageDescription" => "Allow Colombian Spanish to access the microphone only when you explicitly record a local practice take."
+  "RCTMetroPort" => "$(RCT_METRO_PORT)"
+  "RCTNewArchEnabled" => true
+  "UIApplicationSceneManifest" => {
+    "UIApplicationSupportsMultipleScenes" => false
+    "UISceneConfigurations" => {
+      "UIWindowSceneSessionRoleApplication" => [
+        0 => {
+          "UISceneConfigurationName" => "Default Configuration"
+          "UISceneDelegateClassName" => "EXExpoAppSceneDelegate"
+        }
+      ]
+    }
+  }
+  "UIBackgroundModes" => [
+    0 => "audio"
+  ]
+  "UILaunchStoryboardName" => "SplashScreen"
+  "UIRequiredDeviceCapabilities" => [
+    0 => "arm64"
+  ]
+  "UIRequiresFullScreen" => false
+  "UIStatusBarStyle" => "UIStatusBarStyleDefault"
+  "UISupportedInterfaceOrientations" => [
+    0 => "UIInterfaceOrientationPortrait"
+    1 => "UIInterfaceOrientationPortraitUpsideDown"
+  ]
+  "UISupportedInterfaceOrientations~ipad" => [
+    0 => "UIInterfaceOrientationPortrait"
+    1 => "UIInterfaceOrientationPortraitUpsideDown"
+    2 => "UIInterfaceOrientationLandscapeLeft"
+    3 => "UIInterfaceOrientationLandscapeRight"
+  ]
+  "UIUserInterfaceStyle" => "Automatic"
+  "UIViewControllerBasedStatusBarAppearance" => false
+}

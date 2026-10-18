@@ -1,16 +1,11 @@
+import Pressable from '../components/ThemedPressable';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useRef, useState } from 'react';
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  useWindowDimensions,
-} from 'react-native';
+import { Alert, StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { colors } from '../styles/theme';
+
 import { getDailyProgress, loadDecks } from '../storage/storage';
 import { getLearningEvents, validateLearningEvents } from '../storage/learningEvents';
 import { MAX_BACKUP_CHARACTERS, validateBackupDecks } from '../storage/backupValidation';
@@ -43,6 +38,7 @@ function SettingsRow({
   chevron?: boolean;
   disabled?: boolean;
 }) {
+  const styles = useThemedStyles(makeStyles);
   return (
     <Pressable
       style={styles.settingsRow}
@@ -67,11 +63,15 @@ function SettingsRow({
 }
 
 function Divider() {
+  const styles = useThemedStyles(makeStyles);
   return <View style={styles.divider} />;
 }
 
 export default function SettingsScreen() {
+  const styles = useThemedStyles(makeStyles);
+  const { colors } = useAppTheme();
   const { fontScale } = useWindowDimensions();
+  const appTheme = useAppTheme();
   const nav = useNavigation<any>();
   const { t, toggleLanguage } = useLanguage();
   const buildLabel = t(
@@ -313,7 +313,7 @@ export default function SettingsScreen() {
               disabled={fileBusy}
               onPress={() => runFileAction(() => applyFileBackup(filePreview, 'replace-state'))}
             >
-              <Text style={{ color: '#f87171' }}>{t('settings.file.restoreState')}</Text>
+              <Text style={{ color: colors.restoreDanger }}>{t('settings.file.restoreState')}</Text>
             </Pressable>
           )}
           <Pressable
@@ -330,7 +330,7 @@ export default function SettingsScreen() {
             disabled={fileBusy}
             onPress={() => runFileAction(() => applyFileBackup(filePreview, 'replace'))}
           >
-            <Text style={{ color: '#f87171' }}>{t('settings.file.replace')}</Text>
+            <Text style={{ color: colors.restoreDanger }}>{t('settings.file.replace')}</Text>
           </Pressable>
           <Pressable
             accessibilityRole="button"
@@ -403,6 +403,16 @@ export default function SettingsScreen() {
         <Text style={styles.groupLabel}>{t('settings.section.app')}</Text>
         <View style={styles.groupCard}>
           <SettingsRow
+            emoji="🎨"
+            title={t('theme.title')}
+            subtitle={t('theme.summary', {
+              theme: t(`theme.${appTheme.id}`),
+              appearance: t(`theme.${appTheme.appearance}`),
+            })}
+            onPress={() => nav.navigate('ThemeSettings')}
+          />
+          <Divider />
+          <SettingsRow
             emoji="🔊"
             title={t('audio.title')}
             subtitle={t('audio.settingsNote')}
@@ -469,56 +479,57 @@ export default function SettingsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  previewPanel: {
-    flex: 1,
-    margin: 16,
-    padding: 16,
-    borderRadius: 16,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.brand,
-  },
-  previewButton: { minHeight: 44, justifyContent: 'center', padding: 8 },
-  fileError: { color: colors.textPrimary, padding: 16 },
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  scroll: { padding: 16, paddingBottom: 120 },
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    previewPanel: {
+      flex: 1,
+      margin: 16,
+      padding: 16,
+      borderRadius: 16,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.brand,
+    },
+    previewButton: { minHeight: 44, justifyContent: 'center', padding: 8 },
+    fileError: { color: colors.textPrimary, padding: 16 },
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    scroll: { padding: 16, paddingBottom: 120 },
 
-  pageTitle: {
-    color: colors.textPrimary,
-    fontSize: 26,
-    fontWeight: '800',
-    marginBottom: 20,
-  },
+    pageTitle: {
+      color: colors.textPrimary,
+      fontSize: 26,
+      fontWeight: '800',
+      marginBottom: 20,
+    },
 
-  groupLabel: {
-    color: colors.textTertiary,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1,
-    marginBottom: 6,
-    marginLeft: 4,
-  },
-  groupCard: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 16,
-    marginBottom: 20,
-    overflow: 'hidden',
-  },
+    groupLabel: {
+      color: colors.textTertiary,
+      fontSize: 11,
+      fontWeight: '700',
+      letterSpacing: 1,
+      marginBottom: 6,
+      marginLeft: 4,
+    },
+    groupCard: {
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 16,
+      marginBottom: 20,
+      overflow: 'hidden',
+    },
 
-  settingsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-  rowEmoji: { fontSize: 18 },
-  rowInfo: { flex: 1, gap: 2 },
-  rowTitle: { color: colors.textPrimary, fontSize: 14, fontWeight: '600' },
-  rowSubtitle: { color: colors.textSecondary, fontSize: 12 },
-  chevron: { color: colors.textSecondary, fontSize: 22, fontWeight: '300' },
-  divider: { height: 1, backgroundColor: colors.border, marginLeft: 46 },
-});
+    settingsRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+      paddingVertical: 14,
+      paddingHorizontal: 16,
+    },
+    rowEmoji: { fontSize: 18 },
+    rowInfo: { flex: 1, gap: 2 },
+    rowTitle: { color: colors.textPrimary, fontSize: 14, fontWeight: '600' },
+    rowSubtitle: { color: colors.textSecondary, fontSize: 12 },
+    chevron: { color: colors.textSecondary, fontSize: 22, fontWeight: '300' },
+    divider: { height: 1, backgroundColor: colors.border, marginLeft: 46 },
+  });

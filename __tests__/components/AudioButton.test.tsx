@@ -1,5 +1,7 @@
+import { Image, StyleSheet } from 'react-native';
+import { ThemeProvider, useThemeSelection } from '../../src/context/ThemeContext';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { act, render, fireEvent } from '@testing-library/react-native';
 import AudioButton from '../../src/components/AudioButton';
 
 // The tts.speak function is called by AudioButton. We spy on the module.
@@ -57,4 +59,38 @@ describe('AudioButton', () => {
     expect(mockSpeakCard).toHaveBeenCalledWith(card);
     expect(mockSpeak).not.toHaveBeenCalled();
   });
+});
+
+it('Barrio audio feedback uses its pressed surface without changing the spoken text', () => {
+  let current!: ReturnType<typeof useThemeSelection>;
+  function Probe() {
+    const next = useThemeSelection();
+    React.useLayoutEffect(() => {
+      current = next;
+    }, [next]);
+    return <AudioButton text="hola" />;
+  }
+  const ui = render(
+    <ThemeProvider>
+      <Probe />
+    </ThemeProvider>,
+  );
+  act(() => current.applySelection({ themeId: 'barrio', appearanceMode: 'light' }));
+  expect(ui.queryByText('🔊 Escuchar')).toBeNull();
+  expect(ui.UNSAFE_getByType(Image)).toHaveStyle({ width: 18, height: 18, tintColor: '#18352F' });
+  expect(ui.getByRole('button', { name: 'Escuchar' })).toHaveStyle({ minHeight: 48 });
+  let button = ui.getByText('Escuchar').parent!;
+  while (button.parent && typeof button.props.style !== 'function') button = button.parent;
+  const pressedStyle =
+    typeof button.props.style === 'function'
+      ? button.props.style({ pressed: true })
+      : button.props.style;
+  expect(StyleSheet.flatten(pressedStyle)).toMatchObject({ backgroundColor: '#E4E9DD' });
+  fireEvent(ui.getByRole('button', { name: 'Escuchar' }), 'focus', { nativeEvent: {} });
+  expect(ui.getByRole('button', { name: 'Escuchar' })).toHaveStyle({
+    outlineWidth: 2,
+    outlineColor: '#A04B25',
+  });
+  fireEvent.press(ui.getByRole('button', { name: 'Escuchar' }));
+  expect(mockSpeak).toHaveBeenCalledWith('hola');
 });

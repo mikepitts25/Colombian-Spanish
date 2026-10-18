@@ -1,9 +1,11 @@
+import Pressable from './ThemedPressable';
+import { useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { FlashCard } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { splitExampleText } from '../utils/exampleText';
-import { colors } from '../styles/theme';
 
 // Optional self-check only. It deliberately has no storage or grading capability.
 export default function MissionFollowUp({
@@ -13,6 +15,7 @@ export default function MissionFollowUp({
   cards: FlashCard[];
   onDone: () => void;
 }) {
+  const styles = useThemedStyles(makeStyles);
   const { t } = useLanguage();
   const [index, setIndex] = useState(0),
     [revealed, setRevealed] = useState(false);
@@ -57,24 +60,25 @@ export default function MissionFollowUp({
     </View>
   );
 }
-const styles = StyleSheet.create({
-  card: {
-    padding: 20,
-    gap: 18,
-    borderRadius: 20,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.borderBrand,
-  },
-  title: { color: colors.textPrimary, fontSize: 23, fontWeight: '700' },
-  note: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
-  cue: { color: colors.textPrimary, fontSize: 24, lineHeight: 32 },
-  button: {
-    minHeight: 48,
-    padding: 14,
-    borderRadius: 12,
-    backgroundColor: colors.brand,
-    justifyContent: 'center',
-  },
-  buttonText: { color: colors.textInverse, fontSize: 16, fontWeight: '700', textAlign: 'center' },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    card: {
+      padding: 20,
+      gap: 18,
+      borderRadius: 20,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.borderBrand,
+    },
+    title: { color: colors.textPrimary, fontSize: 23, fontWeight: '700' },
+    note: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
+    cue: { color: colors.textPrimary, fontSize: 24, lineHeight: 32 },
+    button: {
+      minHeight: 48,
+      padding: 14,
+      borderRadius: 12,
+      backgroundColor: colors.brand,
+      justifyContent: 'center',
+    },
+    buttonText: { color: colors.textInverse, fontSize: 16, fontWeight: '700', textAlign: 'center' },
+  });

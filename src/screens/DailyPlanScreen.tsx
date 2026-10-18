@@ -1,5 +1,9 @@
+import Pressable from '../components/ThemedPressable';
+import { controlSurface, controlText } from '../styles/controlStates';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SHOW_REVIEW_TOOLS } from '../config';
@@ -10,9 +14,9 @@ import { abandonDailyPlan, readDailyPlan } from '../storage/dailyPlans';
 import { DailyPlan } from '../storage/dailyPlanSchema';
 import { availableDailyResponse } from '../missions/dailyResponse';
 import MissionScreen from './MissionScreen';
-import { colors } from '../styles/theme';
 
 export default function DailyPlanScreen() {
+  const styles = useThemedStyles(makeStyles);
   const { fontScale } = useWindowDimensions();
   const nav = useNavigation<any>(),
     route = useRoute<any>();
@@ -151,29 +155,32 @@ function PlanAction({
   onPress: () => void;
   disabled: boolean;
 }) {
+  const styles = useThemedStyles(makeStyles);
+  const theme = useAppTheme();
   return (
     <Pressable
       accessibilityRole="button"
       disabled={disabled}
       onPress={onPress}
-      style={styles.button}
+      style={({ pressed }) => [styles.button, controlSurface(theme, pressed, disabled)]}
     >
-      <Text style={styles.buttonText}>{label}</Text>
+      <Text style={[styles.buttonText, controlText(theme, disabled)]}>{label}</Text>
     </Pressable>
   );
 }
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: 20, gap: 16 },
-  title: { color: colors.textPrimary, fontSize: 28, fontWeight: '800' },
-  body: { color: colors.textPrimary, fontSize: 17 },
-  button: {
-    minHeight: 48,
-    justifyContent: 'center',
-    padding: 14,
-    backgroundColor: colors.surface,
-    borderRadius: 14,
-    margin: 8,
-  },
-  buttonText: { color: colors.brand, fontSize: 16, fontWeight: '700' },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    content: { padding: 20, gap: 16 },
+    title: { color: colors.textPrimary, fontSize: 28, fontWeight: '800' },
+    body: { color: colors.textPrimary, fontSize: 17 },
+    button: {
+      minHeight: 48,
+      justifyContent: 'center',
+      padding: 14,
+      backgroundColor: colors.surface,
+      borderRadius: 14,
+      margin: 8,
+    },
+    buttonText: { color: colors.brand, fontSize: 16, fontWeight: '700' },
+  });

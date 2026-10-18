@@ -1,0 +1,32 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/components/ThemedTextInput.test.tsx
+
+FAIL __tests__/components/ThemedTextInput.test.tsx
+  ✓ focused drafts retain their native input while appearance and focus ink change (340 ms)
+  ✕ System delegates keyboard appearance to native traits while explicit modes keep their override (3 ms)
+
+  ● System delegates keyboard appearance to native traits while explicit modes keep their override
+
+    expect(element).toHaveProp("keyboardAppearance", "default") // element.getAttribute(keyboardAppearance) === "default"
+
+    Expected the element to have prop:
+      keyboardAppearance="default"
+    Received:
+      keyboardAppearance="light"
+
+      56 |     fireEvent(input, 'focus', {nativeEvent:{}});
+      57 |     act(() => current.applySelection({themeId:'barrio',appearanceMode:'system'}));
+    > 58 |     expect(input).toHaveProp('keyboardAppearance','default');
+         |                   ^
+      59 |     scheme.mockReturnValue('dark');
+      60 |     ui.rerender(tree());
+      61 |     expect(ui.getByDisplayValue('retained system draft')).toBe(input);
+
+      at Object.toHaveProp (__tests__/components/ThemedTextInput.test.tsx:58:19)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 passed, 2 total
+Snapshots:   0 total
+Time:        1.191 s
+Ran all test suites within paths "__tests__/components/ThemedTextInput.test.tsx".

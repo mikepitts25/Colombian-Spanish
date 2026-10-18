@@ -1,0 +1,12 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/components/ThemedTextInput.test.tsx __tests__/context/ThemeContext.test.tsx
+
+PASS __tests__/components/ThemedTextInput.test.tsx
+PASS __tests__/context/ThemeContext.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.987 s, estimated 2 s
+Ran all test suites within paths "__tests__/components/ThemedTextInput.test.tsx", "__tests__/context/ThemeContext.test.tsx".

@@ -1,3 +1,4 @@
+import { ThemeId, AppearanceMode, normalizeThemeSelection } from '../utils/themePreference';
 import AsyncStorage, { StorageAccess, withStorageTransaction } from './durableStorage';
 import {
   LearningLevel,
@@ -15,6 +16,8 @@ export type LearningReason = 'travel' | 'move' | 'love' | 'work' | 'culture' | '
 export type HomeRegion = 'all' | 'paisa' | 'rolo' | 'costeno' | 'valluno' | 'llanero';
 
 export type Prefs = {
+  themeId: ThemeId;
+  appearanceMode: AppearanceMode;
   autoSpeak: boolean;
   speechRate: number; // Requested clip/TTS playback rate; perceived tempo varies by backend
   uiLanguage: UiLanguage;
@@ -28,6 +31,8 @@ export type Prefs = {
 };
 
 const DEFAULTS: Prefs = {
+  themeId: 'classic',
+  appearanceMode: 'system',
   autoSpeak: false,
   speechRate: 0.98,
   uiLanguage: 'es',
@@ -60,6 +65,7 @@ export async function getPrefs(access: StorageAccess = AsyncStorage): Promise<Pr
   try {
     const parsed = JSON.parse(raw) as Partial<Prefs>;
     return {
+      ...normalizeThemeSelection(parsed),
       learningLevel: LEARNING_LEVELS.includes(parsed.learningLevel as LearningLevel)
         ? parsed.learningLevel!
         : DEFAULTS.learningLevel,

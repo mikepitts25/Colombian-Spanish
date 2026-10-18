@@ -1,0 +1,52 @@
+[
+  {
+    "surface": "phone",
+    "file": "/tmp/colombian-barrio-phone-original.json",
+    "backupSHA256": "15b148f13e926ed3c8dc4571e283116f6de366b8b9b1dab27f5ad0d4f8efde53",
+    "characters": 376059,
+    "normalizedFields": [],
+    "sourceDevice": "5E9A8854-135A-4675-A437-4EFCA043F656",
+    "sourceContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+    "sourceKeyHashes": {
+      "SRS_DECKS_V3": "4089507d856f2e9866fb42f2cb63959287ec47dfa94ca3e659abb68ffa31fecb",
+      "SRS_DAILY_PLAN_V1": "3edd9c565e61c5d971b758f88aa85642565619595f6ae32522f7ca860fc3cf10",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_PREFS_V1": "77055397846d78338d34eb796687d65baa95cba8212bdb440f1cfdeb82d97c10",
+      "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+      "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+      "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "564a2142ad2ef29f2fab88631bc665563447bdafe39f7b0f508815d1f0d4e266",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+    },
+    "deckCount": 48,
+    "cardCount": 1402,
+    "eventCount": 10
+  },
+  {
+    "surface": "tablet",
+    "file": "/tmp/colombian-barrio-tablet-original.json",
+    "backupSHA256": "f8e07944c5aa293c4fea0d6a0ece91ff605b56c1fe14ceb21c53064b11f8a205",
+    "characters": 376904,
+    "normalizedFields": [],
+    "sourceDevice": "DABA2821-3619-4F4A-B0C3-54E70B31511F",
+    "sourceContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DABA2821-3619-4F4A-B0C3-54E70B31511F/data/Containers/Data/Application/8FB7A15F-3AA2-472B-97E6-D1251A614B92",
+    "sourceKeyHashes": {
+      "SRS_DECKS_V3": "f8a072a2c06fa5eaac7d4cfa9347f8f7ae3281b220296bb08cfc1ecb0d70f386",
+      "SRS_DAILY_PLAN_V1": "9a205cd703b2e5f091300a43619bb6100dcba85730120daa72c99ab057847908",
+      "SRS_MISSIONS_V1": "dda005e7f63fd5035df0d065b488295aad003596a4bab04af421803dae4dcfce",
+      "SRS_PREFS_V1": "22832054038a6af44fc34bef5114f7d89a7213e8d72ec01819f947e6ca4b1e59",
+      "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+      "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+      "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "038415fb75da3f6f96a446a4593df1360a134d41dbcf4275152e4b41e4780541",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_LEARNING_EVENTS_V1": "943cd4efe0c963ccb8c73cc5fe79d4a07319e528fa06b0345fc047d5abcf66e7"
+    },
+    "deckCount": 48,
+    "cardCount": 1402,
+    "eventCount": 11
+  }
+]

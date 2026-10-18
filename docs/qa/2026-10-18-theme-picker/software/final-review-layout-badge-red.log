@@ -1,0 +1,85 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/ReviewScreen.test.tsx __tests__/screens/FlaggedScreen.test.tsx
+
+FAIL __tests__/screens/ReviewScreen.test.tsx
+  ● Barrio selected filters use on-fill ink and preserve Classic white
+
+    expect(element).toHaveStyle()
+
+    - Expected
+
+    - color: #14291F;
+    + color: white;
+
+      211 |   for (const label of ['Todas', 'Todos los decks']) {
+      212 |     const labels = screen.getAllByText(label);
+    > 213 |     expect(labels[labels.length - 1]).toHaveStyle({ color: '#14291F' });
+          |                                       ^
+      214 |   }
+      215 |   screen.applyTheme({ themeId: 'classic', appearanceMode: 'dark' });
+      216 |   const labels = screen.getAllByText('Todas');
+
+      at Object.toHaveStyle (__tests__/screens/ReviewScreen.test.tsx:213:39)
+
+  ● Barrio filter viewports fit full 48-point chips plus focus rings while Classic retains 38
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 56
+    Received: 38
+
+      222 |   const rows = screen.UNSAFE_getAllByType(ScrollView).filter((row) => row.props.horizontal);
+      223 |   expect(rows).toHaveLength(2);
+    > 224 |   for (const row of rows) expect(StyleSheet.flatten(row.props.style).height).toBe(56);
+          |                                                                              ^
+      225 |   screen.applyTheme({ themeId: 'classic', appearanceMode: 'dark' });
+      226 |   for (const row of screen.UNSAFE_getAllByType(ScrollView).filter((row) => row.props.horizontal)) {
+      227 |     expect(StyleSheet.flatten(row.props.style).height).toBe(38);
+
+      at Object.toBe (__tests__/screens/ReviewScreen.test.tsx:224:78)
+
+FAIL __tests__/screens/FlaggedScreen.test.tsx
+  ● Barrio light export and deck badge use readable semantic pairs
+
+    expect(element).toHaveStyle()
+
+    - Expected
+
+    - color: #285F81;
+    + color: #56675B;
+
+      151 |   const { colors } = resolveAppTheme({ themeId: 'barrio', appearanceMode }, null);
+      152 |   const badge = screen.getByText('Deck "quoted"');
+    > 153 |   expect(badge).toHaveStyle({ color: colors.tagText });
+          |                 ^
+      154 |   expect(badge.parent).toHaveStyle({ backgroundColor: colors.tagSurface });
+      155 |   expect(screen.getByText('📋 Copiar CSV')).toHaveStyle({ color: colors.audioText });
+      156 |   screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+
+      at toHaveStyle (__tests__/screens/FlaggedScreen.test.tsx:153:17)
+
+  ● Barrio dark export and deck badge use readable semantic pairs
+
+    expect(element).toHaveStyle()
+
+    - Expected
+
+    - color: #A7D2EC;
+    + color: #A6B6AA;
+
+      151 |   const { colors } = resolveAppTheme({ themeId: 'barrio', appearanceMode }, null);
+      152 |   const badge = screen.getByText('Deck "quoted"');
+    > 153 |   expect(badge).toHaveStyle({ color: colors.tagText });
+          |                 ^
+      154 |   expect(badge.parent).toHaveStyle({ backgroundColor: colors.tagSurface });
+      155 |   expect(screen.getByText('📋 Copiar CSV')).toHaveStyle({ color: colors.audioText });
+      156 |   screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+
+      at toHaveStyle (__tests__/screens/FlaggedScreen.test.tsx:153:17)
+
+Test Suites: 2 failed, 2 total
+Tests:       4 failed, 11 passed, 15 total
+Snapshots:   0 total
+Time:        2.478 s
+Ran all test suites within paths "__tests__/screens/ReviewScreen.test.tsx", "__tests__/screens/FlaggedScreen.test.tsx".

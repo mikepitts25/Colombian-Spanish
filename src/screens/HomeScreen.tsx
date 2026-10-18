@@ -1,10 +1,13 @@
+import Pressable from '../components/ThemedPressable';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import { readActivityTimings } from '../storage/missions';
 import { calibratedActivitySeconds, ActivityTimingSample } from '../missions/activeTiming';
 import { SHOW_REVIEW_TOOLS } from '../config';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, radius } from '../styles/theme';
+import { radius } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
 import { getDailyProgress, getStreakState, getLastStudyDay } from '../storage/storage';
@@ -119,6 +122,9 @@ async function loadHomeProgress() {
 }
 
 export default function HomeScreen() {
+  const styles = useThemedStyles(makeStyles);
+  const appTheme = useAppTheme();
+  const { colors } = useAppTheme();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale >= 1.4;
   const { ready, decks, activeDeckId, setActiveDeckId, reload } = useDeck();
@@ -560,16 +566,29 @@ export default function HomeScreen() {
           {quickDecks.length > 0 ? (
             <View style={styles.dueDeckList}>
               {quickDecks.map((deck) => {
-                const color = CATEGORY_COLORS[deck.cat] ?? '#64748b';
+                const color = CATEGORY_COLORS[deck.cat] ?? colors.mutedInk;
                 const emoji = CATEGORY_EMOJIS[deck.cat] ?? '📦';
                 const isActive = deck.id === activeDeckId;
                 return (
                   <Pressable
                     key={deck.id}
-                    style={[styles.deckRow, isActive && { borderColor: color + '99' }]}
+                    style={[
+                      styles.deckRow,
+                      isActive && {
+                        borderColor: appTheme.id === 'classic' ? color + '99' : colors.border,
+                      },
+                    ]}
                     onPress={() => startStudy(deck.id)}
                   >
-                    <View style={[styles.deckIconWrap, { backgroundColor: color + '20' }]}>
+                    <View
+                      style={[
+                        styles.deckIconWrap,
+                        {
+                          backgroundColor:
+                            appTheme.id === 'classic' ? color + '20' : colors.surfaceElevated,
+                        },
+                      ]}
+                    >
                       <Text style={styles.deckEmoji}>{emoji}</Text>
                     </View>
                     <View style={styles.deckInfo}>
@@ -609,239 +628,240 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  loadingWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12 },
-  loadingFlag: { fontSize: 48 },
-  loadingText: { color: colors.textSecondary, fontSize: 16 },
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    loadingWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12 },
+    loadingFlag: { fontSize: 48 },
+    loadingText: { color: colors.textSecondary, fontSize: 16 },
 
-  flagStripe: { flexDirection: 'row', height: 3 },
-  flagBand: { height: 3 },
+    flagStripe: { flexDirection: 'row', height: 3 },
+    flagBand: { height: 3 },
 
-  scroll: { paddingBottom: 120 },
+    scroll: { paddingBottom: 120 },
 
-  header: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  greetingWrap: { flex: 1, gap: 3 },
-  greeting: { color: colors.textPrimary, fontSize: 21, fontWeight: '800', lineHeight: 25 },
-  greetingSub: { color: colors.textSecondary, fontSize: 13 },
-  avatarBtn: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: '#FFDA00',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarText: { fontSize: 18 },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      paddingHorizontal: 16,
+      paddingTop: 10,
+      paddingBottom: 10,
+    },
+    greetingWrap: { flex: 1, gap: 3 },
+    greeting: { color: colors.textPrimary, fontSize: 21, fontWeight: '800', lineHeight: 25 },
+    greetingSub: { color: colors.textSecondary, fontSize: 13 },
+    avatarBtn: {
+      width: 38,
+      height: 38,
+      borderRadius: 19,
+      backgroundColor: colors.flagHighlight,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    avatarText: { fontSize: 18 },
 
-  todayCard: {
-    marginHorizontal: 16,
-    marginBottom: 14,
-    backgroundColor: colors.surface,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: 14,
-    gap: 12,
-  },
-  todayHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    gap: 12,
-  },
-  eyebrow: {
-    color: colors.brand,
-    fontSize: 12,
-    fontWeight: '800',
-    textTransform: 'uppercase',
-  },
-  todaySummary: { flex: 1, minWidth: 0 },
-  stackedHeader: { flexDirection: 'column', alignItems: 'stretch', gap: 8 },
-  todayDueUnit: { color: colors.textPrimary, fontSize: 18, fontWeight: '700' },
-  todayTitle: {
-    color: colors.textPrimary,
-    fontSize: 30,
-    fontWeight: '800',
-    lineHeight: 34,
-    fontVariant: ['tabular-nums'],
-  },
-  todaySub: { color: colors.textSecondary, fontSize: 13, marginTop: 1 },
-  streakPill: {
-    flexShrink: 0,
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: radius.full,
-    borderWidth: 1,
-    borderColor: colors.border,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  streakText: {
-    color: colors.textPrimary,
-    fontSize: 13,
-    fontWeight: '800',
-  },
-  goalPanel: {
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderRadius: 12,
-    padding: 12,
-    gap: 8,
-  },
-  goalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  goalLabel: { color: colors.textSecondary, fontSize: 13, fontWeight: '700' },
-  goalValue: {
-    color: colors.textPrimary,
-    fontSize: 13,
-    fontWeight: '800',
-    fontVariant: ['tabular-nums'],
-  },
-  goalTrack: {
-    height: 8,
-    borderRadius: radius.full,
-    backgroundColor: colors.surfaceElevated,
-    overflow: 'hidden',
-  },
-  goalFill: {
-    height: 8,
-    borderRadius: radius.full,
-    backgroundColor: colors.brand,
-  },
-  primaryButton: {
-    minHeight: 48,
-    borderRadius: 13,
-    backgroundColor: colors.brand,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-  },
-  primaryButtonText: {
-    color: colors.textInverse,
-    fontSize: 16,
-    fontWeight: '900',
-  },
+    todayCard: {
+      marginHorizontal: 16,
+      marginBottom: 14,
+      backgroundColor: colors.surface,
+      borderRadius: 16,
+      borderWidth: 1,
+      borderColor: colors.border,
+      padding: 14,
+      gap: 12,
+    },
+    todayHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      gap: 12,
+    },
+    eyebrow: {
+      color: colors.brand,
+      fontSize: 12,
+      fontWeight: '800',
+      textTransform: 'uppercase',
+    },
+    todaySummary: { flex: 1, minWidth: 0 },
+    stackedHeader: { flexDirection: 'column', alignItems: 'stretch', gap: 8 },
+    todayDueUnit: { color: colors.textPrimary, fontSize: 18, fontWeight: '700' },
+    todayTitle: {
+      color: colors.textPrimary,
+      fontSize: 30,
+      fontWeight: '800',
+      lineHeight: 34,
+      fontVariant: ['tabular-nums'],
+    },
+    todaySub: { color: colors.textSecondary, fontSize: 13, marginTop: 1 },
+    streakPill: {
+      flexShrink: 0,
+      backgroundColor: colors.surfaceElevated,
+      borderRadius: radius.full,
+      borderWidth: 1,
+      borderColor: colors.border,
+      paddingHorizontal: 10,
+      paddingVertical: 6,
+    },
+    streakText: {
+      color: colors.textPrimary,
+      fontSize: 13,
+      fontWeight: '800',
+    },
+    goalPanel: {
+      backgroundColor: colors.subtlePanel,
+      borderRadius: 12,
+      padding: 12,
+      gap: 8,
+    },
+    goalHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    goalLabel: { color: colors.textSecondary, fontSize: 13, fontWeight: '700' },
+    goalValue: {
+      color: colors.textPrimary,
+      fontSize: 13,
+      fontWeight: '800',
+      fontVariant: ['tabular-nums'],
+    },
+    goalTrack: {
+      height: 8,
+      borderRadius: radius.full,
+      backgroundColor: colors.surfaceElevated,
+      overflow: 'hidden',
+    },
+    goalFill: {
+      height: 8,
+      borderRadius: radius.full,
+      backgroundColor: colors.brand,
+    },
+    primaryButton: {
+      minHeight: 48,
+      borderRadius: 13,
+      backgroundColor: colors.brand,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 16,
+    },
+    primaryButtonText: {
+      color: colors.textInverse,
+      fontSize: 16,
+      fontWeight: '900',
+    },
 
-  wordCard: {
-    marginHorizontal: 16,
-    marginBottom: 14,
-    backgroundColor: colors.surface,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: 'rgba(255,218,0,0.28)',
-    padding: 14,
-    gap: 6,
-  },
-  wordHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  wordEyebrow: {
-    color: colors.brand,
-    fontSize: 12,
-    fontWeight: '800',
-    textTransform: 'uppercase',
-  },
-  wordAudioButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.accentBlue,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  wordAudioIcon: { fontSize: 15 },
-  wordFront: { color: colors.textPrimary, fontSize: 22, fontWeight: '900' },
-  wordBack: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
+    wordCard: {
+      marginHorizontal: 16,
+      marginBottom: 14,
+      backgroundColor: colors.surface,
+      borderRadius: 14,
+      borderWidth: 1,
+      borderColor: colors.softHighlightEdge,
+      padding: 14,
+      gap: 6,
+    },
+    wordHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 12,
+    },
+    wordEyebrow: {
+      color: colors.brand,
+      fontSize: 12,
+      fontWeight: '800',
+      textTransform: 'uppercase',
+    },
+    wordAudioButton: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: colors.accentBlue,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    wordAudioIcon: { fontSize: 15 },
+    wordFront: { color: colors.textPrimary, fontSize: 22, fontWeight: '900' },
+    wordBack: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
 
-  quickActions: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  quickAction: {
-    flexBasis: '48%',
-    flexGrow: 1,
-    minHeight: 54,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 11,
-  },
-  quickActionIcon: {
-    color: colors.brand,
-    fontSize: 18,
-    fontWeight: '800',
-  },
-  quickActionLabel: {
-    color: colors.textPrimary,
-    fontSize: 13,
-    fontWeight: '800',
-  },
+    quickActions: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 10,
+    },
+    quickAction: {
+      flexBasis: '48%',
+      flexGrow: 1,
+      minHeight: 54,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 11,
+    },
+    quickActionIcon: {
+      color: colors.brand,
+      fontSize: 18,
+      fontWeight: '800',
+    },
+    quickActionLabel: {
+      color: colors.textPrimary,
+      fontSize: 13,
+      fontWeight: '800',
+    },
 
-  section: { paddingHorizontal: 16, marginBottom: 18, gap: 10 },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    gap: 12,
-  },
-  sectionTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
-  sectionSub: { color: colors.textSecondary, fontSize: 12, marginTop: 2 },
-  browseLink: { color: colors.brand, fontSize: 12, fontWeight: '800' },
-  dueDeckList: { gap: 8 },
+    section: { paddingHorizontal: 16, marginBottom: 18, gap: 10 },
+    sectionHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      gap: 12,
+    },
+    sectionTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
+    sectionSub: { color: colors.textSecondary, fontSize: 12, marginTop: 2 },
+    browseLink: { color: colors.brand, fontSize: 12, fontWeight: '800' },
+    dueDeckList: { gap: 8 },
 
-  deckRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 12,
-    padding: 10,
-  },
-  deckIconWrap: {
-    width: 38,
-    height: 38,
-    borderRadius: 11,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  deckEmoji: { fontSize: 18 },
-  deckInfo: { flex: 1, gap: 2 },
-  deckName: { color: colors.textPrimary, fontSize: 14, fontWeight: '700' },
-  deckMeta: { color: colors.textSecondary, fontSize: 12 },
-  duePill: {
-    backgroundColor: 'rgba(248,113,113,0.12)',
-    borderRadius: radius.full,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-  },
-  duePillText: { color: '#f87171', fontSize: 11, fontWeight: '700' },
-  emptyDueState: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 14,
-    padding: 16,
-    gap: 4,
-  },
-  emptyTitle: { color: colors.textPrimary, fontSize: 15, fontWeight: '800' },
-  emptyText: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
-});
+    deckRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 10,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 12,
+      padding: 10,
+    },
+    deckIconWrap: {
+      width: 38,
+      height: 38,
+      borderRadius: 11,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    deckEmoji: { fontSize: 18 },
+    deckInfo: { flex: 1, gap: 2 },
+    deckName: { color: colors.textPrimary, fontSize: 14, fontWeight: '700' },
+    deckMeta: { color: colors.textSecondary, fontSize: 12 },
+    duePill: {
+      backgroundColor: colors.troubleWash,
+      borderRadius: radius.full,
+      paddingHorizontal: 8,
+      paddingVertical: 3,
+    },
+    duePillText: { color: colors.restoreDanger, fontSize: 11, fontWeight: '700' },
+    emptyDueState: {
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 14,
+      padding: 16,
+      gap: 4,
+    },
+    emptyTitle: { color: colors.textPrimary, fontSize: 15, fontWeight: '800' },
+    emptyText: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
+  });

@@ -1,20 +1,18 @@
+import Pressable from '../components/ThemedPressable';
+import ThemedTextInput from '../components/ThemedTextInput';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  FlatList,
-  Pressable,
-  useWindowDimensions,
-} from 'react-native';
+import { StyleSheet, Text, View, FlatList, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, spacing } from '../styles/theme';
+import { spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useLanguage } from '../context/LanguageContext';
 import { speakCard } from '../services/tts';
 
 export default function PhrasebookScreen() {
+  const styles = useThemedStyles(makeStyles);
+  const { colors } = useAppTheme();
   const { ready, decks, setActiveDeckId, toggleFavorite } = useDeck();
   const { t } = useLanguage();
   const [q, setQ] = useState('');
@@ -53,7 +51,7 @@ export default function PhrasebookScreen() {
             <Text style={styles.h1}>{t('phrasebook.title')}</Text>
             <Text style={styles.sub}>{t('phrasebook.sub')}</Text>
 
-            <TextInput
+            <ThemedTextInput
               value={q}
               onChangeText={setQ}
               placeholder={t('phrasebook.searchPlaceholder')}
@@ -119,46 +117,47 @@ export default function PhrasebookScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
-  sub: { color: colors.textSecondary, marginBottom: spacing(1.5) },
-  search: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 12,
-    padding: spacing(1.25),
-    color: colors.textPrimary,
-    marginBottom: spacing(1.5),
-  },
-  row: {
-    flexDirection: 'row',
-    gap: 12,
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 12,
-    padding: spacing(1.25),
-    marginBottom: 10,
-  },
-  front: { color: colors.textPrimary, fontWeight: '900', fontSize: 16 },
-  back: { color: colors.textSecondary, marginTop: 2 },
-  example: { color: colors.textSecondary, marginTop: 6, fontStyle: 'italic' },
-  meta: { color: colors.textSecondary, marginTop: 8, fontSize: 12 },
-  stacked: { flexDirection: 'column' },
-  horizontalActions: { flexDirection: 'row', flexWrap: 'wrap' },
-  actions: { gap: 8, justifyContent: 'flex-start' },
-  actionBtn: {
-    minWidth: 48,
-    minHeight: 48,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  actionText: { color: colors.textPrimary, fontWeight: '900' },
-  empty: { color: colors.textPrimary, fontWeight: '900', fontSize: 16 },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
+    h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
+    sub: { color: colors.textSecondary, marginBottom: spacing(1.5) },
+    search: {
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 12,
+      padding: spacing(1.25),
+      color: colors.textPrimary,
+      marginBottom: spacing(1.5),
+    },
+    row: {
+      flexDirection: 'row',
+      gap: 12,
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 12,
+      padding: spacing(1.25),
+      marginBottom: 10,
+    },
+    front: { color: colors.textPrimary, fontWeight: '900', fontSize: 16 },
+    back: { color: colors.textSecondary, marginTop: 2 },
+    example: { color: colors.textSecondary, marginTop: 6, fontStyle: 'italic' },
+    meta: { color: colors.textSecondary, marginTop: 8, fontSize: 12 },
+    stacked: { flexDirection: 'column' },
+    horizontalActions: { flexDirection: 'row', flexWrap: 'wrap' },
+    actions: { gap: 8, justifyContent: 'flex-start' },
+    actionBtn: {
+      minWidth: 48,
+      minHeight: 48,
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    actionText: { color: colors.textPrimary, fontWeight: '900' },
+    empty: { color: colors.textPrimary, fontWeight: '900', fontSize: 16 },
+  });

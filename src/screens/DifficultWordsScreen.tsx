@@ -1,7 +1,10 @@
+import Pressable from '../components/ThemedPressable';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useRef, useState, useLayoutEffect } from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors } from '../styles/theme';
+
 import Flashcard from '../components/Flashcard';
 import { useDeck } from '../hooks/useDeck';
 import { selectDifficultCards, formatIntervalShort, previewInterval } from '../utils/srs';
@@ -48,6 +51,22 @@ type DifficultRow = {
 };
 
 export default function DifficultWordsScreen() {
+  const styles = useThemedStyles(makeStyles);
+  const theme = useAppTheme();
+  const grades = GRADES.map((grade) => {
+    if (theme.id === 'classic') return grade;
+    const { colors } = theme;
+    const [color, bg] =
+      grade.q === 1
+        ? [colors.danger, colors.dangerMuted]
+        : grade.q === 2
+          ? [colors.warning, colors.warningMuted]
+          : grade.q === 4
+            ? [colors.success, colors.successMuted]
+            : [colors.info, colors.infoMuted];
+    return { ...grade, color, bg, border: color };
+  });
+  const { colors } = useAppTheme();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale >= 1.4;
   const scroll = useRef<ScrollView>(null);
@@ -172,7 +191,7 @@ export default function DifficultWordsScreen() {
           </View>
         </View>
 
-        <View key={`deck-${fontScale}`} style={styles.deckPill}>
+        <View testID="difficult-deck-badge" key={`deck-${fontScale}`} style={styles.deckPill}>
           <Text style={styles.deckPillText}>{current.deckName}</Text>
         </View>
 
@@ -203,7 +222,7 @@ export default function DifficultWordsScreen() {
         <View key={`grades-${fontScale}`} style={styles.gradeBar}>
           <Text style={styles.gradeLabel}>{t('difficult.reviewPrompt')}</Text>
           <View style={[styles.gradeButtons, largeText && styles.stacked]}>
-            {GRADES.map((g) => (
+            {grades.map((g) => (
               <Pressable
                 key={g.labelKey}
                 accessibilityRole="button"
@@ -217,7 +236,12 @@ export default function DifficultWordsScreen() {
                 onPress={() => grade(g.q)}
               >
                 <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
-                <Text style={[styles.gradeBtnInterval, { color: g.color + 'b3' }]}>
+                <Text
+                  style={[
+                    styles.gradeBtnInterval,
+                    { color: theme.id === 'classic' ? g.color + 'b3' : g.color },
+                  ]}
+                >
                   {formatIntervalShort(previewInterval(current.card, g.q))}
                 </Text>
               </Pressable>
@@ -229,75 +253,80 @@ export default function DifficultWordsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  sessionContent: { flexGrow: 1 },
-  stacked: { flexDirection: 'column', alignItems: 'stretch', gap: 12 },
-  noFlex: { flex: 0 },
-  emptyContent: { alignItems: 'center', gap: 10 },
-  center: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 24 },
-  loadingText: { color: colors.textSecondary, fontSize: 16 },
-  emptyEmoji: { fontSize: 48 },
-  emptyTitle: { color: colors.textPrimary, fontSize: 22, fontWeight: '900' },
-  emptySub: { color: colors.textSecondary, fontSize: 14, textAlign: 'center' },
+const makeStyles = ({ colors, id }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    sessionContent: { flexGrow: 1 },
+    stacked: { flexDirection: 'column', alignItems: 'stretch', gap: 12 },
+    noFlex: { flex: 0 },
+    emptyContent: { alignItems: 'center', gap: 10 },
+    center: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 24 },
+    loadingText: { color: colors.textSecondary, fontSize: 16 },
+    emptyEmoji: { fontSize: 48 },
+    emptyTitle: { color: colors.textPrimary, fontSize: 22, fontWeight: '900' },
+    emptySub: { color: colors.textSecondary, fontSize: 14, textAlign: 'center' },
 
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 10,
-  },
-  title: { color: colors.textPrimary, fontSize: 26, fontWeight: '900' },
-  sub: { color: colors.textSecondary, fontSize: 13, marginTop: 2 },
-  counterPill: {
-    paddingHorizontal: 12,
-    paddingVertical: 7,
-    borderRadius: 18,
-    backgroundColor: 'rgba(255,218,0,0.12)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,218,0,0.45)',
-  },
-  counterText: { color: colors.brand, fontSize: 13, fontWeight: '900' },
-  deckPill: {
-    alignSelf: 'flex-start',
-    marginHorizontal: 16,
-    marginBottom: 14,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-    backgroundColor: colors.accentBlue,
-  },
-  deckPillText: { color: colors.textPrimary, fontSize: 12, fontWeight: '800' },
-  cardArea: { flexGrow: 1, flexShrink: 0, paddingHorizontal: 20, justifyContent: 'center' },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 16,
+      paddingTop: 16,
+      paddingBottom: 10,
+    },
+    title: { color: colors.textPrimary, fontSize: 26, fontWeight: '900' },
+    sub: { color: colors.textSecondary, fontSize: 13, marginTop: 2 },
+    counterPill: {
+      paddingHorizontal: 12,
+      paddingVertical: 7,
+      borderRadius: 18,
+      backgroundColor: colors.highlightWash,
+      borderWidth: 1,
+      borderColor: colors.highlightEdge,
+    },
+    counterText: { color: colors.brand, fontSize: 13, fontWeight: '900' },
+    deckPill: {
+      alignSelf: 'flex-start',
+      marginHorizontal: 16,
+      marginBottom: 14,
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 16,
+      backgroundColor: id === 'classic' ? colors.accentBlue : colors.tagSurface,
+    },
+    deckPillText: {
+      color: id === 'classic' ? colors.textPrimary : colors.tagText,
+      fontSize: 12,
+      fontWeight: '800',
+    },
+    cardArea: { flexGrow: 1, flexShrink: 0, paddingHorizontal: 20, justifyContent: 'center' },
 
-  gradeBar: {
-    backgroundColor: '#0f172a',
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(255,218,0,0.12)',
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    paddingBottom: 16,
-    gap: 10,
-  },
-  gradeLabel: {
-    color: colors.textTertiary,
-    fontSize: 12,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  gradeButtons: { flexDirection: 'row', gap: 8 },
-  gradeBtn: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 2,
-    minHeight: 48,
-    paddingVertical: 10,
-    borderRadius: 16,
-    borderWidth: 1.5,
-  },
-  gradeBtnLabel: { fontSize: 14, fontWeight: '800' },
-  gradeBtnInterval: { fontSize: 10 },
-});
+    gradeBar: {
+      backgroundColor: colors.deepSurface,
+      borderTopWidth: 1,
+      borderTopColor: colors.highlightWash,
+      paddingHorizontal: 16,
+      paddingTop: 12,
+      paddingBottom: 16,
+      gap: 10,
+    },
+    gradeLabel: {
+      color: colors.textTertiary,
+      fontSize: 12,
+      fontWeight: '600',
+      textAlign: 'center',
+    },
+    gradeButtons: { flexDirection: 'row', gap: 8 },
+    gradeBtn: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 2,
+      minHeight: 48,
+      paddingVertical: 10,
+      borderRadius: 16,
+      borderWidth: 1.5,
+    },
+    gradeBtnLabel: { fontSize: 14, fontWeight: '800' },
+    gradeBtnInterval: { fontSize: 10 },
+  });

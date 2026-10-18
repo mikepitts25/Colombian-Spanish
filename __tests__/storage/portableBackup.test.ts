@@ -123,3 +123,47 @@ it('refuses a snapshot when stored supplemental state is corrupt', async () => {
   await expect(captureBackupSnapshot()).rejects.toThrow();
   expect(await AsyncStorage.getItem(key)).toBe('{broken');
 });
+
+it.each(['classic', 'barrio'] as const)(
+  'exports and restores a valid %s selection without losing remembered appearance',
+  async (themeId) => {
+    const prefs = { ...state.prefs, themeId, appearanceMode: 'light' };
+    await AsyncStorage.setItem(key, JSON.stringify(prefs));
+    const backup = parseBackupText(JSON.stringify(await captureBackupSnapshot()));
+    expect(backup.applicationState?.prefs).toEqual(prefs);
+    await AsyncStorage.setItem(key, JSON.stringify({ themeId: 'classic', appearanceMode: 'dark' }));
+    await restoreBackup(
+      backup.decks,
+      backup.learningEvents,
+      'replace-state',
+      backup.applicationState,
+    );
+    expect(JSON.parse((await AsyncStorage.getItem(key))!)).toEqual(prefs);
+  },
+);
+it.each([
+  { themeId: 'future', appearanceMode: 'light' },
+  { themeId: 'barrio', appearanceMode: 'future' },
+  { themeId: null },
+  { appearanceMode: false },
+])('rejects an unsupported imported selection before any write: %p', async (selection) => {
+  const raw = JSON.stringify(state.prefs);
+  await AsyncStorage.setItem(key, raw);
+  const applicationState = { ...state, prefs: { ...state.prefs, ...selection } };
+  const before = write.mock.calls.length;
+  expect(() => parseBackupText(JSON.stringify({ ...envelope, applicationState }))).toThrow();
+  await expect(restoreBackup([], [], 'replace-state', applicationState)).rejects.toThrow();
+  expect(write.mock.calls.slice(before)).toEqual([]);
+  expect(await AsyncStorage.getItem(key)).toBe(raw);
+});
+it.each([1, 2] as const)(
+  'legacy version %s deck restore leaves the local selection unchanged',
+  async (version) => {
+    const prefs = { ...state.prefs, themeId: 'barrio', appearanceMode: 'dark' };
+    await AsyncStorage.setItem(key, JSON.stringify(prefs));
+    const backup = parseBackupText(JSON.stringify({ ...envelope, version }));
+    expect(backup.applicationState).toBeUndefined();
+    await restoreBackup(backup.decks, backup.learningEvents);
+    expect(JSON.parse((await AsyncStorage.getItem(key))!)).toEqual(prefs);
+  },
+);

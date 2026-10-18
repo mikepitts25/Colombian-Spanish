@@ -1,6 +1,7 @@
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
-import { Dimensions } from 'react-native';
-import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import { Dimensions, ScrollView, StyleSheet } from 'react-native';
+import { act, fireEvent, waitFor } from '@testing-library/react-native';
 import ReviewScreen from '../../src/screens/ReviewScreen';
 import { Deck, FlashCard } from '../../src/types';
 import { useDeck } from '../../src/hooks/useDeck';
@@ -56,7 +57,7 @@ function renderReviewScreen(overrides = {}) {
     ...overrides,
   });
 
-  const screen = render(<ReviewScreen />);
+  const screen = renderWithTheme(<ReviewScreen />);
   return { ...screen, updateCardReview };
 }
 
@@ -138,6 +139,8 @@ it('submits one editorial intent and blocks conflicting controls while saving', 
   fireEvent.press(screen.getByText('Guardar y seguir'));
   fireEvent.press(screen.getByText('Necesita revisión nativa'));
   expect(updateCardReview).toHaveBeenCalledTimes(1);
+  screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  expect(screen.getByDisplayValue('retained correction')).toHaveStyle({ color: '#18352F' });
   expect(screen.getByText('Saltar')).toBeDisabled();
   expect(screen.getByText('Sin revisar')).toBeDisabled();
   expect(screen.getByPlaceholderText('Traducción en inglés')).toHaveProp('editable', false);
@@ -188,7 +191,8 @@ test('retains the failed save intent across a live text-size change', async () =
         screen: { ...screenMetrics, fontScale: 3 },
       }),
     );
-    expect(screen.getByDisplayValue('retained draft')).toBeTruthy();
+    screen.applyTheme({ themeId: 'barrio', appearanceMode: 'dark' });
+    expect(screen.getByDisplayValue('retained draft')).toHaveStyle({ color: '#F7F3EA' });
     expect(
       screen.getByText('No se pudieron guardar los cambios. Reintenta antes de continuar.'),
     ).toBeTruthy();
@@ -198,5 +202,28 @@ test('retains the failed save intent across a live text-size change', async () =
   } finally {
     screen.unmount();
     act(() => Dimensions.set({ window, screen: screenMetrics }));
+  }
+});
+
+test('Barrio selected filters use on-fill ink and preserve Classic white', () => {
+  const screen = renderReviewScreen();
+  screen.applyTheme({ themeId: 'barrio', appearanceMode: 'dark' });
+  for (const label of ['Todas', 'Todos los decks']) {
+    const labels = screen.getAllByText(label);
+    expect(labels[labels.length - 1]).toHaveStyle({ color: '#14291F' });
+  }
+  screen.applyTheme({ themeId: 'classic', appearanceMode: 'dark' });
+  const labels = screen.getAllByText('Todas');
+  expect(labels[labels.length - 1]).toHaveStyle({ color: '#fff' });
+});
+test('Barrio filter viewports fit full 48-point chips plus focus rings while Classic retains 38', () => {
+  const screen = renderReviewScreen();
+  screen.applyTheme({ themeId: 'barrio', appearanceMode: 'dark' });
+  const rows = screen.UNSAFE_getAllByType(ScrollView).filter((row) => row.props.horizontal);
+  expect(rows).toHaveLength(2);
+  for (const row of rows) expect(StyleSheet.flatten(row.props.style).height).toBe(56);
+  screen.applyTheme({ themeId: 'classic', appearanceMode: 'dark' });
+  for (const row of screen.UNSAFE_getAllByType(ScrollView).filter((row) => row.props.horizontal)) {
+    expect(StyleSheet.flatten(row.props.style).height).toBe(38);
   }
 });

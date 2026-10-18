@@ -1,0 +1,14 @@
+{
+  "runtimeCommit": "fd5384e9c284027237e3038671082888ce1d02f4",
+  "nativeCheckout": "/tmp/colombian-barrio-native-20261018",
+  "derivedData": "/tmp/colombian-theme-picker-build",
+  "profile": "development",
+  "signing": "CODE_SIGNING_ALLOWED=NO",
+  "sentryUpload": "disabled for local simulator build; no account configuration",
+  "node": "v24.5.0",
+  "cocoapods": "1.16.2",
+  "phone": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+  "tablet": "F9BC32B5-9591-4CEA-9363-707D3A7E204D",
+  "creation": "fresh simctl create, not clone",
+  "normalMetroBefore": "PID18777 localhost8098 in preserved host worktree"
+}

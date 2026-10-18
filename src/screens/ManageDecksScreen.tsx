@@ -1,13 +1,16 @@
+import Pressable from '../components/ThemedPressable';
+import ThemedTextInput from '../components/ThemedTextInput';
+import { controlSurface, controlText } from '../styles/controlStates';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
   Modal,
   StyleSheet,
   Text,
-  TextInput,
   View,
   FlatList,
-  Pressable,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
@@ -15,7 +18,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, usePreventRemove } from '@react-navigation/native';
-import { colors } from '../styles/theme';
+
 import { useDeck } from '../hooks/useDeck';
 import { Deck } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -35,20 +38,29 @@ function Action({
   disabled: boolean;
   danger?: boolean;
 }) {
+  const styles = useThemedStyles(makeStyles);
+  const theme = useAppTheme();
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? label}
       accessibilityState={{ disabled }}
       disabled={disabled}
-      style={[styles.button, danger && styles.danger, disabled && styles.disabled]}
+      style={({ pressed }) => [
+        styles.button,
+        danger && styles.danger,
+        disabled && styles.disabled,
+        controlSurface(theme, pressed, disabled, false),
+      ]}
       onPress={onPress}
     >
-      <Text style={styles.buttonText}>{label}</Text>
+      <Text style={[styles.buttonText, controlText(theme, disabled)]}>{label}</Text>
     </Pressable>
   );
 }
 export default function ManageDecksScreen() {
+  const styles = useThemedStyles(makeStyles);
+  const { colors } = useAppTheme();
   const { ready, decks, activeDeckId, renameDeck, deleteDeck, resetDeckProgress, setActiveDeckId } =
     useDeck();
   const nav = useNavigation<any>();
@@ -192,7 +204,7 @@ export default function ManageDecksScreen() {
           }}
         />
       )}
-      <TextInput
+      <ThemedTextInput
         accessibilityLabel={t('manage.searchPlaceholder')}
         value={q}
         editable={!blocked}
@@ -295,7 +307,7 @@ export default function ManageDecksScreen() {
                   <Text style={styles.body}>{t('editing.uncertain')}</Text>
                 </>
               )}
-              <TextInput
+              <ThemedTextInput
                 accessibilityLabel={t('manage.deckNamePlaceholder')}
                 editable={!blocked}
                 value={renameValue}
@@ -317,59 +329,60 @@ export default function ManageDecksScreen() {
     </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: 20, paddingBottom: 40 },
-  header: { gap: 12, marginBottom: 16 },
-  h1: { color: colors.textPrimary, fontSize: 24, fontWeight: '900' },
-  body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
-  input: {
-    minHeight: 48,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 12,
-    padding: 14,
-    color: colors.textPrimary,
-    fontSize: 16,
-    textAlignVertical: 'top',
-  },
-  row: {
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 12,
-    padding: 14,
-    marginBottom: 12,
-    gap: 12,
-  },
-  name: { color: colors.textPrimary, fontWeight: '800', fontSize: 18 },
-  select: { minHeight: 48, justifyContent: 'center' },
-  actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  stacked: { flexDirection: 'column', alignItems: 'stretch' },
-  button: {
-    minHeight: 48,
-    padding: 14,
-    borderRadius: 12,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: { color: colors.textPrimary, fontSize: 16, fontWeight: '700' },
-  danger: { borderColor: '#f59e0b' },
-  disabled: { opacity: 0.6 },
-  modalBackdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  modalBody: {
-    maxHeight: '85%',
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: 14,
-    padding: 16,
-  },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    content: { padding: 20, paddingBottom: 40 },
+    header: { gap: 12, marginBottom: 16 },
+    h1: { color: colors.textPrimary, fontSize: 24, fontWeight: '900' },
+    body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
+    input: {
+      minHeight: 48,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 12,
+      padding: 14,
+      color: colors.textPrimary,
+      fontSize: 16,
+      textAlignVertical: 'top',
+    },
+    row: {
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 12,
+      padding: 14,
+      marginBottom: 12,
+      gap: 12,
+    },
+    name: { color: colors.textPrimary, fontWeight: '800', fontSize: 18 },
+    select: { minHeight: 48, justifyContent: 'center' },
+    actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+    stacked: { flexDirection: 'column', alignItems: 'stretch' },
+    button: {
+      minHeight: 48,
+      padding: 14,
+      borderRadius: 12,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    buttonText: { color: colors.textPrimary, fontSize: 16, fontWeight: '700' },
+    danger: { borderColor: colors.managementWarning },
+    disabled: { opacity: 0.6 },
+    modalBackdrop: {
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.6)',
+      justifyContent: 'center',
+      padding: 20,
+    },
+    modalBody: {
+      maxHeight: '85%',
+      backgroundColor: colors.surfaceElevated,
+      borderRadius: 14,
+      padding: 16,
+    },
+  });

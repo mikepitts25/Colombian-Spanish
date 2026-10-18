@@ -1,6 +1,7 @@
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { colors } from '../styles/theme';
 
 type ProgressBarSize = 'sm' | 'md' | 'lg';
 type ProgressBarVariant = 'default' | 'brand' | 'success';
@@ -17,17 +18,19 @@ const sizeStyles: Record<ProgressBarSize, { height: number }> = {
   lg: { height: 14 },
 };
 
-const variantColors: Record<ProgressBarVariant, string> = {
-  default: colors.accentBlue,
-  brand: colors.brand,
-  success: '#22c55e',
-};
-
 export default function ProgressBar({
   progress,
   size = 'md',
   variant = 'brand',
 }: ProgressBarProps) {
+  const styles = useThemedStyles(makeStyles);
+  const { colors } = useAppTheme();
+  const variantColors: Record<ProgressBarVariant, string> = {
+    default: colors.accentBlue,
+    brand: colors.brand,
+    success: colors.progressSuccess,
+  };
+
   return (
     <View style={[styles.wrap, sizeStyles[size]]}>
       <View
@@ -43,7 +46,8 @@ export default function ProgressBar({
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { backgroundColor: '#1f2937', borderRadius: 999 },
-  bar: { height: '100%', borderRadius: 999 },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { backgroundColor: colors.progressTrack, borderRadius: 999 },
+    bar: { height: '100%', borderRadius: 999 },
+  });

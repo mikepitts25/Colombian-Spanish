@@ -1,7 +1,10 @@
+import Pressable from '../components/ThemedPressable';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Pressable, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, radius } from '../styles/theme';
+import { radius } from '../styles/theme';
 import { getDailyProgress, getStudyStreak } from '../storage/storage';
 import { useDeck } from '../hooks/useDeck';
 import { useNavigation } from '@react-navigation/native';
@@ -23,6 +26,7 @@ async function loadProgress() {
 }
 
 function DonutRing({ pct, size = 90 }: { pct: number; size?: number }) {
+  const { colors } = useAppTheme();
   const stroke = 12;
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
@@ -34,12 +38,12 @@ function DonutRing({ pct, size = 90 }: { pct: number; size?: number }) {
           height: size,
           borderRadius: size / 2,
           borderWidth: stroke,
-          borderColor: '#1e293b',
+          borderColor: colors.slateTrack,
         }}
       />
       {/* Filled ring — we approximate with a RN View arc at low fidelity */}
       <View style={{ position: 'absolute', alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: '#FFDA00', fontSize: 16, fontWeight: '800' }}>
+        <Text style={{ color: colors.flagHighlight, fontSize: 16, fontWeight: '800' }}>
           {Math.round(pct * 100)}%
         </Text>
       </View>
@@ -48,6 +52,8 @@ function DonutRing({ pct, size = 90 }: { pct: number; size?: number }) {
 }
 
 export default function ProgressScreen() {
+  const { colors } = useAppTheme();
+  const styles = useThemedStyles(makeStyles);
   const { decks, ready } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
@@ -221,10 +227,10 @@ export default function ProgressScreen() {
               style={[
                 styles.statBox,
                 largeText && styles.noFlex,
-                { borderColor: '#FFDA00', backgroundColor: 'rgba(255,218,0,0.08)' },
+                { borderColor: colors.flagHighlight, backgroundColor: colors.onboardingWash },
               ]}
             >
-              <Text style={[styles.statVal, { color: '#FFDA00' }]}>
+              <Text style={[styles.statVal, { color: colors.flagHighlight }]}>
                 {stats.total.toLocaleString()}
               </Text>
               <Text style={styles.statLabel}>{t('progress.totalCards')}</Text>
@@ -233,10 +239,13 @@ export default function ProgressScreen() {
               style={[
                 styles.statBox,
                 largeText && styles.noFlex,
-                { borderColor: '#003893', backgroundColor: 'rgba(0,56,147,0.15)' },
+                { borderColor: colors.flagBlueEdge, backgroundColor: colors.scheduleWash },
               ]}
             >
-              <Text style={[styles.statVal, { color: '#60a5fa' }]} testID="progress-in-review">
+              <Text
+                style={[styles.statVal, { color: colors.scheduleInk }]}
+                testID="progress-in-review"
+              >
                 {stats.studied}
               </Text>
               <Text style={styles.statLabel}>{t('progress.studied')}</Text>
@@ -247,10 +256,13 @@ export default function ProgressScreen() {
               style={[
                 styles.statBox,
                 largeText && styles.noFlex,
-                { borderColor: '#CE1126', backgroundColor: 'rgba(206,17,38,0.1)' },
+                { borderColor: colors.flagRedEdge, backgroundColor: colors.dueWash },
               ]}
             >
-              <Text style={[styles.statVal, { color: '#f87171' }]} testID="progress-due-reviews">
+              <Text
+                style={[styles.statVal, { color: colors.restoreDanger }]}
+                testID="progress-due-reviews"
+              >
                 {stats.due}
               </Text>
               <Text style={styles.statLabel}>{t('progress.dueReviews')}</Text>
@@ -259,10 +271,12 @@ export default function ProgressScreen() {
               style={[
                 styles.statBox,
                 largeText && styles.noFlex,
-                { borderColor: 'rgba(255,218,0,0.4)', backgroundColor: 'rgba(255,218,0,0.06)' },
+                { borderColor: colors.tabBorder, backgroundColor: colors.brandWash },
               ]}
             >
-              <Text style={[styles.statVal, { color: '#FFDA00' }]}>{(decks || []).length}</Text>
+              <Text style={[styles.statVal, { color: colors.flagHighlight }]}>
+                {(decks || []).length}
+              </Text>
               <Text style={styles.statLabel}>{t('progress.decks')}</Text>
             </View>
           </View>
@@ -378,167 +392,168 @@ export default function ProgressScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  stacked: { flexDirection: 'column', alignItems: 'stretch' },
-  noFlex: { flex: 0 },
-  pressed: { opacity: 0.65 },
-  dailyPercentage: { color: colors.brand, fontSize: 24, fontWeight: '800' },
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  scroll: { padding: 16, paddingBottom: 120 },
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10 },
-  loadingText: { color: colors.textSecondary, fontSize: 16 },
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    stacked: { flexDirection: 'column', alignItems: 'stretch' },
+    noFlex: { flex: 0 },
+    pressed: { opacity: 0.65 },
+    dailyPercentage: { color: colors.brand, fontSize: 24, fontWeight: '800' },
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    scroll: { padding: 16, paddingBottom: 120 },
+    center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10 },
+    loadingText: { color: colors.textSecondary, fontSize: 16 },
 
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  pageTitle: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
-  evidenceRow: {
-    gap: 6,
-    paddingVertical: 14,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  evidenceNote: { color: colors.textSecondary, fontSize: 14, lineHeight: 21 },
-  practiceBtn: {
-    minHeight: 48,
-    justifyContent: 'center',
-    padding: 12,
-    marginTop: 12,
-    borderWidth: 1,
-    borderColor: colors.brand,
-    borderRadius: 10,
-  },
+    titleRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 16,
+    },
+    pageTitle: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
+    evidenceRow: {
+      gap: 6,
+      paddingVertical: 14,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+    },
+    evidenceNote: { color: colors.textSecondary, fontSize: 14, lineHeight: 21 },
+    practiceBtn: {
+      minHeight: 48,
+      justifyContent: 'center',
+      padding: 12,
+      marginTop: 12,
+      borderWidth: 1,
+      borderColor: colors.brand,
+      borderRadius: 10,
+    },
 
-  streakCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
-    backgroundColor: 'rgba(255,218,0,0.06)',
-    borderWidth: 1.5,
-    borderColor: 'rgba(255,218,0,0.5)',
-    borderRadius: 20,
-    padding: 20,
-    marginBottom: 12,
-    shadowColor: '#FFDA00',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.25,
-    shadowRadius: 20,
-    elevation: 8,
-  },
-  streakLeft: { flex: 1, gap: 2 },
-  streakCaptionTop: { color: colors.textSecondary, fontSize: 12 },
-  streakNumRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', gap: 6 },
-  streakDays: { color: colors.textPrimary, fontSize: 40, fontWeight: '800' },
-  streakUnit: { color: colors.textSecondary, fontSize: 16, fontWeight: '600' },
-  streakCaption: { color: colors.textTertiary, fontSize: 11 },
-  streakBadge: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: 'rgba(255,218,0,0.12)',
-    borderWidth: 2.5,
-    borderColor: '#FFDA00',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  streakBadgeEmoji: { fontSize: 36 },
+    streakCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 16,
+      backgroundColor: colors.brandWash,
+      borderWidth: 1.5,
+      borderColor: colors.strongHighlightEdge,
+      borderRadius: 20,
+      padding: 20,
+      marginBottom: 12,
+      shadowColor: '#FFDA00',
+      shadowOffset: { width: 0, height: 6 },
+      shadowOpacity: 0.25,
+      shadowRadius: 20,
+      elevation: 8,
+    },
+    streakLeft: { flex: 1, gap: 2 },
+    streakCaptionTop: { color: colors.textSecondary, fontSize: 12 },
+    streakNumRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', gap: 6 },
+    streakDays: { color: colors.textPrimary, fontSize: 40, fontWeight: '800' },
+    streakUnit: { color: colors.textSecondary, fontSize: 16, fontWeight: '600' },
+    streakCaption: { color: colors.textTertiary, fontSize: 11 },
+    streakBadge: {
+      width: 80,
+      height: 80,
+      borderRadius: 40,
+      backgroundColor: colors.highlightWash,
+      borderWidth: 2.5,
+      borderColor: colors.flagHighlight,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    streakBadgeEmoji: { fontSize: 36 },
 
-  dailyCard: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 20,
-    padding: 20,
-    marginBottom: 12,
-  },
-  dailyCardRow: { flexDirection: 'row', alignItems: 'center', gap: 20 },
-  dailyDonut: { alignItems: 'center', justifyContent: 'center' },
-  dailyRight: { flex: 1, gap: 6 },
-  dailyTitle: { color: colors.textPrimary, fontSize: 14, fontWeight: '800' },
-  dailySub: { color: colors.textSecondary, fontSize: 12 },
-  dailyBarTrack: {
-    height: 6,
-    backgroundColor: '#1e293b',
-    borderRadius: 3,
-    overflow: 'hidden',
-  },
-  dailyBarFill: { height: 6, backgroundColor: '#FFDA00', borderRadius: 3 },
-  studyMoreBtn: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    minHeight: 48,
-    justifyContent: 'center',
-    borderRadius: 10,
-    backgroundColor: 'rgba(255,218,0,0.1)',
-    borderWidth: 1.5,
-    borderColor: 'rgba(255,218,0,0.4)',
-  },
-  studyMoreText: { color: colors.brand, fontSize: 12, fontWeight: '700' },
+    dailyCard: {
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 20,
+      padding: 20,
+      marginBottom: 12,
+    },
+    dailyCardRow: { flexDirection: 'row', alignItems: 'center', gap: 20 },
+    dailyDonut: { alignItems: 'center', justifyContent: 'center' },
+    dailyRight: { flex: 1, gap: 6 },
+    dailyTitle: { color: colors.textPrimary, fontSize: 14, fontWeight: '800' },
+    dailySub: { color: colors.textSecondary, fontSize: 12 },
+    dailyBarTrack: {
+      height: 6,
+      backgroundColor: colors.slateTrack,
+      borderRadius: 3,
+      overflow: 'hidden',
+    },
+    dailyBarFill: { height: 6, backgroundColor: colors.flagHighlight, borderRadius: 3 },
+    studyMoreBtn: {
+      alignSelf: 'flex-start',
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      minHeight: 48,
+      justifyContent: 'center',
+      borderRadius: 10,
+      backgroundColor: colors.audioTint,
+      borderWidth: 1.5,
+      borderColor: colors.tabBorder,
+    },
+    studyMoreText: { color: colors.brand, fontSize: 12, fontWeight: '700' },
 
-  statGrid: { gap: 10, marginBottom: 16 },
-  statRow: { flexDirection: 'row', gap: 10 },
-  statBox: {
-    flex: 1,
-    alignItems: 'center',
-    gap: 4,
-    paddingVertical: 16,
-    paddingHorizontal: 10,
-    borderRadius: 18,
-    borderWidth: 1.5,
-  },
-  statVal: { fontSize: 24, fontWeight: '800' },
-  statLabel: { color: colors.textSecondary, fontSize: 12, fontWeight: '600', letterSpacing: 0.5 },
+    statGrid: { gap: 10, marginBottom: 16 },
+    statRow: { flexDirection: 'row', gap: 10 },
+    statBox: {
+      flex: 1,
+      alignItems: 'center',
+      gap: 4,
+      paddingVertical: 16,
+      paddingHorizontal: 10,
+      borderRadius: 18,
+      borderWidth: 1.5,
+    },
+    statVal: { fontSize: 24, fontWeight: '800' },
+    statLabel: { color: colors.textSecondary, fontSize: 12, fontWeight: '600', letterSpacing: 0.5 },
 
-  section: { marginBottom: 16 },
-  sectionTitle: { color: colors.textPrimary, fontSize: 16, fontWeight: '800', marginBottom: 10 },
+    section: { marginBottom: 16 },
+    sectionTitle: { color: colors.textPrimary, fontSize: 16, fontWeight: '800', marginBottom: 10 },
 
-  deckProgressRow: {
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    gap: 10,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 14,
-    padding: 14,
-    marginBottom: 8,
-  },
-  deckProgressLeft: { width: '100%' },
-  deckProgressName: { color: colors.textPrimary, fontSize: 13, fontWeight: '600' },
-  deckProgressSub: { color: colors.textTertiary, fontSize: 11, marginTop: 2 },
-  deckProgressBarWrap: { width: '100%', minHeight: 6 },
-  deckProgressTrack: {
-    height: 6,
-    backgroundColor: '#1e293b',
-    borderRadius: 3,
-    overflow: 'hidden',
-  },
-  deckProgressFill: { height: 6, backgroundColor: '#FFDA00', borderRadius: 3 },
-  deckDuePill: {
-    alignSelf: 'flex-start',
-    backgroundColor: 'rgba(248,113,113,0.2)',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: radius.full,
-  },
-  deckDueText: { color: '#f87171', fontSize: 11, fontWeight: '700' },
+    deckProgressRow: {
+      flexDirection: 'column',
+      alignItems: 'stretch',
+      gap: 10,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 14,
+      padding: 14,
+      marginBottom: 8,
+    },
+    deckProgressLeft: { width: '100%' },
+    deckProgressName: { color: colors.textPrimary, fontSize: 13, fontWeight: '600' },
+    deckProgressSub: { color: colors.textTertiary, fontSize: 11, marginTop: 2 },
+    deckProgressBarWrap: { width: '100%', minHeight: 6 },
+    deckProgressTrack: {
+      height: 6,
+      backgroundColor: colors.slateTrack,
+      borderRadius: 3,
+      overflow: 'hidden',
+    },
+    deckProgressFill: { height: 6, backgroundColor: colors.flagHighlight, borderRadius: 3 },
+    deckDuePill: {
+      alignSelf: 'flex-start',
+      backgroundColor: colors.dueBadgeWash,
+      paddingHorizontal: 8,
+      paddingVertical: 3,
+      borderRadius: radius.full,
+    },
+    deckDueText: { color: colors.restoreDanger, fontSize: 11, fontWeight: '700' },
 
-  motivCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    backgroundColor: 'rgba(255,218,0,0.06)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,218,0,0.2)',
-    borderRadius: 16,
-    padding: 16,
-  },
-  motivEmoji: { fontSize: 28 },
-  motivRight: { flex: 1, gap: 3 },
-  motivTitle: { color: colors.brand, fontSize: 14, fontWeight: '800' },
-  motivText: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
-});
+    motivCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+      backgroundColor: colors.brandWash,
+      borderWidth: 1,
+      borderColor: colors.softBrandBorder,
+      borderRadius: 16,
+      padding: 16,
+    },
+    motivEmoji: { fontSize: 28 },
+    motivRight: { flex: 1, gap: 3 },
+    motivTitle: { color: colors.brand, fontSize: 14, fontWeight: '800' },
+    motivText: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
+  });

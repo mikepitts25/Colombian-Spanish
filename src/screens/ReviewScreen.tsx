@@ -1,3 +1,7 @@
+import Pressable from '../components/ThemedPressable';
+import ThemedTextInput from '../components/ThemedTextInput';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -5,14 +9,12 @@ import {
   StyleSheet,
   Text,
   View,
-  Pressable,
   ScrollView,
-  TextInput,
   useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, usePreventRemove } from '@react-navigation/native';
-import { colors, spacing } from '../styles/theme';
+import { spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { speakCard } from '../services/tts';
 import { FlashCard } from '../types';
@@ -52,11 +54,18 @@ function matchesReviewFilter(card: FlashCard, filter: ReviewFilter) {
 }
 
 export default function ReviewScreen() {
+  const theme = useAppTheme();
+  const { colors } = theme;
+  const styles = useThemedStyles(makeStyles);
   const { ready, decks, updateCardReview } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale >= 1.4;
+  // Fit Barrio’s 48pt chip and its 4pt focus ring on each side; preserve Classic sizing.
+  const filterHeight = Math.ceil(
+    Math.max(theme.id === 'barrio' ? 56 : 38, 38 * Math.max(1, fontScale)),
+  );
 
   const [deckFilter, setDeckFilter] = useState<string>('all');
   const [reviewFilter, setReviewFilter] = useState<ReviewFilter>('all');
@@ -336,7 +345,7 @@ export default function ReviewScreen() {
             </View>
             <ScrollView
               horizontal
-              style={[styles.filterScroller, { height: Math.ceil(38 * Math.max(1, fontScale)) }]}
+              style={[styles.filterScroller, { height: filterHeight }]}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.filterRow}
             >
@@ -371,7 +380,7 @@ export default function ReviewScreen() {
             </View>
             <ScrollView
               horizontal
-              style={[styles.filterScroller, { height: Math.ceil(38 * Math.max(1, fontScale)) }]}
+              style={[styles.filterScroller, { height: filterHeight }]}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.filterRow}
             >
@@ -441,7 +450,7 @@ export default function ReviewScreen() {
               ) : null}
 
               <Text style={styles.label}>{t('review.english')}</Text>
-              <TextInput
+              <ThemedTextInput
                 style={styles.input}
                 multiline={largeText}
                 value={draftBack}
@@ -450,11 +459,11 @@ export default function ReviewScreen() {
                   if (!pending.current) setDraftBack(value);
                 }}
                 placeholder={t('review.englishPlaceholder')}
-                placeholderTextColor="#64748b"
+                placeholderTextColor={colors.mutedInk}
               />
 
               <Text style={styles.label}>{t('review.example')}</Text>
-              <TextInput
+              <ThemedTextInput
                 style={[styles.input, styles.exampleInput]}
                 value={draftExample}
                 editable={!blocked}
@@ -462,7 +471,7 @@ export default function ReviewScreen() {
                   if (!pending.current) setDraftExample(value);
                 }}
                 placeholder={t('review.examplePlaceholder')}
-                placeholderTextColor="#64748b"
+                placeholderTextColor={colors.mutedInk}
                 multiline
               />
 
@@ -490,257 +499,274 @@ export default function ReviewScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  stacked: { flexDirection: 'column', alignItems: 'stretch' },
-  fullWidth: { flex: 0, width: '100%' },
-  controlDisabled: { opacity: 0.45 },
-  saveRetry: { color: colors.brand, fontWeight: '700', paddingVertical: 12 },
-  keyboardWrap: { flex: 1 },
-  content: { flex: 1 },
-  contentBody: { padding: spacing(2), paddingBottom: spacing(2), gap: spacing(1.5) },
-  header: { gap: spacing(1) },
-  headerActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  h1: { color: colors.textPrimary, fontSize: 24, fontWeight: '900', marginBottom: 4 },
-  sub: { color: colors.textSecondary, fontSize: 14, lineHeight: 20 },
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    stacked: { flexDirection: 'column', alignItems: 'stretch' },
+    fullWidth: { flex: 0, width: '100%' },
+    controlDisabled: { opacity: 0.45 },
+    saveRetry: { color: colors.brand, fontWeight: '700', paddingVertical: 12 },
+    keyboardWrap: { flex: 1 },
+    content: { flex: 1 },
+    contentBody: { padding: spacing(2), paddingBottom: spacing(2), gap: spacing(1.5) },
+    header: { gap: spacing(1) },
+    headerActions: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 12,
+    },
+    h1: { color: colors.textPrimary, fontSize: 24, fontWeight: '900', marginBottom: 4 },
+    sub: { color: colors.textSecondary, fontSize: 14, lineHeight: 20 },
 
-  backBtn: {
-    backgroundColor: '#0b1220',
-    borderWidth: 1,
-    borderColor: '#334155',
-    borderRadius: 14,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backBtnText: { color: '#e2e8f0', fontWeight: '900', fontSize: 13 },
+    backBtn: {
+      backgroundColor: colors.editorSurface,
+      borderWidth: 1,
+      borderColor: colors.editorBorder,
+      borderRadius: 14,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    backBtnText: { color: colors.editorInk, fontWeight: '900', fontSize: 13 },
 
-  flaggedBtn: {
-    backgroundColor: '#0b1220',
-    borderWidth: 1,
-    borderColor: '#334155',
-    borderRadius: 14,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  flaggedBtnActive: { borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,0.1)' },
-  flaggedBtnText: { color: '#e2e8f0', fontWeight: '900', fontSize: 13 },
+    flaggedBtn: {
+      backgroundColor: colors.editorSurface,
+      borderWidth: 1,
+      borderColor: colors.editorBorder,
+      borderRadius: 14,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    flaggedBtnActive: { borderColor: colors.alertInk, backgroundColor: colors.editorAlertWash },
+    flaggedBtnText: { color: colors.editorInk, fontWeight: '900', fontSize: 13 },
 
-  filterBlock: {
-    gap: 8,
-    backgroundColor: '#070d1a',
-    borderWidth: 1,
-    borderColor: '#172033',
-    borderRadius: 14,
-    padding: 10,
-  },
-  filterHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  filterLabel: { color: '#64748b', fontSize: 11, fontWeight: '900', textTransform: 'uppercase' },
-  filterValue: { flex: 1, color: '#e2e8f0', fontSize: 12, fontWeight: '800', textAlign: 'right' },
-  filterScroller: { flexGrow: 0, height: 38 },
-  filterRow: { gap: 8, paddingRight: spacing(1), alignItems: 'center' },
-  chip: {
-    backgroundColor: '#0b1220',
-    borderWidth: 1,
-    borderColor: '#1f2937',
-    borderRadius: 999,
-    minHeight: 34,
-    maxWidth: 190,
-    paddingVertical: 7,
-    paddingHorizontal: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chipActive: { backgroundColor: '#1d4ed8', borderColor: '#1d4ed8' },
-  reviewChipActive: { backgroundColor: '#047857', borderColor: '#047857' },
-  chipText: { color: '#cbd5e1', fontWeight: '700', fontSize: 13 },
-  chipTextActive: { color: 'white' },
+    filterBlock: {
+      gap: 8,
+      backgroundColor: colors.editorOuter,
+      borderWidth: 1,
+      borderColor: colors.editorRule,
+      borderRadius: 14,
+      padding: 10,
+    },
+    filterHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 12,
+    },
+    filterLabel: {
+      color: colors.mutedInk,
+      fontSize: 11,
+      fontWeight: '900',
+      textTransform: 'uppercase',
+    },
+    filterValue: {
+      flex: 1,
+      color: colors.editorInk,
+      fontSize: 12,
+      fontWeight: '800',
+      textAlign: 'right',
+    },
+    filterScroller: { flexGrow: 0, height: 38 },
+    filterRow: { gap: 8, paddingRight: spacing(1), alignItems: 'center' },
+    chip: {
+      backgroundColor: colors.editorSurface,
+      borderWidth: 1,
+      borderColor: colors.editorSoftEdge,
+      borderRadius: 999,
+      minHeight: 34,
+      maxWidth: 190,
+      paddingVertical: 7,
+      paddingHorizontal: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    chipActive: { backgroundColor: colors.editorPrimary, borderColor: colors.editorPrimary },
+    reviewChipActive: { backgroundColor: colors.regionFill, borderColor: colors.regionFill },
+    chipText: { color: colors.editorSecondary, fontWeight: '700', fontSize: 13 },
+    chipTextActive: { color: colors.editorActionInk },
 
-  queueSummary: {
-    backgroundColor: '#070d1a',
-    borderWidth: 1,
-    borderColor: '#172033',
-    borderRadius: 14,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  queueSummaryLabel: {
-    color: '#94a3b8',
-    fontSize: 12,
-    fontWeight: '800',
-    textTransform: 'uppercase',
-  },
-  progress: {
-    color: '#e2e8f0',
-    fontWeight: '900',
-    fontVariant: ['tabular-nums'],
-  },
+    queueSummary: {
+      backgroundColor: colors.editorOuter,
+      borderWidth: 1,
+      borderColor: colors.editorRule,
+      borderRadius: 14,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    queueSummaryLabel: {
+      color: colors.editorTertiary,
+      fontSize: 12,
+      fontWeight: '800',
+      textTransform: 'uppercase',
+    },
+    progress: {
+      color: colors.editorInk,
+      fontWeight: '900',
+      fontVariant: ['tabular-nums'],
+    },
 
-  card: {
-    backgroundColor: '#0f172a',
-    borderWidth: 1,
-    borderColor: '#1f2937',
-    borderRadius: 14,
-    padding: spacing(2),
-    gap: spacing(1),
-  },
-  cardFlagged: { borderColor: '#ef4444', borderWidth: 2 },
-  cardTopRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 8,
-  },
+    card: {
+      backgroundColor: colors.deepSurface,
+      borderWidth: 1,
+      borderColor: colors.editorSoftEdge,
+      borderRadius: 14,
+      padding: spacing(2),
+      gap: spacing(1),
+    },
+    cardFlagged: { borderColor: colors.alertInk, borderWidth: 2 },
+    cardTopRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 8,
+    },
 
-  flagBanner: {
-    backgroundColor: 'rgba(239,68,68,0.15)',
-    borderRadius: 8,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    alignSelf: 'flex-start',
-  },
-  flagBannerText: { color: '#f87171', fontWeight: '900', fontSize: 13 },
+    flagBanner: {
+      backgroundColor: colors.alertWash,
+      borderRadius: 8,
+      paddingVertical: 6,
+      paddingHorizontal: 12,
+      alignSelf: 'flex-start',
+    },
+    flagBannerText: { color: colors.restoreDanger, fontWeight: '900', fontSize: 13 },
 
-  deckBadge: {
-    backgroundColor: '#1e293b',
-    borderRadius: 8,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    alignSelf: 'flex-start',
-    maxWidth: '70%',
-  },
-  deckBadgeText: { color: '#94a3b8', fontSize: 12, fontWeight: '700' },
-  statusBadge: {
-    backgroundColor: '#052e2b',
-    borderRadius: 8,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-  },
-  statusBadgeText: {
-    color: '#99f6e4',
-    fontSize: 12,
-    fontWeight: '800',
-    textTransform: 'capitalize',
-  },
+    deckBadge: {
+      backgroundColor: colors.slateTrack,
+      borderRadius: 8,
+      paddingVertical: 4,
+      paddingHorizontal: 10,
+      alignSelf: 'flex-start',
+      maxWidth: '70%',
+    },
+    deckBadgeText: { color: colors.editorTertiary, fontSize: 12, fontWeight: '700' },
+    statusBadge: {
+      backgroundColor: colors.editorSuccessWash,
+      borderRadius: 8,
+      paddingVertical: 4,
+      paddingHorizontal: 10,
+    },
+    statusBadgeText: {
+      color: colors.quizFeedbackInk,
+      fontSize: 12,
+      fontWeight: '800',
+      textTransform: 'capitalize',
+    },
 
-  wordRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  spanish: {
-    flex: 1,
-    color: '#f8fafc',
-    fontSize: 31,
-    fontWeight: '900',
-    lineHeight: 38,
-  },
-  label: {
-    color: '#94a3b8',
-    fontSize: 12,
-    fontWeight: '900',
-    textTransform: 'uppercase',
-  },
-  input: {
-    backgroundColor: '#0b1220',
-    borderWidth: 1,
-    borderColor: '#334155',
-    borderRadius: 10,
-    color: '#f8fafc',
-    fontSize: 16,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-  },
-  exampleInput: {
-    minHeight: 104,
-    textAlignVertical: 'top',
-    lineHeight: 22,
-  },
-  ipa: { color: '#64748b', fontSize: 14 },
-  tagsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
-  tag: {
-    backgroundColor: '#1e293b',
-    borderRadius: 999,
-    paddingVertical: 3,
-    paddingHorizontal: 8,
-  },
-  tagText: { color: '#94a3b8', fontSize: 12 },
+    wordRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+    spanish: {
+      flex: 1,
+      color: colors.editorText,
+      fontSize: 31,
+      fontWeight: '900',
+      lineHeight: 38,
+    },
+    label: {
+      color: colors.editorTertiary,
+      fontSize: 12,
+      fontWeight: '900',
+      textTransform: 'uppercase',
+    },
+    input: {
+      backgroundColor: colors.editorSurface,
+      borderWidth: 1,
+      borderColor: colors.editorBorder,
+      borderRadius: 10,
+      color: colors.editorText,
+      fontSize: 16,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+    },
+    exampleInput: {
+      minHeight: 104,
+      textAlignVertical: 'top',
+      lineHeight: 22,
+    },
+    ipa: { color: colors.mutedInk, fontSize: 14 },
+    tagsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
+    tag: {
+      backgroundColor: colors.slateTrack,
+      borderRadius: 999,
+      paddingVertical: 3,
+      paddingHorizontal: 8,
+    },
+    tagText: { color: colors.editorTertiary, fontSize: 12 },
 
-  speakBtn: {
-    backgroundColor: '#0b1220',
-    borderWidth: 1,
-    borderColor: '#1f2937',
-    borderRadius: 999,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-  speakBtnText: { color: '#e2e8f0', fontWeight: '700' },
+    speakBtn: {
+      backgroundColor: colors.editorSurface,
+      borderWidth: 1,
+      borderColor: colors.editorSoftEdge,
+      borderRadius: 999,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+    },
+    speakBtnText: { color: colors.editorInk, fontWeight: '700' },
 
-  empty: {
-    minHeight: 220,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#0f172a',
-    borderWidth: 1,
-    borderColor: '#1f2937',
-    borderRadius: 14,
-    padding: spacing(2),
-  },
-  emptyText: { color: colors.textSecondary },
+    empty: {
+      minHeight: 220,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.deepSurface,
+      borderWidth: 1,
+      borderColor: colors.editorSoftEdge,
+      borderRadius: 14,
+      padding: spacing(2),
+    },
+    emptyText: { color: colors.textSecondary },
 
-  actionBar: {
-    borderTopWidth: 1,
-    borderTopColor: '#172033',
-    backgroundColor: '#020617',
-    paddingHorizontal: spacing(2),
-    paddingTop: spacing(1.25),
-    paddingBottom: spacing(1.5),
-    gap: spacing(1),
-  },
-  controls: {
-    flexDirection: 'row',
-    gap: 8,
-    alignItems: 'center',
-  },
-  navBtn: {
-    flex: 1,
-    backgroundColor: '#0b1220',
-    borderWidth: 1,
-    borderColor: '#1f2937',
-    borderRadius: 12,
-    paddingVertical: 9,
-    alignItems: 'center',
-  },
-  navBtnDisabled: { opacity: 0.3 },
-  navBtnText: { color: '#e2e8f0', fontWeight: '900', fontSize: 13 },
+    actionBar: {
+      borderTopWidth: 1,
+      borderTopColor: colors.editorRule,
+      backgroundColor: colors.bg,
+      paddingHorizontal: spacing(2),
+      paddingTop: spacing(1.25),
+      paddingBottom: spacing(1.5),
+      gap: spacing(1),
+    },
+    controls: {
+      flexDirection: 'row',
+      gap: 8,
+      alignItems: 'center',
+    },
+    navBtn: {
+      flex: 1,
+      backgroundColor: colors.editorSurface,
+      borderWidth: 1,
+      borderColor: colors.editorSoftEdge,
+      borderRadius: 12,
+      paddingVertical: 9,
+      alignItems: 'center',
+    },
+    navBtnDisabled: { opacity: 0.3 },
+    navBtnText: { color: colors.editorInk, fontWeight: '900', fontSize: 13 },
 
-  reviewActions: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  actionBtn: {
-    flex: 1,
-    borderRadius: 12,
-    paddingVertical: 13,
-    paddingHorizontal: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 50,
-  },
-  actionBtnDisabled: { opacity: 0.45 },
-  nativeBtn: { backgroundColor: '#7f1d1d' },
-  saveBtn: { backgroundColor: '#1d4ed8' },
-  actionBtnText: { color: '#fff', fontWeight: '900', fontSize: 14, textAlign: 'center' },
-});
+    reviewActions: {
+      flexDirection: 'row',
+      gap: 8,
+    },
+    actionBtn: {
+      flex: 1,
+      borderRadius: 12,
+      paddingVertical: 13,
+      paddingHorizontal: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: 50,
+    },
+    actionBtnDisabled: { opacity: 0.45 },
+    nativeBtn: { backgroundColor: colors.editorDangerFill },
+    saveBtn: { backgroundColor: colors.editorPrimary },
+    actionBtnText: {
+      color: colors.editorActionInk,
+      fontWeight: '900',
+      fontSize: 14,
+      textAlign: 'center',
+    },
+  });

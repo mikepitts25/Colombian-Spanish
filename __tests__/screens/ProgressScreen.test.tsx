@@ -1,3 +1,4 @@
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -172,4 +173,17 @@ it('saturates the goal indicator while retaining the actual above-goal count', a
     now: 100,
     text: '7 of 5 cards studied',
   });
+});
+
+it('repaints evidence labels without changing counters or observations', async () => {
+  const ui = renderWithTheme(<ProgressScreen />);
+  const label = await ui.findByText('No recognition results yet');
+  const count = ui.getByTestId('progress-in-review').props.children;
+  const before = await AsyncStorage.getItem('SRS_LEARNING_EVENTS_V1');
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  expect(label).toHaveStyle({ color: '#486258' });
+  expect(ui.getByTestId('progress-in-review').props.children).toBe(count);
+  expect(await AsyncStorage.getItem('SRS_LEARNING_EVENTS_V1')).toBe(before);
+  ui.applyTheme({ themeId: 'classic', appearanceMode: 'dark' });
+  expect(label).toHaveStyle({ color: '#cbd5e1' });
 });

@@ -1,16 +1,11 @@
+import Pressable from '../components/ThemedPressable';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  Switch,
-  useWindowDimensions,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Switch, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { colors } from '../styles/theme';
+
 import {
   DEFAULT_NOTIFICATION_PREFS,
   NotificationPreferences,
@@ -37,6 +32,8 @@ function ReminderSwitch({
   testID: string;
   expanded: boolean;
 }) {
+  const styles = useThemedStyles(makeStyles);
+  const { colors } = useAppTheme();
   return (
     <View style={[styles.row, expanded && styles.expandedRow]}>
       <View style={styles.info}>
@@ -53,7 +50,7 @@ function ReminderSwitch({
           disabled={disabled}
           onValueChange={onChange}
           trackColor={{ false: colors.border, true: colors.brand }}
-          thumbColor={value ? '#020617' : colors.textTertiary}
+          thumbColor={value ? colors.onBrand : colors.textTertiary}
           ios_backgroundColor={colors.border}
         />
       </View>
@@ -62,6 +59,7 @@ function ReminderSwitch({
 }
 
 export default function NotificationsScreen() {
+  const styles = useThemedStyles(makeStyles);
   const nav = useNavigation<any>();
   const { fontScale } = useWindowDimensions();
   const { t } = useLanguage();
@@ -233,31 +231,37 @@ export default function NotificationsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: 20, paddingBottom: 40, gap: 16 },
-  back: {
-    alignSelf: 'flex-start',
-    minHeight: 48,
-    paddingHorizontal: 16,
-    justifyContent: 'center',
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-  },
-  backText: { color: colors.brand, fontSize: 16, fontWeight: '700' },
-  title: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
-  groupTitle: { color: colors.textSecondary, fontSize: 14, fontWeight: '700' },
-  card: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 16,
-  },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 16 },
-  expandedRow: { flexDirection: 'column', alignItems: 'stretch' },
-  info: { flex: 1, gap: 6 },
-  rowTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '700' },
-  body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
-  switchTarget: { minHeight: 48, minWidth: 48, justifyContent: 'center', alignSelf: 'flex-start' },
-  divider: { height: 1, backgroundColor: colors.border },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    content: { padding: 20, paddingBottom: 40, gap: 16 },
+    back: {
+      alignSelf: 'flex-start',
+      minHeight: 48,
+      paddingHorizontal: 16,
+      justifyContent: 'center',
+      backgroundColor: colors.surface,
+      borderRadius: 12,
+    },
+    backText: { color: colors.brand, fontSize: 16, fontWeight: '700' },
+    title: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
+    groupTitle: { color: colors.textSecondary, fontSize: 14, fontWeight: '700' },
+    card: {
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 16,
+    },
+    row: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 16 },
+    expandedRow: { flexDirection: 'column', alignItems: 'stretch' },
+    info: { flex: 1, gap: 6 },
+    rowTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '700' },
+    body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
+    switchTarget: {
+      minHeight: 48,
+      minWidth: 48,
+      justifyContent: 'center',
+      alignSelf: 'flex-start',
+    },
+    divider: { height: 1, backgroundColor: colors.border },
+  });

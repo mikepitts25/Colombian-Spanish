@@ -1,17 +1,12 @@
+import Pressable from '../components/ThemedPressable';
+import { useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Alert,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-} from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { usePreventRemove } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
-import { colors, spacing } from '../styles/theme';
+import { spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useLanguage } from '../context/LanguageContext';
 import type { FlashCard } from '../types';
@@ -19,6 +14,7 @@ import type { FlashCard } from '../types';
 type FlaggedRow = { deckName: string; card: FlashCard };
 
 export default function FlaggedScreen() {
+  const styles = useThemedStyles(makeStyles);
   const { ready, decks, clearAllFlags } = useDeck();
   const { t } = useLanguage();
   const { fontScale } = useWindowDimensions();
@@ -170,7 +166,7 @@ export default function FlaggedScreen() {
               <Text style={styles.rowNumText}>{index + 1}</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <View style={styles.deckBadge}>
+              <View testID={`flagged-deck-badge-${item.card.id}`} style={styles.deckBadge}>
                 <Text style={styles.deckBadgeText}>{item.deckName}</Text>
               </View>
               <Text style={styles.spanish}>{item.card.front}</Text>
@@ -185,85 +181,90 @@ export default function FlaggedScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
-  sub: { color: colors.textSecondary, marginBottom: spacing(1.5) },
+const makeStyles = ({ colors, id }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
+    h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
+    sub: { color: colors.textSecondary, marginBottom: spacing(1.5) },
 
-  actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: spacing(1.5) },
-  stacked: { flexDirection: 'column' },
-  disabled: { opacity: 0.6 },
-  exportBtn: {
-    paddingHorizontal: 16,
-    justifyContent: 'center',
-    backgroundColor: colors.surfacePressed,
-    borderRadius: 12,
-    minHeight: 48,
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  exportBtnText: { color: 'white', fontWeight: '900' },
-  clearBtn: {
-    justifyContent: 'center',
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: '#ef4444',
-    borderRadius: 12,
-    minHeight: 48,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    alignItems: 'center',
-  },
-  clearBtnText: { color: '#ef4444', fontWeight: '900' },
+    actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: spacing(1.5) },
+    stacked: { flexDirection: 'column' },
+    disabled: { opacity: 0.6 },
+    exportBtn: {
+      paddingHorizontal: 16,
+      justifyContent: 'center',
+      backgroundColor: colors.surfacePressed,
+      borderRadius: 12,
+      minHeight: 48,
+      paddingVertical: 12,
+      alignItems: 'center',
+    },
+    exportBtnText: { color: colors.audioText, fontWeight: '900' },
+    clearBtn: {
+      justifyContent: 'center',
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.alertInk,
+      borderRadius: 12,
+      minHeight: 48,
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+      alignItems: 'center',
+    },
+    clearBtnText: { color: colors.alertInk, fontWeight: '900' },
 
-  hint: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 10,
-    padding: spacing(1.25),
-    marginBottom: spacing(1.5),
-  },
-  hintText: { color: colors.textSecondary, fontSize: 12, lineHeight: 18 },
+    hint: {
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 10,
+      padding: spacing(1.25),
+      marginBottom: spacing(1.5),
+    },
+    hintText: { color: colors.textSecondary, fontSize: 12, lineHeight: 18 },
 
-  row: {
-    flexDirection: 'row',
-    gap: 12,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: '#ef4444',
-    borderRadius: 12,
-    padding: spacing(1.5),
-    marginBottom: 10,
-  },
-  rowNum: {
-    alignSelf: 'flex-start',
-    minWidth: 28,
-    minHeight: 28,
-    padding: 4,
-    borderRadius: 14,
-    backgroundColor: 'rgba(239,68,68,0.15)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  rowNumText: { color: '#f87171', fontWeight: '900', fontSize: 13 },
+    row: {
+      flexDirection: 'row',
+      gap: 12,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.alertInk,
+      borderRadius: 12,
+      padding: spacing(1.5),
+      marginBottom: 10,
+    },
+    rowNum: {
+      alignSelf: 'flex-start',
+      minWidth: 28,
+      minHeight: 28,
+      padding: 4,
+      borderRadius: 14,
+      backgroundColor: colors.alertWash,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    rowNumText: { color: colors.restoreDanger, fontWeight: '900', fontSize: 13 },
 
-  deckBadge: {
-    backgroundColor: colors.border,
-    borderRadius: 6,
-    paddingVertical: 3,
-    paddingHorizontal: 8,
-    alignSelf: 'flex-start',
-    marginBottom: 6,
-  },
-  deckBadgeText: { color: colors.textTertiary, fontSize: 11, fontWeight: '700' },
+    deckBadge: {
+      backgroundColor: id === 'classic' ? colors.border : colors.tagSurface,
+      borderRadius: 6,
+      paddingVertical: 3,
+      paddingHorizontal: 8,
+      alignSelf: 'flex-start',
+      marginBottom: 6,
+    },
+    deckBadgeText: {
+      color: id === 'classic' ? colors.textTertiary : colors.tagText,
+      fontSize: 11,
+      fontWeight: '700',
+    },
 
-  spanish: { color: colors.textPrimary, fontSize: 18, fontWeight: '900', marginBottom: 2 },
-  english: { color: '#93c5fd', fontSize: 15, fontWeight: '700', marginBottom: 4 },
-  example: { color: colors.textSecondary, fontStyle: 'italic', fontSize: 13, marginBottom: 6 },
-  cardId: { color: colors.textTertiary, fontSize: 11, fontFamily: 'monospace' },
+    spanish: { color: colors.textPrimary, fontSize: 18, fontWeight: '900', marginBottom: 2 },
+    english: { color: colors.tagText, fontSize: 15, fontWeight: '700', marginBottom: 4 },
+    example: { color: colors.textSecondary, fontStyle: 'italic', fontSize: 13, marginBottom: 6 },
+    cardId: { color: colors.textTertiary, fontSize: 11, fontFamily: 'monospace' },
 
-  emptyWrap: { alignItems: 'center', paddingTop: spacing(6) },
-  emptyEmoji: { fontSize: 48, marginBottom: spacing(1) },
-  emptyText: { color: colors.textSecondary, textAlign: 'center', lineHeight: 22 },
-});
+    emptyWrap: { alignItems: 'center', paddingTop: spacing(6) },
+    emptyEmoji: { fontSize: 48, marginBottom: spacing(1) },
+    emptyText: { color: colors.textSecondary, textAlign: 'center', lineHeight: 22 },
+  });

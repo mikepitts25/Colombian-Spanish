@@ -1,16 +1,19 @@
+import Pressable from './ThemedPressable';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useRef, useState, useEffect, useLayoutEffect, useCallback, useMemo } from 'react';
 import {
   Animated,
   Easing,
   PanResponder,
-  Pressable,
   StyleSheet,
   Text,
   View,
   useWindowDimensions,
 } from 'react-native';
+import ThemeIcon from './ThemeIcon';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { colors } from '../styles/theme';
+
 import { CardRegister, FlashCard } from '../types';
 import { splitExampleText } from '../utils/exampleText';
 import { getCardRegister, REGISTER_LABEL_KEYS } from '../utils/register';
@@ -32,6 +35,18 @@ const REGISTER_COLORS: Record<CardRegister, { bg: string; border: string; text: 
 };
 
 export default function Flashcard({ card, onGrade, expandForLargeText = false }: Props) {
+  const styles = useThemedStyles(makeStyles);
+  const theme = useAppTheme();
+  const { colors } = theme;
+  const registerColors =
+    theme.id === 'classic'
+      ? REGISTER_COLORS
+      : {
+          formal: { bg: colors.surfaceElevated, border: colors.border, text: colors.textSecondary },
+          casual: { bg: colors.infoMuted, border: colors.info, text: colors.info },
+          vulgar: { bg: colors.dangerMuted, border: colors.danger, text: colors.danger },
+          flirty: { bg: colors.warningMuted, border: colors.warning, text: colors.warning },
+        };
   const { t } = useLanguage();
   const reducedMotion = useReducedMotion();
   const { fontScale } = useWindowDimensions();
@@ -49,12 +64,12 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
         styles.registerBadge,
         largeText && styles.registerBadgeFlow,
         {
-          backgroundColor: REGISTER_COLORS[register].bg,
-          borderColor: REGISTER_COLORS[register].border,
+          backgroundColor: registerColors[register].bg,
+          borderColor: registerColors[register].border,
         },
       ]}
     >
-      <Text style={[styles.registerText, { color: REGISTER_COLORS[register].text }]}>
+      <Text style={[styles.registerText, { color: registerColors[register].text }]}>
         {register === 'vulgar' ? '⚠️ ' : ''}
         {t(REGISTER_LABEL_KEYS[register])}
       </Text>
@@ -225,9 +240,13 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
               style={styles.expandedSpeaker}
               onPress={say}
             >
-              <Text allowFontScaling={false} accessible={false} style={styles.speakerIcon}>
-                🔊
-              </Text>
+              {theme.iconStyle === 'emoji' ? (
+                <Text allowFontScaling={false} accessible={false} style={styles.speakerIcon}>
+                  🔊
+                </Text>
+              ) : (
+                <ThemeIcon name="audio" size={17} color={colors.brand} />
+              )}
             </Pressable>
           )}
         </View>
@@ -284,7 +303,11 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
               style={styles.speakerBtn}
               onPress={say}
             >
-              <Text style={styles.speakerIcon}>🔊</Text>
+              {theme.iconStyle === 'emoji' ? (
+                <Text style={styles.speakerIcon}>🔊</Text>
+              ) : (
+                <ThemeIcon name="audio" size={17} color={colors.brand} />
+              )}
             </Pressable>
           </View>
         </Animated.View>
@@ -328,124 +351,125 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
   );
 }
 
-const styles = StyleSheet.create({
-  expandedCard: {
-    minHeight: 278,
-    backgroundColor: '#111827',
-    borderRadius: 26,
-    borderWidth: 1,
-    borderTopWidth: 5,
-    borderColor: colors.border,
-    borderTopColor: colors.brand,
-  },
-  expandedFace: { padding: 20, alignItems: 'center', gap: 16 },
-  expandedWord: { fontSize: 28 },
-  expandedSpeaker: {
-    minHeight: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 12,
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: 16,
-  },
-  registerBadgeFlow: { position: 'relative', top: 0 },
-  cardWrap: { height: 278 },
-  stopAudio: { minHeight: 48, marginTop: 8, alignItems: 'center', justifyContent: 'center' },
-  stopAudioText: { color: colors.textSecondary, fontSize: 16 },
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    expandedCard: {
+      minHeight: 278,
+      backgroundColor: colors.cardSurface,
+      borderRadius: 26,
+      borderWidth: 1,
+      borderTopWidth: 5,
+      borderColor: colors.border,
+      borderTopColor: colors.brand,
+    },
+    expandedFace: { padding: 20, alignItems: 'center', gap: 16 },
+    expandedWord: { fontSize: 28 },
+    expandedSpeaker: {
+      minHeight: 48,
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: 12,
+      backgroundColor: colors.surfaceElevated,
+      borderRadius: 16,
+    },
+    registerBadgeFlow: { position: 'relative', top: 0 },
+    cardWrap: { height: 278 },
+    stopAudio: { minHeight: 48, marginTop: 8, alignItems: 'center', justifyContent: 'center' },
+    stopAudioText: { color: colors.textSecondary, fontSize: 16 },
 
-  card: {
-    ...StyleSheet.absoluteFill,
-    backgroundColor: '#111827',
-    borderRadius: 26,
-    borderWidth: 1,
-    borderColor: 'rgba(148,163,184,0.16)',
-    backfaceVisibility: 'hidden',
-    shadowColor: '#000',
-    shadowOpacity: 0.32,
-    shadowRadius: 22,
-    shadowOffset: { width: 0, height: 12 },
-    elevation: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  cardFront: {
-    borderTopWidth: 5,
-    borderTopColor: colors.brand,
-    shadowColor: 'rgba(255,218,0,0.2)',
-  },
-  cardBack: {
-    borderTopWidth: 5,
-    borderTopColor: colors.accentBlue,
-  },
+    card: {
+      ...StyleSheet.absoluteFill,
+      backgroundColor: colors.cardSurface,
+      borderRadius: 26,
+      borderWidth: 1,
+      borderColor: colors.cardBorder,
+      backfaceVisibility: 'hidden',
+      shadowColor: '#000',
+      shadowOpacity: 0.32,
+      shadowRadius: 22,
+      shadowOffset: { width: 0, height: 12 },
+      elevation: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    cardFront: {
+      borderTopWidth: 5,
+      borderTopColor: colors.brand,
+      shadowColor: colors.cardGlow,
+    },
+    cardBack: {
+      borderTopWidth: 5,
+      borderTopColor: colors.accentBlue,
+    },
 
-  flipTarget: { flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center', gap: 12 },
-  face: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 26,
-    paddingVertical: 28,
-    gap: 12,
-  },
+    flipTarget: { flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center', gap: 12 },
+    face: {
+      flex: 1,
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 26,
+      paddingVertical: 28,
+      gap: 12,
+    },
 
-  frontWord: {
-    color: colors.textPrimary,
-    fontSize: 48,
-    fontWeight: '900',
-    textAlign: 'center',
-    letterSpacing: 0,
-  },
-  backWord: {
-    color: colors.textPrimary,
-    fontSize: 34,
-    fontWeight: '900',
-    textAlign: 'center',
-    letterSpacing: 0,
-  },
-  example: {
-    color: colors.textSecondary,
-    fontSize: 15,
-    fontStyle: 'italic',
-    textAlign: 'center',
-    lineHeight: 21,
-    paddingHorizontal: 8,
-  },
-  exampleBack: {
-    color: colors.textSecondary,
-    fontSize: 14,
-    textAlign: 'center',
-    lineHeight: 20,
-    paddingHorizontal: 8,
-  },
-  speakerBtn: {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: 'rgba(255,218,0,0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,218,0,0.36)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  speakerIcon: { fontSize: 17 },
+    frontWord: {
+      color: colors.textPrimary,
+      fontSize: 48,
+      fontWeight: '900',
+      textAlign: 'center',
+      letterSpacing: 0,
+    },
+    backWord: {
+      color: colors.textPrimary,
+      fontSize: 34,
+      fontWeight: '900',
+      textAlign: 'center',
+      letterSpacing: 0,
+    },
+    example: {
+      color: colors.textSecondary,
+      fontSize: 15,
+      fontStyle: 'italic',
+      textAlign: 'center',
+      lineHeight: 21,
+      paddingHorizontal: 8,
+    },
+    exampleBack: {
+      color: colors.textSecondary,
+      fontSize: 14,
+      textAlign: 'center',
+      lineHeight: 20,
+      paddingHorizontal: 8,
+    },
+    speakerBtn: {
+      position: 'absolute',
+      bottom: 16,
+      right: 16,
+      width: 48,
+      height: 48,
+      borderRadius: 24,
+      backgroundColor: colors.audioTint,
+      borderWidth: 1,
+      borderColor: colors.audioBorder,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    speakerIcon: { fontSize: 17 },
 
-  registerBadge: {
-    position: 'absolute',
-    top: 14,
-    alignSelf: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-    borderWidth: 1,
-  },
-  registerText: {
-    fontSize: 11,
-    fontWeight: '800',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-});
+    registerBadge: {
+      position: 'absolute',
+      top: 14,
+      alignSelf: 'center',
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+      borderRadius: 12,
+      borderWidth: 1,
+    },
+    registerText: {
+      fontSize: 11,
+      fontWeight: '800',
+      textTransform: 'uppercase',
+      letterSpacing: 0.5,
+    },
+  });

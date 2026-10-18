@@ -327,3 +327,29 @@ test('keeps the existing card presentation for consumers that have not enabled e
     act(() => Dimensions.set({ window, screen }));
   }
 });
+
+import { ThemeProvider, useThemeSelection } from '../../src/context/ThemeContext';
+it('keeps the revealed face and grade callback while applying Barrio and returning to Classic', () => {
+  let selection!: ReturnType<typeof useThemeSelection>;
+  const grade = jest.fn();
+  function Controller() {
+    const next = useThemeSelection();
+    React.useLayoutEffect(() => {
+      selection = next;
+    }, [next]);
+    return <Flashcard card={makeCard()} onGrade={grade} />;
+  }
+  const ui = render(
+    <ThemeProvider>
+      <Controller />
+    </ThemeProvider>,
+  );
+  fireEvent.press(ui.getByRole('button', { name: /Voltear tarjeta: chimba/ }));
+  expect(ui.getByText('awesome / cool')).toHaveStyle({ color: '#f8fafc' });
+  act(() => selection.applySelection({ themeId: 'barrio', appearanceMode: 'light' }));
+  expect(ui.getByText('awesome / cool')).toHaveStyle({ color: '#18352F' });
+  expect(ui.queryByText('chimba')).toBeNull();
+  act(() => selection.applySelection({ themeId: 'classic', appearanceMode: 'light' }));
+  expect(ui.getByText('awesome / cool')).toHaveStyle({ color: '#f8fafc' });
+  expect(grade).not.toHaveBeenCalled();
+});

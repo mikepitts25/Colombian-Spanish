@@ -1,14 +1,17 @@
+import Pressable from '../components/ThemedPressable';
+import { controlSurface, controlText } from '../styles/controlStates';
+import ThemedTextInput from '../components/ThemedTextInput';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import { useActiveStudyTime } from '../hooks/useActiveStudyTime';
 import { isTimedResponse } from '../missions/activeTiming';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
   useWindowDimensions,
 } from 'react-native';
@@ -24,7 +27,6 @@ import { LocalizedText, MissionPack, validateMission } from '../missions/schema'
 import { MissionCommand, MissionRun } from '../missions/engine';
 import { applyMissionCommand, loadMissionRun, startMissionRun } from '../storage/missions';
 import MissionFollowUp from '../components/MissionFollowUp';
-import { colors } from '../styles/theme';
 
 type Pending =
   | { kind: 'start'; id: string; at: number; expectedRunId?: string }
@@ -48,6 +50,7 @@ export default function MissionScreen({
   footer?: React.ReactNode;
   blocked?: boolean;
 } = {}) {
+  const styles = useThemedStyles(makeStyles);
   const { fontScale } = useWindowDimensions();
   const { language, t } = useLanguage();
   const nav = useNavigation<any>();
@@ -320,7 +323,7 @@ export default function MissionScreen({
                           <>
                             {node.kind === 'production' ? (
                               <>
-                                <TextInput
+                                <ThemedTextInput
                                   accessibilityLabel={t('mission.answer')}
                                   style={styles.input}
                                   value={answer}
@@ -497,44 +500,45 @@ export default function MissionScreen({
     </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: 20, gap: 16, paddingBottom: 60 },
-  title: { fontSize: 28, fontWeight: '800', color: colors.textPrimary },
-  eyebrow: { color: colors.brand, fontSize: 14, fontWeight: '700' },
-  heading: { color: colors.textPrimary, fontSize: 23, fontWeight: '700' },
-  body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
-  prompt: { color: colors.textPrimary, fontSize: 20, lineHeight: 28 },
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: 20,
-    padding: 20,
-    gap: 16,
-    borderWidth: 1,
-    borderColor: colors.borderBrand,
-  },
-  button: {
-    minHeight: 48,
-    backgroundColor: colors.brand,
-    borderRadius: 12,
-    padding: 14,
-    justifyContent: 'center',
-    marginVertical: 4,
-  },
-  buttonText: { fontSize: 16, color: colors.textInverse, fontWeight: '700', textAlign: 'center' },
-  disabled: { opacity: 0.5 },
-  input: {
-    minHeight: 52,
-    borderWidth: 1,
-    borderColor: colors.borderActive,
-    borderRadius: 10,
-    padding: 14,
-    color: colors.textPrimary,
-    fontSize: 20,
-  },
-  hint: { fontSize: 16, color: colors.brand, lineHeight: 24 },
-  feedback: { fontSize: 20, fontWeight: '700', color: colors.brand, marginVertical: 12 },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    content: { padding: 20, gap: 16, paddingBottom: 60 },
+    title: { fontSize: 28, fontWeight: '800', color: colors.textPrimary },
+    eyebrow: { color: colors.brand, fontSize: 14, fontWeight: '700' },
+    heading: { color: colors.textPrimary, fontSize: 23, fontWeight: '700' },
+    body: { color: colors.textSecondary, fontSize: 16, lineHeight: 24 },
+    prompt: { color: colors.textPrimary, fontSize: 20, lineHeight: 28 },
+    card: {
+      backgroundColor: colors.surface,
+      borderRadius: 20,
+      padding: 20,
+      gap: 16,
+      borderWidth: 1,
+      borderColor: colors.borderBrand,
+    },
+    button: {
+      minHeight: 48,
+      backgroundColor: colors.brand,
+      borderRadius: 12,
+      padding: 14,
+      justifyContent: 'center',
+      marginVertical: 4,
+    },
+    buttonText: { fontSize: 16, color: colors.textInverse, fontWeight: '700', textAlign: 'center' },
+    disabled: { opacity: 0.5 },
+    input: {
+      minHeight: 52,
+      borderWidth: 1,
+      borderColor: colors.borderActive,
+      borderRadius: 10,
+      padding: 14,
+      color: colors.textPrimary,
+      fontSize: 20,
+    },
+    hint: { fontSize: 16, color: colors.brand, lineHeight: 24 },
+    feedback: { fontSize: 20, fontWeight: '700', color: colors.brand, marginVertical: 12 },
+  });
 
 function ActionButton({
   label,
@@ -547,6 +551,8 @@ function ActionButton({
   off: boolean;
   busy?: boolean;
 }) {
+  const styles = useThemedStyles(makeStyles);
+  const theme = useAppTheme();
   return (
     <Pressable
       key={label}
@@ -554,9 +560,13 @@ function ActionButton({
       accessibilityState={{ disabled: off, busy }}
       disabled={off}
       onPress={action}
-      style={[styles.button, off && styles.disabled]}
+      style={({ pressed }) => [
+        styles.button,
+        off && styles.disabled,
+        controlSurface(theme, pressed, off),
+      ]}
     >
-      <Text style={styles.buttonText}>{label}</Text>
+      <Text style={[styles.buttonText, controlText(theme, off)]}>{label}</Text>
     </Pressable>
   );
 }

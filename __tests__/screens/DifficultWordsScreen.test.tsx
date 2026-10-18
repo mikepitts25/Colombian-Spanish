@@ -1,3 +1,5 @@
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
+import { resolveAppTheme } from '../../src/styles/appTheme';
 import React from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
@@ -203,3 +205,22 @@ it('shows scheduler intervals for the current difficult card rather than fixed e
     screen.unmount();
   }
 });
+
+test.each(['light', 'dark'] as const)(
+  'Barrio %s difficult deck pill uses the actual readable tag pair',
+  (appearanceMode) => {
+    const screen = renderWithTheme(<DifficultWordsScreen />);
+    screen.applyTheme({ themeId: 'barrio', appearanceMode });
+    const { colors } = resolveAppTheme({ themeId: 'barrio', appearanceMode }, null);
+    expect(screen.getByText('Slang')).toHaveStyle({ color: colors.tagText });
+    expect(screen.getByTestId('difficult-deck-badge')).toHaveStyle({
+      backgroundColor: colors.tagSurface,
+    });
+    screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+    const classic = resolveAppTheme({ themeId: 'classic', appearanceMode: 'system' }, null).colors;
+    expect(screen.getByText('Slang')).toHaveStyle({ color: classic.textPrimary });
+    expect(screen.getByTestId('difficult-deck-badge')).toHaveStyle({
+      backgroundColor: classic.accentBlue,
+    });
+  },
+);

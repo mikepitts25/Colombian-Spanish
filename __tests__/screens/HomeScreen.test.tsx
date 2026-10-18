@@ -1,3 +1,4 @@
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { AppState, AppStateStatus, Dimensions } from 'react-native';
@@ -664,4 +665,15 @@ it('refreshes the catch-up boundary when Start crosses midnight after Home loads
       expect.objectContaining({ sessionNewLimit: 0 }),
     ),
   );
+});
+
+it('theme identity repaints Home while its recommendation and route remain the same', async () => {
+  const ui = renderWithTheme(<HomeScreen />);
+  const label = await ui.findByText('Study due cards');
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  expect(label).toHaveStyle({ color: '#FFFFFF' });
+  await act(async () => fireEvent.press(label));
+  await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
+  ui.applyTheme({ themeId: 'classic', appearanceMode: 'dark' });
+  expect(label).toHaveStyle({ color: '#020617' });
 });

@@ -1,6 +1,6 @@
 # Barrio semantic appearance foundation
 
-Status: **owner approved the written spec on 2026-10-18 with an explicit preservation requirement: keep the current theme available in a theme picker alongside Barrio.** This revision incorporates that requirement. Implementation-plan review and execution choice remain pending; no runtime change is part of this artifact.
+Status: **owner approved the written spec on 2026-10-18 with an explicit preservation requirement: keep the current theme available in a theme picker alongside Barrio.** This revision incorporates that requirement. The owner also approved the implementation plan and selected Native inline execution; implementation remains subject to its tests, native checks and final review.
 
 ## Intent and scope
 
@@ -84,4 +84,4 @@ The implementation plan must enumerate actual consumers/roles, identify changed 
 
 ## Remaining decisions and gates
 
-The owner approved this written spec and requested retaining the current theme. This revision keeps Classic as default and offers Barrio with a remembered System/Light/Dark preference, using Save-to-apply. The implementation plan and execution choice require review before coding. No product code changes are part of this artifact. Security B01.8-C2g stays skipped without retry or bypass. Downloadable-audio spec approval, rights/recordings, language release acceptance, provider/account/product decisions and physical-device work are unaffected.
+The owner approved this written spec and requested retaining the current theme. This revision keeps Classic as default and offers Barrio with a remembered System/Light/Dark preference, using Save-to-apply. The owner approved the implementation plan and Native execution; the implementation is now in progress. This spec alone does not establish runtime completion. Security B01.8-C2g stays skipped without retry or bypass. Downloadable-audio spec approval, rights/recordings, language release acceptance, provider/account/product decisions and physical-device work are unaffected.
