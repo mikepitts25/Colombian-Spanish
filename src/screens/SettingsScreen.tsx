@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/theme';
+import { useAppTheme } from '../context/ThemeContext';
 import { getDailyProgress, loadDecks } from '../storage/storage';
 import { getLearningEvents, validateLearningEvents } from '../storage/learningEvents';
 import { MAX_BACKUP_CHARACTERS, validateBackupDecks } from '../storage/backupValidation';
@@ -72,6 +73,7 @@ function Divider() {
 
 export default function SettingsScreen() {
   const { fontScale } = useWindowDimensions();
+  const appTheme = useAppTheme();
   const nav = useNavigation<any>();
   const { t, toggleLanguage } = useLanguage();
   const buildLabel = t(
@@ -402,6 +404,16 @@ export default function SettingsScreen() {
         {/* App */}
         <Text style={styles.groupLabel}>{t('settings.section.app')}</Text>
         <View style={styles.groupCard}>
+          <SettingsRow
+            emoji="🎨"
+            title={t('theme.title')}
+            subtitle={t('theme.summary', {
+              theme: t(`theme.${appTheme.id}`),
+              appearance: t(`theme.${appTheme.appearance}`),
+            })}
+            onPress={() => nav.navigate('ThemeSettings')}
+          />
+          <Divider />
           <SettingsRow
             emoji="🔊"
             title={t('audio.title')}

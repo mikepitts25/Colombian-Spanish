@@ -5,6 +5,8 @@ import type { NativeStackNavigationOptions } from '@react-navigation/native-stac
 import { Text, View, StyleSheet, Pressable, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AudioPreferencesScreen from '../screens/AudioPreferencesScreen';
+import ThemeSettingsScreen from '../screens/ThemeSettingsScreen';
+import { useAppTheme } from '../context/ThemeContext';
 import ListeningScreen from '../screens/ListeningScreen';
 import VoicePracticeScreen from '../screens/VoicePracticeScreen';
 import MissionScreen from '../screens/MissionScreen';
@@ -104,14 +106,14 @@ function Tabs() {
   );
 }
 
-const stackHeaderOpts: NativeStackNavigationOptions = {
-  headerStyle: { backgroundColor: colors.surface },
-  headerTintColor: colors.brand,
-  headerTitleStyle: { fontWeight: '700' as const, color: colors.textPrimary },
-  headerBackButtonDisplayMode: 'minimal',
-};
-
 export default function RootNavigator() {
+  const appTheme = useAppTheme();
+  const stackHeaderOpts: NativeStackNavigationOptions = {
+    headerStyle: { backgroundColor: appTheme.colors.surface },
+    headerTintColor: appTheme.colors.brand,
+    headerTitleStyle: { fontWeight: '700' as const, color: appTheme.colors.textPrimary },
+    headerBackButtonDisplayMode: 'minimal',
+  };
   const { t } = useLanguage();
   const reducedMotion = useReducedMotion();
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
@@ -125,7 +127,7 @@ export default function RootNavigator() {
   // Hold rendering one frame until we know whether to show onboarding —
   // avoids flashing Home before redirecting first-run users.
   if (onboarded === null) {
-    return <View style={styles.bootWrap} />;
+    return <View style={[styles.bootWrap, { backgroundColor: appTheme.colors.bg }]} />;
   }
 
   return (
@@ -136,6 +138,11 @@ export default function RootNavigator() {
       <Stack.Screen
         name="Onboarding"
         component={OnboardingScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ThemeSettings"
+        component={ThemeSettingsScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen name="Root" component={Tabs} options={{ headerShown: false }} />

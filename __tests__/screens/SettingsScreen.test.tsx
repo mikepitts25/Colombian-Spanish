@@ -747,3 +747,11 @@ test('marks goal summaries unavailable on focus read failure and recovers on the
   await screen.findByText('20 tarjetas por día');
   expect(screen.queryByText('No disponible · abre para reintentar')).toBeNull();
 });
+
+test('opens the theme picker with Classic as the default theme identity', async () => {
+  const ui = render(<SettingsScreen />);
+  await ui.findByText('Tema');
+  expect(ui.getByText('Clásico · Oscuro')).toBeTruthy();
+  fireEvent.press(ui.getByText('Tema'));
+  expect(mockNavigate).toHaveBeenCalledWith('ThemeSettings');
+});

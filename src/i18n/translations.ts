@@ -2,6 +2,26 @@ import { UiLanguage } from '../storage/prefs';
 
 export const translations = {
   es: {
+    'theme.title': 'Tema',
+    'theme.classicChoice': 'Clásico (tema original)',
+    'theme.classic': 'Clásico',
+    'theme.barrio': 'Barrio',
+    'theme.appearance': 'Apariencia de Barrio',
+    'theme.system': 'Seguir el sistema',
+    'theme.light': 'Claro',
+    'theme.dark': 'Oscuro',
+    'theme.loading': 'Cargando tema…',
+    'theme.loadError': 'No se pudo cargar el tema. Reintenta sin restablecer la app.',
+    'theme.retry': 'Reintentar',
+    'theme.save': 'Guardar tema',
+    'theme.cancel': 'Cancelar',
+    'theme.saved': 'Tema guardado.',
+    'theme.saveError':
+      'No se pudo guardar. Tu selección se conserva. Reintenta la misma selección.',
+    'theme.classicNote':
+      'Clásico conserva la apariencia oscura original. Se recuerda tu apariencia de Barrio.',
+    'theme.applyNote': 'Guardar aplica el tema. Puedes volver a Clásico cuando quieras.',
+    'theme.summary': '{theme} · {appearance}',
     'voice.preview': 'Autoevaluación de voz (borrador)',
     'voice.title': 'Grabar y escuchar · borrador',
     'voice.notice':
@@ -667,6 +687,25 @@ export const translations = {
     'nav.difficultWords': 'Palabras Difíciles',
   },
   en: {
+    'theme.title': 'Theme',
+    'theme.classicChoice': 'Classic (original theme)',
+    'theme.classic': 'Classic',
+    'theme.barrio': 'Barrio',
+    'theme.appearance': 'Barrio appearance',
+    'theme.system': 'Follow system',
+    'theme.light': 'Light',
+    'theme.dark': 'Dark',
+    'theme.loading': 'Loading theme…',
+    'theme.loadError': 'Could not load theme settings. Retry without resetting the app.',
+    'theme.retry': 'Retry',
+    'theme.save': 'Save theme',
+    'theme.cancel': 'Cancel',
+    'theme.saved': 'Theme saved.',
+    'theme.saveError': 'Could not save. Your selection is retained. Retry the same selection.',
+    'theme.classicNote':
+      'Classic keeps the original dark appearance. Your Barrio appearance is remembered.',
+    'theme.applyNote': 'Save applies the theme. You can return to Classic at any time.',
+    'theme.summary': '{theme} · {appearance}',
     'voice.preview': 'Voice self-check (draft)',
     'voice.title': 'Record and listen back · draft',
     'voice.notice':
