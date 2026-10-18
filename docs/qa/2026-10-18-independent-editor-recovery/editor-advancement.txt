@@ -1,0 +1,15 @@
+Observed CUA output excerpt, retained from this run after review.
+Source: hub.getAXState({emit:false}) immediately after the coordinate Retry tap
+at [914,411], followed by native Text Size11→3. Unrelated tree rows omitted.
+This is a retained excerpt of the already observed tool output, not a new query.
+
+After visible Retry:
++                   265 text Description: TARJETA ACTUAL, Secondary Actions: Cancel
++                   266 text Description: 2 / 1402, Secondary Actions: Cancel
++                   267 text Description: Hola 1, Secondary Actions: Cancel
++                   269 Group (settable) Value: Hello 1, Secondary Actions: Cancel, Scroll Down, Scroll Up
+
+After restoring original text size:
++                   245 text Description: 2 / 1402, Secondary Actions: Cancel
++                   248 text Description: Hola 1, Secondary Actions: Cancel
+~                   143 slider (settable, float) Text Size, Value: 3
