@@ -1,0 +1,13 @@
+{
+  "path": "/tmp/colombian-theme-picker-build/Build/Products/Debug-iphonesimulator/ColombianSpanish.app",
+  "nativeCommit": "fd5384e9c284027237e3038671082888ce1d02f4",
+  "interfaceStyle": "Automatic",
+  "bundleId": "com.mikepitts.colombianspanish",
+  "version": "1.0.0",
+  "build": "1.0.0",
+  "sha256": {
+    "ColombianSpanish": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb",
+    "ColombianSpanish.debug.dylib": "9ead475eee83995ecdda06bde196cb42eea4b827270ea84a0a1574052b01b5bf",
+    "Info.plist": "b362a54ea078ddf7b3103c9940c6bdeefbf739cf2a5884ea63b309255cacad0c"
+  }
+}

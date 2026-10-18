@@ -1,0 +1,187 @@
+[
+  {
+    "file": "phone-barrio-add-card-en.png",
+    "dimensions": [750, 1334],
+    "sha256": "0805009700c2549b223b862d5b83f2cb1f44990f5ab7274d50d17cd5c4e926ee"
+  },
+  {
+    "file": "phone-barrio-dark-picker-es.png",
+    "dimensions": [750, 1334],
+    "sha256": "1808ee15220708359e7dca0f9dc5aa8b489a2bbfe3300f80e43b9adcb8ec4a06"
+  },
+  {
+    "file": "phone-barrio-difficult-en.png",
+    "dimensions": [750, 1334],
+    "sha256": "27911ee35868ee82011c69279ac7ffc0cf1495c143638330b3f3e8db90c42518"
+  },
+  {
+    "file": "phone-barrio-flagged-en.png",
+    "dimensions": [750, 1334],
+    "sha256": "3096e15f1319abb7fcaf07c3de7a337553c57e28f17bdabb60e24f12e8855d93"
+  },
+  {
+    "file": "phone-barrio-light-alert-os-dark.png",
+    "dimensions": [750, 1334],
+    "sha256": "5bc2aac04f8aeb44500b28525d5604150880050f3a156866d1f2e34434ad3474"
+  },
+  {
+    "file": "phone-barrio-light-home-es-default.png",
+    "dimensions": [750, 1334],
+    "sha256": "f921bc8530b7e50645f62a0eb57470122b96df1a9711b4e710cfa24c8097dcf8"
+  },
+  {
+    "file": "phone-barrio-listening-unanswered-en.png",
+    "dimensions": [750, 1334],
+    "sha256": "79bcd81e71baa7121f8cace51e0b8d2a882f9790b547d773132c9896fe05d2f1"
+  },
+  {
+    "file": "phone-barrio-phrases-weather-en.png",
+    "dimensions": [750, 1334],
+    "sha256": "d405bbd14fcf3407b8b3c135167eb54c770334a56ee8915c6af59057f879dff6"
+  },
+  {
+    "file": "phone-barrio-quiz-unanswered-en.png",
+    "dimensions": [750, 1334],
+    "sha256": "c4f3b58927181ac9bf82c8e2cd7aa9e40ff8d4a982c9d6504ab20960c2fea5c2"
+  },
+  {
+    "file": "phone-barrio-review-en.png",
+    "dimensions": [750, 1334],
+    "sha256": "f5c4d2f45ea8062ea9e843f79a966bebda8d5c05bd78393a8dcb0bb10eb5a9bb"
+  },
+  {
+    "file": "phone-classic-first-run.png",
+    "dimensions": [750, 1334],
+    "sha256": "1c93987dea18a45c1f35c4b7f8b46e9133a1da4cd66f15ccaff138101e69c8c8"
+  },
+  {
+    "file": "phone-classic-goal-es-default.png",
+    "dimensions": [750, 1334],
+    "sha256": "a7e79c092ebfa2ab736cfe864f74867cd752e23ab3d9d88d026e57d161226106"
+  },
+  {
+    "file": "phone-classic-home-es-default.png",
+    "dimensions": [750, 1334],
+    "sha256": "27f9a7492036fb522e196e7910c76e1390e22de0fd017ba790b79926c2371f0b"
+  },
+  {
+    "file": "phone-classic-restore-alert.png",
+    "dimensions": [750, 1334],
+    "sha256": "3133cbe6db1fc5e8c9248278cdea2787aa04a1c1bc4d9b62e1ce298513280406"
+  },
+  {
+    "file": "phone-classic-settings-es-default.png",
+    "dimensions": [750, 1334],
+    "sha256": "59ac1c39212ca47aa8c3a32ee0e0a9cc8879500a04531e7305099d8802ac6521"
+  },
+  {
+    "file": "phone-classic-study-retained-face.png",
+    "dimensions": [750, 1334],
+    "sha256": "df43f46772007c54876086215a6de821f5fec11a929447d40be0b3bb7c9ab206"
+  },
+  {
+    "file": "phone-picker-retained-draft-es-maximum.png",
+    "dimensions": [750, 1334],
+    "sha256": "adee10acf862543d9d18fce8c6dedab7b9c9e28693c5d16f091037dcc75cb6be"
+  },
+  {
+    "file": "phone-picker-unapplied-light-draft.png",
+    "dimensions": [750, 1334],
+    "sha256": "308acefa7c0777a8800f7f8555655d053e522ed15a382be16301f74e162dcf6c"
+  },
+  {
+    "file": "phone-rename-dark-keyboard-draft-en.png",
+    "dimensions": [750, 1334],
+    "sha256": "24ac5f7af45265c80e7e0d2fb504e60abafcddacca3721f02c8a6f0cc383f9b6"
+  },
+  {
+    "file": "phone-rename-light-stale-keyboard-en.png",
+    "dimensions": [750, 1334],
+    "sha256": "08da87d3aed0ca520a1a62b1c643e9ea0a2317d572b16c32467c8fef5f35a424"
+  },
+  {
+    "file": "phone-system-dark-home-es-maximum.png",
+    "dimensions": [750, 1334],
+    "sha256": "de27814108f8ce69301a4f1e5664e4d56722dda6ae18643b3151e42efefb6893"
+  },
+  {
+    "file": "phone-system-dark-progress-es-maximum.png",
+    "dimensions": [750, 1334],
+    "sha256": "4e7051e8ea6774c2cf203862ddfcb33ae7d653f1c677aecaa64112d65a22ac49"
+  },
+  {
+    "file": "phone-system-dark-reply-retained-en-maximum.png",
+    "dimensions": [750, 1334],
+    "sha256": "3a6ad47291f89c274f8c22c0cc116179a8964a63af87753d17deb7568216bc60"
+  },
+  {
+    "file": "phone-system-dark-retained-draft-maximum.png",
+    "dimensions": [750, 1334],
+    "sha256": "b0b65b192963ca6bd7d29f405aa8a24ba43e419b6166c37ceb5f215893c21dec"
+  },
+  {
+    "file": "phone-system-dark-study-revealed.png",
+    "dimensions": [750, 1334],
+    "sha256": "ae4e5eb91667cdb553d6530f74959006b7f5d8be65e88fc09c2e75b4ca1068d6"
+  },
+  {
+    "file": "phone-system-keyboard-live-dark-green.png",
+    "dimensions": [750, 1334],
+    "sha256": "5d4bb092a1612ea3e155fa467067502bbb0fffa32be57cc023694df287677217"
+  },
+  {
+    "file": "phone-system-keyboard-live-light-green.png",
+    "dimensions": [750, 1334],
+    "sha256": "a3188648200874ec6dd15f4642bccc6b4f44bf46329d467c0ccef6c19e88a454"
+  },
+  {
+    "file": "phone-system-light-picker.png",
+    "dimensions": [750, 1334],
+    "sha256": "f9ab31c7a73ae210347c377cd595414132d300fb2e614bda35c2482e91ed74db"
+  },
+  {
+    "file": "phone-voice-disabled-legacy-paint-red.png",
+    "dimensions": [750, 1334],
+    "sha256": "331403d854fa59fde7aad83bbf8b1d1e8129f968654f0c815764be1fef10f89a"
+  },
+  {
+    "file": "phone-voice-disabled-semantic-paint-green.png",
+    "dimensions": [750, 1334],
+    "sha256": "fa3e5749df0e7af14877e46385bd64ffe00a00329a7c9f0c66db35e52e23a6a5"
+  },
+  {
+    "file": "tablet-barrio-dark-cold-home-es-default.png",
+    "dimensions": [2064, 2752],
+    "sha256": "053a193aecbcb348bf7a782c2d87a60dd5e518b0551215513dc680265bf7a0ca"
+  },
+  {
+    "file": "tablet-barrio-light-home-es-default.png",
+    "dimensions": [2064, 2752],
+    "sha256": "b21a093effe439936881831931b23455ed3f0958265fcae3ff77bdf15d85bd98"
+  },
+  {
+    "file": "tablet-barrio-light-settings-es-default.png",
+    "dimensions": [2064, 2752],
+    "sha256": "43328082a38db12e0547d322ff2b9474a65702eb6d51dca7b6c5ea6487ec0d4f"
+  },
+  {
+    "file": "tablet-classic-first-run.png",
+    "dimensions": [2064, 2752],
+    "sha256": "0ddd987e45f9049479e5f54827cf93029def2656f5ccc7d685a19d1ac748d2be"
+  },
+  {
+    "file": "tablet-classic-home-es-default.png",
+    "dimensions": [2064, 2752],
+    "sha256": "874645952665ccc887846d485092464a00fc6387ba710f35621e1a19a976e551"
+  },
+  {
+    "file": "tablet-classic-settings-es-default.png",
+    "dimensions": [2064, 2752],
+    "sha256": "8527669c7a0420b476be1772cac7eba52c39a1bba140257afaf5ac4ba1f85236"
+  },
+  {
+    "file": "tablet-system-dark-card-draft-en-maximum.png",
+    "dimensions": [2064, 2752],
+    "sha256": "6d42242513d61fa6cec60bc66a226ba177f44836dd4076e4d15b22bb60170c1d"
+  }
+]

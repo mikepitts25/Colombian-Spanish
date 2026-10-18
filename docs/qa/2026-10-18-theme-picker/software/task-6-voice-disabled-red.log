@@ -1,0 +1,38 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/VoicePracticeScreen.test.tsx
+
+FAIL __tests__/screens/VoicePracticeScreen.test.tsx
+  ✓ explains local unscored practice without requesting permission on open; text alternative stays available (509 ms)
+  ✓ denied microphone has a usable text alternative and Back (69 ms)
+  ✓ failed deletion remains visible for explicit retry and cannot silently overwrite (214 ms)
+  ✓ reports whether the text alternative is expanded and preserves it through live text resizing (13 ms)
+  ✓ live text resizing retains one pending permission request and a replayable take until explicit Back cleanup (124 ms)
+  ✕ Barrio unavailable voice actions use readable disabled colors without requesting microphone access (14 ms)
+
+  ● Barrio unavailable voice actions use readable disabled colors without requesting microphone access
+
+    expect(element).toHaveStyle()
+
+    - Expected
+
+    - backgroundColor: #E8E5DD;
+    - opacity: 1;
+    + backgroundColor: #23624E;
+    + opacity: 0.5;
+
+      149 |   ui.applyTheme({themeId:'barrio',appearanceMode:'light'});
+      150 |   for(const label of ['Replay my take','Delete my take']) {
+    > 151 |     expect(ui.getByRole('button',{name:label,disabled:true})).toHaveStyle({backgroundColor:'#E8E5DD',opacity:1});
+          |                                                               ^
+      152 |     expect(ui.getByText(label)).toHaveStyle({color:'#58675E'});
+      153 |   }
+      154 |   expect(mockPermission).not.toHaveBeenCalled();
+
+      at Object.toHaveStyle (__tests__/screens/VoicePracticeScreen.test.tsx:151:63)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        1.929 s
+Ran all test suites within paths "__tests__/screens/VoicePracticeScreen.test.tsx".

@@ -1,0 +1,55 @@
+
+> colombian-spanish-srs@1.0.0 test:fixtures
+> jest --runInBand --watchman=false --runTestsByPath __tests__/context/DeckContext.test.tsx __tests__/context/LargeLibraryIntegration.test.tsx __tests__/screens/StudyLifecycleIntegration.test.tsx __tests__/screens/DifficultWordsScreen.test.tsx __tests__/screens/QuizScreen.test.tsx __tests__/storage/legacyBackupRecovery.test.ts __tests__/storage/portableBackup.test.ts
+
+PASS __tests__/screens/StudyLifecycleIntegration.test.tsx (5.016 s)
+PASS __tests__/context/LargeLibraryIntegration.test.tsx
+PASS __tests__/context/DeckContext.test.tsx
+PASS __tests__/screens/QuizScreen.test.tsx
+PASS __tests__/screens/DifficultWordsScreen.test.tsx
+  ● Console
+
+    console.error
+      The current testing environment is not configured to support act(...)
+
+      14 |     AccessibilityInfo.isReduceMotionEnabled().then(
+      15 |       (value) => {
+    > 16 |         if (active && !changed) setReduced(value);
+         |                                 ^
+      17 |       },
+      18 |       () => {
+      19 |         /* Keep conservative default. */
+
+      at isConcurrentActEnvironment (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11999:17)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14399:7)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6208:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
+      at setReduced (src/hooks/useReducedMotion.ts:16:33)
+
+    console.error
+      The current testing environment is not configured to support act(...)
+
+      14 |     AccessibilityInfo.isReduceMotionEnabled().then(
+      15 |       (value) => {
+    > 16 |         if (active && !changed) setReduced(value);
+         |                                 ^
+      17 |       },
+      18 |       () => {
+      19 |         /* Keep conservative default. */
+
+      at isConcurrentActEnvironment (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11999:17)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14399:7)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6208:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
+      at setReduced (src/hooks/useReducedMotion.ts:16:33)
+
+PASS __tests__/storage/portableBackup.test.ts
+PASS __tests__/storage/legacyBackupRecovery.test.ts
+
+Test Suites: 7 passed, 7 total
+Tests:       105 passed, 105 total
+Snapshots:   0 total
+Time:        13.315 s
+Ran all test suites within paths "__tests__/context/DeckContext.test.tsx", "__tests__/context/LargeLibraryIntegration.test.tsx", "__tests__/screens/StudyLifecycleIntegration.test.tsx", "__tests__/screens/DifficultWordsScreen.test.tsx", "__tests__/screens/QuizScreen.test.tsx", "__tests__/storage/legacyBackupRecovery.test.ts", "__tests__/storage/portableBackup.test.ts".

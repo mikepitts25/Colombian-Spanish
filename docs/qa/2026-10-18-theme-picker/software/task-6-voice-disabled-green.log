@@ -1,0 +1,17 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/VoicePracticeScreen.test.tsx
+
+PASS __tests__/screens/VoicePracticeScreen.test.tsx
+  ✓ explains local unscored practice without requesting permission on open; text alternative stays available (455 ms)
+  ✓ denied microphone has a usable text alternative and Back (66 ms)
+  ✓ failed deletion remains visible for explicit retry and cannot silently overwrite (217 ms)
+  ✓ reports whether the text alternative is expanded and preserves it through live text resizing (15 ms)
+  ✓ live text resizing retains one pending permission request and a replayable take until explicit Back cleanup (124 ms)
+  ✓ Barrio unavailable voice actions use readable disabled colors without requesting microphone access (18 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        1.665 s, estimated 2 s
+Ran all test suites within paths "__tests__/screens/VoicePracticeScreen.test.tsx".

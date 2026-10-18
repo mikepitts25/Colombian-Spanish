@@ -1,0 +1,9 @@
+{
+  "exitCode": 0,
+  "fullLogSHA256": "3f2a2f2705a0e82b8f2ecda6c6027fb59b10d6af3fe90b1c1206e65f3ffde8b6",
+  "fullLogBytes": 15204494,
+  "fullLogLocalPath": "/tmp/colombian-barrio-xcodebuild-full.log",
+  "result": "BUILD SUCCEEDED",
+  "architectures": ["arm64", "x86_64"],
+  "command": "SENTRY_DISABLE_AUTO_UPLOAD=true xcodebuild -workspace ios/ColombianSpanish.xcworkspace -scheme ColombianSpanish -configuration Debug -sdk iphonesimulator -derivedDataPath /tmp/colombian-theme-picker-build CODE_SIGNING_ALLOWED=NO build"
+}
