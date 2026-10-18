@@ -1,0 +1,9 @@
+PASS __tests__/screens/HomeScreen.test.tsx
+PASS __tests__/context/DeckContext.test.tsx
+PASS __tests__/screens/ProgressScreen.test.tsx
+
+Test Suites: 3 passed, 3 total
+Tests:       67 passed, 67 total
+Snapshots:   0 total
+Time:        4.779 s
+Ran all test suites within paths "__tests__/context/DeckContext.test.tsx", "__tests__/screens/HomeScreen.test.tsx", "__tests__/screens/ProgressScreen.test.tsx".
