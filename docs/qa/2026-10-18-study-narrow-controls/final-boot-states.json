@@ -1,0 +1,14 @@
+[
+  {
+    "device": "5E9A8854-135A-4675-A437-4EFCA043F656",
+    "state": "Shutdown"
+  },
+  {
+    "device": "DABA2821-3619-4F4A-B0C3-54E70B31511F",
+    "state": "Booted"
+  },
+  {
+    "device": "E66076BE-D9F8-49FB-870F-F29B57C4CA40",
+    "state": "Booted"
+  }
+]
