@@ -1,0 +1,5 @@
+{
+  "phase": "after",
+  "hostLocal": "2026-10-19T00:01:29.132097+02:00",
+  "process": "77843 /Users/mike/Library/Developer/CoreSimulator/Devices/2EDF21F0-7DBD-4B09-8D5F-85560FD0E730/data/Containers/Bundle/Application/7371F52C-60D7-44FE-8767-E61A74355768/ColombianSpanish.app/ColombianSpanish -RCT_jsLocation localhost:8099"
+}
