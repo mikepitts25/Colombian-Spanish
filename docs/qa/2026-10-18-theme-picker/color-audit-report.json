@@ -1,6 +1,6 @@
 {
   "errors": [],
-  "literalCount": 254,
+  "literalCount": 255,
   "contrasts": [
     {
       "themeId": "classic",
@@ -963,6 +963,30 @@
     {
       "themeId": "classic",
       "appearanceMode": "dark",
+      "foreground": "audioText",
+      "background": "surfacePressed",
+      "minimum": 4.5,
+      "purpose": "actual control/status pair",
+      "foregroundValue": "#fff",
+      "backgroundValue": "#334155",
+      "ratio": 10.355,
+      "pass": true
+    },
+    {
+      "themeId": "classic",
+      "appearanceMode": "dark",
+      "foreground": "editorActionInk",
+      "background": "regionFill",
+      "minimum": 4.5,
+      "purpose": "actual control/status pair",
+      "foregroundValue": "#fff",
+      "backgroundValue": "#047857",
+      "ratio": 5.484,
+      "pass": true
+    },
+    {
+      "themeId": "classic",
+      "appearanceMode": "dark",
       "foreground": "onBrand",
       "background": "brand",
       "minimum": 4.5,
@@ -1684,6 +1708,30 @@
       "ratio": 1.003,
       "pass": false,
       "exception": "Preserved Classic legacy pair; this migration does not certify Classic accessibility."
+    },
+    {
+      "themeId": "classic",
+      "appearanceMode": "dark",
+      "foreground": "textTertiary",
+      "background": "border",
+      "minimum": 4.5,
+      "purpose": "Preserved Classic Flagged source-deck badge",
+      "foregroundValue": "#94a3b8",
+      "backgroundValue": "#1e293b",
+      "ratio": 5.705,
+      "pass": true
+    },
+    {
+      "themeId": "classic",
+      "appearanceMode": "dark",
+      "foreground": "textPrimary",
+      "background": "accentBlue",
+      "minimum": 4.5,
+      "purpose": "Preserved Classic Difficult source-deck badge",
+      "foregroundValue": "#f8fafc",
+      "backgroundValue": "#003893",
+      "ratio": 10.101,
+      "pass": true
     },
     {
       "themeId": "barrio",
@@ -2624,6 +2672,30 @@
     {
       "themeId": "barrio",
       "appearanceMode": "light",
+      "foreground": "audioText",
+      "background": "surfacePressed",
+      "minimum": 4.5,
+      "purpose": "actual control/status pair",
+      "foregroundValue": "#18352F",
+      "backgroundValue": "#E4E9DD",
+      "ratio": 10.697,
+      "pass": true
+    },
+    {
+      "themeId": "barrio",
+      "appearanceMode": "light",
+      "foreground": "editorActionInk",
+      "background": "regionFill",
+      "minimum": 4.5,
+      "purpose": "actual control/status pair",
+      "foregroundValue": "#FFFFFF",
+      "backgroundValue": "#23624E",
+      "ratio": 7.171,
+      "pass": true
+    },
+    {
+      "themeId": "barrio",
+      "appearanceMode": "light",
       "foreground": "onBrand",
       "background": "brand",
       "minimum": 4.5,
@@ -3307,6 +3379,18 @@
     },
     {
       "themeId": "barrio",
+      "appearanceMode": "light",
+      "foreground": "tagText",
+      "background": "tagSurface",
+      "minimum": 4.5,
+      "purpose": "Barrio Flagged and Difficult source-deck badges",
+      "foregroundValue": "#285F81",
+      "backgroundValue": "#E4EDF3",
+      "ratio": 5.817,
+      "pass": true
+    },
+    {
+      "themeId": "barrio",
       "appearanceMode": "dark",
       "foreground": "textPrimary",
       "background": "bg",
@@ -4239,6 +4323,30 @@
       "foregroundValue": "#A7D6B2",
       "backgroundValue": "#25382F",
       "ratio": 7.657,
+      "pass": true
+    },
+    {
+      "themeId": "barrio",
+      "appearanceMode": "dark",
+      "foreground": "audioText",
+      "background": "surfacePressed",
+      "minimum": 4.5,
+      "purpose": "actual control/status pair",
+      "foregroundValue": "#F7F3EA",
+      "backgroundValue": "#304638",
+      "ratio": 9.211,
+      "pass": true
+    },
+    {
+      "themeId": "barrio",
+      "appearanceMode": "dark",
+      "foreground": "editorActionInk",
+      "background": "regionFill",
+      "minimum": 4.5,
+      "purpose": "actual control/status pair",
+      "foregroundValue": "#14291F",
+      "backgroundValue": "#A7D6B2",
+      "ratio": 9.442,
       "pass": true
     },
     {
@@ -4923,6 +5031,18 @@
       "foregroundValue": "#718A77",
       "backgroundValue": "#25382F",
       "ratio": 3.325,
+      "pass": true
+    },
+    {
+      "themeId": "barrio",
+      "appearanceMode": "dark",
+      "foreground": "tagText",
+      "background": "tagSurface",
+      "minimum": 4.5,
+      "purpose": "Barrio Flagged and Difficult source-deck badges",
+      "foregroundValue": "#A7D2EC",
+      "backgroundValue": "#243946",
+      "ratio": 7.476,
       "pass": true
     }
   ]

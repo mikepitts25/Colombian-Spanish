@@ -166,7 +166,7 @@ export default function FlaggedScreen() {
               <Text style={styles.rowNumText}>{index + 1}</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <View style={styles.deckBadge}>
+              <View testID={`flagged-deck-badge-${item.card.id}`} style={styles.deckBadge}>
                 <Text style={styles.deckBadgeText}>{item.deckName}</Text>
               </View>
               <Text style={styles.spanish}>{item.card.front}</Text>
@@ -181,7 +181,7 @@ export default function FlaggedScreen() {
   );
 }
 
-const makeStyles = ({ colors }: AppTheme) =>
+const makeStyles = ({ colors, id }: AppTheme) =>
   StyleSheet.create({
     wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
     h1: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', marginBottom: 4 },
@@ -199,7 +199,7 @@ const makeStyles = ({ colors }: AppTheme) =>
       paddingVertical: 12,
       alignItems: 'center',
     },
-    exportBtnText: { color: 'white', fontWeight: '900' },
+    exportBtnText: { color: colors.audioText, fontWeight: '900' },
     clearBtn: {
       justifyContent: 'center',
       backgroundColor: colors.surface,
@@ -246,14 +246,18 @@ const makeStyles = ({ colors }: AppTheme) =>
     rowNumText: { color: colors.restoreDanger, fontWeight: '900', fontSize: 13 },
 
     deckBadge: {
-      backgroundColor: colors.border,
+      backgroundColor: id === 'classic' ? colors.border : colors.tagSurface,
       borderRadius: 6,
       paddingVertical: 3,
       paddingHorizontal: 8,
       alignSelf: 'flex-start',
       marginBottom: 6,
     },
-    deckBadgeText: { color: colors.textTertiary, fontSize: 11, fontWeight: '700' },
+    deckBadgeText: {
+      color: id === 'classic' ? colors.textTertiary : colors.tagText,
+      fontSize: 11,
+      fontWeight: '700',
+    },
 
     spanish: { color: colors.textPrimary, fontSize: 18, fontWeight: '900', marginBottom: 2 },
     english: { color: colors.tagText, fontSize: 15, fontWeight: '700', marginBottom: 4 },

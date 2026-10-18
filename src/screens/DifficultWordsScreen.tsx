@@ -191,7 +191,7 @@ export default function DifficultWordsScreen() {
           </View>
         </View>
 
-        <View key={`deck-${fontScale}`} style={styles.deckPill}>
+        <View testID="difficult-deck-badge" key={`deck-${fontScale}`} style={styles.deckPill}>
           <Text style={styles.deckPillText}>{current.deckName}</Text>
         </View>
 
@@ -253,7 +253,7 @@ export default function DifficultWordsScreen() {
   );
 }
 
-const makeStyles = ({ colors }: AppTheme) =>
+const makeStyles = ({ colors, id }: AppTheme) =>
   StyleSheet.create({
     wrap: { flex: 1, backgroundColor: colors.bg },
     sessionContent: { flexGrow: 1 },
@@ -292,9 +292,13 @@ const makeStyles = ({ colors }: AppTheme) =>
       paddingHorizontal: 12,
       paddingVertical: 6,
       borderRadius: 16,
-      backgroundColor: colors.accentBlue,
+      backgroundColor: id === 'classic' ? colors.accentBlue : colors.tagSurface,
     },
-    deckPillText: { color: colors.textPrimary, fontSize: 12, fontWeight: '800' },
+    deckPillText: {
+      color: id === 'classic' ? colors.textPrimary : colors.tagText,
+      fontSize: 12,
+      fontWeight: '800',
+    },
     cardArea: { flexGrow: 1, flexShrink: 0, paddingHorizontal: 20, justifyContent: 'center' },
 
     gradeBar: {

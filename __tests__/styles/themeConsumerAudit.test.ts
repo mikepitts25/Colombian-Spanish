@@ -22,3 +22,24 @@ test('an injected color occurrence requires explicit classification', () => {
       .errors,
   ).toEqual(expect.arrayContaining([expect.stringContaining('unclassified')]));
 });
+
+test('named paint colors are audited while vocabulary and content names are not', () => {
+  const { inspectSource } = require('../../scripts/audit-theme-colors');
+  const scan = inspectSource(
+    'src/components/Injected.tsx',
+    `
+    const card = { front: 'blanco', back: 'white' };
+    const style = { color: 'white', backgroundColor: 'rebeccapurple', shadowColor: 'transparent' };
+  `,
+  );
+  expect(scan.literals.map((item: { value: string }) => item.value)).toEqual([
+    'white',
+    'rebeccapurple',
+    'transparent',
+  ]);
+  expect(
+    auditSources(root, {
+      'src/components/Injected.tsx': "const style = { color: 'white' };",
+    }).errors,
+  ).toEqual(expect.arrayContaining([expect.stringContaining('unclassified color white')]));
+});

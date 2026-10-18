@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const ts = require('typescript');
+const normalizeColor = require('@react-native/normalize-colors');
 const manifestPath = 'docs/qa/2026-10-18-theme-picker/color-roles.json';
 const isColor = /^(#[\da-f]{3,8}|rgba?\([^\n]+\))$/i;
 function sourcePaths(root, dir = 'src') {
@@ -59,7 +60,24 @@ function inspectSource(file, source) {
         line: ast.getLineAndCharacterOfPosition(node.getStart(ast)).line + 1,
       });
     }
-    if (ts.isStringLiteralLike(node) && isColor.test(node.text)) {
+    // Named colors count only in paint-valued properties: a vocabulary back:'white'
+    // is content, whereas color:'white' (including a conditional value) is paint.
+    let paintOwner = node.parent;
+    while (
+      paintOwner &&
+      !ts.isPropertyAssignment(paintOwner) &&
+      !ts.isVariableDeclaration(paintOwner)
+    )
+      paintOwner = paintOwner.parent;
+    const paintProperty =
+      paintOwner && ts.isPropertyAssignment(paintOwner)
+        ? paintOwner.name.getText(ast).replace(/['"]/g, '')
+        : '';
+    const namedPaint =
+      ts.isStringLiteralLike(node) &&
+      /^(?:color|.*Color|fill|stroke|background)$/.test(paintProperty) &&
+      normalizeColor(node.text) !== null;
+    if (ts.isStringLiteralLike(node) && (isColor.test(node.text) || namedPaint)) {
       let owner = node;
       while (owner.parent && !ts.isVariableDeclaration(owner)) owner = owner.parent;
       const declaration = ts.isVariableDeclaration(owner) ? owner.name.getText(ast) : 'render';
@@ -120,6 +138,11 @@ function loadPalette(root) {
   return load(path.join(root, 'src/styles/appTheme.ts')).resolveAppTheme;
 }
 function rgba(value) {
+  if (!value.startsWith('#') && !/^rgba?\(/.test(value)) {
+    const color = normalizeColor(value);
+    if (color === null) throw new Error(`Invalid color: ${value}`);
+    return [(color >>> 24) & 255, (color >>> 16) & 255, (color >>> 8) & 255, (color & 255) / 255];
+  }
   if (value.startsWith('#')) {
     let h = value.slice(1);
     if (h.length === 3)
@@ -195,6 +218,8 @@ function contrastPairs() {
         purpose: 'text/icon ink on route surfaces',
       });
   for (const [fg, bg] of [
+    ['audioText', 'surfacePressed'],
+    ['editorActionInk', 'regionFill'],
     ['onBrand', 'brand'],
     ['onBrand', 'brandPressed'],
     ['textInverse', 'brand'],
@@ -233,6 +258,29 @@ function contrastPairs() {
   ])
     for (const bg of ['bg', 'surface', 'surfaceElevated'])
       pairs.push({ foreground: fg, background: bg, minimum: 3, purpose: 'control boundary' });
+  pairs.push(
+    {
+      foreground: 'tagText',
+      background: 'tagSurface',
+      minimum: 4.5,
+      purpose: 'Barrio Flagged and Difficult source-deck badges',
+      themeId: 'barrio',
+    },
+    {
+      foreground: 'textTertiary',
+      background: 'border',
+      minimum: 4.5,
+      purpose: 'Preserved Classic Flagged source-deck badge',
+      themeId: 'classic',
+    },
+    {
+      foreground: 'textPrimary',
+      background: 'accentBlue',
+      minimum: 4.5,
+      purpose: 'Preserved Classic Difficult source-deck badge',
+      themeId: 'classic',
+    },
+  );
   return pairs;
 }
 function auditSources(root, overrides = {}) {
@@ -270,6 +318,7 @@ function auditSources(root, overrides = {}) {
     for (const appearanceMode of themeId === 'classic' ? ['dark'] : ['light', 'dark']) {
       const theme = resolve({ themeId, appearanceMode }, null);
       for (const pair of manifest.contrastPairs) {
+        if (pair.themeId && pair.themeId !== themeId) continue;
         const actual = contrast(
           theme.colors[pair.foreground],
           theme.colors[pair.background],

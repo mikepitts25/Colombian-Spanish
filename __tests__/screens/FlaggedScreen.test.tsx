@@ -1,3 +1,5 @@
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
+import { resolveAppTheme } from '../../src/styles/appTheme';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { Alert, Dimensions } from 'react-native';
@@ -142,3 +144,25 @@ it('does not show a late export alert after screen removal', async () => {
   expect(mockCopy).toHaveBeenCalledTimes(1);
   expect(alerts).not.toHaveBeenCalled();
 });
+
+test.each(['light', 'dark'] as const)(
+  'Barrio %s export and deck badge use readable semantic pairs',
+  (appearanceMode) => {
+    const screen = renderWithTheme(<FlaggedScreen />);
+    screen.applyTheme({ themeId: 'barrio', appearanceMode });
+    const { colors } = resolveAppTheme({ themeId: 'barrio', appearanceMode }, null);
+    const badge = screen.getByText('Deck "quoted"');
+    expect(badge).toHaveStyle({ color: colors.tagText });
+    expect(screen.getByTestId('flagged-deck-badge-c')).toHaveStyle({
+      backgroundColor: colors.tagSurface,
+    });
+    expect(screen.getByText('📋 Copiar CSV')).toHaveStyle({ color: colors.audioText });
+    screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+    const classic = resolveAppTheme({ themeId: 'classic', appearanceMode: 'system' }, null).colors;
+    expect(screen.getByText('📋 Copiar CSV')).toHaveStyle({ color: '#fff' });
+    expect(screen.getByText('Deck "quoted"')).toHaveStyle({ color: classic.textTertiary });
+    expect(screen.getByTestId('flagged-deck-badge-c')).toHaveStyle({
+      backgroundColor: classic.border,
+    });
+  },
+);

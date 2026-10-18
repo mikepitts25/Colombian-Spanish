@@ -54,13 +54,18 @@ function matchesReviewFilter(card: FlashCard, filter: ReviewFilter) {
 }
 
 export default function ReviewScreen() {
-  const { colors } = useAppTheme();
+  const theme = useAppTheme();
+  const { colors } = theme;
   const styles = useThemedStyles(makeStyles);
   const { ready, decks, updateCardReview } = useDeck();
   const nav = useNavigation<any>();
   const { t } = useLanguage();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale >= 1.4;
+  // Fit Barrio’s 48pt chip and its 4pt focus ring on each side; preserve Classic sizing.
+  const filterHeight = Math.ceil(
+    Math.max(theme.id === 'barrio' ? 56 : 38, 38 * Math.max(1, fontScale)),
+  );
 
   const [deckFilter, setDeckFilter] = useState<string>('all');
   const [reviewFilter, setReviewFilter] = useState<ReviewFilter>('all');
@@ -340,7 +345,7 @@ export default function ReviewScreen() {
             </View>
             <ScrollView
               horizontal
-              style={[styles.filterScroller, { height: Math.ceil(38 * Math.max(1, fontScale)) }]}
+              style={[styles.filterScroller, { height: filterHeight }]}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.filterRow}
             >
@@ -375,7 +380,7 @@ export default function ReviewScreen() {
             </View>
             <ScrollView
               horizontal
-              style={[styles.filterScroller, { height: Math.ceil(38 * Math.max(1, fontScale)) }]}
+              style={[styles.filterScroller, { height: filterHeight }]}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.filterRow}
             >
@@ -583,7 +588,7 @@ const makeStyles = ({ colors }: AppTheme) =>
     chipActive: { backgroundColor: colors.editorPrimary, borderColor: colors.editorPrimary },
     reviewChipActive: { backgroundColor: colors.regionFill, borderColor: colors.regionFill },
     chipText: { color: colors.editorSecondary, fontWeight: '700', fontSize: 13 },
-    chipTextActive: { color: 'white' },
+    chipTextActive: { color: colors.editorActionInk },
 
     queueSummary: {
       backgroundColor: colors.editorOuter,
