@@ -10,7 +10,7 @@
 
 **Brief:** Product assessment and user request in this chat on October 14, 2026. Major new subsystems get a focused design and implementation plan when selected; do not predesign the entire roadmap or invent future interfaces now.
 
-**Last updated:** 2026-10-17. **Status:** Foundation, learning correctness, recoverable draft missions, follow-up practice, audio preferences and initial accessibility batches merged/pushed with successful CI. iPhone/iPad simulator evidence is recorded. Remaining AI implementation and human/device gates are tracked below; the roadmap is not all complete.
+**Last updated:** 2026-10-18. **Status:** Foundation, learning correctness, recoverable draft missions, follow-up practice, audio preferences and initial accessibility batches merged/pushed with successful CI. iPhone/iPad simulator evidence is recorded. Remaining AI implementation and human/device gates are tracked below; the roadmap is not all complete.
 
 ## How to use this checklist
 
@@ -293,6 +293,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 **Split:** B08-A tokens/components; B08-B Home/navigation; B08-C activity/progress screens. **Main files:** `src/styles/theme.ts`, navigation, shared components, screens, translations, assets.
 
 - [ ] **B08.1 [AI, H-PRODUCT]** Prepare concrete visual directions using a real mission and existing screens; choose a coherent direction with Colombian settings/people and appropriate asset rights.
+  - [x] **B08.1-A1 [AI]** Prepare three comparable Home directions and a recommended Home → current draft greeting → Progress flow, with editable SVGs, rendered boards, route preservation, honest evidence labels, asset provenance and four proposed implementation bundles. [Review package](docs/design/2026-10-18-visual-directions/README.md). Static proposal only; owner direction/cultural/brand acceptance, subsequent design approval, implementation and native acceptance remain open. Pencil session expired; original local vectors used without account changes.
 - [ ] **B08.2 [AI]** Define light/dark semantic tokens, typography, spacing, consistent icons, focus/pressed/disabled states, and accessible reusable controls. Replace tiny navigation labels and excessive competing accents.
   - [x] **B08.2-A [AI, SIM]** Increase bottom-tab labels/targets and expose selected tab semantics; add explicit 48-point flashcard audio action and system Reduce Motion support for card/stack transitions with live preference handling.
   - [x] **B08.2-B1 [AI, SIM]** Keep translated tab labels visible at accessibility text sizes using two rows and refresh native tab measurements on live font changes. Spanish/English large/maximum/default checks and actions verified on iOS27; broader screen content remains open. [QA](docs/qa/2026-10-17-accessible-tabs/REPORT.md).
@@ -852,3 +853,7 @@ B08.5-B8d adds Spanish narrow-phone and large-tablet New Deck/Rename keyboard-op
 ## 2026-10-18 — Voice self-check live text
 
 B08.2-B14 corrects severe reproduced text/action clipping during live Dynamic Type changes, keeping the recorder/controller and alternative state intact. [QA](docs/qa/2026-10-18-voice-large-text/REPORT.md) records native tablet RED→GREEN, bilingual maximum-text phone examples/actions, full101 suites995 tests and exact cold restoration. Full touch/assistive/recording/platform acceptance remains open; security and genuine human/account/device gates are unchanged.
+
+### 2026-10-18 — Concrete visual direction proposals
+
+B08.1-A1 completes the AI preparation of three Home directions and a three-screen recommended flow. [Boards, tradeoffs and next bundles](docs/design/2026-10-18-visual-directions/README.md) preserve the current four tabs, exact plan/resume contract and draft gates; all displayed data is illustrative. B08.1 remains open for owner direction choice. No runtime/theme/navigation change is claimed, so no new simulator acceptance is claimed. Prior `bc51829` CI39096612278 and board39096612285 succeeded. Security B01.8-C2g remains access-blocked; no retry or bypass. Other AI and human/device work remains tracked above.
