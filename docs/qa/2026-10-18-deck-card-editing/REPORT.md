@@ -34,3 +34,7 @@ Run `python3 docs/qa/2026-10-18-deck-card-editing/verify-state.py`. Five read-on
 ## Remaining scope
 
 Native save/failure/keyboard/touch/assistive flows, narrow phones, Android, themes/windowing, signed/physical interruption and user acceptance remain open. Existing reset/delete provider post-commit read failure can be uncertain; UI requires a new deliberate confirmation, not an automatic retry. Security B01.8-C2g remains blocked by the owner-reported access error; no retry/bypass or security patch. Downloadable audio still awaits written design approval. No accounts/licenses/signing actions taken.
+
+## Integration
+
+Implementation `649618b61843913aba44bad5200a4ddb1d390b73` fast-forward merged and pushed to main. The merged checkout independently passes 100 suites / 985 tests. [CI39088071204](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39088071204) passes quality/content, iOS bundle/project generation, Android bundle/project generation and aggregate validation. [Board39088071107](https://github.com/mikepitts25/Colombian-Spanish/actions/runs/39088071107) succeeds. These generated native bundles do not establish Android emulator or physical-device acceptance.

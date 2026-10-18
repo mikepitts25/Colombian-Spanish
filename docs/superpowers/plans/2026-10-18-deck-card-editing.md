@@ -40,4 +40,4 @@ Files: src/screens/ManageDecksScreen.tsx; translations; screen tests.
 - [x] Guard/catch operations and preserve rename draft/intent; expose error recovery. Keep destructive confirmation and fresh-provider storage behavior.
 - [x] Put headers/search in the scrolling list, retain query/draft on native remeasurement, wrap actions and provide scrollable keyboard-safe rename modal.
 - [x] Full suite, types/lint/format/data/editorial gates; representative bilingual upper forms and Spanish modals, with canceled drafts and exact cold-state verification. Native saved fixture, software keyboard and full touch/assistive follow-up remain open in MASTER_PLAN.
-- [ ] Fresh whole-branch review, master checklist update, authorized merge/push and merged validation/CI.
+- [x] Fresh whole-branch review, master checklist update, authorized merge/push and merged validation/CI. Implementation `649618b` merged/pushed; merged 100 suites/985 tests and CI39088071204 all four jobs passed. Board39088071107 succeeded. Native follow-up stays open in B08.5-B8.
