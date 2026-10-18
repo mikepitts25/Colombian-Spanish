@@ -180,3 +180,21 @@ it('allows metadata and scheduling changes without invalidating displayed meanin
   });
   expect(await getLearningEvents()).toHaveLength(1);
 });
+
+it.each(['card', 'deck'] as const)(
+  'rejects a new displayed answer after its %s was removed without changing any record',
+  async (removed) => {
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify(removed === 'deck' ? [] : [{ id: 'd1', name: 'Test', cards: [card('c2')] }]),
+    );
+    const before = await AsyncStorage.multiGet(await AsyncStorage.getAllKeys());
+    await expect(
+      commitFlashcardAnswer({
+        ...attempt,
+        context: { deckId: 'd1', front: 'hola', back: 'hello' },
+      }),
+    ).rejects.toThrow('Displayed card or study queue changed');
+    expect(await AsyncStorage.multiGet(await AsyncStorage.getAllKeys())).toEqual(before);
+  },
+);

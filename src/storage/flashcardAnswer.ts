@@ -104,6 +104,7 @@ export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
       const deck = decks.find((item) => item.cards.some((card) => card.id === input.cardId));
       const card = deck?.cards.find((item) => item.id === input.cardId);
       if (!deck || !card) {
+        if (input.context) throw new StaleGradeError();
         if (input.planId !== undefined) throw new Error('Daily plan card unavailable');
         return undefined;
       }

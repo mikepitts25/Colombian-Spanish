@@ -1,0 +1,40 @@
+{
+  "base": "f3f0bdfe836795e609cbc24331981a251d56840f",
+  "runtimeChanges": true,
+  "durableKeysAdded": 0,
+  "dependenciesAdded": 0,
+  "red": {
+    "realStudy": "Back → Continue after an uncommitted missing-target grade overwrote imported lastSession cardId/queue/sessionId; exact all-portable-record assertion failed",
+    "transactionCases": 2,
+    "transactionReason": "Missing displayed card or deck resolved undefined rather than stale rejection",
+    "difficultWords": "After failed reload and provider emission removed current card, stale error/reload were absent",
+    "discardedProbe": "First mock omitted provider emission and failed on old card still present; corrected rerender reaches actual missing-recovery invariant"
+  },
+  "final": {
+    "focusedSuites": 5,
+    "focusedTests": 71,
+    "fullSuites": 117,
+    "fullTests": 1151,
+    "status": "passed",
+    "actDiagnosticBlocks": 0,
+    "checks": ["typecheck", "lint", "format:check", "audit-theme-colors", "diff --check"],
+    "themeAudit": {
+      "classifiedLiterals": 255,
+      "compositedPairs": 418,
+      "classicExceptions": 63,
+      "errors": 0
+    }
+  },
+  "review": {
+    "status": "ready to merge",
+    "reviewer": "/root/removed_target_grade_review",
+    "critical": 0,
+    "important": 0,
+    "minor": 0,
+    "fixPasses": 0,
+    "verificationJson": "Written concurrently with final review; coordinator validated against current logs, final review recommendation satisfied before commit"
+  },
+  "nativeAcceptance": false,
+  "securityAssessment": "skipped",
+  "scope": "New context-bearing answers for absent targets reject before writes; matching committed event acknowledgement and context-free legacy missing-card no-op remain unchanged"
+}
