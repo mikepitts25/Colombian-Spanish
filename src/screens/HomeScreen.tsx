@@ -133,7 +133,7 @@ export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId, reload } = useDeck();
   const nav = useNavigation<any>();
   const starting = useRef(false);
-  const barrioPending = useRef<HomePresentation | undefined>(undefined);
+  const [barrioPending, setBarrioPending] = useState<HomePresentation | undefined>(undefined);
   const [studyStarting, setStudyStarting] = useState(false);
   const [studyStartError, setStudyStartError] = useState(false);
   const { t } = useLanguage();
@@ -348,8 +348,8 @@ export default function HomeScreen() {
 
   if (barrioModel) {
     const presentation =
-      studyStarting && barrioPending.current
-        ? { ...barrioPending.current, pending: true, startError: false }
+      studyStarting && barrioPending
+        ? { ...barrioPending, pending: true, startError: false }
         : barrioModel;
     const primary = () => {
       if (starting.current || presentation.pending || presentation.action === 'none') return;
@@ -362,11 +362,11 @@ export default function HomeScreen() {
         return;
       }
       // Display-only snapshot. The original operation still refreshes its own inputs atomically.
-      barrioPending.current = { ...presentation, startError: false };
+      setBarrioPending({ ...presentation, startError: false });
       const operation =
         activity.plan || response ? startPlan() : startStudy(recommendedDeck?.id, true);
       void operation.finally(() => {
-        barrioPending.current = undefined;
+        setBarrioPending(undefined);
       });
     };
     return (

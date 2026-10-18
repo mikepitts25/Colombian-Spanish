@@ -73,16 +73,20 @@ jest.mock('../../src/data/decks', () => ({
   ],
 }));
 
+function ThemeLanguageProbe() {
+  const theme = useThemeSelection(),
+    language = useLanguage();
+  React.useLayoutEffect(() => {
+    mockTheme = theme;
+    mockLanguage = language;
+  }, [theme, language]);
+  return null;
+}
 function Providers({ children }: { children: React.ReactNode }) {
-  function Probe() {
-    mockTheme = useThemeSelection();
-    mockLanguage = useLanguage();
-    return null;
-  }
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <Probe />
+        <ThemeLanguageProbe />
         <DeckProvider>{children}</DeckProvider>
       </LanguageProvider>
     </ThemeProvider>

@@ -33,7 +33,7 @@ export type BarrioHomeContentProps = {
     newAvailableToday: number;
   };
   word?: WordOfDayPick;
-  dueDecks: ReadonlyArray<{ id: string; name: string; cardCount: number; dueCount: number }>;
+  dueDecks: readonly { id: string; name: string; cardCount: number; dueCount: number }[];
   reviewMeasured: boolean;
   replyMeasured: boolean;
   showDevelopment: boolean;
