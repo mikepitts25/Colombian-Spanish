@@ -121,3 +121,82 @@ it.each([
   ).rejects.toThrow();
   expect(await AsyncStorage.getItem('SRS_LAST_STUDY_SESSION_V1')).toBeNull();
 });
+
+it('refuses a resumed checkpoint after another operation replaced the stored queue', async () => {
+  const { saveResumedStudySession } = require('../../src/storage/storage');
+  const expected = await saveLastStudySession({ deckId: 'd1', cardId: 'c3', queue } as any);
+  await saveLastStudySession({
+    deckId: 'd1',
+    cardId: 'new',
+    queue: { ...queue, cardIds: ['new'], sessionId: 'imported' },
+  } as any);
+  const before = await AsyncStorage.multiGet(await AsyncStorage.getAllKeys());
+  await expect(
+    saveResumedStudySession(
+      { deckId: 'd1', cardId: 'c2', queue: { ...queue, cardIds: ['c2'] } },
+      expected,
+    ),
+  ).rejects.toThrow('Study session changed');
+  expect(await AsyncStorage.multiGet(await AsyncStorage.getAllKeys())).toEqual(before);
+});
+
+it('allows an exact resumed queue with a refreshed timestamp and unavailable members filtered', async () => {
+  const { saveResumedStudySession } = require('../../src/storage/storage');
+  const expected = await saveLastStudySession({ deckId: 'd1', cardId: 'c3', queue } as any);
+  await AsyncStorage.setItem(
+    'SRS_LAST_STUDY_SESSION_V1',
+    JSON.stringify({ ...expected, updatedAt: expected.updatedAt + 1000 }),
+  );
+  const next = { deckId: 'd1', cardId: 'c2', queue: { ...queue, cardIds: ['c2'] } };
+  const saved = await saveResumedStudySession(next, expected);
+  expect(await getLastStudySession()).toEqual(saved);
+  expect(saved).toEqual({ ...next, updatedAt: expect.any(Number) });
+});
+
+it('rejects a resumed checkpoint when the saved session disappeared', async () => {
+  const { saveResumedStudySession } = require('../../src/storage/storage');
+  const expected = await saveLastStudySession({ deckId: 'd1', cardId: 'c3', queue } as any);
+  await AsyncStorage.removeItem('SRS_LAST_STUDY_SESSION_V1');
+  await expect(saveResumedStudySession(expected, expected)).rejects.toThrow(
+    'Study session changed',
+  );
+  expect(await AsyncStorage.getItem('SRS_LAST_STUDY_SESSION_V1')).toBeNull();
+});
+
+it('acknowledges a recovered filtered resume checkpoint without replacing later storage', async () => {
+  const { saveResumedStudySession } = require('../../src/storage/storage');
+  const expected = await saveLastStudySession({ deckId: 'd1', cardId: 'c3', queue } as any);
+  const next = { deckId: 'd1', cardId: 'c2', queue: { ...queue, cardIds: ['c2'] } };
+  const write = AsyncStorage.setItem as jest.Mock;
+  const original = write.getMockImplementation()!;
+  let fail = true;
+  write.mockImplementation(async (key, value) => {
+    if (fail && key === 'SRS_LAST_STUDY_SESSION_V1') {
+      fail = false;
+      throw new Error('interrupted resume checkpoint');
+    }
+    return original(key, value);
+  });
+  try {
+    await expect(saveResumedStudySession(next, expected)).rejects.toThrow(
+      'interrupted resume checkpoint',
+    );
+    expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).not.toBeNull();
+    const committed = (await getLastStudySession())!;
+    await AsyncStorage.setItem(
+      'SRS_LAST_STUDY_SESSION_V1',
+      JSON.stringify({
+        ...committed,
+        updatedAt: committed.updatedAt + 1000,
+      }),
+    );
+    const beforeRetry = await AsyncStorage.multiGet(await AsyncStorage.getAllKeys());
+    const recovered = await saveResumedStudySession(next, expected);
+    expect(recovered).toMatchObject(next);
+    expect(await getLastStudySession()).toEqual(recovered);
+    expect(await AsyncStorage.multiGet(await AsyncStorage.getAllKeys())).toEqual(beforeRetry);
+    expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
+  } finally {
+    write.mockImplementation(original);
+  }
+});

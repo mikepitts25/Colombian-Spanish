@@ -1,0 +1,49 @@
+{
+  "base": "d6271f317e7cb25b98f9b8158709d4c266ebed02",
+  "runtimeChanges": true,
+  "newKeys": 0,
+  "newSchemas": 0,
+  "newDependencies": 0,
+  "red": {
+    "realStudyQueueInvariants": 2,
+    "cases": [
+      "cap error after full-state restore then Back/Continue",
+      "already-committed interrupted Retry after full-state restore then Back/Continue"
+    ],
+    "failure": "Imported lastSession card IDs, queue and session ID were overwritten by a local stale checkpoint",
+    "initialStorageContractCases": 3,
+    "recoveredAfterImageCase": "Strict expected-before-image check rejected its own recovered filtered checkpoint; now acknowledges stored intended input without writes"
+  },
+  "review": {
+    "reviewer": "/root/resume_checkpoint_final_review",
+    "critical": 0,
+    "important": 1,
+    "minor": 0,
+    "importantFinding": "New explicit daily plan start incorrectly required an already matching global last-study checkpoint",
+    "fix": "Separate freshly validated explicit plan opening intent from ordinary Continue; retain global checkpoint guard for linked-plan ordinary Continue",
+    "fixRedCases": 2,
+    "fixPasses": 1,
+    "reReview": false,
+    "verificationManifest": "Assembled after review and checked against current command outputs before commit"
+  },
+  "final": {
+    "focusedSuites": 3,
+    "focusedTests": 117,
+    "fullSuites": 117,
+    "fullTests": 1157,
+    "status": "passed",
+    "reactActDiagnostics": 0,
+    "checks": ["typecheck", "lint", "format:check", "audit-theme-colors", "diff --check"],
+    "themeAudit": {
+      "classifiedLiterals": 255,
+      "compositedPairs": 418,
+      "classicExceptions": 63,
+      "errors": 0
+    }
+  },
+  "nativeAcceptance": false,
+  "broaderOrderingAcceptance": false,
+  "securityWork": "skipped",
+  "audioSpecApproval": "pending",
+  "sourceScope": "Ordinary selected saved-session compare/write and recovered exact after-image acknowledgement are atomic; explicit plan start continues to use its separately persisted plan session"
+}

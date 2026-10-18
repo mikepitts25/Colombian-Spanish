@@ -15,6 +15,7 @@ import {
   getLastStudySession,
   LastStudySession,
   saveLastStudySession,
+  saveResumedStudySession,
 } from '../storage/storage';
 import ConjugationPanel from '../components/ConjugationPanel';
 import { isVerb } from '../utils/verbUtils';
@@ -36,7 +37,11 @@ import type { FlashCard } from '../types';
 import { createLearningSessionId } from '../storage/learningEvents';
 import { AnswerAttempt, DailyNewCardLimitError, StaleGradeError } from '../storage/flashcardAnswer';
 import { speakCard } from '../services/tts';
-import { StudyQueueSnapshot } from '../storage/studySession';
+import {
+  StudyQueueSnapshot,
+  copySessionInput,
+  StaleStudySessionError,
+} from '../storage/studySession';
 import { isNewCard, formatIntervalShort, previewInterval } from '../utils/srs';
 import { useActiveStudyTime } from '../hooks/useActiveStudyTime';
 import { readDailyPlan } from '../storage/dailyPlans';
@@ -129,6 +134,7 @@ export default function StudyScreen() {
   const pendingCheckpoint = useRef<Omit<LastStudySession, 'updatedAt'> | undefined>(undefined);
   const newCardRegion = useRef<RegionFilterId>('all');
   const requestedQueue = useRef<StudyQueueSnapshot | undefined>(undefined);
+  const resumeExpectation = useRef<Omit<LastStudySession, 'updatedAt'> | undefined>(undefined);
   const sessionLimits = useRef({ cardLimit: 15, newLimit: 15 });
   const boundedLimits = useRef<StudyQueueSnapshot['limits']>(undefined);
   const [queuedCardIds, setQueuedCardIds] = useState<string[]>([]);
@@ -150,6 +156,7 @@ export default function StudyScreen() {
       // A deferred checkpoint must not outlive this screen and replace another flow's session.
       sessionVersion.current += 1;
       pendingCheckpoint.current = undefined;
+      resumeExpectation.current = undefined;
     },
     [],
   );
@@ -219,6 +226,7 @@ export default function StudyScreen() {
       queueDeckId.current = activeDeckId;
       pendingGrade.current = undefined;
       pendingCheckpoint.current = undefined;
+      resumeExpectation.current = undefined;
       checkpointBlocked.current = false;
       requestedQueue.current = undefined;
       newCardRegion.current = 'all';
@@ -376,6 +384,7 @@ export default function StudyScreen() {
   async function persistQueueCheckpoint(payload: Omit<LastStudySession, 'updatedAt'>) {
     const version = sessionVersion.current;
     const planId = dailyPlan.current;
+    const expected = resumeExpectation.current;
     pendingCheckpoint.current = payload;
     checkpointBlocked.current = true;
     setCheckpointBusy(true);
@@ -385,16 +394,27 @@ export default function StudyScreen() {
       // newer deck checkpoint jump that queue and then be overwritten by the grade.
       await gradeSettled.current;
       if (version !== sessionVersion.current || pendingCheckpoint.current !== payload) return;
-      const saved = await saveLastStudySession(payload);
+      const saved = expected
+        ? await saveResumedStudySession(payload, expected)
+        : await saveLastStudySession(payload);
       if (version === sessionVersion.current && pendingCheckpoint.current === payload) {
         setResumeSession(saved);
         setResumePlanId(planId);
         setResumeLoadError(false);
         pendingCheckpoint.current = undefined;
+        resumeExpectation.current = undefined;
         checkpointBlocked.current = false;
       }
-    } catch {
-      if (version === sessionVersion.current) setCheckpointFailed(true);
+    } catch (error) {
+      if (version === sessionVersion.current) {
+        if (error instanceof StaleStudySessionError) {
+          pendingCheckpoint.current = undefined;
+          resumeExpectation.current = undefined;
+          checkpointBlocked.current = false;
+          setCheckpointFailed(false);
+          setGradeError('stale');
+        } else setCheckpointFailed(true);
+      }
     } finally {
       if (version === sessionVersion.current) setCheckpointBusy(false);
     }
@@ -406,6 +426,7 @@ export default function StudyScreen() {
     saved?: LastStudySession,
     limits?: { cardLimit?: unknown; newLimit?: unknown; preferredRegion?: unknown },
     planId?: string,
+    intent: 'study' | 'plan' = 'study',
   ) {
     if (
       grading.current ||
@@ -429,6 +450,9 @@ export default function StudyScreen() {
     queueDeckId.current = deckId;
     pendingGrade.current = undefined;
     requestedQueue.current = saved?.queue;
+    // Explicit plan opening owns its separately persisted plan session.
+    // Ordinary Continue must still match the global checkpoint it selected.
+    resumeExpectation.current = saved && intent === 'study' ? copySessionInput(saved) : undefined;
     newCardRegion.current =
       !saved && REGION_FILTERS.some((region) => region.id === limits?.preferredRegion)
         ? (limits!.preferredRegion as RegionFilterId)
@@ -486,7 +510,7 @@ export default function StudyScreen() {
             session.queue!.cardIds.some((id) => !deck.cards.some((card) => card.id === id))
           )
             throw new Error('Plan cards unavailable');
-          if (!startSession(session.deckId, session.cardId, session, undefined, plan.id))
+          if (!startSession(session.deckId, session.cardId, session, undefined, plan.id, 'plan'))
             throw new Error('Study busy');
         }
         nav.setParams({ dailyPlanId: undefined });

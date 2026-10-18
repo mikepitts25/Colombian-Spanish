@@ -71,3 +71,29 @@ export function copySessionInput(
       : {}),
   };
 }
+
+export class StaleStudySessionError extends Error {
+  constructor() {
+    super('Study session changed');
+  }
+}
+
+/** Compare checkpoint ownership, ignoring only its refresh timestamp. */
+export function sameStudySession(
+  stored: Omit<LastStudySession, 'updatedAt'> | undefined,
+  expected: Omit<LastStudySession, 'updatedAt'>,
+): boolean {
+  const a = stored?.queue;
+  const b = expected.queue;
+  return (
+    !!stored &&
+    stored.deckId === expected.deckId &&
+    stored.cardId === expected.cardId &&
+    a?.schemaVersion === b?.schemaVersion &&
+    a?.sessionId === b?.sessionId &&
+    a?.region === b?.region &&
+    a?.limits?.cardLimit === b?.limits?.cardLimit &&
+    a?.limits?.newLimit === b?.limits?.newLimit &&
+    JSON.stringify(a?.cardIds) === JSON.stringify(b?.cardIds)
+  );
+}

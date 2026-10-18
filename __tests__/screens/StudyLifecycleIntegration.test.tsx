@@ -830,6 +830,19 @@ test.each([
       await screen.findByText('phrase second');
       await assertRestored();
       expect(await getLearningEvents()).toEqual(events);
+      if (target === 'edited') {
+        fireEvent.press(screen.getByText('Volver'));
+        fireEvent.press(await screen.findByText('Continuar'));
+        await screen.findByText(
+          'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
+        );
+        await assertRestored();
+        await act(async () => {
+          fireEvent.press(screen.getByText('Recargar tarjetas'));
+        });
+        await screen.findByText('Continuar');
+        await assertRestored();
+      }
     }
     screen.unmount();
     mockParams = {};
@@ -976,6 +989,19 @@ test.each([
       expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
     };
     await assertRestored();
+    if (target === 'capped' && boundary === 'held') {
+      fireEvent.press(screen.getByText('Volver'));
+      fireEvent.press(await screen.findByText('Continuar'));
+      await screen.findByText(
+        'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
+      );
+      await assertRestored();
+      await act(async () => {
+        fireEvent.press(screen.getByText('Recargar tarjetas'));
+      });
+      await screen.findByText('Continuar');
+      await assertRestored();
+    }
     if (target === 'removed') {
       expect(screen.getByText('Volver')).toBeDisabled();
       fireEvent.press(screen.getByText('Volver'));
@@ -1031,5 +1057,76 @@ test.each([
     expect(screen.queryByText('phrase first')).toBeNull();
     expect(screen.queryByText('phrase second')).toBeNull();
     await assertRestored(true);
+  },
+);
+
+test.each(['first-open', 'after-manual-study'] as const)(
+  'an explicit daily review plan opens %s with real storage and retains guarded ordinary Continue',
+  async (mode) => {
+    const { openRecommendedPlan } = require('../../src/storage/recommendedPlan');
+    const { readDailyPlan } = require('../../src/storage/dailyPlans');
+    const { saveLastStudySession } = require('../../src/storage/storage');
+    const decks: Deck[] = [
+      { id: 'alpha', name: 'Alpha', cards: [card('first'), card('second')] },
+      { id: 'beta', name: 'Beta', cards: [card('manual')] },
+    ];
+    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(decks));
+    const plan = await openRecommendedPlan(false);
+    expect(plan?.phase).toBe('review');
+    expect(plan.review.session.queue.cardIds.length).toBeGreaterThan(1);
+    if (mode === 'after-manual-study') {
+      mockParams = { autoStartDeckId: 'beta' };
+      const manual = render(<App />);
+      await manual.findByText('phrase manual');
+      await waitFor(() => expect(manual.getByText('Bien')).not.toBeDisabled());
+      expect((await getLastStudySession())?.deckId).toBe('beta');
+      manual.unmount();
+    } else expect(await getLastStudySession()).toBeUndefined();
+    mockParams = { dailyPlanId: plan.id };
+    const screen = render(<App />);
+    await screen.findByText(`phrase ${plan.review.session.cardId}`);
+    await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    expect(
+      screen.queryByText('La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.'),
+    ).toBeNull();
+    expect((await getLastStudySession())?.queue).toEqual(plan.review.session.queue);
+    expect((await readDailyPlan()).id).toBe(plan.id);
+    expect(await getLearningEvents()).toEqual([]);
+    await act(async () => {
+      fireEvent.press(screen.getByText('Bien'));
+    });
+    const nextPlan = await readDailyPlan();
+    expect(nextPlan.phase).toBe('review');
+    expect(nextPlan.review.session.queue.cardIds).toEqual(
+      plan.review.session.queue.cardIds.slice(1),
+    );
+    expect((await getLastStudySession())?.queue).toEqual(nextPlan.review.session.queue);
+    expect(await getLearningEvents()).toEqual([
+      expect.objectContaining({ planId: plan.id, cardId: plan.review.session.cardId, quality: 4 }),
+    ]);
+    if (mode === 'after-manual-study') {
+      fireEvent.press(screen.getByText('Volver'));
+      await screen.findByText('Continuar');
+      await saveLastStudySession({
+        deckId: 'beta',
+        cardId: 'manual',
+        queue: {
+          schemaVersion: 1,
+          cardIds: ['manual'],
+          region: 'all',
+          sessionId: 'new-manual-owner',
+        },
+      });
+      const before = await captureBackupSnapshot();
+      fireEvent.press(screen.getByText('Continuar'));
+      await screen.findByText(
+        'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
+      );
+      const after = await captureBackupSnapshot();
+      expect(after.decks).toEqual(before.decks);
+      expect(after.applicationState).toEqual(before.applicationState);
+      expect(after.learningEvents).toEqual(before.learningEvents);
+      expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
+    }
   },
 );
