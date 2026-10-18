@@ -1,0 +1,42 @@
+{
+  "baselineFocused": {
+    "suites": 2,
+    "tests": 71,
+    "reactActDiagnostics": 6,
+    "zeroDiagnosticGateExit": 1
+  },
+  "finalFocused": {
+    "suites": 2,
+    "tests": 71,
+    "reactActDiagnostics": 0,
+    "zeroDiagnosticGateExit": 0
+  },
+  "finalFull": {
+    "suites": 117,
+    "tests": 1140,
+    "reactActDiagnostics": 0,
+    "zeroDiagnosticGateExit": 0
+  },
+  "base": "1edf727a59b286b1794c4ac25ad98e69812b94e6",
+  "runtimeChanges": false,
+  "consoleSuppression": false,
+  "newTests": 0,
+  "pythonQaTests": 14,
+  "staticChecks": ["typecheck", "lint", "format:check", "diff --check"],
+  "baselineDiagnosticOrigins": [
+    "StudyScreen landing shows the no-deck state when activeDeck is undefined (2)",
+    "keeps one stable attempt through a failed save and retry",
+    "does not skip the next difficult card when grading changes eligibility",
+    "Barrio light difficult deck pill uses the actual readable tag pair",
+    "Barrio dark difficult deck pill uses the actual readable tag pair"
+  ],
+  "nativeAttempt": {
+    "device": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+    "preflightIsolated": true,
+    "metro8099Listening": true,
+    "deviceHubReportedRunning": true,
+    "uiReadTimeoutSeconds": [30, 45, 30],
+    "uiActionsPerformed": false,
+    "macLockStateKnown": false
+  }
+}

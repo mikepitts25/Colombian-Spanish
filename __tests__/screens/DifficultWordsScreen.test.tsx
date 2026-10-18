@@ -99,7 +99,8 @@ it('keeps one stable attempt through a failed save and retry', async () => {
     .mockResolvedValue(undefined);
   mockUseDeck.mockReturnValue({ ready: true, decks: [DECK], recordAnswer });
   const screen = render(<DifficultWordsScreen />);
-  await act(async () => fireEvent.press(await screen.findByText('Bien')));
+  const grade = await screen.findByText('Bien');
+  await act(async () => fireEvent.press(grade));
   const retry = await screen.findByText('Intentar guardar de nuevo');
   await act(async () => fireEvent.press(retry));
   expect(recordAnswer.mock.calls[1]).toEqual(recordAnswer.mock.calls[0]);
@@ -127,7 +128,8 @@ it('does not skip the next difficult card when grading changes eligibility', asy
   });
   mockUseDeck.mockImplementation(() => context);
   const screen = render(<DifficultWordsScreen />);
-  await act(async () => fireEvent.press(await screen.findByText('Bien')));
+  const grade = await screen.findByText('Bien');
+  await act(async () => fireEvent.press(grade));
   expect(await screen.findByText('second')).toBeTruthy();
 });
 
@@ -208,9 +210,11 @@ it('shows scheduler intervals for the current difficult card rather than fixed e
 
 test.each(['light', 'dark'] as const)(
   'Barrio %s difficult deck pill uses the actual readable tag pair',
-  (appearanceMode) => {
+  async (appearanceMode) => {
     const screen = renderWithTheme(<DifficultWordsScreen />);
-    screen.applyTheme({ themeId: 'barrio', appearanceMode });
+    await act(async () => {
+      screen.applyTheme({ themeId: 'barrio', appearanceMode });
+    });
     const { colors } = resolveAppTheme({ themeId: 'barrio', appearanceMode }, null);
     expect(screen.getByText('Slang')).toHaveStyle({ color: colors.tagText });
     expect(screen.getByTestId('difficult-deck-badge')).toHaveStyle({
