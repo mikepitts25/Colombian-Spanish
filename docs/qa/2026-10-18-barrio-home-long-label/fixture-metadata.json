@@ -1,0 +1,95 @@
+{
+  "sourceMain": "bb5f57c8bbaeb078b82bc0b7fae291e2ef3f040c",
+  "runtimeHead": "ecf1a2e",
+  "nativeChanges": false,
+  "productionJS": false,
+  "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPad-mini-A17-Pro",
+  "binarySha256": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb",
+  "originalBackupSha256": "2c4a26c908771a2a25ebb7267b54cac3a4e710ef43a95a7ae1ba30facaeb4cac",
+  "fixtureSha256": "b744da2753b3be8b8c5366a20ba566dc56ae3202bdcdb6c3932edd3e82055499",
+  "name": "Conversaciones largas para conocer el barrio y preparar un viaje por Colombia sin perder el contexto",
+  "nameCharacters": 100,
+  "fixtureExpectedKeyHashes": {
+    "SRS_DECKS_V3": "13ad6ac7722f74e5d965e38ebb61d395d0a69a4cdad353db26cc97f4c79d994b",
+    "SRS_DAILY_PLAN_V1": "9a205cd703b2e5f091300a43619bb6100dcba85730120daa72c99ab057847908",
+    "SRS_MISSIONS_V1": "dda005e7f63fd5035df0d065b488295aad003596a4bab04af421803dae4dcfce",
+    "SRS_PREFS_V1": "d7785209fd2bb58309bd54c8fcfe3c5106adf32b508d692061b075a2017f33ad",
+    "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+    "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+    "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+    "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "SRS_LAST_STUDY_SESSION_V1": "038415fb75da3f6f96a446a4593df1360a134d41dbcf4275152e4b41e4780541",
+    "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "SRS_LEARNING_EVENTS_V1": "943cd4efe0c963ccb8c73cc5fe79d4a07319e528fa06b0345fc047d5abcf66e7"
+  },
+  "startedSession": {
+    "deckId": "catchup-qa",
+    "cardId": "catchup-4",
+    "queue": {
+      "schemaVersion": 1,
+      "cardIds": ["catchup-4", "catchup-5", "catchup-6", "catchup-7", "catchup-8", "catchup-9"],
+      "region": "all",
+      "sessionId": "mve5iisn-2-3582vylo8lf"
+    },
+    "updatedAt": 1792347651277
+  },
+  "matrix": [
+    {
+      "language": "es",
+      "appearance": "dark",
+      "nativeTextSize": 3,
+      "image": "native/mini-default-long-label.png",
+      "positioning": "touch"
+    },
+    {
+      "language": "es",
+      "appearance": "dark",
+      "nativeTextSize": 11,
+      "image": "native/mini-maximum-long-label.png",
+      "positioning": "VoiceOver keyboard focus"
+    },
+    {
+      "language": "en",
+      "appearance": "dark",
+      "nativeTextSize": 3,
+      "image": "native/mini-en-dark-default.png",
+      "positioning": "touch"
+    },
+    {
+      "language": "en",
+      "appearance": "dark",
+      "nativeTextSize": 11,
+      "image": "native/mini-en-dark-maximum.png",
+      "positioning": "VoiceOver keyboard focus"
+    },
+    {
+      "language": "en",
+      "appearance": "light",
+      "nativeTextSize": 3,
+      "image": "native/mini-en-light-default.png",
+      "positioning": "touch"
+    },
+    {
+      "language": "en",
+      "appearance": "light",
+      "nativeTextSize": 11,
+      "image": "native/mini-en-light-maximum.png",
+      "positioning": "VoiceOver keyboard focus"
+    },
+    {
+      "language": "es",
+      "appearance": "light",
+      "nativeTextSize": 3,
+      "image": "native/mini-es-light-default.png",
+      "positioning": "VoiceOver keyboard focus"
+    },
+    {
+      "language": "es",
+      "appearance": "light",
+      "nativeTextSize": 11,
+      "image": "native/mini-es-light-maximum.png",
+      "positioning": "VoiceOver keyboard focus"
+    }
+  ]
+}
