@@ -6,6 +6,8 @@ import { DeckProvider, useDeckContext } from '../../src/context/DeckContext';
 import { getDailyProgress, getLastStudySession, loadDecks } from '../../src/storage/storage';
 import { getLearningEvents } from '../../src/storage/learningEvents';
 import { restoreBackup } from '../../src/storage/backupRestore';
+import { captureBackupSnapshot } from '../../src/storage/backupSnapshot';
+import { localDayKey } from '../../src/utils/calendarDay';
 import { Deck, FlashCard } from '../../src/types';
 
 let mockParams: Record<string, unknown> = {};
@@ -664,5 +666,126 @@ test.each(['reset', 'replace', 'merge-new'] as const)(
     expect(await getLearningEvents()).toEqual(events);
     expect(await getDailyProgress()).toEqual(daily);
     expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
+  },
+);
+
+test.each(['held', 'interrupted'] as const)(
+  'full-state restore %s behind a grade retains restored records through old Retry and restart',
+  async (ordering) => {
+    const now = Date.now();
+    jest.spyOn(Date, 'now').mockReturnValue(now);
+    const decks: Deck[] = [{ id: 'alpha', name: 'Alpha', cards: [card('first'), card('second')] }];
+    await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(decks));
+    let screen = render(<App />);
+    await screen.findByText('phrase first');
+    await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    const backup = await captureBackupSnapshot();
+    const restoredDecks = [
+      { ...decks[0], name: 'Restored Alpha', cards: [card('second'), card('restored-next')] },
+    ];
+    const restoredSession = {
+      deckId: 'alpha',
+      cardId: 'restored-next',
+      updatedAt: now - 1000,
+      queue: {
+        schemaVersion: 1 as const,
+        cardIds: ['restored-next'],
+        region: 'all',
+        sessionId: 'restored-session',
+      },
+    };
+    const restoredState = {
+      ...backup.applicationState!,
+      prefs: { uiLanguage: 'es', newCardsPerDay: 10, speechRate: 0.9 },
+      daily: { date: localDayKey(new Date(now)), count: 7, target: 12, newCount: 3 },
+      streak: { streak: 4, freezes: 1, lastStudyDate: new Date(now).toISOString() },
+      seenWords: [],
+      quizHistory: [],
+      lastSession: restoredSession,
+      notificationPrefs: { masterOn: false },
+      missions: { schemaVersion: 1, runs: [] },
+      dailyPlan: { schemaVersion: 1, current: null },
+    };
+    const write = AsyncStorage.setItem as jest.Mock;
+    const originalWrite = write.getMockImplementation()!;
+    let intercepted = false;
+    write.mockImplementation(async (key: string, value: string) => {
+      if (!intercepted && key === (ordering === 'held' ? 'SRS_WRITE_JOURNAL_V1' : 'SRS_DECKS_V3')) {
+        intercepted = true;
+        if (ordering === 'held')
+          await new Promise<void>((resolve) => {
+            releaseHeldWrite = resolve;
+          });
+        else throw new Error('simulated interrupted grade before full-state restore');
+      }
+      return originalWrite(key, value);
+    });
+    let restoring!: Promise<void>;
+    if (ordering === 'held') {
+      act(() => {
+        fireEvent.press(screen.getByText('Bien'));
+      });
+      await waitFor(() => expect(intercepted).toBe(true));
+    } else {
+      await act(async () => fireEvent.press(screen.getByText('Bien')));
+      await screen.findByText('Intentar guardar de nuevo');
+    }
+    await act(async () => {
+      let restoreSettled = false;
+      restoring = restoreBackup(restoredDecks, [], 'replace-state', restoredState).then(() => {
+        restoreSettled = true;
+      });
+      if (ordering === 'held') {
+        await Promise.resolve();
+        expect(restoreSettled).toBe(false);
+        expect(JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!)).toEqual(decks);
+      }
+      releaseHeldWrite?.();
+      releaseHeldWrite = undefined;
+      await restoring;
+      await current.reload();
+    });
+    const expectedRecords = {
+      SRS_PREFS_V1: restoredState.prefs,
+      SRS_DAILY_PROGRESS_V1: restoredState.daily,
+      SRS_STUDY_STREAK_V1: restoredState.streak,
+      SRS_SEEN_WORDS_V1: [],
+      SRS_QUIZ_HISTORY_V1: [],
+      SRS_LAST_STUDY_SESSION_V1: restoredSession,
+      SRS_NOTIFICATION_PREFS_V1: restoredState.notificationPrefs,
+      SRS_MISSIONS_V1: restoredState.missions,
+      SRS_DAILY_PLAN_V1: restoredState.dailyPlan,
+    };
+    const assertRestored = async (resumed = false) => {
+      expect(await loadDecks()).toEqual(restoredDecks);
+      expect(current.decks).toEqual(restoredDecks);
+      for (const [key, value] of Object.entries(expectedRecords))
+        expect(JSON.parse((await AsyncStorage.getItem(key))!)).toEqual(
+          resumed && key === 'SRS_LAST_STUDY_SESSION_V1'
+            ? { ...restoredSession, updatedAt: now }
+            : value,
+        );
+      expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
+    };
+    await assertRestored();
+    const events = await getLearningEvents();
+    expect(events).toEqual([expect.objectContaining({ cardId: 'first', quality: 4 })]);
+    if (ordering === 'interrupted') {
+      await act(async () => fireEvent.press(screen.getByText('Intentar guardar de nuevo')));
+      await screen.findByText('phrase second');
+      await assertRestored();
+      expect(await getLearningEvents()).toEqual(events);
+    }
+    screen.unmount();
+    mockParams = {};
+    screen = render(<App />);
+    fireEvent.press(await screen.findByText('Continuar'));
+    await screen.findByText('phrase restored-next');
+    await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    expect(screen.getByText('1 restantes')).toBeTruthy();
+    expect(screen.queryByText('phrase first')).toBeNull();
+    expect(screen.queryByText('phrase second')).toBeNull();
+    await assertRestored(true);
+    expect(await getLearningEvents()).toEqual(events);
   },
 );

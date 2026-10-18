@@ -1,0 +1,67 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/StudyLifecycleIntegration.test.tsx --testNamePattern=full-state restore
+
+FAIL __tests__/screens/StudyLifecycleIntegration.test.tsx
+  ✕ full-state restore held behind a grade retains restored records through old Retry and restart (311 ms)
+  ✕ full-state restore interrupted behind a grade retains restored records through old Retry and restart (73 ms)
+  ○ skipped Otra vez becomes due without refilling a saved in-progress queue
+  ○ skipped Difícil becomes due without refilling a saved in-progress queue
+  ○ skipped cross-deck new-card cap permits due reviews and later relearning without new credit
+  ○ skipped edits queued behind an in-flight grade preserve content and the frozen remaining queue
+  ○ skipped an editor recovers an interrupted grade and UI retry acknowledges it without losing the edit
+  ○ skipped reset of another deck during a held grade preserves exactly-once progress
+  ○ skipped delete of another deck during a held grade preserves exactly-once progress
+  ○ skipped reset of another deck during a interrupted grade preserves exactly-once progress
+  ○ skipped delete of another deck during a interrupted grade preserves exactly-once progress
+  ○ skipped deleting the active deck leaves a safe Study boundary (fallback=true, boundary=interrupted)
+  ○ skipped deleting the active deck leaves a safe Study boundary (fallback=false, boundary=interrupted)
+  ○ skipped deleting the active deck leaves a safe Study boundary (fallback=true, boundary=held)
+  ○ skipped deleting the active deck leaves a safe Study boundary (fallback=false, boundary=held)
+  ○ skipped active-session reset after grade recovery survives original Retry and exact resume
+  ○ skipped active-session replace after grade recovery survives original Retry and exact resume
+  ○ skipped active-session merge-new after grade recovery survives original Retry and exact resume
+
+  ● full-state restore held behind a grade retains restored records through old Retry and restart
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: {"newCardsPerDay": 10, "speechRate": 0.9, "uiLanguage": "es"}
+    Received: null
+
+      761 |       expect(current.decks).toEqual(restoredDecks);
+      762 |       for (const [key, value] of Object.entries(expectedRecords))
+    > 763 |         expect(JSON.parse((await AsyncStorage.getItem(key))!)).toEqual(
+          |                                                                ^
+      764 |           resumed && key === 'SRS_LAST_STUDY_SESSION_V1'
+      765 |             ? { ...restoredSession, updatedAt: now }
+      766 |             : value,
+
+      at toEqual (__tests__/screens/StudyLifecycleIntegration.test.tsx:763:64)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● full-state restore interrupted behind a grade retains restored records through old Retry and restart
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: {"newCardsPerDay": 10, "speechRate": 0.9, "uiLanguage": "es"}
+    Received: null
+
+      761 |       expect(current.decks).toEqual(restoredDecks);
+      762 |       for (const [key, value] of Object.entries(expectedRecords))
+    > 763 |         expect(JSON.parse((await AsyncStorage.getItem(key))!)).toEqual(
+          |                                                                ^
+      764 |           resumed && key === 'SRS_LAST_STUDY_SESSION_V1'
+      765 |             ? { ...restoredSession, updatedAt: now }
+      766 |             : value,
+
+      at toEqual (__tests__/screens/StudyLifecycleIntegration.test.tsx:763:64)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 16 skipped, 18 total
+Snapshots:   0 total
+Time:        1.683 s, estimated 5 s
+Ran all test suites within paths "__tests__/screens/StudyLifecycleIntegration.test.tsx".
