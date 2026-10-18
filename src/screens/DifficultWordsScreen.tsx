@@ -9,7 +9,7 @@ import Flashcard from '../components/Flashcard';
 import { useDeck } from '../hooks/useDeck';
 import { selectDifficultCards, formatIntervalShort, previewInterval } from '../utils/srs';
 import { createLearningSessionId } from '../storage/learningEvents';
-import { AnswerAttempt } from '../storage/flashcardAnswer';
+import { AnswerAttempt, StaleGradeError } from '../storage/flashcardAnswer';
 import { FlashCard } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -72,14 +72,14 @@ export default function DifficultWordsScreen() {
   const scroll = useRef<ScrollView>(null);
   const cardTop = useRef(0);
   const [gradeSaving, setGradeSaving] = useState(false);
-  const { ready, decks, recordAnswer } = useDeck();
+  const { ready, decks, recordAnswer, reload } = useDeck();
   const { t } = useLanguage();
   const [idx, setIdx] = useState(0);
   const [queueIds, setQueueIds] = useState<string[] | null>(null);
   const grading = useRef(false);
   const pendingGrade = useRef<AnswerAttempt | undefined>(undefined);
   const sessionId = useRef(createLearningSessionId());
-  const [gradeError, setGradeError] = useState(false);
+  const [gradeError, setGradeError] = useState<'save' | 'stale' | null>(null);
 
   const eligibleRows = useMemo<DifficultRow[]>(() => {
     const rows = (decks || []).flatMap((deck) =>
@@ -118,7 +118,7 @@ export default function DifficultWordsScreen() {
   }, [idx]);
 
   async function grade(q: 0 | 1 | 2 | 3 | 4 | 5) {
-    if (!current || grading.current) return;
+    if (!current || grading.current || gradeError === 'stale') return;
     grading.current = true;
     setGradeSaving(true);
     const attempt = pendingGrade.current ?? {
@@ -126,18 +126,44 @@ export default function DifficultWordsScreen() {
       sessionId: sessionId.current,
       cardId: current.card.id,
       quality: q,
+      context: {
+        deckId: current.deckId,
+        front: current.card.front,
+        back: current.card.back,
+        example: current.card.example,
+      },
     };
     pendingGrade.current = attempt;
     try {
       await recordAnswer(attempt.cardId, attempt.quality, {
         attemptId: attempt.attemptId,
         sessionId: attempt.sessionId,
+        context: attempt.context,
       });
       pendingGrade.current = undefined;
-      setGradeError(false);
+      setGradeError(null);
       setIdx((value) => value + 1);
+    } catch (error) {
+      if (error instanceof StaleGradeError) pendingGrade.current = undefined;
+      setGradeError(error instanceof StaleGradeError ? 'stale' : 'save');
+    } finally {
+      grading.current = false;
+      setGradeSaving(false);
+    }
+  }
+
+  async function reloadStaleCards() {
+    if (grading.current) return;
+    grading.current = true;
+    setGradeSaving(true);
+    try {
+      await reload({ requireFreshBudget: true });
+      setQueueIds(null);
+      setIdx(0);
+      sessionId.current = createLearningSessionId();
+      setGradeError(null);
     } catch {
-      setGradeError(true);
+      setGradeError('stale');
     } finally {
       grading.current = false;
       setGradeSaving(false);
@@ -208,14 +234,21 @@ export default function DifficultWordsScreen() {
         {gradeError && (
           <View style={{ padding: 12, gap: 8 }}>
             <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
-              {t('practice.saveError')}
+              {t(gradeError === 'stale' ? 'practice.staleGrade' : 'practice.saveError')}
             </Text>
             <Pressable
               accessibilityRole="button"
               disabled={gradeSaving}
-              onPress={() => grade(pendingGrade.current?.quality ?? 1)}
+              style={{ minHeight: 48, minWidth: 48, justifyContent: 'center' }}
+              onPress={
+                gradeError === 'stale'
+                  ? reloadStaleCards
+                  : () => grade(pendingGrade.current?.quality ?? 1)
+              }
             >
-              <Text style={{ color: colors.brand }}>{t('practice.retrySave')}</Text>
+              <Text style={{ color: colors.brand }}>
+                {t(gradeError === 'stale' ? 'practice.reloadCards' : 'practice.retrySave')}
+              </Text>
             </Pressable>
           </View>
         )}
@@ -226,8 +259,8 @@ export default function DifficultWordsScreen() {
               <Pressable
                 key={g.labelKey}
                 accessibilityRole="button"
-                accessibilityState={{ disabled: gradeError || gradeSaving }}
-                disabled={gradeError || gradeSaving}
+                accessibilityState={{ disabled: !!gradeError || gradeSaving }}
+                disabled={!!gradeError || gradeSaving}
                 style={[
                   styles.gradeBtn,
                   largeText && styles.noFlex,

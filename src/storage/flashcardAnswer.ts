@@ -1,6 +1,6 @@
 import { copySessionInput } from './studySession';
 import { advancePlanReview } from './dailyPlans';
-import { CardQuality, Deck } from '../types';
+import { CardQuality, Deck, FlashCard } from '../types';
 import { gradeCard, isNewCard } from '../utils/srs';
 import { withStorageTransaction } from './durableStorage';
 import { getPrefs } from './prefs';
@@ -14,6 +14,7 @@ import {
   loadDecks,
   saveDecks,
   getDailyProgress,
+  getLastStudySession,
   incrementDailyNewCount,
   incrementDailyProgress,
   recordSeenWord,
@@ -28,7 +29,21 @@ export class DailyNewCardLimitError extends Error {
   }
 }
 
+export class StaleGradeError extends Error {
+  constructor() {
+    super('Displayed card or study queue changed');
+  }
+}
+
+// Ephemeral intent context, retained with the original answer across retries.
+// Scheduling and editorial metadata do not change the meaning shown to a learner.
+export type GradeContext = Pick<FlashCard, 'front' | 'back' | 'example'> & {
+  deckId: string;
+  session?: Omit<LastStudySession, 'updatedAt'>;
+};
+
 export interface AnswerAttempt {
+  context?: GradeContext;
   planId?: string;
   attemptId: string;
   sessionId: string;
@@ -39,7 +54,7 @@ export interface AnswerAttempt {
 }
 export type AnswerOptions = Pick<
   AnswerAttempt,
-  'attemptId' | 'sessionId' | 'nextSession' | 'durationMs' | 'planId'
+  'attemptId' | 'sessionId' | 'nextSession' | 'durationMs' | 'planId' | 'context'
 >;
 
 export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
@@ -59,6 +74,12 @@ export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
   // Snapshot caller state before waiting for another event/restore operation.
   const input = {
     ...attempt,
+    context: attempt.context
+      ? {
+          ...attempt.context,
+          session: attempt.context.session ? copySessionInput(attempt.context.session) : undefined,
+        }
+      : undefined,
     nextSession: attempt.nextSession ? copySessionInput(attempt.nextSession) : undefined,
   };
   return serializeLearningHistoryWrite(() =>
@@ -86,12 +107,38 @@ export async function commitFlashcardAnswer(attempt: AnswerAttempt) {
         if (input.planId !== undefined) throw new Error('Daily plan card unavailable');
         return undefined;
       }
-      if (input.planId !== undefined && input.nextSession?.deckId !== deck.id)
-        throw new Error('Daily plan card moved to another deck');
       const daily = await getDailyProgress(tx);
       if (isNewCard(card) && daily.newCount >= (await getPrefs(tx)).newCardsPerDay) {
         throw new DailyNewCardLimitError();
       }
+      if (input.context) {
+        const expected = input.context;
+        if (
+          deck.id !== expected.deckId ||
+          card.front !== expected.front ||
+          card.back !== expected.back ||
+          card.example !== expected.example
+        )
+          throw new StaleGradeError();
+        if (expected.session) {
+          const stored = await getLastStudySession(tx);
+          const a = stored?.queue;
+          const b = expected.session.queue;
+          if (
+            !stored ||
+            stored.deckId !== expected.session.deckId ||
+            stored.cardId !== expected.session.cardId ||
+            a?.sessionId !== b?.sessionId ||
+            a?.region !== b?.region ||
+            a?.limits?.cardLimit !== b?.limits?.cardLimit ||
+            a?.limits?.newLimit !== b?.limits?.newLimit ||
+            JSON.stringify(a?.cardIds) !== JSON.stringify(b?.cardIds)
+          )
+            throw new StaleGradeError();
+        }
+      }
+      if (input.planId !== undefined && input.nextSession?.deckId !== deck.id)
+        throw new Error('Daily plan card moved to another deck');
       await advancePlanReview(tx, input);
       const nextDecks: Deck[] = decks.map((item) =>
         item.id === deck.id

@@ -34,7 +34,7 @@ import {
 import type { CategoryKey } from '../utils/deckCategories';
 import type { FlashCard } from '../types';
 import { createLearningSessionId } from '../storage/learningEvents';
-import { AnswerAttempt, DailyNewCardLimitError } from '../storage/flashcardAnswer';
+import { AnswerAttempt, DailyNewCardLimitError, StaleGradeError } from '../storage/flashcardAnswer';
 import { speakCard } from '../services/tts';
 import { StudyQueueSnapshot } from '../storage/studySession';
 import { isNewCard, formatIntervalShort, previewInterval } from '../utils/srs';
@@ -94,8 +94,16 @@ export default function StudyScreen() {
   const { colors } = useAppTheme();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale >= 1.4;
-  const { ready, decks, activeDeck, getStudyBatch, recordAnswer, toggleFavorite, setActiveDeckId } =
-    useDeck();
+  const {
+    ready,
+    decks,
+    activeDeck,
+    getStudyBatch,
+    recordAnswer,
+    toggleFavorite,
+    setActiveDeckId,
+    reload,
+  } = useDeck();
   const nav = useNavigation<any>();
   const route = useRoute<any>();
   const { t } = useLanguage();
@@ -133,7 +141,7 @@ export default function StudyScreen() {
   const [gradeSaving, setGradeSaving] = useState(false);
   const pendingGrade = useRef<AnswerAttempt | undefined>(undefined);
   const learningSession = useRef(createLearningSessionId());
-  const [gradeError, setGradeError] = useState<'save' | 'limit' | null>(null);
+  const [gradeError, setGradeError] = useState<'save' | 'limit' | 'stale' | null>(null);
   const sessionVersion = useRef(0);
   const [daily, setDaily] = useState({ count: 0, target: 10 });
 
@@ -200,6 +208,9 @@ export default function StudyScreen() {
   // eligible queue, but must not remove a card before this screen advances its index.
   const activeDeckId = activeDeck?.id;
   useEffect(() => {
+    // Reload can publish replacement decks before its budget read completes.
+    // Preserve the imported checkpoint through recovery, including read failure.
+    if (gradeError === 'stale') return undefined;
     const externalDeckChange = mode === 'session' && queueDeckId.current !== activeDeckId;
     if (externalDeckChange) {
       dailyPlan.current = undefined;
@@ -553,6 +564,7 @@ export default function StudyScreen() {
       !currentCard ||
       !activeDeck ||
       grading.current ||
+      gradeError === 'stale' ||
       checkpointBlocked.current ||
       openingPlan.current ||
       (planOpenError && !pendingGrade.current)
@@ -572,6 +584,23 @@ export default function StudyScreen() {
       cardId: currentCard.id,
       quality: qValue,
       durationMs: activeDuration(),
+      context: {
+        deckId: activeDeck.id,
+        front: currentCard.front,
+        back: currentCard.back,
+        example: currentCard.example,
+        session: {
+          deckId: activeDeck.id,
+          cardId: queuedCardIds[0],
+          queue: {
+            schemaVersion: 1 as const,
+            cardIds: [...queuedCardIds],
+            region: activeRegion,
+            sessionId: learningSession.current,
+            ...(boundedLimits.current ? { limits: { ...boundedLimits.current } } : {}),
+          },
+        },
+      },
       ...(dailyPlan.current ? { planId: dailyPlan.current } : {}),
       nextSession: {
         deckId: activeDeck.id,
@@ -591,6 +620,7 @@ export default function StudyScreen() {
         attemptId: attempt.attemptId,
         sessionId: attempt.sessionId,
         durationMs: attempt.durationMs,
+        context: attempt.context,
         ...(attempt.planId ? { planId: attempt.planId } : {}),
         nextSession: attempt.nextSession,
       });
@@ -606,13 +636,47 @@ export default function StudyScreen() {
       if (!nextCard) setSessionComplete(true);
     } catch (error) {
       if (sessionVersion.current === version) {
-        if (error instanceof DailyNewCardLimitError) pendingGrade.current = undefined;
-        setGradeError(error instanceof DailyNewCardLimitError ? 'limit' : 'save');
+        if (error instanceof DailyNewCardLimitError || error instanceof StaleGradeError)
+          pendingGrade.current = undefined;
+        setGradeError(
+          error instanceof StaleGradeError
+            ? 'stale'
+            : error instanceof DailyNewCardLimitError
+              ? 'limit'
+              : 'save',
+        );
       }
     } finally {
       grading.current = false;
       setGradeSaving(false);
       finishGrade();
+    }
+  }
+
+  async function reloadStaleStudy() {
+    if (grading.current) return;
+    grading.current = true;
+    setGradeSaving(true);
+    try {
+      const [, session, plan] = await Promise.all([
+        reload({ requireFreshBudget: true }),
+        getLastStudySession(),
+        readDailyPlan(),
+      ]);
+      const linked =
+        plan?.phase === 'review' &&
+        plan.review?.session.queue?.sessionId === session?.queue?.sessionId &&
+        plan.review?.session.deckId === session?.deckId;
+      setResumeSession(linked ? plan!.review!.session : session);
+      setResumePlanId(linked ? plan!.id : undefined);
+      setResumeLoadError(false);
+      setGradeError(null);
+      setMode('landing');
+    } catch {
+      setGradeError('stale');
+    } finally {
+      grading.current = false;
+      setGradeSaving(false);
     }
   }
 
@@ -867,6 +931,7 @@ export default function StudyScreen() {
             disabled={
               gradeSaving ||
               gradeError === 'save' ||
+              gradeError === 'stale' ||
               checkpointBusy ||
               checkpointFailed ||
               planOpening ||
@@ -935,6 +1000,7 @@ export default function StudyScreen() {
                   disabled:
                     gradeSaving ||
                     gradeError === 'save' ||
+                    gradeError === 'stale' ||
                     checkpointBusy ||
                     checkpointFailed ||
                     planOpening ||
@@ -943,6 +1009,7 @@ export default function StudyScreen() {
                 disabled={
                   gradeSaving ||
                   gradeError === 'save' ||
+                  gradeError === 'stale' ||
                   checkpointBusy ||
                   checkpointFailed ||
                   planOpening ||
@@ -1036,8 +1103,24 @@ export default function StudyScreen() {
         {gradeError && (
           <View style={styles.saveError}>
             <Text accessibilityRole="alert" style={{ color: colors.textPrimary }}>
-              {t(gradeError === 'limit' ? 'practice.newLimit' : 'practice.saveError')}
+              {t(
+                gradeError === 'stale'
+                  ? 'practice.staleGrade'
+                  : gradeError === 'limit'
+                    ? 'practice.newLimit'
+                    : 'practice.saveError',
+              )}
             </Text>
+            {gradeError === 'stale' && (
+              <Pressable
+                accessibilityRole="button"
+                disabled={gradeSaving}
+                style={{ minHeight: 48, minWidth: 48, justifyContent: 'center' }}
+                onPress={reloadStaleStudy}
+              >
+                <Text style={{ color: colors.brand }}>{t('practice.reloadCards')}</Text>
+              </Pressable>
+            )}
             {gradeError === 'save' && (
               <Pressable
                 accessibilityRole="button"

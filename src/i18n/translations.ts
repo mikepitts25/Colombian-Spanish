@@ -301,6 +301,9 @@ export const translations = {
     'quiz.saveError': 'No se pudo guardar tu respuesta. Inténtalo de nuevo.',
     'practice.saveError': 'No se pudo guardar. Reintenta la misma respuesta antes de continuar.',
     'practice.retrySave': 'Intentar guardar de nuevo',
+    'practice.staleGrade':
+      'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
+    'practice.reloadCards': 'Recargar tarjetas',
     'practice.newLimit':
       'Alcanzaste el límite diario de tarjetas nuevas. Vuelve a los decks para repasar tarjetas estudiadas.',
     'quiz.retrySave': 'Intentar guardar de nuevo',
@@ -1029,6 +1032,8 @@ export const translations = {
     'quiz.saveError': 'Could not save your answer. Please try again.',
     'practice.saveError': 'Could not save. Retry the same answer before continuing.',
     'practice.retrySave': 'Try saving again',
+    'practice.staleGrade': 'The card or session changed. Reload cards before continuing.',
+    'practice.reloadCards': 'Reload cards',
     'practice.newLimit':
       'Today’s new-card limit is reached. Return to decks to review studied cards.',
     'quiz.retrySave': 'Try saving again',

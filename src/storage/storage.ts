@@ -26,8 +26,10 @@ export async function saveDecks(decks: Deck[], access: StorageAccess = AsyncStor
   await access.setItem(KEY, JSON.stringify(decks));
 }
 
-export async function getLastStudySession(): Promise<LastStudySession | undefined> {
-  const raw = await AsyncStorage.getItem(LAST_STUDY_SESSION_KEY);
+export async function getLastStudySession(
+  access: StorageAccess = AsyncStorage,
+): Promise<LastStudySession | undefined> {
+  const raw = await access.getItem(LAST_STUDY_SESSION_KEY);
   if (!raw) return undefined;
   try {
     const parsed = JSON.parse(raw) as LastStudySession;

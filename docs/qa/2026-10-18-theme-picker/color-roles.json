@@ -9012,6 +9012,13 @@
       "path": "App.tsx",
       "role": "danger",
       "line": 39
+    },
+    {
+      "key": "src/screens/StudyScreen.tsx|brand|15",
+      "base": "src/screens/StudyScreen.tsx|brand",
+      "path": "src/screens/StudyScreen.tsx",
+      "role": "brand",
+      "line": 1484
     }
   ],
   "contrastPairs": [
