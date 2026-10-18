@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppState } from 'react-native';
+import { AppState, Dimensions } from 'react-native';
 import { act, fireEvent, render } from '@testing-library/react-native';
 import VoicePracticeScreen from '../../src/screens/VoicePracticeScreen';
 const mockBack = jest.fn(),
@@ -88,4 +88,57 @@ test('failed deletion remains visible for explicit retry and cannot silently ove
   await ui.findByText('Ready to record');
 });
 
-afterEach(() => jest.restoreAllMocks());
+const originalWindow = Dimensions.get('window');
+afterEach(() => {
+  act(() => Dimensions.set({ window: originalWindow }));
+  jest.restoreAllMocks();
+});
+
+test('reports whether the text alternative is expanded and preserves it through live text resizing', () => {
+  const ui = render(<VoicePracticeScreen />);
+  const alternative = () => ui.getByRole('button', { name: 'Practice without recording' });
+  expect(alternative()).toHaveAccessibilityState({ expanded: false });
+  fireEvent.press(alternative());
+  expect(alternative()).toHaveAccessibilityState({ expanded: true });
+  expect(ui.getByText('buenos días')).toBeTruthy();
+  act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
+  expect(alternative()).toHaveAccessibilityState({ expanded: true });
+  expect(ui.getByText('buenos días')).toBeTruthy();
+  expect(mockPermission).not.toHaveBeenCalled();
+  fireEvent.press(alternative());
+  expect(alternative()).toHaveAccessibilityState({ expanded: false });
+  expect(ui.queryByText('buenos días')).toBeNull();
+});
+
+test('live text resizing retains one pending permission request and a replayable take until explicit Back cleanup', async () => {
+  let release!: (value: { granted: boolean; canAskAgain: boolean }) => void;
+  mockPermission.mockImplementationOnce(
+    () =>
+      new Promise((resolve) => {
+        release = resolve;
+      }),
+  );
+  const ui = render(<VoicePracticeScreen />);
+  fireEvent.press(ui.getByRole('button', { name: 'Record up to 30 seconds' }));
+  await ui.findByText('Waiting for microphone permission');
+  act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
+  expect(ui.getByRole('button', { name: 'Record up to 30 seconds', disabled: true })).toBeTruthy();
+  fireEvent.press(ui.getByRole('button', { name: 'Record up to 30 seconds' }));
+  expect(mockPermission).toHaveBeenCalledTimes(1);
+  expect(mockDiscard).not.toHaveBeenCalled();
+  await act(async () => release({ granted: true, canAskAgain: true }));
+  await ui.findByText('Recording');
+  fireEvent.press(ui.getByRole('button', { name: 'Stop' }));
+  await ui.findByText('Ready to replay');
+  act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 1.8 } }));
+  expect(ui.getByRole('button', { name: 'Record up to 30 seconds', disabled: true })).toBeTruthy();
+  expect(ui.getByRole('button', { name: 'Replay my take', disabled: false })).toBeTruthy();
+  expect(mockPermission).toHaveBeenCalledTimes(1);
+  expect(mockDiscard).not.toHaveBeenCalled();
+  fireEvent.press(ui.getByRole('button', { name: 'Replay my take' }));
+  await ui.findByText('Replay started');
+  fireEvent.press(ui.getByRole('button', { name: 'Back' }));
+  await act(async () => {});
+  expect(mockDiscard).toHaveBeenCalledTimes(1);
+  expect(mockBack).toHaveBeenCalledTimes(1);
+});

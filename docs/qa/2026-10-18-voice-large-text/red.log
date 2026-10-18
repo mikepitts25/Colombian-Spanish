@@ -1,0 +1,35 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false __tests__/screens/VoicePracticeScreen.test.tsx
+
+FAIL __tests__/screens/VoicePracticeScreen.test.tsx
+  ✓ explains local unscored practice without requesting permission on open; text alternative stays available (444 ms)
+  ✓ denied microphone has a usable text alternative and Back (64 ms)
+  ✓ failed deletion remains visible for explicit retry and cannot silently overwrite (215 ms)
+  ✕ reports whether the text alternative is expanded and preserves it through live text resizing (9 ms)
+  ✓ live text resizing retains one pending permission request and a replayable take until explicit Back cleanup (124 ms)
+
+  ● reports whether the text alternative is expanded and preserves it through live text resizing
+
+    expect(element).toHaveAccessibilityState({"expanded": false})
+
+    Expected the element to have accessibility state:
+      {"expanded": false}
+    Received element with implied accessibility state:
+      {"busy": undefined, "checked": undefined, "disabled": false, "expanded": undefined, "selected": undefined}
+
+       98 |   const ui = render(<VoicePracticeScreen />);
+       99 |   const alternative = () => ui.getByRole('button', { name: 'Practice without recording' });
+    > 100 |   expect(alternative()).toHaveAccessibilityState({ expanded: false });
+          |                         ^
+      101 |   fireEvent.press(alternative());
+      102 |   expect(alternative()).toHaveAccessibilityState({ expanded: true });
+      103 |   expect(ui.getByText('buenos días')).toBeTruthy();
+
+      at Object.toHaveAccessibilityState (__tests__/screens/VoicePracticeScreen.test.tsx:100:25)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 4 passed, 5 total
+Snapshots:   0 total
+Time:        1.618 s, estimated 3 s
+Ran all test suites matching /__tests__\/screens\/VoicePracticeScreen.test.tsx/i.

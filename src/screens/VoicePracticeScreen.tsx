@@ -1,5 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { AppState, Linking, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import {
+  AppState,
+  Linking,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useAudioRecorder, RecordingPresets } from 'expo-audio';
@@ -16,6 +24,7 @@ export default function VoicePracticeScreen() {
 function VoicePracticeDraft() {
   const { t } = useLanguage(),
     nav = useNavigation<any>();
+  const { fontScale } = useWindowDimensions();
   const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const voice = useMemo(() => new VoicePractice(createVoicePorts(recorder)), [recorder]);
   const [state, setState] = useState<VoiceState>(voice.state),
@@ -64,11 +73,11 @@ function VoicePracticeDraft() {
       setLeaving(false);
     }
   };
-  const button = (label: string, action: () => void, disabled = false) => (
+  const button = (label: string, action: () => void, disabled = false, expanded?: boolean) => (
     <Pressable
       key={label}
       accessibilityRole="button"
-      accessibilityState={{ disabled }}
+      accessibilityState={{ disabled, ...(expanded === undefined ? {} : { expanded }) }}
       disabled={disabled}
       onPress={action}
       style={[styles.button, disabled && styles.disabled]}
@@ -78,7 +87,7 @@ function VoicePracticeDraft() {
   );
   const sample = LISTENING_BASICS.nodes.find((n) => n.kind === 'listening');
   return (
-    <SafeAreaView style={styles.wrap}>
+    <SafeAreaView key={fontScale} style={styles.wrap}>
       <ScrollView contentContainerStyle={styles.content}>
         {button(t('audio.back'), () => void back(), leaving)}
         <Text accessibilityRole="header" style={styles.title}>
@@ -111,7 +120,7 @@ function VoicePracticeDraft() {
           leaving || busy || state.phase !== 'ready',
         )}
         {button(t('voice.delete'), () => void voice.discard(), leaving || busy || !state.hasTake)}
-        {button(t('voice.alternative'), () => setText(!text))}
+        {button(t('voice.alternative'), () => setText(!text), false, text)}
         {text && (
           <>
             <Text style={styles.body}>{t('voice.selfCheck')}</Text>
