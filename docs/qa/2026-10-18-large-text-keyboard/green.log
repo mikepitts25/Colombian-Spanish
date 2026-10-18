@@ -1,0 +1,22 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/AddCardScreen.test.tsx
+
+PASS __tests__/screens/AddCardScreen.test.tsx
+  ✓ keeps one pending card intent and blocks edits through live resizing until confirmed saved (24 ms)
+  ✓ retains the exact failed card payload and identity for retry instead of losing or duplicating it (68 ms)
+  ✓ blocks missing selected deck without discarding entered card fields (9 ms)
+  ✓ new-deck retry retains one identity and modal draft through failure and resizing (79 ms)
+  ✓ can return to the retained draft after a target disappears without automatically submitting another create (63 ms)
+  ✓ keeps the keyboard viewport above the keyboard when the native header occupies 74 points (4 ms)
+  ✓ reveals the focused input after keyboard layout using measured input position, not the large label (3 ms)
+  ✓ ignores pre-resize field coordinates until both current field and input layouts arrive (6 ms)
+  AddCardScreen localization
+    ✓ renders Add Card labels in English by default (157 ms)
+    ✓ renders Add Card labels in Spanish when UI language is Spanish (5 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       10 passed, 10 total
+Snapshots:   0 total
+Time:        1.506 s, estimated 2 s
+Ran all test suites within paths "__tests__/screens/AddCardScreen.test.tsx".

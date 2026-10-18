@@ -7,6 +7,8 @@ import {
   View,
   StyleSheet,
   DeviceEventEmitter,
+  ScrollView,
+  TextInput,
 } from 'react-native';
 import { HeaderHeightContext } from '@react-navigation/elements';
 import AddCardScreen from '../../src/screens/AddCardScreen';
@@ -175,4 +177,67 @@ test('keeps the keyboard viewport above the keyboard when the native header occu
   // Global top = header 74 + local y20. Only 313 points fit before y407.
   const padding = StyleSheet.flatten(avoiding.findByType(View).props.style).paddingBottom;
   expect(573 - padding).toBe(313);
+});
+
+test('reveals the focused input after keyboard layout using measured input position, not the large label', () => {
+  const ui = render(<AddCardScreen />);
+  const scroll = ui.UNSAFE_getAllByType(ScrollView)[0].instance;
+  const tags = ui.UNSAFE_getAllByType(TextInput)[3];
+  scroll.scrollTo.mockClear();
+  fireEvent(tags.parent!, 'layout', {
+    persist: () => {},
+    nativeEvent: { layout: { x: 0, y: 1600, width: 343, height: 108 } },
+  });
+  fireEvent(tags, 'layout', {
+    persist: () => {},
+    nativeEvent: { layout: { x: 0, y: 276, width: 343, height: 108 } },
+  });
+  fireEvent(tags, 'focus');
+  expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 1860, animated: false });
+  scroll.scrollTo.mockClear();
+  act(() =>
+    DeviceEventEmitter.emit('keyboardDidShow', {
+      endCoordinates: { screenX: 0, screenY: 407, width: 375, height: 260 },
+    }),
+  );
+  expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 1860, animated: false });
+  fireEvent(tags, 'blur');
+  scroll.scrollTo.mockClear();
+  act(() =>
+    DeviceEventEmitter.emit('keyboardDidShow', {
+      endCoordinates: { screenX: 0, screenY: 407, width: 375, height: 260 },
+    }),
+  );
+  expect(scroll.scrollTo).not.toHaveBeenCalled();
+});
+
+test('ignores pre-resize field coordinates until both current field and input layouts arrive', () => {
+  const ui = render(<AddCardScreen />);
+  const first = ui.UNSAFE_getAllByType(TextInput)[3];
+  fireEvent.changeText(first, 'Q');
+  fireEvent(first.parent!, 'layout', {
+    persist: () => {},
+    nativeEvent: { layout: { x: 0, y: 420, width: 343, height: 108 } },
+  });
+  fireEvent(first, 'layout', {
+    persist: () => {},
+    nativeEvent: { layout: { x: 0, y: 30, width: 343, height: 108 } },
+  });
+  fireEvent(first, 'focus');
+  act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
+  const scroll = ui.UNSAFE_getAllByType(ScrollView)[0].instance;
+  const tags = ui.UNSAFE_getAllByType(TextInput)[3];
+  scroll.scrollTo.mockClear();
+  fireEvent(tags, 'focus');
+  fireEvent(tags.parent!, 'layout', {
+    persist: () => {},
+    nativeEvent: { layout: { x: 0, y: 1600, width: 343, height: 108 } },
+  });
+  expect(scroll.scrollTo).not.toHaveBeenCalled();
+  fireEvent(tags, 'layout', {
+    persist: () => {},
+    nativeEvent: { layout: { x: 0, y: 276, width: 343, height: 108 } },
+  });
+  expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 1860, animated: false });
+  expect(ui.getByDisplayValue('Q')).toBeTruthy();
 });

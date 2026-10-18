@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import {
   Alert,
+  Keyboard,
   Modal,
   Pressable,
   StyleSheet,
@@ -68,6 +69,39 @@ export default function AddCardScreen() {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const content = useRef<ScrollView>(null);
+  const viewportHeight = useRef(0);
+  const focusedField = useRef<{ index: number; fontScale: number } | null>(null);
+  const fieldLayouts = useRef<
+    Record<number, { fontScale: number; fieldY?: number; inputY?: number }>
+  >({});
+  const revealFocusedInput = useCallback(() => {
+    const focus = focusedField.current;
+    if (!focus || focus.fontScale !== fontScale) return;
+    const layout = fieldLayouts.current[focus.index];
+    if (
+      layout?.fontScale !== fontScale ||
+      layout.fieldY === undefined ||
+      layout.inputY === undefined
+    )
+      return;
+    content.current?.scrollTo({
+      y: Math.max(0, layout.fieldY + layout.inputY - 16),
+      animated: false,
+    });
+  }, [fontScale]);
+  useEffect(() => {
+    const shown = Keyboard.addListener('keyboardDidShow', revealFocusedInput);
+    return () => shown.remove();
+  }, [revealFocusedInput]);
+  function recordFieldLayout(index: number, part: 'fieldY' | 'inputY', y: number) {
+    const previous = fieldLayouts.current[index];
+    fieldLayouts.current[index] = {
+      ...(previous?.fontScale === fontScale ? previous : {}),
+      fontScale,
+      [part]: y,
+    };
+    if (focusedField.current?.index === index) revealFocusedInput();
+  }
   const selectedDeck = decks.find((deck) => deck.id === (selectedDeckId ?? activeDeckId));
   const blocked = pendingSave !== null;
   usePreventRemove(blocked, () => {});
@@ -213,6 +247,12 @@ export default function AddCardScreen() {
       >
         <ScrollView
           ref={content}
+          onLayout={(event) => {
+            const height = event.nativeEvent.layout.height;
+            const previous = viewportHeight.current;
+            viewportHeight.current = height;
+            if (height < previous) revealFocusedInput();
+          }}
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="always"
           keyboardDismissMode="interactive"
@@ -236,11 +276,27 @@ export default function AddCardScreen() {
           >
             <Text style={styles.body}>{selectedDeck?.name ?? t('addCard.selectDeck')}</Text>
           </Pressable>
-          {fields.map((field) => (
-            <View key={field.label} style={styles.field}>
+          {fields.map((field, index) => (
+            <View
+              key={field.label}
+              style={styles.field}
+              onLayout={(event) => recordFieldLayout(index, 'fieldY', event.nativeEvent.layout.y)}
+            >
               <Text style={styles.label}>{field.label}</Text>
               <TextInput
                 accessibilityLabel={field.label}
+                onLayout={(event) => recordFieldLayout(index, 'inputY', event.nativeEvent.layout.y)}
+                onFocus={() => {
+                  focusedField.current = { index, fontScale };
+                  revealFocusedInput();
+                }}
+                onBlur={() => {
+                  if (
+                    focusedField.current?.index === index &&
+                    focusedField.current.fontScale === fontScale
+                  )
+                    focusedField.current = null;
+                }}
                 value={field.value}
                 editable={!blocked && ready}
                 onChangeText={(value) => {

@@ -1,0 +1,58 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/screens/AddCardScreen.test.tsx
+
+FAIL __tests__/screens/AddCardScreen.test.tsx
+  ✓ keeps one pending card intent and blocks edits through live resizing until confirmed saved (22 ms)
+  ✓ retains the exact failed card payload and identity for retry instead of losing or duplicating it (66 ms)
+  ✓ blocks missing selected deck without discarding entered card fields (9 ms)
+  ✓ new-deck retry retains one identity and modal draft through failure and resizing (79 ms)
+  ✓ can return to the retained draft after a target disappears without automatically submitting another create (63 ms)
+  ✓ keeps the keyboard viewport above the keyboard when the native header occupies 74 points (4 ms)
+  ✕ reveals the focused input after keyboard layout using measured input position, not the large label (3 ms)
+  ✕ ignores pre-resize field coordinates until both current field and input layouts arrive (8 ms)
+  AddCardScreen localization
+    ✓ renders Add Card labels in English by default (154 ms)
+    ✓ renders Add Card labels in Spanish when UI language is Spanish (4 ms)
+
+  ● reveals the focused input after keyboard layout using measured input position, not the large label
+
+    expect(jest.fn()).toHaveBeenLastCalledWith(...expected)
+
+    Expected: {"animated": false, "y": 1860}
+
+    Number of calls: 0
+
+      189 |   fireEvent(tags, 'layout', { persist: () => {}, nativeEvent: { layout: { x: 0, y: 276, width: 343, height: 108 } } });
+      190 |   fireEvent(tags, 'focus');
+    > 191 |   expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 1860, animated: false });
+          |                           ^
+      192 |   scroll.scrollTo.mockClear();
+      193 |   act(() => DeviceEventEmitter.emit('keyboardDidShow', {
+      194 |     endCoordinates: { screenX: 0, screenY: 407, width: 375, height: 260 },
+
+      at Object.toHaveBeenLastCalledWith (__tests__/screens/AddCardScreen.test.tsx:191:27)
+
+  ● ignores pre-resize field coordinates until both current field and input layouts arrive
+
+    expect(jest.fn()).toHaveBeenLastCalledWith(...expected)
+
+    Expected: {"animated": false, "y": 1860}
+
+    Number of calls: 0
+
+      218 |   expect(scroll.scrollTo).not.toHaveBeenCalled();
+      219 |   fireEvent(tags, 'layout', { persist: () => {}, nativeEvent: { layout: { x: 0, y: 276, width: 343, height: 108 } } });
+    > 220 |   expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 1860, animated: false });
+          |                           ^
+      221 |   expect(ui.getByDisplayValue('Q')).toBeTruthy();
+      222 | });
+      223 |
+
+      at Object.toHaveBeenLastCalledWith (__tests__/screens/AddCardScreen.test.tsx:220:27)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 8 passed, 10 total
+Snapshots:   0 total
+Time:        1.46 s, estimated 2 s
+Ran all test suites within paths "__tests__/screens/AddCardScreen.test.tsx".
