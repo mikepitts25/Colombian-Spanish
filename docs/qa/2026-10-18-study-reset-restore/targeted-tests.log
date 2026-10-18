@@ -1,0 +1,23 @@
+PASS __tests__/screens/StudyLifecycleIntegration.test.tsx
+  ✓ Otra vez becomes due without refilling a saved in-progress queue (359 ms)
+  ✓ Difícil becomes due without refilling a saved in-progress queue (152 ms)
+  ✓ cross-deck new-card cap permits due reviews and later relearning without new credit (114 ms)
+  ✓ edits queued behind an in-flight grade preserve content and the frozen remaining queue (133 ms)
+  ✓ an editor recovers an interrupted grade and UI retry acknowledges it without losing the edit (143 ms)
+  ✓ reset of another deck during a held grade preserves exactly-once progress (124 ms)
+  ✓ delete of another deck during a held grade preserves exactly-once progress (119 ms)
+  ✓ reset of another deck during a interrupted grade preserves exactly-once progress (155 ms)
+  ✓ delete of another deck during a interrupted grade preserves exactly-once progress (157 ms)
+  ✓ deleting the active deck leaves a safe Study boundary (fallback=true, boundary=interrupted) (149 ms)
+  ✓ deleting the active deck leaves a safe Study boundary (fallback=false, boundary=interrupted) (115 ms)
+  ✓ deleting the active deck leaves a safe Study boundary (fallback=true, boundary=held) (140 ms)
+  ✓ deleting the active deck leaves a safe Study boundary (fallback=false, boundary=held) (107 ms)
+  ✓ active-session reset after grade recovery survives original Retry and exact resume (123 ms)
+  ✓ active-session replace after grade recovery survives original Retry and exact resume (144 ms)
+  ✓ active-session merge-new after grade recovery survives original Retry and exact resume (153 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       16 passed, 16 total
+Snapshots:   0 total
+Time:        4.102 s
+Ran all test suites within paths "__tests__/screens/StudyLifecycleIntegration.test.tsx".
