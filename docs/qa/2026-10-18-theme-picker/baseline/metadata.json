@@ -1,0 +1,103 @@
+{
+  "sourceBase": "3271c798498bff00d45990a0713c4b9410285490",
+  "planningHead": "bcc37779718cf67d7482d98cef8f83037420ae02",
+  "metro": "normal localhost8098 PID18777; no fault harness",
+  "servedCodeQualification": "src/App.tsx/app.json unchanged between50a6d62 and planningHead; normal Metro was not restarted for docs/test-only commits",
+  "devices": [
+    {
+      "surface": "tablet",
+      "device": "DABA2821-3619-4F4A-B0C3-54E70B31511F",
+      "initialState": "Booted",
+      "finalState": "Booted",
+      "originalAndFinalTextSize": 3,
+      "appearance": "Light",
+      "voiceOver": false,
+      "captureKeyboard": false,
+      "uiLanguage": "es",
+      "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-8GB",
+      "appPath": "/Users/mike/Library/Developer/CoreSimulator/Devices/DABA2821-3619-4F4A-B0C3-54E70B31511F/data/Containers/Bundle/Application/FFC9A1D7-1EB2-4448-B72F-5F03E5B16938/ColombianSpanish.app",
+      "executableSHA256": "9d6333913aa65faa2800f67b70f1c35b9d9269da9879035d09a4f0a05b109a43",
+      "bundleVersion": "1.0.0",
+      "shortVersion": "1.0.0",
+      "nativeAppearance": "Dark",
+      "allElevenRecordsUnchanged": true
+    },
+    {
+      "surface": "phone",
+      "device": "5E9A8854-135A-4675-A437-4EFCA043F656",
+      "initialState": "Shutdown",
+      "finalState": "Shutdown",
+      "originalAndFinalTextSize": 11,
+      "appearance": "Light",
+      "voiceOver": false,
+      "captureKeyboard": false,
+      "uiLanguage": "es",
+      "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPhone-SE-3rd-generation",
+      "appPath": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Bundle/Application/961ECC04-B6CA-4260-AFE1-D9FAFB9FF7A5/ColombianSpanish.app",
+      "executableSHA256": "9d6333913aa65faa2800f67b70f1c35b9d9269da9879035d09a4f0a05b109a43",
+      "bundleVersion": "1.0.0",
+      "shortVersion": "1.0.0",
+      "nativeAppearance": "Dark",
+      "allElevenRecordsUnchanged": true
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "phone-goal-es-default.png",
+      "width": 750,
+      "height": 1334,
+      "sha256": "d88ab58bdf5298b55e8ce8cfa5271a5988dea4593500e7ef1731ec7440ad9714",
+      "textSize": 3
+    },
+    {
+      "path": "phone-home-es-default.png",
+      "width": 750,
+      "height": 1334,
+      "sha256": "20db1eba9cdd7c75058845ce30f3273731dc5157ddacfb86348d99520f44c91d",
+      "textSize": 3
+    },
+    {
+      "path": "phone-home-es-maximum.png",
+      "width": 750,
+      "height": 1334,
+      "sha256": "2224aa0fdcd5f918c96930305ee955216f65b959d6251acdd6bbe2878e163159",
+      "textSize": 11
+    },
+    {
+      "path": "phone-settings-es-default.png",
+      "width": 750,
+      "height": 1334,
+      "sha256": "bad1cec325daad419e723b36d9cb5d8570ce7bebf674ebae1704969ef3e54b6d",
+      "textSize": 3
+    },
+    {
+      "path": "tablet-goal-es-default.png",
+      "width": 2064,
+      "height": 2752,
+      "sha256": "0bbc27a808ea0f75e8eb246875326c277af79837ebf09dd1ff055c9539972abc",
+      "textSize": 3
+    },
+    {
+      "path": "tablet-home-es-default.png",
+      "width": 2064,
+      "height": 2752,
+      "sha256": "48a7d1417b79fe22854f26725e213731ccc1cf1b63067de70047be6b4a6bd807",
+      "textSize": 3
+    },
+    {
+      "path": "tablet-home-es-maximum.png",
+      "width": 2064,
+      "height": 2752,
+      "sha256": "0edd0faa5c6c7d3597fb8e36f025c85711e81f060d389368a51616fd6e4d096e",
+      "textSize": 11
+    },
+    {
+      "path": "tablet-settings-es-default.png",
+      "width": 2064,
+      "height": 2752,
+      "sha256": "cc351475747831ad917293886ac6be268bf8bba9fc6688e1f90ba1247df52f77",
+      "textSize": 3
+    }
+  ],
+  "limits": "Existing maximum narrow tab clipping is retained as observed baseline, not accepted as correct or fixed by this capture."
+}

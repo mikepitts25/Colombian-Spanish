@@ -16,6 +16,8 @@ const DEFAULT_PREFS = {
   learningLevel: 'beginner',
   studyMinutes: 5,
   tripDate: null,
+  themeId: 'classic',
+  appearanceMode: 'system',
 };
 
 describe('getPrefs', () => {
@@ -162,5 +164,50 @@ describe('setPrefs', () => {
     await setPrefs({ uiLanguage: 'en' });
     const prefs = await getPrefs();
     expect(prefs.uiLanguage).toBe('en');
+  });
+});
+
+describe('theme preference compatibility', () => {
+  it.each([
+    [{}, 'classic', 'system'],
+    [{ themeId: 'barrio', appearanceMode: 'light' }, 'barrio', 'light'],
+    [{ themeId: 'classic', appearanceMode: 'dark' }, 'classic', 'dark'],
+    [{ themeId: 'unknown', appearanceMode: 'light' }, 'classic', 'light'],
+    [{ themeId: 'barrio', appearanceMode: 'unknown' }, 'barrio', 'system'],
+  ])(
+    'normalizes a stored partial selection without writing: %p',
+    async (stored, themeId, appearanceMode) => {
+      const raw = JSON.stringify({ speechRate: 0.85, ...stored });
+      await AsyncStorage.setItem('SRS_PREFS_V1', raw);
+      const before = (AsyncStorage.setItem as jest.Mock).mock.calls.length;
+      expect(await getPrefs()).toMatchObject({ themeId, appearanceMode, speechRate: 0.85 });
+      expect(await AsyncStorage.getItem('SRS_PREFS_V1')).toBe(raw);
+      expect((AsyncStorage.setItem as jest.Mock).mock.calls.slice(before)).toEqual([]);
+    },
+  );
+  it('commits both selection fields together and retains the remembered appearance when returning to Classic', async () => {
+    const writes = AsyncStorage.setItem as jest.Mock;
+    const before = writes.mock.calls.length;
+    await setPrefs({ themeId: 'barrio', appearanceMode: 'light' });
+    const prefsWrites = writes.mock.calls.slice(before).filter(([key]) => key === 'SRS_PREFS_V1');
+    expect(prefsWrites).toHaveLength(1);
+    expect(JSON.parse(prefsWrites[0][1])).toMatchObject({
+      themeId: 'barrio',
+      appearanceMode: 'light',
+    });
+    await setPrefs({ themeId: 'classic' });
+    expect(await getPrefs()).toMatchObject({ themeId: 'classic', appearanceMode: 'light' });
+  });
+  it('retains the pair and unrelated preferences during concurrent partial updates', async () => {
+    await Promise.all([
+      setPrefs({ themeId: 'barrio', appearanceMode: 'dark' }),
+      setPrefs({ speechRate: 0.8, uiLanguage: 'en' }),
+    ]);
+    expect(await getPrefs()).toMatchObject({
+      themeId: 'barrio',
+      appearanceMode: 'dark',
+      speechRate: 0.8,
+      uiLanguage: 'en',
+    });
   });
 });

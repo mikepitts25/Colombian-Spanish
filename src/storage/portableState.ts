@@ -107,6 +107,8 @@ function valid(name: keyof PortableState, value: unknown): boolean {
         'learningLevel',
         'studyMinutes',
         'tripDate',
+        'themeId',
+        'appearanceMode',
       ]) &&
       ['autoSpeak', 'onboardingDone'].every((k) =>
         optional(value, k, (v) => typeof v === 'boolean'),
@@ -126,6 +128,8 @@ function valid(name: keyof PortableState, value: unknown): boolean {
       ) &&
       optional(value, 'studyMinutes', (v) => (STUDY_MINUTES as readonly unknown[]).includes(v)) &&
       optional(value, 'tripDate', (v) => v === null || isTripDate(v)) &&
+      optional(value, 'themeId', (v) => ['classic', 'barrio'].includes(v as string)) &&
+      optional(value, 'appearanceMode', (v) => ['system', 'light', 'dark'].includes(v as string)) &&
       optional(value, 'uiLanguage', (v) => ['en', 'es'].includes(v as string)) &&
       optional(
         value,

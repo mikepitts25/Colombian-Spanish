@@ -10,7 +10,7 @@
 
 **Spec:** [Approved Barrio foundation spec, including owner’s Classic-preservation requirement](../specs/2026-10-18-barrio-foundation-design.md).
 
-**Status:** Plan prepared; owner review and execution-method selection pending. No product implementation is included in this planning batch.
+**Status:** Owner approved this plan and Native inline execution on2026-10-18. Implementation is in progress on the isolated branch; task completion is tracked in the plan-specific execution ledger until final verification.
 
 ## Global Constraints
 
@@ -138,4 +138,4 @@ All spec sections map to Tasks1–6: Classic/default/optional identity and porta
 
 The current theme remains the default throughout. There is no deletion/deprecation step for Classic. Home composition is a later Barrio-only change, and user visual acceptance does not become an AI checkbox.
 
-Recommended execution: **Native** (inline), because palette, preference/provider and31-consumer migration share interfaces and must land together; one fresh whole-branch review remains required. The owner must review this plan and choose Native or subagent-driven execution before implementation under the applicable skill workflow.
+Recommended execution: **Native** (inline), because palette, preference/provider and31-consumer migration share interfaces and must land together; one fresh whole-branch review remains required. The owner selected Native execution. Continue all tasks inline, then obtain one independent whole-branch review before merging.

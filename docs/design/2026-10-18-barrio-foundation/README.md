@@ -1,6 +1,6 @@
 # Barrio foundation: review proposal
 
-Status: **direction A and the recommended concrete foundation approved by the owner on 2026-10-18; written spec approved with the requirement to preserve Classic in a theme picker; implementation-plan review is pending.** This folder contains the original review artifacts; authoritative requirements are now in the linked approved spec. The app is unchanged by these documents. Base: `de3926a99e4e6be5331247252f57448e51282a62`.
+Status: **direction A and the recommended concrete foundation approved by the owner on 2026-10-18; written spec approved with the requirement to preserve Classic in a theme picker; implementation plan approved for Native execution.** This folder contains the original review artifacts; authoritative requirements are now in the linked approved spec. The app is unchanged by these documents. Base: `de3926a99e4e6be5331247252f57448e51282a62`.
 
 The intended result is a warmer, clearer Colombian Spanish practice app: one obvious daily action, readable controls and consistent appearances, while preserving existing learning, recovery and navigation behavior. The owner selected Barrio on 2026-10-18. The owner subsequently approved the recommended coordinated foundation and saved System/Light/Dark setting. Detailed requirements are in the [written spec](../../superpowers/specs/2026-10-18-barrio-foundation-design.md), approved with the owner’s additional Classic-preservation requirement.
 
@@ -51,4 +51,4 @@ The renderer calculates sRGB relative luminance and contrast for 54 explicit opa
 
 ## Review requested
 
-The owner approved the recommended coordinated foundation, both appearances and the saved System/Light/Dark setting. The owner approved the architectural spec while requiring a picker that preserves the current theme as Classic and makes Barrio optional. That requirement is incorporated in the spec; implementation-plan review and execution choice remain before product code changes.
+The owner approved the recommended coordinated foundation, both appearances and the saved System/Light/Dark setting. The owner approved the architectural spec while requiring a picker that preserves the current theme as Classic and makes Barrio optional. That requirement is incorporated in the spec; implementation plan is approved for Native execution; runtime completion requires the planned evidence.
