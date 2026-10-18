@@ -1,0 +1,56 @@
+{
+  "base": "1aa9e35beddaaf71dcb880183f8bff92d07e0c2e",
+  "runtimeChanges": false,
+  "baseline": {
+    "suites": 117,
+    "tests": 1136,
+    "status": "passed"
+  },
+  "mutation": {
+    "boundary": "isolated source copy; if (prior) changed to if (prior && false)",
+    "originalSourceSha256": "e1ab1aaa5554704ed96652c23f6843ed8be60a63baf148a3aa6a7daafb1e6f65",
+    "mutatedSourceSha256": "13903d190d8ec0fe8f7d04876d22ce89878d7ac93dd998aeb7cc006fd3217fb8",
+    "command": "node_modules/.bin/jest --runInBand --watchman=false --runTestsByPath __tests__/screens/StudyLifecycleIntegration.test.tsx -t 'full-state restore interrupted behind a grade'",
+    "exitCode": 1,
+    "failed": 2,
+    "passed": 1,
+    "cases": [
+      {
+        "name": "full-state restore interrupted behind a grade with its card removed retains imported records through retry and restart",
+        "status": "passed"
+      },
+      {
+        "name": "full-state restore interrupted behind a grade with its card edited retains imported records through retry and restart",
+        "status": "failed"
+      },
+      {
+        "name": "full-state restore interrupted behind a grade with its card moved retains imported records through retry and restart",
+        "status": "failed"
+      }
+    ]
+  },
+  "nativeInteractions": false,
+  "final": {
+    "focusedCases": 26,
+    "suites": 117,
+    "tests": 1140,
+    "status": "passed",
+    "staticChecks": ["typecheck", "lint", "format:check", "diff --check"],
+    "calendarCases": 16,
+    "seedDecks": 47,
+    "seedCards": 1392,
+    "audioEntries": 1392,
+    "editorialAwaitingAcceptance": 1392,
+    "colorAudit": {
+      "classified": 255,
+      "compositedPairs": 418,
+      "classicExceptions": 63,
+      "errors": 0
+    },
+    "baselineAndFinalDiagnosticBlocks": {
+      "StudyScreenAct": 2,
+      "DifficultWordsFlashcardActOrActEnvironment": 4
+    },
+    "focusedDiagnosticBlocks": 0
+  }
+}

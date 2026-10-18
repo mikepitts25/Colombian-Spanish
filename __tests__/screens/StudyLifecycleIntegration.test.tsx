@@ -681,19 +681,50 @@ test.each(['reset', 'replace', 'merge-new'] as const)(
   },
 );
 
-test.each(['held', 'interrupted'] as const)(
-  'full-state restore %s behind a grade retains restored records through old Retry and restart',
-  async (ordering) => {
+test.each([
+  ['held', 'removed'],
+  ['interrupted', 'removed'],
+  ['held', 'edited'],
+  ['interrupted', 'edited'],
+  ['held', 'moved'],
+  ['interrupted', 'moved'],
+] as const)(
+  'full-state restore %s behind a grade with its card %s retains imported records through retry and restart',
+  async (ordering, target) => {
     const now = Date.now();
     jest.spyOn(Date, 'now').mockReturnValue(now);
-    const decks: Deck[] = [{ id: 'alpha', name: 'Alpha', cards: [card('first'), card('second')] }];
+    const beta: Deck = { id: 'beta', name: 'Unrelated Beta', cards: [card('beta-stable')] };
+    const decks: Deck[] = [
+      { id: 'alpha', name: 'Alpha', cards: [card('first'), card('second')] },
+      beta,
+    ];
     await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(decks));
     let screen = render(<App />);
     await screen.findByText('phrase first');
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     const backup = await captureBackupSnapshot();
-    const restoredDecks = [
-      { ...decks[0], name: 'Restored Alpha', cards: [card('second'), card('restored-next')] },
+    const replacement = card('first', {
+      front: 'restored prompt',
+      back: 'restored correction',
+      example: 'restored example',
+      tags: ['restored'],
+      flagged: true,
+      reps: 7,
+      interval: 18,
+      ease: 2.1,
+      due: now + 18 * 86400000,
+    });
+    const restoredDecks: Deck[] = [
+      {
+        ...decks[0],
+        name: 'Restored Alpha',
+        cards: [
+          ...(target === 'edited' ? [replacement] : []),
+          card('second'),
+          card('restored-next'),
+        ],
+      },
+      { ...beta, cards: [...beta.cards, ...(target === 'moved' ? [replacement] : [])] },
     ];
     const restoredSession = {
       deckId: 'alpha',
@@ -781,9 +812,21 @@ test.each(['held', 'interrupted'] as const)(
     };
     await assertRestored();
     const events = await getLearningEvents();
-    expect(events).toEqual([expect.objectContaining({ cardId: 'first', quality: 4 })]);
+    expect(events).toEqual([
+      expect.objectContaining({
+        cardId: 'first',
+        deckId: 'alpha',
+        quality: 4,
+        modality: 'recall',
+        evidence: 'self-rated',
+        occurredAt: now,
+      }),
+    ]);
+    // The retained event describes the pre-restore answer, even if that ID is
+    // now edited or belongs to Beta. Retrying must not grade its replacement.
     if (ordering === 'interrupted') {
       await act(async () => fireEvent.press(screen.getByText('Intentar guardar de nuevo')));
+      await waitFor(() => expect(screen.queryByText('Intentar guardar de nuevo')).toBeNull());
       await screen.findByText('phrase second');
       await assertRestored();
       expect(await getLearningEvents()).toEqual(events);
