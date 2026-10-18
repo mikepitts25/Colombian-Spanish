@@ -1,18 +1,19 @@
 import React, { forwardRef, useState } from 'react';
 import { TextInput, TextInputProps } from 'react-native';
-import { useAppTheme } from '../context/ThemeContext';
+import { useAppTheme, useAppKeyboardAppearance } from '../context/ThemeContext';
 /** A stable native input: focus/state survive live palette changes. */
 const ThemedTextInput = forwardRef<TextInput, TextInputProps>(function ThemedTextInput(
   { style, onFocus, onBlur, ...props },
   ref,
 ) {
   const theme = useAppTheme();
+  const keyboardAppearance = useAppKeyboardAppearance();
   const [focused, setFocused] = useState(false);
   return (
     <TextInput
       {...props}
       ref={ref}
-      keyboardAppearance={theme.appearance}
+      keyboardAppearance={keyboardAppearance}
       selectionColor={theme.id === 'barrio' ? theme.colors.brand : props.selectionColor}
       style={[
         theme.id === 'barrio' && { borderWidth: 1, borderColor: theme.colors.border },

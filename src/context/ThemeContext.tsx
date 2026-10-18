@@ -67,3 +67,12 @@ export function useThemedStyles<T>(factory: (theme: AppTheme) => T): T {
   const theme = useAppTheme();
   return useMemo(() => factory(theme), [factory, theme]);
 }
+
+/** Default lets an already-open iOS keyboard follow live System trait changes.
+ * RN's explicit keyboardAppearance setter does not reload the active keyboard. */
+export function useAppKeyboardAppearance(): 'default' | 'light' | 'dark' {
+  const state = useContext(ThemeContext);
+  return state?.selection.themeId === 'barrio' && state.selection.appearanceMode === 'system'
+    ? 'default'
+    : (state?.theme ?? fallback).appearance;
+}
