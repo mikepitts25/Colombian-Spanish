@@ -1,0 +1,42 @@
+[
+  {
+    "file": "native/mini-default-long-label.png",
+    "sha256": "ca93dcbbe4b266f9b1fcca57befe12d9d0080a927c132103b0b14b6227b1b369"
+  },
+  {
+    "file": "native/mini-en-dark-default.png",
+    "sha256": "1089fbaef08bee534f746122da8d330c764a143a838c78c7c9360a07f1d6ece5"
+  },
+  {
+    "file": "native/mini-en-dark-maximum.png",
+    "sha256": "a8a28c9c6a47fbec919c0791e1ecebe94472d31913b6add417dc9d6b936d4f6f"
+  },
+  {
+    "file": "native/mini-en-light-default.png",
+    "sha256": "7e47805e0ca77be7b6aaee9b79cb9245635af91a225cd63b03bd3ab41249a2dc"
+  },
+  {
+    "file": "native/mini-en-light-maximum.png",
+    "sha256": "7cb04a5795604c490fd584717fd653de961988c1fcf2f16fabfa13984dada56f"
+  },
+  {
+    "file": "native/mini-es-light-default.png",
+    "sha256": "d8904c5fb35a321c6155098e389ac776354a9d39511b213db7f0f13a2ec99328"
+  },
+  {
+    "file": "native/mini-es-light-maximum.png",
+    "sha256": "6533b724a6009f3a533aa5c27ae713a0aa5dff4219ed5a3ef1d26850d168985d"
+  },
+  {
+    "file": "native/mini-maximum-focused-long-label.png",
+    "sha256": "10ff6596648e893a1df01bde53d27f10caf4c495352b606112640a8d07137ab4"
+  },
+  {
+    "file": "native/mini-maximum-long-label.png",
+    "sha256": "d67d93441b5d8146b4c6c85f55e5e267825a4ab7164cb170cc6f5a695f9af98d"
+  },
+  {
+    "file": "native/mini-maximum-study.png",
+    "sha256": "411433432802e68b9f86dad687db9d571c6199ababc18b04931dc2a737aa134e"
+  }
+]
