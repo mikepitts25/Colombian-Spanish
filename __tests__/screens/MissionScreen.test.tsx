@@ -2,7 +2,7 @@ import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
-import { AppState, AppStateStatus } from 'react-native';
+import { AppState, AppStateStatus, DeviceEventEmitter, Dimensions, ScrollView } from 'react-native';
 import { DAILY_RESPONSE } from '../../src/missions/dailyResponse';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MissionScreen from '../../src/screens/MissionScreen';
@@ -381,5 +381,75 @@ test('a held response checkpoint retains draft and exactly one command across id
     expect(await getLearningEvents()).toEqual(events);
   } finally {
     release();
+  }
+});
+
+test('reveals the measured focused response when the software keyboard opens without recording an answer', async () => {
+  const ui = await begin();
+  const input = ui.getByLabelText('Your response');
+  const card = ui.getByTestId('mission-node');
+  const scroll = ui.UNSAFE_getAllByType(ScrollView)[0].instance;
+  fireEvent.changeText(input, 'Buenos dias');
+  await act(async () => {
+    card.props.onLayout?.({ nativeEvent: { layout: { x: 20, y: 800, width: 335, height: 500 } } });
+    input.props.onLayout?.({ nativeEvent: { layout: { x: 20, y: 200, width: 295, height: 80 } } });
+  });
+  fireEvent(input, 'focus');
+  scroll.scrollTo.mockClear();
+  act(() =>
+    DeviceEventEmitter.emit('keyboardDidShow', { endCoordinates: { screenY: 400, height: 267 } }),
+  );
+  expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 984, animated: false });
+  expect(ui.getByDisplayValue('Buenos dias')).toBeTruthy();
+  expect(await getLearningEvents()).toEqual([]);
+  fireEvent(input, 'blur');
+  scroll.scrollTo.mockClear();
+  act(() =>
+    DeviceEventEmitter.emit('keyboardDidShow', { endCoordinates: { screenY: 400, height: 267 } }),
+  );
+  expect(scroll.scrollTo).not.toHaveBeenCalled();
+});
+
+test('waits for current response geometry after rotation and live text changes, retaining the ungraded draft', async () => {
+  const originalWindow = Dimensions.get('window');
+  const originalScreen = Dimensions.get('screen');
+  const ui = await begin();
+  const measure = async (part: 'card' | 'input', y: number) =>
+    act(async () => {
+      const target =
+        part === 'card' ? ui.getByTestId('mission-node') : ui.getByLabelText('Your response');
+      target.props.onLayout?.({ nativeEvent: { layout: { x: 20, y, width: 335, height: 100 } } });
+    });
+  try {
+    fireEvent.changeText(ui.getByLabelText('Your response'), 'Buenos dias');
+    await measure('card', 800);
+    await measure('input', 200);
+    fireEvent(ui.getByLabelText('Your response'), 'focus');
+    const scroll = () => ui.UNSAFE_getAllByType(ScrollView)[0].instance;
+    scroll().scrollTo.mockClear();
+    await act(async () =>
+      Dimensions.set({ window: { ...originalWindow, width: 900, height: 400 } }),
+    );
+    fireEvent(ui.UNSAFE_getAllByType(ScrollView)[0], 'layout', {
+      persist: () => {},
+      nativeEvent: { layout: { width: 900, height: 250 } },
+    });
+    expect(scroll().scrollTo).not.toHaveBeenCalled();
+    await measure('card', 600);
+    expect(scroll().scrollTo).not.toHaveBeenCalled();
+    await measure('input', 150);
+    expect(scroll().scrollTo).toHaveBeenLastCalledWith({ y: 734, animated: false });
+    await act(async () => Dimensions.set({ window: { ...originalWindow, fontScale: 3 } }));
+    scroll().scrollTo.mockClear();
+    fireEvent(ui.getByLabelText('Your response'), 'focus');
+    await measure('card', 1600);
+    expect(scroll().scrollTo).not.toHaveBeenCalled();
+    await measure('input', 300);
+    expect(scroll().scrollTo).toHaveBeenLastCalledWith({ y: 1884, animated: false });
+    expect(ui.getByDisplayValue('Buenos dias')).toBeTruthy();
+    expect(await getLearningEvents()).toEqual([]);
+  } finally {
+    ui.unmount();
+    act(() => Dimensions.set({ window: originalWindow, screen: originalScreen }));
   }
 });

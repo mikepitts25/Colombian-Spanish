@@ -7,6 +7,7 @@ import { useActiveStudyTime } from '../hooks/useActiveStudyTime';
 import { isTimedResponse } from '../missions/activeTiming';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -51,7 +52,7 @@ export default function MissionScreen({
   blocked?: boolean;
 } = {}) {
   const styles = useThemedStyles(makeStyles);
-  const { fontScale } = useWindowDimensions();
+  const { fontScale, width } = useWindowDimensions();
   const { language, t } = useLanguage();
   const nav = useNavigation<any>();
   const { ready, decks } = useDeck();
@@ -72,6 +73,40 @@ export default function MissionScreen({
   const expectedRun = useRef<string | undefined>(undefined);
   const timingContinuous = useRef(false);
   const timedResponse = isTimedResponse(pack);
+  const content = useRef<ScrollView>(null);
+  const focusedResponse = useRef<string | undefined>(undefined);
+  const responseIdentity =
+    run && !run.feedback && !run.completed ? `${run.id}:${run.nodeId}:${run.revision}` : undefined;
+  const layoutKey = `${responseIdentity}:${language}:${fontScale}:${width}`;
+  const responseLayout = useRef<{ key: string; cardY?: number; inputY?: number }>({ key: '' });
+  const revealResponse = useCallback(() => {
+    const layout = responseLayout.current;
+    if (
+      !responseIdentity ||
+      focusedResponse.current !== responseIdentity ||
+      layout.key !== layoutKey ||
+      layout.cardY === undefined ||
+      layout.inputY === undefined
+    )
+      return;
+    content.current?.scrollTo({
+      y: Math.max(0, layout.cardY + layout.inputY - 16),
+      animated: false,
+    });
+  }, [responseIdentity, layoutKey]);
+  const recordResponseLayout = (part: 'cardY' | 'inputY', y: number) => {
+    const previous = responseLayout.current;
+    responseLayout.current = {
+      ...(previous.key === layoutKey ? previous : {}),
+      key: layoutKey,
+      [part]: y,
+    };
+    revealResponse();
+  };
+  useEffect(() => {
+    const shown = Keyboard.addListener('keyboardDidShow', revealResponse);
+    return () => shown.remove();
+  }, [revealResponse]);
   useEffect(() => {
     if (planId && run?.completed && !contentChanged) onCompleted?.();
   }, [planId, run?.completed, contentChanged, onCompleted]);
@@ -210,6 +245,8 @@ export default function MissionScreen({
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView
+          ref={content}
+          onLayout={revealResponse}
           key={fontScale}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.content}
@@ -282,7 +319,11 @@ export default function MissionScreen({
                     onDone={() => setReviewing(false)}
                   />
                 ) : (
-                  <View style={styles.card}>
+                  <View
+                    testID="mission-node"
+                    style={styles.card}
+                    onLayout={(event) => recordResponseLayout('cardY', event.nativeEvent.layout.y)}
+                  >
                     <Text accessibilityRole="header" style={styles.heading}>
                       {local(node.title)}
                     </Text>
@@ -325,6 +366,17 @@ export default function MissionScreen({
                               <>
                                 <ThemedTextInput
                                   accessibilityLabel={t('mission.answer')}
+                                  onLayout={(event) =>
+                                    recordResponseLayout('inputY', event.nativeEvent.layout.y)
+                                  }
+                                  onFocus={() => {
+                                    focusedResponse.current = responseIdentity;
+                                    revealResponse();
+                                  }}
+                                  onBlur={() => {
+                                    if (focusedResponse.current === responseIdentity)
+                                      focusedResponse.current = undefined;
+                                  }}
                                   style={styles.input}
                                   value={answer}
                                   onChangeText={setAnswer}
