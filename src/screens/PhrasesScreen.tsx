@@ -1,3 +1,5 @@
+import { useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,9 +9,10 @@ import { useDeck } from '../hooks/useDeck';
 import { useLanguage } from '../context/LanguageContext';
 import { speakCard } from '../services/tts';
 import { AvailablePhraseTopic, getAvailablePhraseTopics } from '../utils/phraseTopics';
-import { colors, radius, spacing } from '../styles/theme';
+import { radius, spacing } from '../styles/theme';
 
 export default function PhrasesScreen() {
+  const styles = useThemedStyles(makeStyles);
   const { ready, decks, toggleFavorite } = useDeck();
   const { t } = useLanguage();
   const nav = useNavigation<any>();
@@ -164,6 +167,7 @@ function TopicHeader({
   studyLabel: string;
   onStudy: () => void;
 }) {
+  const styles = useThemedStyles(makeStyles);
   return (
     <View style={styles.selectedIntro}>
       <View style={styles.selectedTitleRow}>
@@ -202,6 +206,7 @@ function PhraseCard({
   onPlay: () => void;
   onToggleFavorite: () => void;
 }) {
+  const styles = useThemedStyles(makeStyles);
   return (
     <View style={[styles.phraseCard, expanded && styles.stacked]}>
       <View style={[styles.phraseCopy, expanded && styles.unflexed]}>
@@ -236,134 +241,135 @@ function PhraseCard({
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
-  loading: { color: colors.textPrimary, fontSize: 16 },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: spacing(1.5),
-    marginBottom: spacing(2),
-  },
-  headerCopy: { flex: 1 },
-  title: { color: colors.textPrimary, fontSize: 28, fontWeight: '900' },
-  sub: { color: colors.textSecondary, fontSize: 15, lineHeight: 21, marginTop: 4 },
-  favoritesButton: {
-    alignItems: 'center',
-    backgroundColor: colors.surfaceElevated,
-    borderColor: colors.borderBrand,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    minHeight: 48,
-    justifyContent: 'center',
-    minWidth: 48,
-  },
-  favoritesIcon: { color: colors.brand, fontSize: 22 },
-  topicList: { gap: spacing(1), paddingBottom: spacing(3) },
-  topicCard: {
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: spacing(1.5),
-    padding: spacing(1.5),
-  },
-  topicCardPressed: { backgroundColor: colors.surfacePressed },
-  topicEmojiWrap: {
-    alignItems: 'center',
-    backgroundColor: colors.brandMuted,
-    borderRadius: radius.md,
-    height: 48,
-    justifyContent: 'center',
-    width: 48,
-  },
-  topicEmoji: { fontSize: 23 },
-  topicCopy: { flex: 1 },
-  topicTitle: { color: colors.textPrimary, fontSize: 16, fontWeight: '800' },
-  topicSub: { color: colors.textSecondary, fontSize: 13, lineHeight: 18, marginTop: 2 },
-  topicCount: { color: colors.textTertiary, fontSize: 12, fontWeight: '700', marginTop: 5 },
-  chevron: { color: colors.brand, fontSize: 28, fontWeight: '500' },
-  empty: { color: colors.textSecondary, fontSize: 15, marginTop: spacing(2) },
-  topicHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: spacing(1.5),
-  },
-  backButton: {
-    paddingVertical: spacing(0.5),
-    minHeight: 48,
-    flexShrink: 1,
-    justifyContent: 'center',
-  },
-  backText: { color: colors.brand, fontSize: 14, fontWeight: '800' },
-  cardsContent: { paddingBottom: spacing(3) },
-  selectedIntro: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    marginBottom: spacing(1.5),
-    padding: spacing(1.5),
-  },
-  selectedTitleRow: { alignItems: 'center', flexDirection: 'row', gap: spacing(1.25) },
-  selectedEmoji: { fontSize: 30 },
-  selectedCopy: { flex: 1 },
-  selectedTitle: { color: colors.textPrimary, fontSize: 21, fontWeight: '900' },
-  selectedSub: { color: colors.textSecondary, fontSize: 14, lineHeight: 20, marginTop: 3 },
-  topicActionRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: spacing(1.5),
-  },
-  selectedCount: { color: colors.textTertiary, fontSize: 13, fontWeight: '700' },
-  studyButton: {
-    backgroundColor: colors.brand,
-    borderRadius: radius.md,
-    minHeight: 48,
-    justifyContent: 'center',
-    flexShrink: 1,
-    paddingHorizontal: spacing(1.25),
-    paddingVertical: spacing(1),
-  },
-  studyButtonText: { color: colors.textInverse, fontSize: 13, fontWeight: '900' },
-  phraseCard: {
-    backgroundColor: colors.surfaceElevated,
-    borderColor: colors.border,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: spacing(1),
-    marginBottom: spacing(1),
-    padding: spacing(1.25),
-  },
-  phraseCopy: { flex: 1 },
-  phraseFront: { color: colors.textPrimary, fontSize: 16, fontWeight: '800' },
-  phraseBack: { color: colors.textSecondary, fontSize: 14, marginTop: 3 },
-  example: {
-    color: colors.textSecondary,
-    fontSize: 12,
-    fontStyle: 'italic',
-    lineHeight: 18,
-    marginTop: 7,
-  },
-  stacked: { flexDirection: 'column', alignItems: 'stretch', gap: spacing(1) },
-  unflexed: { flex: 0 },
-  horizontalActions: { flexDirection: 'row', flexWrap: 'wrap' },
-  phraseActions: { gap: spacing(0.75) },
-  actionButton: {
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radius.base,
-    borderWidth: 1,
-    minHeight: 48,
-    justifyContent: 'center',
-    minWidth: 48,
-  },
-  favoriteActive: { borderColor: colors.brand },
-  actionText: { color: colors.textPrimary, fontSize: 18 },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg, padding: spacing(2) },
+    loading: { color: colors.textPrimary, fontSize: 16 },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      gap: spacing(1.5),
+      marginBottom: spacing(2),
+    },
+    headerCopy: { flex: 1 },
+    title: { color: colors.textPrimary, fontSize: 28, fontWeight: '900' },
+    sub: { color: colors.textSecondary, fontSize: 15, lineHeight: 21, marginTop: 4 },
+    favoritesButton: {
+      alignItems: 'center',
+      backgroundColor: colors.surfaceElevated,
+      borderColor: colors.borderBrand,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      minHeight: 48,
+      justifyContent: 'center',
+      minWidth: 48,
+    },
+    favoritesIcon: { color: colors.brand, fontSize: 22 },
+    topicList: { gap: spacing(1), paddingBottom: spacing(3) },
+    topicCard: {
+      alignItems: 'center',
+      backgroundColor: colors.surface,
+      borderColor: colors.border,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      flexDirection: 'row',
+      gap: spacing(1.5),
+      padding: spacing(1.5),
+    },
+    topicCardPressed: { backgroundColor: colors.surfacePressed },
+    topicEmojiWrap: {
+      alignItems: 'center',
+      backgroundColor: colors.brandMuted,
+      borderRadius: radius.md,
+      height: 48,
+      justifyContent: 'center',
+      width: 48,
+    },
+    topicEmoji: { fontSize: 23 },
+    topicCopy: { flex: 1 },
+    topicTitle: { color: colors.textPrimary, fontSize: 16, fontWeight: '800' },
+    topicSub: { color: colors.textSecondary, fontSize: 13, lineHeight: 18, marginTop: 2 },
+    topicCount: { color: colors.textTertiary, fontSize: 12, fontWeight: '700', marginTop: 5 },
+    chevron: { color: colors.brand, fontSize: 28, fontWeight: '500' },
+    empty: { color: colors.textSecondary, fontSize: 15, marginTop: spacing(2) },
+    topicHeader: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: spacing(1.5),
+    },
+    backButton: {
+      paddingVertical: spacing(0.5),
+      minHeight: 48,
+      flexShrink: 1,
+      justifyContent: 'center',
+    },
+    backText: { color: colors.brand, fontSize: 14, fontWeight: '800' },
+    cardsContent: { paddingBottom: spacing(3) },
+    selectedIntro: {
+      backgroundColor: colors.surface,
+      borderColor: colors.border,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      marginBottom: spacing(1.5),
+      padding: spacing(1.5),
+    },
+    selectedTitleRow: { alignItems: 'center', flexDirection: 'row', gap: spacing(1.25) },
+    selectedEmoji: { fontSize: 30 },
+    selectedCopy: { flex: 1 },
+    selectedTitle: { color: colors.textPrimary, fontSize: 21, fontWeight: '900' },
+    selectedSub: { color: colors.textSecondary, fontSize: 14, lineHeight: 20, marginTop: 3 },
+    topicActionRow: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginTop: spacing(1.5),
+    },
+    selectedCount: { color: colors.textTertiary, fontSize: 13, fontWeight: '700' },
+    studyButton: {
+      backgroundColor: colors.brand,
+      borderRadius: radius.md,
+      minHeight: 48,
+      justifyContent: 'center',
+      flexShrink: 1,
+      paddingHorizontal: spacing(1.25),
+      paddingVertical: spacing(1),
+    },
+    studyButtonText: { color: colors.textInverse, fontSize: 13, fontWeight: '900' },
+    phraseCard: {
+      backgroundColor: colors.surfaceElevated,
+      borderColor: colors.border,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      flexDirection: 'row',
+      gap: spacing(1),
+      marginBottom: spacing(1),
+      padding: spacing(1.25),
+    },
+    phraseCopy: { flex: 1 },
+    phraseFront: { color: colors.textPrimary, fontSize: 16, fontWeight: '800' },
+    phraseBack: { color: colors.textSecondary, fontSize: 14, marginTop: 3 },
+    example: {
+      color: colors.textSecondary,
+      fontSize: 12,
+      fontStyle: 'italic',
+      lineHeight: 18,
+      marginTop: 7,
+    },
+    stacked: { flexDirection: 'column', alignItems: 'stretch', gap: spacing(1) },
+    unflexed: { flex: 0 },
+    horizontalActions: { flexDirection: 'row', flexWrap: 'wrap' },
+    phraseActions: { gap: spacing(0.75) },
+    actionButton: {
+      alignItems: 'center',
+      backgroundColor: colors.surface,
+      borderColor: colors.border,
+      borderRadius: radius.base,
+      borderWidth: 1,
+      minHeight: 48,
+      justifyContent: 'center',
+      minWidth: 48,
+    },
+    favoriteActive: { borderColor: colors.brand },
+    actionText: { color: colors.textPrimary, fontSize: 18 },
+  });

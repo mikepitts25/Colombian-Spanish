@@ -1,3 +1,5 @@
+import { useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   AppState,
@@ -16,12 +18,13 @@ import { useLanguage } from '../context/LanguageContext';
 import { VoicePractice, VoiceState } from '../speaking/voicePractice';
 import { createVoicePorts } from '../services/voicePractice';
 import { LISTENING_BASICS } from '../missions/listeningBasics';
-import { colors } from '../styles/theme';
+
 export default function VoicePracticeScreen() {
   const { t } = useLanguage();
   return SHOW_REVIEW_TOOLS ? <VoicePracticeDraft /> : <Text>{t('mission.unavailable')}</Text>;
 }
 function VoicePracticeDraft() {
+  const styles = useThemedStyles(makeStyles);
   const { t } = useLanguage(),
     nav = useNavigation<any>();
   const { fontScale } = useWindowDimensions();
@@ -139,20 +142,21 @@ function VoicePracticeDraft() {
     </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: 20, paddingBottom: 60, gap: 16 },
-  title: { fontSize: 28, fontWeight: '800', color: colors.textPrimary },
-  body: { fontSize: 16, lineHeight: 24, color: colors.textSecondary },
-  status: { fontSize: 20, fontWeight: '700', color: colors.textPrimary },
-  sample: { fontSize: 26, color: colors.textPrimary },
-  button: {
-    minHeight: 48,
-    padding: 14,
-    borderRadius: 12,
-    backgroundColor: colors.brand,
-    justifyContent: 'center',
-  },
-  buttonText: { fontSize: 16, fontWeight: '700', textAlign: 'center', color: colors.textInverse },
-  disabled: { opacity: 0.5 },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    content: { padding: 20, paddingBottom: 60, gap: 16 },
+    title: { fontSize: 28, fontWeight: '800', color: colors.textPrimary },
+    body: { fontSize: 16, lineHeight: 24, color: colors.textSecondary },
+    status: { fontSize: 20, fontWeight: '700', color: colors.textPrimary },
+    sample: { fontSize: 26, color: colors.textPrimary },
+    button: {
+      minHeight: 48,
+      padding: 14,
+      borderRadius: 12,
+      backgroundColor: colors.brand,
+      justifyContent: 'center',
+    },
+    buttonText: { fontSize: 16, fontWeight: '700', textAlign: 'center', color: colors.textInverse },
+    disabled: { opacity: 0.5 },
+  });

@@ -1,16 +1,11 @@
+import ThemedTextInput from '../components/ThemedTextInput';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useState, useEffect, useRef, useLayoutEffect } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Pressable,
-  ScrollView,
-  useWindowDimensions,
-} from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { colors } from '../styles/theme';
+
 import { useDeck } from '../hooks/useDeck';
 import Flashcard from '../components/Flashcard';
 import {
@@ -79,6 +74,22 @@ type StudyMode = 'landing' | 'session';
 type SearchRow = { deckId: string; deckName: string; card: FlashCard };
 
 export default function StudyScreen() {
+  const styles = useThemedStyles(makeStyles);
+  const theme = useAppTheme();
+  const grades = GRADES.map((grade) => {
+    if (theme.id === 'classic') return grade;
+    const { colors } = theme;
+    const [color, bg] =
+      grade.q === 1
+        ? [colors.danger, colors.dangerMuted]
+        : grade.q === 2
+          ? [colors.warning, colors.warningMuted]
+          : grade.q === 4
+            ? [colors.success, colors.successMuted]
+            : [colors.info, colors.infoMuted];
+    return { ...grade, color, bg, border: color };
+  });
+  const { colors } = useAppTheme();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale >= 1.4;
   const { ready, decks, activeDeck, getStudyBatch, recordAnswer, toggleFavorite, setActiveDeckId } =
@@ -146,8 +157,12 @@ export default function StudyScreen() {
   );
 
   const visibleCategories = useMemo(
-    () => CATEGORY_DISPLAY.filter((cat) => getDecksForCategory(decks || [], cat.key).length > 0),
-    [decks],
+    () =>
+      CATEGORY_DISPLAY.filter((cat) => getDecksForCategory(decks || [], cat.key).length > 0).map(
+        (cat) =>
+          theme.id === 'classic' ? cat : { ...cat, color: colors.info, bg: colors.infoMuted },
+      ),
+    [decks, theme, colors],
   );
 
   const searchResults = useMemo(() => {
@@ -668,7 +683,7 @@ export default function StudyScreen() {
 
           <View style={styles.searchBar}>
             <Text style={styles.searchIcon}>🔍</Text>
-            <TextInput
+            <ThemedTextInput
               value={q}
               onChangeText={(text) => {
                 setQ(text);
@@ -748,7 +763,10 @@ export default function StudyScreen() {
                     style={[
                       styles.catCard,
                       largeText && styles.catCardExpanded,
-                      { backgroundColor: cat.bg, borderColor: cat.color + '66' },
+                      {
+                        backgroundColor: cat.bg,
+                        borderColor: theme.id === 'classic' ? cat.color + '66' : cat.color,
+                      },
                     ]}
                     onPress={() => handleCategoryPress(cat.key)}
                   >
@@ -1019,7 +1037,7 @@ export default function StudyScreen() {
         <View key={`grades-${fontScale}`} style={styles.gradeBar}>
           <Text style={styles.gradeLabel}>{t('study.gradePrompt')}</Text>
           <View style={[styles.gradeButtons, largeText && styles.stacked]}>
-            {GRADES.map((g) => (
+            {grades.map((g) => (
               <Pressable
                 key={g.labelKey}
                 style={[
@@ -1039,7 +1057,12 @@ export default function StudyScreen() {
                 }
               >
                 <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
-                <Text style={[styles.gradeBtnInterval, { color: g.color + 'b3' }]}>
+                <Text
+                  style={[
+                    styles.gradeBtnInterval,
+                    { color: theme.id === 'classic' ? g.color + 'b3' : g.color },
+                  ]}
+                >
                   {gradeIntervals[g.q] ?? ''}
                 </Text>
               </Pressable>
@@ -1051,343 +1074,349 @@ export default function StudyScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  sessionScroll: { flexGrow: 1, paddingBottom: 16 },
-  stacked: { flexDirection: 'column', alignItems: 'stretch', gap: 12 },
-  noFlex: { flex: 0 },
-  wrapped: { flexWrap: 'wrap' },
-  saveError: { padding: 12, gap: 8 },
-  wrap: { flex: 1, backgroundColor: colors.bg },
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 20 },
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    sessionScroll: { flexGrow: 1, paddingBottom: 16 },
+    stacked: { flexDirection: 'column', alignItems: 'stretch', gap: 12 },
+    noFlex: { flex: 0 },
+    wrapped: { flexWrap: 'wrap' },
+    saveError: { padding: 12, gap: 8 },
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 20 },
 
-  loadingEmoji: { fontSize: 40 },
-  loadingText: { color: colors.textSecondary, fontSize: 16 },
+    loadingEmoji: { fontSize: 40 },
+    loadingText: { color: colors.textSecondary, fontSize: 16 },
 
-  noDeckEmoji: { fontSize: 48 },
-  noDeckTitle: { color: colors.textPrimary, fontSize: 20, fontWeight: '800', textAlign: 'center' },
-  noDeckSub: { color: colors.textSecondary, fontSize: 14, textAlign: 'center' },
-  goHomeBtn: {
-    marginTop: 8,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-    backgroundColor: colors.brand,
-  },
-  goHomeBtnText: { color: '#020617', fontWeight: '800', fontSize: 14 },
+    noDeckEmoji: { fontSize: 48 },
+    noDeckTitle: {
+      color: colors.textPrimary,
+      fontSize: 20,
+      fontWeight: '800',
+      textAlign: 'center',
+    },
+    noDeckSub: { color: colors.textSecondary, fontSize: 14, textAlign: 'center' },
+    goHomeBtn: {
+      marginTop: 8,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      borderRadius: 20,
+      backgroundColor: colors.brand,
+    },
+    goHomeBtnText: { color: colors.onBrand, fontWeight: '800', fontSize: 14 },
 
-  landingScroll: { padding: 16, paddingBottom: 120 },
-  landingHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 14,
-  },
-  landingTitle: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
-  searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 20,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginBottom: 12,
-  },
-  searchIcon: { fontSize: 16 },
-  searchInput: {
-    flex: 1,
-    color: colors.textPrimary,
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  clearBtn: { color: colors.textSecondary, fontSize: 14, paddingHorizontal: 4 },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  sectionTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
-  catGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 24 },
-  catCard: {
-    width: '31%',
-    minHeight: 80,
-    borderRadius: 16,
-    borderWidth: 1.5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 4,
-    padding: 8,
-  },
-  catCardExpanded: { width: '100%', padding: 16 },
-  catLabelExpanded: { fontSize: 14, lineHeight: 19 },
-  catEmoji: { fontSize: 22 },
-  catLabel: {
-    fontSize: 10,
-    fontWeight: '700',
-    textAlign: 'center',
-    lineHeight: 13,
-  },
-  emptyWrap: { alignItems: 'center', paddingVertical: 40, gap: 10 },
-  emptyEmoji: { fontSize: 40 },
-  emptyText: { color: colors.textSecondary, fontSize: 14, textAlign: 'center' },
-  resultRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 14,
-    padding: 14,
-    marginBottom: 8,
-  },
-  resultLeft: { flex: 1, gap: 2 },
-  resultFront: { color: colors.textPrimary, fontWeight: '800', fontSize: 16 },
-  resultBack: { color: colors.textSecondary, fontSize: 13 },
-  resultExample: {
-    color: colors.textTertiary,
-    fontStyle: 'italic',
-    fontSize: 12,
-    marginTop: 2,
-  },
-  resultMeta: { color: colors.textTertiary, fontSize: 11, marginTop: 4 },
-  speakBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.accentBlue,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  speakIcon: { fontSize: 16 },
-  resumeBlock: { gap: 10 },
-  resumeCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 12,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 14,
-    padding: 14,
-  },
-  resumeTextBlock: { flex: 1, minWidth: 0 },
-  resumeDeckName: { color: colors.textPrimary, fontSize: 16, fontWeight: '800' },
-  resumeDeckMeta: { color: colors.textSecondary, fontSize: 12, marginTop: 3 },
-  resumeCta: { color: colors.brand, fontSize: 13, fontWeight: '900' },
-  resumeEmptyCard: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 14,
-    padding: 14,
-  },
-  resumeEmptyText: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
+    landingScroll: { padding: 16, paddingBottom: 120 },
+    landingHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 14,
+    },
+    landingTitle: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
+    searchBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 10,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 20,
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+      marginBottom: 12,
+    },
+    searchIcon: { fontSize: 16 },
+    searchInput: {
+      flex: 1,
+      color: colors.textPrimary,
+      fontSize: 14,
+      fontWeight: '500',
+    },
+    clearBtn: { color: colors.textSecondary, fontSize: 14, paddingHorizontal: 4 },
+    sectionHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 12,
+    },
+    sectionTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: '800' },
+    catGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 24 },
+    catCard: {
+      width: '31%',
+      minHeight: 80,
+      borderRadius: 16,
+      borderWidth: 1.5,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 4,
+      padding: 8,
+    },
+    catCardExpanded: { width: '100%', padding: 16 },
+    catLabelExpanded: { fontSize: 14, lineHeight: 19 },
+    catEmoji: { fontSize: 22 },
+    catLabel: {
+      fontSize: 10,
+      fontWeight: '700',
+      textAlign: 'center',
+      lineHeight: 13,
+    },
+    emptyWrap: { alignItems: 'center', paddingVertical: 40, gap: 10 },
+    emptyEmoji: { fontSize: 40 },
+    emptyText: { color: colors.textSecondary, fontSize: 14, textAlign: 'center' },
+    resultRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 14,
+      padding: 14,
+      marginBottom: 8,
+    },
+    resultLeft: { flex: 1, gap: 2 },
+    resultFront: { color: colors.textPrimary, fontWeight: '800', fontSize: 16 },
+    resultBack: { color: colors.textSecondary, fontSize: 13 },
+    resultExample: {
+      color: colors.textTertiary,
+      fontStyle: 'italic',
+      fontSize: 12,
+      marginTop: 2,
+    },
+    resultMeta: { color: colors.textTertiary, fontSize: 11, marginTop: 4 },
+    speakBtn: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: colors.accentBlue,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    speakIcon: { fontSize: 16 },
+    resumeBlock: { gap: 10 },
+    resumeCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 12,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 14,
+      padding: 14,
+    },
+    resumeTextBlock: { flex: 1, minWidth: 0 },
+    resumeDeckName: { color: colors.textPrimary, fontSize: 16, fontWeight: '800' },
+    resumeDeckMeta: { color: colors.textSecondary, fontSize: 12, marginTop: 3 },
+    resumeCta: { color: colors.brand, fontSize: 13, fontWeight: '900' },
+    resumeEmptyCard: {
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 14,
+      padding: 14,
+    },
+    resumeEmptyText: { color: colors.textSecondary, fontSize: 13, lineHeight: 18 },
 
-  progressTrack: {
-    height: 8,
-    backgroundColor: 'rgba(148,163,184,0.16)',
-    borderRadius: 999,
-    marginHorizontal: 18,
-    marginBottom: 12,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: colors.brand,
-    borderRadius: 999,
-  },
+    progressTrack: {
+      height: 8,
+      backgroundColor: colors.neutralWash,
+      borderRadius: 999,
+      marginHorizontal: 18,
+      marginBottom: 12,
+      overflow: 'hidden',
+    },
+    progressFill: {
+      height: '100%',
+      backgroundColor: colors.brand,
+      borderRadius: 999,
+    },
 
-  sessionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 18,
-    paddingTop: 12,
-    paddingBottom: 10,
-    gap: 10,
-  },
-  sessionBackBtn: {
-    minHeight: 48,
-    alignSelf: 'flex-start',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    borderRadius: 17,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: 'rgba(148,163,184,0.18)',
-  },
-  sessionBackText: { color: colors.brand, fontSize: 12, fontWeight: '900' },
-  sessionTitleBlock: {
-    minWidth: 0,
-    flex: 1,
-  },
-  sessionEyebrow: {
-    color: colors.textTertiary,
-    fontSize: 10,
-    fontWeight: '800',
-    textTransform: 'uppercase',
-  },
-  deckTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 7,
-    marginTop: 3,
-  },
-  studyHeaderActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  favoriteBtn: {
-    width: 48,
-    height: 48,
-    borderRadius: 17,
-    backgroundColor: 'rgba(255,218,0,0.12)',
-    borderWidth: 1.5,
-    borderColor: colors.brand,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  favoriteBtnText: {
-    color: colors.brand,
-    fontSize: 22,
-    fontWeight: '800',
-    lineHeight: 24,
-  },
-  deckPillFlag: { fontSize: 17 },
-  deckTitle: {
-    color: colors.textPrimary,
-    fontSize: 18,
-    fontWeight: '900',
-    flexShrink: 1,
-  },
-  cardsLeftPill: {
-    paddingHorizontal: 12,
-    paddingVertical: 7,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255,218,0,0.15)',
-    borderWidth: 1.5,
-    borderColor: colors.brand,
-  },
-  cardsLeftText: { color: colors.brand, fontSize: 13, fontWeight: '800' },
+    sessionHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 18,
+      paddingTop: 12,
+      paddingBottom: 10,
+      gap: 10,
+    },
+    sessionBackBtn: {
+      minHeight: 48,
+      alignSelf: 'flex-start',
+      justifyContent: 'center',
+      paddingHorizontal: 10,
+      borderRadius: 17,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.neutralEdge,
+    },
+    sessionBackText: { color: colors.brand, fontSize: 12, fontWeight: '900' },
+    sessionTitleBlock: {
+      minWidth: 0,
+      flex: 1,
+    },
+    sessionEyebrow: {
+      color: colors.textTertiary,
+      fontSize: 10,
+      fontWeight: '800',
+      textTransform: 'uppercase',
+    },
+    deckTitleRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 7,
+      marginTop: 3,
+    },
+    studyHeaderActions: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+    },
+    favoriteBtn: {
+      width: 48,
+      height: 48,
+      borderRadius: 17,
+      backgroundColor: colors.highlightWash,
+      borderWidth: 1.5,
+      borderColor: colors.brand,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    favoriteBtnText: {
+      color: colors.brand,
+      fontSize: 22,
+      fontWeight: '800',
+      lineHeight: 24,
+    },
+    deckPillFlag: { fontSize: 17 },
+    deckTitle: {
+      color: colors.textPrimary,
+      fontSize: 18,
+      fontWeight: '900',
+      flexShrink: 1,
+    },
+    cardsLeftPill: {
+      paddingHorizontal: 12,
+      paddingVertical: 7,
+      borderRadius: 20,
+      backgroundColor: colors.selectedWash,
+      borderWidth: 1.5,
+      borderColor: colors.brand,
+    },
+    cardsLeftText: { color: colors.brand, fontSize: 13, fontWeight: '800' },
 
-  regionFilterWrap: {
-    position: 'relative',
-    minHeight: 44,
-    marginBottom: 8,
-  },
-  regionScroller: {
-    flexGrow: 0,
-    maxHeight: 44,
-  },
-  regionRow: {
-    alignItems: 'center',
-    gap: 8,
-    paddingHorizontal: 18,
-    paddingRight: 52,
-  },
-  regionChip: {
-    minHeight: 34,
-    paddingVertical: 6,
-    justifyContent: 'center',
-    paddingHorizontal: 13,
-    borderRadius: 17,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: 'rgba(148,163,184,0.18)',
-  },
-  regionChipActive: {
-    backgroundColor: '#047857',
-    borderColor: '#10b981',
-  },
-  regionChipText: { color: colors.textSecondary, fontSize: 12, fontWeight: '800' },
-  regionChipTextActive: { color: '#ffffff', fontWeight: '900' },
-  regionOverflowCue: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    width: 52,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-  regionOverflowFadeWide: {
-    ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(2,6,23,0.55)',
-  },
-  regionOverflowFadeTight: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    bottom: 0,
-    width: 30,
-    backgroundColor: colors.bg,
-  },
-  regionOverflowChevron: {
-    color: colors.brand,
-    fontSize: 22,
-    fontWeight: '900',
-    paddingRight: 16,
-  },
+    regionFilterWrap: {
+      position: 'relative',
+      minHeight: 44,
+      marginBottom: 8,
+    },
+    regionScroller: {
+      flexGrow: 0,
+      maxHeight: 44,
+    },
+    regionRow: {
+      alignItems: 'center',
+      gap: 8,
+      paddingHorizontal: 18,
+      paddingRight: 52,
+    },
+    regionChip: {
+      minHeight: 34,
+      paddingVertical: 6,
+      justifyContent: 'center',
+      paddingHorizontal: 13,
+      borderRadius: 17,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.neutralEdge,
+    },
+    regionChipActive: {
+      backgroundColor: colors.regionFill,
+      borderColor: colors.regionEdge,
+    },
+    regionChipText: { color: colors.textSecondary, fontSize: 12, fontWeight: '800' },
+    regionChipTextActive: { color: colors.regionInk, fontWeight: '900' },
+    regionOverflowCue: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      bottom: 0,
+      width: 52,
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+    },
+    regionOverflowFadeWide: {
+      ...StyleSheet.absoluteFill,
+      backgroundColor: colors.translucentSurface,
+    },
+    regionOverflowFadeTight: {
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      bottom: 0,
+      width: 30,
+      backgroundColor: colors.bg,
+    },
+    regionOverflowChevron: {
+      color: colors.brand,
+      fontSize: 22,
+      fontWeight: '900',
+      paddingRight: 16,
+    },
 
-  swipeHints: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    marginBottom: 10,
-  },
-  swipeHard: { color: 'rgba(248,113,113,0.72)', fontSize: 12, fontWeight: '800' },
-  swipeTap: { color: colors.textSecondary, fontSize: 12, fontWeight: '700' },
-  swipeEasy: { color: 'rgba(16,185,129,0.72)', fontSize: 12, fontWeight: '800' },
+    swipeHints: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: 20,
+      marginBottom: 10,
+    },
+    swipeHard: { color: colors.swipeHardInk, fontSize: 12, fontWeight: '800' },
+    swipeTap: { color: colors.textSecondary, fontSize: 12, fontWeight: '700' },
+    swipeEasy: { color: colors.swipeEasyInk, fontSize: 12, fontWeight: '800' },
 
-  cardArea: {
-    flexGrow: 1,
-    flexShrink: 0,
-    paddingHorizontal: 18,
-    gap: 10,
-  },
-  quizCta: {
-    marginTop: 6,
-    minHeight: 44,
-    borderRadius: 14,
-    paddingHorizontal: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.brand,
-  },
-  quizCtaText: { color: colors.textInverse, fontSize: 14, fontWeight: '900' },
+    cardArea: {
+      flexGrow: 1,
+      flexShrink: 0,
+      paddingHorizontal: 18,
+      gap: 10,
+    },
+    quizCta: {
+      marginTop: 6,
+      minHeight: 44,
+      borderRadius: 14,
+      paddingHorizontal: 22,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.brand,
+    },
+    quizCtaText: { color: colors.textInverse, fontSize: 14, fontWeight: '900' },
 
-  gradeBar: {
-    backgroundColor: colors.surface,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(148,163,184,0.12)',
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    paddingBottom: 16,
-    gap: 10,
-  },
-  gradeLabel: {
-    color: colors.textSecondary,
-    fontSize: 12,
-    fontWeight: '800',
-    textAlign: 'center',
-  },
-  gradeButtons: { flexDirection: 'row', gap: 8 },
-  gradeBtn: {
-    flex: 1,
-    minHeight: 54,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 2,
-    paddingVertical: 9,
-    borderRadius: 16,
-    borderWidth: 1.5,
-  },
-  gradeBtnLabel: { fontSize: 14, fontWeight: '800' },
-  gradeBtnInterval: { fontSize: 10 },
-});
+    gradeBar: {
+      backgroundColor: colors.surface,
+      borderTopWidth: 1,
+      borderTopColor: colors.dividerEdge,
+      paddingHorizontal: 16,
+      paddingTop: 12,
+      paddingBottom: 16,
+      gap: 10,
+    },
+    gradeLabel: {
+      color: colors.textSecondary,
+      fontSize: 12,
+      fontWeight: '800',
+      textAlign: 'center',
+    },
+    gradeButtons: { flexDirection: 'row', gap: 8 },
+    gradeBtn: {
+      flex: 1,
+      minHeight: 54,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 2,
+      paddingVertical: 9,
+      borderRadius: 16,
+      borderWidth: 1.5,
+    },
+    gradeBtnLabel: { fontSize: 14, fontWeight: '800' },
+    gradeBtnInterval: { fontSize: 10 },
+  });

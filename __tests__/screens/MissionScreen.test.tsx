@@ -1,3 +1,4 @@
+import { renderWithTheme } from '../helpers/renderWithTheme';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
@@ -58,7 +59,7 @@ beforeEach(async () => {
   await AsyncStorage.clear();
 });
 async function begin() {
-  const ui = render(<MissionScreen />);
+  const ui = renderWithTheme(<MissionScreen />);
   fireEvent.press(await ui.findByText('Start draft mission'));
   await ui.findByText('At the café');
   fireEvent.press(ui.getByText('Continue'));
@@ -109,7 +110,9 @@ test('retains failed submission for retry and resumes exact feedback without per
   fireEvent.changeText(ui.getByLabelText('Your response'), 'buenos dias');
   fireEvent.press(ui.getByText('Check answer'));
   await ui.findByText('Could not save this step. Retry to continue.');
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
   expect(ui.getByLabelText('Your response')).toHaveProp('value', 'buenos dias');
+  expect(ui.getByLabelText('Your response')).toHaveStyle({ color: '#18352F' });
   fireEvent.press(ui.getByText('Retry save'));
   await ui.findByText('Check the accents');
   const state = (await missionStorage.loadMissionRun(FIRST_MORNING)).run!;
@@ -347,4 +350,36 @@ test('notifies the parent when a pending save settles even after the player unmo
   ui.unmount();
   await act(async () => release());
   await waitFor(() => expect(changed.mock.calls).toEqual([[true], [false]]));
+});
+
+test('a held response checkpoint retains draft and exactly one command across identity changes', async () => {
+  const ui = await begin();
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'Buenos días');
+  const original = missionStorage.applyMissionCommand;
+  let release!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  const command = jest
+    .spyOn(missionStorage, 'applyMissionCommand')
+    .mockImplementation(async (...args) => {
+      await pending;
+      return original(...args);
+    });
+  try {
+    fireEvent.press(ui.getByText('Check answer'));
+    ui.applyTheme({ themeId: 'barrio', appearanceMode: 'dark' });
+    expect(ui.getByLabelText('Your response')).toHaveProp('value', 'Buenos días');
+    expect(ui.getByLabelText('Your response')).toHaveStyle({ color: '#F7F3EA' });
+    fireEvent.press(ui.getByText('Check answer'));
+    expect(command).toHaveBeenCalledTimes(1);
+    await act(async () => release());
+    await ui.findByText('Correct');
+    const events = await getLearningEvents();
+    expect(events).toHaveLength(1);
+    ui.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+    expect(await getLearningEvents()).toEqual(events);
+  } finally {
+    release();
+  }
 });

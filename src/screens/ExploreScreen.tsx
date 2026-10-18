@@ -1,11 +1,14 @@
+import { useThemedStyles } from '../context/ThemeContext';
+import { AppTheme } from '../styles/appTheme';
 import React from 'react';
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { colors, spacing, radius } from '../styles/theme';
+import { spacing, radius } from '../styles/theme';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function ExploreScreen() {
+  const styles = useThemedStyles(makeStyles);
   const nav = useNavigation<any>();
   const { t } = useLanguage();
 
@@ -59,47 +62,48 @@ export default function ExploreScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.bg,
-  },
-  header: {
-    padding: spacing(3),
-    paddingBottom: spacing(2),
-  },
-  title: {
-    color: colors.textPrimary,
-    fontSize: 28,
-    fontWeight: '800',
-  },
-  subtitle: {
-    color: colors.textSecondary,
-    fontSize: 16,
-    marginTop: spacing(0.5),
-  },
-  content: {
-    padding: spacing(2),
-    gap: spacing(1.5),
-  },
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    padding: spacing(2.5),
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  cardPressed: {
-    backgroundColor: colors.surfacePressed,
-  },
-  cardTitle: {
-    color: colors.textPrimary,
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: spacing(0.5),
-  },
-  cardDescription: {
-    color: colors.textSecondary,
-    fontSize: 14,
-  },
-});
+const makeStyles = ({ colors }: AppTheme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.bg,
+    },
+    header: {
+      padding: spacing(3),
+      paddingBottom: spacing(2),
+    },
+    title: {
+      color: colors.textPrimary,
+      fontSize: 28,
+      fontWeight: '800',
+    },
+    subtitle: {
+      color: colors.textSecondary,
+      fontSize: 16,
+      marginTop: spacing(0.5),
+    },
+    content: {
+      padding: spacing(2),
+      gap: spacing(1.5),
+    },
+    card: {
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      padding: spacing(2.5),
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    cardPressed: {
+      backgroundColor: colors.surfacePressed,
+    },
+    cardTitle: {
+      color: colors.textPrimary,
+      fontSize: 18,
+      fontWeight: '700',
+      marginBottom: spacing(0.5),
+    },
+    cardDescription: {
+      color: colors.textSecondary,
+      fontSize: 14,
+    },
+  });

@@ -1,3 +1,4 @@
+import { ThemeProvider, useThemeSelection } from '../../src/context/ThemeContext';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -25,7 +26,12 @@ jest.mock('@react-navigation/native', () => ({
 jest.mock('../../src/data/decks', () => ({ ALL_DECKS: [] }));
 
 let current: ReturnType<typeof useDeckContext>;
+let currentTheme: ReturnType<typeof useThemeSelection>;
 function Probe() {
+  const theme = useThemeSelection();
+  React.useLayoutEffect(() => {
+    currentTheme = theme;
+  }, [theme]);
   const context = useDeckContext();
   React.useLayoutEffect(() => {
     current = context;
@@ -34,10 +40,12 @@ function Probe() {
 }
 function App() {
   return (
-    <DeckProvider>
-      <Probe />
-      <StudyScreen />
-    </DeckProvider>
+    <ThemeProvider>
+      <DeckProvider>
+        <Probe />
+        <StudyScreen />
+      </DeckProvider>
+    </ThemeProvider>
   );
 }
 function card(id: string, overrides: Partial<FlashCard> = {}): FlashCard {
@@ -201,6 +209,7 @@ test('edits queued behind an in-flight grade preserve content and the frozen rem
   await act(async () => {
     fireEvent.press(screen.getByText('Bien'));
     await started;
+    currentTheme.applySelection({ themeId: 'barrio', appearanceMode: 'light' });
     edits = Promise.all([
       current.renameDeck('alpha', 'Renamed during save'),
       current.updateCardReview('first', { back: 'corrected meaning', flagged: true }),
@@ -214,6 +223,7 @@ test('edits queued behind an in-flight grade preserve content and the frozen rem
     await edits;
   });
   await screen.findByText('phrase second');
+  expect(screen.getByText('Bien')).toHaveStyle({ color: '#23624E' });
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   const stored = await loadDecks();
   expect(stored[0]).toMatchObject({
@@ -279,6 +289,8 @@ test('an editor recovers an interrupted grade and UI retry acknowledges it witho
   expect(daily).toMatchObject({ count: 1, newCount: 1 });
   const remaining = await getLastStudySession();
   expect(remaining?.queue).toEqual({ ...initial?.queue, cardIds: ['second'] });
+  act(() => currentTheme.applySelection({ themeId: 'barrio', appearanceMode: 'dark' }));
+  expect(screen.getByText('Intentar guardar de nuevo')).toHaveStyle({ color: '#A7D6B2' });
   await act(async () => fireEvent.press(screen.getByText('Intentar guardar de nuevo')));
   await screen.findByText('phrase second');
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());

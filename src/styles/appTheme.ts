@@ -7,6 +7,51 @@ type LegacyColors = {
   gradient: { [K in keyof typeof classicColors.gradient]: readonly string[] };
 };
 export type ThemeColors = LegacyColors & {
+  dividerEdge: string;
+  swipeEasyInk: string;
+  swipeHardInk: string;
+  translucentSurface: string;
+  regionEdge: string;
+  selectedWash: string;
+  neutralEdge: string;
+  neutralWash: string;
+  editorActionInk: string;
+  editorDangerFill: string;
+  editorText: string;
+  editorSuccessWash: string;
+  editorTertiary: string;
+  editorSecondary: string;
+  editorPrimary: string;
+  editorSoftEdge: string;
+  editorRule: string;
+  editorOuter: string;
+  editorAlertWash: string;
+  editorInk: string;
+  editorBorder: string;
+  editorSurface: string;
+  quizFeedbackInk: string;
+  quizReviewInk: string;
+  quizReviewWash: string;
+  regionInk: string;
+  regionFill: string;
+  dueBadgeWash: string;
+  strongHighlightEdge: string;
+  dueWash: string;
+  flagRedEdge: string;
+  scheduleInk: string;
+  scheduleWash: string;
+  flagBlueEdge: string;
+  slateTrack: string;
+  troubleWash: string;
+  softHighlightEdge: string;
+  subtlePanel: string;
+  flagHighlight: string;
+  mutedInk: string;
+  alertWash: string;
+  alertInk: string;
+  deepSurface: string;
+  highlightEdge: string;
+  highlightWash: string;
   audioSurface: string;
   audioText: string;
   tagSurface: string;
@@ -56,6 +101,51 @@ const classic: AppTheme = immutable({
   iconStyle: 'emoji',
   colors: {
     ...classicColors,
+    dividerEdge: 'rgba(148,163,184,0.12)',
+    swipeEasyInk: 'rgba(16,185,129,0.72)',
+    swipeHardInk: 'rgba(248,113,113,0.72)',
+    translucentSurface: 'rgba(2,6,23,0.55)',
+    regionEdge: '#10b981',
+    selectedWash: 'rgba(255,218,0,0.15)',
+    neutralEdge: 'rgba(148,163,184,0.18)',
+    neutralWash: 'rgba(148,163,184,0.16)',
+    editorActionInk: '#fff',
+    editorDangerFill: '#7f1d1d',
+    editorText: '#f8fafc',
+    editorSuccessWash: '#052e2b',
+    editorTertiary: '#94a3b8',
+    editorSecondary: '#cbd5e1',
+    editorPrimary: '#1d4ed8',
+    editorSoftEdge: '#1f2937',
+    editorRule: '#172033',
+    editorOuter: '#070d1a',
+    editorAlertWash: 'rgba(239,68,68,0.1)',
+    editorInk: '#e2e8f0',
+    editorBorder: '#334155',
+    editorSurface: '#0b1220',
+    quizFeedbackInk: '#99f6e4',
+    quizReviewInk: '#6ee7b7',
+    quizReviewWash: 'rgba(4,120,87,0.18)',
+    regionInk: '#ffffff',
+    regionFill: '#047857',
+    dueBadgeWash: 'rgba(248,113,113,0.2)',
+    strongHighlightEdge: 'rgba(255,218,0,0.5)',
+    dueWash: 'rgba(206,17,38,0.1)',
+    flagRedEdge: '#CE1126',
+    scheduleInk: '#60a5fa',
+    scheduleWash: 'rgba(0,56,147,0.15)',
+    flagBlueEdge: '#003893',
+    slateTrack: '#1e293b',
+    troubleWash: 'rgba(248,113,113,0.12)',
+    softHighlightEdge: 'rgba(255,218,0,0.28)',
+    subtlePanel: 'rgba(255,255,255,0.04)',
+    flagHighlight: '#FFDA00',
+    mutedInk: '#64748b',
+    alertWash: 'rgba(239,68,68,0.15)',
+    alertInk: '#ef4444',
+    deepSurface: '#0f172a',
+    highlightEdge: 'rgba(255,218,0,0.45)',
+    highlightWash: 'rgba(255,218,0,0.12)',
     audioSurface: '#1f2937',
     audioText: '#fff',
     tagSurface: '#0b1220',
@@ -157,6 +247,51 @@ function barrio(palette: typeof light, appearance: 'light' | 'dark'): AppTheme {
       onboardingWash: palette.raised,
       managementWarning: palette.warning,
       restoreDanger: palette.danger,
+      highlightWash: palette.raised,
+      highlightEdge: palette.border,
+      deepSurface: palette.surface,
+      alertInk: palette.danger,
+      alertWash: palette.dangerMuted,
+      mutedInk: palette.tertiary,
+      flagHighlight: palette.primary,
+      subtlePanel: palette.raised,
+      softHighlightEdge: palette.border,
+      troubleWash: palette.dangerMuted,
+      slateTrack: palette.raised,
+      flagBlueEdge: palette.info,
+      scheduleWash: palette.infoMuted,
+      scheduleInk: palette.info,
+      flagRedEdge: palette.danger,
+      dueWash: palette.dangerMuted,
+      strongHighlightEdge: palette.border,
+      dueBadgeWash: palette.dangerMuted,
+      regionFill: palette.primary,
+      regionInk: palette.onPrimary,
+      quizReviewWash: palette.successMuted,
+      quizReviewInk: palette.success,
+      quizFeedbackInk: palette.success,
+      editorSurface: palette.surface,
+      editorBorder: palette.border,
+      editorInk: palette.text,
+      editorAlertWash: palette.dangerMuted,
+      editorOuter: palette.bg,
+      editorRule: palette.border,
+      editorSoftEdge: palette.border,
+      editorPrimary: palette.primary,
+      editorSecondary: palette.secondary,
+      editorTertiary: palette.tertiary,
+      editorSuccessWash: palette.successMuted,
+      editorText: palette.text,
+      editorDangerFill: palette.danger,
+      editorActionInk: palette.onPrimary,
+      neutralWash: palette.raised,
+      neutralEdge: palette.border,
+      selectedWash: palette.raised,
+      regionEdge: palette.primary,
+      translucentSurface: palette.surface,
+      swipeHardInk: palette.danger,
+      swipeEasyInk: palette.success,
+      dividerEdge: palette.border,
       bg: palette.bg,
       surface: palette.surface,
       surfaceElevated: palette.raised,
