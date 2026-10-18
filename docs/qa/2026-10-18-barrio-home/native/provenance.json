@@ -28,5 +28,7 @@
     "actualDependencies": true,
     "ciModeCacheClearedAfterRuntimeChange": true,
     "launchArguments": ["-RCT_jsLocation", "localhost:8099"]
-  }
+  },
+  "finalRuntimeHead": "ecf1a2e",
+  "matrixRuntimeHead": "9bd079b"
 }

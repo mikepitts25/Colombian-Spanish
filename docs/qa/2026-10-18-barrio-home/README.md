@@ -1,10 +1,10 @@
 # Barrio Home implementation and bounded QA — 2026-10-18
 
-Runtime candidate: `9bd079b`, based on approved plan `6a6afd4`. Classic remains the default and retains its original Home composition. Barrio adds a plan-first hero, explicit phase labels, activity, word, tools and due decks. Existing Home controllers, queues, storage schemas and editorial gates remain authoritative.
+Final runtime candidate: `ecf1a2e`; original visual/state matrix: `9bd079b`, based on approved plan `6a6afd4`. Classic remains the default and retains its original Home composition. Barrio adds a plan-first hero, explicit phase labels, activity, word, tools and due decks. Existing Home controllers, queues, storage schemas and editorial gates remain authoritative.
 
 ## Automated verification
 
-Full suite: **117 suites / 1,134 tests passed** after the React render-purity fix. Typecheck, lint, format, calendar zones, data validation, content validation/review, simulator isolation (**11 tests**) and theme color audit passed. The color audit classifies 255 literals, checks 418 composited pairs and retains 63 explicit Classic exceptions with zero errors. Logs are in `software/`; no package, lockfile or editorial inventory change was required.
+Full suite: **117 suites / 1,136 tests passed** after the React render-purity fix. Typecheck, lint, format, calendar zones, data validation, content validation/review, simulator isolation (**11 tests**) and theme color audit passed. The color audit classifies 255 literals, checks 418 composited pairs and retains 63 explicit Classic exceptions with zero errors. Logs are in `software/`; no package, lockfile or editorial inventory change was required.
 
 Real-provider integration covers production review-only Study without a fabricated durable plan; failed stale reads with Retry; held/rejected starts and repeated presses while theme/language/font change; exact retained prior-day queue/run; unavailable content version recovery; fresh midnight budgets; completed-today to next-day fresh identity. Pure selector/component tests cover empty, cap, no-due, unavailable, completed, full long labels, loading/error stale-row suppression, semantic actions and decorative-art hiding. These are automated harness results, not native or signed production acceptance.
 
@@ -43,3 +43,11 @@ Phone phases: only preferences changed for theme/language checks; greeting intro
 The mini embedded app AX tree was absent during its first light/dark/language sequence; visible coordinate controls were used with screenshots after each action. AX returned after its final cold load, enabling the explicitly AX-driven route checks above. The known unsigned Debug notification/keychain entitlement banner was dismissed; signed notification acceptance remains open. All images were observed through CUA and saved using explicit-device simctl screenshots. `images.json` records their hashes. No blocked security work was attempted.
 
 Implementation may be integrated with these gaps explicitly retained under B08.3-C; the parent Home acceptance checklist remains open. This package does not claim the entire native matrix or all AI work is finished.
+
+## Independent review and recovery fix
+
+One fresh read-only whole-branch review of `6a6afd4..698b0a4` found two Important recovery defects and no Critical/Minor findings. Both were reproduced locally RED, then fixed in `ecf1a2e`: loading/read-error precedence now supersedes a pending visual snapshot; Retry remembers the failed plan/deck and bounded/unbounded intent while the existing controller refreshes its inputs. Both regression tests and full117 suites/1,136 tests pass. No re-review was dispatched, following the approved Native execution process.
+
+After the fixes, Metro8099 was restarted/cache-cleared and both explicitly preflighted devices cold-launched the current source. CUA observed the mini BarrioDark Home and phone Classic Home; the two `final-smoke` images and snapshots record that final candidate. Both still match all11 original baseline hashes and10/11 events. Earlier bilingual/maximum/route captures remain accurately attributed to `9bd079b`; they are not described as a repeated full matrix on the recovery fix. A typo UUID terminate command was rejected as invalid before any operation; the corrected explicit UUID launch has its own preflight evidence. The alternate `com.apple.iphonesimulator` CUA application route was unavailable; no software/account setup was attempted.
+
+The reviewer declined empirical judgment of incomplete native/touch and physical/signed/editorial acceptance. Executor ruling: retain every listed gap; the software fixes and final cold-load do not close them. The cost if wrong is an unresolved native usability or release-device issue, tracked in B08.3-C3 and the existing release gates.

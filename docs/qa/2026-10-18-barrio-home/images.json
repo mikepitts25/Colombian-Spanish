@@ -20,6 +20,10 @@
     "sha256": "dc09e5cbb26e1f5a6dfc71636c636cb2d8ea42189ea9711ca548b5cc825ab114"
   },
   {
+    "file": "native/mini-es-dark-final-smoke.png",
+    "sha256": "c8b475c01cb1e6bc9dc42dff42a2f0d4666b5688b33cd4fde8aab46965d9824e"
+  },
+  {
     "file": "native/mini-es-dark-max-upper.png",
     "sha256": "c1f1ffa952a1ba3cc3f4d1d7639fa68b4d79d60b2ebfb0938a3110cd571134dd"
   },
@@ -30,6 +34,10 @@
   {
     "file": "native/mini-es-light-max-upper.png",
     "sha256": "4dc0acd1b35d8b170d61d24af3f5856743aa77ae97877d61984b85bf51aa2419"
+  },
+  {
+    "file": "native/phone-classic-final-smoke.png",
+    "sha256": "bc0fcb3719185358c93d90592520940bce561fce82b7914120d6ab2ab13b9095"
   },
   {
     "file": "native/phone-classic-restored.png",

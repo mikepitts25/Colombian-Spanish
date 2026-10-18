@@ -12,7 +12,8 @@ phone = '2EDF21F0-7DBD-4B09-8D5F-85560FD0E730'
 mini = 'DF3686C1-A2E7-4870-B127-A83A8B67541D'
 for prefix, device, event_count in [('phone', phone, 10), ('mini', mini, 11)]:
     baseline = by_phase[prefix + '-baseline']
-    final = by_phase[prefix + '-restored-loaded']
+    final = by_phase[prefix + '-final-smoke']
+    assert by_phase[prefix + '-restored-loaded']['keyHashes'] == final['keyHashes']
     assert final['device'] == baseline['device'] == device
     assert len(baseline['keyHashes']) == 11
     assert final['keyHashes'] == baseline['keyHashes'], prefix + ' not restored'
@@ -32,7 +33,8 @@ for file in native.glob('*-preflight.json'):
     assert p['isolated'] and p['requestedDevice'] in {phone, mini}
     assert f"/Devices/{p['requestedDevice']}/data/" in p['resolvedContainer']
 provenance = json.loads((native / 'provenance.json').read_text())
-assert provenance['runtimeHead'] == '9bd079b'
+assert provenance['runtimeHead'] == provenance['matrixRuntimeHead'] == '9bd079b'
+assert provenance['finalRuntimeHead'] == 'ecf1a2e'
 assert not provenance['nativeChanges'] and provenance['metro']['actualDependencies']
 assert provenance['metro']['launchArguments'] == ['-RCT_jsLocation', 'localhost:8099']
 for device in provenance['devices']:
