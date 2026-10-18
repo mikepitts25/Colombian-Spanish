@@ -1,0 +1,2093 @@
+[
+  {
+    "phase": "source-before-ui",
+    "device": "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcflyw4-a-0pp4985ubq9",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792243675857,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792243747290
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcflyw4-c-bml0jb9bnl5"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvcflyw4-c-bml0jb9bnl5",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": false,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": null
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792244109885,
+          "lastOperation": {
+            "id": "mvcfv9rx-nxe9xxmlg8q",
+            "key": "[\"mvcflyw4-c-bml0jb9bnl5\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792291262.261958,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 2,
+      "target": 5,
+      "newCount": 2
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792243747293
+    },
+    "quizHistory": null,
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "notificationPrefs": null,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "e7080f81b0839e047b3979cee321befb16047d07f78a42edd00a1adac0acfcde",
+    "keyHashes": {
+      "SRS_DECKS_V3": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+      "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+      "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+      "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+      "SRS_DAILY_PROGRESS_V1": "3a51f7e271c3889f81629e0b079f421ade5a4895cbf1b326c03092ffe5cedfbf",
+      "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+      "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+      "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+      "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+    },
+    "journal": null,
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 47,
+    "deckVariants": {
+      "absent": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+      "false": "168ad43caecec1ce0bdff037e5c4e7193a84b77d383072d4ec3686c1b061803e",
+      "true": "7edc5bdc19b22b5b103a481cf23251369602bd0af796def97535010f76b3042a"
+    }
+  },
+  {
+    "phase": "clone-before-launch",
+    "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcgu0hh-1-5pe1thght36",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792245730788,
+        "phase": "applied",
+        "review": {
+          "initialCardIds": ["catchup-0", "catchup-1"],
+          "session": {
+            "deckId": "catchup-qa",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcgu0hh-2-gwe985fqs56",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 0
+              }
+            },
+            "updatedAt": 1792245860350
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcgu0hh-3-g3teof35o8k"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "capturedAt": 1792291307.231328,
+    "daily": {
+      "date": "2026-10-18",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "catchup-qa",
+      "cardId": "catchup-7",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
+        "region": "all",
+        "sessionId": "mvch686p-e-kaznxi22mfb"
+      },
+      "updatedAt": 1792273696341
+    },
+    "quizHistory": [],
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "missionId": "daily-morning-greeting",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgut7l-a-vwpwc09ty5f",
+        "cardId": "catchup-0",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245768071,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 36943
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcgwsf1-7-twhin1qss5",
+        "cardId": "catchup-1",
+        "deckId": "catchup-qa",
+        "sessionId": "mvcgu0hh-2-gwe985fqs56",
+        "planId": "mvcgu0hh-1-5pe1thght36",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792245860357,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 51706
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvchb3ql-k-gtd4svzkgys",
+        "cardId": "catchup-2",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792246528211,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 227435
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwf708-a-fjxccvlxnb4",
+        "cardId": "catchup-3",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792271913306,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 87391
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwgyk0-f-24dcbcquua2",
+        "cardId": "catchup-4",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792271995662,
+        "quality": 1,
+        "hintsUsed": null,
+        "durationMs": 82258
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcwkikg-7-23hiksw9xg6",
+        "cardId": "catchup-5",
+        "deckId": "catchup-qa",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "modality": "recall",
+        "outcome": "incorrect",
+        "evidence": "self-rated",
+        "occurredAt": 1792272161572,
+        "quality": 2,
+        "hintsUsed": null,
+        "durationMs": 30643
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcxdb87-7-o0qt2c7bqel",
+        "sessionId": "mvch686p-e-kaznxi22mfb",
+        "cardId": "catchup-6",
+        "deckId": "catchup-qa",
+        "modality": "recall",
+        "evidence": "self-rated",
+        "outcome": "incorrect",
+        "quality": 2,
+        "occurredAt": 1792273505092,
+        "hintsUsed": null,
+        "durationMs": 1303066
+      }
+    ],
+    "cardCount": 1402,
+    "notificationPrefs": {},
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.85,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 1
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "e374b8b532e0e7ccbdad2feafebefd47dfd0f528da2516b23a732954fd80ebbe",
+    "keyHashes": {
+      "SRS_DECKS_V3": "4089507d856f2e9866fb42f2cb63959287ec47dfa94ca3e659abb68ffa31fecb",
+      "SRS_DAILY_PLAN_V1": "3edd9c565e61c5d971b758f88aa85642565619595f6ae32522f7ca860fc3cf10",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_PREFS_V1": "77055397846d78338d34eb796687d65baa95cba8212bdb440f1cfdeb82d97c10",
+      "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+      "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+      "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "57ee2223ea0693f5a1b1ef94a8fba778bcffab8369b99da54c95d64864784027",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+    },
+    "journal": null,
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 48,
+    "deckVariants": {
+      "absent": "4089507d856f2e9866fb42f2cb63959287ec47dfa94ca3e659abb68ffa31fecb",
+      "false": "32aa95b61f23632cb917e3fafaaa9643335b843894167f32fb6202dba99b291b",
+      "true": "e5971ca6d20842febb0503b6f8ff8e5ee01b6e5987939845b4c00a20bf34a02d"
+    }
+  },
+  {
+    "phase": "clone-ready",
+    "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcflyw4-a-0pp4985ubq9",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792243675857,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792243747290
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcflyw4-c-bml0jb9bnl5"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvcflyw4-c-bml0jb9bnl5",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": false,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": null
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792244109885,
+          "lastOperation": {
+            "id": "mvcfv9rx-nxe9xxmlg8q",
+            "key": "[\"mvcflyw4-c-bml0jb9bnl5\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792291361.668525,
+    "daily": {
+      "date": "2026-10-18",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792243747293
+    },
+    "quizHistory": null,
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "notificationPrefs": null,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "e7080f81b0839e047b3979cee321befb16047d07f78a42edd00a1adac0acfcde",
+    "keyHashes": {
+      "SRS_DECKS_V3": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+      "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+      "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+      "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+      "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+      "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+      "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+      "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+      "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+    },
+    "journal": null,
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 47,
+    "deckVariants": {
+      "absent": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+      "false": "168ad43caecec1ce0bdff037e5c4e7193a84b77d383072d4ec3686c1b061803e",
+      "true": "7edc5bdc19b22b5b103a481cf23251369602bd0af796def97535010f76b3042a"
+    }
+  },
+  {
+    "phase": "clone-before-clear",
+    "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcflyw4-a-0pp4985ubq9",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792243675857,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792243747290
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcflyw4-c-bml0jb9bnl5"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvcflyw4-c-bml0jb9bnl5",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": false,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": null
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792244109885,
+          "lastOperation": {
+            "id": "mvcfv9rx-nxe9xxmlg8q",
+            "key": "[\"mvcflyw4-c-bml0jb9bnl5\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792291479.87968,
+    "daily": {
+      "date": "2026-10-18",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792243747293
+    },
+    "quizHistory": null,
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "notificationPrefs": null,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "e7080f81b0839e047b3979cee321befb16047d07f78a42edd00a1adac0acfcde",
+    "keyHashes": {
+      "SRS_DECKS_V3": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+      "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+      "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+      "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+      "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+      "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+      "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+      "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+      "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+    },
+    "journal": null,
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 47,
+    "deckVariants": {
+      "absent": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+      "false": "168ad43caecec1ce0bdff037e5c4e7193a84b77d383072d4ec3686c1b061803e",
+      "true": "7edc5bdc19b22b5b103a481cf23251369602bd0af796def97535010f76b3042a"
+    }
+  },
+  {
+    "phase": "clone-clear-baseline",
+    "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcflyw4-a-0pp4985ubq9",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792243675857,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792243747290
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcflyw4-c-bml0jb9bnl5"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvcflyw4-c-bml0jb9bnl5",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": false,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": null
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792244109885,
+          "lastOperation": {
+            "id": "mvcfv9rx-nxe9xxmlg8q",
+            "key": "[\"mvcflyw4-c-bml0jb9bnl5\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792291593.5492349,
+    "daily": {
+      "date": "2026-10-18",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792243747293
+    },
+    "quizHistory": null,
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "notificationPrefs": null,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "e7080f81b0839e047b3979cee321befb16047d07f78a42edd00a1adac0acfcde",
+    "keyHashes": {
+      "SRS_DECKS_V3": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+      "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+      "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+      "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+      "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+      "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+      "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+      "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+      "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+    },
+    "journal": null,
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 47,
+    "deckWithoutFlagsHash": "9898a614f4f3d513962d10511795db05e789893d5e7176da3817feb454d3e65f",
+    "expectedClearedDeckHash": "38e9306b5ab9448cba2c269fe1b1b67874dd75010c6d4a10609f1495c67d40d6",
+    "deckVariants": {
+      "absent": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+      "false": "168ad43caecec1ce0bdff037e5c4e7193a84b77d383072d4ec3686c1b061803e",
+      "true": "7edc5bdc19b22b5b103a481cf23251369602bd0af796def97535010f76b3042a"
+    }
+  },
+  {
+    "phase": "clone-cleared",
+    "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcflyw4-a-0pp4985ubq9",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792243675857,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792243747290
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcflyw4-c-bml0jb9bnl5"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvcflyw4-c-bml0jb9bnl5",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": false,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": null
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792244109885,
+          "lastOperation": {
+            "id": "mvcfv9rx-nxe9xxmlg8q",
+            "key": "[\"mvcflyw4-c-bml0jb9bnl5\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792291608.488961,
+    "daily": {
+      "date": "2026-10-18",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792243747293
+    },
+    "quizHistory": null,
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "notificationPrefs": null,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5,
+        "flagged": false
+      }
+    ],
+    "deckHash": "29cc926a8100fb7370a7bbc7fcdee0b575f4bced8ba298275617009bcb52b42b",
+    "keyHashes": {
+      "SRS_DECKS_V3": "38e9306b5ab9448cba2c269fe1b1b67874dd75010c6d4a10609f1495c67d40d6",
+      "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+      "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+      "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+      "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+      "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+      "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+      "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+      "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+    },
+    "journal": null,
+    "flaggedCards": [],
+    "deckCount": 47,
+    "deckWithoutFlagsHash": "9898a614f4f3d513962d10511795db05e789893d5e7176da3817feb454d3e65f",
+    "expectedClearedDeckHash": "38e9306b5ab9448cba2c269fe1b1b67874dd75010c6d4a10609f1495c67d40d6",
+    "deckVariants": {
+      "absent": "38e9306b5ab9448cba2c269fe1b1b67874dd75010c6d4a10609f1495c67d40d6",
+      "false": "32eac63eb4d41b6d8def9c1aee5cf02531416749f872b731748fb19ccdf08d96",
+      "true": "f5be0b76a462651977c5e93f0877d2ab2d0ad81ec35caaec40aadc4db0a95ac5"
+    }
+  },
+  {
+    "phase": "clone-cold-restored",
+    "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcflyw4-a-0pp4985ubq9",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792243675857,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792243747290
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcflyw4-c-bml0jb9bnl5"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvcflyw4-c-bml0jb9bnl5",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": false,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": null
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792244109885,
+          "lastOperation": {
+            "id": "mvcfv9rx-nxe9xxmlg8q",
+            "key": "[\"mvcflyw4-c-bml0jb9bnl5\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792291732.858421,
+    "daily": {
+      "date": "2026-10-18",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792243747293
+    },
+    "quizHistory": null,
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "notificationPrefs": null,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5,
+        "flagged": false
+      }
+    ],
+    "deckHash": "29cc926a8100fb7370a7bbc7fcdee0b575f4bced8ba298275617009bcb52b42b",
+    "keyHashes": {
+      "SRS_DECKS_V3": "38e9306b5ab9448cba2c269fe1b1b67874dd75010c6d4a10609f1495c67d40d6",
+      "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+      "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+      "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+      "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+      "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+      "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+      "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+      "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+    },
+    "journal": null,
+    "flaggedCards": [],
+    "deckCount": 47,
+    "deckWithoutFlagsHash": "9898a614f4f3d513962d10511795db05e789893d5e7176da3817feb454d3e65f",
+    "expectedClearedDeckHash": "38e9306b5ab9448cba2c269fe1b1b67874dd75010c6d4a10609f1495c67d40d6",
+    "deckVariants": {
+      "absent": "38e9306b5ab9448cba2c269fe1b1b67874dd75010c6d4a10609f1495c67d40d6",
+      "false": "32eac63eb4d41b6d8def9c1aee5cf02531416749f872b731748fb19ccdf08d96",
+      "true": "f5be0b76a462651977c5e93f0877d2ab2d0ad81ec35caaec40aadc4db0a95ac5"
+    }
+  },
+  {
+    "phase": "source-after-ui",
+    "device": "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB",
+    "plan": {
+      "schemaVersion": 1,
+      "current": {
+        "id": "mvcflyw4-a-0pp4985ubq9",
+        "day": "2026-10-17",
+        "minutes": 3,
+        "createdAt": 1792243675857,
+        "phase": "complete",
+        "review": {
+          "initialCardIds": ["1800", "1801"],
+          "session": {
+            "deckId": "deck-business",
+            "queue": {
+              "schemaVersion": 1,
+              "cardIds": [],
+              "region": "all",
+              "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+              "limits": {
+                "cardLimit": 2,
+                "newLimit": 2
+              }
+            },
+            "updatedAt": 1792243747290
+          }
+        },
+        "applied": {
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "runId": "mvcflyw4-c-bml0jb9bnl5"
+        }
+      }
+    },
+    "missions": {
+      "schemaVersion": 1,
+      "runs": [
+        {
+          "schemaVersion": 1,
+          "id": "mvcflyw4-c-bml0jb9bnl5",
+          "missionId": "daily-morning-greeting",
+          "contentVersion": 1,
+          "nodeId": "complete",
+          "revision": 2,
+          "hintsUsed": 0,
+          "assisted": false,
+          "modelAnswerRevealed": false,
+          "completed": true,
+          "activeTiming": {
+            "durationMs": null
+          },
+          "reviewCardIds": [],
+          "updatedAt": 1792244109885,
+          "lastOperation": {
+            "id": "mvcfv9rx-nxe9xxmlg8q",
+            "key": "[\"mvcflyw4-c-bml0jb9bnl5\",\"greeting\",1,\"advance\",null]"
+          }
+        }
+      ]
+    },
+    "capturedAt": 1792291733.017314,
+    "daily": {
+      "date": "2026-10-17",
+      "count": 2,
+      "target": 5,
+      "newCount": 2
+    },
+    "session": {
+      "deckId": "deck-business",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": [],
+        "region": "all",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "limits": {
+          "cardLimit": 2,
+          "newLimit": 2
+        }
+      },
+      "updatedAt": 1792243747293
+    },
+    "quizHistory": null,
+    "events": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnc8q-l-053whkk5yl8n",
+        "cardId": "1800",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243739868,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 63776
+      },
+      {
+        "schemaVersion": 1,
+        "id": "mvcfnhz6-q-ecuff4eisko",
+        "cardId": "1801",
+        "deckId": "deck-business",
+        "sessionId": "mvcflyw4-b-rhf9gcxcr5",
+        "planId": "mvcflyw4-a-0pp4985ubq9",
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "self-rated",
+        "occurredAt": 1792243747293,
+        "quality": 4,
+        "hintsUsed": null,
+        "durationMs": 7267
+      },
+      {
+        "schemaVersion": 1,
+        "id": "production:[\"mvcflyw4-c-bml0jb9bnl5\",\"morning-greeting\",0]",
+        "cardId": "0010",
+        "deckId": "deck-greetings",
+        "sessionId": "mvcflyw4-c-bml0jb9bnl5",
+        "exercise": {
+          "id": "morning-greeting",
+          "contentVersion": 1,
+          "kind": "typed-recall"
+        },
+        "modality": "recall",
+        "outcome": "correct",
+        "evidence": "answer-checked",
+        "occurredAt": 1792243962234,
+        "hintsUsed": 0,
+        "durationMs": 106385,
+        "missionId": "daily-morning-greeting"
+      }
+    ],
+    "cardCount": 1392,
+    "notificationPrefs": null,
+    "prefs": {
+      "learningLevel": "beginner",
+      "studyMinutes": 3,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "work",
+      "homeRegion": "all"
+    },
+    "streak": {
+      "streak": 1,
+      "lastStudyDate": "2026-10-17",
+      "freezes": 0
+    },
+    "fixtureCards": [
+      {
+        "id": "weather-phrase-001",
+        "front": "Hace mucho calor hoy",
+        "back": "It is very hot today.",
+        "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
+        "tags": ["weather", "phrase", "heat"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    ],
+    "deckHash": "e7080f81b0839e047b3979cee321befb16047d07f78a42edd00a1adac0acfcde",
+    "keyHashes": {
+      "SRS_DECKS_V3": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+      "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+      "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+      "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+      "SRS_DAILY_PROGRESS_V1": "3a51f7e271c3889f81629e0b079f421ade5a4895cbf1b326c03092ffe5cedfbf",
+      "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+      "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+      "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+      "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+    },
+    "journal": null,
+    "flaggedCards": [
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-001"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-002"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-003"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-004"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-005"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-006"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-007"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-008"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-009"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-010"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-011"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-012"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-013"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-014"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-015"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-016"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-017"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-018"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-019"
+      },
+      {
+        "deckId": "deck-llanero",
+        "cardId": "llan-020"
+      }
+    ],
+    "deckCount": 47,
+    "deckWithoutFlagsHash": "9898a614f4f3d513962d10511795db05e789893d5e7176da3817feb454d3e65f",
+    "expectedClearedDeckHash": "38e9306b5ab9448cba2c269fe1b1b67874dd75010c6d4a10609f1495c67d40d6",
+    "deckVariants": {
+      "absent": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+      "false": "168ad43caecec1ce0bdff037e5c4e7193a84b77d383072d4ec3686c1b061803e",
+      "true": "7edc5bdc19b22b5b103a481cf23251369602bd0af796def97535010f76b3042a"
+    }
+  }
+]
