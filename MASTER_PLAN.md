@@ -428,7 +428,11 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 **Package:** mission-linked rewards and one short story arc; avoid multiple unrelated game systems.
 
 - [ ] **B10.1 [AI, H-PRODUCT]** Choose a small passport/stamp system tied to demonstrated mission outcomes, with clear assisted versus independent completion.
+  - [x] **B10.1-A [AI]** Prepare a source-grounded [practice-passport concept](docs/design/2026-10-18-practice-passport/README.md): compare three directions, recommend one durable café outcome stamp with honest support labels, optional comparable replay, exactly-once/backup/version requirements and three AI implementation bundles. Proposal preparation only; no reward feature or accepted content shipped.
+  - [ ] **B10.1-B [H-PRODUCT, AI]** Review the recommended focused direction, then write/review its architectural spec and implementation plan before runtime work. Standing Native preference is preserved; the separate audio-pack written-spec review remains pending.
 - [ ] **B10.2 [AI, H-LANGUAGE]** Create recurring characters and a short culturally grounded story arc; validate humor, register, and representation.
+  - [x] **B10.2-A [AI]** Draft the [fictional cast and five-beat scene brief](docs/design/2026-10-18-practice-passport/story-brief.md) within the existing First Morning café mission, including optional recorded help, tone, representation and required editorial decisions. No new mission pack, dialogue acceptance, recording, rights or cultural validation is claimed.
+  - [ ] **B10.2-B [H-PRODUCT, H-LANGUAGE, AI]** Select/revise the cast and direction, author/review exact versioned dialogue/variants/outcome criteria, then integrate actual accepted decisions. AI can draft/apply corrections; humans supply real language/representation acceptance.
 - [ ] **B10.3 [AI]** Implement rewards, optional celebrations, reduced-motion behavior, retry consistency, and personal-best challenges without duplicate rewards or progress loss.
 - [ ] **B10.4 [AI, SIM]** Integrate rewards into mission completion and Progress; keep streak recovery supportive and accessible.
 - [ ] **B10.5 [H-LEARNER, AI]** Test whether stories/rewards improve willingness to practice and learning performance; reduce or remove elements that distract or pressure people.
