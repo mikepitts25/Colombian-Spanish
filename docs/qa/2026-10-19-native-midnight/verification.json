@@ -1,0 +1,19 @@
+{
+  "base": "7af01321895e4d3c3969ed9debbaa8e08e982c4f",
+  "device": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+  "imageSHA256": {
+    "before.png": "6a556900f6df2ea818f1dfa6eb4e671666f7b852f8d4403986025dadf5f7534e",
+    "after.png": "29d8eab7e79b1d6350bd754e3954d17a405501ff2fe7ef9c992484671aa63025",
+    "restored-text3.png": "a04260b99e9443cf77fe4018c3f6d6573476707a91dd4d82ed809ca2b423d048"
+  },
+  "observedText": {
+    "before": ["¡Buenas noches!", "tinto"],
+    "after": ["¡Buenos días!", "meter presión"]
+  },
+  "nativeTextSize": {
+    "before": 1,
+    "after": 1,
+    "returned": 3
+  },
+  "scope": "One same-store Spanish Classic Home natural-midnight refresh; not Barrio, Progress, timezone/DST or source-cold acceptance."
+}
