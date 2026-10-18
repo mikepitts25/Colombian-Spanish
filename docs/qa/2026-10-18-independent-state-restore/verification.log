@@ -1,0 +1,1 @@
+PASS: real clipboard full-state restore/cold equality; independent destination interrupted journal and blocked Retry; all eleven after-images recover; exact normal queue and actual source preserved

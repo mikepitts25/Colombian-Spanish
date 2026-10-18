@@ -1,0 +1,18 @@
+watchman warning:  Recrawled this watch 21 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish'`
+
+PASS __tests__/components/StorageGate.test.tsx
+PASS __tests__/storage/backupSnapshot.test.ts
+PASS __tests__/storage/portableBackup.test.ts
+PASS __tests__/storage/backupRestore.test.ts
+PASS __tests__/services/backupFiles.test.ts
+PASS __tests__/storage/durableStorage.test.ts
+
+Test Suites: 6 passed, 6 total
+Tests:       52 passed, 52 total
+Snapshots:   0 total
+Time:        1.329 s
+Ran all test suites matching /__tests__\/components\/StorageGate.test.tsx|__tests__\/storage\/durableStorage.test.ts|__tests__\/storage\/portableBackup.test.ts|__tests__\/storage\/backupRestore.test.ts|__tests__\/services\/backupFiles.test.ts|__tests__\/storage\/backupSnapshot.test.ts/i.
