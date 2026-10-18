@@ -2,11 +2,11 @@
 > colombian-spanish-srs@1.0.0 test
 > jest --runInBand
 
-PASS __tests__/screens/MissionScreen.test.tsx (6.788 s)
+PASS __tests__/screens/MissionScreen.test.tsx (6.622 s)
 PASS __tests__/screens/StudyLifecycleIntegration.test.tsx
+PASS __tests__/screens/HomeScreen.test.tsx
 PASS __tests__/context/LargeLibraryIntegration.test.tsx
 PASS __tests__/scripts/validate-project.test.js
-PASS __tests__/screens/HomeScreen.test.tsx
 PASS __tests__/scripts/export-content-review.test.js
 PASS __tests__/screens/StudyScreen.test.tsx
   ● Console
@@ -67,15 +67,15 @@ PASS __tests__/screens/StudyScreen.test.tsx
       at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
       at setResumePlanId (src/screens/StudyScreen.tsx:342:11)
 
-PASS __tests__/context/DeckContext.test.tsx
 PASS __tests__/screens/QuizScreen.test.tsx
+PASS __tests__/context/DeckContext.test.tsx
 PASS __tests__/screens/ListeningScreen.test.tsx
 PASS __tests__/scripts/braces-depth.test.js
-PASS __tests__/styles/themeConsumerAudit.test.ts
 PASS __tests__/screens/StudyEditorIntegration.test.tsx
 PASS __tests__/screens/AudioPreferencesScreen.test.tsx
-PASS __tests__/scripts/editorial-release.test.js
+PASS __tests__/styles/themeConsumerAudit.test.ts
 PASS __tests__/screens/DailyPlanLifecycle.test.tsx
+PASS __tests__/scripts/editorial-release.test.js
 PASS __tests__/navigation/themeNavigation.test.tsx
   ● Console
 
@@ -100,15 +100,15 @@ PASS __tests__/navigation/themeNavigation.test.tsx
       at Object.require (__tests__/navigation/themeNavigation.test.tsx:5:1)
 
 PASS __tests__/screens/SettingsScreen.test.tsx
-PASS __tests__/navigation/RootNavigator.test.tsx
 PASS __tests__/screens/NotificationsScreen.test.tsx
 PASS __tests__/screens/VoicePracticeScreen.test.tsx
+PASS __tests__/navigation/RootNavigator.test.tsx
 PASS __tests__/screens/HomeWorkload.integration.test.tsx
 PASS __tests__/screens/LearningPreferencesScreen.test.tsx
-PASS __tests__/utils/calendarDay.test.ts
-PASS __tests__/screens/ReviewScreen.test.tsx
 PASS __tests__/screens/ThemeSettingsScreen.test.tsx
 PASS __tests__/screens/DailyGoalScreen.test.tsx
+PASS __tests__/utils/calendarDay.test.ts
+PASS __tests__/screens/ReviewScreen.test.tsx
 PASS __tests__/screens/DifficultWordsScreen.test.tsx
   ● Console
 
@@ -205,98 +205,98 @@ PASS __tests__/screens/DifficultWordsScreen.test.tsx
       at setReduced (src/hooks/useReducedMotion.ts:16:33)
 
 PASS __tests__/navigation/reviewSaveBoundary.test.tsx
-PASS __tests__/missions/listening.test.ts
-PASS __tests__/screens/OnboardingRecovery.test.tsx
-PASS __tests__/screens/DailyPlanScreen.test.tsx
-PASS __tests__/screens/AddCardScreen.test.tsx
 PASS __tests__/services/crashReporting.test.ts
+PASS __tests__/screens/DailyPlanScreen.test.tsx
+PASS __tests__/screens/OnboardingRecovery.test.tsx
+PASS __tests__/missions/listening.test.ts
+PASS __tests__/screens/AddCardScreen.test.tsx
 PASS __tests__/AppThemeBootstrap.integration.test.tsx
 PASS __tests__/screens/ProgressScreen.test.tsx
 PASS __tests__/scripts/nyc-yaml.test.js
+PASS __tests__/components/Flashcard.test.tsx
 PASS __tests__/components/BarrioHomeContent.test.tsx
 PASS __tests__/scripts/xcode-uuid.test.js
-PASS __tests__/screens/AddCardScreen.theme.integration.test.tsx
-PASS __tests__/components/Flashcard.test.tsx
-PASS __tests__/scripts/generate-elevenlabs-audio.test.js
 PASS __tests__/services/tts.test.ts
+PASS __tests__/screens/AddCardScreen.theme.integration.test.tsx
 Without `from` option PostCSS could generate wrong source map and will not find Browserslist config. Set it to CSS file path or to `undefined` to prevent this warning.
 PASS __tests__/tooling/postcssSecurity.test.js
 PASS __tests__/screens/FlaggedScreen.test.tsx
+PASS __tests__/components/StorageGate.test.tsx
 PASS __tests__/components/FlashcardAudio.test.tsx
 PASS __tests__/components/ThemeBootstrap.test.tsx
-PASS __tests__/screens/ManageDecksScreen.test.tsx
-PASS __tests__/components/StorageGate.test.tsx
-PASS __tests__/screens/PhrasesScreen.test.tsx
 PASS __tests__/hooks/useFocusedAsync.test.tsx
+PASS __tests__/screens/ManageDecksScreen.test.tsx
+PASS __tests__/screens/PhrasesScreen.test.tsx
 PASS __tests__/storage/recommendedPlan.test.ts
 PASS __tests__/components/ConjugationPanel.test.tsx
+PASS __tests__/scripts/generate-elevenlabs-audio.test.js
 PASS __tests__/screens/MissionAudio.test.tsx
+PASS __tests__/components/ThemeIcon.test.tsx
 PASS __tests__/screens/FocusedDueRefresh.integration.test.tsx
 PASS __tests__/screens/PhrasebookScreen.test.tsx
-PASS __tests__/hooks/useReducedMotion.test.tsx
 PASS __tests__/storage/learningEvents.test.ts
-PASS __tests__/components/ConjugationTable.theme.test.tsx
 PASS __tests__/components/AudioButton.test.tsx
-PASS __tests__/components/ErrorBoundaryTheme.test.tsx
 PASS __tests__/components/ProgressBar.test.tsx
-PASS __tests__/lint/noDeprecatedSafeAreaView.test.ts
-PASS __tests__/components/StorageStatusTheme.test.tsx
-PASS __tests__/components/ThemedTextInput.test.tsx
-PASS __tests__/services/notifications.test.ts
 PASS __tests__/context/ThemeContext.test.tsx
-PASS __tests__/components/ThemeIcon.test.tsx
-PASS __tests__/storage/activityTimings.test.ts
-PASS __tests__/storage/studySessionSnapshot.test.ts
-PASS __tests__/storage/legacyBackupRecovery.test.ts
-PASS __tests__/exercises/production.test.ts
-PASS __tests__/storage/dailyPlans.test.ts
-PASS __tests__/missions/engine.test.ts
-PASS __tests__/storage/storage.test.ts
-PASS __tests__/storage/flashcardAnswer.test.ts
-PASS __tests__/storage/missions.test.ts
+PASS __tests__/components/ErrorBoundaryTheme.test.tsx
+PASS __tests__/hooks/useReducedMotion.test.tsx
 PASS __tests__/storage/portableBackup.test.ts
-PASS __tests__/screens/OnboardingScreen.test.tsx
-PASS __tests__/services/voicePractice.test.ts
+PASS __tests__/components/ThemedTextInput.test.tsx
+PASS __tests__/storage/activityTimings.test.ts
+PASS __tests__/components/ConjugationTable.theme.test.tsx
 PASS __tests__/hooks/useActiveStudyTime.test.tsx
-PASS __tests__/missions/activeTiming.test.ts
-PASS __tests__/storage/dailyGoalSettings.test.ts
-PASS __tests__/storage/backupSnapshot.test.ts
+PASS __tests__/lint/noDeprecatedSafeAreaView.test.ts
+PASS __tests__/services/notifications.test.ts
+PASS __tests__/storage/dailyPlans.test.ts
+PASS __tests__/components/StorageStatusTheme.test.tsx
+PASS __tests__/utils/phraseTopics.test.ts
+PASS __tests__/screens/OnboardingScreen.test.tsx
+PASS __tests__/exercises/production.test.ts
+PASS __tests__/missions/engine.test.ts
+PASS __tests__/services/voicePractice.test.ts
+PASS __tests__/storage/missions.test.ts
+PASS __tests__/storage/flashcardAnswer.test.ts
 PASS __tests__/utils/srs.test.ts
-PASS __tests__/storage/appliedPlan.test.ts
-PASS __tests__/storage/deckMutations.test.ts
-PASS __tests__/storage/backupRestore.test.ts
-PASS __tests__/styles/appTheme.test.ts
-PASS __tests__/storage/learningProfile.test.ts
+PASS __tests__/storage/studySessionSnapshot.test.ts
+PASS __tests__/storage/storage.test.ts
 PASS __tests__/storage/onboarding.test.ts
-PASS __tests__/utils/deckCategories.test.ts
-PASS __tests__/storage/calendarTransitions.test.ts
-PASS __tests__/storage/concurrentState.test.ts
-PASS __tests__/storage/durableStorage.test.ts
-PASS __tests__/storage/prefs.test.ts
+PASS __tests__/storage/dailyGoalSettings.test.ts
+PASS __tests__/storage/legacyBackupRecovery.test.ts
 PASS __tests__/utils/dailyReview.test.ts
-PASS __tests__/missions/firstMorning.test.ts
-PASS __tests__/speaking/voicePractice.test.ts
+PASS __tests__/missions/activeTiming.test.ts
+PASS __tests__/storage/calendarTransitions.test.ts
+PASS __tests__/storage/durableStorage.test.ts
+PASS __tests__/utils/regions.test.ts
+PASS __tests__/storage/backupSnapshot.test.ts
+PASS __tests__/storage/backupRestore.test.ts
+PASS __tests__/storage/learningProfile.test.ts
+PASS __tests__/storage/concurrentState.test.ts
+PASS __tests__/storage/deckMutations.test.ts
+PASS __tests__/storage/appliedPlan.test.ts
+PASS __tests__/styles/appTheme.test.ts
 PASS __tests__/services/backupFiles.test.ts
-PASS __tests__/data/phraseContent.test.ts
-PASS __tests__/utils/homePresentation.test.ts
-PASS __tests__/data/conjugationForms.test.ts
+PASS __tests__/missions/firstMorning.test.ts
 PASS __tests__/config/runtimeCompatibility.test.js
 PASS __tests__/data/exampleTranslations.test.ts
-PASS __tests__/data/conjugationCopy.test.ts
+PASS __tests__/storage/prefs.test.ts
+PASS __tests__/data/conjugationForms.test.ts
+PASS __tests__/data/phraseContent.test.ts
+PASS __tests__/utils/deckCategories.test.ts
+PASS __tests__/speaking/voicePractice.test.ts
+PASS __tests__/navigation/stackReturn.test.ts
+PASS __tests__/utils/homePresentation.test.ts
+PASS __tests__/utils/wordOfDay.test.ts
 PASS __tests__/utils/reviewPace.test.ts
-PASS __tests__/utils/regions.test.ts
+PASS __tests__/config/recordingPermissions.test.js
 PASS __tests__/utils/themePreference.test.ts
+PASS __tests__/data/conjugationCopy.test.ts
+PASS __tests__/utils/shuffle.test.ts
 PASS __tests__/utils/exampleText.test.ts
 PASS __tests__/utils/practiceEvidence.test.ts
-PASS __tests__/utils/wordOfDay.test.ts
-PASS __tests__/config/recordingPermissions.test.js
-PASS __tests__/navigation/stackReturn.test.ts
 PASS __tests__/utils/register.test.ts
-PASS __tests__/utils/shuffle.test.ts
-PASS __tests__/utils/phraseTopics.test.ts
 
 Test Suites: 117 passed, 117 total
-Tests:       1134 passed, 1134 total
+Tests:       1136 passed, 1136 total
 Snapshots:   0 total
-Time:        58.609 s
+Time:        52.188 s
 Ran all test suites.

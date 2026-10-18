@@ -133,6 +133,10 @@ export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId, reload } = useDeck();
   const nav = useNavigation<any>();
   const starting = useRef(false);
+  // Retry repeats the failed entry action; the controller still refreshes its inputs.
+  const lastStartIntent = useRef<
+    { kind: 'plan' } | { kind: 'study'; deckId: string; bounded: boolean } | undefined
+  >(undefined);
   const [barrioPending, setBarrioPending] = useState<HomePresentation | undefined>(undefined);
   const [studyStarting, setStudyStarting] = useState(false);
   const [studyStartError, setStudyStartError] = useState(false);
@@ -234,6 +238,7 @@ export default function HomeScreen() {
       return;
     }
     if (starting.current) return;
+    lastStartIntent.current = { kind: 'study', deckId, bounded };
     starting.current = true;
     setStudyStarting(true);
     setStudyStartError(false);
@@ -294,6 +299,7 @@ export default function HomeScreen() {
   };
   const startPlan = async () => {
     if (starting.current) return;
+    lastStartIntent.current = { kind: 'plan' };
     starting.current = true;
     setStudyStarting(true);
     setStudyStartError(false);
@@ -348,7 +354,10 @@ export default function HomeScreen() {
 
   if (barrioModel) {
     const presentation =
-      studyStarting && barrioPending
+      studyStarting &&
+      barrioPending &&
+      barrioModel.kind !== 'readError' &&
+      barrioModel.kind !== 'loading'
         ? { ...barrioPending, pending: true, startError: false }
         : barrioModel;
     const primary = () => {
@@ -363,8 +372,13 @@ export default function HomeScreen() {
       }
       // Display-only snapshot. The original operation still refreshes its own inputs atomically.
       setBarrioPending({ ...presentation, startError: false });
+      const retryIntent = studyStartError ? lastStartIntent.current : undefined;
       const operation =
-        activity.plan || response ? startPlan() : startStudy(recommendedDeck?.id, true);
+        retryIntent?.kind === 'study'
+          ? startStudy(retryIntent.deckId, retryIntent.bounded)
+          : retryIntent?.kind === 'plan' || activity.plan || response
+            ? startPlan()
+            : startStudy(recommendedDeck?.id, true);
       void operation.finally(() => {
         setBarrioPending(undefined);
       });

@@ -768,3 +768,58 @@ it('Barrio retries a rejected start while its original controller remains mounte
   await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
   expect(mockReload).toHaveBeenCalledTimes(2);
 });
+
+it('Barrio read failure overrides a pending presentation snapshot', async () => {
+  let release!: () => void;
+  mockReload.mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        release = resolve;
+      }),
+  );
+  const ui = renderWithTheme(<HomeScreen />);
+  await ui.findByText('Study due cards');
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  fireEvent.press(ui.getByRole('button', { name: 'Start my plan' }));
+  require('../../src/storage/storage').getDailyProgress.mockRejectedValueOnce(
+    new Error('read failed'),
+  );
+  const foreground = (AppState.addEventListener as jest.Mock).mock.calls.at(-1)![1];
+  await act(async () => foreground('active'));
+  try {
+    expect(ui.queryByText('Could not read your plan')).not.toBeNull();
+    expect(ui.queryByText('One step for today')).toBeNull();
+    expect(ui.queryByRole('button', { name: /Greetings,.*review/ })).toBeNull();
+    fireEvent.press(ui.getByRole('button', { name: 'Loading...' }));
+    expect(mockReload).toHaveBeenCalledTimes(1);
+  } finally {
+    await act(async () => release());
+    ui.unmount();
+  }
+});
+it('Barrio Retry repeats the selected direct deck start', async () => {
+  const other = {
+    ...DECK,
+    id: 'other-deck',
+    name: 'Other deck',
+    cards: [makeCard('other', { reps: 1, interval: 1 })],
+  };
+  mockUseDeck.mockReturnValue({
+    ready: true,
+    decks: [DECK, other],
+    activeDeckId: DECK.id,
+    activeDeck: DECK,
+    setActiveDeckId: jest.fn(),
+    reload: mockReload,
+  });
+  mockReload.mockRejectedValueOnce(new Error('read failed'));
+  const ui = renderWithTheme(<HomeScreen />);
+  await ui.findByText('Study due cards');
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  fireEvent.press(ui.getByRole('button', { name: /Other deck,/ }));
+  await ui.findByText('Could not open your practice. Try opening it again.');
+  fireEvent.press(ui.getByRole('button', { name: 'Retry' }));
+  await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
+  expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: 'other-deck' });
+  ui.unmount();
+});
