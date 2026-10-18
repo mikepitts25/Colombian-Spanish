@@ -1,0 +1,70 @@
+[
+  {
+    "file": "native/phone-en-dark-default.png",
+    "sha256": "709fa1d277b56ba6735cbb3644f4a664bcf07eee8431247844106c6ae5758de8"
+  },
+  {
+    "file": "native/phone-en-dark-maximum-middle.png",
+    "sha256": "b9d0f87c858d7dc8c5ac453779f3fd4193c9a7db11f792a15f1194bbf89165f1"
+  },
+  {
+    "file": "native/phone-en-dark-maximum-tail.png",
+    "sha256": "ecd9c369482a5165ea543bb7a265d1383b9f2550811a33041ce5c79fa608ea81"
+  },
+  {
+    "file": "native/phone-en-dark-maximum-top.png",
+    "sha256": "41c080635c233dfbcb9199478c1ba28b569145b77d440466de794ddc7e62b9b8"
+  },
+  {
+    "file": "native/phone-en-light-default.png",
+    "sha256": "def2f258f4974311b166c4b0faeaadde14a752ce01bee078c379891e6e0b6252"
+  },
+  {
+    "file": "native/phone-es-dark-default.png",
+    "sha256": "a6e8917a4126c0d85d210a7a600209886c075f9cd68357f0a702aa6d84ea4009"
+  },
+  {
+    "file": "native/phone-es-dark-maximum-middle.png",
+    "sha256": "7e313e324898e1a33dac200208a8e042407844786a6f5a4b6f6aef561dc82d30"
+  },
+  {
+    "file": "native/phone-es-dark-maximum-overlap.png",
+    "sha256": "fbe3f1199be836bf2d432f835a9fd7882fe805a526be0d7dc70572be40864186"
+  },
+  {
+    "file": "native/phone-es-dark-maximum-tail.png",
+    "sha256": "9d299e1735210eaeaf9dce158c7d0635bdb89794482132bce9252d37048dca0d"
+  },
+  {
+    "file": "native/phone-es-dark-maximum-top.png",
+    "sha256": "337af4936def5ca747dffa815974bbd22f98a80fc8c6f8ab5b1b317825bb2c20"
+  },
+  {
+    "file": "native/phone-es-light-default.png",
+    "sha256": "5bf928c414c002ae49c5aeabe579a2445e33fbe9f55321d21be74086eeeb69f6"
+  },
+  {
+    "file": "native/phone-es-light-maximum-middle.png",
+    "sha256": "715b5d5aea0dc93bc6b22d7022dc97c6758043ce426433a874b690761a8fecc2"
+  },
+  {
+    "file": "native/phone-es-light-maximum-overlap.png",
+    "sha256": "064a799007cd3114e8ad43891923fabab26c9d6df828c322afc2bbfaa54f3546"
+  },
+  {
+    "file": "native/phone-es-light-maximum-tail.png",
+    "sha256": "15197b87e81b4c5bfd346c8b8c015cd1d201a157292ef5ed4f2581cef4551d7d"
+  },
+  {
+    "file": "native/phone-es-light-maximum-top.png",
+    "sha256": "9b683e5bf27e0933636acc8a3dd9fab003918a1bb0d18a6788265aa23951c9f6"
+  },
+  {
+    "file": "native/phone-maximum-study.png",
+    "sha256": "4d4c351ac0b41c0f7476a689e9090b0a2d7e89c68d8f87f57fe0476fbac43d7c"
+  },
+  {
+    "file": "native/phone-restored.png",
+    "sha256": "431f4072e79d77b1c41c3ece5e07828bc61540eaed9aeee81bac49ff8897e0ec"
+  }
+]
