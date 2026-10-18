@@ -1,3 +1,5 @@
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
+import ThemeIcon from '../../src/components/ThemeIcon';
 import '@testing-library/jest-native/extend-expect';
 import React from 'react';
 import { Dimensions, ScrollView } from 'react-native';
@@ -1384,4 +1386,23 @@ test('a plan handoff retains a failed manual grade until its original retry sett
   } finally {
     read.mockRestore();
   }
+});
+
+test('Barrio audio entry uses the common decorative icon while Classic retains its glyph', async () => {
+  const initial = renderStudyScreen();
+  initial.unmount();
+  const screen = renderWithTheme(<StudyScreen />);
+  fireEvent.changeText(
+    await screen.findByPlaceholderText('Busca palabras, frases o decks...'),
+    'hola',
+  );
+  screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  expect(screen.UNSAFE_getAllByType(ThemeIcon).some((icon) => icon.props.name === 'audio')).toBe(
+    true,
+  );
+  expect(screen.queryAllByText('🔊')).toHaveLength(0);
+  fireEvent.press(screen.getAllByLabelText(/^Escuchar: /)[0]);
+  expect(require('../../src/services/tts').speakCard).toHaveBeenCalledTimes(1);
+  screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+  expect(screen.getAllByText('🔊').length).toBeGreaterThan(0);
 });

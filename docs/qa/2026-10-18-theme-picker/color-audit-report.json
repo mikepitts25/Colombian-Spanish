@@ -964,6 +964,18 @@
       "themeId": "classic",
       "appearanceMode": "dark",
       "foreground": "audioText",
+      "background": "audioSurface",
+      "minimum": 4.5,
+      "purpose": "actual control/status pair",
+      "foregroundValue": "#fff",
+      "backgroundValue": "#1f2937",
+      "ratio": 14.679,
+      "pass": true
+    },
+    {
+      "themeId": "classic",
+      "appearanceMode": "dark",
+      "foreground": "audioText",
       "background": "surfacePressed",
       "minimum": 4.5,
       "purpose": "actual control/status pair",
@@ -2673,6 +2685,18 @@
       "themeId": "barrio",
       "appearanceMode": "light",
       "foreground": "audioText",
+      "background": "audioSurface",
+      "minimum": 4.5,
+      "purpose": "actual control/status pair",
+      "foregroundValue": "#18352F",
+      "backgroundValue": "#EFEBDD",
+      "ratio": 11.074,
+      "pass": true
+    },
+    {
+      "themeId": "barrio",
+      "appearanceMode": "light",
+      "foreground": "audioText",
       "background": "surfacePressed",
       "minimum": 4.5,
       "purpose": "actual control/status pair",
@@ -4323,6 +4347,18 @@
       "foregroundValue": "#A7D6B2",
       "backgroundValue": "#25382F",
       "ratio": 7.657,
+      "pass": true
+    },
+    {
+      "themeId": "barrio",
+      "appearanceMode": "dark",
+      "foreground": "audioText",
+      "background": "audioSurface",
+      "minimum": 4.5,
+      "purpose": "actual control/status pair",
+      "foregroundValue": "#F7F3EA",
+      "backgroundValue": "#25382F",
+      "ratio": 11.252,
       "pass": true
     },
     {

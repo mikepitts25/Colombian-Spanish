@@ -1,0 +1,15 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/styles/themeConsumerAudit.test.ts
+
+PASS __tests__/styles/themeConsumerAudit.test.ts
+  ✓ the full runtime has no static palette consumers or unclassified colors (273 ms)
+  ✓ a metric-only import is legal but an injected static palette import is caught (342 ms)
+  ✓ an injected color occurrence requires explicit classification (170 ms)
+  ✓ named paint colors are audited while vocabulary and content names are not (151 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        1.698 s
+Ran all test suites within paths "__tests__/styles/themeConsumerAudit.test.ts".

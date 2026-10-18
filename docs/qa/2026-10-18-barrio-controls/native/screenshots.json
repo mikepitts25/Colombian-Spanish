@@ -1,0 +1,27 @@
+[
+  {
+    "file": "phone-barrio-home-audio.png",
+    "dimensions": [750, 1334],
+    "sha256": "10c27ac8e95f1757bbbc61fd86624debbaaacfe9c3624c2a3ed2ed1e6b2ca170"
+  },
+  {
+    "file": "phone-barrio-phrase-audio.png",
+    "dimensions": [750, 1334],
+    "sha256": "f1477458db9033db41c6df700a045894ea547b8b5b07f8b87f5435c76aef0715"
+  },
+  {
+    "file": "phone-barrio-quiz-feedback-upper.png",
+    "dimensions": [750, 1334],
+    "sha256": "e7e01c7abc32a0b7b39634f5a637e60d6d8da1460f397a92789f29bdd2cfe6bf"
+  },
+  {
+    "file": "phone-barrio-study-search-audio.png",
+    "dimensions": [750, 1334],
+    "sha256": "20462264c86d7a1ffa8f64cad6df9af07e68c1aa35a778764496c5a962fd0a66"
+  },
+  {
+    "file": "phone-classic-home.png",
+    "dimensions": [750, 1334],
+    "sha256": "758be56febdeb32bffaedb09bcb590272a0682b337ca93d0780bccbb226cc365"
+  }
+]

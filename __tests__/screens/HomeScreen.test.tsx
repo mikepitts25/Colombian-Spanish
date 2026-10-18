@@ -1,3 +1,4 @@
+import ThemeIcon from '../../src/components/ThemeIcon';
 import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
@@ -676,4 +677,18 @@ it('theme identity repaints Home while its recommendation and route remain the s
   await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
   ui.applyTheme({ themeId: 'classic', appearanceMode: 'dark' });
   expect(label).toHaveStyle({ color: '#020617' });
+});
+
+test('Barrio audio entry uses the common decorative icon while Classic retains its glyph', async () => {
+  const screen = renderWithTheme(<HomeScreen />);
+  await screen.findByText('Study due cards');
+  screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  expect(screen.UNSAFE_getAllByType(ThemeIcon).some((icon) => icon.props.name === 'audio')).toBe(
+    true,
+  );
+  expect(screen.queryAllByText('🔊')).toHaveLength(0);
+  fireEvent.press(screen.getByLabelText(/^Listen: /));
+  expect(mockSpeakCard).toHaveBeenCalledTimes(1);
+  screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+  expect(screen.getAllByText('🔊').length).toBeGreaterThan(0);
 });

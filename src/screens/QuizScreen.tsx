@@ -1,5 +1,6 @@
+import { controlSurface, controlText } from '../styles/controlStates';
 import Pressable from '../components/ThemedPressable';
-import { useThemedStyles } from '../context/ThemeContext';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
@@ -58,6 +59,7 @@ const MIN_QUIZ_WORDS = 1;
 const MAX_QUIZ_QUESTIONS = 10;
 
 export default function QuizScreen() {
+  const theme = useAppTheme();
   const styles = useThemedStyles(makeStyles);
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale >= 1.4;
@@ -249,6 +251,7 @@ export default function QuizScreen() {
     async (wasCorrect: boolean) => {
       if (!session || !answered.current || advancing.current) return;
       advancing.current = true;
+      setSaving(true);
       const nextAnswers = [...session.answers, wasCorrect];
       const nextScore = wasCorrect ? session.score + 1 : session.score;
       const nextIndex = session.currentIndex + 1;
@@ -275,6 +278,7 @@ export default function QuizScreen() {
         if (mounted.current) setSaveError(true);
       } finally {
         advancing.current = false;
+        if (mounted.current) setSaving(false);
       }
     },
     [finishQuiz, session],
@@ -606,11 +610,13 @@ export default function QuizScreen() {
         )}
         {showFeedback && (
           <Pressable
-            style={styles.primaryButton}
+            style={({ pressed }) => [styles.primaryButton, controlSurface(theme, pressed, saving)]}
             onPress={() => void handleNext(isCorrect)}
+            accessibilityRole="button"
+            accessibilityState={{ disabled: saving, busy: saving }}
             disabled={saving}
           >
-            <Text style={styles.primaryButtonText}>
+            <Text style={[styles.primaryButtonText, controlText(theme, saving)]}>
               {t(
                 session.currentIndex + 1 === session.questions.length ? 'quiz.finish' : 'quiz.next',
               )}

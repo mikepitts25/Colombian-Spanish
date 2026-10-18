@@ -1,3 +1,5 @@
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
+import ThemeIcon from '../../src/components/ThemeIcon';
 import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react-native';
 import { Dimensions } from 'react-native';
@@ -185,4 +187,18 @@ test('keeps one favorite request through live resizing and reflects the saved ca
   fireEvent.press(screen.getByRole('button', { name: 'Open Favorites' }));
   expect(mockNavigate).toHaveBeenCalledWith('Phrasebook');
   expect(mockToggleFavorite).toHaveBeenCalledTimes(1);
+});
+
+test('Barrio audio entry uses the common decorative icon while Classic retains its glyph', async () => {
+  const screen = renderWithTheme(<PhrasesScreen />);
+  fireEvent.press(screen.getByText('Weather today'));
+  screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  expect(screen.UNSAFE_getAllByType(ThemeIcon).some((icon) => icon.props.name === 'audio')).toBe(
+    true,
+  );
+  expect(screen.queryAllByText('🔊')).toHaveLength(0);
+  fireEvent.press(screen.getByLabelText('Play Hace mucho calor hoy'));
+  expect(mockSpeakCard).toHaveBeenCalledWith(expect.objectContaining({ id: 'weather-heat' }));
+  screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+  expect(screen.getAllByText('🔊').length).toBeGreaterThan(0);
 });

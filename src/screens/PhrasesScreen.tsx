@@ -1,5 +1,6 @@
+import ThemeIcon from '../components/ThemeIcon';
 import Pressable from '../components/ThemedPressable';
-import { useThemedStyles } from '../context/ThemeContext';
+import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useState } from 'react';
 import { FlatList, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
@@ -208,6 +209,7 @@ function PhraseCard({
   onToggleFavorite: () => void;
 }) {
   const styles = useThemedStyles(makeStyles);
+  const theme = useAppTheme();
   return (
     <View style={[styles.phraseCard, expanded && styles.stacked]}>
       <View style={[styles.phraseCopy, expanded && styles.unflexed]}>
@@ -222,9 +224,13 @@ function PhraseCard({
           style={styles.actionButton}
           onPress={onPlay}
         >
-          <Text allowFontScaling={false} style={styles.actionText}>
-            🔊
-          </Text>
+          {theme.id === 'classic' ? (
+            <Text allowFontScaling={false} style={styles.actionText}>
+              🔊
+            </Text>
+          ) : (
+            <ThemeIcon name="audio" size={18} color={theme.colors.textPrimary} />
+          )}
         </Pressable>
         <Pressable
           accessibilityRole="button"
