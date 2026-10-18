@@ -1,0 +1,65 @@
+FAIL __tests__/screens/MissionScreen.test.tsx (7.545 s)
+  ✓ choice actions keep stable React list keys (869 ms)
+  ✓ complete draft flow records three assessed recalls and one recognition without changing daily/SRS state (606 ms)
+  ✓ retains failed submission for retry and resumes exact feedback without persisting raw text (337 ms)
+  ✓ hints are counted on explicit retries and incorrect answers permit assisted continuation (376 ms)
+  ✓ load failure offers retry and production gate prevents accessing draft content (108 ms)
+  ✓ blocks rapid actions and local exit during a pending checkpoint (60 ms)
+  ✓ preserves partial input when revealing a hint (217 ms)
+  ✓ allows local exit after a settled checkpoint failure while retaining retry (221 ms)
+  ✓ offers difficult-phrase recall/reveal without writing extra events or changing the completed checkpoint (605 ms)
+  ✓ a linked one-response activity starts its planned run and completes only that plan (218 ms)
+  ✓ times only actionable foreground segments, preserving hint/save retry timing without counting waits (325 ms)
+  ✓ cold response resume with feedback=false never invents a lost timing segment (268 ms)
+  ✓ cold response resume with feedback=true never invents a lost timing segment (270 ms)
+  ✓ notifies the parent when a pending save settles even after the player unmounts (57 ms)
+  ✓ a held response checkpoint retains draft and exactly one command across identity changes (171 ms)
+  ✓ reveals the measured focused response when the software keyboard opens without recording an answer (164 ms)
+  ✓ waits for current response geometry after rotation and live text changes, retaining the ungraded draft (168 ms)
+  ✕ keeps the focused response eligible after a hint revision without requiring refocus (217 ms)
+  ✕ can reuse unchanged response frames after translation changes without waiting for absent layout events (166 ms)
+
+  ● keeps the focused response eligible after a hint revision without requiring refocus
+
+    expect(jest.fn()).toHaveBeenLastCalledWith(...expected)
+
+    Expected: {"animated": false, "y": 1044}
+
+    Number of calls: 0
+
+      479 |     DeviceEventEmitter.emit('keyboardDidShow', { endCoordinates: { screenY: 400, height: 267 } }),
+      480 |   );
+    > 481 |   expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 1044, animated: false });
+          |                           ^
+      482 |   expect(ui.getByDisplayValue('Buenos dias')).toBeTruthy();
+      483 |   expect((await missionStorage.loadMissionRun(FIRST_MORNING)).run?.hintsUsed).toBe(1);
+      484 | });
+
+      at Object.toHaveBeenLastCalledWith (__tests__/screens/MissionScreen.test.tsx:481:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● can reuse unchanged response frames after translation changes without waiting for absent layout events
+
+    expect(jest.fn()).toHaveBeenLastCalledWith(...expected)
+
+    Expected: {"animated": false, "y": 984}
+
+    Number of calls: 0
+
+      504 |     DeviceEventEmitter.emit('keyboardDidShow', { endCoordinates: { screenY: 400, height: 267 } }),
+      505 |   );
+    > 506 |   expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 984, animated: false });
+          |                           ^
+      507 | });
+      508 |
+
+      at Object.toHaveBeenLastCalledWith (__tests__/screens/MissionScreen.test.tsx:506:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 17 passed, 19 total
+Snapshots:   0 total
+Time:        7.782 s
+Ran all test suites within paths "__tests__/screens/MissionScreen.test.tsx".

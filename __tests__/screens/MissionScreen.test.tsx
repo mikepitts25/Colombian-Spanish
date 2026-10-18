@@ -2,7 +2,7 @@ import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
-import { AppState, AppStateStatus } from 'react-native';
+import { AppState, AppStateStatus, DeviceEventEmitter, Dimensions, ScrollView } from 'react-native';
 import { DAILY_RESPONSE } from '../../src/missions/dailyResponse';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MissionScreen from '../../src/screens/MissionScreen';
@@ -11,6 +11,7 @@ import * as missionStorage from '../../src/storage/missions';
 import { getLearningEvents } from '../../src/storage/learningEvents';
 const mockBack = jest.fn();
 let mockPreview = true;
+let mockLanguage: 'en' | 'es' = 'en';
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ goBack: mockBack }),
   useFocusEffect: (cb: () => void) => require('react').useEffect(cb, [cb]),
@@ -22,8 +23,8 @@ jest.mock('../../src/config', () => ({
 }));
 jest.mock('../../src/context/LanguageContext', () => ({
   useLanguage: () => ({
-    language: 'en',
-    t: (key: any) => require('../../src/i18n/translations').translate('en', key),
+    language: mockLanguage,
+    t: (key: any) => require('../../src/i18n/translations').translate(mockLanguage, key),
   }),
 }));
 jest.mock('../../src/hooks/useDeck', () => ({
@@ -56,6 +57,7 @@ beforeEach(async () => {
   jest.restoreAllMocks();
   jest.clearAllMocks();
   mockPreview = true;
+  mockLanguage = 'en';
   await AsyncStorage.clear();
 });
 async function begin() {
@@ -382,4 +384,124 @@ test('a held response checkpoint retains draft and exactly one command across id
   } finally {
     release();
   }
+});
+
+test('reveals the measured focused response when the software keyboard opens without recording an answer', async () => {
+  const ui = await begin();
+  const input = ui.getByLabelText('Your response');
+  const card = ui.getByTestId('mission-node');
+  const scroll = ui.UNSAFE_getAllByType(ScrollView)[0].instance;
+  fireEvent.changeText(input, 'Buenos dias');
+  await act(async () => {
+    card.props.onLayout?.({ nativeEvent: { layout: { x: 20, y: 800, width: 335, height: 500 } } });
+    input.props.onLayout?.({ nativeEvent: { layout: { x: 20, y: 200, width: 295, height: 80 } } });
+  });
+  fireEvent(input, 'focus');
+  scroll.scrollTo.mockClear();
+  act(() =>
+    DeviceEventEmitter.emit('keyboardDidShow', { endCoordinates: { screenY: 400, height: 267 } }),
+  );
+  expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 984, animated: false });
+  expect(ui.getByDisplayValue('Buenos dias')).toBeTruthy();
+  expect(await getLearningEvents()).toEqual([]);
+  fireEvent(input, 'blur');
+  scroll.scrollTo.mockClear();
+  act(() =>
+    DeviceEventEmitter.emit('keyboardDidShow', { endCoordinates: { screenY: 400, height: 267 } }),
+  );
+  expect(scroll.scrollTo).not.toHaveBeenCalled();
+});
+
+test('waits for current response geometry after rotation and live text changes, retaining the ungraded draft', async () => {
+  const originalWindow = Dimensions.get('window');
+  const originalScreen = Dimensions.get('screen');
+  const ui = await begin();
+  const measure = async (part: 'card' | 'input', y: number) =>
+    act(async () => {
+      const target =
+        part === 'card' ? ui.getByTestId('mission-node') : ui.getByLabelText('Your response');
+      target.props.onLayout?.({ nativeEvent: { layout: { x: 20, y, width: 335, height: 100 } } });
+    });
+  try {
+    fireEvent.changeText(ui.getByLabelText('Your response'), 'Buenos dias');
+    await measure('card', 800);
+    await measure('input', 200);
+    fireEvent(ui.getByLabelText('Your response'), 'focus');
+    const scroll = () => ui.UNSAFE_getAllByType(ScrollView)[0].instance;
+    scroll().scrollTo.mockClear();
+    await act(async () =>
+      Dimensions.set({ window: { ...originalWindow, width: 900, height: 400 } }),
+    );
+    fireEvent(ui.UNSAFE_getAllByType(ScrollView)[0], 'layout', {
+      persist: () => {},
+      nativeEvent: { layout: { width: 900, height: 250 } },
+    });
+    expect(scroll().scrollTo).not.toHaveBeenCalled();
+    await measure('card', 600);
+    expect(scroll().scrollTo).not.toHaveBeenCalled();
+    await measure('input', 150);
+    expect(scroll().scrollTo).toHaveBeenLastCalledWith({ y: 734, animated: false });
+    await act(async () => Dimensions.set({ window: { ...originalWindow, fontScale: 3 } }));
+    scroll().scrollTo.mockClear();
+    fireEvent(ui.getByLabelText('Your response'), 'focus');
+    await measure('card', 1600);
+    expect(scroll().scrollTo).not.toHaveBeenCalled();
+    await measure('input', 300);
+    expect(scroll().scrollTo).toHaveBeenLastCalledWith({ y: 1884, animated: false });
+    expect(ui.getByDisplayValue('Buenos dias')).toBeTruthy();
+    expect(await getLearningEvents()).toEqual([]);
+  } finally {
+    ui.unmount();
+    act(() => Dimensions.set({ window: originalWindow, screen: originalScreen }));
+  }
+});
+
+test('keeps the focused response eligible after a hint revision without requiring refocus', async () => {
+  const ui = await begin();
+  const input = ui.getByLabelText('Your response');
+  const measure = (part: 'card' | 'input', y: number) =>
+    act(() => {
+      const target =
+        part === 'card' ? ui.getByTestId('mission-node') : ui.getByLabelText('Your response');
+      target.props.onLayout({ nativeEvent: { layout: { x: 20, y, width: 335, height: 100 } } });
+    });
+  measure('card', 800);
+  measure('input', 200);
+  fireEvent.changeText(input, 'Buenos dias');
+  fireEvent(input, 'focus');
+  fireEvent.press(ui.getByText('Hint'));
+  await ui.findByText('Begin with buenos…');
+  const scroll = ui.UNSAFE_getAllByType(ScrollView)[0].instance;
+  scroll.scrollTo.mockClear();
+  measure('card', 800);
+  measure('input', 260);
+  act(() =>
+    DeviceEventEmitter.emit('keyboardDidShow', { endCoordinates: { screenY: 400, height: 267 } }),
+  );
+  expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 1044, animated: false });
+  expect(ui.getByDisplayValue('Buenos dias')).toBeTruthy();
+  expect((await missionStorage.loadMissionRun(FIRST_MORNING)).run?.hintsUsed).toBe(1);
+});
+
+test('can reuse unchanged response frames after translation changes without waiting for absent layout events', async () => {
+  const ui = await begin();
+  await act(async () => {
+    ui.getByTestId('mission-node').props.onLayout({
+      nativeEvent: { layout: { x: 20, y: 800, width: 335, height: 500 } },
+    });
+    ui.getByLabelText('Your response').props.onLayout({
+      nativeEvent: { layout: { x: 20, y: 200, width: 295, height: 80 } },
+    });
+  });
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'Buenos dias');
+  fireEvent(ui.getByLabelText('Your response'), 'focus');
+  mockLanguage = 'es';
+  ui.applyTheme({ themeId: 'barrio', appearanceMode: 'dark' });
+  expect(ui.getByLabelText('Tu respuesta')).toHaveProp('value', 'Buenos dias');
+  const scroll = ui.UNSAFE_getAllByType(ScrollView)[0].instance;
+  scroll.scrollTo.mockClear();
+  act(() =>
+    DeviceEventEmitter.emit('keyboardDidShow', { endCoordinates: { screenY: 400, height: 267 } }),
+  );
+  expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 984, animated: false });
 });

@@ -1,0 +1,8 @@
+{
+  "device": "F9BC32B5-9591-4CEA-9363-707D3A7E204D",
+  "name": "Colombian Spanish Barrio Tablet QA",
+  "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-8GB",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+  "sources": ["simctl list devices --json", "own device.plist"],
+  "capturedAt": "2026-10-18T13:06:13.312354+00:00"
+}

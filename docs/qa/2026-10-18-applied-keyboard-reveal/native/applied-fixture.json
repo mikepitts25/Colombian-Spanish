@@ -1,0 +1,6 @@
+{
+  "mode": "v3 original plus prior applied dailyPlan/missions and English preference",
+  "backupSHA256": "ae75a305d441ea64494c4b40c2bb627477deb8af63ba0ece38f98af7d9e64b98",
+  "characters": 376530,
+  "changedFields": ["dailyPlan", "missions", "prefs.uiLanguage"]
+}

@@ -1,0 +1,8 @@
+PASS __tests__/screens/MissionScreen.test.tsx (7.279 s)
+PASS __tests__/screens/DailyPlanScreen.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       23 passed, 23 total
+Snapshots:   0 total
+Time:        7.98 s, estimated 9 s
+Ran all test suites within paths "__tests__/screens/MissionScreen.test.tsx", "__tests__/screens/DailyPlanScreen.test.tsx".
