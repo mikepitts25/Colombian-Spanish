@@ -8,7 +8,7 @@
 
 **Tech Stack:** Existing TypeScript/React Native/Expo57, React19, React Navigation7, theme/i18n/control components, Jest/RNTL, own-container iOS development simulators. No new product dependency.
 
-**Spec:** [2026-10-18-barrio-home-design.md](../specs/2026-10-18-barrio-home-design.md), owner approved in this chat on 2026-10-18. [Composition references](../../design/2026-10-18-barrio-home/README.md). This plan is prepared for review; no runtime step is approved or completed yet.
+**Spec:** [2026-10-18-barrio-home-design.md](../specs/2026-10-18-barrio-home-design.md), owner approved in this chat on 2026-10-18. [Composition references](../../design/2026-10-18-barrio-home/README.md). Owner approved this plan and Native execution in this chat on2026-10-18. Runtime steps below track actual execution.
 
 ## Global Constraints
 
@@ -111,11 +111,11 @@ Task2 exports `BarrioHomeContentProps` with `presentation: HomePresentation`, `g
 
 **Interfaces:** Consumes Task1 model/keys. Produces the typed component/callback props above. No controller, IO, feature gating or route ownership moves into this component.
 
-- [ ] **Step 1:** Write component tests for one primary CTA in each kind; exact state/copy, pending disabled/busy, read/start alert distinction, conditional new-card/catch-up text, singular/plural activity/streak/freezes, retained queue count without invented remaining time, full long Spanish deck name, no fictional applied phase and no stale activity section. Fire every tool, Browse, Manage, deck and word-audio action and assert exact callback arguments. Development tools exist only when supplied enabled. Assert one named Listen+phrase control and no accessible decorative cup.
-- [ ] **Step 2:** Run `npm test -- --runInBand --runTestsByPath __tests__/components/BarrioHomeContent.test.tsx`. Expected RED for missing component/behavior.
-- [ ] **Step 3:** Implement `BarrioHomeContent(props: BarrioHomeContentProps)` in the spec's section order, with multiline content and min48 targets. Two-column tools only when fontScale<1.4 and available content width≥360 points; otherwise stack. Grow all text containers; no ellipsis on deck names, fixed text height or absolute footer. Native measurement keys may depend on fontScale only below the owner. Use semantic roles/state helpers for pressed/disabled/focus and progressbar current/max. Render the original cup as a128×128 transparent asset at40×40 points with existing accent tint; hide at fontScale≥1.4 or content width<320. Store vector and provenance; no dependency/install. All-false future phase flags show the phase label alone, current/finished/unavailable append the spec status text. Keep unknown activity omitted and raw daily count uncapped in prose.
-- [ ] **Step 4:** Rerun Step2 plus `npm run typecheck` and `node scripts/audit-theme-colors.js`. Expected GREEN with no unclassified new occurrence; record any existing Classic exceptions without changing them. Verify cup PNG dimensions/transparency and reproducible regeneration with the external renderer; no runtime board raster.
-- [ ] **Step 5:** Commit `feat: build accessible Barrio Home composition`.
+- [x] **Step 1:** Write component tests for one primary CTA in each kind; exact state/copy, pending disabled/busy, read/start alert distinction, conditional new-card/catch-up text, singular/plural activity/streak/freezes, retained queue count without invented remaining time, full long Spanish deck name, no fictional applied phase and no stale activity section. Fire every tool, Browse, Manage, deck and word-audio action and assert exact callback arguments. Development tools exist only when supplied enabled. Assert one named Listen+phrase control and no accessible decorative cup.
+- [x] **Step 2:** Run `npm test -- --runInBand --runTestsByPath __tests__/components/BarrioHomeContent.test.tsx`. Expected RED for missing component/behavior.
+- [x] **Step 3:** Implement `BarrioHomeContent(props: BarrioHomeContentProps)` in the spec's section order, with multiline content and min48 targets. Two-column tools only when fontScale<1.4 and available content width≥360 points; otherwise stack. Grow all text containers; no ellipsis on deck names, fixed text height or absolute footer. Native measurement keys may depend on fontScale only below the owner. Use semantic roles/state helpers for pressed/disabled/focus and progressbar current/max. Render the original cup as a128×128 transparent asset at40×40 points with existing accent tint; hide at fontScale≥1.4 or content width<320. Store vector and provenance; no dependency/install. All-false future phase flags show the phase label alone, current/finished/unavailable append the spec status text. Keep unknown activity omitted and raw daily count uncapped in prose.
+- [x] **Step 4:** Rerun Step2 plus `npm run typecheck` and `node scripts/audit-theme-colors.js`. Expected GREEN with no unclassified new occurrence; record any existing Classic exceptions without changing them. Verify cup PNG dimensions/transparency and reproducible regeneration with the external renderer; no runtime board raster.
+- [x] **Step 5:** Commit `feat: build accessible Barrio Home composition`.
 
 ## Task 3: Stable Home integration and real-provider retention
 
@@ -147,4 +147,4 @@ Spec coverage: state/copy/count/estimate/availability→Task1; original art/layo
 
 Recommend **Native** execution: these four tasks share the presentation contract and existing Home controller, so inline work avoids handoff churn; one independent whole-branch review remains required. Preserve the owner's standing Native execution preference. This later Home plan still needs review; do not infer that earlier foundation approval executes an unreviewed plan.
 
-Owner review of this implementation plan is pending. No task checkbox is complete until its actual work and verification are performed.
+Owner review approved this implementation plan and Native execution on2026-10-18. Task checkboxes record performed work and verification; unfinished tasks remain open.

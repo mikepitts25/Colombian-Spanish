@@ -3757,6 +3757,181 @@
       "line": 62
     },
     {
+      "key": "src/components/BarrioHomeContent.tsx|audioText|1",
+      "base": "src/components/BarrioHomeContent.tsx|audioText",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "audioText",
+      "line": 324
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|textPrimary|1",
+      "base": "src/components/BarrioHomeContent.tsx|textPrimary",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "textPrimary",
+      "line": 410
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|accentRed|1",
+      "base": "src/components/BarrioHomeContent.tsx|accentRed",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "accentRed",
+      "line": 411
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|surface|1",
+      "base": "src/components/BarrioHomeContent.tsx|surface",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "surface",
+      "line": 413
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|border|1",
+      "base": "src/components/BarrioHomeContent.tsx|border",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "border",
+      "line": 414
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|textSecondary|1",
+      "base": "src/components/BarrioHomeContent.tsx|textSecondary",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "textSecondary",
+      "line": 420
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|textPrimary|2",
+      "base": "src/components/BarrioHomeContent.tsx|textPrimary",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "textPrimary",
+      "line": 421
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|textSecondary|2",
+      "base": "src/components/BarrioHomeContent.tsx|textSecondary",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "textSecondary",
+      "line": 422
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|textSecondary|3",
+      "base": "src/components/BarrioHomeContent.tsx|textSecondary",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "textSecondary",
+      "line": 423
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|textPrimary|3",
+      "base": "src/components/BarrioHomeContent.tsx|textPrimary",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "textPrimary",
+      "line": 424
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|danger|1",
+      "base": "src/components/BarrioHomeContent.tsx|danger",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "danger",
+      "line": 425
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|surfaceElevated|1",
+      "base": "src/components/BarrioHomeContent.tsx|surfaceElevated",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "surfaceElevated",
+      "line": 426
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|textPrimary|4",
+      "base": "src/components/BarrioHomeContent.tsx|textPrimary",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "textPrimary",
+      "line": 427
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|brand|1",
+      "base": "src/components/BarrioHomeContent.tsx|brand",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "brand",
+      "line": 435
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|surfaceElevated|2",
+      "base": "src/components/BarrioHomeContent.tsx|surfaceElevated",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "surfaceElevated",
+      "line": 437
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|border|2",
+      "base": "src/components/BarrioHomeContent.tsx|border",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "border",
+      "line": 438
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|onBrand|1",
+      "base": "src/components/BarrioHomeContent.tsx|onBrand",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "onBrand",
+      "line": 441
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|textPrimary|5",
+      "base": "src/components/BarrioHomeContent.tsx|textPrimary",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "textPrimary",
+      "line": 442
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|textPrimary|6",
+      "base": "src/components/BarrioHomeContent.tsx|textPrimary",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "textPrimary",
+      "line": 444
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|progressTrack|1",
+      "base": "src/components/BarrioHomeContent.tsx|progressTrack",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "progressTrack",
+      "line": 448
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|progressSuccess|1",
+      "base": "src/components/BarrioHomeContent.tsx|progressSuccess",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "progressSuccess",
+      "line": 451
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|surface|2",
+      "base": "src/components/BarrioHomeContent.tsx|surface",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "surface",
+      "line": 453
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|border|3",
+      "base": "src/components/BarrioHomeContent.tsx|border",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "border",
+      "line": 454
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|textPrimary|7",
+      "base": "src/components/BarrioHomeContent.tsx|textPrimary",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "textPrimary",
+      "line": 462
+    },
+    {
+      "key": "src/components/BarrioHomeContent.tsx|audioSurface|1",
+      "base": "src/components/BarrioHomeContent.tsx|audioSurface",
+      "path": "src/components/BarrioHomeContent.tsx",
+      "role": "audioSurface",
+      "line": 467
+    },
+    {
       "key": "src/components/ConjugationPanel.tsx|surfaceElevated|1",
       "base": "src/components/ConjugationPanel.tsx|surfaceElevated",
       "path": "src/components/ConjugationPanel.tsx",
@@ -5483,329 +5658,329 @@
       "base": "src/screens/HomeScreen.tsx|mutedInk",
       "path": "src/screens/HomeScreen.tsx",
       "role": "mutedInk",
-      "line": 579
+      "line": 583
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|1",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 588
+      "line": 592
     },
     {
       "key": "src/screens/HomeScreen.tsx|surfaceElevated|1",
       "base": "src/screens/HomeScreen.tsx|surfaceElevated",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surfaceElevated",
-      "line": 598
+      "line": 602
     },
     {
       "key": "src/screens/HomeScreen.tsx|bg|1",
       "base": "src/screens/HomeScreen.tsx|bg",
       "path": "src/screens/HomeScreen.tsx",
       "role": "bg",
-      "line": 643
+      "line": 647
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|1",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 646
+      "line": 650
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|1",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 662
+      "line": 666
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|2",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 663
+      "line": 667
     },
     {
       "key": "src/screens/HomeScreen.tsx|flagHighlight|1",
       "base": "src/screens/HomeScreen.tsx|flagHighlight",
       "path": "src/screens/HomeScreen.tsx",
       "role": "flagHighlight",
-      "line": 668
+      "line": 672
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|1",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 677
+      "line": 681
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|2",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 680
+      "line": 684
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|2",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 691
+      "line": 695
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|2",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 698
+      "line": 702
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|3",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 700
+      "line": 704
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|3",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 706
+      "line": 710
     },
     {
       "key": "src/screens/HomeScreen.tsx|surfaceElevated|2",
       "base": "src/screens/HomeScreen.tsx|surfaceElevated",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surfaceElevated",
-      "line": 709
+      "line": 713
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|3",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 712
+      "line": 716
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|4",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 717
+      "line": 721
     },
     {
       "key": "src/screens/HomeScreen.tsx|subtlePanel|1",
       "base": "src/screens/HomeScreen.tsx|subtlePanel",
       "path": "src/screens/HomeScreen.tsx",
       "role": "subtlePanel",
-      "line": 722
+      "line": 726
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|4",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 732
+      "line": 736
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|5",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 734
+      "line": 738
     },
     {
       "key": "src/screens/HomeScreen.tsx|surfaceElevated|3",
       "base": "src/screens/HomeScreen.tsx|surfaceElevated",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surfaceElevated",
-      "line": 742
+      "line": 746
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|3",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 748
+      "line": 752
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|4",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 753
+      "line": 757
     },
     {
       "key": "src/screens/HomeScreen.tsx|textInverse|1",
       "base": "src/screens/HomeScreen.tsx|textInverse",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textInverse",
-      "line": 759
+      "line": 763
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|2",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 767
+      "line": 771
     },
     {
       "key": "src/screens/HomeScreen.tsx|softHighlightEdge|1",
       "base": "src/screens/HomeScreen.tsx|softHighlightEdge",
       "path": "src/screens/HomeScreen.tsx",
       "role": "softHighlightEdge",
-      "line": 770
+      "line": 774
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|5",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 781
+      "line": 785
     },
     {
       "key": "src/screens/HomeScreen.tsx|accentBlue|1",
       "base": "src/screens/HomeScreen.tsx|accentBlue",
       "path": "src/screens/HomeScreen.tsx",
       "role": "accentBlue",
-      "line": 790
+      "line": 794
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|6",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 795
+      "line": 799
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|5",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 796
+      "line": 800
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|3",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 811
+      "line": 815
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|4",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 813
+      "line": 817
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|6",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 817
+      "line": 821
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|7",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 822
+      "line": 826
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|8",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 834
+      "line": 841
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|6",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 835
+      "line": 842
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|7",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 836
+      "line": 843
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|4",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 843
+      "line": 850
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|5",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 845
+      "line": 852
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|9",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 858
+      "line": 865
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|7",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 859
+      "line": 866
     },
     {
       "key": "src/screens/HomeScreen.tsx|troubleWash|1",
       "base": "src/screens/HomeScreen.tsx|troubleWash",
       "path": "src/screens/HomeScreen.tsx",
       "role": "troubleWash",
-      "line": 861
+      "line": 868
     },
     {
       "key": "src/screens/HomeScreen.tsx|restoreDanger|1",
       "base": "src/screens/HomeScreen.tsx|restoreDanger",
       "path": "src/screens/HomeScreen.tsx",
       "role": "restoreDanger",
-      "line": 866
+      "line": 873
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|5",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 868
+      "line": 875
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|6",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 870
+      "line": 877
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|10",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 875
+      "line": 882
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|8",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 876
+      "line": 883
     },
     {
       "key": "src/screens/LearningPreferencesScreen.tsx|textSecondary|1",
@@ -6022,98 +6197,98 @@
       "base": "src/screens/MissionScreen.tsx|bg",
       "path": "src/screens/MissionScreen.tsx",
       "role": "bg",
-      "line": 505
+      "line": 557
     },
     {
       "key": "src/screens/MissionScreen.tsx|textPrimary|1",
       "base": "src/screens/MissionScreen.tsx|textPrimary",
       "path": "src/screens/MissionScreen.tsx",
       "role": "textPrimary",
-      "line": 507
+      "line": 559
     },
     {
       "key": "src/screens/MissionScreen.tsx|brand|1",
       "base": "src/screens/MissionScreen.tsx|brand",
       "path": "src/screens/MissionScreen.tsx",
       "role": "brand",
-      "line": 508
+      "line": 560
     },
     {
       "key": "src/screens/MissionScreen.tsx|textPrimary|2",
       "base": "src/screens/MissionScreen.tsx|textPrimary",
       "path": "src/screens/MissionScreen.tsx",
       "role": "textPrimary",
-      "line": 509
+      "line": 561
     },
     {
       "key": "src/screens/MissionScreen.tsx|textSecondary|1",
       "base": "src/screens/MissionScreen.tsx|textSecondary",
       "path": "src/screens/MissionScreen.tsx",
       "role": "textSecondary",
-      "line": 510
+      "line": 562
     },
     {
       "key": "src/screens/MissionScreen.tsx|textPrimary|3",
       "base": "src/screens/MissionScreen.tsx|textPrimary",
       "path": "src/screens/MissionScreen.tsx",
       "role": "textPrimary",
-      "line": 511
+      "line": 563
     },
     {
       "key": "src/screens/MissionScreen.tsx|surface|1",
       "base": "src/screens/MissionScreen.tsx|surface",
       "path": "src/screens/MissionScreen.tsx",
       "role": "surface",
-      "line": 513
+      "line": 565
     },
     {
       "key": "src/screens/MissionScreen.tsx|borderBrand|1",
       "base": "src/screens/MissionScreen.tsx|borderBrand",
       "path": "src/screens/MissionScreen.tsx",
       "role": "borderBrand",
-      "line": 518
+      "line": 570
     },
     {
       "key": "src/screens/MissionScreen.tsx|brand|2",
       "base": "src/screens/MissionScreen.tsx|brand",
       "path": "src/screens/MissionScreen.tsx",
       "role": "brand",
-      "line": 522
+      "line": 574
     },
     {
       "key": "src/screens/MissionScreen.tsx|textInverse|1",
       "base": "src/screens/MissionScreen.tsx|textInverse",
       "path": "src/screens/MissionScreen.tsx",
       "role": "textInverse",
-      "line": 528
+      "line": 580
     },
     {
       "key": "src/screens/MissionScreen.tsx|borderActive|1",
       "base": "src/screens/MissionScreen.tsx|borderActive",
       "path": "src/screens/MissionScreen.tsx",
       "role": "borderActive",
-      "line": 533
+      "line": 585
     },
     {
       "key": "src/screens/MissionScreen.tsx|textPrimary|4",
       "base": "src/screens/MissionScreen.tsx|textPrimary",
       "path": "src/screens/MissionScreen.tsx",
       "role": "textPrimary",
-      "line": 536
+      "line": 588
     },
     {
       "key": "src/screens/MissionScreen.tsx|brand|3",
       "base": "src/screens/MissionScreen.tsx|brand",
       "path": "src/screens/MissionScreen.tsx",
       "role": "brand",
-      "line": 539
+      "line": 591
     },
     {
       "key": "src/screens/MissionScreen.tsx|brand|4",
       "base": "src/screens/MissionScreen.tsx|brand",
       "path": "src/screens/MissionScreen.tsx",
       "role": "brand",
-      "line": 540
+      "line": 592
     },
     {
       "key": "src/screens/NotificationsScreen.tsx|border|1",
