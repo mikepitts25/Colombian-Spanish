@@ -1,0 +1,35 @@
+{
+  "base": "cd06fd3cd05295edf2e7335bf52b928869859cfe",
+  "device": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+  "sourcePort": 8099,
+  "language": "es",
+  "nativeChanges": false,
+  "savedSelection": {
+    "themeId": "barrio",
+    "appearanceMode": "system"
+  },
+  "nativeAppearanceSequence": ["Light", "Dark", "Light"],
+  "nativeTextSequence": [3, 11, 3],
+  "finalSelection": "original implicit Classic/System",
+  "imageSHA256": {
+    "barrio-system-light-home.png": "565195723bc257eef17e8934b783576f0ae3489cdea5962fa10bb31d4deef64e",
+    "barrio-system-dark-max.png": "374ffe17fdc00683f4a0c79ebbb05ce3d124bfdccc3927df418e81a6b6225d52",
+    "baseline-cold-restored.png": "91b29bc1fb785e39b7245416a9c81c43feb0b4d76112a80df4c4a41cac97002e",
+    "classic-saved-home.png": "6514c7a884ea5800399a9c19f25cff9545ccfde3b17a7d3edfe0896f5326c829",
+    "classic-cold-metro.png": "9b54bbff2452ddb0b1a1bdc44fc8312540c9d59d52406d8e6587d45f0045574c",
+    "barrio-system-dark-home.png": "16080a8f598a4a14eee2d169baa06498089deaa99f3e5dc9e66a959b2b84d138",
+    "barrio-system-light-return.png": "2bd94768c6dd0120c5d9e7b238a87809729648b93dda72f8b80568631a9dadcf",
+    "classic-cold-home.png": "027d4a1419133a1399b9c8b6a4346c3770e772958f1dd2c42f9481c493ceff42",
+    "baseline-restored.png": "eddf5f68c25c08cf3f0522a2de62cffadbdfcab39b38800a2213aa5a5fc3a23e",
+    "theme-open.png": "327cbcf31f58bd3653464cdbd29d14e30f5ae010282435b4c9bacef1e17d7774"
+  },
+  "unaccepted": [
+    "maximum-text precise touch positioning",
+    "English long titles",
+    "tablet matrix",
+    "other platforms",
+    "signed/physical/assistive acceptance",
+    "source-device cold protection"
+  ],
+  "failedLaunchImage": "classic-cold-home.png"
+}
