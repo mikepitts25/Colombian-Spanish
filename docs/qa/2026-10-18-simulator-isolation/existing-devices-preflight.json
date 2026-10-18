@@ -1,0 +1,46 @@
+[
+  {
+    "isolated": false,
+    "requestedDevice": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "bundle": "com.mikepitts.colombianspanish",
+    "error": "Container is outside requested device A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F: /Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+    "exitCode": 1
+  },
+  {
+    "isolated": true,
+    "requestedDevice": "E66076BE-D9F8-49FB-870F-F29B57C4CA40",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66076BE-D9F8-49FB-870F-F29B57C4CA40/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66076BE-D9F8-49FB-870F-F29B57C4CA40/data/Containers/Data/Application/4ACB8BEA-2FF2-4899-AB94-032DF8D8095F",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66076BE-D9F8-49FB-870F-F29B57C4CA40/data/Containers/Data/Application/4ACB8BEA-2FF2-4899-AB94-032DF8D8095F",
+    "bundle": "com.mikepitts.colombianspanish",
+    "exitCode": 0
+  },
+  {
+    "isolated": false,
+    "requestedDevice": "6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1",
+    "bundle": "com.mikepitts.colombianspanish",
+    "error": "Container is outside requested device 6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1: /Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+    "exitCode": 1
+  },
+  {
+    "isolated": false,
+    "requestedDevice": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+    "bundle": "com.mikepitts.colombianspanish",
+    "error": "Command '['xcrun', 'simctl', 'get_app_container', 'F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6', 'com.mikepitts.colombianspanish', 'data']' returned non-zero exit status 149.",
+    "exitCode": 1
+  },
+  {
+    "isolated": false,
+    "requestedDevice": "B51A3777-8E81-4049-B101-C2B18390E2B1",
+    "bundle": "com.mikepitts.colombianspanish",
+    "error": "Command '['xcrun', 'simctl', 'get_app_container', 'B51A3777-8E81-4049-B101-C2B18390E2B1', 'com.mikepitts.colombianspanish', 'data']' returned non-zero exit status 149.",
+    "exitCode": 1
+  },
+  {
+    "isolated": false,
+    "requestedDevice": "AFCA5E93-0434-45B1-911C-E06B2B3A0BC8",
+    "bundle": "com.mikepitts.colombianspanish",
+    "error": "Command '['xcrun', 'simctl', 'get_app_container', 'AFCA5E93-0434-45B1-911C-E06B2B3A0BC8', 'com.mikepitts.colombianspanish', 'data']' returned non-zero exit status 149.",
+    "exitCode": 1
+  }
+]

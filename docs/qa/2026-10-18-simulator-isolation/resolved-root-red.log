@@ -1,0 +1,32 @@
+...FF.F....
+======================================================================
+FAIL: test_rejects_aliased_data_directory (test_simulator_isolation.SimulatorIsolationTests.test_rejects_aliased_data_directory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/scripts/tests/test_simulator_isolation.py", line 79, in test_rejects_aliased_data_directory
+    with self.assertRaisesRegex(ValueError, 'outside requested device'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_rejects_aliased_device_directory (test_simulator_isolation.SimulatorIsolationTests.test_rejects_aliased_device_directory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/scripts/tests/test_simulator_isolation.py", line 68, in test_rejects_aliased_device_directory
+    with self.assertRaisesRegex(ValueError, 'outside requested device'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_rejects_application_alias_resolving_to_own_shared_group (test_simulator_isolation.SimulatorIsolationTests.test_rejects_application_alias_resolving_to_own_shared_group)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mike/.codex/worktrees/complete-backups/Colombian-Spanish/scripts/tests/test_simulator_isolation.py", line 90, in test_rejects_application_alias_resolving_to_own_shared_group
+    with self.assertRaisesRegex(ValueError, 'application container root'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.010s
+
+FAILED (failures=3)

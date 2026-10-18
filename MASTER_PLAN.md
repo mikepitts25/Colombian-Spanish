@@ -12,6 +12,8 @@
 
 **Last updated:** 2026-10-18. **Status:** Foundation, learning correctness, recoverable draft missions, follow-up practice, audio preferences and initial accessibility batches merged/pushed with successful CI. iPhone/iPad simulator evidence is recorded. Remaining AI implementation and human/device gates are tracked below; the roadmap is not all complete.
 
+**Simulator isolation correction (2026-10-18):** Some cloned QA devices report and use a foreign device data directory. Historical clone-independence/source-protection claims for the identified aliases require audit or repetition; actual UI observations and automated tests remain bounded evidence. The source changed in this discovery was fully restored through app UI and cold-verified. Use the [mandatory QA preflight](docs/qa/SIMULATOR_PREFLIGHT.md) before further simulator app interaction.
+
 ## How to use this checklist
 
 - This file owns priorities, dependencies, and completion. Older plans remain historical references; `PROJECT_HUB.md` and `APP_STORE_CHECKLIST.md` must point here.
@@ -97,7 +99,9 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
 - [ ] **B01.5 [AI, SIM]** Locate/install supported Android tooling if available, document the actual environment constraint if not, and establish an emulator workflow without treating iOS success as Android success.
   - [x] **B01.5-A [AI]** Reinspect the Mac: Android Studio and bundled JDK 21 exist; SDK, platform tools and project emulator are absent. Record an actionable setup path. [Environment evidence](docs/qa/ANDROID_TOOLCHAIN.md).
   - [ ] **B01.5-B [AI, SIM, H-ACCOUNT]** Obtain SDK license authorization, install verified tooling/system image, create a dedicated emulator and run native flows. Agreement question is pending; no acceptance or Android runtime pass is claimed.
-- [x] **B01.6 [AI]** Document repeatable commands, fixture reset, screenshots, and build artifacts. Preserve user data and unrelated simulator sessions.
+- [ ] **B01.6 [AI, SIM]** Document repeatable commands, fixture reset, screenshots, and build artifacts. Preserve user data and unrelated simulator sessions. Reopened for newly discovered clone data-path aliasing.
+  - [x] **B01.6-A [AI, SIM]** Add read-only explicit-device container preflight, eleven pure/CLI tests in CI, a guarded capture helper and documented quarantine/fresh-install workflow. Restore the discovered ungraded mission change through supported import; all eleven source hashes retain baseline through actual source cold launch and fresh replacement startup. [Evidence](docs/qa/2026-10-18-simulator-isolation/REPORT.md). No product or security behavior change.
+  - [ ] **B01.6-B [AI, SIM]** Audit remaining clone mappings and historical independent-store/source-preservation claims; repeat affected destructive-fixture or cross-device checks on preflighted fresh installations. Known aliases are shut down; unbooted lookups are unverified. Do not infer independence from a simulator name/UUID.
 
 - [x] **B01.7 [AI]** Record the dependency audit and apply compatible locked dependency updates without a forced major upgrade. See the dated foundation report for before/after counts.
 - [ ] **B01.8 [AI]** Triage remaining dependency advisory paths and implement a separately verified SDK/navigation upgrade where required; the current audit still has high findings.
@@ -862,3 +866,7 @@ B08.1-A1 completes the AI preparation of three Home directions and a three-scree
 ## 2026-10-18 — Study/editor transaction audit
 
 B02.4-B2n adds two real-stack integration checks for queued editor writes during grading and editor-triggered journal recovery followed by the original UI retry. Both pass against the existing implementation: content edits survive, exact remainder/session persists and no duplicate grade/new credit occurs. Full101 suites997 tests, types, lint and formatting pass. [Scope and fault boundaries](docs/qa/2026-10-18-study-editor-races/REPORT.md) distinguish in-memory software faults from native OS/process acceptance. Broader audit and security/human/platform/device gates remain open.
+
+## 2026-10-18 — Simulator data-path isolation correction
+
+B01.6-A delivers a read-only preflight and fresh-install replacement workflow after discovering a new clone writing an ungraded mission run into its source store. The original clone-isolation assumption was incorrect. Supported app import restored all eleven original source records, verified through actual source cold launch; source is shutdown again. Eleven Python tests and recorded-state verifier pass. [Report](docs/qa/2026-10-18-simulator-isolation/REPORT.md) identifies two older foreign-path lookups, quarantined/stopped surfaces and the passing fresh replacement. B01.6 is reopened for the historical claim audit; the intended keyboard-open check and broader native/human/account/device gates remain open. Security access remains blocked and untouched.

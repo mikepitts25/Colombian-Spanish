@@ -28,6 +28,8 @@ jobs:
       - run: npm run lint
       - run: npm run format:check
       - run: npm test -- --runInBand
+      - name: Simulator preflight scope tests (no native runtime)
+        run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts/tests -p test_simulator_isolation.py
       - run: npm run test:calendar
       - run: npm run validate:data
       - run: npm run content:validate-reviews
@@ -77,7 +79,7 @@ jobs:
             echo ''
             echo '| Check | Result |'
             echo '| --- | --- |'
-            echo "| Types, lint, formatting, Jest, content | $QUALITY_RESULT |"
+            echo "| Types, lint, formatting, Jest/Python, content | $QUALITY_RESULT |"
             echo "| iOS/Android project generation and JS bundles | $NATIVE_RESULT |"
             echo ''
             echo 'Native compilation, signing, physical-device QA, and editorial acceptance are not established by these checks.'

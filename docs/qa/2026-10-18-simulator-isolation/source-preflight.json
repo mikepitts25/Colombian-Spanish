@@ -1,0 +1,8 @@
+{
+  "isolated": true,
+  "requestedDevice": "B51A3777-8E81-4049-B101-C2B18390E2B1",
+  "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data",
+  "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+  "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+  "bundle": "com.mikepitts.colombianspanish"
+}
