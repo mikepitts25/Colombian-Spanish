@@ -435,3 +435,126 @@ test.each([
     expect(await getDailyProgress()).toEqual(daily);
   },
 );
+
+test.each([
+  [true, 'interrupted'],
+  [false, 'interrupted'],
+  [true, 'held'],
+  [false, 'held'],
+] as const)(
+  'deleting the active deck leaves a safe Study boundary (fallback=%s, boundary=%s)',
+  async (hasFallback, boundary) => {
+    const beta: Deck = {
+      id: 'beta',
+      name: 'Beta',
+      cards: [card('beta-first'), card('beta-second')],
+    };
+    await AsyncStorage.setItem(
+      'SRS_DECKS_V3',
+      JSON.stringify([
+        { id: 'alpha', name: 'Alpha', cards: [card('first'), card('second')] },
+        ...(hasFallback ? [beta] : []),
+      ]),
+    );
+    let screen = render(<App />);
+    await screen.findByText('phrase first');
+    await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    const alphaSession = (await getLastStudySession())?.queue?.sessionId;
+    const write = AsyncStorage.setItem as jest.Mock;
+    const originalWrite = write.getMockImplementation()!;
+    let release!: () => void;
+    let entered!: () => void;
+    const held = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const started = new Promise<void>((resolve) => {
+      entered = resolve;
+    });
+    releaseHeldWrite = release;
+    let interrupt = true;
+    write.mockImplementation(async (key: string, value: string) => {
+      if (
+        interrupt &&
+        boundary === 'held' &&
+        key === 'SRS_WRITE_JOURNAL_V1' &&
+        JSON.parse(value).entries.some(
+          ([entryKey]: [string, string]) => entryKey === 'SRS_LEARNING_EVENTS_V1',
+        )
+      ) {
+        interrupt = false;
+        entered();
+        await held;
+      } else if (interrupt && boundary === 'interrupted' && key === 'SRS_DECKS_V3') {
+        interrupt = false;
+        throw new Error('simulated interrupted active-deck grade');
+      }
+      return originalWrite(key, value);
+    });
+    if (boundary === 'held') {
+      await act(async () => {
+        fireEvent.press(screen.getByText('Bien'));
+        await started;
+        const deleting = current.deleteDeck('alpha');
+        release();
+        await deleting;
+      });
+    } else {
+      await act(async () => fireEvent.press(screen.getByText('Bien')));
+      await screen.findByText(
+        'No se pudo guardar. Reintenta la misma respuesta antes de continuar.',
+      );
+      const journal = JSON.parse((await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1'))!);
+      const eventEntry = journal.entries.find(
+        ([key]: [string, string]) => key === 'SRS_LEARNING_EVENTS_V1',
+      );
+      expect(JSON.parse(eventEntry[1]).events).toEqual([
+        expect.objectContaining({ cardId: 'first', quality: 4, sessionId: alphaSession }),
+      ]);
+      await act(async () => current.deleteDeck('alpha'));
+    }
+    if (hasFallback) {
+      await screen.findByText('phrase beta-first');
+      await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    } else {
+      await screen.findByText('Selecciona un deck');
+    }
+    expect(screen.queryByText('phrase first')).toBeNull();
+    expect(screen.queryByText('phrase second')).toBeNull();
+    expect(screen.queryByText('Intentar guardar de nuevo')).toBeNull();
+    const stored = await loadDecks();
+    expect(stored).toEqual(hasFallback ? [beta] : []);
+    expect(current.decks).toEqual(stored);
+    expect(current.activeDeck?.id).toBe(hasFallback ? 'beta' : undefined);
+    const events = await getLearningEvents();
+    expect(events).toEqual([
+      expect.objectContaining({ cardId: 'first', quality: 4, sessionId: alphaSession }),
+    ]);
+    const daily = await getDailyProgress();
+    expect(daily).toMatchObject({ count: 1, newCount: 1 });
+    expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
+    const remaining = await getLastStudySession();
+    if (hasFallback) {
+      expect(remaining?.deckId).toBe('beta');
+      expect(remaining?.queue?.sessionId).not.toBe(alphaSession);
+      expect(remaining?.queue?.cardIds).toEqual(['beta-first', 'beta-second']);
+    }
+    screen.unmount();
+    screen = render(<App />);
+    if (hasFallback) {
+      fireEvent.press(await screen.findByText('Continuar'));
+      await screen.findByText('phrase beta-first');
+      await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+      expect((await getLastStudySession())?.queue).toEqual(remaining?.queue);
+    } else {
+      await screen.findByText('Selecciona un deck');
+      expect(screen.queryByText('Continuar')).toBeNull();
+      expect(screen.queryByText('Bien')).toBeNull();
+    }
+    expect(screen.queryByText('phrase first')).toBeNull();
+    expect(screen.queryByText('Intentar guardar de nuevo')).toBeNull();
+    expect(await loadDecks()).toEqual(stored);
+    expect(await getLearningEvents()).toEqual(events);
+    expect(await getDailyProgress()).toEqual(daily);
+    expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
+  },
+);
