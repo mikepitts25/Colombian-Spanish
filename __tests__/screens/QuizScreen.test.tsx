@@ -1,3 +1,6 @@
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
+import Pressable from '../../src/components/ThemedPressable';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getLearningEvents } from '../../src/storage/learningEvents';
@@ -94,7 +97,7 @@ function renderQuiz(overrides = {}) {
     recordAnswer: jest.fn().mockResolvedValue(undefined),
     ...overrides,
   });
-  return render(<QuizScreen />);
+  return renderWithTheme(<QuizScreen />);
 }
 
 beforeEach(async () => {
@@ -425,4 +428,42 @@ it('retains a pending selected answer and feedback through live text changes wit
     screen.unmount();
     act(() => Dimensions.set({ window, screen: screenMetrics }));
   }
+});
+
+test('Barrio Finish shows pressed and pending paint while preserving one result write and Classic paint', async () => {
+  mockGetSeenWords.mockResolvedValue(CARDS.slice(0, 1).map(makeSeenWord));
+  let release!: (value: unknown[]) => void;
+  (recordQuizResult as jest.Mock).mockImplementationOnce(
+    () =>
+      new Promise((resolve) => {
+        release = resolve;
+      }),
+  );
+  const screen = renderQuiz();
+  screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
+  fireEvent.press(await screen.findByText('Start Quiz'));
+  const prompt = screen.getByText(/^front-c/).props.children as string;
+  fireEvent.press(screen.getByText(prompt.replace('front-', 'back-')));
+  const finish = await screen.findByText('See results');
+  const button = screen
+    .UNSAFE_getAllByType(Pressable)
+    .find((node) => node.findAllByProps({ children: 'See results' }).length)!;
+  expect(
+    StyleSheet.flatten(
+      typeof button.props.style === 'function'
+        ? button.props.style({ pressed: true })
+        : button.props.style,
+    ),
+  ).toMatchObject({ backgroundColor: '#184A3A' });
+  fireEvent.press(finish);
+  fireEvent.press(finish);
+  expect(recordQuizResult).toHaveBeenCalledTimes(1);
+  expect(screen.getByText('See results')).toBeDisabled();
+  expect(screen.getByText('See results')).toHaveStyle({ color: '#58675E' });
+  expect(StyleSheet.flatten(button.props.style({ pressed: false }))).toMatchObject({
+    backgroundColor: '#E8E5DD',
+  });
+  screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
+  expect(screen.getByText('See results')).toHaveStyle({ color: '#020617' });
+  await act(async () => release([]));
 });

@@ -1570,7 +1570,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Colombianisms",
       "value": "#FFDA00",
-      "line": 57,
+      "line": 58,
       "disposition": "classic-only"
     },
     {
@@ -1580,7 +1580,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Essentials",
       "value": "#60a5fa",
-      "line": 58,
+      "line": 59,
       "disposition": "classic-only"
     },
     {
@@ -1590,7 +1590,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'People & Relationships'",
       "value": "#f472b6",
-      "line": 59,
+      "line": 60,
       "disposition": "classic-only"
     },
     {
@@ -1600,7 +1600,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Places & Travel'",
       "value": "#34d399",
-      "line": 60,
+      "line": 61,
       "disposition": "classic-only"
     },
     {
@@ -1610,7 +1610,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Home & Daily Life'",
       "value": "#a78bfa",
-      "line": 61,
+      "line": 62,
       "disposition": "classic-only"
     },
     {
@@ -1620,7 +1620,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Food & Drink'",
       "value": "#fb923c",
-      "line": 62,
+      "line": 63,
       "disposition": "classic-only"
     },
     {
@@ -1630,7 +1630,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Communication",
       "value": "#38bdf8",
-      "line": 63,
+      "line": 64,
       "disposition": "classic-only"
     },
     {
@@ -1640,7 +1640,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Health",
       "value": "#f87171",
-      "line": 64,
+      "line": 65,
       "disposition": "classic-only"
     },
     {
@@ -1650,7 +1650,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Nature",
       "value": "#4ade80",
-      "line": 65,
+      "line": 66,
       "disposition": "classic-only"
     },
     {
@@ -1660,7 +1660,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Work & School'",
       "value": "#94a3b8",
-      "line": 66,
+      "line": 67,
       "disposition": "classic-only"
     },
     {
@@ -1670,7 +1670,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Numbers & Time'",
       "value": "#c084fc",
-      "line": 67,
+      "line": 68,
       "disposition": "classic-only"
     },
     {
@@ -1680,7 +1680,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "'Fun & Culture'",
       "value": "#fbbf24",
-      "line": 68,
+      "line": 69,
       "disposition": "classic-only"
     },
     {
@@ -1690,7 +1690,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Tech",
       "value": "#22d3ee",
-      "line": 69,
+      "line": 70,
       "disposition": "classic-only"
     },
     {
@@ -1700,7 +1700,7 @@
       "declaration": "CATEGORY_COLORS",
       "property": "Other",
       "value": "#64748b",
-      "line": 70,
+      "line": 71,
       "disposition": "classic-only"
     },
     {
@@ -1710,7 +1710,7 @@
       "declaration": "render",
       "property": "backgroundColor",
       "value": "#FFDA00",
-      "line": 330,
+      "line": 331,
       "disposition": "meaningful-flag-art"
     },
     {
@@ -1720,7 +1720,7 @@
       "declaration": "render",
       "property": "backgroundColor",
       "value": "#003893",
-      "line": 331,
+      "line": 332,
       "disposition": "meaningful-flag-art"
     },
     {
@@ -1730,7 +1730,7 @@
       "declaration": "render",
       "property": "backgroundColor",
       "value": "#CE1126",
-      "line": 332,
+      "line": 333,
       "disposition": "meaningful-flag-art"
     },
     {
@@ -1790,7 +1790,7 @@
       "declaration": "GRADES",
       "property": "color",
       "value": "#f87171",
-      "line": 46,
+      "line": 47,
       "disposition": "classic-only"
     },
     {
@@ -1800,7 +1800,7 @@
       "declaration": "GRADES",
       "property": "bg",
       "value": "rgba(206,17,38,0.3)",
-      "line": 47,
+      "line": 48,
       "disposition": "classic-only"
     },
     {
@@ -1810,7 +1810,7 @@
       "declaration": "GRADES",
       "property": "border",
       "value": "#CE1126",
-      "line": 48,
+      "line": 49,
       "disposition": "classic-only"
     },
     {
@@ -1820,7 +1820,7 @@
       "declaration": "GRADES",
       "property": "color",
       "value": "#fb923c",
-      "line": 53,
+      "line": 54,
       "disposition": "classic-only"
     },
     {
@@ -1830,7 +1830,7 @@
       "declaration": "GRADES",
       "property": "bg",
       "value": "rgba(251,146,60,0.25)",
-      "line": 54,
+      "line": 55,
       "disposition": "classic-only"
     },
     {
@@ -1840,7 +1840,7 @@
       "declaration": "GRADES",
       "property": "border",
       "value": "#fb923c",
-      "line": 55,
+      "line": 56,
       "disposition": "classic-only"
     },
     {
@@ -1850,7 +1850,7 @@
       "declaration": "GRADES",
       "property": "color",
       "value": "#FFDA00",
-      "line": 60,
+      "line": 61,
       "disposition": "classic-only"
     },
     {
@@ -1860,7 +1860,7 @@
       "declaration": "GRADES",
       "property": "bg",
       "value": "rgba(255,218,0,0.22)",
-      "line": 61,
+      "line": 62,
       "disposition": "classic-only"
     },
     {
@@ -1870,7 +1870,7 @@
       "declaration": "GRADES",
       "property": "border",
       "value": "#FFDA00",
-      "line": 62,
+      "line": 63,
       "disposition": "classic-only"
     },
     {
@@ -1880,7 +1880,7 @@
       "declaration": "GRADES",
       "property": "color",
       "value": "#10b981",
-      "line": 67,
+      "line": 68,
       "disposition": "classic-only"
     },
     {
@@ -1890,7 +1890,7 @@
       "declaration": "GRADES",
       "property": "bg",
       "value": "rgba(16,185,129,0.25)",
-      "line": 68,
+      "line": 69,
       "disposition": "classic-only"
     },
     {
@@ -1900,7 +1900,7 @@
       "declaration": "GRADES",
       "property": "border",
       "value": "#10b981",
-      "line": 69,
+      "line": 70,
       "disposition": "classic-only"
     },
     {
@@ -5462,336 +5462,350 @@
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 480
+      "line": 481
+    },
+    {
+      "key": "src/screens/HomeScreen.tsx|audioSurface|1",
+      "base": "src/screens/HomeScreen.tsx|audioSurface",
+      "path": "src/screens/HomeScreen.tsx",
+      "role": "audioSurface",
+      "line": 493
+    },
+    {
+      "key": "src/screens/HomeScreen.tsx|audioText|1",
+      "base": "src/screens/HomeScreen.tsx|audioText",
+      "path": "src/screens/HomeScreen.tsx",
+      "role": "audioText",
+      "line": 502
     },
     {
       "key": "src/screens/HomeScreen.tsx|mutedInk|1",
       "base": "src/screens/HomeScreen.tsx|mutedInk",
       "path": "src/screens/HomeScreen.tsx",
       "role": "mutedInk",
-      "line": 569
+      "line": 579
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|1",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 578
+      "line": 588
     },
     {
       "key": "src/screens/HomeScreen.tsx|surfaceElevated|1",
       "base": "src/screens/HomeScreen.tsx|surfaceElevated",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surfaceElevated",
-      "line": 588
+      "line": 598
     },
     {
       "key": "src/screens/HomeScreen.tsx|bg|1",
       "base": "src/screens/HomeScreen.tsx|bg",
       "path": "src/screens/HomeScreen.tsx",
       "role": "bg",
-      "line": 633
+      "line": 643
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|1",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 636
+      "line": 646
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|1",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 652
+      "line": 662
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|2",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 653
+      "line": 663
     },
     {
       "key": "src/screens/HomeScreen.tsx|flagHighlight|1",
       "base": "src/screens/HomeScreen.tsx|flagHighlight",
       "path": "src/screens/HomeScreen.tsx",
       "role": "flagHighlight",
-      "line": 658
+      "line": 668
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|1",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 667
+      "line": 677
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|2",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 670
+      "line": 680
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|2",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 681
+      "line": 691
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|2",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 688
+      "line": 698
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|3",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 690
+      "line": 700
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|3",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 696
+      "line": 706
     },
     {
       "key": "src/screens/HomeScreen.tsx|surfaceElevated|2",
       "base": "src/screens/HomeScreen.tsx|surfaceElevated",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surfaceElevated",
-      "line": 699
+      "line": 709
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|3",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 702
+      "line": 712
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|4",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 707
+      "line": 717
     },
     {
       "key": "src/screens/HomeScreen.tsx|subtlePanel|1",
       "base": "src/screens/HomeScreen.tsx|subtlePanel",
       "path": "src/screens/HomeScreen.tsx",
       "role": "subtlePanel",
-      "line": 712
+      "line": 722
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|4",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 722
+      "line": 732
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|5",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 724
+      "line": 734
     },
     {
       "key": "src/screens/HomeScreen.tsx|surfaceElevated|3",
       "base": "src/screens/HomeScreen.tsx|surfaceElevated",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surfaceElevated",
-      "line": 732
+      "line": 742
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|3",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 738
+      "line": 748
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|4",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 743
+      "line": 753
     },
     {
       "key": "src/screens/HomeScreen.tsx|textInverse|1",
       "base": "src/screens/HomeScreen.tsx|textInverse",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textInverse",
-      "line": 749
+      "line": 759
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|2",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 757
+      "line": 767
     },
     {
       "key": "src/screens/HomeScreen.tsx|softHighlightEdge|1",
       "base": "src/screens/HomeScreen.tsx|softHighlightEdge",
       "path": "src/screens/HomeScreen.tsx",
       "role": "softHighlightEdge",
-      "line": 760
+      "line": 770
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|5",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 771
+      "line": 781
     },
     {
       "key": "src/screens/HomeScreen.tsx|accentBlue|1",
       "base": "src/screens/HomeScreen.tsx|accentBlue",
       "path": "src/screens/HomeScreen.tsx",
       "role": "accentBlue",
-      "line": 780
+      "line": 790
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|6",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 785
+      "line": 795
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|5",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 786
+      "line": 796
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|3",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 801
+      "line": 811
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|4",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 803
+      "line": 813
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|6",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 807
+      "line": 817
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|7",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 812
+      "line": 822
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|8",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 824
+      "line": 834
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|6",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 825
+      "line": 835
     },
     {
       "key": "src/screens/HomeScreen.tsx|brand|7",
       "base": "src/screens/HomeScreen.tsx|brand",
       "path": "src/screens/HomeScreen.tsx",
       "role": "brand",
-      "line": 826
+      "line": 836
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|4",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 833
+      "line": 843
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|5",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 835
+      "line": 845
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|9",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 848
+      "line": 858
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|7",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 849
+      "line": 859
     },
     {
       "key": "src/screens/HomeScreen.tsx|troubleWash|1",
       "base": "src/screens/HomeScreen.tsx|troubleWash",
       "path": "src/screens/HomeScreen.tsx",
       "role": "troubleWash",
-      "line": 851
+      "line": 861
     },
     {
       "key": "src/screens/HomeScreen.tsx|restoreDanger|1",
       "base": "src/screens/HomeScreen.tsx|restoreDanger",
       "path": "src/screens/HomeScreen.tsx",
       "role": "restoreDanger",
-      "line": 856
+      "line": 866
     },
     {
       "key": "src/screens/HomeScreen.tsx|surface|5",
       "base": "src/screens/HomeScreen.tsx|surface",
       "path": "src/screens/HomeScreen.tsx",
       "role": "surface",
-      "line": 858
+      "line": 868
     },
     {
       "key": "src/screens/HomeScreen.tsx|border|6",
       "base": "src/screens/HomeScreen.tsx|border",
       "path": "src/screens/HomeScreen.tsx",
       "role": "border",
-      "line": 860
+      "line": 870
     },
     {
       "key": "src/screens/HomeScreen.tsx|textPrimary|10",
       "base": "src/screens/HomeScreen.tsx|textPrimary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textPrimary",
-      "line": 865
+      "line": 875
     },
     {
       "key": "src/screens/HomeScreen.tsx|textSecondary|8",
       "base": "src/screens/HomeScreen.tsx|textSecondary",
       "path": "src/screens/HomeScreen.tsx",
       "role": "textSecondary",
-      "line": 866
+      "line": 876
     },
     {
       "key": "src/screens/LearningPreferencesScreen.tsx|textSecondary|1",
@@ -6501,235 +6515,242 @@
       "line": 162
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|bg|1",
-      "base": "src/screens/PhrasesScreen.tsx|bg",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "bg",
-      "line": 247
-    },
-    {
       "key": "src/screens/PhrasesScreen.tsx|textPrimary|1",
       "base": "src/screens/PhrasesScreen.tsx|textPrimary",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "textPrimary",
-      "line": 248
+      "line": 232
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|bg|1",
+      "base": "src/screens/PhrasesScreen.tsx|bg",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "bg",
+      "line": 253
     },
     {
       "key": "src/screens/PhrasesScreen.tsx|textPrimary|2",
       "base": "src/screens/PhrasesScreen.tsx|textPrimary",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "textPrimary",
-      "line": 256
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|textSecondary|1",
-      "base": "src/screens/PhrasesScreen.tsx|textSecondary",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "textSecondary",
-      "line": 257
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|surfaceElevated|1",
-      "base": "src/screens/PhrasesScreen.tsx|surfaceElevated",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "surfaceElevated",
-      "line": 260
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|borderBrand|1",
-      "base": "src/screens/PhrasesScreen.tsx|borderBrand",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "borderBrand",
-      "line": 261
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|brand|1",
-      "base": "src/screens/PhrasesScreen.tsx|brand",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "brand",
-      "line": 268
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|surface|1",
-      "base": "src/screens/PhrasesScreen.tsx|surface",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "surface",
-      "line": 272
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|border|1",
-      "base": "src/screens/PhrasesScreen.tsx|border",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "border",
-      "line": 273
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|surfacePressed|1",
-      "base": "src/screens/PhrasesScreen.tsx|surfacePressed",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "surfacePressed",
-      "line": 280
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|brandMuted|1",
-      "base": "src/screens/PhrasesScreen.tsx|brandMuted",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "brandMuted",
-      "line": 283
+      "line": 254
     },
     {
       "key": "src/screens/PhrasesScreen.tsx|textPrimary|3",
       "base": "src/screens/PhrasesScreen.tsx|textPrimary",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "textPrimary",
-      "line": 291
+      "line": 262
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|textSecondary|2",
+      "key": "src/screens/PhrasesScreen.tsx|textSecondary|1",
       "base": "src/screens/PhrasesScreen.tsx|textSecondary",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "textSecondary",
-      "line": 292
+      "line": 263
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|textTertiary|1",
-      "base": "src/screens/PhrasesScreen.tsx|textTertiary",
+      "key": "src/screens/PhrasesScreen.tsx|surfaceElevated|1",
+      "base": "src/screens/PhrasesScreen.tsx|surfaceElevated",
       "path": "src/screens/PhrasesScreen.tsx",
-      "role": "textTertiary",
-      "line": 293
+      "role": "surfaceElevated",
+      "line": 266
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|brand|2",
+      "key": "src/screens/PhrasesScreen.tsx|borderBrand|1",
+      "base": "src/screens/PhrasesScreen.tsx|borderBrand",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "borderBrand",
+      "line": 267
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|brand|1",
       "base": "src/screens/PhrasesScreen.tsx|brand",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "brand",
-      "line": 294
+      "line": 274
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|textSecondary|3",
-      "base": "src/screens/PhrasesScreen.tsx|textSecondary",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "textSecondary",
-      "line": 295
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|brand|3",
-      "base": "src/screens/PhrasesScreen.tsx|brand",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "brand",
-      "line": 308
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|surface|2",
+      "key": "src/screens/PhrasesScreen.tsx|surface|1",
       "base": "src/screens/PhrasesScreen.tsx|surface",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "surface",
-      "line": 311
+      "line": 278
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|border|2",
+      "key": "src/screens/PhrasesScreen.tsx|border|1",
       "base": "src/screens/PhrasesScreen.tsx|border",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "border",
-      "line": 312
+      "line": 279
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|surfacePressed|1",
+      "base": "src/screens/PhrasesScreen.tsx|surfacePressed",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "surfacePressed",
+      "line": 286
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|brandMuted|1",
+      "base": "src/screens/PhrasesScreen.tsx|brandMuted",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "brandMuted",
+      "line": 289
     },
     {
       "key": "src/screens/PhrasesScreen.tsx|textPrimary|4",
       "base": "src/screens/PhrasesScreen.tsx|textPrimary",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "textPrimary",
-      "line": 321
+      "line": 297
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|textSecondary|4",
+      "key": "src/screens/PhrasesScreen.tsx|textSecondary|2",
       "base": "src/screens/PhrasesScreen.tsx|textSecondary",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "textSecondary",
-      "line": 322
+      "line": 298
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|textTertiary|2",
+      "key": "src/screens/PhrasesScreen.tsx|textTertiary|1",
       "base": "src/screens/PhrasesScreen.tsx|textTertiary",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "textTertiary",
-      "line": 329
+      "line": 299
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|brand|4",
+      "key": "src/screens/PhrasesScreen.tsx|brand|2",
       "base": "src/screens/PhrasesScreen.tsx|brand",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "brand",
-      "line": 331
+      "line": 300
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|textInverse|1",
-      "base": "src/screens/PhrasesScreen.tsx|textInverse",
+      "key": "src/screens/PhrasesScreen.tsx|textSecondary|3",
+      "base": "src/screens/PhrasesScreen.tsx|textSecondary",
       "path": "src/screens/PhrasesScreen.tsx",
-      "role": "textInverse",
-      "line": 339
+      "role": "textSecondary",
+      "line": 301
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|surfaceElevated|2",
-      "base": "src/screens/PhrasesScreen.tsx|surfaceElevated",
+      "key": "src/screens/PhrasesScreen.tsx|brand|3",
+      "base": "src/screens/PhrasesScreen.tsx|brand",
       "path": "src/screens/PhrasesScreen.tsx",
-      "role": "surfaceElevated",
-      "line": 341
+      "role": "brand",
+      "line": 314
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|border|3",
+      "key": "src/screens/PhrasesScreen.tsx|surface|2",
+      "base": "src/screens/PhrasesScreen.tsx|surface",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "surface",
+      "line": 317
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|border|2",
       "base": "src/screens/PhrasesScreen.tsx|border",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "border",
-      "line": 342
+      "line": 318
     },
     {
       "key": "src/screens/PhrasesScreen.tsx|textPrimary|5",
       "base": "src/screens/PhrasesScreen.tsx|textPrimary",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "textPrimary",
-      "line": 351
+      "line": 327
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|textSecondary|5",
+      "key": "src/screens/PhrasesScreen.tsx|textSecondary|4",
       "base": "src/screens/PhrasesScreen.tsx|textSecondary",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "textSecondary",
-      "line": 352
+      "line": 328
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|textSecondary|6",
-      "base": "src/screens/PhrasesScreen.tsx|textSecondary",
+      "key": "src/screens/PhrasesScreen.tsx|textTertiary|2",
+      "base": "src/screens/PhrasesScreen.tsx|textTertiary",
       "path": "src/screens/PhrasesScreen.tsx",
-      "role": "textSecondary",
-      "line": 354
+      "role": "textTertiary",
+      "line": 335
     },
     {
-      "key": "src/screens/PhrasesScreen.tsx|surface|3",
-      "base": "src/screens/PhrasesScreen.tsx|surface",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "surface",
-      "line": 366
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|border|4",
-      "base": "src/screens/PhrasesScreen.tsx|border",
-      "path": "src/screens/PhrasesScreen.tsx",
-      "role": "border",
-      "line": 367
-    },
-    {
-      "key": "src/screens/PhrasesScreen.tsx|brand|5",
+      "key": "src/screens/PhrasesScreen.tsx|brand|4",
       "base": "src/screens/PhrasesScreen.tsx|brand",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "brand",
-      "line": 374
+      "line": 337
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|textInverse|1",
+      "base": "src/screens/PhrasesScreen.tsx|textInverse",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "textInverse",
+      "line": 345
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|surfaceElevated|2",
+      "base": "src/screens/PhrasesScreen.tsx|surfaceElevated",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "surfaceElevated",
+      "line": 347
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|border|3",
+      "base": "src/screens/PhrasesScreen.tsx|border",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "border",
+      "line": 348
     },
     {
       "key": "src/screens/PhrasesScreen.tsx|textPrimary|6",
       "base": "src/screens/PhrasesScreen.tsx|textPrimary",
       "path": "src/screens/PhrasesScreen.tsx",
       "role": "textPrimary",
-      "line": 375
+      "line": 357
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|textSecondary|5",
+      "base": "src/screens/PhrasesScreen.tsx|textSecondary",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "textSecondary",
+      "line": 358
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|textSecondary|6",
+      "base": "src/screens/PhrasesScreen.tsx|textSecondary",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "textSecondary",
+      "line": 360
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|surface|3",
+      "base": "src/screens/PhrasesScreen.tsx|surface",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "surface",
+      "line": 372
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|border|4",
+      "base": "src/screens/PhrasesScreen.tsx|border",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "border",
+      "line": 373
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|brand|5",
+      "base": "src/screens/PhrasesScreen.tsx|brand",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "brand",
+      "line": 380
+    },
+    {
+      "key": "src/screens/PhrasesScreen.tsx|textPrimary|7",
+      "base": "src/screens/PhrasesScreen.tsx|textPrimary",
+      "path": "src/screens/PhrasesScreen.tsx",
+      "role": "textPrimary",
+      "line": 381
     },
     {
       "key": "src/screens/ProgressScreen.tsx|slateTrack|1",
@@ -7100,448 +7121,448 @@
       "base": "src/screens/QuizScreen.tsx|bg",
       "path": "src/screens/QuizScreen.tsx",
       "role": "bg",
-      "line": 627
+      "line": 633
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|1",
       "base": "src/screens/QuizScreen.tsx|textSecondary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
-      "line": 630
+      "line": 636
     },
     {
       "key": "src/screens/QuizScreen.tsx|surface|1",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 646
+      "line": 652
     },
     {
       "key": "src/screens/QuizScreen.tsx|border|1",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 649
+      "line": 655
     },
     {
       "key": "src/screens/QuizScreen.tsx|textPrimary|1",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 658
+      "line": 664
     },
     {
       "key": "src/screens/QuizScreen.tsx|brand|1",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 664
+      "line": 670
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|2",
       "base": "src/screens/QuizScreen.tsx|textSecondary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
-      "line": 669
+      "line": 675
     },
     {
       "key": "src/screens/QuizScreen.tsx|border|2",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 677
+      "line": 683
     },
     {
       "key": "src/screens/QuizScreen.tsx|brand|2",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 681
+      "line": 687
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|3",
       "base": "src/screens/QuizScreen.tsx|textSecondary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
-      "line": 682
+      "line": 688
     },
     {
       "key": "src/screens/QuizScreen.tsx|textPrimary|2",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 686
+      "line": 692
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|4",
       "base": "src/screens/QuizScreen.tsx|textSecondary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
-      "line": 690
+      "line": 696
     },
     {
       "key": "src/screens/QuizScreen.tsx|textTertiary|1",
       "base": "src/screens/QuizScreen.tsx|textTertiary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textTertiary",
-      "line": 696
+      "line": 702
     },
     {
       "key": "src/screens/QuizScreen.tsx|surface|2",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 712
+      "line": 718
     },
     {
       "key": "src/screens/QuizScreen.tsx|border|3",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 714
+      "line": 720
     },
     {
       "key": "src/screens/QuizScreen.tsx|regionFill|1",
       "base": "src/screens/QuizScreen.tsx|regionFill",
       "path": "src/screens/QuizScreen.tsx",
       "role": "regionFill",
-      "line": 718
+      "line": 724
     },
     {
       "key": "src/screens/QuizScreen.tsx|regionFill|2",
       "base": "src/screens/QuizScreen.tsx|regionFill",
       "path": "src/screens/QuizScreen.tsx",
       "role": "regionFill",
-      "line": 718
+      "line": 724
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|5",
       "base": "src/screens/QuizScreen.tsx|textSecondary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
-      "line": 719
+      "line": 725
     },
     {
       "key": "src/screens/QuizScreen.tsx|regionInk|1",
       "base": "src/screens/QuizScreen.tsx|regionInk",
       "path": "src/screens/QuizScreen.tsx",
       "role": "regionInk",
-      "line": 720
+      "line": 726
     },
     {
       "key": "src/screens/QuizScreen.tsx|surface|3",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 723
+      "line": 729
     },
     {
       "key": "src/screens/QuizScreen.tsx|border|4",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 726
+      "line": 732
     },
     {
       "key": "src/screens/QuizScreen.tsx|textPrimary|3",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 733
+      "line": 739
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|6",
       "base": "src/screens/QuizScreen.tsx|textSecondary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
-      "line": 737
+      "line": 743
     },
     {
       "key": "src/screens/QuizScreen.tsx|brand|3",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 741
+      "line": 747
     },
     {
       "key": "src/screens/QuizScreen.tsx|textInverse|1",
       "base": "src/screens/QuizScreen.tsx|textInverse",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textInverse",
-      "line": 751
+      "line": 757
     },
     {
       "key": "src/screens/QuizScreen.tsx|surfaceElevated|1",
       "base": "src/screens/QuizScreen.tsx|surfaceElevated",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surfaceElevated",
-      "line": 756
+      "line": 762
     },
     {
       "key": "src/screens/QuizScreen.tsx|borderBrand|1",
       "base": "src/screens/QuizScreen.tsx|borderBrand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "borderBrand",
-      "line": 758
+      "line": 764
     },
     {
       "key": "src/screens/QuizScreen.tsx|brand|4",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 767
+      "line": 773
     },
     {
       "key": "src/screens/QuizScreen.tsx|surface|4",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 773
+      "line": 779
     },
     {
       "key": "src/screens/QuizScreen.tsx|border|5",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 776
+      "line": 782
     },
     {
       "key": "src/screens/QuizScreen.tsx|textPrimary|4",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 781
+      "line": 787
     },
     {
       "key": "src/screens/QuizScreen.tsx|brand|5",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 793
+      "line": 799
     },
     {
       "key": "src/screens/QuizScreen.tsx|textTertiary|2",
       "base": "src/screens/QuizScreen.tsx|textTertiary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textTertiary",
-      "line": 797
+      "line": 803
     },
     {
       "key": "src/screens/QuizScreen.tsx|quizReviewWash|1",
       "base": "src/screens/QuizScreen.tsx|quizReviewWash",
       "path": "src/screens/QuizScreen.tsx",
       "role": "quizReviewWash",
-      "line": 800
+      "line": 806
     },
     {
       "key": "src/screens/QuizScreen.tsx|quizReviewInk|1",
       "base": "src/screens/QuizScreen.tsx|quizReviewInk",
       "path": "src/screens/QuizScreen.tsx",
       "role": "quizReviewInk",
-      "line": 805
+      "line": 811
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|7",
       "base": "src/screens/QuizScreen.tsx|textSecondary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
-      "line": 809
+      "line": 815
     },
     {
       "key": "src/screens/QuizScreen.tsx|surface|5",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 812
+      "line": 818
     },
     {
       "key": "src/screens/QuizScreen.tsx|border|6",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 818
+      "line": 824
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|8",
       "base": "src/screens/QuizScreen.tsx|textSecondary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
-      "line": 824
+      "line": 830
     },
     {
       "key": "src/screens/QuizScreen.tsx|textPrimary|5",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 831
+      "line": 837
     },
     {
       "key": "src/screens/QuizScreen.tsx|quizFeedbackInk|1",
       "base": "src/screens/QuizScreen.tsx|quizFeedbackInk",
       "path": "src/screens/QuizScreen.tsx",
       "role": "quizFeedbackInk",
-      "line": 837
+      "line": 843
     },
     {
       "key": "src/screens/QuizScreen.tsx|surfaceElevated|2",
       "base": "src/screens/QuizScreen.tsx|surfaceElevated",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surfaceElevated",
-      "line": 845
+      "line": 851
     },
     {
       "key": "src/screens/QuizScreen.tsx|border|7",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 849
+      "line": 855
     },
     {
       "key": "src/screens/QuizScreen.tsx|success|1",
       "base": "src/screens/QuizScreen.tsx|success",
       "path": "src/screens/QuizScreen.tsx",
       "role": "success",
-      "line": 851
+      "line": 857
     },
     {
       "key": "src/screens/QuizScreen.tsx|successMuted|1",
       "base": "src/screens/QuizScreen.tsx|successMuted",
       "path": "src/screens/QuizScreen.tsx",
       "role": "successMuted",
-      "line": 851
+      "line": 857
     },
     {
       "key": "src/screens/QuizScreen.tsx|danger|1",
       "base": "src/screens/QuizScreen.tsx|danger",
       "path": "src/screens/QuizScreen.tsx",
       "role": "danger",
-      "line": 852
+      "line": 858
     },
     {
       "key": "src/screens/QuizScreen.tsx|dangerMuted|1",
       "base": "src/screens/QuizScreen.tsx|dangerMuted",
       "path": "src/screens/QuizScreen.tsx",
       "role": "dangerMuted",
-      "line": 852
+      "line": 858
     },
     {
       "key": "src/screens/QuizScreen.tsx|textPrimary|6",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 854
+      "line": 860
     },
     {
       "key": "src/screens/QuizScreen.tsx|successMuted|2",
       "base": "src/screens/QuizScreen.tsx|successMuted",
       "path": "src/screens/QuizScreen.tsx",
       "role": "successMuted",
-      "line": 867
+      "line": 873
     },
     {
       "key": "src/screens/QuizScreen.tsx|success|2",
       "base": "src/screens/QuizScreen.tsx|success",
       "path": "src/screens/QuizScreen.tsx",
       "role": "success",
-      "line": 869
+      "line": 875
     },
     {
       "key": "src/screens/QuizScreen.tsx|dangerMuted|2",
       "base": "src/screens/QuizScreen.tsx|dangerMuted",
       "path": "src/screens/QuizScreen.tsx",
       "role": "dangerMuted",
-      "line": 872
+      "line": 878
     },
     {
       "key": "src/screens/QuizScreen.tsx|danger|2",
       "base": "src/screens/QuizScreen.tsx|danger",
       "path": "src/screens/QuizScreen.tsx",
       "role": "danger",
-      "line": 874
+      "line": 880
     },
     {
       "key": "src/screens/QuizScreen.tsx|textPrimary|7",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 877
+      "line": 883
     },
     {
       "key": "src/screens/QuizScreen.tsx|textPrimary|8",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 890
+      "line": 896
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|9",
       "base": "src/screens/QuizScreen.tsx|textSecondary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
-      "line": 895
+      "line": 901
     },
     {
       "key": "src/screens/QuizScreen.tsx|surface|6",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 901
+      "line": 907
     },
     {
       "key": "src/screens/QuizScreen.tsx|brand|6",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 906
+      "line": 912
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|10",
       "base": "src/screens/QuizScreen.tsx|textSecondary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
-      "line": 910
+      "line": 916
     },
     {
       "key": "src/screens/QuizScreen.tsx|textPrimary|9",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 915
+      "line": 921
     },
     {
       "key": "src/screens/QuizScreen.tsx|brand|7",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 920
+      "line": 926
     },
     {
       "key": "src/screens/QuizScreen.tsx|surfaceElevated|3",
       "base": "src/screens/QuizScreen.tsx|surfaceElevated",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surfaceElevated",
-      "line": 926
+      "line": 932
     },
     {
       "key": "src/screens/QuizScreen.tsx|textPrimary|10",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 935
+      "line": 941
     },
     {
       "key": "src/screens/QuizScreen.tsx|textTertiary|3",
       "base": "src/screens/QuizScreen.tsx|textTertiary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textTertiary",
-      "line": 940
+      "line": 946
     },
     {
       "key": "src/screens/QuizScreen.tsx|border|8",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 945
+      "line": 951
     },
     {
       "key": "src/screens/ReviewScreen.tsx|mutedInk|1",
@@ -8087,539 +8108,553 @@
       "base": "src/screens/StudyScreen.tsx|danger",
       "path": "src/screens/StudyScreen.tsx",
       "role": "danger",
-      "line": 85
+      "line": 86
     },
     {
       "key": "src/screens/StudyScreen.tsx|dangerMuted|1",
       "base": "src/screens/StudyScreen.tsx|dangerMuted",
       "path": "src/screens/StudyScreen.tsx",
       "role": "dangerMuted",
-      "line": 85
+      "line": 86
     },
     {
       "key": "src/screens/StudyScreen.tsx|warning|1",
       "base": "src/screens/StudyScreen.tsx|warning",
       "path": "src/screens/StudyScreen.tsx",
       "role": "warning",
-      "line": 87
+      "line": 88
     },
     {
       "key": "src/screens/StudyScreen.tsx|warningMuted|1",
       "base": "src/screens/StudyScreen.tsx|warningMuted",
       "path": "src/screens/StudyScreen.tsx",
       "role": "warningMuted",
-      "line": 87
+      "line": 88
     },
     {
       "key": "src/screens/StudyScreen.tsx|success|1",
       "base": "src/screens/StudyScreen.tsx|success",
       "path": "src/screens/StudyScreen.tsx",
       "role": "success",
-      "line": 89
+      "line": 90
     },
     {
       "key": "src/screens/StudyScreen.tsx|successMuted|1",
       "base": "src/screens/StudyScreen.tsx|successMuted",
       "path": "src/screens/StudyScreen.tsx",
       "role": "successMuted",
-      "line": 89
+      "line": 90
     },
     {
       "key": "src/screens/StudyScreen.tsx|info|1",
       "base": "src/screens/StudyScreen.tsx|info",
       "path": "src/screens/StudyScreen.tsx",
       "role": "info",
-      "line": 90
+      "line": 91
     },
     {
       "key": "src/screens/StudyScreen.tsx|infoMuted|1",
       "base": "src/screens/StudyScreen.tsx|infoMuted",
       "path": "src/screens/StudyScreen.tsx",
       "role": "infoMuted",
-      "line": 90
+      "line": 91
     },
     {
       "key": "src/screens/StudyScreen.tsx|info|2",
       "base": "src/screens/StudyScreen.tsx|info",
       "path": "src/screens/StudyScreen.tsx",
       "role": "info",
-      "line": 164
+      "line": 165
     },
     {
       "key": "src/screens/StudyScreen.tsx|infoMuted|2",
       "base": "src/screens/StudyScreen.tsx|infoMuted",
       "path": "src/screens/StudyScreen.tsx",
       "role": "infoMuted",
-      "line": 164
+      "line": 165
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|1",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 619
+      "line": 620
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|2",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 622
+      "line": 623
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|1",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 632
+      "line": 633
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|2",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 638
+      "line": 639
     },
     {
       "key": "src/screens/StudyScreen.tsx|textTertiary|1",
       "base": "src/screens/StudyScreen.tsx|textTertiary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textTertiary",
-      "line": 698
+      "line": 699
+    },
+    {
+      "key": "src/screens/StudyScreen.tsx|audioSurface|1",
+      "base": "src/screens/StudyScreen.tsx|audioSurface",
+      "path": "src/screens/StudyScreen.tsx",
+      "role": "audioSurface",
+      "line": 752
+    },
+    {
+      "key": "src/screens/StudyScreen.tsx|audioText|1",
+      "base": "src/screens/StudyScreen.tsx|audioText",
+      "path": "src/screens/StudyScreen.tsx",
+      "role": "audioText",
+      "line": 761
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|3",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 1008
+      "line": 1021
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|3",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1019
+      "line": 1032
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|4",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 1025
+      "line": 1038
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|4",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1033
+      "line": 1046
     },
     {
       "key": "src/screens/StudyScreen.tsx|bg|1",
       "base": "src/screens/StudyScreen.tsx|bg",
       "path": "src/screens/StudyScreen.tsx",
       "role": "bg",
-      "line": 1085
+      "line": 1098
     },
     {
       "key": "src/screens/StudyScreen.tsx|textSecondary|1",
       "base": "src/screens/StudyScreen.tsx|textSecondary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textSecondary",
-      "line": 1089
+      "line": 1102
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|5",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 1093
+      "line": 1106
     },
     {
       "key": "src/screens/StudyScreen.tsx|textSecondary|2",
       "base": "src/screens/StudyScreen.tsx|textSecondary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textSecondary",
-      "line": 1098
+      "line": 1111
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|5",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1104
+      "line": 1117
     },
     {
       "key": "src/screens/StudyScreen.tsx|onBrand|1",
       "base": "src/screens/StudyScreen.tsx|onBrand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "onBrand",
-      "line": 1106
+      "line": 1119
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|6",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 1114
+      "line": 1127
     },
     {
       "key": "src/screens/StudyScreen.tsx|surface|1",
       "base": "src/screens/StudyScreen.tsx|surface",
       "path": "src/screens/StudyScreen.tsx",
       "role": "surface",
-      "line": 1119
+      "line": 1132
     },
     {
       "key": "src/screens/StudyScreen.tsx|border|1",
       "base": "src/screens/StudyScreen.tsx|border",
       "path": "src/screens/StudyScreen.tsx",
       "role": "border",
-      "line": 1121
+      "line": 1134
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|7",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 1130
+      "line": 1143
     },
     {
       "key": "src/screens/StudyScreen.tsx|textSecondary|3",
       "base": "src/screens/StudyScreen.tsx|textSecondary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textSecondary",
-      "line": 1134
+      "line": 1147
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|8",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 1141
+      "line": 1154
     },
     {
       "key": "src/screens/StudyScreen.tsx|textSecondary|4",
       "base": "src/screens/StudyScreen.tsx|textSecondary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textSecondary",
-      "line": 1164
+      "line": 1177
     },
     {
       "key": "src/screens/StudyScreen.tsx|surface|2",
       "base": "src/screens/StudyScreen.tsx|surface",
       "path": "src/screens/StudyScreen.tsx",
       "role": "surface",
-      "line": 1169
+      "line": 1182
     },
     {
       "key": "src/screens/StudyScreen.tsx|border|2",
       "base": "src/screens/StudyScreen.tsx|border",
       "path": "src/screens/StudyScreen.tsx",
       "role": "border",
-      "line": 1171
+      "line": 1184
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|9",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 1177
+      "line": 1190
     },
     {
       "key": "src/screens/StudyScreen.tsx|textSecondary|5",
       "base": "src/screens/StudyScreen.tsx|textSecondary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textSecondary",
-      "line": 1178
+      "line": 1191
     },
     {
       "key": "src/screens/StudyScreen.tsx|textTertiary|2",
       "base": "src/screens/StudyScreen.tsx|textTertiary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textTertiary",
-      "line": 1180
+      "line": 1193
     },
     {
       "key": "src/screens/StudyScreen.tsx|textTertiary|3",
       "base": "src/screens/StudyScreen.tsx|textTertiary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textTertiary",
-      "line": 1185
+      "line": 1198
     },
     {
       "key": "src/screens/StudyScreen.tsx|accentBlue|1",
       "base": "src/screens/StudyScreen.tsx|accentBlue",
       "path": "src/screens/StudyScreen.tsx",
       "role": "accentBlue",
-      "line": 1190
+      "line": 1203
     },
     {
       "key": "src/screens/StudyScreen.tsx|surface|3",
       "base": "src/screens/StudyScreen.tsx|surface",
       "path": "src/screens/StudyScreen.tsx",
       "role": "surface",
-      "line": 1201
+      "line": 1214
     },
     {
       "key": "src/screens/StudyScreen.tsx|border|3",
       "base": "src/screens/StudyScreen.tsx|border",
       "path": "src/screens/StudyScreen.tsx",
       "role": "border",
-      "line": 1203
+      "line": 1216
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|10",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 1208
+      "line": 1221
     },
     {
       "key": "src/screens/StudyScreen.tsx|textSecondary|6",
       "base": "src/screens/StudyScreen.tsx|textSecondary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textSecondary",
-      "line": 1209
+      "line": 1222
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|6",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1210
+      "line": 1223
     },
     {
       "key": "src/screens/StudyScreen.tsx|surface|4",
       "base": "src/screens/StudyScreen.tsx|surface",
       "path": "src/screens/StudyScreen.tsx",
       "role": "surface",
-      "line": 1212
+      "line": 1225
     },
     {
       "key": "src/screens/StudyScreen.tsx|border|4",
       "base": "src/screens/StudyScreen.tsx|border",
       "path": "src/screens/StudyScreen.tsx",
       "role": "border",
-      "line": 1214
+      "line": 1227
     },
     {
       "key": "src/screens/StudyScreen.tsx|textSecondary|7",
       "base": "src/screens/StudyScreen.tsx|textSecondary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textSecondary",
-      "line": 1218
+      "line": 1231
     },
     {
       "key": "src/screens/StudyScreen.tsx|neutralWash|1",
       "base": "src/screens/StudyScreen.tsx|neutralWash",
       "path": "src/screens/StudyScreen.tsx",
       "role": "neutralWash",
-      "line": 1222
+      "line": 1235
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|7",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1230
+      "line": 1243
     },
     {
       "key": "src/screens/StudyScreen.tsx|surface|5",
       "base": "src/screens/StudyScreen.tsx|surface",
       "path": "src/screens/StudyScreen.tsx",
       "role": "surface",
-      "line": 1249
+      "line": 1262
     },
     {
       "key": "src/screens/StudyScreen.tsx|neutralEdge|1",
       "base": "src/screens/StudyScreen.tsx|neutralEdge",
       "path": "src/screens/StudyScreen.tsx",
       "role": "neutralEdge",
-      "line": 1251
+      "line": 1264
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|8",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1253
+      "line": 1266
     },
     {
       "key": "src/screens/StudyScreen.tsx|textTertiary|4",
       "base": "src/screens/StudyScreen.tsx|textTertiary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textTertiary",
-      "line": 1259
+      "line": 1272
     },
     {
       "key": "src/screens/StudyScreen.tsx|highlightWash|1",
       "base": "src/screens/StudyScreen.tsx|highlightWash",
       "path": "src/screens/StudyScreen.tsx",
       "role": "highlightWash",
-      "line": 1279
+      "line": 1292
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|9",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1281
+      "line": 1294
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|10",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1286
+      "line": 1299
     },
     {
       "key": "src/screens/StudyScreen.tsx|textPrimary|11",
       "base": "src/screens/StudyScreen.tsx|textPrimary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textPrimary",
-      "line": 1293
+      "line": 1306
     },
     {
       "key": "src/screens/StudyScreen.tsx|selectedWash|1",
       "base": "src/screens/StudyScreen.tsx|selectedWash",
       "path": "src/screens/StudyScreen.tsx",
       "role": "selectedWash",
-      "line": 1302
+      "line": 1315
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|11",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1304
+      "line": 1317
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|12",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1306
+      "line": 1319
     },
     {
       "key": "src/screens/StudyScreen.tsx|surface|6",
       "base": "src/screens/StudyScreen.tsx|surface",
       "path": "src/screens/StudyScreen.tsx",
       "role": "surface",
-      "line": 1329
+      "line": 1342
     },
     {
       "key": "src/screens/StudyScreen.tsx|neutralEdge|2",
       "base": "src/screens/StudyScreen.tsx|neutralEdge",
       "path": "src/screens/StudyScreen.tsx",
       "role": "neutralEdge",
-      "line": 1331
+      "line": 1344
     },
     {
       "key": "src/screens/StudyScreen.tsx|regionFill|1",
       "base": "src/screens/StudyScreen.tsx|regionFill",
       "path": "src/screens/StudyScreen.tsx",
       "role": "regionFill",
-      "line": 1334
+      "line": 1347
     },
     {
       "key": "src/screens/StudyScreen.tsx|regionEdge|1",
       "base": "src/screens/StudyScreen.tsx|regionEdge",
       "path": "src/screens/StudyScreen.tsx",
       "role": "regionEdge",
-      "line": 1335
+      "line": 1348
     },
     {
       "key": "src/screens/StudyScreen.tsx|textSecondary|8",
       "base": "src/screens/StudyScreen.tsx|textSecondary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textSecondary",
-      "line": 1337
+      "line": 1350
     },
     {
       "key": "src/screens/StudyScreen.tsx|regionInk|1",
       "base": "src/screens/StudyScreen.tsx|regionInk",
       "path": "src/screens/StudyScreen.tsx",
       "role": "regionInk",
-      "line": 1338
+      "line": 1351
     },
     {
       "key": "src/screens/StudyScreen.tsx|translucentSurface|1",
       "base": "src/screens/StudyScreen.tsx|translucentSurface",
       "path": "src/screens/StudyScreen.tsx",
       "role": "translucentSurface",
-      "line": 1350
+      "line": 1363
     },
     {
       "key": "src/screens/StudyScreen.tsx|bg|2",
       "base": "src/screens/StudyScreen.tsx|bg",
       "path": "src/screens/StudyScreen.tsx",
       "role": "bg",
-      "line": 1358
+      "line": 1371
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|13",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1361
+      "line": 1374
     },
     {
       "key": "src/screens/StudyScreen.tsx|swipeHardInk|1",
       "base": "src/screens/StudyScreen.tsx|swipeHardInk",
       "path": "src/screens/StudyScreen.tsx",
       "role": "swipeHardInk",
-      "line": 1374
+      "line": 1387
     },
     {
       "key": "src/screens/StudyScreen.tsx|textSecondary|9",
       "base": "src/screens/StudyScreen.tsx|textSecondary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textSecondary",
-      "line": 1375
+      "line": 1388
     },
     {
       "key": "src/screens/StudyScreen.tsx|swipeEasyInk|1",
       "base": "src/screens/StudyScreen.tsx|swipeEasyInk",
       "path": "src/screens/StudyScreen.tsx",
       "role": "swipeEasyInk",
-      "line": 1376
+      "line": 1389
     },
     {
       "key": "src/screens/StudyScreen.tsx|brand|14",
       "base": "src/screens/StudyScreen.tsx|brand",
       "path": "src/screens/StudyScreen.tsx",
       "role": "brand",
-      "line": 1391
+      "line": 1404
     },
     {
       "key": "src/screens/StudyScreen.tsx|textInverse|1",
       "base": "src/screens/StudyScreen.tsx|textInverse",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textInverse",
-      "line": 1393
+      "line": 1406
     },
     {
       "key": "src/screens/StudyScreen.tsx|surface|7",
       "base": "src/screens/StudyScreen.tsx|surface",
       "path": "src/screens/StudyScreen.tsx",
       "role": "surface",
-      "line": 1396
+      "line": 1409
     },
     {
       "key": "src/screens/StudyScreen.tsx|dividerEdge|1",
       "base": "src/screens/StudyScreen.tsx|dividerEdge",
       "path": "src/screens/StudyScreen.tsx",
       "role": "dividerEdge",
-      "line": 1398
+      "line": 1411
     },
     {
       "key": "src/screens/StudyScreen.tsx|textSecondary|10",
       "base": "src/screens/StudyScreen.tsx|textSecondary",
       "path": "src/screens/StudyScreen.tsx",
       "role": "textSecondary",
-      "line": 1405
+      "line": 1418
     },
     {
       "key": "src/screens/ThemeSettingsScreen.tsx|bg|1",
@@ -9272,6 +9307,12 @@
       "background": "surfaceElevated",
       "minimum": 4.5,
       "purpose": "text/icon ink on route surfaces"
+    },
+    {
+      "foreground": "audioText",
+      "background": "audioSurface",
+      "minimum": 4.5,
+      "purpose": "actual control/status pair"
     },
     {
       "foreground": "audioText",

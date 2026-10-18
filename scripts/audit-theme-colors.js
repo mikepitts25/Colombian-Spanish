@@ -218,6 +218,7 @@ function contrastPairs() {
         purpose: 'text/icon ink on route surfaces',
       });
   for (const [fg, bg] of [
+    ['audioText', 'audioSurface'],
     ['audioText', 'surfacePressed'],
     ['editorActionInk', 'regionFill'],
     ['onBrand', 'brand'],

@@ -1,3 +1,4 @@
+import ThemeIcon from '../components/ThemeIcon';
 import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
@@ -487,10 +488,19 @@ export default function HomeScreen() {
             <View style={styles.wordHeader}>
               <Text style={styles.wordEyebrow}>{t('home.wordOfDay')}</Text>
               <Pressable
-                style={styles.wordAudioButton}
+                style={[
+                  styles.wordAudioButton,
+                  appTheme.id === 'barrio' && { backgroundColor: colors.audioSurface },
+                ]}
+                accessibilityRole="button"
+                accessibilityLabel={`${t('common.listen')}: ${wordOfDay.card.front}`}
                 onPress={() => void speakCard(wordOfDay.card)}
               >
-                <Text style={styles.wordAudioIcon}>🔊</Text>
+                {appTheme.id === 'classic' ? (
+                  <Text style={styles.wordAudioIcon}>🔊</Text>
+                ) : (
+                  <ThemeIcon name="audio" size={15} color={colors.audioText} />
+                )}
               </Pressable>
             </View>
             <Text style={styles.wordFront}>{wordOfDay.card.front}</Text>

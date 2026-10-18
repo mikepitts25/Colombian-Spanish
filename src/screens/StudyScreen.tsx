@@ -1,3 +1,4 @@
+import ThemeIcon from '../components/ThemeIcon';
 import Pressable from '../components/ThemedPressable';
 import ThemedTextInput from '../components/ThemedTextInput';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
@@ -745,8 +746,20 @@ export default function StudyScreen() {
                           : ''}
                       </Text>
                     </View>
-                    <Pressable style={styles.speakBtn} onPress={() => void speakCard(item.card)}>
-                      <Text style={styles.speakIcon}>🔊</Text>
+                    <Pressable
+                      style={[
+                        styles.speakBtn,
+                        theme.id === 'barrio' && { backgroundColor: colors.audioSurface },
+                      ]}
+                      accessibilityRole="button"
+                      accessibilityLabel={`${t('common.listen')}: ${item.card.front}`}
+                      onPress={() => void speakCard(item.card)}
+                    >
+                      {theme.id === 'classic' ? (
+                        <Text style={styles.speakIcon}>🔊</Text>
+                      ) : (
+                        <ThemeIcon name="audio" size={16} color={colors.audioText} />
+                      )}
                     </Pressable>
                   </Pressable>
                 ))
