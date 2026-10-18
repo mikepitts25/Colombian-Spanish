@@ -1,0 +1,12 @@
+PASS __tests__/screens/StudyLifecycleIntegration.test.tsx
+  ✓ Otra vez becomes due without refilling a saved in-progress queue (350 ms)
+  ✓ Difícil becomes due without refilling a saved in-progress queue (141 ms)
+  ✓ cross-deck new-card cap permits due reviews and later relearning without new credit (105 ms)
+  ✓ edits queued behind an in-flight grade preserve content and the frozen remaining queue (134 ms)
+  ✓ an editor recovers an interrupted grade and UI retry acknowledges it without losing the edit (143 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        2.526 s, estimated 3 s
+Ran all test suites within paths "__tests__/screens/StudyLifecycleIntegration.test.tsx".

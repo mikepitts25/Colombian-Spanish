@@ -8,6 +8,8 @@ import { getLearningEvents } from '../../src/storage/learningEvents';
 import { Deck, FlashCard } from '../../src/types';
 
 let mockParams: Record<string, unknown> = {};
+const defaultStorageWrite = (AsyncStorage.setItem as jest.Mock).getMockImplementation()!;
+let releaseHeldWrite: (() => void) | undefined;
 jest.mock('@react-navigation/native', () => ({
   usePreventRemove: jest.fn(),
   useFocusEffect: (callback: any) => require('react').useEffect(callback, [callback]),
@@ -52,7 +54,12 @@ beforeEach(async () => {
   await AsyncStorage.clear();
   mockParams = { autoStartDeckId: 'alpha' };
 });
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => {
+  releaseHeldWrite?.();
+  releaseHeldWrite = undefined;
+  (AsyncStorage.setItem as jest.Mock).mockImplementation(defaultStorageWrite);
+  jest.restoreAllMocks();
+});
 
 test.each([
   ['Otra vez', 1, 15 * 60 * 1000],
@@ -146,4 +153,144 @@ test('cross-deck new-card cap permits due reviews and later relearning without n
     ['beta-review', 4],
     ['alpha-new', 4],
   ]);
+});
+
+test('edits queued behind an in-flight grade preserve content and the frozen remaining queue', async () => {
+  const untouched = card('unrelated', { reps: 3, interval: 5 });
+  await AsyncStorage.setItem(
+    'SRS_DECKS_V3',
+    JSON.stringify([
+      { id: 'alpha', name: 'Alpha', cards: [card('first'), card('second')] },
+      { id: 'beta', name: 'Beta', cards: [untouched] },
+    ]),
+  );
+  let screen = render(<App />);
+  await screen.findByText('phrase first');
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  const initial = await getLastStudySession();
+  const write = AsyncStorage.setItem as jest.Mock;
+  const originalWrite = write.getMockImplementation()!;
+  let release!: () => void;
+  let entered!: () => void;
+  const held = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  const started = new Promise<void>((resolve) => {
+    entered = resolve;
+  });
+  releaseHeldWrite = release;
+  let intercept = true;
+  write.mockImplementation(async (key: string, value: string) => {
+    if (
+      intercept &&
+      key === 'SRS_WRITE_JOURNAL_V1' &&
+      JSON.parse(value).entries.some(
+        ([entryKey]: [string, string]) => entryKey === 'SRS_LEARNING_EVENTS_V1',
+      )
+    ) {
+      intercept = false;
+      entered();
+      await held;
+    }
+    return originalWrite(key, value);
+  });
+  let edits!: Promise<unknown>;
+  await act(async () => {
+    fireEvent.press(screen.getByText('Bien'));
+    await started;
+    edits = Promise.all([
+      current.renameDeck('alpha', 'Renamed during save'),
+      current.updateCardReview('first', { back: 'corrected meaning', flagged: true }),
+      current.addCardToDeck('alpha', {
+        id: 'added-later',
+        front: 'new phrase',
+        back: 'new answer',
+      }),
+    ]);
+    release();
+    await edits;
+  });
+  await screen.findByText('phrase second');
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  const stored = await loadDecks();
+  expect(stored[0]).toMatchObject({
+    name: 'Renamed during save',
+    cards: [
+      { id: 'first', reps: 1, back: 'corrected meaning', flagged: true },
+      { id: 'second', reps: 0 },
+      { id: 'added-later', reps: 0 },
+    ],
+  });
+  expect(current.decks).toEqual(stored);
+  expect(stored[1].cards).toEqual([untouched]);
+  const remaining = await getLastStudySession();
+  expect(remaining?.queue).toEqual({ ...initial?.queue, cardIds: ['second'] });
+  const events = await getLearningEvents();
+  expect(events).toEqual([expect.objectContaining({ cardId: 'first', quality: 4 })]);
+  expect(await getDailyProgress()).toMatchObject({ count: 1, newCount: 1 });
+  screen.unmount();
+  screen = render(<App />);
+  fireEvent.press(await screen.findByText('Continuar'));
+  await screen.findByText('phrase second');
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  expect((await getLastStudySession())?.queue).toEqual(remaining?.queue);
+  expect(await loadDecks()).toEqual(stored);
+  expect(await getLearningEvents()).toEqual(events);
+});
+
+test('an editor recovers an interrupted grade and UI retry acknowledges it without losing the edit', async () => {
+  await AsyncStorage.setItem(
+    'SRS_DECKS_V3',
+    JSON.stringify([{ id: 'alpha', name: 'Alpha', cards: [card('first'), card('second')] }]),
+  );
+  let screen = render(<App />);
+  await screen.findByText('phrase first');
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  const initial = await getLastStudySession();
+  const write = AsyncStorage.setItem as jest.Mock;
+  const originalWrite = write.getMockImplementation()!;
+  let interrupt = true;
+  write.mockImplementation(async (key: string, value: string) => {
+    if (interrupt && key === 'SRS_DECKS_V3') {
+      interrupt = false;
+      throw new Error('simulated interrupted grade apply');
+    }
+    return originalWrite(key, value);
+  });
+  await act(async () => fireEvent.press(screen.getByText('Bien')));
+  await screen.findByText('No se pudo guardar. Reintenta la misma respuesta antes de continuar.');
+  const journal = JSON.parse((await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1'))!);
+  const eventWrite = journal.entries.find(
+    ([key]: [string, string]) => key === 'SRS_LEARNING_EVENTS_V1',
+  );
+  expect(JSON.parse(eventWrite[1]).events).toEqual([
+    expect.objectContaining({ cardId: 'first', quality: 4 }),
+  ]);
+  await act(async () => current.updateCardReview('first', { back: 'correction after recovery' }));
+  expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
+  const recovered = await loadDecks();
+  expect(recovered[0].cards[0]).toMatchObject({ reps: 1, back: 'correction after recovery' });
+  const events = await getLearningEvents();
+  expect(events).toEqual([expect.objectContaining({ cardId: 'first', quality: 4 })]);
+  const daily = await getDailyProgress();
+  expect(daily).toMatchObject({ count: 1, newCount: 1 });
+  const remaining = await getLastStudySession();
+  expect(remaining?.queue).toEqual({ ...initial?.queue, cardIds: ['second'] });
+  await act(async () => fireEvent.press(screen.getByText('Intentar guardar de nuevo')));
+  await screen.findByText('phrase second');
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  expect(current.decks).toEqual(recovered);
+  expect(await loadDecks()).toEqual(recovered);
+  expect(await getLearningEvents()).toEqual(events);
+  expect(await getDailyProgress()).toEqual(daily);
+  expect((await getLastStudySession())?.queue).toEqual(remaining?.queue);
+  screen.unmount();
+  screen = render(<App />);
+  fireEvent.press(await screen.findByText('Continuar'));
+  await screen.findByText('phrase second');
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  expect((await getLastStudySession())?.queue).toEqual(remaining?.queue);
+  expect(await loadDecks()).toEqual(recovered);
+  expect(await getLearningEvents()).toEqual(events);
+  expect(await getDailyProgress()).toEqual(daily);
 });
