@@ -145,6 +145,6 @@ Task2 exports `BarrioHomeContentProps` with `presentation: HomePresentation`, `g
 
 Spec coverage: state/copy/count/estimate/availability→Task1; original art/layout/routes/semantics→Task2; Classic/controller/error/fresh-start/storage invariants→Task3; complete automated/native/review/integration→Task4. All five Review Focus cases have explicit tests in their owning tasks and native checks where needed. Shared names and props are defined once above; no new storage subsystem or content acceptance is hidden in the tasks.
 
-Recommend **Native** execution: these four tasks share the presentation contract and existing Home controller, so inline work avoids handoff churn; one independent whole-branch review remains required. The owner previously chose Native for the foundation, but this later Home plan still needs review. Preserve that method if confirmed for this plan; do not infer that earlier foundation approval executes this unreviewed plan.
+Recommend **Native** execution: these four tasks share the presentation contract and existing Home controller, so inline work avoids handoff churn; one independent whole-branch review remains required. Preserve the owner's standing Native execution preference. This later Home plan still needs review; do not infer that earlier foundation approval executes an unreviewed plan.
 
 Owner review of this implementation plan is pending. No task checkbox is complete until its actual work and verification are performed.
