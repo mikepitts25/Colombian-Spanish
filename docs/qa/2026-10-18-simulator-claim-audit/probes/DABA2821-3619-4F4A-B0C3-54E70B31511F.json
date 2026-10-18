@@ -1,0 +1,19 @@
+{
+  "device": "DABA2821-3619-4F4A-B0C3-54E70B31511F",
+  "name": "Colombian Spanish Fresh Mission Keyboard QA",
+  "originalState": "Booted",
+  "startedAt": 1792300143.229295,
+  "appLaunchedByCollector": false,
+  "lookupExitCode": 0,
+  "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DABA2821-3619-4F4A-B0C3-54E70B31511F/data/Containers/Data/Application/8FB7A15F-3AA2-472B-97E6-D1251A614B92",
+  "preflight": {
+    "isolated": true,
+    "requestedDevice": "DABA2821-3619-4F4A-B0C3-54E70B31511F",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DABA2821-3619-4F4A-B0C3-54E70B31511F/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DABA2821-3619-4F4A-B0C3-54E70B31511F/data/Containers/Data/Application/8FB7A15F-3AA2-472B-97E6-D1251A614B92",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DABA2821-3619-4F4A-B0C3-54E70B31511F/data/Containers/Data/Application/8FB7A15F-3AA2-472B-97E6-D1251A614B92"
+  },
+  "status": "own-path",
+  "finalState": "Booted",
+  "finishedAt": 1792300143.5417302
+}

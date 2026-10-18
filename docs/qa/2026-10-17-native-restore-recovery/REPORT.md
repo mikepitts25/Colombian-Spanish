@@ -1,5 +1,7 @@
 # Native interrupted restore — 2026-10-17
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04` → `5E9A8854-135A-4675-A437-4EFCA043F656`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 B11.2-B2. Base `f753efb`. Existing recovery behavior verified on a real native development client; no product code changed.
 
 ## Test boundary

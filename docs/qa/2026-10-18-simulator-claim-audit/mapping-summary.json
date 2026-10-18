@@ -1,0 +1,170 @@
+[
+  {
+    "device": "0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8",
+    "name": "Colombian Spanish SDK57 iOS27 QA",
+    "status": "own-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8/data/Containers/Data/Application/48F0E6DF-535A-4D61-BF9F-BD5DAE16BE97",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8.json",
+    "reportedDataDevice": "0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8"
+  },
+  {
+    "device": "121168CB-C271-4202-AC19-94F8DAE7B8B1",
+    "name": "Colombian Spanish Fresh QA",
+    "status": "lookup-unverified",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": null,
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/121168CB-C271-4202-AC19-94F8DAE7B8B1.json"
+  },
+  {
+    "device": "5E9A8854-135A-4675-A437-4EFCA043F656",
+    "name": "Colombian Spanish Plan Narrow QA",
+    "status": "own-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/5E9A8854-135A-4675-A437-4EFCA043F656.json",
+    "reportedDataDevice": "5E9A8854-135A-4675-A437-4EFCA043F656"
+  },
+  {
+    "device": "5EAE09E7-828A-4306-B727-E2BBB307C24C",
+    "name": "Colombian Spanish Tablet QA",
+    "status": "lookup-unverified",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": null,
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/5EAE09E7-828A-4306-B727-E2BBB307C24C.json"
+  },
+  {
+    "device": "6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1",
+    "name": "Colombian Spanish Maximum Grading QA",
+    "status": "foreign-or-invalid-path",
+    "origin": "previous verified lookup; not rebooted",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+    "evidence": "docs/qa/2026-10-18-simulator-isolation/existing-devices-preflight.json",
+    "reportedDataDevice": "5E9A8854-135A-4675-A437-4EFCA043F656"
+  },
+  {
+    "device": "6E0CD6D5-B769-426C-9B98-6984350BA622",
+    "name": "Colombian Spanish SDK55 QA",
+    "status": "own-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/6E0CD6D5-B769-426C-9B98-6984350BA622/data/Containers/Data/Application/877C363D-1D35-4E93-87F0-9B4AFAD4FE8E",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/6E0CD6D5-B769-426C-9B98-6984350BA622.json",
+    "reportedDataDevice": "6E0CD6D5-B769-426C-9B98-6984350BA622"
+  },
+  {
+    "device": "738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04",
+    "name": "Colombian Spanish Restore Recovery QA",
+    "status": "foreign-or-invalid-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04.json",
+    "reportedDataDevice": "5E9A8854-135A-4675-A437-4EFCA043F656"
+  },
+  {
+    "device": "99B846D3-361A-48FE-B3C1-9FD837CDCE76",
+    "name": "Colombian Spanish Applied Timing QA",
+    "status": "own-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/99B846D3-361A-48FE-B3C1-9FD837CDCE76/data/Containers/Data/Application/833E90E9-B35F-4C3A-A34C-B1C6A3A5FB84",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/99B846D3-361A-48FE-B3C1-9FD837CDCE76.json",
+    "reportedDataDevice": "99B846D3-361A-48FE-B3C1-9FD837CDCE76"
+  },
+  {
+    "device": "A1792E3E-B9FD-4BD1-8364-7FC979B92825",
+    "name": "Colombian Spanish Timing QA",
+    "status": "own-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/A1792E3E-B9FD-4BD1-8364-7FC979B92825/data/Containers/Data/Application/9C98D777-1C2B-4E9B-956C-0FC3ABE10AB5",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/A1792E3E-B9FD-4BD1-8364-7FC979B92825.json",
+    "reportedDataDevice": "A1792E3E-B9FD-4BD1-8364-7FC979B92825"
+  },
+  {
+    "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "name": "Colombian Spanish Keyboard Tablet QA",
+    "status": "foreign-or-invalid-path",
+    "origin": "previous verified lookup; not rebooted",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+    "evidence": "docs/qa/2026-10-18-simulator-isolation/existing-devices-preflight.json",
+    "reportedDataDevice": "B51A3777-8E81-4049-B101-C2B18390E2B1"
+  },
+  {
+    "device": "AFCA5E93-0434-45B1-911C-E06B2B3A0BC8",
+    "name": "QUARANTINED - Mission Keyboard Alias",
+    "status": "foreign-or-invalid-path",
+    "origin": "previous observed alias/source impact; quarantined, not rebooted",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+    "evidence": "docs/qa/2026-10-18-simulator-isolation/native-state-check.json",
+    "reportedDataDevice": "B51A3777-8E81-4049-B101-C2B18390E2B1"
+  },
+  {
+    "device": "B51A3777-8E81-4049-B101-C2B18390E2B1",
+    "name": "Colombian Spanish Plan Tablet QA",
+    "status": "own-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/B51A3777-8E81-4049-B101-C2B18390E2B1.json",
+    "reportedDataDevice": "B51A3777-8E81-4049-B101-C2B18390E2B1"
+  },
+  {
+    "device": "C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0",
+    "name": "Colombian Spanish Editor Recovery QA",
+    "status": "foreign-or-invalid-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0.json",
+    "reportedDataDevice": "5E9A8854-135A-4675-A437-4EFCA043F656"
+  },
+  {
+    "device": "C2FC53CC-FE0C-42C0-B880-5839C1F51299",
+    "name": "Colombian Spanish SDK57 QA",
+    "status": "own-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/C2FC53CC-FE0C-42C0-B880-5839C1F51299/data/Containers/Data/Application/C082253F-416B-4414-90BD-9EA829E5CE06",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/C2FC53CC-FE0C-42C0-B880-5839C1F51299.json",
+    "reportedDataDevice": "C2FC53CC-FE0C-42C0-B880-5839C1F51299"
+  },
+  {
+    "device": "DA623884-B6E4-4E09-8945-EC74CC888A61",
+    "name": "Colombian Spanish QA",
+    "status": "lookup-unverified",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": null,
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/DA623884-B6E4-4E09-8945-EC74CC888A61.json"
+  },
+  {
+    "device": "DABA2821-3619-4F4A-B0C3-54E70B31511F",
+    "name": "Colombian Spanish Fresh Mission Keyboard QA",
+    "status": "own-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DABA2821-3619-4F4A-B0C3-54E70B31511F/data/Containers/Data/Application/8FB7A15F-3AA2-472B-97E6-D1251A614B92",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/DABA2821-3619-4F4A-B0C3-54E70B31511F.json",
+    "reportedDataDevice": "DABA2821-3619-4F4A-B0C3-54E70B31511F"
+  },
+  {
+    "device": "E66076BE-D9F8-49FB-870F-F29B57C4CA40",
+    "name": "Colombian Spanish Mini Tablet QA",
+    "status": "own-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66076BE-D9F8-49FB-870F-F29B57C4CA40/data/Containers/Data/Application/4ACB8BEA-2FF2-4899-AB94-032DF8D8095F",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/E66076BE-D9F8-49FB-870F-F29B57C4CA40.json",
+    "reportedDataDevice": "E66076BE-D9F8-49FB-870F-F29B57C4CA40"
+  },
+  {
+    "device": "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB",
+    "name": "Colombian Spanish Catch-up QA",
+    "status": "foreign-or-invalid-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/E66A88D6-CC87-4F46-A197-3F97EE9ED8CB.json",
+    "reportedDataDevice": "5E9A8854-135A-4675-A437-4EFCA043F656"
+  },
+  {
+    "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+    "name": "Colombian Spanish Flag Clearing QA",
+    "status": "own-path",
+    "origin": "this audit; read-only lookup",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6/data/Containers/Data/Application/E66C5EB5-490E-494B-908B-0DCF459BC0F6",
+    "evidence": "docs/qa/2026-10-18-simulator-claim-audit/probes/F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6.json",
+    "reportedDataDevice": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6"
+  }
+]

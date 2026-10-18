@@ -1,0 +1,436 @@
+{
+  "phase": "after",
+  "capturedAt": 1792300257.402739,
+  "devices": [
+    {
+      "device": "99B846D3-361A-48FE-B3C1-9FD837CDCE76",
+      "name": "Colombian Spanish Applied Timing QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/99B846D3-361A-48FE-B3C1-9FD837CDCE76/data/Containers/Data/Application/833E90E9-B35F-4C3A-A34C-B1C6A3A5FB84",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/99B846D3-361A-48FE-B3C1-9FD837CDCE76/data/Containers/Data/Application/833E90E9-B35F-4C3A-A34C-B1C6A3A5FB84/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "049caa2861970904412aa6105e24c438fc16fe62be2b2024bdb0eb5afd53ef86",
+          "SRS_DAILY_PLAN_V1": "3345198eba1c24a4cf77197a85f2bb3719f67950f8f9b3fab1e535b5c9ade6d5",
+          "SRS_MISSIONS_V1": "cdc4ad23991118410488d556e9dcc69cc479ff0f6cfe36ebc435484e2dea071b",
+          "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+          "SRS_DAILY_PROGRESS_V1": "3a51f7e271c3889f81629e0b079f421ade5a4895cbf1b326c03092ffe5cedfbf",
+          "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+          "SRS_SEEN_WORDS_V1": "32f97b14ff69c7b060f2a385ca66efc33dfbe6da2742b4df0476c6b503efb5e9",
+          "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LAST_STUDY_SESSION_V1": "01b061ea4d0b399b99a06e45a9e178b9d8b7063a49c9e54f4305cf5fbb08157a",
+          "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LEARNING_EVENTS_V1": "86d354dc71bc27d8ca1360699c68c2e38b644ba946a44eaa489c3a37b5a7519a"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8",
+      "name": "Colombian Spanish SDK57 iOS27 QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8/data/Containers/Data/Application/48F0E6DF-535A-4D61-BF9F-BD5DAE16BE97",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8/data/Containers/Data/Application/48F0E6DF-535A-4D61-BF9F-BD5DAE16BE97/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "1b6d931a76d60f41e8b88901f6c91cf897c2eb66b0cc1895d78695781631d90c",
+          "SRS_DAILY_PLAN_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+          "SRS_PREFS_V1": "be6c06151c1458136475d0b299f199532febb2295796d0560b7b81a314d34e94",
+          "SRS_DAILY_PROGRESS_V1": "8836b161fa33215eef80f51140d054761ef62a5de6d39cd217d46633aad11e99",
+          "SRS_STUDY_STREAK_V1": "0ffec32bd7228dc15263923120faddd1ea10148fb12b41bc7ff71e930dfbbb6c",
+          "SRS_SEEN_WORDS_V1": "40909597898bf1c5573ce0a82a8f06c07f327d8ce832a31c80c2c9a7b528fa3c",
+          "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "SRS_LAST_STUDY_SESSION_V1": "f113c4dd32cbb7688f8c91c1c98180cad6e56b63258fd80fc668fbae140d6b90",
+          "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "SRS_LEARNING_EVENTS_V1": "e61675552e10ef3595bc296e8ab12798bcab8d2f460820f0b376351910b9726d"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "A1792E3E-B9FD-4BD1-8364-7FC979B92825",
+      "name": "Colombian Spanish Timing QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/A1792E3E-B9FD-4BD1-8364-7FC979B92825/data/Containers/Data/Application/9C98D777-1C2B-4E9B-956C-0FC3ABE10AB5",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/A1792E3E-B9FD-4BD1-8364-7FC979B92825/data/Containers/Data/Application/9C98D777-1C2B-4E9B-956C-0FC3ABE10AB5/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "232613c44707ba4e1b84f552acc409c98b1644aa865a8c9af8b638be04f38e97",
+          "SRS_DAILY_PLAN_V1": "0495dc80f7a2e8aa27d560ade842f50afc3e1eac4f2bebb1bc2b44dc04e29cff",
+          "SRS_MISSIONS_V1": "02598547b1f87959a527c906d3ce804d188844905aff7bd8691f389f84a0bf52",
+          "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+          "SRS_DAILY_PROGRESS_V1": "229b300525b9287957520afa52acada50788bcc274ef7aedc82df23ce904d6ee",
+          "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+          "SRS_SEEN_WORDS_V1": "d6004e905c96f5f90677b5aa46662ee2fc64ee47a588df4e790f3d68852af37b",
+          "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LAST_STUDY_SESSION_V1": "9467430087a7a618f0aa50136c54eeb6a96631e079baa1d5059218ca837a624b",
+          "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LEARNING_EVENTS_V1": "496e91541da05e99f1c81cec9e98b44c069fa014e6704c8cbe241b1995d08662"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "121168CB-C271-4202-AC19-94F8DAE7B8B1",
+      "name": "Colombian Spanish Fresh QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "missing-or-ambiguous-container",
+        "containerCount": 0
+      }
+    },
+    {
+      "device": "DA623884-B6E4-4E09-8945-EC74CC888A61",
+      "name": "Colombian Spanish QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "missing-or-ambiguous-container",
+        "containerCount": 0
+      }
+    },
+    {
+      "device": "6E0CD6D5-B769-426C-9B98-6984350BA622",
+      "name": "Colombian Spanish SDK55 QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/6E0CD6D5-B769-426C-9B98-6984350BA622/data/Containers/Data/Application/877C363D-1D35-4E93-87F0-9B4AFAD4FE8E",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/6E0CD6D5-B769-426C-9B98-6984350BA622/data/Containers/Data/Application/877C363D-1D35-4E93-87F0-9B4AFAD4FE8E/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "f2503d07ae9c4033cf664e36e29f985c81fe81e8c6689f9dc352906c6e9451f7",
+          "SRS_DAILY_PLAN_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+          "SRS_PREFS_V1": "4834ccacf9d6a45a326c02504ea248cb3fe6db9a4ef1d6e8eb5c48b122f5752e",
+          "SRS_DAILY_PROGRESS_V1": "a209f61a124cd6b47878e19453c07433fe1235ec173cfc5d607c5d5d6e8844f8",
+          "SRS_STUDY_STREAK_V1": "674dca0595054810cee634f5540bd08545330adb5b9ca57bc2344385c38f87fc",
+          "SRS_SEEN_WORDS_V1": "1863b8fbb7e6853f2fc5679dbd39df2a4ebb2d1d494c0db84e2dec81b5b6bdfa",
+          "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "SRS_LAST_STUDY_SESSION_V1": "81a8515e29ed1d429ea03c6155d1485e4bfd0e1d7fd0d327fb29d58d7e567ac9",
+          "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "SRS_LEARNING_EVENTS_V1": "ca6c4c5cbb28b61c927c699624feba78a3cecd7c21c94a2350f19f90b8fce1c9"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "C2FC53CC-FE0C-42C0-B880-5839C1F51299",
+      "name": "Colombian Spanish SDK57 QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/C2FC53CC-FE0C-42C0-B880-5839C1F51299/data/Containers/Data/Application/C082253F-416B-4414-90BD-9EA829E5CE06",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/C2FC53CC-FE0C-42C0-B880-5839C1F51299/data/Containers/Data/Application/C082253F-416B-4414-90BD-9EA829E5CE06/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "f2503d07ae9c4033cf664e36e29f985c81fe81e8c6689f9dc352906c6e9451f7",
+          "SRS_DAILY_PLAN_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_MISSIONS_V1": "ac810f64e87f90f21d178af8b1eb4fe90f4086f43816601663c5ca3c785da98e",
+          "SRS_PREFS_V1": "4834ccacf9d6a45a326c02504ea248cb3fe6db9a4ef1d6e8eb5c48b122f5752e",
+          "SRS_DAILY_PROGRESS_V1": "a209f61a124cd6b47878e19453c07433fe1235ec173cfc5d607c5d5d6e8844f8",
+          "SRS_STUDY_STREAK_V1": "674dca0595054810cee634f5540bd08545330adb5b9ca57bc2344385c38f87fc",
+          "SRS_SEEN_WORDS_V1": "1863b8fbb7e6853f2fc5679dbd39df2a4ebb2d1d494c0db84e2dec81b5b6bdfa",
+          "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "SRS_LAST_STUDY_SESSION_V1": "e03d506ee96c63c622e360d87b802722b91d7c18db4e181038abfa400658a2f9",
+          "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "SRS_LEARNING_EVENTS_V1": "ca6c4c5cbb28b61c927c699624feba78a3cecd7c21c94a2350f19f90b8fce1c9"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB",
+      "name": "Colombian Spanish Catch-up QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66A88D6-CC87-4F46-A197-3F97EE9ED8CB/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66A88D6-CC87-4F46-A197-3F97EE9ED8CB/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+          "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+          "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+          "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+          "SRS_DAILY_PROGRESS_V1": "3a51f7e271c3889f81629e0b079f421ade5a4895cbf1b326c03092ffe5cedfbf",
+          "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+          "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+          "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+          "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0",
+      "name": "Colombian Spanish Editor Recovery QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+          "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+          "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+          "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+          "SRS_DAILY_PROGRESS_V1": "3a51f7e271c3889f81629e0b079f421ade5a4895cbf1b326c03092ffe5cedfbf",
+          "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+          "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+          "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+          "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+      "name": "Colombian Spanish Flag Clearing QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6/data/Containers/Data/Application/E66C5EB5-490E-494B-908B-0DCF459BC0F6",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6/data/Containers/Data/Application/E66C5EB5-490E-494B-908B-0DCF459BC0F6/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "38e9306b5ab9448cba2c269fe1b1b67874dd75010c6d4a10609f1495c67d40d6",
+          "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+          "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+          "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+          "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+          "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+          "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+          "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+          "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1",
+      "name": "Colombian Spanish Maximum Grading QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+          "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+          "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+          "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+          "SRS_DAILY_PROGRESS_V1": "3a51f7e271c3889f81629e0b079f421ade5a4895cbf1b326c03092ffe5cedfbf",
+          "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+          "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+          "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+          "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "5E9A8854-135A-4675-A437-4EFCA043F656",
+      "name": "Colombian Spanish Plan Narrow QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "4089507d856f2e9866fb42f2cb63959287ec47dfa94ca3e659abb68ffa31fecb",
+          "SRS_DAILY_PLAN_V1": "3edd9c565e61c5d971b758f88aa85642565619595f6ae32522f7ca860fc3cf10",
+          "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+          "SRS_PREFS_V1": "77055397846d78338d34eb796687d65baa95cba8212bdb440f1cfdeb82d97c10",
+          "SRS_DAILY_PROGRESS_V1": "0a27222ec2415bb4e69da96ac52b030df4aa6c7febc98b6212515e262e63e267",
+          "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+          "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+          "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "SRS_LAST_STUDY_SESSION_V1": "07b1b8d8dc963bdec23bd042758fafa581d0ddfb2635c7719bdd135df454bce7",
+          "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "SRS_LEARNING_EVENTS_V1": "be7440572c900d8144ac35935254f07f6e6f9cca64c5d94940ba739c14bbe4da"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04",
+      "name": "Colombian Spanish Restore Recovery QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "ae233d1977bff3d6f941db31c7ff473512fcd73ac924d7277e734350a56e62b5",
+          "SRS_DAILY_PLAN_V1": "b264664ca45ad8eccd5d8aa8c857944cabbca69fb0c48bb1d50159402411b92c",
+          "SRS_MISSIONS_V1": "2e7b6e8426478295088f1624fa7748783b4e2bba91a96a3e5c5bd514641fa9e9",
+          "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+          "SRS_DAILY_PROGRESS_V1": "3a51f7e271c3889f81629e0b079f421ade5a4895cbf1b326c03092ffe5cedfbf",
+          "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+          "SRS_SEEN_WORDS_V1": "c2399bfe4b4180ee8d66b968538306aa9a9e8c9bf42048689612c58a01023499",
+          "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LAST_STUDY_SESSION_V1": "ea1a0387b89012b35c7d62381cf1a6b7b55f303139c7d4d55beedc87c498ff13",
+          "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LEARNING_EVENTS_V1": "5b35ad8d674d632c764699f74244f66c8ee43e99b43ae4070ffa352e42e2b08f"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "DABA2821-3619-4F4A-B0C3-54E70B31511F",
+      "name": "Colombian Spanish Fresh Mission Keyboard QA",
+      "state": "Booted",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DABA2821-3619-4F4A-B0C3-54E70B31511F/data/Containers/Data/Application/8FB7A15F-3AA2-472B-97E6-D1251A614B92",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/DABA2821-3619-4F4A-B0C3-54E70B31511F/data/Containers/Data/Application/8FB7A15F-3AA2-472B-97E6-D1251A614B92/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "98df24fba45deee6befdcd4437647321eeb598964b379f094ffc94e79aa9d73e",
+          "SRS_DAILY_PLAN_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_MISSIONS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_DAILY_PROGRESS_V1": "6516eaa250f7ec8f4980353f1be39fa401dd8970a697d2437131fb285c60a40e",
+          "SRS_STUDY_STREAK_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_SEEN_WORDS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LAST_STUDY_SESSION_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LEARNING_EVENTS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+      "name": "Colombian Spanish Keyboard Tablet QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "19fba69c88fa6d91f2ba8eb580016245b629af05ff793cc649d87f571dd115b2",
+          "SRS_DAILY_PLAN_V1": "1bdf60ec2d27cf4825e824314bb5b95d7d2a377178d1c12b06ba2ecb3a274c78",
+          "SRS_MISSIONS_V1": "e5196f996b4879fbf29bff4c0f4fedb6beaaff79cc9b07b7fbc9b922671a8656",
+          "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+          "SRS_DAILY_PROGRESS_V1": "3a51f7e271c3889f81629e0b079f421ade5a4895cbf1b326c03092ffe5cedfbf",
+          "SRS_STUDY_STREAK_V1": "6a25e1f5a22e48f7e4847fb61ebbb8e17b35f034331a29bafccb0bc1a5d119d0",
+          "SRS_SEEN_WORDS_V1": "af7dcf9b4a06a6e110dae29175d61609a2195bdf781a6b1f0ff119a0548c527c",
+          "SRS_QUIZ_HISTORY_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LAST_STUDY_SESSION_V1": "f421cb2d45ee7d1a1e299fb10584e2e6439771cc01567d79d8df26545e2821d2",
+          "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LEARNING_EVENTS_V1": "177bdeb2a36f4c716b69d151bd0fb0e28c9235e8d0b35436aacda5caba2115e7"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "B51A3777-8E81-4049-B101-C2B18390E2B1",
+      "name": "Colombian Spanish Plan Tablet QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "463d2bc1e0936f73fa4b99bf5a09588b89713e26315a444e3acbe2b5da8db155",
+          "SRS_DAILY_PLAN_V1": "4c0a921ddd00ea6e9f99ff82864dd01142383089cbaadd94cabbded1756fad4b",
+          "SRS_MISSIONS_V1": "6682dc17505197c7983c4c915c837aaf4946b4a61b3d4b4ff63d2759d5b76cd1",
+          "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+          "SRS_DAILY_PROGRESS_V1": "74597bf1daaa6ae43541f2ae7033a8f0eed73d07467ac515b933cb60e4df3f0d",
+          "SRS_STUDY_STREAK_V1": "3086f2ff4d61a2dac1bf73e6886f696e4c6944c7e867aa6f49bf8a4331439c6c",
+          "SRS_SEEN_WORDS_V1": "ceb62c549632566158c6d327357c4ae442ad09892210387068cb297e8b8956a3",
+          "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "SRS_LAST_STUDY_SESSION_V1": "806462c98ec6aa88f7e3c8f700a541b0d4741a4c871b8271996e16dba6804b06",
+          "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "SRS_LEARNING_EVENTS_V1": "581ef68b69517ed66365ac229c29af9812d4416f24e95b09a5f908ff75c7a2fb"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "5EAE09E7-828A-4306-B727-E2BBB307C24C",
+      "name": "Colombian Spanish Tablet QA",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "missing-or-ambiguous-container",
+        "containerCount": 0
+      }
+    },
+    {
+      "device": "AFCA5E93-0434-45B1-911C-E06B2B3A0BC8",
+      "name": "QUARANTINED - Mission Keyboard Alias",
+      "state": "Shutdown",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/AFCA5E93-0434-45B1-911C-E06B2B3A0BC8/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/AFCA5E93-0434-45B1-911C-E06B2B3A0BC8/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "463d2bc1e0936f73fa4b99bf5a09588b89713e26315a444e3acbe2b5da8db155",
+          "SRS_DAILY_PLAN_V1": "4c0a921ddd00ea6e9f99ff82864dd01142383089cbaadd94cabbded1756fad4b",
+          "SRS_MISSIONS_V1": "6682dc17505197c7983c4c915c837aaf4946b4a61b3d4b4ff63d2759d5b76cd1",
+          "SRS_PREFS_V1": "30bb01e03a6b4b4f8190a5585a4fa863f67e7a908de371e31f495233ebb5293d",
+          "SRS_DAILY_PROGRESS_V1": "74597bf1daaa6ae43541f2ae7033a8f0eed73d07467ac515b933cb60e4df3f0d",
+          "SRS_STUDY_STREAK_V1": "3086f2ff4d61a2dac1bf73e6886f696e4c6944c7e867aa6f49bf8a4331439c6c",
+          "SRS_SEEN_WORDS_V1": "ceb62c549632566158c6d327357c4ae442ad09892210387068cb297e8b8956a3",
+          "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "SRS_LAST_STUDY_SESSION_V1": "806462c98ec6aa88f7e3c8f700a541b0d4741a4c871b8271996e16dba6804b06",
+          "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "SRS_LEARNING_EVENTS_V1": "581ef68b69517ed66365ac229c29af9812d4416f24e95b09a5f908ff75c7a2fb"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "device": "E66076BE-D9F8-49FB-870F-F29B57C4CA40",
+      "name": "Colombian Spanish Mini Tablet QA",
+      "state": "Booted",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+      "ownState": {
+        "status": "captured",
+        "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66076BE-D9F8-49FB-870F-F29B57C4CA40/data/Containers/Data/Application/4ACB8BEA-2FF2-4899-AB94-032DF8D8095F",
+        "manifest": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66076BE-D9F8-49FB-870F-F29B57C4CA40/data/Containers/Data/Application/4ACB8BEA-2FF2-4899-AB94-032DF8D8095F/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1/manifest.json",
+        "keyHashes": {
+          "SRS_DECKS_V3": "21e4c56b17f422c88b6056abb25cad84d93184d8b119d9463a8e537578590e2b",
+          "SRS_DAILY_PLAN_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_MISSIONS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_PREFS_V1": "8d5f626853e8c698d0efa77e1a5c732c995ba0ed4e680a0fd39dd572dec56bfe",
+          "SRS_DAILY_PROGRESS_V1": "486e2074e50af9fb27fcf29c5e391fa98cf5baad317ec1a4f43d6eb90248e5e7",
+          "SRS_STUDY_STREAK_V1": "4a6c2ac7d8ee8a7d0847e4a4714718b6a6c6343b0dd781d62ce40092ef2f85d0",
+          "SRS_SEEN_WORDS_V1": "0275233ca6ade3bc76a99e7e76558609d37a5314080b98c76c497555c4a52741",
+          "SRS_QUIZ_HISTORY_V1": "260fb134c55a500395c56851f042d3cbec41f3e0f9376e0e12c04e4b5d89637d",
+          "SRS_LAST_STUDY_SESSION_V1": "559641a7c1b3fe11a72de6f7951ca5c794a417cac76b5c03b9e62387f61ef15e",
+          "SRS_NOTIFICATION_PREFS_V1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "SRS_LEARNING_EVENTS_V1": "317500629dc3821e3380717139bc2210d4b71de0821dc83cef63d687456a7e5a"
+        },
+        "journalHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    }
+  ]
+}

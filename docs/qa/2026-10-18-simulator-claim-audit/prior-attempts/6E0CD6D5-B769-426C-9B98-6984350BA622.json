@@ -1,0 +1,12 @@
+{
+  "device": "6E0CD6D5-B769-426C-9B98-6984350BA622",
+  "name": "Colombian Spanish SDK55 QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792299966.861342,
+  "appLaunchedByCollector": false,
+  "status": "probe-unverified",
+  "error": "Command '['xcrun', 'simctl', 'bootstatus', '6E0CD6D5-B769-426C-9B98-6984350BA622', '-b']' timed out after 60 seconds",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792300031.3193789
+}

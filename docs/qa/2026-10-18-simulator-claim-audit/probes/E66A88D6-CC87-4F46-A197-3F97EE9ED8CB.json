@@ -1,0 +1,14 @@
+{
+  "device": "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB",
+  "name": "Colombian Spanish Catch-up QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792299822.806008,
+  "appLaunchedByCollector": false,
+  "lookupExitCode": 0,
+  "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+  "status": "foreign-or-invalid-path",
+  "error": "Container is outside requested device E66A88D6-CC87-4F46-A197-3F97EE9ED8CB: /Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792299840.83814
+}

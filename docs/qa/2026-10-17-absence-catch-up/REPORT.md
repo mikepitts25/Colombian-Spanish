@@ -1,5 +1,7 @@
 # Familiar-card catch-up — 2026-10-17
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `E66A88D6-CC87-4F46-A197-3F97EE9ED8CB` → `5E9A8854-135A-4675-A437-4EFCA043F656`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 ## Delivered behavior
 
 B05.4-B adds a distinct fresh-plan catch-up policy after at least seven local calendar days since the last recorded study day (flashcards or a completed quiz share that history). If studied reviews are due, the recommended batch contains familiar cards only, with newLimit 0. The existing 3/5/10-minute budget, measured pace, applied-response reservation, due ordering and hard card bounds still apply. New cards remain separately available; English and Spanish Home explain the limited plan. Seven days is an initial product default for pilot validation, not an efficacy finding.

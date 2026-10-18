@@ -1,5 +1,7 @@
 # Maximum-text Hard focus and touch — 2026-10-17
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1` → `5E9A8854-135A-4675-A437-4EFCA043F656`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 Baseline `0cc4bad`, normal unsigned SDK57 development client, Metro 8098. Existing dedicated iPhone SE (3rd generation) / iOS 26 maximum-grading QA clone `6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1`. No app code, clock or storage file was modified. UI actions used CUA; own-app storage inspection was read-only.
 
 ## Native result

@@ -1,0 +1,157 @@
+[
+  {
+    "device": "99B846D3-361A-48FE-B3C1-9FD837CDCE76",
+    "name": "Colombian Spanish Applied Timing QA",
+    "reports": ["docs/qa/2026-10-17-applied-active-timing/REPORT.md"]
+  },
+  {
+    "device": "0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8",
+    "name": "Colombian Spanish SDK57 iOS27 QA",
+    "reports": [
+      "docs/qa/2026-10-16-sdk57/REPORT.md",
+      "docs/qa/2026-10-16-study-boundaries/REPORT.md",
+      "docs/qa/2026-10-17-accessible-tabs/REPORT.md",
+      "docs/qa/2026-10-17-focused-due-refresh/REPORT.md"
+    ]
+  },
+  {
+    "device": "A1792E3E-B9FD-4BD1-8364-7FC979B92825",
+    "name": "Colombian Spanish Timing QA",
+    "reports": ["docs/qa/2026-10-17-review-duration/REPORT.md"]
+  },
+  {
+    "device": "121168CB-C271-4202-AC19-94F8DAE7B8B1",
+    "name": "Colombian Spanish Fresh QA",
+    "reports": [
+      "docs/qa/2026-10-15-onboarding-recovery/REPORT.md",
+      "docs/qa/2026-10-16-listening-practice/REPORT.md",
+      "docs/qa/2026-10-16-local-voice-practice/REPORT.md",
+      "docs/qa/2026-10-16-navigation-seven/REPORT.md",
+      "docs/qa/2026-10-16-opt-in-speech/REPORT.md",
+      "docs/qa/2026-10-16-progress-evidence/REPORT.md"
+    ]
+  },
+  {
+    "device": "DA623884-B6E4-4E09-8945-EC74CC888A61",
+    "name": "Colombian Spanish QA",
+    "reports": ["docs/qa/2026-10-14-ios-smoke/REPORT.md"]
+  },
+  {
+    "device": "6E0CD6D5-B769-426C-9B98-6984350BA622",
+    "name": "Colombian Spanish SDK55 QA",
+    "reports": [
+      "docs/qa/2026-10-16-native-build-metadata/REPORT.md",
+      "docs/qa/2026-10-16-sdk55/REPORT.md"
+    ]
+  },
+  {
+    "device": "C2FC53CC-FE0C-42C0-B880-5839C1F51299",
+    "name": "Colombian Spanish SDK57 QA",
+    "reports": ["docs/qa/2026-10-16-sdk57/REPORT.md"]
+  },
+  {
+    "device": "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB",
+    "name": "Colombian Spanish Catch-up QA",
+    "reports": [
+      "docs/qa/2026-10-17-absence-catch-up/REPORT.md",
+      "docs/qa/2026-10-17-native-scroll-keyboard/REPORT.md",
+      "docs/qa/2026-10-17-review-filter-advancement/REPORT.md",
+      "docs/qa/2026-10-18-flagged-native-clear/REPORT.md"
+    ]
+  },
+  {
+    "device": "C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0",
+    "name": "Colombian Spanish Editor Recovery QA",
+    "reports": ["docs/qa/2026-10-17-editor-save-recovery/REPORT.md"]
+  },
+  {
+    "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+    "name": "Colombian Spanish Flag Clearing QA",
+    "reports": [
+      "docs/qa/2026-10-18-flagged-native-clear/REPORT.md",
+      "docs/qa/2026-10-18-large-text-keyboard/REPORT.md",
+      "docs/qa/2026-10-18-max-text-modals/REPORT.md",
+      "docs/qa/2026-10-18-native-keyboard/REPORT.md",
+      "docs/qa/2026-10-18-voice-large-text/REPORT.md"
+    ]
+  },
+  {
+    "device": "6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1",
+    "name": "Colombian Spanish Maximum Grading QA",
+    "reports": [
+      "docs/qa/2026-10-17-maximum-text-focus/REPORT.md",
+      "docs/qa/2026-10-17-native-midnight/REPORT.md",
+      "docs/qa/2026-10-17-study-maximum-grading/REPORT.md",
+      "docs/qa/2026-10-18-study-touch/REPORT.md"
+    ]
+  },
+  {
+    "device": "5E9A8854-135A-4675-A437-4EFCA043F656",
+    "name": "Colombian Spanish Plan Narrow QA",
+    "reports": ["docs/qa/2026-10-17-plan-layout-lifecycle/REPORT.md"]
+  },
+  {
+    "device": "738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04",
+    "name": "Colombian Spanish Restore Recovery QA",
+    "reports": [
+      "docs/qa/2026-10-17-braces-depth/REPORT.md",
+      "docs/qa/2026-10-17-native-restore-recovery/REPORT.md"
+    ]
+  },
+  {
+    "device": "DABA2821-3619-4F4A-B0C3-54E70B31511F",
+    "name": "Colombian Spanish Fresh Mission Keyboard QA",
+    "reports": ["docs/qa/2026-10-18-simulator-isolation/REPORT.md"]
+  },
+  {
+    "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "name": "Colombian Spanish Keyboard Tablet QA",
+    "reports": [
+      "docs/qa/2026-10-17-native-scroll-keyboard/REPORT.md",
+      "docs/qa/2026-10-18-deck-native-lifecycle/REPORT.md",
+      "docs/qa/2026-10-18-large-text-keyboard/REPORT.md",
+      "docs/qa/2026-10-18-max-text-modals/REPORT.md",
+      "docs/qa/2026-10-18-tablet-keyboard/REPORT.md",
+      "docs/qa/2026-10-18-tablet-window/REPORT.md",
+      "docs/qa/2026-10-18-voice-large-text/REPORT.md"
+    ]
+  },
+  {
+    "device": "B51A3777-8E81-4049-B101-C2B18390E2B1",
+    "name": "Colombian Spanish Plan Tablet QA",
+    "reports": [
+      "docs/qa/2026-10-17-plan-layout-lifecycle/REPORT.md",
+      "docs/qa/2026-10-18-simulator-isolation/REPORT.md"
+    ]
+  },
+  {
+    "device": "5EAE09E7-828A-4306-B727-E2BBB307C24C",
+    "name": "Colombian Spanish Tablet QA",
+    "reports": [
+      "docs/qa/2026-10-15-tablet-smoke/REPORT.md",
+      "docs/qa/2026-10-16-local-voice-practice/REPORT.md",
+      "docs/qa/2026-10-16-navigation-seven/REPORT.md"
+    ]
+  },
+  {
+    "device": "AFCA5E93-0434-45B1-911C-E06B2B3A0BC8",
+    "name": "QUARANTINED - Mission Keyboard Alias",
+    "reports": ["docs/qa/2026-10-18-simulator-isolation/REPORT.md"]
+  },
+  {
+    "device": "E66076BE-D9F8-49FB-870F-F29B57C4CA40",
+    "name": "Colombian Spanish Mini Tablet QA",
+    "reports": [
+      "docs/qa/2026-10-18-daily-goal/REPORT.md",
+      "docs/qa/2026-10-18-deck-card-editing/REPORT.md",
+      "docs/qa/2026-10-18-deck-native-lifecycle/REPORT.md",
+      "docs/qa/2026-10-18-flagged-recovery/REPORT.md",
+      "docs/qa/2026-10-18-learner-fixtures/REPORT.md",
+      "docs/qa/2026-10-18-phrases-large-text/REPORT.md",
+      "docs/qa/2026-10-18-quiz-large-text/REPORT.md",
+      "docs/qa/2026-10-18-reminder-reliability/REPORT.md",
+      "docs/qa/2026-10-18-reminder-voiceover/REPORT.md",
+      "docs/qa/2026-10-18-tablet-window/REPORT.md"
+    ]
+  }
+]

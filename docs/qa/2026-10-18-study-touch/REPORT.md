@@ -1,5 +1,7 @@
 # Study touch-only positioning follow-up — 2026-10-18
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1` → `5E9A8854-135A-4675-A437-4EFCA043F656`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 B12.5-C remains **open**. This follow-up verifies a retained ordinary queue and records a control limitation; it does not close the maximum-text Again/Hard touch-only positioning gap.
 
 Dedicated iPhone SE 3 / iOS26 grading QA `6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1`, existing unsigned development client, Metro8098/worktree based on `dd1969c`. No app code, storage file or clock was modified. CUA controlled Device Hub; official simctl handled screenshot, cold terminate/launch and read-only own-app storage. VoiceOver and Capture Keyboard remained off. Device started/finished with Spanish Home, native Light/app dark and Text Size3.

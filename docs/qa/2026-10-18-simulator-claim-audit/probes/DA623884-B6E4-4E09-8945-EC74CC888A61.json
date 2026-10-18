@@ -1,0 +1,13 @@
+{
+  "device": "DA623884-B6E4-4E09-8945-EC74CC888A61",
+  "name": "Colombian Spanish QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792300176.947802,
+  "appLaunchedByCollector": false,
+  "lookupExitCode": 2,
+  "status": "lookup-unverified",
+  "error": "An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=2):\nThe operation couldn\u2019t be completed. No such file or directory\nNo such file or directory",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792300193.2861571
+}

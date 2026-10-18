@@ -1,0 +1,20 @@
+{
+  "device": "5E9A8854-135A-4675-A437-4EFCA043F656",
+  "name": "Colombian Spanish Plan Narrow QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792300009.786229,
+  "appLaunchedByCollector": false,
+  "lookupExitCode": 0,
+  "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+  "preflight": {
+    "isolated": true,
+    "requestedDevice": "5E9A8854-135A-4675-A437-4EFCA043F656",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780"
+  },
+  "status": "own-path",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792300028.861433
+}

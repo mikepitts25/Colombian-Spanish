@@ -38,4 +38,4 @@ for phase in ['clone-cleared', 'clone-cold-restored']:
     assert r['daily'] == base['daily'] == {'date': '2026-10-18', 'count': 0, 'target': 5, 'newCount': 0}
     for key in expected_keys - {'SRS_DECKS_V3'}:
         assert r['keyHashes'][key] == base['keyHashes'][key], (phase, key)
-print('PASS: 20 flags cleared only on clone; exact non-flag deck data and ten other keys unchanged through cold launch; source eleven hashes unchanged.')
+print('PASS: recorded 20→0 clear/cold invariants and direct source snapshots match; independent source-runtime protection remains unverified.')

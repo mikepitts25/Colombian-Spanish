@@ -1,0 +1,20 @@
+{
+  "device": "A1792E3E-B9FD-4BD1-8364-7FC979B92825",
+  "name": "Colombian Spanish Timing QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792299912.420738,
+  "appLaunchedByCollector": false,
+  "lookupExitCode": 0,
+  "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/A1792E3E-B9FD-4BD1-8364-7FC979B92825/data/Containers/Data/Application/9C98D777-1C2B-4E9B-956C-0FC3ABE10AB5",
+  "preflight": {
+    "isolated": true,
+    "requestedDevice": "A1792E3E-B9FD-4BD1-8364-7FC979B92825",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/A1792E3E-B9FD-4BD1-8364-7FC979B92825/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/A1792E3E-B9FD-4BD1-8364-7FC979B92825/data/Containers/Data/Application/9C98D777-1C2B-4E9B-956C-0FC3ABE10AB5",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/A1792E3E-B9FD-4BD1-8364-7FC979B92825/data/Containers/Data/Application/9C98D777-1C2B-4E9B-956C-0FC3ABE10AB5"
+  },
+  "status": "own-path",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792299925.142085
+}

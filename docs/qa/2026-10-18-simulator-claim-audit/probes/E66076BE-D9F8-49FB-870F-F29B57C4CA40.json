@@ -1,0 +1,19 @@
+{
+  "device": "E66076BE-D9F8-49FB-870F-F29B57C4CA40",
+  "name": "Colombian Spanish Mini Tablet QA",
+  "originalState": "Booted",
+  "startedAt": 1792300143.229339,
+  "appLaunchedByCollector": false,
+  "lookupExitCode": 0,
+  "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66076BE-D9F8-49FB-870F-F29B57C4CA40/data/Containers/Data/Application/4ACB8BEA-2FF2-4899-AB94-032DF8D8095F",
+  "preflight": {
+    "isolated": true,
+    "requestedDevice": "E66076BE-D9F8-49FB-870F-F29B57C4CA40",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66076BE-D9F8-49FB-870F-F29B57C4CA40/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66076BE-D9F8-49FB-870F-F29B57C4CA40/data/Containers/Data/Application/4ACB8BEA-2FF2-4899-AB94-032DF8D8095F",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/E66076BE-D9F8-49FB-870F-F29B57C4CA40/data/Containers/Data/Application/4ACB8BEA-2FF2-4899-AB94-032DF8D8095F"
+  },
+  "status": "own-path",
+  "finalState": "Booted",
+  "finishedAt": 1792300143.5416489
+}

@@ -1,5 +1,7 @@
 # Smaller-tablet smoke and onboarding live text reflow
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F` → `B51A3777-8E81-4049-B101-C2B18390E2B1`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 Baseline `25ab8a0`. Current SDK57 unsigned development client, normal Expo AppEntry served by Metro 8098. UI actions used CUA/Device Hub. Official simctl created/booted the dedicated mini, installed the existing simulator app, restarted its process and captured screenshots. Own-app AsyncStorage snapshots were read-only; no storage injection, clock change or learner grade. This is development simulator evidence, not signed/physical-device acceptance.
 
 ## Reproduced defect and correction

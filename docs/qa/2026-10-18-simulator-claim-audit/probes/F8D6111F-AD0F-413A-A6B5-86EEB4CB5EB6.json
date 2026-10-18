@@ -1,0 +1,20 @@
+{
+  "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+  "name": "Colombian Spanish Flag Clearing QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792299822.806008,
+  "appLaunchedByCollector": false,
+  "lookupExitCode": 0,
+  "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6/data/Containers/Data/Application/E66C5EB5-490E-494B-908B-0DCF459BC0F6",
+  "preflight": {
+    "isolated": true,
+    "requestedDevice": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6/data/Containers/Data/Application/E66C5EB5-490E-494B-908B-0DCF459BC0F6",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6/data/Containers/Data/Application/E66C5EB5-490E-494B-908B-0DCF459BC0F6"
+  },
+  "status": "own-path",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792299839.495929
+}

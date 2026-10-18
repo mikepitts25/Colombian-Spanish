@@ -25,4 +25,4 @@ assert en['prefs'] == {**base['prefs'], 'uiLanguage': 'en'}
 for key in keys - {'SRS_PREFS_V1'}:
     assert en['keyHashes'][key] == base['keyHashes'][key]
 assert en['keyHashes']['SRS_PREFS_V1'] == hashlib.sha256(json.dumps(en['prefs'], sort_keys=True, separators=(',', ':')).encode()).hexdigest()
-print('PASS: eleven logical app hashes restored on each device; intermediate phone change only Spanish→English; no content, schedule or learning credit changes.')
+print('PASS: eleven hashes restore within each recorded UI-device group; phone intermediate change only Spanish→English. Independent data-store provenance is not established by these records.')

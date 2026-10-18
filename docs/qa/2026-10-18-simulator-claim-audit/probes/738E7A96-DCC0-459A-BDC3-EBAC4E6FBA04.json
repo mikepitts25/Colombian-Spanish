@@ -1,0 +1,14 @@
+{
+  "device": "738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04",
+  "name": "Colombian Spanish Restore Recovery QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792300009.78627,
+  "appLaunchedByCollector": false,
+  "lookupExitCode": 0,
+  "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+  "status": "foreign-or-invalid-path",
+  "error": "Container is outside requested device 738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04: /Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792300028.070782
+}

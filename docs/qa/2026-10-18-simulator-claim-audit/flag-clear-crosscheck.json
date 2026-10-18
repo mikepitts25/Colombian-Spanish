@@ -1,0 +1,15 @@
+{
+  "historicalEvidence": "docs/qa/2026-10-18-flagged-native-clear/native-state-check.json",
+  "comparisons": [
+    {
+      "historicalPhase": "source-after-ui",
+      "device": "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB",
+      "allElevenDirectHashesMatch": true
+    },
+    {
+      "historicalPhase": "clone-cold-restored",
+      "device": "F8D6111F-AD0F-413A-A6B5-86EEB4CB5EB6",
+      "allElevenDirectHashesMatch": true
+    }
+  ]
+}

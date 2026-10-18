@@ -1,0 +1,13 @@
+{
+  "device": "5EAE09E7-828A-4306-B727-E2BBB307C24C",
+  "name": "Colombian Spanish Tablet QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792300092.942531,
+  "appLaunchedByCollector": false,
+  "lookupExitCode": 2,
+  "status": "lookup-unverified",
+  "error": "An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=2):\nThe operation couldn\u2019t be completed. No such file or directory\nNo such file or directory",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792300111.83628
+}

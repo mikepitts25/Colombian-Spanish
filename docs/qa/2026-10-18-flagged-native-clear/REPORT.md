@@ -1,5 +1,7 @@
 # Flag clear and empty-state native evidence — 2026-10-18
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `E66A88D6-CC87-4F46-A197-3F97EE9ED8CB` → `5E9A8854-135A-4675-A437-4EFCA043F656`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 B02.4-B2m / B08.5-B10 complete this bounded Spanish iOS check. No application code changed. Tested the application tree at `47b5c9380fca5fc141253d8bbdc31f9386569d51` through Metro port 8098 using the existing unsigned SDK 57 development binary.
 
 ## Isolation and procedure

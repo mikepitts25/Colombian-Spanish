@@ -1,5 +1,7 @@
 # Narrow Study maximum-text evidence — 2026-10-17
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1` → `5E9A8854-135A-4675-A437-4EFCA043F656`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 Baseline main `11ea040`, normal unsigned Expo SDK 57 development client, Metro 8098. Dedicated iPhone SE (3rd generation) / iOS 26 clone `6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1` was copied from the restored QA fixture after shutting down its source. The source fixture was preserved. UI actions used CUA; snapshots were read-only own-app AsyncStorage inspection. No application code or app-storage files were edited.
 
 ## Verified evidence

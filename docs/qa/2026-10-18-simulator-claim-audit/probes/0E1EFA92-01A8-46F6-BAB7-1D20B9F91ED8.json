@@ -1,0 +1,20 @@
+{
+  "device": "0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8",
+  "name": "Colombian Spanish SDK57 iOS27 QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792299864.040577,
+  "appLaunchedByCollector": false,
+  "lookupExitCode": 0,
+  "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8/data/Containers/Data/Application/48F0E6DF-535A-4D61-BF9F-BD5DAE16BE97",
+  "preflight": {
+    "isolated": true,
+    "requestedDevice": "0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8/data/Containers/Data/Application/48F0E6DF-535A-4D61-BF9F-BD5DAE16BE97",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/0E1EFA92-01A8-46F6-BAB7-1D20B9F91ED8/data/Containers/Data/Application/48F0E6DF-535A-4D61-BF9F-BD5DAE16BE97"
+  },
+  "status": "own-path",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792299876.753568
+}

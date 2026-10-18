@@ -1,5 +1,7 @@
 # Editorial save recovery — 2026-10-17
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0` → `5E9A8854-135A-4675-A437-4EFCA043F656`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 Base `f1de787`. B02.4-B2h handles slow or failed editorial saves without losing the visible draft, duplicating submission or advancing the wrong filtered row.
 
 ## Behavior and verification

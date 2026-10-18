@@ -1,5 +1,7 @@
 # Tablet keyboard, background draft and bilingual completion — 2026-10-18
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F` → `B51A3777-8E81-4049-B101-C2B18390E2B1`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 Baseline `ee5d125`, unsigned SDK57 development client, Metro 8098. Existing dedicated iPad Pro 13-inch (M4) / iPadOS 26 keyboard QA clone `A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F`. UI used CUA; own-app storage snapshots were read-only. No application code, clocks or simulator storage files were edited. The previous completed plan remained intact until the app normally replaced the current plan on the new calendar day; no backup manipulation was needed.
 
 ## Native observations

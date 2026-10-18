@@ -1,5 +1,7 @@
 # Filtered editorial advancement — 2026-10-17
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `E66A88D6-CC87-4F46-A197-3F97EE9ED8CB` → `5E9A8854-135A-4675-A437-4EFCA043F656`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 Base `a40d382`. B02.4-B2g fixes an observed editor queue defect. Before the change, saving could remove the current card from a filtered list, after which `goNext()` incremented the index again and skipped the immediate successor. This affected Unreviewed, Flagged, Needs Native and Missing Example EN.
 
 ## Fix and regression evidence

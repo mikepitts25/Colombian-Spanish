@@ -1,5 +1,7 @@
 # Actual native midnight refresh — October 17–18, 2026
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1` → `5E9A8854-135A-4675-A437-4EFCA043F656`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 Baseline `0cc4bad`, unsigned SDK57 development client on dedicated iPhone SE (3rd generation) / iOS 26 QA clone `6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1`, Metro 8098. Device local calendar was Europe/Berlin. CUA operated the UI; own-app storage inspection was read-only. No clock injection, app storage edits, grading, source edits/HMR or navigation occurred during the foreground boundary interval.
 
 ## Observed result

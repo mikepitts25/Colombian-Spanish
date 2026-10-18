@@ -1,0 +1,92 @@
+[
+  {
+    "report": "docs/qa/2026-10-17-absence-catch-up/REPORT.md",
+    "aliases": ["E66A88D6-CC87-4F46-A197-3F97EE9ED8CB"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-17-braces-depth/REPORT.md",
+    "aliases": ["738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04"],
+    "action": "metadata reference indexed only; security report not edited"
+  },
+  {
+    "report": "docs/qa/2026-10-17-editor-save-recovery/REPORT.md",
+    "aliases": ["C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-17-maximum-text-focus/REPORT.md",
+    "aliases": ["6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-17-native-midnight/REPORT.md",
+    "aliases": ["6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-17-native-restore-recovery/REPORT.md",
+    "aliases": ["738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-17-native-scroll-keyboard/REPORT.md",
+    "aliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F", "E66A88D6-CC87-4F46-A197-3F97EE9ED8CB"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-17-review-filter-advancement/REPORT.md",
+    "aliases": ["E66A88D6-CC87-4F46-A197-3F97EE9ED8CB"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-17-study-maximum-grading/REPORT.md",
+    "aliases": ["6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-18-deck-native-lifecycle/REPORT.md",
+    "aliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-18-flagged-native-clear/REPORT.md",
+    "aliases": ["E66A88D6-CC87-4F46-A197-3F97EE9ED8CB"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-18-large-text-keyboard/REPORT.md",
+    "aliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-18-max-text-modals/REPORT.md",
+    "aliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-18-simulator-isolation/REPORT.md",
+    "aliases": ["AFCA5E93-0434-45B1-911C-E06B2B3A0BC8"],
+    "action": "already explicitly documents aliases; linked from audit"
+  },
+  {
+    "report": "docs/qa/2026-10-18-study-touch/REPORT.md",
+    "aliases": ["6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-18-tablet-keyboard/REPORT.md",
+    "aliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-18-tablet-window/REPORT.md",
+    "aliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+    "action": "provenance notice added"
+  },
+  {
+    "report": "docs/qa/2026-10-18-voice-large-text/REPORT.md",
+    "aliases": ["A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F"],
+    "action": "provenance notice added"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "device": "DA623884-B6E4-4E09-8945-EC74CC888A61",
+  "name": "Colombian Spanish QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792300053.547703,
+  "appLaunchedByCollector": false,
+  "status": "probe-unverified",
+  "error": "Command '['xcrun', 'simctl', 'bootstatus', 'DA623884-B6E4-4E09-8945-EC74CC888A61', '-b']' timed out after 60 seconds",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792300117.922158
+}

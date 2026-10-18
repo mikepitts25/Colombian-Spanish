@@ -22,6 +22,14 @@ Known aliases as of this report (do not use for further app interactions):
 | A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F | B51A3777-8E81-4049-B101-C2B18390E2B1 | Shutdown; retain fixture and re-establish on a fresh installation |
 | 6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1 | 5E9A8854-135A-4675-A437-4EFCA043F656 | Shutdown; retain fixture and re-establish on a fresh installation |
 
+Additional positive aliases from the [nineteen-device audit](2026-10-18-simulator-claim-audit/REPORT.md), all returned to shutdown:
+
+| Requested UI device                  | Reported data device                 |
+| ------------------------------------ | ------------------------------------ |
+| E66A88D6-CC87-4F46-A197-3F97EE9ED8CB | 5E9A8854-135A-4675-A437-4EFCA043F656 |
+| C1E8FD8F-7542-4FF8-B36A-F6B4A4C620E0 | 5E9A8854-135A-4675-A437-4EFCA043F656 |
+| 738E7A96-DCC0-459A-BDC3-EBAC4E6FBA04 | 5E9A8854-135A-4675-A437-4EFCA043F656 |
+
 Fresh replacement DABA2821-3619-4F4A-B0C3-54E70B31511F has before/after-launch passing checks and a fresh onboarding UI. Smaller tablet E66076BE-D9F8-49FB-870F-F29B57C4CA40 passed the current path lookup. Recheck at the next use. Unbooted devices in the inventory remain unverified.
 
 Historical screenshots and same-store state transitions remain observations of actual UI/storage behavior. Claims that two cloned devices supplied independent stores or that a shutdown source was protected require a separate audit or repeat on a fresh installation; do not promote those claims into stronger release acceptance. This finding does not change automated test outcomes or establish a product storage defect.

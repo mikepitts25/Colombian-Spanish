@@ -1,0 +1,23 @@
+[
+  {
+    "device": "A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F",
+    "status": "foreign-or-invalid-path",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+    "origin": "previous verified lookup; not rebooted",
+    "evidence": "docs/qa/2026-10-18-simulator-isolation/existing-devices-preflight.json"
+  },
+  {
+    "device": "6A8A8DE1-3A9A-480B-9D9A-9082E5C6F5B1",
+    "status": "foreign-or-invalid-path",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/5E9A8854-135A-4675-A437-4EFCA043F656/data/Containers/Data/Application/1B2EE0DF-23A9-4D99-BDEB-116ECA87C780",
+    "origin": "previous verified lookup; not rebooted",
+    "evidence": "docs/qa/2026-10-18-simulator-isolation/existing-devices-preflight.json"
+  },
+  {
+    "device": "AFCA5E93-0434-45B1-911C-E06B2B3A0BC8",
+    "status": "foreign-or-invalid-path",
+    "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/B51A3777-8E81-4049-B101-C2B18390E2B1/data/Containers/Data/Application/04B86E59-31C2-4FB6-BB99-0C4EEA661B99",
+    "origin": "previous observed alias/source impact; quarantined, not rebooted",
+    "evidence": "docs/qa/2026-10-18-simulator-isolation/native-state-check.json"
+  }
+]

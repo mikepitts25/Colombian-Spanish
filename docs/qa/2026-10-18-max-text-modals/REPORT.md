@@ -1,5 +1,7 @@
 # Maximum-text deck dialogs — 2026-10-18
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F` → `B51A3777-8E81-4049-B101-C2B18390E2B1`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 Baseline `674a2dd789b13c44bd74bd9ec8db9e9d7dececd9`, native SDK57 development binary and Metro8098. This batch adds evidence only; no runtime code or tests changed. Continue B08.5-B8 with bounded Spanish largest-text New Deck/Rename software-keyboard acceptance. The parent stays open.
 
 ## Method and observations

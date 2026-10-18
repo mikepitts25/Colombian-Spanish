@@ -1,5 +1,7 @@
 # Native touch scrolling and tablet software keyboard — 2026-10-17
 
+> **Storage provenance update — 2026-10-18:** Current alias evidence includes `A7494C5C-D6C5-42E9-9CD4-BB2DEC70499F` → `B51A3777-8E81-4049-B101-C2B18390E2B1`; `E66A88D6-CC87-4F46-A197-3F97EE9ED8CB` → `5E9A8854-135A-4675-A437-4EFCA043F656`. This historical report did not establish requested-device data-path isolation at capture time. Same-store transitions and UI observations retain their stated scope; independent-store/source-runtime protection is unverified unless separately proved. See the [claim audit](../2026-10-18-simulator-claim-audit/REPORT.md).
+
 Product baseline: `460ff55`. This package records native acceptance evidence; no application code changed.
 
 ## Environment and fixture setup

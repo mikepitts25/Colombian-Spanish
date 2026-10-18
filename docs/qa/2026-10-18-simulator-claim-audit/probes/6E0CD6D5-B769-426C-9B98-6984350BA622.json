@@ -1,0 +1,22 @@
+{
+  "device": "6E0CD6D5-B769-426C-9B98-6984350BA622",
+  "name": "Colombian Spanish SDK55 QA",
+  "originalState": "Shutdown",
+  "startedAt": 1792300176.947663,
+  "appLaunchedByCollector": false,
+  "bootStatusWaitTimedOut": true,
+  "stateAfterWait": "Booted",
+  "lookupExitCode": 0,
+  "reportedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/6E0CD6D5-B769-426C-9B98-6984350BA622/data/Containers/Data/Application/877C363D-1D35-4E93-87F0-9B4AFAD4FE8E",
+  "preflight": {
+    "isolated": true,
+    "requestedDevice": "6E0CD6D5-B769-426C-9B98-6984350BA622",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/6E0CD6D5-B769-426C-9B98-6984350BA622/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/6E0CD6D5-B769-426C-9B98-6984350BA622/data/Containers/Data/Application/877C363D-1D35-4E93-87F0-9B4AFAD4FE8E",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/6E0CD6D5-B769-426C-9B98-6984350BA622/data/Containers/Data/Application/877C363D-1D35-4E93-87F0-9B4AFAD4FE8E"
+  },
+  "status": "own-path",
+  "shutdownExitCode": 0,
+  "finalState": "Shutdown",
+  "finishedAt": 1792300241.8915951
+}
