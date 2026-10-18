@@ -1,3 +1,4 @@
+import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import ThemeIcon, { ThemeIconName } from '../components/ThemeIcon';
@@ -5,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { Text, View, StyleSheet, Pressable, useWindowDimensions } from 'react-native';
+import { Text, View, StyleSheet, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AudioPreferencesScreen from '../screens/AudioPreferencesScreen';
 import ThemeSettingsScreen from '../screens/ThemeSettingsScreen';

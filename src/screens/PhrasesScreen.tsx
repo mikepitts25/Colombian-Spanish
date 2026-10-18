@@ -1,7 +1,8 @@
+import Pressable from '../components/ThemedPressable';
 import { useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { FlatList, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { TranslationKey } from '../i18n/translations';

@@ -1,3 +1,4 @@
+import Pressable from '../components/ThemedPressable';
 import { controlSurface, controlText } from '../styles/controlStates';
 import ThemedTextInput from '../components/ThemedTextInput';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
@@ -8,7 +9,6 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,

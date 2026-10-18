@@ -1,3 +1,4 @@
+import Pressable from '../components/ThemedPressable';
 import ThemedTextInput from '../components/ThemedTextInput';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
@@ -8,7 +9,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Pressable,
   ScrollView,
   useWindowDimensions,
 } from 'react-native';

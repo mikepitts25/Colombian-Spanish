@@ -1,3 +1,4 @@
+import * as RN from 'react-native';
 import React from 'react';
 import { Text } from 'react-native';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
@@ -45,6 +46,7 @@ afterEach(() => {
   releaseWrite = undefined;
   (AsyncStorage.setItem as jest.Mock).mockImplementation(nativeWrite);
   (AsyncStorage.getItem as jest.Mock).mockImplementation(nativeRead);
+  jest.restoreAllMocks();
 });
 test('draft Barrio/Light and Cancel change neither stored Classic nor applied appearance', async () => {
   await setPrefs({ themeId: 'classic', appearanceMode: 'dark', speechRate: 0.8 });
@@ -168,4 +170,42 @@ test('failed load exposes Retry instead of editable defaults and preserves exist
   fireEvent.press(ui.getByRole('radio', { name: 'Barrio' }));
   expect(ui.getByRole('radio', { name: 'Light', checked: true })).toBeTruthy();
   expect(await nativeRead('SRS_PREFS_V1')).toBe(raw);
+});
+
+test('a pending Barrio/System save uses the latest OS appearance after acknowledgment', async () => {
+  const scheme = jest.spyOn(RN, 'useColorScheme').mockReturnValue('light');
+  let entered!: () => void;
+  const started = new Promise<void>((resolve) => {
+    entered = resolve;
+  });
+  const held = new Promise<void>((resolve) => {
+    releaseWrite = resolve;
+  });
+  let intercept = true;
+  (AsyncStorage.setItem as jest.Mock).mockImplementation(async (key: string, value: string) => {
+    if (intercept && key === 'SRS_WRITE_JOURNAL_V1') {
+      intercept = false;
+      entered();
+      await held;
+    }
+    return nativeWrite(key, value);
+  });
+  const ui = render(<App />);
+  await ui.findByRole('radio', { name: 'Classic (original theme)' });
+  fireEvent.press(ui.getByRole('radio', { name: 'Barrio' }));
+  expect(ui.getByRole('radio', { name: 'Follow system', checked: true })).toBeTruthy();
+  fireEvent.press(ui.getByRole('button', { name: 'Save theme' }));
+  await act(async () => started);
+  scheme.mockReturnValue('dark');
+  ui.rerender(<App />);
+  expect(ui.getByText('classic:dark')).toBeTruthy();
+  await act(async () => {
+    releaseWrite!();
+    releaseWrite = undefined;
+  });
+  await ui.findByText('barrio:dark');
+  expect(await getPrefs()).toMatchObject({ themeId: 'barrio', appearanceMode: 'system' });
+  scheme.mockReturnValue('light');
+  ui.rerender(<App />);
+  expect(ui.getByText('barrio:light')).toBeTruthy();
 });

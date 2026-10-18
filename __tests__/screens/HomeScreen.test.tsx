@@ -1,4 +1,4 @@
-import { renderWithTheme } from '../helpers/renderWithTheme';
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { AppState, AppStateStatus, Dimensions } from 'react-native';

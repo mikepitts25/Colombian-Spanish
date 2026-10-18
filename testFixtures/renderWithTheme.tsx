@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, render } from '@testing-library/react-native';
-import { ThemeProvider, useThemeSelection } from '../../src/context/ThemeContext';
-import { ThemeSelection } from '../../src/utils/themePreference';
+import { ThemeProvider, useThemeSelection } from '../src/context/ThemeContext';
+import { ThemeSelection } from '../src/utils/themePreference';
 export function renderWithTheme(children: React.ReactNode) {
   let apply!: (selection: ThemeSelection) => void;
   function Probe() {

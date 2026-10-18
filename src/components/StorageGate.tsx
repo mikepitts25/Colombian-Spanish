@@ -1,5 +1,6 @@
+import Pressable from './ThemedPressable';
 import React, { ReactNode, useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import storage from '../storage/durableStorage';
 import { AppTheme } from '../styles/appTheme';
 import { useThemedStyles } from '../context/ThemeContext';
@@ -64,5 +65,5 @@ const makeStyles = ({ colors }: AppTheme) =>
     },
     message: { color: colors.textPrimary, textAlign: 'center', fontSize: 17, lineHeight: 25 },
     button: { backgroundColor: colors.brand, borderRadius: 24, minHeight: 48, padding: 16 },
-    label: { color: colors.bg, fontSize: 16, fontWeight: '700' },
+    label: { color: colors.onBrand, fontSize: 16, fontWeight: '700' },
   });

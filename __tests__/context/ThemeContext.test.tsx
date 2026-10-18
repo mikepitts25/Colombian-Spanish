@@ -66,3 +66,25 @@ test('isolated read-only consumers retain Classic without a provider', () => {
   }
   expect(render(<Paint />).getByText('classic')).toBeTruthy();
 });
+
+test('native dialogs follow the app override and System releases the app-only override', () => {
+  jest.spyOn(RN, 'useColorScheme').mockReturnValue('light');
+  const native = jest.spyOn(RN.Appearance, 'setColorScheme').mockImplementation(() => {});
+  const mount = jest.fn(() => jest.fn());
+  const ui = render(
+    <ThemeProvider>
+      <Probe mount={mount} />
+    </ThemeProvider>,
+  );
+  expect(native).toHaveBeenLastCalledWith('dark');
+  act(() => current.applySelection({ themeId: 'barrio', appearanceMode: 'light' }));
+  expect(native).toHaveBeenLastCalledWith('light');
+  act(() => current.applySelection({ themeId: 'barrio', appearanceMode: 'dark' }));
+  expect(native).toHaveBeenLastCalledWith('dark');
+  act(() => current.applySelection({ themeId: 'barrio', appearanceMode: 'system' }));
+  expect(native).toHaveBeenLastCalledWith('unspecified');
+  expect(ui.getByText('barrio:light')).toBeTruthy();
+  expect(mount).toHaveBeenCalledTimes(1);
+  ui.unmount();
+  expect(native).toHaveBeenLastCalledWith('unspecified');
+});

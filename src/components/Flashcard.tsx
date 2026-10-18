@@ -1,3 +1,4 @@
+import Pressable from './ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useRef, useState, useEffect, useLayoutEffect, useCallback, useMemo } from 'react';
@@ -5,12 +6,12 @@ import {
   Animated,
   Easing,
   PanResponder,
-  Pressable,
   StyleSheet,
   Text,
   View,
   useWindowDimensions,
 } from 'react-native';
+import ThemeIcon from './ThemeIcon';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
 import { CardRegister, FlashCard } from '../types';
@@ -239,9 +240,13 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
               style={styles.expandedSpeaker}
               onPress={say}
             >
-              <Text allowFontScaling={false} accessible={false} style={styles.speakerIcon}>
-                🔊
-              </Text>
+              {theme.iconStyle === 'emoji' ? (
+                <Text allowFontScaling={false} accessible={false} style={styles.speakerIcon}>
+                  🔊
+                </Text>
+              ) : (
+                <ThemeIcon name="audio" size={17} color={colors.brand} />
+              )}
             </Pressable>
           )}
         </View>
@@ -298,7 +303,11 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
               style={styles.speakerBtn}
               onPress={say}
             >
-              <Text style={styles.speakerIcon}>🔊</Text>
+              {theme.iconStyle === 'emoji' ? (
+                <Text style={styles.speakerIcon}>🔊</Text>
+              ) : (
+                <ThemeIcon name="audio" size={17} color={colors.brand} />
+              )}
             </Pressable>
           </View>
         </Animated.View>

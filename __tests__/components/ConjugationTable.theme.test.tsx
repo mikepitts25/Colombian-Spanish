@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react-native';
 import ConjugationTable from '../../src/components/ConjugationTable';
-import { renderWithTheme } from '../helpers/renderWithTheme';
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 test('the legacy verb table repaints without resetting the selected tense', () => {
   const ui = renderWithTheme(<ConjugationTable />);
   fireEvent.press(ui.getByText('Futuro'));

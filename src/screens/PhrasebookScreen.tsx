@@ -1,8 +1,9 @@
+import Pressable from '../components/ThemedPressable';
 import ThemedTextInput from '../components/ThemedTextInput';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Pressable, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, FlatList, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';

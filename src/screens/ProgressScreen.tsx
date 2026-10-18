@@ -1,7 +1,8 @@
+import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Pressable, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { radius } from '../styles/theme';
 import { getDailyProgress, getStudyStreak } from '../storage/storage';

@@ -1,8 +1,9 @@
+import Pressable from './ThemedPressable';
 import { controlSurface, controlText } from '../styles/controlStates';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { AppState, Pressable, StyleSheet, Text, View } from 'react-native';
+import { AppState, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { ListeningNode } from '../missions/schema';
 import { MissionRun } from '../missions/engine';

@@ -1,15 +1,8 @@
+import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  Switch,
-  useWindowDimensions,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Switch, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 

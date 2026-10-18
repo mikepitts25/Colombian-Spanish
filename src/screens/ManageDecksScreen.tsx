@@ -1,3 +1,4 @@
+import Pressable from '../components/ThemedPressable';
 import ThemedTextInput from '../components/ThemedTextInput';
 import { controlSurface, controlText } from '../styles/controlStates';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
@@ -10,7 +11,6 @@ import {
   Text,
   View,
   FlatList,
-  Pressable,
   ScrollView,
   KeyboardAvoidingView,
   Platform,

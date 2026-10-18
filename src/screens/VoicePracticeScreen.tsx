@@ -1,15 +1,8 @@
+import Pressable from '../components/ThemedPressable';
 import { useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  AppState,
-  Linking,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-} from 'react-native';
+import { AppState, Linking, ScrollView, StyleSheet, Text, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useAudioRecorder, RecordingPresets } from 'expo-audio';

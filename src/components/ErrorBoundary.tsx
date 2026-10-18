@@ -1,5 +1,6 @@
+import Pressable from './ThemedPressable';
 import React, { Component, ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { AppTheme, resolveAppTheme } from '../styles/appTheme';
 import { useAppTheme } from '../context/ThemeContext';
 import { reportError } from '../services/crashReporting';

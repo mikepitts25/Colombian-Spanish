@@ -1,4 +1,4 @@
-import { renderWithTheme } from '../helpers/renderWithTheme';
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import { Dimensions } from 'react-native';
 import { act, fireEvent, waitFor } from '@testing-library/react-native';

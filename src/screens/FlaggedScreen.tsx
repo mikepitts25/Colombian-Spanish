@@ -1,15 +1,8 @@
+import Pressable from '../components/ThemedPressable';
 import { useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Alert,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-} from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { usePreventRemove } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';

@@ -1,7 +1,8 @@
+import Pressable from './ThemedPressable';
 import { useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { FlashCard } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { splitExampleText } from '../utils/exampleText';

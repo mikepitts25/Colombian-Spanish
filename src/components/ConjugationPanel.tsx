@@ -1,3 +1,4 @@
+import Pressable from './ThemedPressable';
 import { useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useState } from 'react';
@@ -7,7 +8,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal,
-  Pressable,
   ScrollView,
   useWindowDimensions,
 } from 'react-native';

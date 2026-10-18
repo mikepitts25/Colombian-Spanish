@@ -1,4 +1,4 @@
-import { renderWithTheme } from '../helpers/renderWithTheme';
+import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';

@@ -1,10 +1,11 @@
+import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import { readActivityTimings } from '../storage/missions';
 import { calibratedActivitySeconds, ActivityTimingSample } from '../missions/activeTiming';
 import { SHOW_REVIEW_TOOLS } from '../config';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { radius } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';

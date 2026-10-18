@@ -1,7 +1,8 @@
+import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useRef, useState, useLayoutEffect } from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Flashcard from '../components/Flashcard';
