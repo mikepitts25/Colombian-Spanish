@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-10-19",
+  "status": "local-drafts-captured",
+  "sourceMain": "5432857c109a6cc435951f36ce1d247197f714a1",
+  "officialSources": {
+    "screenshots": "https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/",
+    "accuracy": "https://developer.apple.com/app-store/review/guidelines/#accurate-metadata"
+  },
+  "formats": ["jpeg", "jpg", "png"],
+  "alphaAllowed": false,
+  "minimumPerDeviceSize": 1,
+  "maximumPerDeviceSize": 10,
+  "uiLanguages": ["en", "es"],
+  "storefrontLocalizationsSelected": false,
+  "slots": [
+    {
+      "id": "iphone_dynamic_island_medium",
+      "requiredForCurrentIPhoneScope": true,
+      "portraitSizes": [
+        [1179, 2556],
+        [1206, 2622]
+      ],
+      "plannedDeviceType": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro"
+    },
+    {
+      "id": "ipad_13",
+      "requiredWhenIPadSupported": true,
+      "portraitSizes": [
+        [2064, 2752],
+        [2048, 2732]
+      ],
+      "plannedDeviceType": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-8GB"
+    }
+  ],
+  "nativeCapture": {
+    "command": "xcrun simctl io EXPLICIT_UUID screenshot --type=jpeg OUTPUT.jpg",
+    "helpVerified": true,
+    "resizeOrAIGeneration": false
+  },
+  "captureScope": ["Classic Home", "ordinary Study front"],
+  "optionalScope": ["Barrio Home after actual theme Save"],
+  "assets": [
+    {
+      "file": "2026-10-19/phone-barrio-home-en.jpg",
+      "sha256": "02c286793a70f6ed56ae9133a54b986adb2f0817c16cc607eb70aa55b202a666",
+      "size": [1206, 2622],
+      "language": "en",
+      "theme": "barrio",
+      "view": "home",
+      "device": "D64F6521-8EE6-47B8-86FB-A935306D0E47",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/phone-barrio-home-es.jpg",
+      "sha256": "b3c0c0143275b42134f8458ca41910ace576b2d90777716c11b8a6c6172cb5ff",
+      "size": [1206, 2622],
+      "language": "es",
+      "theme": "barrio",
+      "view": "home",
+      "device": "D64F6521-8EE6-47B8-86FB-A935306D0E47",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/phone-classic-home-en.jpg",
+      "sha256": "5ec54268fe5441c0092ed5fc0a6d8e92214bf60844c5e568fb0f2565fdba71fa",
+      "size": [1206, 2622],
+      "language": "en",
+      "theme": "classic",
+      "view": "home",
+      "device": "D64F6521-8EE6-47B8-86FB-A935306D0E47",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/phone-classic-home-es.jpg",
+      "sha256": "cb1f5b4b827b7535da6d3e95e79fc96c8d85cb6d8f55342a6592a26e3da12ad1",
+      "size": [1206, 2622],
+      "language": "es",
+      "theme": "classic",
+      "view": "home",
+      "device": "D64F6521-8EE6-47B8-86FB-A935306D0E47",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/phone-classic-study-en.jpg",
+      "sha256": "47a9527674abd1a5cc0bca782b49e8f3de46a6e77debeebd2f31244fb6bd8b2f",
+      "size": [1206, 2622],
+      "language": "en",
+      "theme": "classic",
+      "view": "study",
+      "device": "D64F6521-8EE6-47B8-86FB-A935306D0E47",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/phone-classic-study-es.jpg",
+      "sha256": "79c47bda909fee62762305dcb6d8832d3c47afe8ab4c04234cb73cd1e36d1c66",
+      "size": [1206, 2622],
+      "language": "es",
+      "theme": "classic",
+      "view": "study",
+      "device": "D64F6521-8EE6-47B8-86FB-A935306D0E47",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/tablet-barrio-home-en.jpg",
+      "sha256": "701a7ef326dd8027c6eed264aa583d4d7020f354e98682bc8c66176e8f2fe31e",
+      "size": [2064, 2752],
+      "language": "en",
+      "theme": "barrio",
+      "view": "home",
+      "device": "CAE2C851-1943-46F9-9DF6-89A241C9CAEE",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/tablet-barrio-home-es.jpg",
+      "sha256": "af5ad50b54aeb57effac4c53ab8a5a9fc24336f096063a5dcbd3c42d904ddba7",
+      "size": [2064, 2752],
+      "language": "es",
+      "theme": "barrio",
+      "view": "home",
+      "device": "CAE2C851-1943-46F9-9DF6-89A241C9CAEE",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/tablet-classic-home-en.jpg",
+      "sha256": "91d4931bc4824fc101319c2608c66db8f163b8c4c1079e0f141f5e2674392ff9",
+      "size": [2064, 2752],
+      "language": "en",
+      "theme": "classic",
+      "view": "home",
+      "device": "CAE2C851-1943-46F9-9DF6-89A241C9CAEE",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/tablet-classic-home-es.jpg",
+      "sha256": "f49b0dc8c57d0bcfba8f44e9aaa82b9ca998b0b137f29b00d5b20600ced91f6a",
+      "size": [2064, 2752],
+      "language": "es",
+      "theme": "classic",
+      "view": "home",
+      "device": "CAE2C851-1943-46F9-9DF6-89A241C9CAEE",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/tablet-classic-study-en.jpg",
+      "sha256": "43e352b8c03bb80864bd171549350163a4343610750320a7f94aeabee308bc9a",
+      "size": [2064, 2752],
+      "language": "en",
+      "theme": "classic",
+      "view": "study",
+      "device": "CAE2C851-1943-46F9-9DF6-89A241C9CAEE",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    },
+    {
+      "file": "2026-10-19/tablet-classic-study-es.jpg",
+      "sha256": "cc1b4ab6c7317d0ef23c01099da0768e65127a7e33ff6c5d2d47082260e32066",
+      "size": [2064, 2752],
+      "language": "es",
+      "theme": "classic",
+      "view": "study",
+      "device": "CAE2C851-1943-46F9-9DF6-89A241C9CAEE",
+      "os": "26.0",
+      "visualReview": "inspected-actual-app-viewport",
+      "candidate": "unsigned-local-Release",
+      "productSource": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38"
+    }
+  ],
+  "submissionOrPublicationAuthorized": false
+}

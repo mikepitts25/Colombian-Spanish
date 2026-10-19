@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "device": "D5502A06-4858-428C-901C-587B58280F64",
+  "processTimezone": "Pacific/Marquesas",
+  "boundaryUTC": "2026-10-19T09:30:00+00:00",
+  "observedUTC": "2026-10-19T09:30:16.232453+00:00",
+  "samePID": 36090,
+  "normalRestoredPID": 48962,
+  "processExecutableChecked": [
+    "before-fixture-observation",
+    "waiting-midpoint",
+    "before-boundary-final",
+    "after-natural-midnight"
+  ],
+  "imageSHA256": {
+    "restored-classic.png": "e79066b38a66a37ed66468700408ac49c89432611449c63d16358838b900f964",
+    "near-midnight.png": "5dfec69c369ad12dc9aab83ebd23a85ab20f958e80a9390f2b47bd65ba48f6b1",
+    "before-midnight.png": "612a29bbd7f990d4f66c351b70e0d260d9d3faee7a22346fc8081495fb6ef4b6",
+    "progress-after-midnight.png": "5fc55a947485b2647ffe8cda9ce419bc56900b69c0214ca7712cddad037945a3",
+    "after-midnight.png": "c3f22fd129dfca8f2f4d8dd87effbbf810fd6fd2fe961094b89ced4a30421f13",
+    "retained-plan-resumed.png": "08c3fb39576e0e14bd22ef26f27e847ae63c2c33c08ad78ce585f668dce2a733"
+  }
+}
