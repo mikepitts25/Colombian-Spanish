@@ -1,0 +1,32 @@
+{
+  "device": "D5502A06-4858-428C-901C-587B58280F64",
+  "sourceMain": "6068b4ce59b4485c11656a092194f92bfb2a0cf9",
+  "launchPIDs": {
+    "fixtureCold": 20000,
+    "endedCold": 21651,
+    "restoredCold": 22323
+  },
+  "fixturePlan": {
+    "schemaVersion": 1,
+    "current": {
+      "id": "release-unavailable-plan-20261019",
+      "day": "2001-01-01",
+      "minutes": 3,
+      "createdAt": 1000,
+      "phase": "applied",
+      "applied": {
+        "missionId": "daily-morning-greeting",
+        "contentVersion": 99,
+        "runId": "release-retained-run-99"
+      }
+    }
+  },
+  "imageSHA256": {
+    "unavailable-home-es.png": "034c530424d74d16fd37b3f74eb4cd06e5df2680b796f002c0b3bda7d545fd1b",
+    "unavailable-en-max.png": "1856c9fa3d0c2b6c8b1852b88e5732487ff56b81a02601d3f41f8ba642ec37b7",
+    "final-classic.png": "6b0b4df1412873e15e66c48b7a65592d8cf470fbccab5fbdcf578abd317a29d4",
+    "unavailable-en-max-home.png": "72236b9bfd582a724f9a885460e36f93935a6fc482fc5df4d2a620edbae9c6a4",
+    "unavailable-plan-es.png": "aa9a6ed16379df1a7c056c0fe00da50b001d0fc82f7d401392561deafbb23863",
+    "unavailable-en-max-end.png": "b21bef870fc2a1f175ed74f2901a37cd6a9fad7e1b8936703e24320fc85cd179"
+  }
+}
