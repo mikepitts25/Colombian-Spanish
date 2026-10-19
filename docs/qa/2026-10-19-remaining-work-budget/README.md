@@ -55,3 +55,7 @@ The current SDK57 iOS development install now has [granted-recording background 
 ## Permission recovery follow-up
 
 [B09.2-B2d](../2026-10-19-voice-permission-recovery/README.md) completes one distinct Package4 case: actual native Settings revocation → denied Record → working app-settings link → re-enable → new take/delete. iOS terminated the process on both changes, so same-process refresh is not inferred. All eleven original records remain exact; permission returns to unasked and zero takes remain. One simulator ran, then it, Metro and QA Device Hub stopped. No broad local product suite was repeated on unchanged source. All five packages and127 unchecked requirements/29overlapping groups remain open.
+
+## Active-capture text follow-up
+
+[B09.2-B2e](../2026-10-19-active-capture-text/README.md) verifies active capture through live native Text3→11, same-process Stop/take retention, full positioned maximum Stop/Replay/Delete labels and Delete cleanup. The maximum recording status is an AX observation, not simultaneously visible indicator acceptance. Original all11 records/10events and unasked permission recover exactly. A bounded adjacent-target fractional-scroll probe did not expose the complete Spanish count; those Light/Dark cells stay open and that route should not be repeated unchanged. One simulator ran; it, Metro and QA apps stopped. All five packages and127 unchecked rows/29groups remain open; no product source change or duplicate broad local test run.

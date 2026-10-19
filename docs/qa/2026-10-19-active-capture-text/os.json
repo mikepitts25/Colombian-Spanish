@@ -1,0 +1,14 @@
+[
+  {
+    "phase": "max-resize-take",
+    "capturedAt": 1792438769.725638,
+    "microphoneAuthValues": [2],
+    "recordingFileCount": 1
+  },
+  {
+    "phase": "final-cleanup",
+    "capturedAt": 1792438849.5467389,
+    "microphoneAuthValues": [],
+    "recordingFileCount": 0
+  }
+]

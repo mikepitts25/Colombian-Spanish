@@ -73,3 +73,7 @@ Run `python3 docs/qa/2026-10-19-actionability/verify-index.py`. It checks exact 
 ## Permission recovery follow-up
 
 [B09.2-B2d](../2026-10-19-voice-permission-recovery/README.md) now covers live native Settings revocation, denied app behavior, the app-settings recovery link, re-enable and a successful new take/delete with actual OS-driven new-PID relaunches. Reuse this result together with B2c background recovery; other interruption/platform/device cases remain open. The127 unchecked rows/29groups are unchanged.
+
+## Active-capture text follow-up
+
+[B09.2-B2e](../2026-10-19-active-capture-text/README.md) verifies active capture through live native Text3→11, same-process Stop/take retention, full positioned maximum Stop/Replay/Delete labels and Delete cleanup. The maximum recording status is an AX observation, not simultaneously visible indicator acceptance. Original all11 records/10events and unasked permission recover exactly. A bounded adjacent-target fractional-scroll probe did not expose the complete Spanish count; those Light/Dark cells stay open and that route should not be repeated unchanged. One simulator ran; it, Metro and QA apps stopped. All five packages and127 unchecked rows/29groups remain open; no product source change or duplicate broad local test run.
