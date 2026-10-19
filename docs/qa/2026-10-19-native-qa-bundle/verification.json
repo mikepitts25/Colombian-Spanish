@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "sourceMain": "5b6adca6a0eff2decdc70c7a80c0b345872b6c06",
+  "releaseProcessBeforeBoundary": 85692,
+  "releaseProcessAfterBoundary": 85692,
+  "releasePlainColdProcess": 86628,
+  "developmentInitialProcess": 87083,
+  "developmentRestoredColdProcess": 88383,
+  "processTimezone": "Asia/Kolkata",
+  "boundaryUtc": "2026-10-19T18:30:00+00:00",
+  "firstObservedResetUtc": "2026-10-19T18:30:57.791836+00:00",
+  "images": {
+    "before-midnight.png": "1723f1193a614579a153edca0a89e9efbeea1ab9353b9fc0699892d452aefc26",
+    "after-midnight.png": "90599181073bf64dd5f498aef7927339e3a38397706698aaa264cbbf420c30a3",
+    "progress-after.png": "0791e338e3d13c229ccd9d9a48d556dfea35ebeb14f74579f7daf04dc0e8dbb6",
+    "resumed-after.png": "a0cdd2cf717f8aba5eddc7e42775c6c37edb526d07d670eee9a8eb0ee42c3c90",
+    "plain-cold.png": "4262914331aa503170a5f219f4e586b416cb17049cc2fad3c75aa9f7a2b4a0ef",
+    "file-picker.png": "71b0a3acea67e07b748912cd3d9e7866e0621a0b49e918734eaa92018567ae15",
+    "file-preview.png": "3247553b2c8dabf2780ecb1efbc74e4aa67744683050ab6b133eec1f47176002",
+    "editor-es-save-partial.png": "7c46722cc222b3116beb3b4c9638267dd89bfeba42e806997225b0dd2d5b49da",
+    "editor-es-save-fixed.png": "a534d11695fb0820d17cd5d6cef9ddd4083a7ec4efe5ee99f3a7c52e435e1add",
+    "editor-es-native-fixed.png": "d17a24f49e52dd2b37fc71d3ba7595b07314f3bac97dc2618fd7eb18e4c615a8",
+    "editor-es-navigation-fixed.png": "b7f877cce224d5672738dd45def813d05ce7c9a00ce74e487bcfd48b5b4afd19",
+    "editor-en-save-fixed.png": "79f0c24fbebcc19c10186643577e8a6cde1ec5634dcd10ffb3b402f301e4188d",
+    "editor-en-native-fixed.png": "9ef4d5141dffbec3ede67423e229cfcb161e2bb78ee993411143bc8eccd0c472",
+    "editor-en-navigation-fixed.png": "e23d87e1cdd0520d29be8ea1657cececeeb2de69c681fa0169bca47b821e4227",
+    "editor-restored-cold.png": "28c754548b56b6e44fd90404c33f836966f2e60872c1fcbbacf5adbe50d9fcfd"
+  },
+  "regression": {
+    "expectedViewport": 313,
+    "beforeViewport": 387,
+    "headerPoints": 74,
+    "focusedSuites": 2,
+    "focusedTests": 19,
+    "fullSuites": 117,
+    "fullTests": 1158
+  }
+}

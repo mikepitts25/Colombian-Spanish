@@ -1,6 +1,14 @@
 import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
-import { Dimensions, ScrollView, StyleSheet } from 'react-native';
+import {
+  DeviceEventEmitter,
+  Dimensions,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { HeaderHeightContext } from '@react-navigation/elements';
 import { act, fireEvent, waitFor } from '@testing-library/react-native';
 import ReviewScreen from '../../src/screens/ReviewScreen';
 import { Deck, FlashCard } from '../../src/types';
@@ -62,6 +70,29 @@ function renderReviewScreen(overrides = {}) {
 }
 
 describe('ReviewScreen review queue', () => {
+  it('accounts for the native header when keeping editor actions above the keyboard', async () => {
+    mockUseDeck.mockReturnValue({ ready: true, decks: [DECK], updateCardReview: jest.fn() });
+    const ui = renderWithTheme(
+      <HeaderHeightContext.Provider value={74}>
+        <ReviewScreen />
+      </HeaderHeightContext.Provider>,
+    );
+    const avoiding = ui.UNSAFE_getByType(KeyboardAvoidingView);
+    await act(async () => {
+      fireEvent(avoiding.findByType(View), 'layout', {
+        persist: () => {},
+        nativeEvent: { layout: { x: 0, y: 20, width: 375, height: 573 } },
+      });
+      DeviceEventEmitter.emit('keyboardWillShow', {
+        duration: 0,
+        endCoordinates: { screenX: 0, screenY: 407, width: 375, height: 260 },
+      });
+    });
+    // The header plus local y20 starts the viewport at screen y94: 313pt fit above y407.
+    const padding = StyleSheet.flatten(avoiding.findByType(View).props.style).paddingBottom;
+    expect(573 - padding).toBe(313);
+  });
+
   it('saves inline edits as reviewed', async () => {
     const { getByPlaceholderText, getByText, updateCardReview } = renderReviewScreen();
 
