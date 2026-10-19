@@ -2,6 +2,8 @@
 
 2026-10-19, source main `5432857`. This routes the **127 unchecked requirement rows into29 overlapping work groups**. Parent rows repeat their child requirements; this is not127 independent implementation tasks. No parent is marked complete by this audit, and it is not a completion proof for the active goal. Full text/tags and group membership are in [open-items.json](open-items.json).
 
+See the [October19 remaining-work/resource audit](../2026-10-19-remaining-work-budget/README.md) for the five consolidated QA packages, three pending feature approvals and overlap corrections. Later B08.5-B8g/B8h already cover English maximum-text dialog actions and long Add/editor saves; older report gap wording must not trigger unchanged repeats.
+
 ## Work AI can still advance now
 
 1. The retained-plan/nonzero real-midnight observation is complete in [C3o](../2026-10-19-retained-midnight/README.md): natural daily-only reset with exact plan preservation and normal-cold recovery. Remaining live OS-zone/DST and earned/graded boundary cases remain distinct. Calendar unit tests/process cold-zone changes alone do not close those cases.
