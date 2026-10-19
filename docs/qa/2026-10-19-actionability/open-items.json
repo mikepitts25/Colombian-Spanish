@@ -154,9 +154,13 @@
       "id": "mission-guidance",
       "taskIds": ["B07.5", "B07.5-B", "B07.5-B2"],
       "classification": "design-and-content",
-      "aiCanDoNow": "Prepare a focused integration design using existing draft fixtures; implement after its required design/spec/plan review. Do not invent a release-accepted mission.",
+      "aiCanDoNow": "The focused direction proposal is prepared at docs/design/2026-10-19-mission-guidance/README.md. After owner direction review, write/review its spec and implementation plan, then implement with labeled draft fixtures. Do not invent a release-accepted mission.",
       "requires": "Exact accepted mission/outcome policy before production activation; new integration design review.",
-      "evidenceFiles": ["MASTER_PLAN.md", "docs/pilot/READINESS.md"]
+      "evidenceFiles": [
+        "MASTER_PLAN.md",
+        "docs/pilot/READINESS.md",
+        "docs/design/2026-10-19-mission-guidance/README.md"
+      ]
     },
     {
       "id": "visual-and-home",
