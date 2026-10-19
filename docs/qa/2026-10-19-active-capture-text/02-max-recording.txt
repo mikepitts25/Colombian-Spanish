@@ -1,0 +1,19 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Barrio Phone QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 59-62, 64-68
+~					111 button Description: Volver, Secondary Actions: Cancel
++					112 heading Grabar y escuchar · borrador
+~					113 text Práctica local opcional. Grabar y escuchar no evalúa pronunciación ni otorga crédito de aprendizaje. El micrófono se solicita solo al elegir Grabar.
++					114 text Practica un saludo por la mañana. Graba una toma breve o usa el ejemplo escrito.
++					115 text Grabando
++					116 text 10 / 30 s
++					117 element (disabled) Description: Grabar hasta 30 segundos, Secondary Actions: Cancel
++					118 element Description: Detener, Secondary Actions: Cancel
++					119 element (disabled) Description: Escuchar mi toma, Secondary Actions: Cancel
++					120 element Description: Eliminar mi toma, Secondary Actions: Cancel
++					121 button Description: Practicar sin grabar, Secondary Actions: Cancel
++					122 text Las tomas quedan en la caché temporal de esta app y fuera de las copias de seguridad. Elimina la toma o sal para intentar limpiarla. Si la app se cierra inesperadamente, el archivo puede quedar hasta que el sistema lo elimine. No se envía a servidores.
+~					79 slider (settable, float) Text Size, Value: 11
+Selected:
+	6 row (selected)
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

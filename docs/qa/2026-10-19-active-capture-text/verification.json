@@ -1,0 +1,22 @@
+{
+  "sourceMain": "7ac5021a955ee7bc66750327dcc04e656f14cdae",
+  "device": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+  "fixtureColdPID": 94829,
+  "restoredColdPID": 95062,
+  "pidAliveAfterResizedTake": 95062,
+  "nativeTextSizes": [3, 11, 3],
+  "takeDurationSecondsDisplayed": 18.7,
+  "takeSizeKBDisplayed": 290,
+  "recordingElapsedSecondsAfterResize": 10,
+  "images": {
+    "01-default-recording.jpg": "e9fbc4e0a008cef7089228c8a3c3674411606b108a95bcd4fcd4b2b2c1385c5a",
+    "02-max-recording.jpg": "3114d9380ed73ee381e35c7a1a3eb0d04a8bdfa716e320e3377863ea3cdee3a6",
+    "03-max-take-ready.jpg": "e3fbc1c2f74a39fcf87836f2ded064641f3cda783457fdef281c4862e622751f",
+    "04-max-delete-position.jpg": "5ddd139fbd8c19e013fef53d4b1dcfe1379c284b93986d1cffdb9825693cc0f3",
+    "05-max-deleted.jpg": "994b24e8a806f73882820e878b8c9d75f04a2d9c6482275310d864d0042de840",
+    "06-default-ready.jpg": "f387f9a42f3c39210c18c0e1c38e28fa54b7cb5e1d77cf7905b170015c083176"
+  },
+  "imageFormat": "JPEG",
+  "imageDimensions": [1972, 1368],
+  "audioCommitted": false
+}
