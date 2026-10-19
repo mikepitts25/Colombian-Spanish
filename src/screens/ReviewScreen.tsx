@@ -2,7 +2,7 @@ import Pressable from '../components/ThemedPressable';
 import ThemedTextInput from '../components/ThemedTextInput';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, usePreventRemove } from '@react-navigation/native';
+import { HeaderHeightContext } from '@react-navigation/elements';
 import { spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { speakCard } from '../services/tts';
@@ -59,6 +60,7 @@ export default function ReviewScreen() {
   const styles = useThemedStyles(makeStyles);
   const { ready, decks, updateCardReview } = useDeck();
   const nav = useNavigation<any>();
+  const headerHeight = useContext(HeaderHeightContext) ?? 0;
   const { t } = useLanguage();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale >= 1.4;
@@ -273,6 +275,7 @@ export default function ReviewScreen() {
     <SafeAreaView style={styles.wrap}>
       <KeyboardAvoidingView
         style={styles.keyboardWrap}
+        keyboardVerticalOffset={headerHeight}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView

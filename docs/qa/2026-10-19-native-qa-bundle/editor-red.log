@@ -1,0 +1,36 @@
+FAIL __tests__/screens/ReviewScreen.test.tsx
+  ○ skipped submits one editorial intent and blocks conflicting controls while saving
+  ○ skipped keeps a failed editorial draft and retries the exact original intent
+  ○ skipped retains the failed save intent across a live text-size change
+  ○ skipped Barrio selected filters use on-fill ink and preserve Classic white
+  ○ skipped Barrio filter viewports fit full 48-point chips plus focus rings while Classic retains 38
+  ReviewScreen review queue
+    ✕ accounts for the native header when keeping editor actions above the keyboard (183 ms)
+    ○ skipped saves inline edits as reviewed
+    ○ skipped marks a card as needing a native check
+    ○ skipped filters to cards missing an English example
+
+  ● ReviewScreen review queue › accounts for the native header when keeping editor actions above the keyboard
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 313
+    Received: 387
+
+      91 |     // The header plus local y20 starts the viewport at screen y94: 313pt fit above y407.
+      92 |     const padding = StyleSheet.flatten(avoiding.findByType(View).props.style).paddingBottom;
+    > 93 |     expect(573 - padding).toBe(313);
+         |                           ^
+      94 |   });
+      95 |
+      96 |   it('saves inline edits as reviewed', async () => {
+
+      at Object.toBe (__tests__/screens/ReviewScreen.test.tsx:93:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 8 skipped, 9 total
+Snapshots:   0 total
+Time:        2.784 s
+Ran all test suites matching /__tests__\/screens\/ReviewScreen.test.tsx/i with tests matching "accounts for the native header".

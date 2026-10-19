@@ -1,0 +1,30 @@
+{
+  "before": {
+    "id": "0009",
+    "front": "hola",
+    "back": "hello",
+    "example": "¡Hola! ¿Cómo estás? | Hello! How are you?",
+    "tags": ["greetings"],
+    "createdAt": 1754759195954,
+    "due": 1754759195954,
+    "reps": 0,
+    "interval": 0,
+    "ease": 2.5
+  },
+  "after": {
+    "id": "0009",
+    "front": "hola",
+    "back": "hello",
+    "example": "¡Hola! ¿Cómo estás? | Hello! How are you?",
+    "tags": ["greetings"],
+    "createdAt": 1754759195954,
+    "due": 1792520878707,
+    "reps": 1,
+    "interval": 1,
+    "ease": 2.5
+  },
+  "beforeDeckHash": "f9c59a5ac9ceb3b28fca5376a3f8dcf7dac392046cf48c98a6907726a41dfa0e",
+  "afterDeckHash": "c384123e9bc7f8ade0b416be8353ea668a3c6f44bd1188260e30c346740f21d6",
+  "afterNormalizedCardHash": "f9c59a5ac9ceb3b28fca5376a3f8dcf7dac392046cf48c98a6907726a41dfa0e",
+  "onlyChangedCardId": "0009"
+}
