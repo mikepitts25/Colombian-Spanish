@@ -1,0 +1,48 @@
+{
+  "device": "D5502A06-4858-428C-901C-587B58280F64",
+  "sourceMain": "3d4bba8d547e63aac3bbec9897b35b02b87dc624",
+  "launchPIDs": {
+    "capCold": 27567,
+    "reviewCold": 28563,
+    "startedCold": 29456,
+    "restoredCold": 30312
+  },
+  "fixturePlan": {
+    "schemaVersion": 1,
+    "current": {
+      "id": "release-retained-review-plan-20261019",
+      "day": "2001-01-01",
+      "minutes": 3,
+      "createdAt": 1000,
+      "phase": "review",
+      "review": {
+        "initialCardIds": ["0009", "0010", "0011", "0012", "0013"],
+        "session": {
+          "deckId": "deck-greetings",
+          "cardId": "0009",
+          "queue": {
+            "schemaVersion": 1,
+            "cardIds": ["0009", "0010", "0011", "0012", "0013"],
+            "region": "all",
+            "sessionId": "release-retained-review-session-20261019",
+            "limits": {
+              "cardLimit": 6,
+              "newLimit": 5
+            }
+          },
+          "updatedAt": 1000
+        }
+      }
+    }
+  },
+  "imageSHA256": {
+    "retained-study.png": "f312e99f561813f4f489a426ea1c2ecc2e2cd6769a94ca87732215a874983a88",
+    "final-classic.png": "4cf201a799fb69168e6ba252585adc0aadc980346b364fad79d714d98bc62dad",
+    "cap-home-es.png": "dcaadbdbe080b61bea3557879da39a5ac6ef8b13292ba30e5602b981a2b4f442",
+    "retained-linked-resume.png": "f82152dc5a23df51ac288fbbdd82b04103910434282ac30336c69d4b48b300d3",
+    "retained-home-en.png": "65ffc0e6ed819bef2cd145b495313ece062e89ccca532e8eeedc9c0f53c9e628",
+    "cap-browse.png": "457c972284db519dba8bbef8b2a99c5ea353168b9ccc0d4a3e883b00a32c2c7f",
+    "retained-home-es.png": "e2809f21345e569b1cf5d6e58603011a537e2152604ea3bba1702614cb46dc57",
+    "cap-home-en.png": "12adb8bdf0e38f87dc04f3e9d02724c1264b41e25b326efbec836db565339cab"
+  }
+}
