@@ -1,0 +1,17 @@
+{
+  "source": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+  "destination": "BF511B0E-479F-429E-83B7-4134E910847F",
+  "base": "7c534c88401ff86210c07fa900f96e8a2d6bd237",
+  "imageSHA256": {
+    "resumed-seven.png": "feead067fd25de0d8e7f26cac996a1c32fafbb3b7a05260130a25bad8350395a",
+    "editor-next-six.png": "341f9401348625a72d57a2e8db5bf7e13692fe53ef6ac01a879c6101434feddf",
+    "editor-next-seven.png": "eb3ed2f75f1eb40ab1f6c2c33d0acfc5c21fd3f2984f0f4897fbf55e4490738f",
+    "rename-keyboard-open.png": "ed1cbf414b58b6cadcb58e009b6318344c14950ef2c8d4b0b44bb07d1abf4bf0",
+    "source-final-cold.png": "12c763ad16bd63fabef690c2f5b54a7d94b0a1262b83c4d89fe6872f4b844275",
+    "after-hard-nine.png": "43192395b639a0ad3db06ffd7dd94c6c5fd496bf8fa4cf367b5a300394e0f0ab",
+    "final-resumed-nine.png": "7e02b30dc8d902a909eb5c4223a4b6d92f436155f689cdea94ad3dfd2e1f76bd",
+    "create-keyboard-open.png": "ddb580e1884451b9e498e0483ee5066d876c0a51e103b92a33ad0b52f12b0ebc",
+    "cold-resumed-nine.png": "fb50dab0cdedd62d48104ad2f3cb3e3ba51a896fddcd86399b35ab641aa80e9c",
+    "after-again-due-nine.png": "496c12a9d66c0c1fab337c9fac503aeef2aac1103a5324e55e671587cccc78bb"
+  }
+}
