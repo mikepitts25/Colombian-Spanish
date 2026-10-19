@@ -1,0 +1,63 @@
+{
+  "baseCommit": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38",
+  "infoPlist": {
+    "CADisableMinimumFrameDurationOnPhone": true,
+    "CFBundleDevelopmentRegion": "$(DEVELOPMENT_LANGUAGE)",
+    "CFBundleDisplayName": "Colombian Spanish",
+    "CFBundleExecutable": "$(EXECUTABLE_NAME)",
+    "CFBundleIdentifier": "$(PRODUCT_BUNDLE_IDENTIFIER)",
+    "CFBundleInfoDictionaryVersion": "6.0",
+    "CFBundleName": "$(PRODUCT_NAME)",
+    "CFBundlePackageType": "$(PRODUCT_BUNDLE_PACKAGE_TYPE)",
+    "CFBundleShortVersionString": "1.0.0",
+    "CFBundleSignature": "????",
+    "CFBundleURLTypes": [
+      {
+        "CFBundleURLSchemes": ["com.mikepitts.colombianspanish"]
+      }
+    ],
+    "CFBundleVersion": "1.0.0",
+    "ITSAppUsesNonExemptEncryption": false,
+    "LSMinimumSystemVersion": "12.0",
+    "LSRequiresIPhoneOS": true,
+    "NSAppTransportSecurity": {
+      "NSAllowsArbitraryLoads": false,
+      "NSAllowsLocalNetworking": true
+    },
+    "RCTMetroPort": "$(RCT_METRO_PORT)",
+    "RCTNewArchEnabled": true,
+    "UIApplicationSceneManifest": {
+      "UIApplicationSupportsMultipleScenes": false,
+      "UISceneConfigurations": {
+        "UIWindowSceneSessionRoleApplication": [
+          {
+            "UISceneConfigurationName": "Default Configuration",
+            "UISceneDelegateClassName": "EXExpoAppSceneDelegate"
+          }
+        ]
+      }
+    },
+    "UIBackgroundModes": ["audio"],
+    "UILaunchStoryboardName": "SplashScreen",
+    "UIRequiredDeviceCapabilities": ["arm64"],
+    "UIRequiresFullScreen": false,
+    "UIStatusBarStyle": "UIStatusBarStyleDefault",
+    "UISupportedInterfaceOrientations": [
+      "UIInterfaceOrientationPortrait",
+      "UIInterfaceOrientationPortraitUpsideDown"
+    ],
+    "UISupportedInterfaceOrientations~ipad": [
+      "UIInterfaceOrientationPortrait",
+      "UIInterfaceOrientationPortraitUpsideDown",
+      "UIInterfaceOrientationLandscapeLeft",
+      "UIInterfaceOrientationLandscapeRight"
+    ],
+    "UIUserInterfaceStyle": "Automatic",
+    "UIViewControllerBasedStatusBarAppearance": false
+  },
+  "infoPlistSHA256": "ee60109c780df32d80a7013cdbcd13623d00fc56279390e2d90f166954a3523b",
+  "appDelegateSHA256": "248a72ab880e205edd772bc984cccbc59e9b18a1523002e63dd8332de4a096e6",
+  "hasBundledReleasePath": true,
+  "coldMiniPID": 85774,
+  "releaseDevice": "D5502A06-4858-428C-901C-587B58280F64"
+}
