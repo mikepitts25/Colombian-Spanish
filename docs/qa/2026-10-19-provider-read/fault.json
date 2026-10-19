@@ -1,0 +1,15 @@
+{
+  "fileName": "741 2.json",
+  "sha256": "d2f7a189c3153edd8ab192b4b5f5f8a85258cbb65d1fdab7164a38e32f7c421f",
+  "bytes": 379192,
+  "originalMode": "0o644",
+  "restrictedMode": "0o0",
+  "startedAt": 1792446046.0855172,
+  "guardSeconds": 240,
+  "hostEffectiveUid": 501,
+  "hostReadDenied": true,
+  "hostErrno": 13,
+  "restoredAt": 1792446091.2506618,
+  "restoredMode": "0o644",
+  "restoredSha256": "d2f7a189c3153edd8ab192b4b5f5f8a85258cbb65d1fdab7164a38e32f7c421f"
+}

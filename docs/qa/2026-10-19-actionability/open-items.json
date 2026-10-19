@@ -257,14 +257,15 @@
       "id": "tablet-and-lifecycle",
       "taskIds": ["B12.4", "B12.4-B", "B12.5", "B12.6"],
       "classification": "mixed-native-device",
-      "aiCanDoNow": "B12.6-B covers compiled unsigned Release local Files save/picker/preview/cancel. B12.6-C covers mini same-build replacement and genuine removal/new-container reinstall/full-state restoration from the actual Files backup. B12.6-D adds actual local provider collision Stop/Keep Both/Replace and readable replacement preview with exact app state. Continue distinct provider failures/cloud, different-version upgrade, network/storage, permission/lifecycle/window cases; reuse completed local Files/collision/reinstall evidence.",
+      "aiCanDoNow": "B12.6-B covers compiled unsigned Release local Files save/picker/preview/cancel. B12.6-C covers mini same-build replacement and genuine removal/new-container reinstall/full-state restoration from the actual Files backup. B12.6-D adds actual local provider collision Stop/Keep Both/Replace and readable replacement preview with exact app state. B12.6-E adds staged local unreadable-file picker cancellation and restored-file retry with exact state; no app error was observed. Continue app-level provider errors/cloud, different-version upgrade, network/storage, permission/lifecycle/window cases; reuse completed local Files/collision/reinstall evidence.",
       "requires": "Named control limitations, real low storage/network/routes/notification delivery and signed/hardware acceptance are not inferred from software mocks.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-release-bundle/README.md",
         "docs/qa/2026-10-19-native-qa-bundle/README.md",
         "docs/qa/2026-10-19-mini-reinstall-restore/README.md",
-        "docs/qa/2026-10-19-files-collision/README.md"
+        "docs/qa/2026-10-19-files-collision/README.md",
+        "docs/qa/2026-10-19-provider-read/README.md"
       ]
     },
     {

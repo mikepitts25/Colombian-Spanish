@@ -1,0 +1,23 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Applied Mini QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
++				141 container
++					142 text Description: ⚙️ Ajustes, Secondary Actions: Cancel
++					143 text Description: APRENDIZAJE, Secondary Actions: Cancel
++					144 element Description: 🧭, Tus preferencias de aprendizaje, ›, Secondary Actions: Cancel
++					145 element Description: 🎯, Meta Diaria, 5 tarjetas por día, ›, Secondary Actions: Cancel
++					146 element Description: 🃏, Nuevas Tarjetas, 10 por día, ›, Secondary Actions: Cancel
++					147 element Description: 🔔, Recordatorios, Recordatorios de estudio por la mañana y por la noche, ›, Secondary Actions: Cancel
++					148 element Description: 📚, Gestionar Decks, Organiza y edita tus decks, ›, Secondary Actions: Cancel
++					149 text Description: APLICACIÓN, Secondary Actions: Cancel
++					150 element Description: 🎨, Tema, Barrio · Oscuro, ›, Secondary Actions: Cancel
++					151 element Description: 🔊, Preferencias de audio, Velocidad y vista previa de pronunciación, ›, Secondary Actions: Cancel
++					152 element Description: 🌐, Idioma de interfaz, Español, ›, Secondary Actions: Cancel
++					153 element Description: 💾, Exportar respaldo, Copia tus decks y resultados de práctica al portapapeles, ›, Secondary Actions: Cancel
++					154 element Description: 📥, Importar respaldo, Restaurar desde portapapeles, ›, Secondary Actions: Cancel
++					155 element Description: 📄, Guardar archivo de respaldo, Decks, historial y estado de la app · JSON, ›, Secondary Actions: Cancel
++					156 element Description: 📂, Importar archivo de respaldo, Vista previa antes de reemplazar o añadir tarjetas, ›, Secondary Actions: Cancel
++					157 text Description: SOBRE LA APP, Secondary Actions: Cancel
++					158 element Description: 📋, Versión, 1.0.0 · compilación 1.0.0, Secondary Actions: Cancel
++					159 element Description: INICIO, Secondary Actions: Cancel
++					160 element Description: ESTUDIAR, Secondary Actions: Cancel
++					161 element Description: PROGRESO, Secondary Actions: Cancel
++					162 element (selected) Description: AJUSTES, Secondary Actions: Cancel
