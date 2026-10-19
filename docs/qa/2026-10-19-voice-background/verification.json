@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "device": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+  "recordingFileBytesBeforeDelete": 139869,
+  "recordingFilesAfterDelete": 0,
+  "recordingFilesWhileBackgrounded": 0,
+  "recordingFilesAtRecovery": 0,
+  "processBeforeBackground": 83366,
+  "processAfterForeground": 83366,
+  "restoredColdProcess": 83730,
+  "microphoneRowsAfterReset": [],
+  "images": {
+    "voice-ready.png": "d679dffb94d308be00a066b37044df4515850c221f8294903e3e219d04799cac",
+    "voice-final-idle.png": "4b693083764e5e27a216ef54b23de603af4750fd13ea972f98f5b475ebc781b2",
+    "restored-classic.png": "092dea3b11bd9cbd821633e4ab9b25433eb0110ad4f62658bf42d617e7597ba5"
+  }
+}
