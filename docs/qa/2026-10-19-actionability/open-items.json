@@ -181,28 +181,30 @@
         "B08.5-B8"
       ],
       "classification": "mixed-native-and-design",
-      "aiCanDoNow": "C3p completes English maximum long-title/count Light/Dark; C3q adds earned-counter Barrio midnight. B8g/B8h already cover English maximum-text dialogs and long Add/editor saves; B8i fixes header keyboard avoidance and verifies all four bilingual maximum editor actions. Finish Spanish maximum-count, other focused fields and touch/window cases using a changed reliable route or targeted diagnosis. Reuse docs/qa/2026-10-19-native-qa-bundle/README.md, including LogBox open/Dismiss, rather than replaying failed diagnostic/title/drag routes. New activity visuals/personalized next actions still need focused designs/content inputs. The B2e packet records an unsuccessful adjacent-target fractional-scroll probe for the Spanish count; do not repeat that route unchanged.",
+      "aiCanDoNow": "C3p completes English maximum long-title/count Light/Dark; C3q adds earned-counter Barrio midnight. B8g/B8h already cover English maximum-text dialogs and long Add/editor saves; B8i fixes header keyboard avoidance and verifies all four bilingual maximum editor actions. Finish Spanish maximum-count, other focused fields and touch/window cases using a changed reliable route or targeted diagnosis. Reuse docs/qa/2026-10-19-native-qa-bundle/README.md, including LogBox open/Dismiss, rather than replaying failed diagnostic/title/drag routes. New activity visuals/personalized next actions still need focused designs/content inputs. The B2e packet records an unsuccessful adjacent-target fractional-scroll probe for the Spanish count; do not repeat that route unchanged. B8j covers Spanish mini maximum editor keyboard actions in portrait/separate landscape views. English mini keyboard-open cells remain unaccepted; the packet records field-target/margin-drag/unfocused-toggle failures to avoid repeating unchanged.",
       "requires": "Known touch-only/window/keyboard control limits need a changed route or actual layout diagnosis, not repetitive captures. Android, physical acceptance, cultural/content decisions remain distinct.",
       "evidenceFiles": [
         "docs/superpowers/plans/2026-10-18-barrio-home.md",
         "docs/qa/2026-10-19-release-home-budget/README.md",
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-remaining-work-budget/README.md",
-        "docs/qa/2026-10-19-native-qa-bundle/README.md"
+        "docs/qa/2026-10-19-native-qa-bundle/README.md",
+        "docs/qa/2026-10-19-mini-editor-voice/README.md"
       ]
     },
     {
       "id": "voice-native",
       "taskIds": ["B09.2", "B09.2-B", "B09.2-B2"],
       "classification": "mixed-native",
-      "aiCanDoNow": "B2c covers granted-capture background cleanup; B2d now covers live native Settings revocation, denied app behavior, app-settings recovery link and re-enabled new take/delete with OS-driven relaunches. Continue only distinct unverified interruption/navigation/window cases where controllable. Do not repeat basic capture, denial, background or completed permission recovery. Current unsigned Release excludes recording. B2e covers active capture through live native maximum-text resizing and Stop/Delete cleanup; reuse that result rather than replaying it.",
+      "aiCanDoNow": "B2c covers granted-capture background cleanup; B2d now covers live native Settings revocation, denied app behavior, app-settings recovery link and re-enabled new take/delete with OS-driven relaunches. Continue only distinct unverified interruption/navigation/window cases where controllable. Do not repeat basic capture, denial, background or completed permission recovery. Current unsigned Release excludes recording. B2e covers active capture through live native maximum-text resizing and Stop/Delete cleanup; reuse that result rather than replaying it. B2f covers actual mini active-capture rotation, retained take/max-landscape actions and deletion; do not replay this or the completed written-alternative rotation.",
       "requires": "Authorized recording route; known Settings targeting/tool limits; Android, physical sound/routes and signed production exclusion evidence separately.",
       "evidenceFiles": [
         "docs/qa/2026-10-19-voice-denial/README.md",
         "docs/qa/2026-10-19-mini-voice/README.md",
         "docs/qa/2026-10-19-voice-background/README.md",
         "docs/qa/2026-10-19-voice-permission-recovery/README.md",
-        "docs/qa/2026-10-19-active-capture-text/README.md"
+        "docs/qa/2026-10-19-active-capture-text/README.md",
+        "docs/qa/2026-10-19-mini-editor-voice/README.md"
       ]
     },
     {

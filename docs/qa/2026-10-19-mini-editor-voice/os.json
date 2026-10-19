@@ -1,0 +1,32 @@
+[
+  {
+    "phase": "baseline",
+    "capturedAt": 1792439574.433783,
+    "microphoneAuthValues": [],
+    "recordingFileCount": 0
+  },
+  {
+    "phase": "granted-before-rotation",
+    "capturedAt": 1792439623.4411662,
+    "microphoneAuthValues": [2],
+    "recordingFileCount": 0
+  },
+  {
+    "phase": "rotated-take",
+    "capturedAt": 1792439671.110709,
+    "microphoneAuthValues": [2],
+    "recordingFileCount": 1
+  },
+  {
+    "phase": "voice-deleted",
+    "capturedAt": 1792439789.4250329,
+    "microphoneAuthValues": [2],
+    "recordingFileCount": 0
+  },
+  {
+    "phase": "restored-unasked",
+    "capturedAt": 1792440558.709729,
+    "microphoneAuthValues": [],
+    "recordingFileCount": 0
+  }
+]

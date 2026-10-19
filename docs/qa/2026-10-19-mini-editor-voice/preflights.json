@@ -1,0 +1,34 @@
+{
+  "after-launch-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "before-cold-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "before-launch-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "after-cold-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "bundle": "com.mikepitts.colombianspanish"
+  }
+}
