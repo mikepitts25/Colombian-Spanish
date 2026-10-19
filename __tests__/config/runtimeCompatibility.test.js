@@ -25,3 +25,27 @@ it('enables the supported iOS scene lifecycle required by Xcode 27', () => {
     { ios: { enableSceneSupport: true } },
   ]);
 });
+
+it.each(['production', 'development'])(
+  'generates Android system appearance support for the approved automatic mode in %s',
+  (profile) => {
+    const { execFileSync } = require('node:child_process');
+    const path = require('node:path');
+    const cli = path.join(path.dirname(require.resolve('expo/package.json')), 'bin', 'cli');
+    const generated = JSON.parse(
+      execFileSync(process.execPath, [cli, 'config', '--type', 'introspect', '--json'], {
+        cwd: path.dirname(require.resolve('../../package.json')),
+        env: { ...process.env, EAS_BUILD_PROFILE: profile, EXPO_NO_TELEMETRY: '1' },
+        encoding: 'utf8',
+        timeout: 25000,
+        stdio: ['ignore', 'pipe', 'pipe'],
+      }),
+    );
+    const strings = generated._internal.modResults.android.strings.resources.string;
+    expect(strings).toContainEqual({
+      $: { name: 'expo_system_ui_user_interface_style', translatable: 'false' },
+      _: 'automatic',
+    });
+  },
+  30000,
+);

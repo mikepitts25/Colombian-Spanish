@@ -1,0 +1,46 @@
+FAIL __tests__/config/runtimeCompatibility.test.js
+  ✓ uses native fingerprint compatibility for production instead of a shared marketing version (1 ms)
+  ✓ uses native fingerprint compatibility for development instead of a shared marketing version
+  ✓ enables the supported iOS scene lifecycle required by Xcode 27
+  ✕ generates Android system appearance support for the approved automatic mode in production (322 ms)
+  ✕ generates Android system appearance support for the approved automatic mode in development (250 ms)
+
+  ● generates Android system appearance support for the approved automatic mode in production
+
+    expect(received).toContainEqual(expected) // deep equality
+
+    Expected value: {"$": {"name": "expo_system_ui_user_interface_style", "translatable": "false"}, "_": "automatic"}
+    Received array: [{"$": {"name": "app_name"}, "_": "Colombian Spanish"}, {"$": {"name": "expo_runtime_version"}, "_": "file:fingerprint"}]
+
+      43 |     );
+      44 |     const strings = generated._internal.modResults.android.strings.resources.string;
+    > 45 |     expect(strings).toContainEqual({
+         |                     ^
+      46 |       $: { name: 'expo_system_ui_user_interface_style', translatable: 'false' },
+      47 |       _: 'automatic',
+      48 |     });
+
+      at toContainEqual (__tests__/config/runtimeCompatibility.test.js:45:21)
+
+  ● generates Android system appearance support for the approved automatic mode in development
+
+    expect(received).toContainEqual(expected) // deep equality
+
+    Expected value: {"$": {"name": "expo_system_ui_user_interface_style", "translatable": "false"}, "_": "automatic"}
+    Received array: [{"$": {"name": "app_name"}, "_": "Colombian Spanish"}, {"$": {"name": "expo_runtime_version"}, "_": "file:fingerprint"}]
+
+      43 |     );
+      44 |     const strings = generated._internal.modResults.android.strings.resources.string;
+    > 45 |     expect(strings).toContainEqual({
+         |                     ^
+      46 |       $: { name: 'expo_system_ui_user_interface_style', translatable: 'false' },
+      47 |       _: 'automatic',
+      48 |     });
+
+      at toContainEqual (__tests__/config/runtimeCompatibility.test.js:45:21)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 3 passed, 5 total
+Snapshots:   0 total
+Time:        1.234 s
+Ran all test suites within paths "__tests__/config/runtimeCompatibility.test.js".
