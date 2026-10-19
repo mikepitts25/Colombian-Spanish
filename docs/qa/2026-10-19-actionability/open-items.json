@@ -43,7 +43,7 @@
       "id": "calendar-native",
       "taskIds": ["B02.6", "B02.6-B", "B02.6-B2", "B05.5", "B05.5-B"],
       "classification": "mixed-native",
-      "aiCanDoNow": "Complete retained-plan real-boundary observation now; audit other specific foreground/lifecycle gaps against current evidence.",
+      "aiCanDoNow": "C3o completes the retained-plan/nonzero natural midnight case. Continue only specifically unproved earned/graded-boundary, live OS-zone/DST or foreground/lifecycle cases against current evidence.",
       "requires": "Live OS-zone/DST requires a supported control or real relevant boundary. Process TZ and calendar unit tests do not establish live system changes.",
       "evidenceFiles": [
         "docs/qa/2026-10-19-native-zone/README.md",
