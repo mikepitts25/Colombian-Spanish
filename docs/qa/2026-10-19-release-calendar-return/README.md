@@ -1,0 +1,27 @@
+# Release Barrio: nonzero daily reset on cold local-day change
+
+2026-10-19, source main a3c342a. Product code unchanged. This completes bounded B08.3-C3l, using the same compiled unsigned Release SE3 installation as [C3k](../2026-10-19-native-zone/README.md). It does not close R4 or the complete Home acceptance matrix.
+
+## Native route and observations
+
+Only fresh own-path QA device D5502A06-4858-428C-901C-587B58280F64 was operated. Six preflights validate its own data path; the [existing read-only collector](../2026-10-19-fresh-graded-editor/capture-state.py) records ten snapshots. No other simulator/source was operated. No live system-zone change, host clock write, JS time injection, direct app-data write, account, security task or media action.
+
+Using the officially supported child environment from C3k, `SIMCTL_CHILD_TZ=Pacific/Honolulu xcrun simctl launch --terminate-running-process D5502A06-4858-428C-901C-587B58280F64 com.mikepitts.colombianspanish` started PID12067 observing October18. Saved optional Barrio/System through Settings. Study Continue resumed the ordinary Greetings queue0009–0013, same session ID and limits, refreshing updatedAt. Revealed hola and pressed Bien once through native accessibility. One quality4 self-rated recall event for0009 was appended; count/newCount became1/1, streak1, and saved queue advanced to0010–0013/current0010. Home showed1/5,9new available, night greeting/tinto. The deck digest changes on grading; this packet does not archive the exact individual card patch.
+
+Plain launch without a TZ override (PID13046) returned to the device local day October19. Home showed0/5,10new available, morning greeting/meter presión,1,391new library cards and streak1. The daily record alone changed from October18/count1/newCount1 to October19/count0/newCount0, target5 unchanged. All ten other canonical hashes and full saved-session timestamp stayed exact. The single event and deck digest stayed exact. This is a cold process/day change, not focused automatic midnight, live OS-zone/DST, cap-exhaustion or durable-plan validation; the saved session is ordinary Study.
+
+Progress showed0of5,47decks/1392cards, one in review and one self-rated recall observation, with no additional credit. Its ten non-daily records remain exact. Study Continue then showed buenos días/four remaining; only the saved session updatedAt refreshed, with identical queue/session/limits and no second grade/event.
+
+## Recovery is bounded, not exact original storage
+
+Before any mutation, read the own validated container to prepare a host-only v3 baseline backup matching the supported backup schema (47decks/1392cards, zero events, original prefs/daily/session and null absent records). Opened that exact file in TextEdit, copied it through UI, allowed local paste, inspected the app preview and selected Restaurar estado de la app. No original backup contents are published in this packet.
+
+An initial expectation of eleven-hash exact restoration was wrong for this fresh profile. The app deliberately merges learning events in every import mode, including replace-state (`src/storage/backupRestore.ts`), and `writePortableState` replaces null fields with their schema empty defaults. The preview explicitly discloses merged history and reset absent data. We retained this behavior instead of changing the app or writing its storage to satisfy a QA expectation.
+
+After supported restore and plain cold launch PID14124, original decks, Classic/System/Spanish prefs, original daily0/5/new0 and original five-card session including timestamp match baseline exactly. Seven canonical hashes differ: empty dailyPlan/missions/streak/seenWords/quizHistory/notificationPrefs were materialized, and the single QA learning event remains. Streak is reset to0 by the supported restore. These exact normalized/merged results persist through cold launch and final Home observation. Final native settings Light/Text3, VoiceOver/Capture Keyboard off; app left on Classic Home. This disposable installation now has one QA event and normalized empty records; do not reuse its old pristine-zero/all11-baseline assumption. No full-state exact restoration or cross-source preservation is claimed.
+
+## Verification and remaining work
+
+Run `python3 docs/qa/2026-10-19-release-calendar-return/verify-state.py`. It checks snapshot order, recomputed nine separately archived record hashes, absent/present event envelopes, exact one-event/queue behavior, daily-only reset, timestamp-only continuation, exact bounded recovery, six own-path preflights and seven screenshot hashes/dimensions. It cannot replay UI, grade computation, launch environment/PIDs, media/network behavior or recognize screenshot content. Images/AX observations were captured through native tools; screenshots are after the associated action, not instant reset timing. Some narrated values are offscreen in the PNGs: the9→10new allowance, daily words and self-rated observation section rely on native AX observations and archived state. Clipped Study controls do not establish complete layout or touch acceptance.
+
+Still open: live OS timezone/DST, focused nonzero Barrio/durable-plan calendar and broader lifecycle cases, touch-only/long-label/window coverage, Android agreement/runtime, signed candidate, hardware audio/performance/assistive checks, content rights/editorial/learner/account decisions. Security remains skipped. This batch validates existing behavior and its actual recovery limits; no new subsystem or production publication.

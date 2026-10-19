@@ -1,0 +1,18 @@
+{
+  "device": "D5502A06-4858-428C-901C-587B58280F64",
+  "sourceMain": "a3c342a417a3130a2ade3dc7fa1bd4312ac3fec8",
+  "launchPIDs": {
+    "honolulu": 12067,
+    "plainNextDay": 13046,
+    "restoredPlain": 14124
+  },
+  "imageSHA256": {
+    "nextday-resumed.png": "f55f52d517faf252922105d8d474cffaf144bb61028edd5aa69698d1de7df045",
+    "nextday-home.png": "364801a397b7d90b3b6f05d4b97c3b32bbab7cfe99ce730e9dcc8c419729cbaa",
+    "after-one-good.png": "da8856750902cbc16f6998659377b290573b5e4527d523256cceee43a3f06068",
+    "final-classic.png": "958b2f8269fd6a675dca63b32868b8d8ba639c878687402577f59c2bb275e4a4",
+    "nextday-progress.png": "f713b844122fe6774c3658f6bc9797bbeaa74ee7dfdfa6f369affe2983515dd9",
+    "graded-home.png": "8b612155b47d9632af7d7df09623daca9a5a5aa825bd3d2355798e3c7fc2ff5e",
+    "before-grade.png": "ac5b887ffe70eddb8f7f1ace287faf260b2865e502e64618c1b1cf161cbf8944"
+  }
+}
