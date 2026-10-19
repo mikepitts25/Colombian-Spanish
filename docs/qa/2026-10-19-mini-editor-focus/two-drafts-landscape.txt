@@ -1,0 +1,263 @@
+Window: "Colombian Spanish Applied Mini QA", App: Device Hub.
+0 standard window Colombian Spanish Applied Mini QA – iPadOS 26.0, ID: com.apple.dt.DeviceKit.DeviceManagementWindow-AppWindow-1, Secondary Actions: Raise
+	1 split group
+		2 split group com.apple.dt.DeviceKit.DeviceManagementWindow-AppWindow-1, SidebarNavigationSplitView
+			3 scroll area Secondary Actions: Scroll Up, Scroll Down
+				4 list Sidebar
+					5 row (selectable) Description: Available, Value: Expanded
+					6 row (selected) Description: Ipad, Value: Colombian Spanish Applied Mini QA
+26.0
+Simulator
+					7 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Barrio Phone QA
+26.0
+Simulator
+					8 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Fresh Study Editor 20261019
+26.0
+Simulator
+					9 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Release Bundle QA 20261019
+26.0
+Simulator
+					10 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK57 iOS27 QA
+27.0
+Simulator
+					11 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Store Phone QA 20261019
+26.0
+Simulator
+					12 row (selectable) Description: Ipad, Value: Colombian Spanish Store Tablet QA 20261019
+26.0
+Simulator
+					13 row (selectable) Description: Iphone, Third Generation, Value: Py Quest Runtime QA
+18.4
+Simulator
+					14 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Applied Timing QA
+27.0
+Simulator
+					15 row (selectable) Description: Ipad, Value: Colombian Spanish Barrio Tablet QA
+26.0
+Simulator
+					16 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Catch-up QA
+26.0
+Simulator
+					17 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Editor Recovery QA
+26.0
+Simulator
+					18 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Flag Clearing QA
+26.0
+Simulator
+					19 row (selectable) Description: Ipad, Value: Colombian Spanish Fresh Mission Keyboard QA
+26.0
+Simulator
+					20 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Fresh QA
+26.0
+Simulator
+					21 row (selectable) Description: Ipad, Value: Colombian Spanish Mini Tablet QA
+26.0
+Simulator
+					22 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Plan Narrow QA
+26.0
+Simulator
+					23 row (selectable) Description: Ipad, Value: Colombian Spanish Plan Tablet QA
+26.0
+Simulator
+					24 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish QA
+26.0
+Simulator
+					25 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Restore Recovery QA
+26.0
+Simulator
+					26 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK55 QA
+26.0
+Simulator
+					27 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK57 QA
+26.0
+Simulator
+					28 row (selectable) Description: Ipad, Value: Colombian Spanish Tablet QA
+26.0
+Simulator
+					29 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Timing QA
+27.0
+Simulator
+					30 row (selectable) Description: Ipad, Value: QUARANTINED - Mission Keyboard Alias
+26.0
+Simulator
+					31 row (selectable) Description: Ipad, Value: Colombian Spanish Keyboard Tablet QA
+26.0
+Simulator
+					32 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Maximum Grading QA
+26.0
+Simulator
+					33 row (selectable) Description: Iphone, Third Generation, Value: DestinationPacker QA
+26.0
+Simulator
+					34 row (selectable) Description: Iphone, Third Generation, Value: DestinationPacker Screens
+26.0
+Simulator
+					35 row (selectable) Description: Iphone, Third Generation, Value: iPhone 18 Pro
+27.0
+Simulator
+					36 row (selectable) Description: Iphone, Third Generation, Value: SpiceSync iOS QA Large
+26.0
+Simulator
+					37 row (selectable) Description: Iphone, First Generation, Value: SpiceSync iOS QA Small
+26.0
+Simulator
+					38 row (selectable) Description: Iphone, Third Generation, Value: iPhone 17 Pro
+26.0
+Simulator
+					39 row (selectable) Description: Iphone, Third Generation, Value: iPhone 17 Pro Max
+26.0
+Simulator
+					40 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro-Detox
+18.4
+Simulator
+					41 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro
+18.4
+Simulator
+					42 row (selectable) Description: Iphone, Value: iPhone 16e
+26.0
+Simulator
+					43 row (selectable) Description: Ipad, Value: iPad Pro 13-inch (M4)
+26.0
+Simulator
+					44 row (selectable) Description: Ipad, Value: iPad Air 13-inch (M3)
+26.0
+Simulator
+					45 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro Max
+18.3.1
+Simulator
+					46 row (selectable) Description: Iphone, First Generation, Value: iPhone SE (3rd generation)
+18.3.1
+Simulator
+					47 row (selectable) Description: Unavailable, Value: Collapsed
+				48 scroll bar (settable, float) 0
+					49 value indicator (settable, float) 0
+					50 increment arrow button
+					51 decrement arrow button
+					52 increment page button
+					53 decrement page button
+			54 search text field (settable) Search
+				55 button Search
+			56 splitter (disabled, settable, float) 299.5
+			57 container
+				58 container
+					59 back button Description: Manage Decks, ID: BackButton
+					60 heading Description: Review, Secondary Actions: Cancel
+					61 button Description: ‹ Back, Secondary Actions: Cancel
+					62 button Description: Flagged 20, Secondary Actions: Cancel
+					63 text Description: Translation Review, Secondary Actions: Cancel
+					64 text Description: Edit translations, examples, and review status from one queue., Secondary Actions: Cancel
+					65 text Description: DECK, Secondary Actions: Cancel
+					66 text Description: All Decks, Secondary Actions: Cancel
+					67 button Description: All Decks, Secondary Actions: Cancel
+					68 button Description: Catch-up QA, Secondary Actions: Cancel
+					69 element Description: Verbos Esenciales, Secondary Actions: Cancel
+					70 element Description: Actions, Secondary Actions: Cancel
+					71 element Description: Hotel & Accommodation Phrases, Secondary Actions: Cancel
+					72 element Description: Body, Secondary Actions: Cancel
+					73 element Description: Negocios & Trabajo, Secondary Actions: Cancel
+					74 element Description: Clothing, Secondary Actions: Cancel
+					75 element Description: Comida Típica Colombiana, Secondary Actions: Cancel
+					76 element Description: Colors, Secondary Actions: Cancel
+					77 element Description: Comunicación, Secondary Actions: Cancel
+					78 element Description: Frases de Conversación, Secondary Actions: Cancel
+					79 element Description: Costeño Slang (Caribe), Secondary Actions: Cancel
+					80 element Description: Cultura & Festivales, Secondary Actions: Cancel
+					81 element Description: Vida Diaria, Secondary Actions: Cancel
+					82 element Description: Ligando & Relaciones, Secondary Actions: Cancel
+					83 element Description: Dates/Time, Secondary Actions: Cancel
+					84 element Description: Emociones, Secondary Actions: Cancel
+					85 element Description: Expresiones Colombianas, Secondary Actions: Cancel
+					86 element Description: La Familia, Secondary Actions: Cancel
+					87 element Description: Comida y Bebida, Secondary Actions: Cancel
+					88 element Description: Saludos, Secondary Actions: Cancel
+					89 element Description: Salud, Secondary Actions: Cancel
+					90 element Description: Holidays, Secondary Actions: Cancel
+					91 element Description: La Casa, Secondary Actions: Cancel
+					92 element Description: Llanero Slang (Los Llanos), Secondary Actions: Cancel
+					93 element Description: Medical & Emergency Phrases, Secondary Actions: Cancel
+					94 element Description: Nature, Secondary Actions: Cancel
+					95 element Description: Numbers, Secondary Actions: Cancel
+					96 element Description: Paisa Slang (Medellín), Secondary Actions: Cancel
+					97 element Description: Piropos & Compliments, Secondary Actions: Cancel
+					98 element Description: Places, Secondary Actions: Cancel
+					99 element Description: Professions, Secondary Actions: Cancel
+					100 element Description: Rolo Slang (Bogotá), Secondary Actions: Cancel
+					101 element Description: Rolo Slang (Bogotá), Secondary Actions: Cancel
+					102 element Description: Restaurant & Dining Phrases, Secondary Actions: Cancel
+					103 element Description: Rutinas y Verbos, Secondary Actions: Cancel
+					104 element Description: School, Secondary Actions: Cancel
+					105 element Description: Shopping, Secondary Actions: Cancel
+					106 element Description: Jerga Colombiana, Secondary Actions: Cancel
+					107 element Description: Social & Going Out Phrases, Secondary Actions: Cancel
+					108 element Description: Sports, Secondary Actions: Cancel
+					109 element Description: Tecnología, Secondary Actions: Cancel
+					110 element Description: Transporte, Secondary Actions: Cancel
+					111 element Description: Transportation Phrases, Secondary Actions: Cancel
+					112 element Description: Travel, Secondary Actions: Cancel
+					113 element Description: Essential Phrases, Secondary Actions: Cancel
+					114 element Description: Valluno Slang (Cali), Secondary Actions: Cancel
+					115 button Description: Clima, Secondary Actions: Cancel
+					116 text Description: QUEUE, Secondary Actions: Cancel
+					117 text Description: All, Secondary Actions: Cancel
+					118 button Description: All, Secondary Actions: Cancel
+					119 element Description: Unreviewed, Secondary Actions: Cancel
+					120 button Description: Flagged, Secondary Actions: Cancel
+					121 button Description: Needs Native, Secondary Actions: Cancel
+					122 button Description: Missing Example EN, Secondary Actions: Cancel
+					123 text Description: CURRENT CARD, Secondary Actions: Cancel
+					124 text Description: 1 / 1402, Secondary Actions: Cancel
+					125 text Description: Catch-up QA, Secondary Actions: Cancel
+					126 text Description: Reviewed, Secondary Actions: Cancel
+					127 text Description: Hola 0, Secondary Actions: Cancel
+					128 button Description: Listen, Secondary Actions: Cancel
+					129 text Description: ENGLISH, Secondary Actions: Cancel
+					130 Group (settable) Secondary Actions: Cancel, Value: Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Te, Details: Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the key
+					131 text Description: EXAMPLE, Secondary Actions: Cancel
+					132 Group (settable) Secondary Actions: Cancel, Scroll Down, Scroll Up, Value: Ejemplo temporal sin guardar. | Temporary example draft retained while inspecting the keyboard and controls. Ejemplo temporal sin guardar. | Temporary example draft retained while inspecting the keyboard and controls. Ejemplo temporal sin guardar. | Temporary example draft retained while inspecting the keyboard and controls. Ejemplo temporal sin guardar. | Temporary example draft retained while inspecting the keyboard and controls. Ejemplo temporal sin guardar. | Temporary example draft retained while inspecting the keyboard and controls. Ejemplo temporal sin guardar. | Temporary example draft retained , Details: Ejemplo temporal sin guardar. | Temporary example draft retained while inspecting the keyboard and controls. Ejemplo temporal sin guardar. | Temporary example draft retained while inspecting the keyboard and controls. Ejemplo temporal sin guardar. | Temporary example draft retained while inspecting the keyboard and controls. Ejemplo temporal sin guardar. | Temporary example draft retained while inspecting the keyboard and controls. Ejemplo temporal sin guardar. | Temporary example draft retained while inspe
+					133 button (disabled) Description: Prev, Secondary Actions: Cancel
+					134 button Description: Skip, Secondary Actions: Cancel
+					135 button Description: Needs Native Check, Secondary Actions: Cancel
+					136 button Description: Save & Next, Secondary Actions: Cancel
+				137 image Description: Keyboard, Filled, ID: keyboard.fill
+				138 text Capturing Keyboard Hold Escape to cancel
+				139 button Description: Home, ID: app.grid.3x3
+				140 button Description: Screenshot, ID: camera.viewfinder
+				141 button Description: Record, ID: record.circle
+				142 button Rotate Left
+		143 splitter (disabled, settable, float) 706
+		144 container
+			145 scroll area Description: Appearance, ID: Inspector.com.apple.devicekit.inspector.appearance
+				146 container
+					147 pop up button Appearance, Value: Light
+					148 slider (settable, float) Text Size, Value: 11
+					149 switch Reduce Motion, Value: off
+					150 switch Increase Contrast, Value: off
+					151 switch Show Borders, Value: off
+					152 switch Reduce Transparency, Value: off
+					153 switch VoiceOver, Value: off
+				154 pop up button Location, Value: None
+				155 container
+					156 slider (settable, float) Sound, Value: 0.6
+					157 pop up button Output, Value: System
+					158 pop up button Input, Value: System
+	159 toolbar
+		160 menu button Add Device, ID: plus
+		161 toggle button Description: Filter, Help: Sort and Filter, Value: off
+		162 button Description: Hide Sidebar, Secondary Actions: Increment, Decrement, Delete, Cancel
+		163 toggle button Description: Capture Keyboard, Value: on
+		164 toggle button (disabled) Description: Resize mode, Help: Enter resize mode, Value: off
+		165 radio button Description: Edit, Help: Settings, Value: 1, ID: slider.horizontal.3
+		166 radio button Description: Text Document, Help: Reports, Value: 0, ID: text.document
+		167 radio button Description: Info, Value: 0, ID: info
+		168 pop up button more toolbar items
+	169 text Colombian Spanish Applied Mini QA iPadOS 26.0
+	170 menu button Window sharing
+171 menu bar
+	172 Device Hub
+	173 File
+	174 Edit
+	175 View
+	176 Device
+	177 Controls
+	178 Window
+	179 Help
