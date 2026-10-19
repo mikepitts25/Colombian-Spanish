@@ -1,0 +1,13 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Applied Mini QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 102-104
+~					111 heading Description: Grabar y escuchar · borrador, Secondary Actions: Cancel
++					112 text Secondary Actions: Cancel, Description: Práctica local opcional. Grabar y escuchar no evalúa pronunciación ni otorga crédito de aprendizaje. El micrófono se solicita solo al elegir Grabar.
++					113 text Description: Practica un saludo por la mañana. Graba una toma breve o usa el ejemplo escrito., Secondary Actions: Cancel
+~					114 text Description: Listo para escuchar, Secondary Actions: Cancel
++					115 text Description: Toma: 20.1 s · 305 KB, Secondary Actions: Cancel
+~					108 button Description: Escuchar mi toma, Secondary Actions: Cancel
++					116 text Secondary Actions: Cancel, Description: Las tomas quedan en la caché temporal de esta app y fuera de las copias de seguridad. Elimina la toma o sal para intentar limpiarla. Si la app se cierra inesperadamente, el archivo puede quedar hasta que el sistema lo elimine. No se envía a servidores.
+Selected:
+	6 row (selected)
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

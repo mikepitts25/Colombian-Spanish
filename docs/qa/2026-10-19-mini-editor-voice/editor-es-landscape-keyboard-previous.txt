@@ -1,0 +1,139 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Applied Mini QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 115
+~					6 row (selectable) Expanded
+~					7 row (selected) Colombian Spanish Applied Mini QA
+26.0
+Simulator
+~					8 row (selectable) Colombian Spanish Barrio Phone QA
+26.0
+Simulator
+~					9 row (selectable) Colombian Spanish Fresh Study Editor 20261019
+26.0
+Simulator
+~					10 row (selectable) Colombian Spanish Release Bundle QA 20261019
+26.0
+Simulator
+~					11 row (selectable) Colombian Spanish SDK57 iOS27 QA
+27.0
+Simulator
+~					12 row (selectable) Colombian Spanish Store Phone QA 20261019
+26.0
+Simulator
+~					13 row (selectable) Colombian Spanish Store Tablet QA 20261019
+26.0
+Simulator
+~					14 row (selectable) Py Quest Runtime QA
+18.4
+Simulator
+~					15 row (selectable) Colombian Spanish Applied Timing QA
+27.0
+Simulator
+~					16 row (selectable) Colombian Spanish Barrio Tablet QA
+26.0
+Simulator
+~					17 row (selectable) Colombian Spanish Catch-up QA
+26.0
+Simulator
+~					18 row (selectable) Colombian Spanish Editor Recovery QA
+26.0
+Simulator
+~					19 row (selectable) Colombian Spanish Flag Clearing QA
+26.0
+Simulator
+~					20 row (selectable) Colombian Spanish Fresh Mission Keyboard QA
+26.0
+Simulator
+~					21 row (selectable) Colombian Spanish Fresh QA
+26.0
+Simulator
+~					22 row (selectable) Colombian Spanish Mini Tablet QA
+26.0
+Simulator
+~					23 row (selectable) Colombian Spanish Plan Narrow QA
+26.0
+Simulator
+~					24 row (selectable) Colombian Spanish Plan Tablet QA
+26.0
+Simulator
+~					25 row (selectable) Colombian Spanish QA
+26.0
+Simulator
+~					26 row (selectable) Colombian Spanish Restore Recovery QA
+26.0
+Simulator
+~					27 row (selectable) Colombian Spanish SDK55 QA
+26.0
+Simulator
+~					28 row (selectable) Colombian Spanish SDK57 QA
+26.0
+Simulator
+~					29 row (selectable) Colombian Spanish Tablet QA
+26.0
+Simulator
+~					30 row (selectable) Colombian Spanish Timing QA
+27.0
+Simulator
+~					31 row (selectable) QUARANTINED - Mission Keyboard Alias
+26.0
+Simulator
+~					32 row (selectable) Colombian Spanish Keyboard Tablet QA
+26.0
+Simulator
+~					33 row (selectable) Colombian Spanish Maximum Grading QA
+26.0
+Simulator
+~					34 row (selectable) DestinationPacker QA
+26.0
+Simulator
+~					35 row (selectable) DestinationPacker Screens
+26.0
+Simulator
+~					36 row (selectable) iPhone 18 Pro
+27.0
+Simulator
+~					37 row (selectable) SpiceSync iOS QA Large
+26.0
+Simulator
+~					38 row (selectable) SpiceSync iOS QA Small
+26.0
+Simulator
+~					39 row (selectable) iPhone 17 Pro
+26.0
+Simulator
+~					40 row (selectable) iPhone 17 Pro Max
+26.0
+Simulator
+~					41 row (selectable) iPhone 16 Pro-Detox
+18.4
+Simulator
+~					42 row (selectable) iPhone 16 Pro
+18.4
+Simulator
+~					43 row (selectable) iPhone 16e
+26.0
+Simulator
+~					44 row (selectable) iPad Pro 13-inch (M4)
+26.0
+Simulator
+~					45 row (selectable) iPad Air 13-inch (M3)
+26.0
+Simulator
+~					46 row (selectable) iPhone 16 Pro Max
+18.3.1
+Simulator
+~					47 row (selectable) iPhone SE (3rd generation)
+18.3.1
+Simulator
+~					48 row (selectable) Collapsed
+~			57 splitter (settable, float) 299.5
++					206 button Description: Costeño Slang (Caribe), Secondary Actions: Cancel
+~					205 Group (settable, unknown) Description: Ejemplo con inglés después de |, Secondary Actions: Cancel
+~				160 button app.grid.3x3
+~				161 button camera.viewfinder
+~				162 button record.circle
+~				163 button
+~		164 splitter (settable, float) 706
+Selected:
+	7 row (selected)
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

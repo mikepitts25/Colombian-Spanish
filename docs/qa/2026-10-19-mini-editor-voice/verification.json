@@ -1,0 +1,41 @@
+{
+  "sourceMain": "3555ca0c808792bb5650fa2e11fb39b7a1fb56d0",
+  "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "model": "iPad-mini-A17-Pro",
+  "os": "iPadOS26.0",
+  "initialProcess": 96799,
+  "processAliveAfterRotatedTake": 96799,
+  "finalColdProcess": 97681,
+  "takeDurationSecondsDisplayed": 20.1,
+  "takeSizeKBDisplayed": 305,
+  "rotationRecordingAXSeconds": 11,
+  "rotationRecordingScreenshotSeconds": 15,
+  "draftCharacters": 610,
+  "draftSHA256": "f306f3499efa8b394135a25acae899ecedcbbae375cd4786aecf31a1d4a62fd8",
+  "spanishAcceptedActions": ["Anterior", "Saltar", "Necesita revisión nativa", "Guardar y seguir"],
+  "editorEnglishKeyboardActionsAccepted": false,
+  "nativeFinal": {
+    "orientation": "portrait",
+    "textSize": 3,
+    "appearance": "Light",
+    "voiceOver": false,
+    "captureKeyboard": false
+  },
+  "imageFormat": "JPEG",
+  "imageDimensions": [1972, 1368],
+  "images": {
+    "voice-portrait-recording.jpg": "83ce41d217fabf0b168a1393ab13e5be000b98e30b1a963df50d60321b3cef73",
+    "voice-landscape-recording.jpg": "303776a9af99f8ace4ab0c238a0bac41b9f00a385c15df34b73cb8a05b8993b0",
+    "voice-landscape-take.jpg": "d40a0fe97436d8f54c5ba0cb05a2533b3ab54e22af71323fd89dac5267525535",
+    "voice-portrait-retained.jpg": "f8c140aad2725b14cf41217111d46d35be57f8d19ccf9c875db86e93eccddda3",
+    "voice-max-landscape-actions.jpg": "994f65fd70b9b2562a108714d9c6ca2e3591b493b760b21ba7cc905930ac9a13",
+    "editor-es-portrait-keyboard-actions.jpg": "6b6c7bb66bd6a9332da556a19a7bd30765212a75c04983ba95cabac81b6551cc",
+    "editor-es-landscape-keyboard-save.jpg": "403f7049eac4f87345dce83df4f4c9d7d35d6cd2f057a434d43c809f5f48a1dd",
+    "editor-es-landscape-keyboard-previous.jpg": "4c11e71de74a7daaf4c06f45a4468ed3dec5de4d108cb547bfcb16db58898d93",
+    "editor-en-portrait-draft-only.jpg": "910b62dc5d322bb7ccf3fbbf7799fd354f13332915955d6f8933d2eaa84d4ce7",
+    "editor-en-toggle-keyboard-hidden.jpg": "add3ccb6be8e761335daa57c02351e072b7a49d7325c6ad8a6bade96a498ce34",
+    "restored-cold-home.jpg": "1f68ee351c8f0350945f2263496ba7b88128190c1b71efb384ea246d806b65be"
+  },
+  "audioCommitted": false,
+  "backupImportUsed": false
+}

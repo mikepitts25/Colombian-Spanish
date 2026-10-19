@@ -1,0 +1,141 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Applied Mini QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 79-80
+~					5 row (selectable) Description: Available, Value: Expanded
+~					6 row (selected) Description: Ipad, Value: Colombian Spanish Applied Mini QA
+26.0
+Simulator
+~					7 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Barrio Phone QA
+26.0
+Simulator
+~					8 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Fresh Study Editor 20261019
+26.0
+Simulator
+~					9 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Release Bundle QA 20261019
+26.0
+Simulator
+~					10 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK57 iOS27 QA
+27.0
+Simulator
+~					11 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Store Phone QA 20261019
+26.0
+Simulator
+~					12 row (selectable) Description: Ipad, Value: Colombian Spanish Store Tablet QA 20261019
+26.0
+Simulator
+~					13 row (selectable) Description: Iphone, Third Generation, Value: Py Quest Runtime QA
+18.4
+Simulator
+~					14 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Applied Timing QA
+27.0
+Simulator
+~					15 row (selectable) Description: Ipad, Value: Colombian Spanish Barrio Tablet QA
+26.0
+Simulator
+~					16 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Catch-up QA
+26.0
+Simulator
+~					17 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Editor Recovery QA
+26.0
+Simulator
+~					18 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Flag Clearing QA
+26.0
+Simulator
+~					19 row (selectable) Description: Ipad, Value: Colombian Spanish Fresh Mission Keyboard QA
+26.0
+Simulator
+~					20 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Fresh QA
+26.0
+Simulator
+~					21 row (selectable) Description: Ipad, Value: Colombian Spanish Mini Tablet QA
+26.0
+Simulator
+~					22 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Plan Narrow QA
+26.0
+Simulator
+~					23 row (selectable) Description: Ipad, Value: Colombian Spanish Plan Tablet QA
+26.0
+Simulator
+~					24 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish QA
+26.0
+Simulator
+~					25 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Restore Recovery QA
+26.0
+Simulator
+~					26 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK55 QA
+26.0
+Simulator
+~					27 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK57 QA
+26.0
+Simulator
+~					28 row (selectable) Description: Ipad, Value: Colombian Spanish Tablet QA
+26.0
+Simulator
+~					29 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Timing QA
+27.0
+Simulator
+~					30 row (selectable) Description: Ipad, Value: QUARANTINED - Mission Keyboard Alias
+26.0
+Simulator
+~					31 row (selectable) Description: Ipad, Value: Colombian Spanish Keyboard Tablet QA
+26.0
+Simulator
+~					32 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Maximum Grading QA
+26.0
+Simulator
+~					33 row (selectable) Description: Iphone, Third Generation, Value: DestinationPacker QA
+26.0
+Simulator
+~					34 row (selectable) Description: Iphone, Third Generation, Value: DestinationPacker Screens
+26.0
+Simulator
+~					35 row (selectable) Description: Iphone, Third Generation, Value: iPhone 18 Pro
+27.0
+Simulator
+~					36 row (selectable) Description: Iphone, Third Generation, Value: SpiceSync iOS QA Large
+26.0
+Simulator
+~					37 row (selectable) Description: Iphone, First Generation, Value: SpiceSync iOS QA Small
+26.0
+Simulator
+~					38 row (selectable) Description: Iphone, Third Generation, Value: iPhone 17 Pro
+26.0
+Simulator
+~					39 row (selectable) Description: Iphone, Third Generation, Value: iPhone 17 Pro Max
+26.0
+Simulator
+~					40 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro-Detox
+18.4
+Simulator
+~					41 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro
+18.4
+Simulator
+~					42 row (selectable) Description: Iphone, Value: iPhone 16e
+26.0
+Simulator
+~					43 row (selectable) Description: Ipad, Value: iPad Pro 13-inch (M4)
+26.0
+Simulator
+~					44 row (selectable) Description: Ipad, Value: iPad Air 13-inch (M3)
+26.0
+Simulator
+~					45 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro Max
+18.3.1
+Simulator
+~					46 row (selectable) Description: Iphone, First Generation, Value: iPhone SE (3rd generation)
+18.3.1
+Simulator
+~					47 row (selectable) Description: Unavailable, Value: Collapsed
+~			56 splitter (disabled, settable, float) 299.5
+~					130 Group (settable) Secondary Actions: Cancel, Value: Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Te, Details: Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the keyboard and controls. Temporary editor draft retained while inspecting the key
+~					132 Group Description: Ejemplo con inglés después de |, Secondary Actions: Cancel
++					225 element (disabled) Description: Anterior, Secondary Actions: Cancel
++					226 button Description: Saltar, Secondary Actions: Cancel
+~				137 button Description: Home, ID: app.grid.3x3
+~				138 button Description: Screenshot, ID: camera.viewfinder
+~				139 button Description: Record, ID: record.circle
+~				140 button Rotate Left
+~		141 splitter (disabled, settable, float) 706
+Selected:
+	6 row (selected)
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).
