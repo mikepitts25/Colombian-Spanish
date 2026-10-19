@@ -35,3 +35,7 @@ python3 -m unittest discover -s scripts/tests -p 'test_*.py'
 ```
 
 Remaining: English maximum-size title coverage, complete Spanish maximum-size count views, precise touch-only middle/primary positioning, live day/time-zone transitions and the other open Home acceptance cells. Home Task4/C3e stay open. No security work was attempted.
+
+## October19 continuation
+
+[C3p](../2026-10-19-phone-max-label/README.md) now verifies both missing English maximum title/count cells with four overlapping native views per theme, including conocer el. The original eight-cell table above remains the historical October18 result. Combined title coverage is eight of eight; full count coverage is six of eight. Spanish maximum counts Light/Dark, touch-only positioning and broader Home acceptance remain open. C3p restores its October19 baseline exactly, including the naturally advanced daily date.
