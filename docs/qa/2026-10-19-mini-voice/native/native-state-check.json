@@ -13,10 +13,7 @@
         "createdAt": 1792245730788,
         "phase": "complete",
         "review": {
-          "initialCardIds": [
-            "catchup-0",
-            "catchup-1"
-          ],
+          "initialCardIds": ["catchup-0", "catchup-1"],
           "session": {
             "deckId": "catchup-qa",
             "queue": {
@@ -56,9 +53,7 @@
           "activeTiming": {
             "durationMs": 305496
           },
-          "reviewCardIds": [
-            "0010"
-          ],
+          "reviewCardIds": ["0010"],
           "updatedAt": 1792303901315,
           "lastOperation": {
             "id": "mvdfgt4z-8uock31slkq",
@@ -79,11 +74,7 @@
       "cardId": "catchup-7",
       "queue": {
         "schemaVersion": 1,
-        "cardIds": [
-          "catchup-7",
-          "catchup-8",
-          "catchup-9"
-        ],
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
         "region": "all",
         "sessionId": "mvch686p-e-kaznxi22mfb"
       },
@@ -287,11 +278,7 @@
         "front": "Hace mucho calor hoy",
         "back": "It is very hot today.",
         "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
-        "tags": [
-          "weather",
-          "phrase",
-          "heat"
-        ],
+        "tags": ["weather", "phrase", "heat"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -808,10 +795,7 @@
         "createdAt": 1792245730788,
         "phase": "complete",
         "review": {
-          "initialCardIds": [
-            "catchup-0",
-            "catchup-1"
-          ],
+          "initialCardIds": ["catchup-0", "catchup-1"],
           "session": {
             "deckId": "catchup-qa",
             "queue": {
@@ -851,9 +835,7 @@
           "activeTiming": {
             "durationMs": 305496
           },
-          "reviewCardIds": [
-            "0010"
-          ],
+          "reviewCardIds": ["0010"],
           "updatedAt": 1792303901315,
           "lastOperation": {
             "id": "mvdfgt4z-8uock31slkq",
@@ -874,11 +856,7 @@
       "cardId": "catchup-7",
       "queue": {
         "schemaVersion": 1,
-        "cardIds": [
-          "catchup-7",
-          "catchup-8",
-          "catchup-9"
-        ],
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
         "region": "all",
         "sessionId": "mvch686p-e-kaznxi22mfb"
       },
@@ -1082,11 +1060,7 @@
         "front": "Hace mucho calor hoy",
         "back": "It is very hot today.",
         "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
-        "tags": [
-          "weather",
-          "phrase",
-          "heat"
-        ],
+        "tags": ["weather", "phrase", "heat"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -1603,10 +1577,7 @@
         "createdAt": 1792245730788,
         "phase": "complete",
         "review": {
-          "initialCardIds": [
-            "catchup-0",
-            "catchup-1"
-          ],
+          "initialCardIds": ["catchup-0", "catchup-1"],
           "session": {
             "deckId": "catchup-qa",
             "queue": {
@@ -1646,9 +1617,7 @@
           "activeTiming": {
             "durationMs": 305496
           },
-          "reviewCardIds": [
-            "0010"
-          ],
+          "reviewCardIds": ["0010"],
           "updatedAt": 1792303901315,
           "lastOperation": {
             "id": "mvdfgt4z-8uock31slkq",
@@ -1669,11 +1638,7 @@
       "cardId": "catchup-7",
       "queue": {
         "schemaVersion": 1,
-        "cardIds": [
-          "catchup-7",
-          "catchup-8",
-          "catchup-9"
-        ],
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
         "region": "all",
         "sessionId": "mvch686p-e-kaznxi22mfb"
       },
@@ -1877,11 +1842,7 @@
         "front": "Hace mucho calor hoy",
         "back": "It is very hot today.",
         "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
-        "tags": [
-          "weather",
-          "phrase",
-          "heat"
-        ],
+        "tags": ["weather", "phrase", "heat"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -2398,10 +2359,7 @@
         "createdAt": 1792245730788,
         "phase": "complete",
         "review": {
-          "initialCardIds": [
-            "catchup-0",
-            "catchup-1"
-          ],
+          "initialCardIds": ["catchup-0", "catchup-1"],
           "session": {
             "deckId": "catchup-qa",
             "queue": {
@@ -2441,9 +2399,7 @@
           "activeTiming": {
             "durationMs": 305496
           },
-          "reviewCardIds": [
-            "0010"
-          ],
+          "reviewCardIds": ["0010"],
           "updatedAt": 1792303901315,
           "lastOperation": {
             "id": "mvdfgt4z-8uock31slkq",
@@ -2464,11 +2420,7 @@
       "cardId": "catchup-7",
       "queue": {
         "schemaVersion": 1,
-        "cardIds": [
-          "catchup-7",
-          "catchup-8",
-          "catchup-9"
-        ],
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
         "region": "all",
         "sessionId": "mvch686p-e-kaznxi22mfb"
       },
@@ -2672,11 +2624,7 @@
         "front": "Hace mucho calor hoy",
         "back": "It is very hot today.",
         "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
-        "tags": [
-          "weather",
-          "phrase",
-          "heat"
-        ],
+        "tags": ["weather", "phrase", "heat"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -3193,10 +3141,7 @@
         "createdAt": 1792245730788,
         "phase": "complete",
         "review": {
-          "initialCardIds": [
-            "catchup-0",
-            "catchup-1"
-          ],
+          "initialCardIds": ["catchup-0", "catchup-1"],
           "session": {
             "deckId": "catchup-qa",
             "queue": {
@@ -3236,9 +3181,7 @@
           "activeTiming": {
             "durationMs": 305496
           },
-          "reviewCardIds": [
-            "0010"
-          ],
+          "reviewCardIds": ["0010"],
           "updatedAt": 1792303901315,
           "lastOperation": {
             "id": "mvdfgt4z-8uock31slkq",
@@ -3259,11 +3202,7 @@
       "cardId": "catchup-7",
       "queue": {
         "schemaVersion": 1,
-        "cardIds": [
-          "catchup-7",
-          "catchup-8",
-          "catchup-9"
-        ],
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
         "region": "all",
         "sessionId": "mvch686p-e-kaznxi22mfb"
       },
@@ -3467,11 +3406,7 @@
         "front": "Hace mucho calor hoy",
         "back": "It is very hot today.",
         "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
-        "tags": [
-          "weather",
-          "phrase",
-          "heat"
-        ],
+        "tags": ["weather", "phrase", "heat"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -3988,10 +3923,7 @@
         "createdAt": 1792245730788,
         "phase": "complete",
         "review": {
-          "initialCardIds": [
-            "catchup-0",
-            "catchup-1"
-          ],
+          "initialCardIds": ["catchup-0", "catchup-1"],
           "session": {
             "deckId": "catchup-qa",
             "queue": {
@@ -4031,9 +3963,7 @@
           "activeTiming": {
             "durationMs": 305496
           },
-          "reviewCardIds": [
-            "0010"
-          ],
+          "reviewCardIds": ["0010"],
           "updatedAt": 1792303901315,
           "lastOperation": {
             "id": "mvdfgt4z-8uock31slkq",
@@ -4054,11 +3984,7 @@
       "cardId": "catchup-7",
       "queue": {
         "schemaVersion": 1,
-        "cardIds": [
-          "catchup-7",
-          "catchup-8",
-          "catchup-9"
-        ],
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
         "region": "all",
         "sessionId": "mvch686p-e-kaznxi22mfb"
       },
@@ -4262,11 +4188,7 @@
         "front": "Hace mucho calor hoy",
         "back": "It is very hot today.",
         "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
-        "tags": [
-          "weather",
-          "phrase",
-          "heat"
-        ],
+        "tags": ["weather", "phrase", "heat"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -4783,10 +4705,7 @@
         "createdAt": 1792245730788,
         "phase": "complete",
         "review": {
-          "initialCardIds": [
-            "catchup-0",
-            "catchup-1"
-          ],
+          "initialCardIds": ["catchup-0", "catchup-1"],
           "session": {
             "deckId": "catchup-qa",
             "queue": {
@@ -4826,9 +4745,7 @@
           "activeTiming": {
             "durationMs": 305496
           },
-          "reviewCardIds": [
-            "0010"
-          ],
+          "reviewCardIds": ["0010"],
           "updatedAt": 1792303901315,
           "lastOperation": {
             "id": "mvdfgt4z-8uock31slkq",
@@ -4849,11 +4766,7 @@
       "cardId": "catchup-7",
       "queue": {
         "schemaVersion": 1,
-        "cardIds": [
-          "catchup-7",
-          "catchup-8",
-          "catchup-9"
-        ],
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
         "region": "all",
         "sessionId": "mvch686p-e-kaznxi22mfb"
       },
@@ -5057,11 +4970,7 @@
         "front": "Hace mucho calor hoy",
         "back": "It is very hot today.",
         "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
-        "tags": [
-          "weather",
-          "phrase",
-          "heat"
-        ],
+        "tags": ["weather", "phrase", "heat"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -5578,10 +5487,7 @@
         "createdAt": 1792245730788,
         "phase": "complete",
         "review": {
-          "initialCardIds": [
-            "catchup-0",
-            "catchup-1"
-          ],
+          "initialCardIds": ["catchup-0", "catchup-1"],
           "session": {
             "deckId": "catchup-qa",
             "queue": {
@@ -5621,9 +5527,7 @@
           "activeTiming": {
             "durationMs": 305496
           },
-          "reviewCardIds": [
-            "0010"
-          ],
+          "reviewCardIds": ["0010"],
           "updatedAt": 1792303901315,
           "lastOperation": {
             "id": "mvdfgt4z-8uock31slkq",
@@ -5644,11 +5548,7 @@
       "cardId": "catchup-7",
       "queue": {
         "schemaVersion": 1,
-        "cardIds": [
-          "catchup-7",
-          "catchup-8",
-          "catchup-9"
-        ],
+        "cardIds": ["catchup-7", "catchup-8", "catchup-9"],
         "region": "all",
         "sessionId": "mvch686p-e-kaznxi22mfb"
       },
@@ -5852,11 +5752,7 @@
         "front": "Hace mucho calor hoy",
         "back": "It is very hot today.",
         "example": "Hace mucho calor hoy; necesito tomar mucha agua. | It is very hot today; I need to drink lots of water.",
-        "tags": [
-          "weather",
-          "phrase",
-          "heat"
-        ],
+        "tags": ["weather", "phrase", "heat"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
