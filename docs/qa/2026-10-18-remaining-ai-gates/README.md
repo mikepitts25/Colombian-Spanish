@@ -32,7 +32,7 @@ The [proposed audio-pack spec](../../superpowers/specs/2026-10-17-downloadable-a
 
 The production catalog stays empty until accepted content/rights and a publication source are supplied. Human/editorial/account gates are production publication, rights/provenance, Android SDK agreement, signed distribution and real audio/device/assistive acceptance. They do not turn local pack implementation into a hardware-only task. Classic remains the default and permanently available; Barrio remains optional.
 
-## Current validation and UI availability
+## October18 validation and UI availability
 
 On this turn, the existing five saved-evidence verifiers pass; all 18 report links/rows and four bounded repeat references were read and checked. The prior main product baseline is PR29: 117 suites/1,148 tests and all four main CI checks passed. No product source changed, so this documentation pass does not claim a new app test or native pass.
 
@@ -41,3 +41,7 @@ A fresh CUA `getApp("com.apple.dt.Devices")` observation timed out after 30 seco
 ## October19 fresh R1/R2 preparation
 
 [Fresh SE3 checkpoint](../2026-10-19-fresh-study-editor/README.md) records normal onboarding, supported full-state fixture import, all eleven destination hashes through cold launch and all eleven original phone hashes through its separate actual cold launch. The private session is prepared with previously studied cards7/8/9. No grades, deck lifecycle or editor saves occurred; R1/R2 stay open. Device Hub switched to another project between actions twice, so input is paused pending shared-UI availability. This supersedes the old all-UI-observation timeout as the current constraint; no physical device is required for these remaining iOS checks. Recheck source protection after future graded/editor actions.
+
+## October19 graded Study/editor continuation
+
+[Fresh graded/editor evidence](../2026-10-19-fresh-graded-editor/README.md) now establishes R1 graded7/8→cold9, exact event/SRS/counter deltas and frozen9 beyond real Again due; R2 successive unreviewed5→6→7 and disposable create/add/rename/delete with exact patches/cold persistence. All eleven original source hashes remain exact through its actual cold launch. R1/R2 remain open for the named maximum/touch-only/long-draft/keyboard cells; no full-parent closure. Device Hub stayed selected and native AX actions worked, superseding the earlier shared-selection blocker for this batch. Coordinate Create/Save/dismiss attempts had no observed effect, so touch-only acceptance is not inferred. Capture Keyboard is restored off; no new product patch or security work.
