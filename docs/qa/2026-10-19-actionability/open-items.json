@@ -126,9 +126,13 @@
       "id": "hardware",
       "taskIds": ["B06.5", "B08.6", "B09.6", "B11.5", "B12.2", "B12.3", "B12.7"],
       "classification": "physical-and-human",
-      "aiCanDoNow": "Prepare/reuse procedures, diagnose supplied failures and automate connected-device checks when available.",
+      "aiCanDoNow": "Prepare/reuse procedures, diagnose supplied failures and automate connected-device checks when available. B08.6 simulator focus is proved, but October20 focused master-switch keyboard/neutral-double-tap activation was ineffective; direct coordinate activation is not a VoiceOver pass. Further simulator activation investigation requires a changed input route; final human/physical acceptance remains separate.",
       "requires": "Actual supported physical hardware, sensory/audio/performance measurements and assistive-user feedback where specified. Do not mark complete from simulators.",
-      "evidenceFiles": ["MASTER_PLAN.md", "docs/pilot/READINESS.md"]
+      "evidenceFiles": [
+        "MASTER_PLAN.md",
+        "docs/pilot/READINESS.md",
+        "docs/qa/2026-10-20-control-route-limits/README.md"
+      ]
     },
     {
       "id": "mission-content",
@@ -259,7 +263,7 @@
       "id": "tablet-and-lifecycle",
       "taskIds": ["B12.4", "B12.4-B", "B12.5", "B12.6"],
       "classification": "mixed-native-device",
-      "aiCanDoNow": "B12.6-B covers compiled unsigned Release local Files save/picker/preview/cancel. B12.6-C covers mini same-build replacement and genuine removal/new-container reinstall/full-state restoration from the actual Files backup. B12.6-D adds actual local provider collision Stop/Keep Both/Replace and readable replacement preview with exact app state. B12.6-E adds staged local unreadable-file picker cancellation and restored-file retry with exact state; no app error was observed. Continue app-level provider errors/cloud, different-version upgrade, network/storage, permission/lifecycle/window cases; reuse completed local Files/collision/reinstall evidence.",
+      "aiCanDoNow": "B12.6-B covers compiled unsigned Release local Files save/picker/preview/cancel. B12.6-C covers mini same-build replacement and genuine removal/new-container reinstall/full-state restoration from the actual Files backup. B12.6-D adds actual local provider collision Stop/Keep Both/Replace and readable replacement preview with exact app state. B12.6-E adds staged local unreadable-file picker cancellation and restored-file retry with exact state; no app error was observed. Continue app-level provider errors/cloud, different-version upgrade, network/storage, permission/lifecycle/window cases; reuse completed local Files/collision/reinstall evidence. The October20 native top-middle menu-bar probe exposed no menu/resized viewport despite Windowed Apps selected; do not repeat that route or earlier corner/Stage Manager attempts unchanged.",
       "requires": "Named control limitations, real low storage/network/routes/notification delivery and signed/hardware acceptance are not inferred from software mocks.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
@@ -267,7 +271,8 @@
         "docs/qa/2026-10-19-native-qa-bundle/README.md",
         "docs/qa/2026-10-19-mini-reinstall-restore/README.md",
         "docs/qa/2026-10-19-files-collision/README.md",
-        "docs/qa/2026-10-19-provider-read/README.md"
+        "docs/qa/2026-10-19-provider-read/README.md",
+        "docs/qa/2026-10-20-control-route-limits/README.md"
       ]
     },
     {

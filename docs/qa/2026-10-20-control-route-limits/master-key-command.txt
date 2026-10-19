@@ -1,0 +1,199 @@
+Window: "Colombian Spanish Applied Mini QA", App: Device Hub.
+0 standard window Colombian Spanish Applied Mini QA – iPadOS 26.0, ID: com.apple.dt.DeviceKit.DeviceManagementWindow-AppWindow-1, Secondary Actions: Raise
+	1 split group
+		2 split group com.apple.dt.DeviceKit.DeviceManagementWindow-AppWindow-1, SidebarNavigationSplitView
+			3 scroll area Secondary Actions: Scroll Up, Scroll Down
+				4 list Sidebar
+					5 row (selectable) Description: Available, Value: Expanded
+					6 row (selected) Description: Ipad, Value: Colombian Spanish Applied Mini QA
+26.0
+Simulator
+					7 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Barrio Phone QA
+26.0
+Simulator
+					8 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Fresh Study Editor 20261019
+26.0
+Simulator
+					9 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Release Bundle QA 20261019
+26.0
+Simulator
+					10 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK57 iOS27 QA
+27.0
+Simulator
+					11 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Store Phone QA 20261019
+26.0
+Simulator
+					12 row (selectable) Description: Ipad, Value: Colombian Spanish Store Tablet QA 20261019
+26.0
+Simulator
+					13 row (selectable) Description: Iphone, Third Generation, Value: Py Quest Runtime QA
+18.4
+Simulator
+					14 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Applied Timing QA
+27.0
+Simulator
+					15 row (selectable) Description: Ipad, Value: Colombian Spanish Barrio Tablet QA
+26.0
+Simulator
+					16 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Catch-up QA
+26.0
+Simulator
+					17 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Editor Recovery QA
+26.0
+Simulator
+					18 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Flag Clearing QA
+26.0
+Simulator
+					19 row (selectable) Description: Ipad, Value: Colombian Spanish Fresh Mission Keyboard QA
+26.0
+Simulator
+					20 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Fresh QA
+26.0
+Simulator
+					21 row (selectable) Description: Ipad, Value: Colombian Spanish Mini Tablet QA
+26.0
+Simulator
+					22 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Plan Narrow QA
+26.0
+Simulator
+					23 row (selectable) Description: Ipad, Value: Colombian Spanish Plan Tablet QA
+26.0
+Simulator
+					24 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish QA
+26.0
+Simulator
+					25 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Restore Recovery QA
+26.0
+Simulator
+					26 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK55 QA
+26.0
+Simulator
+					27 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish SDK57 QA
+26.0
+Simulator
+					28 row (selectable) Description: Ipad, Value: Colombian Spanish Tablet QA
+26.0
+Simulator
+					29 row (selectable) Description: Iphone, Third Generation, Value: Colombian Spanish Timing QA
+27.0
+Simulator
+					30 row (selectable) Description: Ipad, Value: QUARANTINED - Mission Keyboard Alias
+26.0
+Simulator
+					31 row (selectable) Description: Ipad, Value: Colombian Spanish Keyboard Tablet QA
+26.0
+Simulator
+					32 row (selectable) Description: Iphone, First Generation, Value: Colombian Spanish Maximum Grading QA
+26.0
+Simulator
+					33 row (selectable) Description: Iphone, Third Generation, Value: DestinationPacker QA
+26.0
+Simulator
+					34 row (selectable) Description: Iphone, Third Generation, Value: DestinationPacker Screens
+26.0
+Simulator
+					35 row (selectable) Description: Iphone, Third Generation, Value: iPhone 18 Pro
+27.0
+Simulator
+					36 row (selectable) Description: Iphone, Third Generation, Value: SpiceSync iOS QA Large
+26.0
+Simulator
+					37 row (selectable) Description: Iphone, First Generation, Value: SpiceSync iOS QA Small
+26.0
+Simulator
+					38 row (selectable) Description: Iphone, Third Generation, Value: iPhone 17 Pro
+26.0
+Simulator
+					39 row (selectable) Description: Iphone, Third Generation, Value: iPhone 17 Pro Max
+26.0
+Simulator
+					40 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro-Detox
+18.4
+Simulator
+					41 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro
+18.4
+Simulator
+					42 row (selectable) Description: Iphone, Value: iPhone 16e
+26.0
+Simulator
+					43 row (selectable) Description: Ipad, Value: iPad Pro 13-inch (M4)
+26.0
+Simulator
+					44 row (selectable) Description: Ipad, Value: iPad Air 13-inch (M3)
+26.0
+Simulator
+					45 row (selectable) Description: Iphone, Third Generation, Value: iPhone 16 Pro Max
+18.3.1
+Simulator
+					46 row (selectable) Description: Iphone, First Generation, Value: iPhone SE (3rd generation)
+18.3.1
+Simulator
+					47 row (selectable) Description: Unavailable, Value: Collapsed
+				48 scroll bar (settable, float) 0
+					49 value indicator (settable, float) 0
+					50 increment arrow button
+					51 decrement arrow button
+					52 increment page button
+					53 decrement page button
+			54 search text field (settable) Search
+				55 button Search
+			56 splitter (disabled, settable, float) 299.5
+			57 container
+				58 container
+					59 element Description: Ajustes, Secondary Actions: Cancel
+					60 heading Description: Notificaciones, Secondary Actions: Cancel
+					61 text Description: Preferencias guardadas. No se solicitaron recordatorios., Secondary Actions: Cancel
+					62 text Description: Notificaciones, Secondary Actions: Cancel
+					63 text Description: Recibe recordatorios de estudio, Secondary Actions: Cancel
+					64 switch Description: Notificaciones, Value: 0, ID: notification-master-toggle, Secondary Actions: Cancel
+					65 text Description: RECORDATORIOS, Secondary Actions: Cancel
+					66 text Description: Recordatorio Mañana, Secondary Actions: Cancel
+					67 text Description: 08:00 · hora local · ventana de siete días, Secondary Actions: Cancel
+					68 switch Description: Recordatorio Mañana, Value: 1, ID: notification-morning-toggle, Secondary Actions: Cancel
+					69 text Description: Recordatorio Noche, Secondary Actions: Cancel
+					70 text Description: 21:00 · hora local · todos los días, Secondary Actions: Cancel
+					71 switch Description: Recordatorio Noche, Value: 0, ID: notification-night-toggle, Secondary Actions: Cancel
+					72 text Secondary Actions: Cancel, Description: Los recordatorios de la palabra del día cubren los próximos siete días del calendario y se renuevan al abrir la app. Los recordatorios nocturnos se repiten cada día a las 21:00, hora local. No se envían alertas de racha ni de logros.
+				73 image Description: Keyboard, Filled, ID: keyboard.fill
+				74 text Capturing Keyboard Hold Escape to cancel
+				75 button Description: Home, ID: app.grid.3x3
+				76 button Description: Screenshot, ID: camera.viewfinder
+				77 button Description: Record, ID: record.circle
+				78 button Rotate Left
+		79 splitter (disabled, settable, float) 706
+		80 container
+			81 scroll area Description: Appearance, ID: Inspector.com.apple.devicekit.inspector.appearance
+				82 container
+					83 pop up button Appearance, Value: Light
+					84 slider (settable, float) Text Size, Value: 11
+					85 switch Reduce Motion, Value: off
+					86 switch Increase Contrast, Value: off
+					87 switch Show Borders, Value: off
+					88 switch Reduce Transparency, Value: off
+					89 switch VoiceOver, Value: on
+				90 pop up button Location, Value: None
+				91 container
+					92 slider (settable, float) Sound, Value: 0.6
+					93 pop up button Output, Value: System
+					94 pop up button Input, Value: System
+	95 toolbar
+		96 menu button Add Device, ID: plus
+		97 toggle button Description: Filter, Help: Sort and Filter, Value: off
+		98 button Description: Hide Sidebar, Secondary Actions: Increment, Decrement, Delete, Cancel
+		99 toggle button Description: Capture Keyboard, Value: on
+		100 toggle button (disabled) Description: Resize mode, Help: Enter resize mode, Value: off
+		101 radio button Description: Edit, Help: Settings, Value: 1, ID: slider.horizontal.3
+		102 radio button Description: Text Document, Help: Reports, Value: 0, ID: text.document
+		103 radio button Description: Info, Value: 0, ID: info
+		104 pop up button more toolbar items
+	105 text Colombian Spanish Applied Mini QA iPadOS 26.0
+	106 menu button Window sharing
+107 menu bar
+	108 Device Hub
+	109 File
+	110 Edit
+	111 View
+	112 Device
+	113 Controls
+	114 Window
+	115 Help
