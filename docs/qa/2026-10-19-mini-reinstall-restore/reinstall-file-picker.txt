@@ -1,0 +1,6 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Applied Mini QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~					190 element (disabled) Description: 💾, Exportar respaldo, Copia tus decks y resultados de práctica al portapapeles, ›, Secondary Actions: Cancel
+~					191 element (disabled) Description: 📥, Importar respaldo, Restaurar desde portapapeles, ›, Secondary Actions: Cancel
+~					192 element (disabled) Description: 📄, Guardar archivo de respaldo, Decks, historial y estado de la app · JSON, ›, Secondary Actions: Cancel
+~					193 element (disabled) Description: 📂, Importar archivo de respaldo, Vista previa antes de reemplazar o añadir tarjetas, ›, Secondary Actions: Cancel
+The focused UI element is 0 standard window Colombian Spanish Applied Mini QA – iPadOS 26.0, ID: com.apple.dt.DeviceKit.DeviceManagementWindow-AppWindow-1, Secondary Actions: Raise

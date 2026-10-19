@@ -1,0 +1,11 @@
+{
+  "bundleIdentifier": "com.mikepitts.colombianspanish",
+  "bundleVersion": "1.0.0",
+  "executable": "ColombianSpanish",
+  "executableSHA256": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb",
+  "fileCount": 82,
+  "bundleManifestSHA256": "de8b52225ccc1c9ea449f01107a66bd3059d255b447c7ec5d5d34b2f5f28e377",
+  "hostCopyExact": true,
+  "sourcePath": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Bundle/Application/6C806BF0-1AA4-426C-9964-75177799B8C2/ColombianSpanish.app",
+  "hostCopyPath": "/tmp/colombian-mini-reinstall/ColombianSpanish.app"
+}

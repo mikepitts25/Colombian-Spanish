@@ -1,0 +1,5 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Applied Mini QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 131-134
++	144 text Colombian Spanish Applied Mini QA iPadOS 26.0
++	145 menu button Window sharing
+The focused UI element is 0 standard window Colombian Spanish Applied Mini QA – iPadOS 26.0, ID: com.apple.dt.DeviceKit.DeviceManagementWindow-AppWindow-1, Secondary Actions: Raise

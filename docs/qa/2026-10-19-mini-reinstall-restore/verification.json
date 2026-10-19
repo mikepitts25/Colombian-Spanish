@@ -1,0 +1,25 @@
+{
+  "sourceMain": "cba4aed8e466a441741407bc58c640d2597ab542",
+  "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "model": "iPad-mini-A17-Pro",
+  "runtime": "iPadOS26.0",
+  "initialProcess": 238,
+  "sameBuildReplacement": true,
+  "differentVersionUpgradeTested": false,
+  "imageFormat": "JPEG",
+  "imageDimensions": [1972, 1368],
+  "images": {
+    "file-save-provider.jpg": "b6afb083f656ebb482bf55fbf51f19473608d5e2834e751950a4f9924dad8612",
+    "replacement-home.jpg": "1e8556686a21ee0d20cdbbb38fb05da5a2ec5c004594c428e11adab34702704c",
+    "fresh-onboarding.jpg": "6c543543302475c693897935cbc03d88364cc53c2720aaccfa8efb093193a282",
+    "reinstall-file-picker.jpg": "886a6503f4a8da1bc87c0e3ec92058a01aec12d366cc050b69baace785d9af5e",
+    "reinstall-backup-preview.jpg": "474aa8abe9bb0e72629d1a62fb08c9069679583028765e6afe426bf775b0caaa",
+    "restored-cold-home.jpg": "1ee66e95c7423268b7a9d3f34f42b09fda33eb571a57f4589cd1dd2a4ac74bdc"
+  },
+  "rawBackupCommitted": false,
+  "nativeBundleCommitted": false,
+  "onlyProjectDeviceOperated": true,
+  "externalSimulatorAppearedDuringExport": true,
+  "projectSimulatorStoppedDuringExternalUse": true,
+  "soleMiniBeforeRemovalAndRestore": true
+}

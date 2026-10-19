@@ -1,0 +1,74 @@
+{
+  "after-initial-launch-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "after-replacement-launch-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/7BA54420-FDF0-4E3D-9BAA-C2202826EADB",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/7BA54420-FDF0-4E3D-9BAA-C2202826EADB",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "after-replacement-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/7BA54420-FDF0-4E3D-9BAA-C2202826EADB",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/7BA54420-FDF0-4E3D-9BAA-C2202826EADB",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "after-restored-cold-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "baseline-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "before-replacement-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "before-restored-cold-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "fresh-after-launch-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "fresh-before-launch-preflight.json": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "bundle": "com.mikepitts.colombianspanish"
+  }
+}

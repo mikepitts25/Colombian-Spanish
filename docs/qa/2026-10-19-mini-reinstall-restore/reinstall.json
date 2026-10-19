@@ -1,0 +1,21 @@
+{
+  "appContainerLookupAfterUninstallExitCode": 2,
+  "oldContainerExistsAfterUninstall": false,
+  "backupSurvivesUninstall": true,
+  "backupSHA256AfterUninstall": "3e500e54f0d786fa49970691a20393656b00242228fd104bb876f4c7ad8fb4c1",
+  "oldContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/C44142DA-0CDC-4927-A01A-38E7B024B9D1",
+  "freshContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+  "containerChanged": true,
+  "replacementProcess": 2661,
+  "freshProcess": 3033,
+  "restoredColdProcess": 3291,
+  "fileSHA256AfterRecovery": "3e500e54f0d786fa49970691a20393656b00242228fd104bb876f4c7ad8fb4c1",
+  "microphoneValuesAfterRecovery": [],
+  "recordingFilesAfterRecovery": 0,
+  "finalRecordHashesMatchBaseline": true,
+  "reinstalledExecutableSHA256": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb",
+  "reinstalledBundlePath": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Bundle/Application/C37C5113-EF6F-4073-9584-BFD1A5786D4E/ColombianSpanish.app",
+  "replacementContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/7BA54420-FDF0-4E3D-9BAA-C2202826EADB",
+  "replacementContainerChanged": true,
+  "replacementContainerExistsAfterRecovery": false
+}
