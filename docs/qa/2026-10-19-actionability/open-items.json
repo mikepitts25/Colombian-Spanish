@@ -256,13 +256,14 @@
       "id": "tablet-and-lifecycle",
       "taskIds": ["B12.4", "B12.4-B", "B12.5", "B12.6"],
       "classification": "mixed-native-device",
-      "aiCanDoNow": "B12.6-B covers compiled unsigned Release local Files save/picker/preview/cancel. B12.6-C now covers own-path mini same-build replacement and genuine removal/new-container reinstall/full-state restoration from an actual surviving product-generated Files backup. Continue distinct provider-error/overwrite, different-version upgrade, network/storage, permission/lifecycle/window cases; do not repeat completed local Files or reinstall recovery.",
+      "aiCanDoNow": "B12.6-B covers compiled unsigned Release local Files save/picker/preview/cancel. B12.6-C covers mini same-build replacement and genuine removal/new-container reinstall/full-state restoration from the actual Files backup. B12.6-D adds actual local provider collision Stop/Keep Both/Replace and readable replacement preview with exact app state. Continue distinct provider failures/cloud, different-version upgrade, network/storage, permission/lifecycle/window cases; reuse completed local Files/collision/reinstall evidence.",
       "requires": "Named control limitations, real low storage/network/routes/notification delivery and signed/hardware acceptance are not inferred from software mocks.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-release-bundle/README.md",
         "docs/qa/2026-10-19-native-qa-bundle/README.md",
-        "docs/qa/2026-10-19-mini-reinstall-restore/README.md"
+        "docs/qa/2026-10-19-mini-reinstall-restore/README.md",
+        "docs/qa/2026-10-19-files-collision/README.md"
       ]
     },
     {
@@ -411,7 +412,7 @@
       "id": "B02.1",
       "tags": ["AI", "H-LANGUAGE"],
       "line": 143,
-      "text": "Correct future-tense generation and audit the remaining tense/pronoun tables. Add independent expected-form fixtures including `hablaré`, `comeré`, irregular futures, and region-sensitive forms; have an editor validate the reference set.",
+      "text": "Correct future-tense generation and audit the remaining tense/pronoun tables. Add independent expected-form fixtures including `hablar\u00e9`, `comer\u00e9`, irregular futures, and region-sensitive forms; have an editor validate the reference set.",
       "group": "editor-language"
     },
     {
@@ -698,7 +699,7 @@
       "id": "B07.1",
       "tags": ["AI", "H-PRODUCT"],
       "line": 306,
-      "text": "Define the first mission: “Your first morning in Medellín,” including its outcome, required phrases, completion criteria, and assisted alternatives. Resolve its focused design before coding the new subsystem.",
+      "text": "Define the first mission: \u201cYour first morning in Medell\u00edn,\u201d including its outcome, required phrases, completion criteria, and assisted alternatives. Resolve its focused design before coding the new subsystem.",
       "group": "mission-content"
     },
     {
@@ -1104,7 +1105,7 @@
       "id": "B13.3",
       "tags": ["H-PRODUCT", "H-LEARNER"],
       "line": 521,
-      "text": "Recruit a small directional pilot, initially around 5–8 people spanning beginners and learners with basics; obtain consent and agree on appropriate data collection. This sample is not proof of broad efficacy.",
+      "text": "Recruit a small directional pilot, initially around 5\u20138 people spanning beginners and learners with basics; obtain consent and agree on appropriate data collection. This sample is not proof of broad efficacy.",
       "group": "pilot"
     },
     {

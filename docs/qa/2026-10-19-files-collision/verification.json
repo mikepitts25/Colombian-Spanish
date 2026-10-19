@@ -1,0 +1,33 @@
+{
+  "sourceMain": "f0ab8c45ee072b41249063ffeb0a5f91b07c9433",
+  "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+  "coldPID": 9857,
+  "earlierRunningPID": 6983,
+  "nativeBuildChanged": false,
+  "backupPayloadsMatchBaseline": true,
+  "portableFields": {
+    "dailyPlan": "SRS_DAILY_PLAN_V1",
+    "missions": "SRS_MISSIONS_V1",
+    "prefs": "SRS_PREFS_V1",
+    "daily": "SRS_DAILY_PROGRESS_V1",
+    "streak": "SRS_STUDY_STREAK_V1",
+    "seenWords": "SRS_SEEN_WORDS_V1",
+    "quizHistory": "SRS_QUIZ_HISTORY_V1",
+    "lastSession": "SRS_LAST_STUDY_SESSION_V1",
+    "notificationPrefs": "SRS_NOTIFICATION_PREFS_V1"
+  },
+  "rawBackupCommitted": false,
+  "originalFileName": "colombian-spanish-backup-2026-10-19T20-22-17.412Z-anr4mj.json",
+  "originalFileSHA256": "3e500e54f0d786fa49970691a20393656b00242228fd104bb876f4c7ad8fb4c1",
+  "originalHostCopySHA256": "3e500e54f0d786fa49970691a20393656b00242228fd104bb876f4c7ad8fb4c1",
+  "images": {
+    "collision-alert.jpg": "8b9370e6438bf15d90600d33b2dfb9efeb4744bc8e8c8253bd5dd155df08ccc0",
+    "collision-stop.jpg": "4a256715ad09fe6fe5eab23e85ddfc745223079bc42eac57d85dff49ab43a954",
+    "keep-both-alert.jpg": "e548307f0109dba248e2ec761e4366211aa0828a6e153dc8ce161dfb1c258e1d",
+    "replace-741-alert.jpg": "9550b4e4ebad34d9b6345b3dd4bf214d96fe9e0c8943d2a96a155886915b5d5e",
+    "replaced-file-picker.jpg": "4a929208d89d15ec75ac2c8a6a4c6126113fdb1e5f0c65a6c8dbbeaf8f6d0222",
+    "replaced-preview.jpg": "46fffd0a4344a75beffa6805ac5a31945f85817e5e5e7f6d48bd2c550640d23e",
+    "cold-home.jpg": "bf74ca36a3d5388b9e674a7f99a607230a518f7f121a4afff10869fcdf8ba763"
+  }
+}
