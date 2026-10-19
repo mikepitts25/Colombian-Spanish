@@ -1,0 +1,55 @@
+{
+  "provenance": "Transcribed exact CUA-emitted full native AX string comparisons; raw AX trees are not archived. These are acquisition observations, not independently replayed tests.",
+  "observations": [
+    {
+      "phase": "es-max-before-refocus",
+      "textSize": 11,
+      "exactValues": {
+        "front": true,
+        "back": true,
+        "example": true,
+        "tags": true
+      },
+      "lengths": {
+        "front": 215,
+        "back": 551,
+        "example": 503,
+        "tags": 107
+      }
+    },
+    {
+      "phase": "es-default-return",
+      "textSize": 3,
+      "exactValues": {
+        "front": true,
+        "back": true,
+        "example": true,
+        "tags": true
+      },
+      "lengths": {
+        "front": 215,
+        "back": 551,
+        "example": 503,
+        "tags": 107
+      }
+    },
+    {
+      "phase": "en-new-deck-max-before-refocus",
+      "textSize": 11,
+      "exactName": true,
+      "length": 158
+    },
+    {
+      "phase": "en-new-deck-max-actions",
+      "textSize": 11,
+      "exactName": true,
+      "length": 158
+    },
+    {
+      "phase": "en-rename-max-actions",
+      "textSize": 11,
+      "exactName": true,
+      "length": 158
+    }
+  ]
+}
