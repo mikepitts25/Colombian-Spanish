@@ -1,0 +1,43 @@
+{
+  "baseCommit": "0891b60d1b363d6147660ec13f08174d51fbd6ee",
+  "runtimeBuildSourceCommit": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38",
+  "device": "D5502A06-4858-428C-901C-587B58280F64",
+  "launchPIDs": {
+    "honolulu": 99362,
+    "anchorageMidnight": 195,
+    "finalPlain": 6384
+  },
+  "midnightUTC": "2026-10-19T08:00:00+00:00",
+  "firstObservedDelaySeconds": 25.05049,
+  "midnightZone": "America/Anchorage",
+  "initialAndFinal": {
+    "themeId": "classic",
+    "appearanceMode": "system",
+    "uiLanguage": "es",
+    "nativeAppearance": "Light",
+    "nativeTextSize": 3,
+    "voiceOver": false,
+    "captureKeyboard": false
+  },
+  "uiObservations": {
+    "beforeHeading": "¡Buenas noches!",
+    "beforeWord": "tinto",
+    "firstAfterHeading": "¡Buenos días!",
+    "firstAfterWord": "meter presión",
+    "progressGoal": "0 de 5 tarjetas estudiadas",
+    "progressSelfRatedAttempts": 0,
+    "postHomeImageAfterProgressReturn": true,
+    "primaryPositioning": "accessibility-target scroll, no activation"
+  },
+  "imageSHA256": {
+    "progress-after-midnight.png": "5fe97ae310c2a21cd0053b174c99c4d9144a76c6224c6fea260858f31d1e86fd",
+    "barrio-system-light.png": "7aeaa19100d12f17ca3ce25c0ec1fc57110088d88d4e36370bc0b3d2db151277",
+    "barrio-system-dark.png": "54c7a53c4cad4e8fc1721b216c5eb7bfdb3bdc91f950779c9ea3a19943520cac",
+    "barrio-after-midnight-home.png": "1a03fced48c05e3a53f4c5cb5190dce2dc7c6b8720de8fda1b80d89c5dc2f8a3",
+    "barrio-before-midnight.png": "94007908c322d3b04104593b7800c273f56abebab3ad61bbd8c07bcb1e73bdc2",
+    "final-classic-home.png": "49787c10e7d5732ffd24cb2125b9777a05f5ffd154f3ed335a6ca9bdd462bfb7",
+    "honolulu-home.png": "c074992cb15164371e081dd148f989932c317dbddbca9a9cd00fb012e0684cd2",
+    "barrio-en-max-primary.png": "39ee776c6e650c17366571ad46949db695b5d3bc1996e299aed2f9ed57f7a365",
+    "barrio-es-max-primary.png": "c747108e3f0f928747d9c10f842bf4316bcb2be2b1054bbb8ed0abab7b9f6f15"
+  }
+}
