@@ -43,12 +43,13 @@
       "id": "calendar-native",
       "taskIds": ["B02.6", "B02.6-B", "B02.6-B2", "B05.5", "B05.5-B"],
       "classification": "mixed-native",
-      "aiCanDoNow": "C3q adds an earned-counter focused Barrio midnight on the unsigned Release install; C3o already covers a prepared retained-plan/nonzero boundary. Continue only distinct live OS-zone/DST, foreground or still-unverified combinations. Do not repeat the earned ordinary-queue boundary as missing.",
+      "aiCanDoNow": "C3q adds an earned-counter focused Barrio midnight on the unsigned Release install; C3o already covers a prepared retained-plan/nonzero boundary. C3r covers unfocused Home return after real local midnight with already-zero counters, preserving ten records and the correct new daily date through cold launch. Continue only distinct live OS-zone/DST, remaining nonzero/foreground or still-unverified combinations; do not repeat the completed zero-counter return. Do not repeat the earned ordinary-queue boundary as missing.",
       "requires": "Live OS-zone/DST requires a supported control or real relevant boundary. Process TZ and calendar unit tests do not establish live system changes.",
       "evidenceFiles": [
         "docs/qa/2026-10-19-native-zone/README.md",
         "docs/qa/2026-10-19-release-home-budget/README.md",
-        "docs/qa/2026-10-19-native-qa-bundle/README.md"
+        "docs/qa/2026-10-19-native-qa-bundle/README.md",
+        "docs/qa/2026-10-19-voice-navigation/README.md"
       ]
     },
     {
@@ -197,7 +198,7 @@
       "id": "voice-native",
       "taskIds": ["B09.2", "B09.2-B", "B09.2-B2"],
       "classification": "mixed-native",
-      "aiCanDoNow": "B2c covers granted-capture background cleanup; B2d now covers live native Settings revocation, denied app behavior, app-settings recovery link and re-enabled new take/delete with OS-driven relaunches. Continue only distinct unverified interruption/navigation/window cases where controllable. Do not repeat basic capture, denial, background or completed permission recovery. Current unsigned Release excludes recording. B2e covers active capture through live native maximum-text resizing and Stop/Delete cleanup; reuse that result rather than replaying it. B2f covers actual mini active-capture rotation, retained take/max-landscape actions and deletion; do not replay this or the completed written-alternative rotation.",
+      "aiCanDoNow": "B2c covers granted-capture background cleanup; B2d now covers live native Settings revocation, denied app behavior, app-settings recovery link and re-enabled new take/delete with OS-driven relaunches. B2g now covers mini Back from active capture, retained take and replay, zero-file cleanup and ready reentry in one process. Continue only distinct unverified OS interruption/window cases where controllable; do not repeat completed Back paths. Do not repeat basic capture, denial, background or completed permission recovery. Current unsigned Release excludes recording. B2e covers active capture through live native maximum-text resizing and Stop/Delete cleanup; reuse that result rather than replaying it. B2f covers actual mini active-capture rotation, retained take/max-landscape actions and deletion; do not replay this or the completed written-alternative rotation.",
       "requires": "Authorized recording route; known Settings targeting/tool limits; Android, physical sound/routes and signed production exclusion evidence separately.",
       "evidenceFiles": [
         "docs/qa/2026-10-19-voice-denial/README.md",
@@ -205,7 +206,8 @@
         "docs/qa/2026-10-19-voice-background/README.md",
         "docs/qa/2026-10-19-voice-permission-recovery/README.md",
         "docs/qa/2026-10-19-active-capture-text/README.md",
-        "docs/qa/2026-10-19-mini-editor-voice/README.md"
+        "docs/qa/2026-10-19-mini-editor-voice/README.md",
+        "docs/qa/2026-10-19-voice-navigation/README.md"
       ]
     },
     {
