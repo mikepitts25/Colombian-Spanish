@@ -1,0 +1,18 @@
+{
+  "sourceMain": "8fb6ffa3ae559d2c1f56ec01d2c5a767358b429d",
+  "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+  "initialPID": 20293,
+  "coldPID": 20922,
+  "nativeSourceChanged": false,
+  "actualAppErrorObserved": false,
+  "previewExportedAt": "2026-10-19T20:51:11.701Z",
+  "images": {
+    "cold-home.jpg": "f764e805d97162ca483870dfe471a7d0edbd24969525e5c35d61fceee1dd51e1",
+    "restored-preview.jpg": "f439f98d66bd612cdd086f4f79a1cd6ab50f3e56eff2caeb9dc88d10f307efa5",
+    "restricted-cancel.jpg": "ac89f586d7ea0c56a6378307a959d61a4b0e1f60b14737fd03d1cb49514945f6",
+    "restricted-outcome.jpg": "415e7b98027b78cbe39a23c26bd1fd62480b552dc93d5d6144a95da941d793d3"
+  },
+  "beforeShutdown": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+  "afterShutdown": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n-- iOS 26.5 --\n-- iOS 27.0 --\n"
+}
