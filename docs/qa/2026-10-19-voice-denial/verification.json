@@ -1,0 +1,43 @@
+{
+  "base": "03da07cf67abd2c55c129291009e599b1ab7cdb8",
+  "device": "BF511B0E-479F-429E-83B7-4134E910847F",
+  "recovery": {
+    "sha256": "26e9a3a8269c238780333d7d65dc4091df11dcd0c93efc12f76c0488bdec9ce9",
+    "keyHashes": {
+      "SRS_DAILY_PLAN_V1": "3edd9c565e61c5d971b758f88aa85642565619595f6ae32522f7ca860fc3cf10",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_PREFS_V1": "77055397846d78338d34eb796687d65baa95cba8212bdb440f1cfdeb82d97c10",
+      "SRS_DAILY_PROGRESS_V1": "037ff3b9e7ea1fa6f5e1ad1783628d97936eeceb30fe3ef98e349e2fe559a83c",
+      "SRS_STUDY_STREAK_V1": "5f8a106360e046927793ec1f30553c69852e9c3fac70f51cc96c0f6addcc0f41",
+      "SRS_SEEN_WORDS_V1": "701ae0c6d5bf56ba20394da5ec8b68eec28c9c04248175f72c1d3705f750225a",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "523a5f6458daf67b0e0da67d57037bce8db3698645792e7079d4cb6910879b86",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_DECKS_V3": "c543a738a5bf627f442909f421298133ed57d4893753e3326b7686f80b6beada",
+      "SRS_LEARNING_EVENTS_V1": "6c609aa8a5fb2e2d9e9b8fff4f13aa7e8ffe269606df5cd316eb4aff671e2a04"
+    },
+    "permissionBeforeReset": [["kTCCServiceMicrophone", 0]],
+    "audioFileCount": 0
+  },
+  "cleanup": {
+    "permissionRows": [],
+    "audioFileCount": 0,
+    "coldPID": 62564,
+    "foregroundPID": 44646
+  },
+  "baselinePermissionObservation": {
+    "permissionRows": [],
+    "audioFileCount": 0,
+    "provenance": "Transcribed initial targeted read-only TCC query and app-container m4a count; not a replayable OS permission test."
+  },
+  "imageSHA256": {
+    "denied-es.png": "8cfeb9f8ebe9a7e65f1b5fd3f273e6d619bdabb0591ddfc4b95a540145c0b262",
+    "restored-cold-home.png": "a30330eb16af5ee490b4456bab8c54d955d716e1249ca6c46fb528a87f6274bc",
+    "microphone-prompt.png": "269dc4b349d28ab51c8624448efecd9873671f4ea5619cb69966b7ef2374776e",
+    "en-max-alternative-action.png": "5ad4f6690205dc9d629b24c25369ebb8b3be2d4e9dca1f8a1c4f0f6b86857c8a",
+    "en-max-written-model.png": "cc632aa5f770fb8395945fa1861ec03b3145e2f56d7c8124b5b3b54f7c05164a",
+    "es-max-alternative-action.png": "b791253de701dff2b81227f2b3ccf2272d51dd928271ef7b02e4d7ae19090869",
+    "es-max-written-model.png": "59ec84cfea233104f55cd338f9c9493bed4eccd368d9e0cf2354e5813f31b731",
+    "denied-en.png": "4b613df26d7771a8906e756fc10166c33b68a3c5e55cb1f4061e4070fa219ab2"
+  }
+}

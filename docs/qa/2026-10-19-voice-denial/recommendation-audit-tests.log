@@ -1,0 +1,14 @@
+
+> colombian-spanish-srs@1.0.0 test
+> jest --runInBand --watchman=false --runTestsByPath __tests__/utils/dailyReview.test.ts __tests__/storage/recommendedPlan.test.ts __tests__/screens/HomeScreen.test.tsx __tests__/screens/LearningPreferencesScreen.test.tsx
+
+PASS __tests__/screens/HomeScreen.test.tsx
+PASS __tests__/screens/LearningPreferencesScreen.test.tsx
+PASS __tests__/storage/recommendedPlan.test.ts
+PASS __tests__/utils/dailyReview.test.ts
+
+Test Suites: 4 passed, 4 total
+Tests:       69 passed, 69 total
+Snapshots:   0 total
+Time:        4.359 s
+Ran all test suites within paths "__tests__/utils/dailyReview.test.ts", "__tests__/storage/recommendedPlan.test.ts", "__tests__/screens/HomeScreen.test.tsx", "__tests__/screens/LearningPreferencesScreen.test.tsx".
