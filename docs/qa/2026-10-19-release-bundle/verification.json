@@ -1,0 +1,39 @@
+{
+  "baseCommit": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38",
+  "releaseDevice": "D5502A06-4858-428C-901C-587B58280F64",
+  "miniDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "launchPIDs": [92118, 93130, 93514],
+  "unreachableMetroAddress": "127.0.0.1:1",
+  "unreachableMetroConnectEx": 61,
+  "homeHasDraftTools": false,
+  "homeHasReviewOnly": true,
+  "sourceRecovery": {
+    "sha256": "f13238514b8b36f1cac6b14e91f20cd1aa52a98feec6d9ed25fea749f4e47a0b",
+    "keyHashes": {
+      "SRS_DECKS_V3": "f8a072a2c06fa5eaac7d4cfa9347f8f7ae3281b220296bb08cfc1ecb0d70f386",
+      "SRS_DAILY_PLAN_V1": "9a205cd703b2e5f091300a43619bb6100dcba85730120daa72c99ab057847908",
+      "SRS_MISSIONS_V1": "dda005e7f63fd5035df0d065b488295aad003596a4bab04af421803dae4dcfce",
+      "SRS_PREFS_V1": "d7785209fd2bb58309bd54c8fcfe3c5106adf32b508d692061b075a2017f33ad",
+      "SRS_DAILY_PROGRESS_V1": "0f8606873ab21991981365abb9d20269e218eb27d1cfc53f9c160c8cce0478f8",
+      "SRS_STUDY_STREAK_V1": "15c5a67a1c9e4177a7812a69bfc9137acc47feaaf17d5a02a83bd61034bb6049",
+      "SRS_SEEN_WORDS_V1": "154dd6c71683594bf85e9593eb934388863b6dbbf8a6a5186f870ba0a30b10d0",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "038415fb75da3f6f96a446a4593df1360a134d41dbcf4275152e4b41e4780541",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_LEARNING_EVENTS_V1": "943cd4efe0c963ccb8c73cc5fe79d4a07319e528fa06b0345fc047d5abcf66e7"
+    }
+  },
+  "nativeBuildLog": {
+    "localPath": "/tmp/colombian-mini-accent/release-build.log",
+    "bytes": 9192888,
+    "sha256": "6c116515168ac315a5e7a4344c8d5916f4a930ab4721296a6929f73d8f1d702c"
+  },
+  "imageSHA256": {
+    "release-resumed-study.png": "1570d38ee4aab50e5570d9ebd6e1a7e20bb6495136902c834e07f13cb92d3d62",
+    "release-home-cold.png": "a6a60320b75feb254d476d66a1b50a0496650e396ba9fe2ee1fbaceedebdc487",
+    "release-study-default-revealed.png": "9dc2bf94d195bb2d262b8abdafe05e8250a3c2a7cc381c9305bdd48f729014bb",
+    "release-study-default.png": "12708eeafbe4540cb2d477a02f99e0cdc6b6f110e92963c91c3d18df1f1a4128",
+    "release-home-before-cold.png": "a6a60320b75feb254d476d66a1b50a0496650e396ba9fe2ee1fbaceedebdc487",
+    "release-recommended-study.png": "6ee218c4326adba65f5fe38fab242df146865d65b6d2f20b1dcf6aed0ef34e6d"
+  }
+}

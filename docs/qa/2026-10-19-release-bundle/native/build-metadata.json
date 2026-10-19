@@ -1,0 +1,29 @@
+{
+  "baseCommit": "2b6665db5e79379c8cb7dc0d2567a24c9ed1eb38",
+  "configuration": "Release",
+  "platform": "iphonesimulator",
+  "arch": "arm64",
+  "signingAllowed": false,
+  "sentryAutoUpload": false,
+  "node": "22.16.0",
+  "xcode": "27.1",
+  "buildExitCode": 0,
+  "buildResult": "BUILD SUCCEEDED",
+  "bundleIdentifier": "com.mikepitts.colombianspanish",
+  "hasMicrophoneUsageDescription": false,
+  "files": {
+    "Info.plist": {
+      "sha256": "8ab9c3b4377168a08ec786b844ae7600f6b4547cc927fc42b449feeaa7af17c5",
+      "bytes": 2198
+    },
+    "ColombianSpanish": {
+      "sha256": "49ac9bb5e4c02dead50b1442b091f2b64da1c164fc6090672901c42f4330dcd1",
+      "bytes": 15861056
+    },
+    "main.jsbundle": {
+      "sha256": "9c2931d88b24c51a10630f9b36dfc0bdc39766f5a57ac15084b62314e9fff5d3",
+      "bytes": 5141556
+    }
+  },
+  "command": "xcodebuild -workspace ios/ColombianSpanish.xcworkspace -scheme ColombianSpanish -configuration Release -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/colombian-release-offline-build -jobs 4 ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build"
+}
