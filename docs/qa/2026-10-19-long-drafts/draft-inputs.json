@@ -1,0 +1,9 @@
+{
+  "form": {
+    "front": "QA 1: ¿Qué más? Café, mañana, pingüino y acción — borrador sin guardar.\nQA 2: ¿Qué más? Café, mañana, pingüino y acción — borrador sin guardar.\nQA 3: ¿Qué más? Café, mañana, pingüino y acción — borrador sin guardar.",
+    "back": "QA line 1: A long bilingual test draft; keep punctuation, accents and every line unchanged.\nQA line 2: A long bilingual test draft; keep punctuation, accents and every line unchanged.\nQA line 3: A long bilingual test draft; keep punctuation, accents and every line unchanged.\nQA line 4: A long bilingual test draft; keep punctuation, accents and every line unchanged.\nQA line 5: A long bilingual test draft; keep punctuation, accents and every line unchanged.\nQA line 6: A long bilingual test draft; keep punctuation, accents and every line unchanged.",
+    "example": "QA ejemplo 1: «Café de prueba, por favor». | Test coffee, please — unsaved example.\nQA ejemplo 2: «Café de prueba, por favor». | Test coffee, please — unsaved example.\nQA ejemplo 3: «Café de prueba, por favor». | Test coffee, please — unsaved example.\nQA ejemplo 4: «Café de prueba, por favor». | Test coffee, please — unsaved example.\nQA ejemplo 5: «Café de prueba, por favor». | Test coffee, please — unsaved example.\nQA ejemplo 6: «Café de prueba, por favor». | Test coffee, please — unsaved example.",
+    "tags": "QA, sin guardar, café, mañana, pingüino, acción, puntuación, borrador largo, multiline test, retained draft"
+  },
+  "modal": "QA long deck — café, mañana, pingüino; unsaved name. QA long deck — café, mañana, pingüino; unsaved name. QA long deck — café, mañana, pingüino; unsaved name."
+}
