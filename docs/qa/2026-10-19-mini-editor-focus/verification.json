@@ -1,0 +1,31 @@
+{
+  "sourceMain": "fab8b1b5868de9fb9a71d2f2fb79d89880e40cb2",
+  "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+  "initialPID": 12803,
+  "finalColdPID": 15910,
+  "translationDraftCharacters": 610,
+  "translationDraftSHA256": "f306f3499efa8b394135a25acae899ecedcbbae375cd4786aecf31a1d4a62fd8",
+  "exampleDraftCharacters": 610,
+  "exampleDraftSHA256": "f8c776730830a2ea9aac7184ec511c7d5d4fb71755f7f9e2ff43047df2c2b2ec",
+  "acceptedActions": ["Prev", "Skip", "Needs Native Check", "Save & Next"],
+  "nativeSourceChanged": false,
+  "keyboardOpenAccepted": true,
+  "positioning": "simulator VoiceOver keyboard focus; paced observations between chords",
+  "finalNative": {
+    "textSize": 3,
+    "orientation": "portrait",
+    "voiceOver": false,
+    "captureKeyboard": false,
+    "appearance": "Light"
+  },
+  "images": {
+    "portrait-keyboard-actions.jpg": "8db626e28aeba34685ed4c320f6614be1faee4f57b2bb2e51ffdc4db0747b432",
+    "landscape-lower-actions.jpg": "a87e8b254db1c6ca94f4732bf668989552ec700c283f699fd2b6e186047c63e5",
+    "landscape-prev-skip.jpg": "5207a53fa4fc53699f474a69df6b86dd6d3b8cc418a327d90bc28aca63a93f2a",
+    "two-drafts-landscape-upper.jpg": "36b4488881b42ce6da42c33f5147de61a864e92b3cac94ea88dffd13b33c6e94",
+    "two-drafts-landscape-lower.jpg": "b2cffa80bc2dc0f40a98ff04809dfdd7d4bf94eb58e6036f1023d4930e37c756",
+    "two-drafts-portrait-actions.jpg": "ce69a5151030f1a986e923130a050e40a911e5ac7ce48fb222ec5ef7e7a24e9b",
+    "restored-cold-home.jpg": "1f54ea2fd2abbfdf26d1eb9bbc4e9b737f78b2b20c852be6b8c76b4591099c06"
+  }
+}

@@ -181,7 +181,7 @@
         "B08.5-B8"
       ],
       "classification": "mixed-native-and-design",
-      "aiCanDoNow": "C3p completes English maximum long-title/count Light/Dark; C3q adds earned-counter Barrio midnight. B8g/B8h already cover English maximum-text dialogs and long Add/editor saves; B8i fixes header keyboard avoidance and verifies all four bilingual maximum editor actions. Finish Spanish maximum-count, other focused fields and touch/window cases using a changed reliable route or targeted diagnosis. Reuse docs/qa/2026-10-19-native-qa-bundle/README.md, including LogBox open/Dismiss, rather than replaying failed diagnostic/title/drag routes. New activity visuals/personalized next actions still need focused designs/content inputs. The B2e packet records an unsuccessful adjacent-target fractional-scroll probe for the Spanish count; do not repeat that route unchanged. B8j covers Spanish mini maximum editor keyboard actions in portrait/separate landscape views. English mini keyboard-open cells remain unaccepted; the packet records field-target/margin-drag/unfocused-toggle failures to avoid repeating unchanged.",
+      "aiCanDoNow": "C3p completes English maximum long-title/count Light/Dark; C3q adds earned-counter Barrio midnight. B8g/B8h already cover English maximum-text dialogs and long Add/editor saves; B8i fixes header keyboard avoidance and verifies all four bilingual maximum editor actions. Finish Spanish maximum-count, other focused fields and touch/window cases using a changed reliable route or targeted diagnosis. Reuse docs/qa/2026-10-19-native-qa-bundle/README.md, including LogBox open/Dismiss, rather than replaying failed diagnostic/title/drag routes. New activity visuals/personalized next actions still need focused designs/content inputs. The B2e packet records an unsuccessful adjacent-target fractional-scroll probe for the Spanish count; do not repeat that route unchanged. B8j/B8k now cover bilingual mini maximum keyboard-open editor actions in portrait/separate landscape views. B8k adds both long translation/example drafts and exact rotation retention through a changed, paced simulator VoiceOver focus route. Reuse these cells; do not repeat earlier failed field-target/margin-drag/unfocused-toggle, Escape-dismissal or rapid-chord routes unchanged.",
       "requires": "Known touch-only/window/keyboard control limits need a changed route or actual layout diagnosis, not repetitive captures. Android, physical acceptance, cultural/content decisions remain distinct.",
       "evidenceFiles": [
         "docs/superpowers/plans/2026-10-18-barrio-home.md",
@@ -189,7 +189,8 @@
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-remaining-work-budget/README.md",
         "docs/qa/2026-10-19-native-qa-bundle/README.md",
-        "docs/qa/2026-10-19-mini-editor-voice/README.md"
+        "docs/qa/2026-10-19-mini-editor-voice/README.md",
+        "docs/qa/2026-10-19-mini-editor-focus/README.md"
       ]
     },
     {
