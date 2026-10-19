@@ -1,0 +1,12 @@
+PASS __tests__/config/runtimeCompatibility.test.js
+  ✓ uses native fingerprint compatibility for production instead of a shared marketing version (1 ms)
+  ✓ uses native fingerprint compatibility for development instead of a shared marketing version (1 ms)
+  ✓ enables the supported iOS scene lifecycle required by Xcode 27
+  ✓ generates Android system appearance support for the approved automatic mode in production (266 ms)
+  ✓ generates Android system appearance support for the approved automatic mode in development (234 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.839 s, estimated 2 s
+Ran all test suites within paths "__tests__/config/runtimeCompatibility.test.js".

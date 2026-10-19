@@ -1,0 +1,33 @@
+{
+  "sourceMain": "03b080b9d4c6004e73132a31089cc51bbc34834d",
+  "profile": "development",
+  "expo": "57.0.30",
+  "reactNative": "0.86.3",
+  "systemUi": "57.0.4",
+  "jdk": "21.0.7",
+  "gradle": "9.3.1",
+  "compileSdk": 36,
+  "targetSdk": 36,
+  "buildTools": "36.0.0",
+  "ndk": "27.1.12297006",
+  "avd": "Colombian_Spanish_QA",
+  "image": "android-36/default/arm64-v8a",
+  "avdCores": 2,
+  "requestedRamMiB": 2048,
+  "emulatorMinimumRamMiB": 2560,
+  "serial": "emulator-5554",
+  "apkSha256": "063edd5f14639d85108bee27a916ba71c62fb5c06cfbdaa1cb271c8c82743102",
+  "buildResult": "BUILD SUCCESSFUL in 7m 1s; 473 executed tasks",
+  "visibleResult": "Fresh Spanish Classic onboarding step 1; no completed onboarding interaction",
+  "activityPidBeforeShutdown": 1895,
+  "uiControlLimit": "Floating Studio emulator screenshot succeeded; coordinate input selected Studio main window instead. No onboarding workflow or dynamic appearance acceptance.",
+  "newLicenseAgreementAccepted": false,
+  "filesSha256": {
+    "appearance-green.txt": "e683bbf527b60a3ec4ec55e02b018777f3b7e66cbc10b0af40044bdf2e8ca811",
+    "appearance-red.txt": "103b77960acc74ba24cb23a3905078780350bd1a822bad8a30b61a3b82cbbad5",
+    "build-result.txt": "65230184fcb887cd8f3adb21a73f7cb753224e0a5caf7a1ece6eb3ed236ed0ae",
+    "onboarding.jpg": "763b2ae6c7979ac38f7142fbe8f99892524d44b7f0069a81b1889ddc85bd4ce4",
+    "embedded-launch.txt": "f9e72c0d6783456a4fa521ec702e8d4cc5c548ee0ddd88924ffbef5d515a894a",
+    "generated-strings.xml": "cbcf2a98d9d00a1dbf7754db0521daafb7373ee79d222cfc97d4f01c3157cc0b"
+  }
+}

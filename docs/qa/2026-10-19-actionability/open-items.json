@@ -7,10 +7,14 @@
     {
       "id": "android-setup",
       "taskIds": ["B01.5", "B01.5-B"],
-      "classification": "agreement-and-tooling",
-      "aiCanDoNow": "After authorization, install current verified SDK tools and run native Android checks. Local setup notes can be kept current now.",
-      "requires": "SDK agreement authorization; current SDK/emulator/platform tools absent. iOS CI cannot substitute.",
-      "evidenceFiles": ["docs/qa/ANDROID_TOOLCHAIN.md", "MASTER_PLAN.md"]
+      "classification": "tool-limited-native",
+      "aiCanDoNow": "Use installed licensed SDK and dedicated AVD for remaining native workflows when a supported input route is available. Actual ARM64 compilation/install/visible onboarding now pass; automatic appearance native configuration is fixed.",
+      "requires": "Working Android UI input: floating Studio emulator capture succeeds but input targets the main window. No new SDK agreement is currently needed; iOS evidence cannot substitute for Android workflows.",
+      "evidenceFiles": [
+        "docs/qa/ANDROID_TOOLCHAIN.md",
+        "MASTER_PLAN.md",
+        "docs/qa/2026-10-20-android-native/README.md"
+      ]
     },
     {
       "id": "security-skipped",
@@ -108,7 +112,7 @@
       ],
       "classification": "mixed-native",
       "aiCanDoNow": "Continue specific iOS whole-plan keyboard/navigation/layout/restart cases using own-path draft fixtures. Runtime progression and calibration already exist.",
-      "requires": "Remaining named native cells; changed control route for accent popup/touch-only cases; Android agreement/runtime and signed/hardware cases separately.",
+      "requires": "Remaining named native cells; changed control route for accent popup/touch-only cases; Android runtime and signed/hardware cases separately.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-mini-voice/README.md"
@@ -356,9 +360,9 @@
     },
     {
       "id": "B01.5-B",
-      "tags": ["AI", "SIM", "H-ACCOUNT"],
+      "tags": ["AI", "SIM"],
       "line": 102,
-      "text": "Obtain SDK license authorization, install verified tooling/system image, create a dedicated emulator and run native flows. Agreement question is pending; no acceptance or Android runtime pass is claimed.",
+      "text": "Finish native Android onboarding/study/practice/voice/files and appearance workflows using the now-installed licensed SDK and dedicated AVD. Native compilation/install/first visible onboarding pass; subsequent input loses the floating emulator window, so full workflow acceptance remains open. [Current evidence](docs/qa/2026-10-20-android-native/README.md).",
       "group": "android-setup"
     },
     {
