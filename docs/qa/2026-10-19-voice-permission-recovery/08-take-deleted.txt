@@ -1,0 +1,11 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Barrio Phone QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 137-139
++					135 text Description: Listo para grabar, Secondary Actions: Cancel
+~					127 button Description: Grabar hasta 30 segundos, Secondary Actions: Cancel
+~					129 button (disabled) Description: Escuchar mi toma, Secondary Actions: Cancel
+~					130 button (disabled) Description: Eliminar mi toma, Secondary Actions: Cancel
++					136 text Secondary Actions: Cancel, Description: Las tomas quedan en la caché temporal de esta app y fuera de las copias de seguridad. Elimina la toma o sal para intentar limpiarla. Si la app se cierra inesperadamente, el archivo puede quedar hasta que el sistema lo elimine. No se envía a servidores.
+Selected:
+	6 row (selected)
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

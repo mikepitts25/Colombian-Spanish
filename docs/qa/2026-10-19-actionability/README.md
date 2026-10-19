@@ -69,3 +69,7 @@ This table is a navigation index derived from current requirements and cited art
 ## Mechanical verification and limits
 
 Run `python3 docs/qa/2026-10-19-actionability/verify-index.py`. It checks exact coverage of the current unchecked B-identifiers, original text/tags, unique group ownership and referenced local artifacts. It does not prove requirement completion, validate provider/account availability, replay native tests, accept agreements or replace independent review. Revisit the routing when source requirements, owner answers, candidate/tooling or supplied content change. No new goal, feature selection, recruitment, account, published policy or product code is introduced here.
+
+## Permission recovery follow-up
+
+[B09.2-B2d](../2026-10-19-voice-permission-recovery/README.md) now covers live native Settings revocation, denied app behavior, the app-settings recovery link, re-enable and a successful new take/delete with actual OS-driven new-PID relaunches. Reuse this result together with B2c background recovery; other interruption/platform/device cases remain open. The127 unchecked rows/29groups are unchanged.

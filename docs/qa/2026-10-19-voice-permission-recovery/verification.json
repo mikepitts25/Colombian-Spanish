@@ -1,0 +1,22 @@
+{
+  "sourceMain": "ac3f1256d3efc9af9b4683e7bfb0fddd8afdd82a",
+  "device": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+  "processBeforeRevocation": 92522,
+  "processAfterRevocation": 92805,
+  "processAfterReenable": 92869,
+  "previousProcessAbsentAfterEachSettingsChange": true,
+  "takeDurationSecondsDisplayed": 7.1,
+  "takeSizeKBDisplayed": 141,
+  "images": {
+    "02-settings-granted.jpg": "da210d298f746a68563305ad2846d61e51425bf22eb816b10aed457995878e55",
+    "03-settings-revoked.jpg": "20c9cb703783af2227661a5727592d905e351b4721c4b109523fcde1beba7df3",
+    "04-denied-after-revoke.jpg": "313c7c30dca2050637ee62ed34b4be300b91fdb64fa2913399f78049907f374e",
+    "05-settings-reenabled.jpg": "74fe3f26f897db6d47c13befdbd5b7806132c522a67f5e15a44c06a4a9013952",
+    "06-recording-after-reenable.jpg": "92e7d530c2c482222938b7e58ac93a382453b4a547362253e18f77abfa470be5",
+    "07-take-ready.jpg": "b0badc1c7d6b6b29be299f283026cb679e62bcab68203a6d3b10e8073a3f4e6e",
+    "08-take-deleted.jpg": "4950d7cf1bc7875bc8ec390e8d7e7d3c94c5ce502ef7b4e3c3aa4cd55a7e5f11"
+  },
+  "imageFormat": "JPEG",
+  "imageDimensions": [1972, 1368],
+  "recordingsCommitted": false
+}
