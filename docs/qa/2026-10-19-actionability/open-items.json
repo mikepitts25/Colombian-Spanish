@@ -195,12 +195,13 @@
       "id": "voice-native",
       "taskIds": ["B09.2", "B09.2-B", "B09.2-B2"],
       "classification": "mixed-native",
-      "aiCanDoNow": "B2c completes granted-capture background cleanup and same-process foreground recovery on the current SDK57 own-path iOS development install. Continue only distinct unverified live permission/settings/interruption cases where controllable; do not rerun the basic SDK55 capture or completed denial/background cases. Current unsigned Release excludes recording.",
+      "aiCanDoNow": "B2c covers granted-capture background cleanup; B2d now covers live native Settings revocation, denied app behavior, app-settings recovery link and re-enabled new take/delete with OS-driven relaunches. Continue only distinct unverified interruption/navigation/window cases where controllable. Do not repeat basic capture, denial, background or completed permission recovery. Current unsigned Release excludes recording.",
       "requires": "Authorized recording route; known Settings targeting/tool limits; Android, physical sound/routes and signed production exclusion evidence separately.",
       "evidenceFiles": [
         "docs/qa/2026-10-19-voice-denial/README.md",
         "docs/qa/2026-10-19-mini-voice/README.md",
-        "docs/qa/2026-10-19-voice-background/README.md"
+        "docs/qa/2026-10-19-voice-background/README.md",
+        "docs/qa/2026-10-19-voice-permission-recovery/README.md"
       ]
     },
     {

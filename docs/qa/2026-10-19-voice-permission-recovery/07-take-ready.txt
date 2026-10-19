@@ -1,0 +1,9 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Barrio Phone QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 135-136
++					138 text Description: Listo para escuchar, Secondary Actions: Cancel
++					139 text Description: Toma: 7.1 s · 141 KB, Secondary Actions: Cancel
+~					129 button Description: Escuchar mi toma, Secondary Actions: Cancel
+Selected:
+	6 row (selected)
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

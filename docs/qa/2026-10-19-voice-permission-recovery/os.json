@@ -1,0 +1,38 @@
+[
+  {
+    "phase": "recovered-control-baseline",
+    "capturedAt": 1792437400.312642,
+    "microphoneAuthValues": [],
+    "recordingFileCount": 0
+  },
+  {
+    "phase": "granted",
+    "capturedAt": 1792437461.381869,
+    "microphoneAuthValues": [2],
+    "recordingFileCount": 0
+  },
+  {
+    "phase": "revoked-in-settings",
+    "capturedAt": 1792437530.35817,
+    "microphoneAuthValues": [0],
+    "recordingFileCount": 0
+  },
+  {
+    "phase": "reenabled-in-settings",
+    "capturedAt": 1792437592.007995,
+    "microphoneAuthValues": [2],
+    "recordingFileCount": 0
+  },
+  {
+    "phase": "recovered-take-ready",
+    "capturedAt": 1792437642.1883159,
+    "microphoneAuthValues": [2],
+    "recordingFileCount": 1
+  },
+  {
+    "phase": "cleaned-original-unasked",
+    "capturedAt": 1792437663.106693,
+    "microphoneAuthValues": [],
+    "recordingFileCount": 0
+  }
+]

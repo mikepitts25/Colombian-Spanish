@@ -1,0 +1,14 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Barrio Phone QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 120-125
+~					113 back button Description: Apps, ID: BackButton, Secondary Actions: Cancel
+~					112 heading Description: Colombian Spanish, Secondary Actions: Cancel
+~						115 heading Description: Allow Colombian Spanish to Access, Secondary Actions: Cancel
+~						116 switch Description: Microphone, Value: 1, Secondary Actions: Cancel
+~						117 button Description: Siri, ID: SIRI, Secondary Actions: Cancel
+~						118 button Description: Search, ID: SEARCH, Secondary Actions: Cancel
+~						119 button Description: Paste from Other Apps, Ask, ID: Paste from Other Apps, Secondary Actions: Cancel
+~					69 container Toolbar
+Selected:
+	6 row (selected)
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).
