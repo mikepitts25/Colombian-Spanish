@@ -317,6 +317,7 @@ Sizes describe engineering breadth, not elapsed-time estimates. Human review, ac
   - [ ] **B07.5-B [AI, SIM]** Provide an explicit follow-up practice handoff and connect accepted mission activity to daily guidance.
     - [x] **B07.5-B1 [AI, SIM]** Add optional difficult-phrase cue/reveal/example practice from completion; verify hidden-answer resets, return/reopen and unchanged runs/events/SRS/daily state.
     - [ ] **B07.5-B2 [AI, SIM]** Connect accepted mission activity and follow-up to personalized daily guidance.
+      - [x] **B07.5-B2a [AI]** Prepare the source-grounded [mission-guidance direction proposal](docs/design/2026-10-19-mission-guidance/README.md): compare optional self-check, saved plan phase and scheduling approaches; identify exact accepted-content/run/source gates, unchanged learning state and AI/simulator/human work bundles. Direction review and later spec/plan/runtime acceptance remain open.
 - [ ] **B07.6 [AI, SIM, H-LEARNER]** Verify all branches and interrupted sessions, then run the B13 learner pilot. Speaking can be an optional later enhancement; do not block the first pilot on B09.
 
 **Exit:** one complete mission links comprehension, response, feedback, and subsequent review; scripted technical checks and actual learner findings are recorded separately.
