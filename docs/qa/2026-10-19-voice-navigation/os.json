@@ -1,0 +1,167 @@
+[
+  {
+    "phase": "baseline",
+    "capturedAt": 1792446860.2679129,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [],
+    "takes": [],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": []
+  },
+  {
+    "phase": "resumed",
+    "capturedAt": 1792446978.323193,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[0]],
+    "takes": [],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26275\t0\tUIKitApplication:com.mikepitts.colombianspanish[b76a][rb-legacy]"]
+  },
+  {
+    "phase": "prompt-reset",
+    "capturedAt": 1792446984.656806,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [],
+    "takes": [],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": []
+  },
+  {
+    "phase": "active-before-back",
+    "capturedAt": 1792447068.393985,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[2]],
+    "takes": [
+      {
+        "name": "recording-1595445B-A907-4E6B-92A6-33CFFB5C6B70.m4a",
+        "bytes": 158451
+      }
+    ],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26485\t0\tUIKitApplication:com.mikepitts.colombianspanish[81c9][rb-legacy]"]
+  },
+  {
+    "phase": "active-back-home",
+    "capturedAt": 1792447089.3435972,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[2]],
+    "takes": [],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26485\t0\tUIKitApplication:com.mikepitts.colombianspanish[81c9][rb-legacy]"]
+  },
+  {
+    "phase": "retained-before-back",
+    "capturedAt": 1792447134.093266,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[2]],
+    "takes": [
+      {
+        "name": "recording-13A05B42-98A8-48C2-A5D8-95EBA5F272E0.m4a",
+        "bytes": 95956
+      }
+    ],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26485\t0\tUIKitApplication:com.mikepitts.colombianspanish[81c9][rb-legacy]"]
+  },
+  {
+    "phase": "retained-back-home",
+    "capturedAt": 1792447157.4797142,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[2]],
+    "takes": [],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26485\t0\tUIKitApplication:com.mikepitts.colombianspanish[81c9][rb-legacy]"]
+  },
+  {
+    "phase": "replay-case-recording",
+    "capturedAt": 1792447178.794966,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[2]],
+    "takes": [
+      {
+        "name": "recording-B3D77BD3-F739-40B1-9D0A-289E7BE6A42C.m4a",
+        "bytes": 172033
+      }
+    ],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26485\t0\tUIKitApplication:com.mikepitts.colombianspanish[81c9][rb-legacy]"]
+  },
+  {
+    "phase": "replay-ready",
+    "capturedAt": 1792447199.5794182,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[2]],
+    "takes": [
+      {
+        "name": "recording-B3D77BD3-F739-40B1-9D0A-289E7BE6A42C.m4a",
+        "bytes": 310183
+      }
+    ],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26485\t0\tUIKitApplication:com.mikepitts.colombianspanish[81c9][rb-legacy]"]
+  },
+  {
+    "phase": "replay-back-home",
+    "capturedAt": 1792447230.4038851,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[2]],
+    "takes": [],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26485\t0\tUIKitApplication:com.mikepitts.colombianspanish[81c9][rb-legacy]"]
+  },
+  {
+    "phase": "confirmed-active-before-back",
+    "capturedAt": 1792447300.818688,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[2]],
+    "takes": [
+      {
+        "name": "recording-BB48784C-F66D-4FB2-A16D-1B6C7E5008B6.m4a",
+        "bytes": 184105
+      }
+    ],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26485\t0\tUIKitApplication:com.mikepitts.colombianspanish[81c9][rb-legacy]"]
+  },
+  {
+    "phase": "confirmed-active-back-home",
+    "capturedAt": 1792447322.583314,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[2]],
+    "takes": [],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26485\t0\tUIKitApplication:com.mikepitts.colombianspanish[81c9][rb-legacy]"]
+  },
+  {
+    "phase": "before-reset",
+    "capturedAt": 1792447368.4795678,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [[2]],
+    "takes": [],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["26485\t0\tUIKitApplication:com.mikepitts.colombianspanish[81c9][rb-legacy]"]
+  },
+  {
+    "phase": "cold-home",
+    "capturedAt": 1792447389.5885708,
+    "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "microphoneRows": [],
+    "takes": [],
+    "booted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+    "process": ["27709\t0\tUIKitApplication:com.mikepitts.colombianspanish[01b5][rb-legacy]"]
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "sourceMain": "48cf741c30ce72d8ea4c12c86d2b2a5858419f93",
+  "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+  "acceptedPID": 26485,
+  "coldPID": 27709,
+  "nativeSourceChanged": false,
+  "appStateWrittenDirectly": false,
+  "replayTakeSeconds": 20.7,
+  "retainedTakeSeconds": 3.6,
+  "replayTiming": {
+    "replayClickBefore": 1792447207507,
+    "homeObservedAt": 1792447219761
+  },
+  "activeTiming": {
+    "preBackObservationStartedAt": 1792447309011,
+    "homeObservedAt": 1792447317002
+  },
+  "setupOverlap": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n    Py Quest Runtime QA (C100803B-D3D6-48B3-9615-7F74673A590D) (Booted) \n-- iOS 26.0 --\n    Colombian Spanish Applied Mini QA (DF3686C1-A2E7-4870-B127-A83A8B67541D) (Booted) \n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+  "finalBooted": "== Devices ==\n-- iOS 18.1 --\n-- iOS 18.3 --\n-- iOS 18.4 --\n-- iOS 26.0 --\n-- iOS 26.5 --\n-- iOS 27.0 --\n",
+  "images": {
+    "active-immediate-before-back.jpg": "c785fd7d085541b71ca7bb43285ecccb0498cf1641ee3e4d2746e1a1c1293787",
+    "after-replay-back-ready.jpg": "bdb33c26a983b9788bb1e69133be5b27a5d9d12b8afdbfa3890816b475ed5142",
+    "cold-home.jpg": "0dde528d2d0e06e5432de0f04c2d33a3ed1d46f8c3030d6cf394327dd59100a9",
+    "midnight-home.jpg": "1ebb5d0a9e47d873199b79625df26763dc12ff4e8f15883ba4e3bdb7ed4e58a2",
+    "replay-before-back.jpg": "356bfb0b4c05780d0987968bad781470fb5c86de1b288e156084e76b8f58a0dc",
+    "retained-before-back.jpg": "30e6ef2ac5f74c7070fa0263af651d62d58bff968f7a8a806b48f1f301a27200"
+  }
+}

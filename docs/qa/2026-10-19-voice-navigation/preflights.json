@@ -1,0 +1,26 @@
+{
+  "baseline": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "resumed": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "bundle": "com.mikepitts.colombianspanish"
+  },
+  "final": {
+    "isolated": true,
+    "requestedDevice": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+    "expectedDataRoot": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data",
+    "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "resolvedContainer": "/Users/mike/Library/Developer/CoreSimulator/Devices/DF3686C1-A2E7-4870-B127-A83A8B67541D/data/Containers/Data/Application/47425600-1B02-4C30-AB30-F272312DD80E",
+    "bundle": "com.mikepitts.colombianspanish"
+  }
+}
