@@ -1,0 +1,25 @@
+{
+  "device": "DF3686C1-A2E7-4870-B127-A83A8B67541D",
+  "baseCommit": "133c19b2b4489db2e15c5f3c4dc2228279e092c5",
+  "coldPID": 74919,
+  "initialAndFinal": {
+    "orientation": "portrait",
+    "textSize": 3,
+    "nativeAppearance": "Light",
+    "theme": "Barrio",
+    "appearanceMode": "dark",
+    "uiLanguage": "es",
+    "voiceOver": false,
+    "captureKeyboard": false
+  },
+  "imageSHA256": {
+    "en-max-landscape.png": "0089cbf6809bf5a2fafb1e102dd13bfa934f6e26e129daae02ae8f77d062cb35",
+    "en-default.png": "2321c41b5e9212032b0d56866ed36a6cac7858a44842da97cffa385f63e24d47",
+    "es-max-action-model.png": "1910a18d777057cfca80422d3b9a1d8593fcd3fd5e5382caaf2abf193b494c54",
+    "es-max-model.png": "cc236b8f865b68831900d7f5577f9f4f67043a7402456bfc1b69bf92b9d5b7f1",
+    "restored-cold-home.png": "5ec384e88d6bbc274a631963de258a89dd62fbf89be079c201732453e036817d",
+    "es-max-landscape.png": "ec1cf678ae277f9218fa7b73bfdac3149ecc9d0d051e1dafec85fc3c33489e2e",
+    "es-default.png": "c8a4eeecee0c4748f3166d405d13e0786884ff3b9e5e6093496b48ad31d5c277",
+    "en-max-action-model.png": "0332ec6e5af8cb57cf90f738ca75ce2f50c63f86f8d1cb0c5055ec5f3d12051c"
+  }
+}
