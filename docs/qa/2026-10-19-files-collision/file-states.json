@@ -1,0 +1,112 @@
+[
+  {
+    "phase": "stopped",
+    "files": {
+      "741.json": {
+        "bytes": 379192,
+        "sha256": "7f4d96f61d6e55c6d7340de53c1eb4814106100c874adce134ceca0d4b8a2158",
+        "exportedAt": "2026-10-19T20:50:21.185Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "Colombian-Spanish-backup-2026-10-19T20-2.json": {
+        "bytes": 379192,
+        "sha256": "7ef674228995010614e8f5c9f6a0e78909032133648c77f2ef78fd056ad5f95e",
+        "exportedAt": "2026-10-19T20:48:53.304Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "colombian-spanish-backup-2026-10-19T20-22-17.412Z-anr4mj.json": {
+        "bytes": 379192,
+        "sha256": "3e500e54f0d786fa49970691a20393656b00242228fd104bb876f4c7ad8fb4c1",
+        "exportedAt": "2026-10-19T20:22:17.389Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      }
+    }
+  },
+  {
+    "phase": "kept-both",
+    "files": {
+      "741 2.json": {
+        "bytes": 379192,
+        "sha256": "d2f7a189c3153edd8ab192b4b5f5f8a85258cbb65d1fdab7164a38e32f7c421f",
+        "exportedAt": "2026-10-19T20:51:11.701Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "741.json": {
+        "bytes": 379192,
+        "sha256": "7f4d96f61d6e55c6d7340de53c1eb4814106100c874adce134ceca0d4b8a2158",
+        "exportedAt": "2026-10-19T20:50:21.185Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "Colombian-Spanish-backup-2026-10-19T20-2.json": {
+        "bytes": 379192,
+        "sha256": "7ef674228995010614e8f5c9f6a0e78909032133648c77f2ef78fd056ad5f95e",
+        "exportedAt": "2026-10-19T20:48:53.304Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "colombian-spanish-backup-2026-10-19T20-22-17.412Z-anr4mj.json": {
+        "bytes": 379192,
+        "sha256": "3e500e54f0d786fa49970691a20393656b00242228fd104bb876f4c7ad8fb4c1",
+        "exportedAt": "2026-10-19T20:22:17.389Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      }
+    }
+  },
+  {
+    "phase": "replaced",
+    "files": {
+      "741 2.json": {
+        "bytes": 379192,
+        "sha256": "d2f7a189c3153edd8ab192b4b5f5f8a85258cbb65d1fdab7164a38e32f7c421f",
+        "exportedAt": "2026-10-19T20:51:11.701Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "741.json": {
+        "bytes": 379192,
+        "sha256": "9e091f5f754a6806c6481ba0f1500ce012bb4fdc439743e7a0bcf5f8a438f094",
+        "exportedAt": "2026-10-19T20:52:49.182Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "Colombian-Spanish-backup-2026-10-19T20-2.json": {
+        "bytes": 379192,
+        "sha256": "7ef674228995010614e8f5c9f6a0e78909032133648c77f2ef78fd056ad5f95e",
+        "exportedAt": "2026-10-19T20:48:53.304Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "colombian-spanish-backup-2026-10-19T20-22-17.412Z-anr4mj.json": {
+        "bytes": 379192,
+        "sha256": "3e500e54f0d786fa49970691a20393656b00242228fd104bb876f4c7ad8fb4c1",
+        "exportedAt": "2026-10-19T20:22:17.389Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      }
+    }
+  },
+  {
+    "phase": "final",
+    "files": {
+      "741 2.json": {
+        "bytes": 379192,
+        "sha256": "d2f7a189c3153edd8ab192b4b5f5f8a85258cbb65d1fdab7164a38e32f7c421f",
+        "exportedAt": "2026-10-19T20:51:11.701Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "741.json": {
+        "bytes": 379192,
+        "sha256": "9e091f5f754a6806c6481ba0f1500ce012bb4fdc439743e7a0bcf5f8a438f094",
+        "exportedAt": "2026-10-19T20:52:49.182Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "Colombian-Spanish-backup-2026-10-19T20-2.json": {
+        "bytes": 379192,
+        "sha256": "7ef674228995010614e8f5c9f6a0e78909032133648c77f2ef78fd056ad5f95e",
+        "exportedAt": "2026-10-19T20:48:53.304Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      },
+      "colombian-spanish-backup-2026-10-19T20-22-17.412Z-anr4mj.json": {
+        "bytes": 379192,
+        "sha256": "3e500e54f0d786fa49970691a20393656b00242228fd104bb876f4c7ad8fb4c1",
+        "exportedAt": "2026-10-19T20:22:17.389Z",
+        "logicalHash": "fc9fdefe6434c7e36a2f9083c0ad21f77fc01a3a68cbc8100d4e0a6ed0cef033"
+      }
+    }
+  }
+]
