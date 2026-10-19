@@ -29,3 +29,7 @@ After the Running Devices panel was floated, a coordinate action intended for th
 One full regression run was warranted by the native dependency change:117 suites/1,160 tests pass, with typecheck/lint/changed-file formatting and `expo install --check` also passing. The two added contracts account for the increase from 1,158 tests. This does not supply signed release or physical-device evidence.
 
 Before shutdown, the explicitly verified own AVD reported the app PID 1895. It was stopped through official `adb -s emulator-5554 emu kill`; both device inventories were empty afterward. Both owned Metro instances were stopped, Studio was exited, and no Gradle build/daemon or emulator process remained. Device Hub/TextEdit stayed closed. Existing iOS app data and unrelated root files were untouched. Cached SDK/Gradle files remain on disk so future work can reuse them without another first build.
+
+## Subsequent docked workflow evidence
+
+[The docked follow-up](../2026-10-20-android-docked/README.md) supersedes this report’s historical floating-input limitation and untested onboarding/study/live-appearance cells. It reuses this APK without rebuilding. Other Android workflows and broader parent requirements remain open.

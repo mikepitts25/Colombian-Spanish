@@ -1,0 +1,25 @@
+{
+  "sourceMain": "191b6ad5c59e5eb52b9e3eb015e3d077614b6585",
+  "apkSha256": "063edd5f14639d85108bee27a916ba71c62fb5c06cfbdaa1cb271c8c82743102",
+  "avd": "Colombian_Spanish_QA",
+  "serial": "emulator-5554",
+  "coldPid": 2452,
+  "systemChangePid": 2452,
+  "osNightModeFinal": "yes; restore Light at next exclusive boot",
+  "scope": "Bounded Android QA; five broader packages remain open",
+  "filesSha256": {
+    "README.md": "6582257243ab95f5f174c2326ac0bcb6ca85da3c935e1e2957f9625f4bd7b7fc",
+    "barrio-light-os-dark-picker.jpg": "9d065483362e12a162041c1bd8faa8e76ffaf26359295390653615f63a9e3e80",
+    "barrio-system-os-dark-picker.jpg": "d228158485b5ed32e4c31515664d37141c1694667af18b120de9ed881a515dfa",
+    "barrio-system-os-light-picker.jpg": "b522b992976db44f954d677e639e0fb908c93340458602d4e5d5160f3380bb27",
+    "cold-home.jpg": "b27a87d9c128f44b9956f0f9a810ef073da427326c838caa1d6afd9d0f73dc09",
+    "cold-launch.txt": "aa3450a12549c8310e287ddb59b0871301a0a73e27f6e734f1b7642d61306f69",
+    "exclusive-abort.json": "2854222e7952bc828a2cb2f343d790d5a1e825c4747fc00d34af5a7ed167f62e",
+    "exclusive-runtime.jsonl": "18a49f7cca8b4cb48a0110b3c908362967c4a8bd313d6d313841c24cbad5792a",
+    "onboarded-progress.jpg": "74f9415d55233f8402ce671a49fdd47b67d33af3fe733928efce247cd74b2cfe",
+    "os-dark.txt": "1b8e4275d08ba2435f8a2b9ead5bbd0ecda10255da2c02278ebd0f1441f9b420",
+    "state-summary.json": "7b9ff07ff61d2424585056900043430b2a599392a52268c80cd440651e8ed4bf",
+    "study-revealed.jpg": "105160c0db1ed1abc6b6feef8586e2a4ec5bcb9155c651bd0f1dc47272fd15f5",
+    "verify-evidence.py": "557ced1909bb52e0a3183d5782fedeaedb540b45935fa66e637c73195429552b"
+  }
+}

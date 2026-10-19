@@ -7,13 +7,14 @@
     {
       "id": "android-setup",
       "taskIds": ["B01.5", "B01.5-B"],
-      "classification": "tool-limited-native",
-      "aiCanDoNow": "Use installed licensed SDK and dedicated AVD for remaining native workflows when a supported input route is available. Actual ARM64 compilation/install/visible onboarding now pass; automatic appearance native configuration is fixed.",
-      "requires": "Working Android UI input: floating Studio emulator capture succeeds but input targets the main window. No new SDK agreement is currently needed; iOS evidence cannot substitute for Android workflows.",
+      "classification": "ai-now-with-exclusive-runtime",
+      "aiCanDoNow": "Use working Dock Pinned input for remaining Android practice/voice/files and named appearance/language/accessibility cases. Onboarding, one Hard grade, exact cold state and live System/Light override pass; do not repeat them.",
+      "requires": "Stable sole-runtime window: the other chat repeatedly boots iOS, and our guard stops only the own AVD on overlap. Restore the dedicated Android OS Light setting at next boot. No new SDK agreement needed; post-cold visual Study traversal remains open.",
       "evidenceFiles": [
         "docs/qa/ANDROID_TOOLCHAIN.md",
         "MASTER_PLAN.md",
-        "docs/qa/2026-10-20-android-native/README.md"
+        "docs/qa/2026-10-20-android-native/README.md",
+        "docs/qa/2026-10-20-android-docked/README.md"
       ]
     },
     {
@@ -362,7 +363,7 @@
       "id": "B01.5-B",
       "tags": ["AI", "SIM"],
       "line": 102,
-      "text": "Finish native Android onboarding/study/practice/voice/files and appearance workflows using the now-installed licensed SDK and dedicated AVD. Native compilation/install/first visible onboarding pass; subsequent input loses the floating emulator window, so full workflow acceptance remains open. [Current evidence](docs/qa/2026-10-20-android-native/README.md).",
+      "text": "Finish remaining native Android practice/voice/files and appearance/language/accessibility workflows using the installed licensed SDK and dedicated AVD. Dock Pinned input now works; onboarding, one Hard grade, exact cold recovery and bounded live appearance pass. Post-cold visual Study traversal and other named workflows remain open; exclusive runtime availability is needed. [Current evidence](docs/qa/2026-10-20-android-docked/README.md).",
       "group": "android-setup"
     },
     {
