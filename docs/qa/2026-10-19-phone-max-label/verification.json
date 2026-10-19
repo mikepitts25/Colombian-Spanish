@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "sourceMain": "8376c254067ae6ba974e864742528e3c75ffc7d3",
+  "device": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+  "productionJS": false,
+  "nativeChanges": false,
+  "binarySHA256": "40aa16f2b08aec4eb47a4e2087427184bf386dbb8b7e7421e42d368bc103bbcb",
+  "nativeTextSizeForAcceptedViews": 11,
+  "restoredColdPID": 64908,
+  "title": "Conversaciones largas para conocer el barrio y preparar un viaje por Colombia sin perder el contexto",
+  "acceptedCells": [
+    {
+      "language": "en",
+      "appearance": "light",
+      "images": [
+        "en-light-title-1.png",
+        "en-light-title-2.png",
+        "en-light-title-3-count.png",
+        "en-light-title-4-overlap.png"
+      ],
+      "coverage": {
+        "title-1": "Conversaciones largas para",
+        "title-2": "barrio y preparar un viaje por Colombia",
+        "title-3-count": "sin perder el contexto;10 cards;3 reviews due",
+        "title-4-overlap": "conocer el"
+      }
+    },
+    {
+      "language": "en",
+      "appearance": "dark",
+      "images": [
+        "en-dark-title-1.png",
+        "en-dark-title-2.png",
+        "en-dark-title-3-count.png",
+        "en-dark-title-4-overlap.png"
+      ],
+      "coverage": {
+        "title-1": "Conversaciones largas para",
+        "title-2": "barrio y preparar un viaje por Colombia",
+        "title-3-count": "sin perder el contexto;10 cards;3 reviews due",
+        "title-4-overlap": "conocer el"
+      }
+    }
+  ],
+  "spanishMaximumCountsComplete": false,
+  "imageSHA256": {
+    "restored-classic.png": "42da8bdc5ae7e2ddc86c17f67749011dcc8c24116f4e71f16260a66bb637f135",
+    "en-dark-title-3-count.png": "948fda1f05def8c25a37587175c9d7b0182e8fb0e0f13884bdf79250bf43d471",
+    "en-light-title-3-count.png": "bf6cf51ac5f436a9a4eb3d49d85c1a1dd3f083fb3382c4592dc9a7b35ecc5793",
+    "en-light-title-4-overlap.png": "bcaf7a9673d461c0ece8e67fe172ac1c57f1407ef6eed2f31958616520141a4c",
+    "es-dark-count-bottom.png": "d4a47e80a3cc31cd5fe4ca7bb3e6144f0df8577403f6d113364baac1c37c163b",
+    "en-dark-title-4-overlap.png": "948d3b9973165e0e856ca2ea5792884803d27ce635e9b1c10424cf7ea7d3b604",
+    "incidental-ungraded-study.png": "2f5069d07a1cf7bbc6915522dde8d5976e398408c640a94b57a23c8adae37a49",
+    "en-dark-title-2.png": "69a8d9224d31d3ad45838304fe900149c045562ba62126b2fb490361be503e2b",
+    "en-dark-title-1.png": "d84e883329c480d7b3c3d26b0880db3a2788361557c4c2a11bd8334a2c0cad3b",
+    "en-light-title-2.png": "293b887f8b6e132e61f66c41c35c3751600a1a8e89ce248fa6889ba563399cef",
+    "en-light-title-1.png": "a27676f72d4e720c1f4fd3b9a8f0de38c78569f15703573eb3ca2de5d9f87687"
+  },
+  "fixtureDeckCanonicalSHA256": "824baf7a1beb3892df3d3dbc70b72f8ee9bfd0daf98e5fb953bb18363ab38d85",
+  "fixtureFileSHA256": "d5119ec56610270e4e8e7f34ec6109d0a0dd92ab79368fc0581cb4d0a9b01712",
+  "baselineFileSHA256": "a1b03d2272c654351f54f8435a8c606c8a3b4869edbb187144fafb2b38b2b058"
+}
