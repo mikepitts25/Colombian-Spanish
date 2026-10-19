@@ -1,0 +1,1216 @@
+{
+  "schemaVersion": 1,
+  "sourceMain": "5432857c109a6cc435951f36ce1d247197f714a1",
+  "asOf": "2026-10-19",
+  "purpose": "Classification of unchecked requirements, not a completion proof or 127 independent tasks. Parent rows overlap.",
+  "groups": [
+    {
+      "id": "android-setup",
+      "taskIds": ["B01.5", "B01.5-B"],
+      "classification": "agreement-and-tooling",
+      "aiCanDoNow": "After authorization, install current verified SDK tools and run native Android checks. Local setup notes can be kept current now.",
+      "requires": "SDK agreement authorization; current SDK/emulator/platform tools absent. iOS CI cannot substitute.",
+      "evidenceFiles": ["docs/qa/ANDROID_TOOLCHAIN.md", "MASTER_PLAN.md"]
+    },
+    {
+      "id": "security-skipped",
+      "taskIds": ["B01.8", "B01.8-C", "B01.8-C2", "B01.8-C2g"],
+      "classification": "owner-skipped",
+      "aiCanDoNow": "None in this run: leave blocked security work open.",
+      "requires": "Owner explicitly requested skipping the blocked work; do not retry or bypass.",
+      "evidenceFiles": ["MASTER_PLAN.md"]
+    },
+    {
+      "id": "board-choice",
+      "taskIds": ["B01.9"],
+      "classification": "owner-decision",
+      "aiCanDoNow": "Keep current automated deployment result accurate; no new board migration is needed for the app goal.",
+      "requires": "Owner decision whether to retain/retire the historical board; successful workflow does not supply that decision.",
+      "evidenceFiles": ["MASTER_PLAN.md", ".github/workflows"]
+    },
+    {
+      "id": "native-source-and-queue",
+      "taskIds": ["B01.6", "B01.6-B", "B01.6-B2", "B02.4", "B02.4-B2"],
+      "classification": "mixed-native",
+      "aiCanDoNow": "Reconcile fresh source/fixture evidence and perform remaining bounded queue/navigation/lifecycle checks on own-path installs. Do not replay known failed gestures unchanged.",
+      "requires": "Named remaining native cases; exact source/destination protection where claimed. Android, genuine OS/storage failures and hardware remain separate.",
+      "evidenceFiles": [
+        "docs/qa/2026-10-18-remaining-ai-gates/README.md",
+        "docs/qa/2026-10-19-fresh-graded-editor/README.md"
+      ]
+    },
+    {
+      "id": "calendar-native",
+      "taskIds": ["B02.6", "B02.6-B", "B02.6-B2", "B05.5", "B05.5-B"],
+      "classification": "mixed-native",
+      "aiCanDoNow": "C3o completes the retained-plan/nonzero natural midnight case. Continue only specifically unproved earned/graded-boundary, live OS-zone/DST or foreground/lifecycle cases against current evidence.",
+      "requires": "Live OS-zone/DST requires a supported control or real relevant boundary. Process TZ and calendar unit tests do not establish live system changes.",
+      "evidenceFiles": [
+        "docs/qa/2026-10-19-native-zone/README.md",
+        "docs/qa/2026-10-19-release-home-budget/README.md"
+      ]
+    },
+    {
+      "id": "editor-language",
+      "taskIds": ["B02.1", "B02.1-D", "B03.4", "B03.6", "B03.6-B", "B04.1", "B04.1-B"],
+      "classification": "editorial-input",
+      "aiCanDoNow": "Apply attributed accepted corrections and regressions when supplied; existing preparation is available.",
+      "requires": "Qualified language/region/register decisions and release-content acceptance. Green generated tests are not native-editor acceptance.",
+      "evidenceFiles": ["docs/editorial/RELEASE_WORKFLOW.md", "docs/editorial/review-ledger.json"]
+    },
+    {
+      "id": "human-audio",
+      "taskIds": ["B03.5", "B03.5-B", "B03.5-B2", "B03.5-B3", "B06.3", "B06.4-B"],
+      "classification": "recordings-and-rights",
+      "aiCanDoNow": "Validate file formats/manifests and integrate accepted recordings when supplied. Local download-manager work is separately possible after its design review.",
+      "requires": "Chosen scripts, actual performances, consent/provenance/rights and editorial acceptance; publication source for real packs.",
+      "evidenceFiles": [
+        "docs/editorial/RELEASE_WORKFLOW.md",
+        "docs/superpowers/specs/2026-10-17-downloadable-audio-packs-design.md"
+      ]
+    },
+    {
+      "id": "reviewed-exercises",
+      "taskIds": ["B04.3", "B04.3-B", "B04.3-B2", "B04.4", "B04.4-B"],
+      "classification": "editorial-and-design",
+      "aiCanDoNow": "Draft or apply exact variants/corrections and a focused notes display design using labeled drafts. Existing authored player is not missing wholesale.",
+      "requires": "Pilot attachment/variant decisions, reviewed language, then focused display design/spec/plan before new runtime behavior.",
+      "evidenceFiles": ["MASTER_PLAN.md", "docs/editorial/RELEASE_WORKFLOW.md"]
+    },
+    {
+      "id": "exercise-native",
+      "taskIds": ["B04.5", "B04.5-B"],
+      "classification": "mixed-native",
+      "aiCanDoNow": "Finish named current-player layout/keyboard/accent/correction checks where input works; retain fixture labels.",
+      "requires": "Accepted expanded exercise content for its later cases; changed input capability for known failed accent/gesture routes; Android setup separately.",
+      "evidenceFiles": ["docs/qa/2026-10-18-remaining-ai-gates/README.md"]
+    },
+    {
+      "id": "audience",
+      "taskIds": ["B05.1"],
+      "classification": "product-input",
+      "aiCanDoNow": "Use the existing concrete audience/journey preparation; apply actual decisions.",
+      "requires": "Owner audience/journey acceptance and learner evidence, rather than inventing a new audience.",
+      "evidenceFiles": ["MASTER_PLAN.md", "docs/pilot/READINESS.md"]
+    },
+    {
+      "id": "whole-plan-native",
+      "taskIds": [
+        "B05.3",
+        "B05.3-B",
+        "B05.3-B2",
+        "B05.3-B2b",
+        "B05.3-B2b2",
+        "B05.3-B2b2-B",
+        "B05.3-B2b2-B2"
+      ],
+      "classification": "mixed-native",
+      "aiCanDoNow": "Continue specific iOS whole-plan keyboard/navigation/layout/restart cases using own-path draft fixtures. Runtime progression and calibration already exist.",
+      "requires": "Remaining named native cells; changed control route for accent popup/touch-only cases; Android agreement/runtime and signed/hardware cases separately.",
+      "evidenceFiles": [
+        "docs/qa/2026-10-18-remaining-ai-gates/README.md",
+        "docs/qa/2026-10-19-mini-voice/README.md"
+      ]
+    },
+    {
+      "id": "audio-pack-design",
+      "taskIds": ["B06.4", "B06.4-A2"],
+      "classification": "design-review",
+      "aiCanDoNow": "After the existing written-spec approval, prepare/review its implementation plan, then implement local manager/adapters/fixtures. No human recording or paid host is needed for local QA.",
+      "requires": "Pending written audio-pack spec review, followed by implementation-plan review. Production content/source/rights are a later separate input.",
+      "evidenceFiles": ["docs/superpowers/specs/2026-10-17-downloadable-audio-packs-design.md"]
+    },
+    {
+      "id": "hardware",
+      "taskIds": ["B06.5", "B08.6", "B09.6", "B11.5", "B12.2", "B12.3", "B12.7"],
+      "classification": "physical-and-human",
+      "aiCanDoNow": "Prepare/reuse procedures, diagnose supplied failures and automate connected-device checks when available.",
+      "requires": "Actual supported physical hardware, sensory/audio/performance measurements and assistive-user feedback where specified. Do not mark complete from simulators.",
+      "evidenceFiles": ["MASTER_PLAN.md", "docs/pilot/READINESS.md"]
+    },
+    {
+      "id": "mission-content",
+      "taskIds": ["B07.1", "B07.1-B", "B07.4"],
+      "classification": "editorial-input",
+      "aiCanDoNow": "Apply reviewed exact mission/outcome corrections to the existing draft engine/pack.",
+      "requires": "Owner experience/outcome acceptance and qualified language/audio review before production release or learner pilot.",
+      "evidenceFiles": [
+        "docs/editorial/first-morning-mission-draft.json",
+        "docs/pilot/READINESS.md"
+      ]
+    },
+    {
+      "id": "mission-native",
+      "taskIds": ["B07.3", "B07.3-B", "B07.6"],
+      "classification": "mixed-native",
+      "aiCanDoNow": "Finish named current authored-player native lifecycle/layout checks; keep draft and generated media boundaries clear.",
+      "requires": "Android setup, actual candidate/offline/media integration, plus the separately consented learner pilot.",
+      "evidenceFiles": [
+        "docs/qa/2026-10-18-remaining-ai-gates/README.md",
+        "docs/pilot/READINESS.md"
+      ]
+    },
+    {
+      "id": "mission-guidance",
+      "taskIds": ["B07.5", "B07.5-B", "B07.5-B2"],
+      "classification": "design-and-content",
+      "aiCanDoNow": "Prepare a focused integration design using existing draft fixtures; implement after its required design/spec/plan review. Do not invent a release-accepted mission.",
+      "requires": "Exact accepted mission/outcome policy before production activation; new integration design review.",
+      "evidenceFiles": ["MASTER_PLAN.md", "docs/pilot/READINESS.md"]
+    },
+    {
+      "id": "visual-and-home",
+      "taskIds": [
+        "B08.1",
+        "B08.2",
+        "B08.2-B",
+        "B08.3",
+        "B08.3-C",
+        "B08.3-C3",
+        "B08.3-C3e",
+        "B08.4",
+        "B08.4-B",
+        "B08.4-B2",
+        "B08.5",
+        "B08.5-B",
+        "B08.5-B8"
+      ],
+      "classification": "mixed-native-and-design",
+      "aiCanDoNow": "Finish precise phone English maximum long-name/Spanish maximum-count, remaining form/keyboard and route/window cases using working controls. New activity visuals/personalized next actions require their focused designs/content inputs.",
+      "requires": "Known touch-only/window/keyboard control limits need a changed route or actual layout diagnosis, not repetitive captures. Android, physical acceptance, cultural/content decisions remain distinct.",
+      "evidenceFiles": [
+        "docs/superpowers/plans/2026-10-18-barrio-home.md",
+        "docs/qa/2026-10-19-release-home-budget/README.md",
+        "docs/qa/2026-10-18-remaining-ai-gates/README.md"
+      ]
+    },
+    {
+      "id": "voice-native",
+      "taskIds": ["B09.2", "B09.2-B", "B09.2-B2"],
+      "classification": "mixed-native",
+      "aiCanDoNow": "Repeat bounded granted-capture/settings/interruption recovery on an authorized own-path development client where controllable. Current unsigned Release excludes recording.",
+      "requires": "Authorized recording route; known Settings targeting/tool limits; Android, physical sound/routes and signed production exclusion evidence separately.",
+      "evidenceFiles": [
+        "docs/qa/2026-10-19-voice-denial/README.md",
+        "docs/qa/2026-10-19-mini-voice/README.md"
+      ]
+    },
+    {
+      "id": "assessed-speaking",
+      "taskIds": [
+        "B02.3",
+        "B02.3-B2",
+        "B02.3-B2b",
+        "B09.1",
+        "B09.1-B",
+        "B09.3",
+        "B09.3-B",
+        "B09.4",
+        "B09.5"
+      ],
+      "classification": "provider-and-validation",
+      "aiCanDoNow": "Use existing comparison/rubric/fixtures; apply real scope decisions, validate supplied recordings, then implement assessed-event/service paths. Do not manufacture speaking scores.",
+      "requires": "Chosen local/hosted scope and budget/retention, validated exercise/rating definitions and consented recordings. Hosted infrastructure is conditional, not a current universal launch blocker.",
+      "evidenceFiles": ["docs/speaking/OPTIONS_AND_EVALUATION.md", "docs/pilot/READINESS.md"]
+    },
+    {
+      "id": "passport-story",
+      "taskIds": ["B10.1", "B10.1-B", "B10.2", "B10.2-B", "B10.3", "B10.4"],
+      "classification": "design-review",
+      "aiCanDoNow": "After the prepared direction review, write/review spec and implementation plan, then code rewards and integration. Existing story/cast briefs can receive actual corrections.",
+      "requires": "Pending focused passport direction; exact story/language and outcome acceptance before production use.",
+      "evidenceFiles": [
+        "docs/design/2026-10-18-practice-passport/README.md",
+        "docs/design/2026-10-18-practice-passport/story-brief.md"
+      ]
+    },
+    {
+      "id": "optional-sync",
+      "taskIds": ["B11.3", "B11.4"],
+      "classification": "conditional-product-account",
+      "aiCanDoNow": "Keep local learning and backup available; implement optional sync only after it is deliberately selected and designed.",
+      "requires": "Demand/scope choice, authorized service/accounts and design; no active sync service is implied.",
+      "evidenceFiles": ["MASTER_PLAN.md", "docs/privacy/DATA_INVENTORY.md"]
+    },
+    {
+      "id": "disclosures",
+      "taskIds": ["B11.6", "B11.6-B", "B14.4"],
+      "classification": "candidate-and-owner-input",
+      "aiCanDoNow": "Refresh technical inventory for actual code changes; translate actual selected release behavior into disclosure drafts. Existing technical inventory is preparation, not a published policy.",
+      "requires": "Public contact, release scope and actual service/candidate data handling; owner acceptance and any specific unresolved specialist question.",
+      "evidenceFiles": ["docs/privacy/DATA_INVENTORY.md", "MASTER_PLAN.md"]
+    },
+    {
+      "id": "tablet-and-lifecycle",
+      "taskIds": ["B12.4", "B12.4-B", "B12.5", "B12.6"],
+      "classification": "mixed-native-device",
+      "aiCanDoNow": "Run remaining controllable simulator permission/lifecycle/window/file-provider checks; keep hardware-only outcomes separate.",
+      "requires": "Named control limitations, real low storage/network/routes/notification delivery and signed/hardware acceptance are not inferred from software mocks.",
+      "evidenceFiles": [
+        "docs/qa/2026-10-18-remaining-ai-gates/README.md",
+        "docs/qa/2026-10-19-release-bundle/README.md"
+      ]
+    },
+    {
+      "id": "touch-route",
+      "taskIds": ["B12.5-C"],
+      "classification": "tool-limited",
+      "aiCanDoNow": "Investigate a genuinely changed input route or targeted native layout evidence; do not replay documented failed gestures.",
+      "requires": "Reliable maximum-text touch-only positioning. This is a tooling/input limit, not inherently a requirement for a human or physical phone.",
+      "evidenceFiles": [
+        "docs/qa/2026-10-19-voice-denial/INPUT_NOTES.md",
+        "docs/qa/2026-10-19-release-bundle/README.md"
+      ]
+    },
+    {
+      "id": "signed-release",
+      "taskIds": ["B12.8", "B14.6", "B14.7", "B14.8"],
+      "classification": "candidate-account-device",
+      "aiCanDoNow": "Prepare candidate procedures/metadata/builds within authorized access; fix concrete failures. Local unsigned build is already available.",
+      "requires": "Selected signed candidate, owner-only identity/agreements/access, release-content/device gates and explicit publication authorization. Do not equate current unsigned QA with signed acceptance.",
+      "evidenceFiles": [
+        "docs/qa/2026-10-19-release-bundle/README.md",
+        "docs/pilot/READINESS.md",
+        "MASTER_PLAN.md"
+      ]
+    },
+    {
+      "id": "pilot",
+      "taskIds": [
+        "B10.5",
+        "B13.1",
+        "B13.1-B",
+        "B13.2",
+        "B13.2-B",
+        "B13.3",
+        "B13.4",
+        "B13.5",
+        "B13.6"
+      ],
+      "classification": "human-data-and-product",
+      "aiCanDoNow": "Use prepared protocol/task bank; apply accepted language, analyze actual consented data and implement selected findings when provided.",
+      "requires": "Candidate/audience/data-lifecycle acceptance, exact tasks/assets and voluntary learners with real delayed/transfer observations. Synthetic QA is not pilot results.",
+      "evidenceFiles": [
+        "docs/pilot/READINESS.md",
+        "docs/pilot/PROTOCOL.md",
+        "docs/pilot/TASK_BANK.md",
+        "docs/pilot/observations.csv"
+      ]
+    },
+    {
+      "id": "commercial",
+      "taskIds": ["B14.2", "B14.2-B", "B14.3"],
+      "classification": "conditional-product-account",
+      "aiCanDoNow": "Use prepared options/formulas; update actual selected cost inputs, then implement purchases only if charging is selected and designed.",
+      "requires": "Scope/pricing/budget/storefront decisions, actual pilot/cost inputs and authorized products/accounts; physical sandbox purchase acceptance later.",
+      "evidenceFiles": ["docs/product/COMMERCIAL_OPTIONS.md", "MASTER_PLAN.md"]
+    },
+    {
+      "id": "store-assets",
+      "taskIds": ["B14.5"],
+      "classification": "ai-now",
+      "aiCanDoNow": "The12 current Release local drafts are captured and verified in B14.5-B. Refresh selected assets against the actual signed candidate/content/storefront before submission; local generation itself requires no account or physical device.",
+      "requires": "No account or physical device is needed for local generation. Final candidate/content/storefront acceptance and upload/publication are separate.",
+      "evidenceFiles": ["MASTER_PLAN.md", "app.json", "docs/qa/2026-10-19-release-bundle/README.md"]
+    },
+    {
+      "id": "conditional-experiments",
+      "taskIds": ["B15.1", "B15.2", "B15.3", "B15.4", "B15.5", "B15.6"],
+      "classification": "deferred-by-plan",
+      "aiCanDoNow": "Reopen a scoped experiment after actual pilot evidence selects it; do not replace current acceptance work with unsolicited expansion.",
+      "requires": "B13 evidence and feature-specific outcome/design/cost/rights/device inputs as stated in B15.",
+      "evidenceFiles": ["MASTER_PLAN.md", "docs/pilot/READINESS.md"]
+    }
+  ],
+  "openItems": [
+    {
+      "id": "B01.5",
+      "tags": ["AI", "SIM"],
+      "line": 100,
+      "text": "Locate/install supported Android tooling if available, document the actual environment constraint if not, and establish an emulator workflow without treating iOS success as Android success.",
+      "group": "android-setup"
+    },
+    {
+      "id": "B01.5-B",
+      "tags": ["AI", "SIM", "H-ACCOUNT"],
+      "line": 102,
+      "text": "Obtain SDK license authorization, install verified tooling/system image, create a dedicated emulator and run native flows. Agreement question is pending; no acceptance or Android runtime pass is claimed.",
+      "group": "android-setup"
+    },
+    {
+      "id": "B01.6",
+      "tags": ["AI", "SIM"],
+      "line": 103,
+      "text": "Document repeatable commands, fixture reset, screenshots, and build artifacts. Preserve user data and unrelated simulator sessions. Reopened for newly discovered clone data-path aliasing.",
+      "group": "native-source-and-queue"
+    },
+    {
+      "id": "B01.6-B",
+      "tags": ["AI", "SIM"],
+      "line": 105,
+      "text": "Audit remaining clone mappings and historical independent-store/source-preservation claims; repeat affected destructive-fixture or cross-device checks on preflighted fresh installations. Known aliases are shut down; unbooted lookups are unverified. Do not infer independence from a simulator name/UUID.",
+      "group": "native-source-and-queue"
+    },
+    {
+      "id": "B01.6-B2",
+      "tags": ["AI", "SIM"],
+      "line": 107,
+      "text": "Re-establish relied-on destructive/cross-store source protection on fresh preflighted installations, with actual runtime-source paths and direct source/destination hashes. The flag-clear file comparison remains valid; parent runtime independence and broader affected cross-store claims remain unverified until repeated.",
+      "group": "native-source-and-queue"
+    },
+    {
+      "id": "B01.8",
+      "tags": ["AI"],
+      "line": 116,
+      "text": "Triage remaining dependency advisory paths and implement a separately verified SDK/navigation upgrade where required; the current audit still has high findings.",
+      "group": "security-skipped"
+    },
+    {
+      "id": "B01.8-C",
+      "tags": ["AI", "SIM"],
+      "line": 119,
+      "text": "Complete supported Navigation/Expo/test-tooling migrations or upstream backports, re-audit, and verify native flows. No-patch findings remain tracked rather than assumed resolved.",
+      "group": "security-skipped"
+    },
+    {
+      "id": "B01.8-C2",
+      "tags": ["AI", "SIM"],
+      "line": 121,
+      "text": "Complete separately verified Expo/RN/Jest and remaining no-patch advisory migration/backports with native flows. Navigation migration does not close these paths.",
+      "group": "security-skipped"
+    },
+    {
+      "id": "B01.8-C2g",
+      "tags": ["AI", "SIM"],
+      "line": 128,
+      "text": "Verify a bounded node-forge signature-validation backport or supported replacement; keep no-patch advisories and native/build compatibility explicit. Replace the local braces mitigation when a verified upstream release exists. **Access blocked:** Owner reported a Codex cybersecurity-access error and requested continuing app work (2026-10-17). No signature-validation patch was applied; leave this security task open until supported access is available.",
+      "group": "security-skipped"
+    },
+    {
+      "id": "B01.9",
+      "tags": ["AI", "H-PRODUCT", "H-ACCOUNT"],
+      "line": 129,
+      "text": "Decide whether to restore or retire the historical Kanban Pages deployment. Its previously failing workflow now reports successful deployment on October 16 pushes without an agent configuration change. Owner should confirm the intended publication scope; no Pages/account setting was changed in these batches.",
+      "group": "board-choice"
+    },
+    {
+      "id": "B02.1",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 143,
+      "text": "Correct future-tense generation and audit the remaining tense/pronoun tables. Add independent expected-form fixtures including `hablar\u00e9`, `comer\u00e9`, irregular futures, and region-sensitive forms; have an editor validate the reference set.",
+      "group": "editor-language"
+    },
+    {
+      "id": "B02.1-D",
+      "tags": ["H-LANGUAGE"],
+      "line": 147,
+      "text": "Have a qualified editor accept the reference set and remaining grammar guidance. AI tests do not establish native acceptance.",
+      "group": "editor-language"
+    },
+    {
+      "id": "B02.3",
+      "tags": ["AI"],
+      "line": 149,
+      "text": "Separate recognition, recall, listening, and speaking evidence; prevent an easy multiple-choice success from automatically asserting unaided recall mastery. Preserve old progress without inventing missing historical evidence.",
+      "group": "assessed-speaking"
+    },
+    {
+      "id": "B02.3-B2",
+      "tags": ["AI"],
+      "line": 152,
+      "text": "Connect assessed listening/speaking observations when those features exist.",
+      "group": "assessed-speaking"
+    },
+    {
+      "id": "B02.3-B2b",
+      "tags": ["AI"],
+      "line": 154,
+      "text": "Connect speaking observations when a validated speaking exercise exists.",
+      "group": "assessed-speaking"
+    },
+    {
+      "id": "B02.4",
+      "tags": ["AI"],
+      "line": 155,
+      "text": "Audit session queue stability, grading during rapid interactions, daily new-card caps, relearning, resume, and cross-deck behavior. Pin actual failures with regression tests.",
+      "group": "native-source-and-queue"
+    },
+    {
+      "id": "B02.4-B2",
+      "tags": ["AI", "SIM"],
+      "line": 182,
+      "text": "Complete exact full-queue resume, broad relearning/cross-deck and external-navigation audits, unrelated editor mutation races, OS interruption and simulator/device acceptance.",
+      "group": "native-source-and-queue"
+    },
+    {
+      "id": "B02.6",
+      "tags": ["AI", "SIM"],
+      "line": 184,
+      "text": "Refresh Home/Progress after study and app resume; verify empty library, fresh install, returning learner, midnight, timezone changes, and upgrade fixtures.",
+      "group": "calendar-native"
+    },
+    {
+      "id": "B02.6-B",
+      "tags": ["AI", "SIM"],
+      "line": 189,
+      "text": "Complete timezone/DST, fresh/empty/returning-user and upgrade coverage, then capture native simulator evidence.",
+      "group": "calendar-native"
+    },
+    {
+      "id": "B02.6-B2",
+      "tags": ["AI", "SIM"],
+      "line": 194,
+      "text": "Verify live zone changes, native refresh, full fresh/empty/returning/upgrade flows and platform evidence; matrix results do not establish these.",
+      "group": "calendar-native"
+    },
+    {
+      "id": "B03.4",
+      "tags": ["H-LANGUAGE", "AI"],
+      "line": 209,
+      "text": "Review the first mission, grammar fixtures, common phrases, slang/register, and regional claims; AI applies reviewed corrections and adds regression fixtures.",
+      "group": "editor-language"
+    },
+    {
+      "id": "B03.5",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 210,
+      "text": "Prepare recording scripts and speaker briefs; recruit/record through human-led arrangements, obtain appropriate rights/consent, and review pronunciation. Maintain generated versus human audio provenance.",
+      "group": "human-audio"
+    },
+    {
+      "id": "B03.5-B",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 212,
+      "text": "Select exact pilot scripts, obtain human performance/rights and editorial acceptance, then integrate accepted recordings.",
+      "group": "human-audio"
+    },
+    {
+      "id": "B03.5-B2",
+      "tags": ["H-LANGUAGE", "H-PRODUCT"],
+      "line": 214,
+      "text": "Revise/accept the script and arrange human performances/rights; supply recordings and real acceptance evidence.",
+      "group": "human-audio"
+    },
+    {
+      "id": "B03.5-B3",
+      "tags": ["AI"],
+      "line": 215,
+      "text": "Validate supplied files/manifests and integrate accepted audio with accurate provenance.",
+      "group": "human-audio"
+    },
+    {
+      "id": "B03.6",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 216,
+      "text": "Review the remaining library in batches, prioritizing usage and risk. Quarantine unresolved teaching content from the release rather than marking it approved.",
+      "group": "editor-language"
+    },
+    {
+      "id": "B03.6-B",
+      "tags": ["H-LANGUAGE"],
+      "line": 218,
+      "text": "Supply actual qualified decisions and accept the selected release library.",
+      "group": "editor-language"
+    },
+    {
+      "id": "B04.1",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 226,
+      "text": "Generate plausible distractors with unique answer text and one unambiguous best answer; validate synonyms, alternate regional forms, and grammatical categories.",
+      "group": "editor-language"
+    },
+    {
+      "id": "B04.1-B",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 228,
+      "text": "Improve semantic plausibility and validate synonyms/regional/grammatical alternatives; literal deduplication is not editorial acceptance.",
+      "group": "editor-language"
+    },
+    {
+      "id": "B04.3",
+      "tags": ["AI"],
+      "line": 230,
+      "text": "Add unaided production/reverse-recall and cloze exercises, with explicit accepted variants and informative corrections. Keep modality-specific results.",
+      "group": "reviewed-exercises"
+    },
+    {
+      "id": "B04.3-B",
+      "tags": ["AI", "SIM", "H-LANGUAGE"],
+      "line": 232,
+      "text": "Integrate reviewed exercise packs, reference/release checks and an accessible learner player; verify keyboard, correction, hints and completion on simulators.",
+      "group": "reviewed-exercises"
+    },
+    {
+      "id": "B04.3-B2",
+      "tags": ["H-LANGUAGE", "AI"],
+      "line": 234,
+      "text": "Accept exact authored exercise variants/corrections and integrate accepted release content; widen platform/accessibility checks.",
+      "group": "reviewed-exercises"
+    },
+    {
+      "id": "B04.4",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 235,
+      "text": "Add short reviewed grammar explanations attached to useful phrases; cover requests, questions, pronouns, and past events in the pilot's scope.",
+      "group": "reviewed-exercises"
+    },
+    {
+      "id": "B04.4-B",
+      "tags": ["H-LANGUAGE", "H-PRODUCT", "AI"],
+      "line": 237,
+      "text": "Select pilot attachments and accept/correct exact notes and contrasts, then review the display/help design and implement version-bound bilingual notes. AI can apply real editorial decisions and verify code/simulator behavior; reference links and card acceptance alone do not approve these notes.",
+      "group": "reviewed-exercises"
+    },
+    {
+      "id": "B04.5",
+      "tags": ["AI", "SIM"],
+      "line": 238,
+      "text": "Verify correct/incorrect/hinted responses, accents, punctuation, empty pools, repeated attempts, and learning-event integrity.",
+      "group": "exercise-native"
+    },
+    {
+      "id": "B04.5-B",
+      "tags": ["AI", "SIM"],
+      "line": 240,
+      "text": "Complete hinted/accepted-variant, accent/punctuation, expanded accessibility/layout, and platform coverage as those exercise capabilities are added.",
+      "group": "exercise-native"
+    },
+    {
+      "id": "B05.1",
+      "tags": ["AI", "H-PRODUCT"],
+      "line": 248,
+      "text": "Prepare a concrete starting audience and journey: default proposal is an adult with beginner/basic Spanish preparing for everyday life in Colombia. Make level self-report adjustable; validate the proposal in the pilot.",
+      "group": "audience"
+    },
+    {
+      "id": "B05.3",
+      "tags": ["AI"],
+      "line": 254,
+      "text": "Build 3/5/10-minute plan options combining due review, a small amount of new material, and one applied activity. Use initial duration estimates, then calibrate with measured session times.",
+      "group": "whole-plan-native"
+    },
+    {
+      "id": "B05.3-B",
+      "tags": ["AI", "SIM"],
+      "line": 256,
+      "text": "Add the applied-activity phase, complete plan progression and duration calibration; a bounded flashcard review does not close the parent.",
+      "group": "whole-plan-native"
+    },
+    {
+      "id": "B05.3-B2",
+      "tags": ["AI", "SIM"],
+      "line": 258,
+      "text": "Add one applied phase, durable whole-plan progression/resume, and activity-specific duration calibration; honor editorial availability and preserve review-only fallback.",
+      "group": "whole-plan-native"
+    },
+    {
+      "id": "B05.3-B2b",
+      "tags": ["AI", "SIM"],
+      "line": 260,
+      "text": "Wire Home/Study and the available authored applied activity to this contract, complete the linked applied phase, calibrate its active timing, and verify whole-plan restart/errors/layouts. Contract storage alone does not close B05.3-B2.",
+      "group": "whole-plan-native"
+    },
+    {
+      "id": "B05.3-B2b2",
+      "tags": ["AI", "SIM"],
+      "line": 262,
+      "text": "Measure active applied-response time, calibrate activity-specific estimates, and finish wider lifecycle/layout/platform validation; remaining acceptance below does not close B05.3-B2b.",
+      "group": "whole-plan-native"
+    },
+    {
+      "id": "B05.3-B2b2-B",
+      "tags": ["AI", "SIM", "DEVICE"],
+      "line": 264,
+      "text": "Finish broader English/Spanish narrow/tablet/large-text and OS/navigation interruption checks across the whole plan; native Android and signed/physical acceptance remain separately gated. This remains actionable for available iOS surfaces.",
+      "group": "whole-plan-native"
+    },
+    {
+      "id": "B05.3-B2b2-B2",
+      "tags": ["AI", "SIM"],
+      "line": 266,
+      "text": "Finish tablet software-keyboard behavior and remaining iOS matrix gaps. Unlocked checks passed tablet hardware-keyboard entry, accent feedback and assisted completion, plus narrow largest-text completed-screen touch scrolling and Home return; see the B1 report. Remaining checks are AI simulator work, not hardware-only work.",
+      "group": "whole-plan-native"
+    },
+    {
+      "id": "B05.5",
+      "tags": ["AI", "SIM"],
+      "line": 277,
+      "text": "Make the main Home action start/resume the recommended activity directly; verify preference changes, timezone changes, and no-content states.",
+      "group": "calendar-native"
+    },
+    {
+      "id": "B05.5-B",
+      "tags": ["AI", "SIM"],
+      "line": 279,
+      "text": "Finish remaining broader resume/timezone and platform coverage. Purpose/region/time-aware selection already exists; the [current source/test audit](docs/qa/2026-10-19-voice-denial/README.md#recommendation-audit) rechecks all six purposes, regional/time bounds and fresh foreground preferences (four suites/69 tests), without claiming native zone/platform completion.",
+      "group": "calendar-native"
+    },
+    {
+      "id": "B06.3",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 293,
+      "text": "Integrate accepted phrase and dialogue recordings with speaker/region metadata; support multiple speakers without claiming one voice represents a whole region.",
+      "group": "human-audio"
+    },
+    {
+      "id": "B06.4",
+      "tags": ["AI", "SIM"],
+      "line": 294,
+      "text": "Add downloadable audio packs with size/status, cancellation, integrity checks, storage recovery, and offline playback. Do not depend on device TTS for promised offline audio coverage.",
+      "group": "audio-pack-design"
+    },
+    {
+      "id": "B06.4-A2",
+      "tags": ["AI", "SIM"],
+      "line": 296,
+      "text": "After review of the proposed new-subsystem design (fresh-create/install isolation policy updated in the [continuation map](docs/qa/2026-10-18-remaining-ai-gates/README.md)), implement and test the catalog/install manager, native transfer/digest/playback adapter, Settings UI, release boundary and simulator fixture flows. No remote publication or human recording is needed for local AI validation.",
+      "group": "audio-pack-design"
+    },
+    {
+      "id": "B06.4-B",
+      "tags": ["H-PRODUCT", "H-LANGUAGE", "H-ACCOUNT"],
+      "line": 297,
+      "text": "Select/authorize the actual publication source and accept pack content/provenance/rights before publishing real downloads; physical audio and signed-candidate checks remain under B12.",
+      "group": "human-audio"
+    },
+    {
+      "id": "B06.5",
+      "tags": ["AI", "DEVICE"],
+      "line": 298,
+      "text": "Verify speaker/headphone/Bluetooth playback, mute/volume behavior, speed/intelligibility, interruptions, app background/foreground, and offline restart on actual supported phones.",
+      "group": "hardware"
+    },
+    {
+      "id": "B07.1",
+      "tags": ["AI", "H-PRODUCT"],
+      "line": 306,
+      "text": "Define the first mission: \u201cYour first morning in Medell\u00edn,\u201d including its outcome, required phrases, completion criteria, and assisted alternatives. Resolve its focused design before coding the new subsystem.",
+      "group": "mission-content"
+    },
+    {
+      "id": "B07.1-B",
+      "tags": ["H-PRODUCT", "H-LANGUAGE"],
+      "line": 308,
+      "text": "Accept the experience and exact language before production release/pilot.",
+      "group": "mission-content"
+    },
+    {
+      "id": "B07.3",
+      "tags": ["AI", "SIM"],
+      "line": 310,
+      "text": "Build an accessible player with deterministic branching, hints, retry, save/resume, completion, and offline support. Start with authored branches.",
+      "group": "mission-native"
+    },
+    {
+      "id": "B07.3-B",
+      "tags": ["AI", "SIM"],
+      "line": 312,
+      "text": "Expand native accessibility, small/tablet and Android checks; validate offline cold launch in the actual candidate and integrate media playback with B06.",
+      "group": "mission-native"
+    },
+    {
+      "id": "B07.4",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 313,
+      "text": "Assemble reviewed content: hear an exchange, understand it, choose or produce a reply, handle an unavailable item, and complete the practical outcome.",
+      "group": "mission-content"
+    },
+    {
+      "id": "B07.5",
+      "tags": ["AI"],
+      "line": 314,
+      "text": "Feed difficulties back into personalized practice without duplicating events, unfairly penalizing hint use, or changing unrelated card scheduling.",
+      "group": "mission-guidance"
+    },
+    {
+      "id": "B07.5-B",
+      "tags": ["AI", "SIM"],
+      "line": 316,
+      "text": "Provide an explicit follow-up practice handoff and connect accepted mission activity to daily guidance.",
+      "group": "mission-guidance"
+    },
+    {
+      "id": "B07.5-B2",
+      "tags": ["AI", "SIM"],
+      "line": 318,
+      "text": "Connect accepted mission activity and follow-up to personalized daily guidance.",
+      "group": "mission-guidance"
+    },
+    {
+      "id": "B07.6",
+      "tags": ["AI", "SIM", "H-LEARNER"],
+      "line": 319,
+      "text": "Verify all branches and interrupted sessions, then run the B13 learner pilot. Speaking can be an optional later enhancement; do not block the first pilot on B09.",
+      "group": "mission-native"
+    },
+    {
+      "id": "B08.1",
+      "tags": ["AI", "H-PRODUCT"],
+      "line": 327,
+      "text": "Prepare concrete visual directions using a real mission and existing screens; choose a coherent direction with Colombian settings/people and appropriate asset rights.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.2",
+      "tags": ["AI"],
+      "line": 330,
+      "text": "Define light/dark semantic tokens, typography, spacing, consistent icons, focus/pressed/disabled states, and accessible reusable controls. Replace tiny navigation labels and excessive competing accents.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.2-B",
+      "tags": ["AI", "SIM"],
+      "line": 355,
+      "text": "Complete theme/token/control consistency, focus/pressed states and large-text/platform layout coverage.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.3",
+      "tags": ["AI", "SIM"],
+      "line": 356,
+      "text": "Implement mission-led Home and clear access to practice, explore, saved content, and profile/settings; preserve existing features and navigation entry points.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.3-C",
+      "tags": ["AI", "SIM"],
+      "line": 362,
+      "text": "After those reviews, implement the approved Barrio-only Home with complete state/copy contracts, preserved Classic/routes/queue/save behavior, native phone/mini coverage, independent review and integration. Preserve production content gates and separate signed/physical/assistive acceptance.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.3-C3",
+      "tags": ["SIM", "AI"],
+      "line": 365,
+      "text": "Finish controlled touch-only middle/lower/maximum-primary scrolling, native long-deck/remaining route and state-fixture matrix, and Home-specific System/Classic roundtrips. Device Hub gesture/AX limits are recorded; automated harness results do not close native acceptance.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.3-C3e",
+      "tags": ["SIM", "AI"],
+      "line": 370,
+      "text": "Finish live day/zone cells; precise touch-only middle/maximum-primary positioning and visual long-deck acceptance remain open. Runtime-empty cold import reseeds by existing policy; do not repeat it as a persistent-empty UI test. Standalone Simulator app route unavailable; change input capability or diagnose layout before repeating failed gesture routes. Actual mini Settings General has no Date & Time row; searches Date/Time Zone returned No Results, all11 app hashes unchanged after return ([probe](docs/qa/2026-10-18-barrio-home-calendar/README.md)); no host clock change.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.4",
+      "tags": ["AI", "SIM"],
+      "line": 384,
+      "text": "Give flashcards, listening, missions, and speaking distinct useful layouts. Present actual learned abilities and next actions in Progress.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.4-B",
+      "tags": ["AI", "SIM"],
+      "line": 386,
+      "text": "Complete activity-specific layouts, long/large text and evidence-based Progress next actions.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.4-B2",
+      "tags": ["AI", "SIM"],
+      "line": 388,
+      "text": "Complete broader layouts/large text, platform checks and personalized next actions after accepted activity integration.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.5",
+      "tags": ["AI", "SIM"],
+      "line": 390,
+      "text": "Capture representative iPhone/Android and supported tablet layouts in both languages/themes, including large text, long content, reduced motion, and narrow screens.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.5-B",
+      "tags": ["AI", "SIM"],
+      "line": 392,
+      "text": "Expand to Android, smaller tablets/narrow views, both themes, long/large text and full activity coverage.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.5-B8",
+      "tags": ["AI", "SIM"],
+      "line": 400,
+      "text": "Finish keyboard-open lower-field/Save positioning, new-deck/rename modal keyboard checks and wider touch/assistive coverage. Native fixture lifecycle is now verified in B8a; omitted Device Hub app nodes do not establish an app defect.",
+      "group": "visual-and-home"
+    },
+    {
+      "id": "B08.6",
+      "tags": ["AI", "DEVICE", "H-LEARNER"],
+      "line": 414,
+      "text": "Verify real screen-reader navigation, tap comfort, daylight readability, and accessibility preferences; obtain feedback from people who use relevant assistive features where possible.",
+      "group": "hardware"
+    },
+    {
+      "id": "B09.1",
+      "tags": ["AI", "H-PRODUCT", "H-ACCOUNT"],
+      "line": 423,
+      "text": "Compare device-local and hosted recognition/feedback against latency, cost, regional handling, retention, and privacy requirements. Use fixtures until a provider/budget is selected.",
+      "group": "assessed-speaking"
+    },
+    {
+      "id": "B09.1-B",
+      "tags": ["H-PRODUCT", "H-ACCOUNT", "AI"],
+      "line": 425,
+      "text": "Select scope/provider/budget/retention; supply authorized account and consented recordings as needed, then run the measured device/service comparison.",
+      "group": "assessed-speaking"
+    },
+    {
+      "id": "B09.2",
+      "tags": ["AI", "SIM"],
+      "line": 426,
+      "text": "Implement permission request/denial/recovery, record/replay/delete, recording indicators, interruption handling, and a non-speaking alternative.",
+      "group": "voice-native"
+    },
+    {
+      "id": "B09.2-B",
+      "tags": ["AI", "SIM", "DEVICE"],
+      "line": 428,
+      "text": "Verify granted capture/replay/delete and interruptions in an authorized development client, both platforms and physical audio routes; validate signed production permission exclusions before enabling any release scope.",
+      "group": "voice-native"
+    },
+    {
+      "id": "B09.2-B2",
+      "tags": ["AI", "SIM", "DEVICE"],
+      "line": 430,
+      "text": "Android, OS interruptions/settings changes, routes/audio quality and actual signed-production exclusions remain separate.",
+      "group": "voice-native"
+    },
+    {
+      "id": "B09.3",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 433,
+      "text": "Define feedback for task completion, intelligibility, and phrasing. Do not equate transcription accuracy with phonetic pronunciation scoring; validate any scores against editor-rated recordings.",
+      "group": "assessed-speaking"
+    },
+    {
+      "id": "B09.3-B",
+      "tags": ["H-LANGUAGE", "H-LEARNER", "AI"],
+      "line": 435,
+      "text": "Accept task/rating definitions, supply independent recordings/ratings and evaluate actual model feedback before enabling assessed speaking claims.",
+      "group": "assessed-speaking"
+    },
+    {
+      "id": "B09.4",
+      "tags": ["AI"],
+      "line": 436,
+      "text": "If hosted, keep keys server-side; add consent, authentication as appropriate, rate/spend limits, timeout/retry/cancel, retention/deletion, and safe logs. Verify offline behavior.",
+      "group": "assessed-speaking"
+    },
+    {
+      "id": "B09.5",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 437,
+      "text": "Add an authored voice-note scenario with a short message, learner response, relevant follow-up, one useful correction, and targeted review.",
+      "group": "assessed-speaking"
+    },
+    {
+      "id": "B09.6",
+      "tags": ["AI", "DEVICE", "H-LEARNER"],
+      "line": 438,
+      "text": "Evaluate real microphones, Bluetooth/headsets, quiet/noisy environments, accents, hesitations, weak connectivity, interruptions, and permission changes on both shipped platforms.",
+      "group": "hardware"
+    },
+    {
+      "id": "B10.1",
+      "tags": ["AI", "H-PRODUCT"],
+      "line": 446,
+      "text": "Choose a small passport/stamp system tied to demonstrated mission outcomes, with clear assisted versus independent completion.",
+      "group": "passport-story"
+    },
+    {
+      "id": "B10.1-B",
+      "tags": ["H-PRODUCT", "AI"],
+      "line": 448,
+      "text": "Review the recommended focused direction, then write/review its architectural spec and implementation plan before runtime work. Standing Native preference is preserved; the separate audio-pack written-spec review remains pending.",
+      "group": "passport-story"
+    },
+    {
+      "id": "B10.2",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 449,
+      "text": "Create recurring characters and a short culturally grounded story arc; validate humor, register, and representation.",
+      "group": "passport-story"
+    },
+    {
+      "id": "B10.2-B",
+      "tags": ["H-PRODUCT", "H-LANGUAGE", "AI"],
+      "line": 451,
+      "text": "Select/revise the cast and direction, author/review exact versioned dialogue/variants/outcome criteria, then integrate actual accepted decisions. AI can draft/apply corrections; humans supply real language/representation acceptance.",
+      "group": "passport-story"
+    },
+    {
+      "id": "B10.3",
+      "tags": ["AI"],
+      "line": 452,
+      "text": "Implement rewards, optional celebrations, reduced-motion behavior, retry consistency, and personal-best challenges without duplicate rewards or progress loss.",
+      "group": "passport-story"
+    },
+    {
+      "id": "B10.4",
+      "tags": ["AI", "SIM"],
+      "line": 453,
+      "text": "Integrate rewards into mission completion and Progress; keep streak recovery supportive and accessible.",
+      "group": "passport-story"
+    },
+    {
+      "id": "B10.5",
+      "tags": ["H-LEARNER", "AI"],
+      "line": 454,
+      "text": "Test whether stories/rewards improve willingness to practice and learning performance; reduce or remove elements that distract or pressure people.",
+      "group": "pilot"
+    },
+    {
+      "id": "B11.3",
+      "tags": ["AI", "H-PRODUCT"],
+      "line": 473,
+      "text": "Decide whether cross-device demand justifies optional accounts. Keep local learning available without an account.",
+      "group": "optional-sync"
+    },
+    {
+      "id": "B11.4",
+      "tags": ["AI", "H-ACCOUNT"],
+      "line": 474,
+      "text": "If enabled, implement secure auth, per-user access, sync conflicts, offline queues, deletion/export, and recovery; configure production services through authorized accounts.",
+      "group": "optional-sync"
+    },
+    {
+      "id": "B11.5",
+      "tags": ["AI", "DEVICE"],
+      "line": 475,
+      "text": "Verify backup through real share/file flows; if sync exists, test two physical devices, reinstall/recovery, conflicting offline edits, and interrupted connectivity.",
+      "group": "hardware"
+    },
+    {
+      "id": "B11.6",
+      "tags": ["AI", "H-PRODUCT"],
+      "line": 476,
+      "text": "Inventory all diagnostics/network data, validate crash-reporting redaction and sampling, and update privacy disclosures to match actual behavior.",
+      "group": "disclosures"
+    },
+    {
+      "id": "B11.6-B",
+      "tags": ["H-PRODUCT", "H-ACCOUNT", "DEVICE"],
+      "line": 479,
+      "text": "Supply the public contact, verify actual signed-build envelopes and configured service retention/access/IP handling, and accept the release disclosure/store forms.",
+      "group": "disclosures"
+    },
+    {
+      "id": "B12.2",
+      "tags": ["AI", "DEVICE"],
+      "line": 490,
+      "text": "Test a physical iPhone on each promised support boundary; cover an older/lower-performance supported device and a current device where feasible. Record gaps explicitly.",
+      "group": "hardware"
+    },
+    {
+      "id": "B12.3",
+      "tags": ["AI", "DEVICE"],
+      "line": 491,
+      "text": "Test physical Android hardware if Android ships, including a lower-performance supported device and relevant vendor battery restrictions. Emulator results are supplementary.",
+      "group": "hardware"
+    },
+    {
+      "id": "B12.4",
+      "tags": ["AI", "SIM", "DEVICE"],
+      "line": 492,
+      "text": "Test tablets if advertised/supported by the release; app configuration currently enables iPad support. Either validate the supported layout or deliberately narrow support.",
+      "group": "tablet-and-lifecycle"
+    },
+    {
+      "id": "B12.4-B",
+      "tags": ["AI", "SIM", "DEVICE"],
+      "line": 494,
+      "text": "Complete smaller-tablet, window/multitasking, large-text, theme, accessibility and signed-candidate/hardware validation; refine wide layouts.",
+      "group": "tablet-and-lifecycle"
+    },
+    {
+      "id": "B12.5",
+      "tags": ["AI", "DEVICE"],
+      "line": 496,
+      "text": "Verify audio/microphone routes, interruptions, permissions changed in OS settings, actual scheduled reminders, notification taps, and app background/termination behavior. Audit reminder settings against implemented behavior, including the rolling word-of-day window.",
+      "group": "tablet-and-lifecycle"
+    },
+    {
+      "id": "B12.5-C",
+      "tags": ["AI", "SIM"],
+      "line": 498,
+      "text": "Verify narrow Study grading interval labels and touch access around the bottom tabs in the catch-up cold-resume capture, including scrolling, safe areas and larger text. Reproduce persistent clipping before proposing a fix; preserve grading. [Evidence](docs/qa/2026-10-17-absence-catch-up/cold-resume-es.png). [2026-10-18 follow-up](docs/qa/2026-10-18-study-touch/REPORT.md): maximum Good/Easy touch-scroll and exact ungraded cold queue verified; downward positioning attempts still inconclusive. Change input route before repeating this check. [Own-path narrow follow-up](docs/qa/2026-10-18-study-narrow-controls/REPORT.md) records an unchanged keyboard End route plus gutter/wheel observations; Again/Hard maximum-text positioning remains unverified. Do not repeat these routes without changed input capability or targeted native layout diagnosis. [Physical Size/capture comparison](docs/qa/2026-10-19-voice-denial/INPUT_NOTES.md) calibrated a host overlay but did not establish app-coordinate delivery; all eleven records unchanged, fitted view/Capture off restored. These added failed routes also require changed capability before another repeat.",
+      "group": "touch-route"
+    },
+    {
+      "id": "B12.6",
+      "tags": ["AI", "DEVICE"],
+      "line": 503,
+      "text": "Verify airplane-mode cold launch, downloaded content, poor network, low storage, file sharing, reinstall with backup, and upgrade without progress loss.",
+      "group": "tablet-and-lifecycle"
+    },
+    {
+      "id": "B12.7",
+      "tags": ["AI", "DEVICE"],
+      "line": 505,
+      "text": "Measure startup, scrolling, memory, battery/thermal behavior, and storage on hardware; set budgets from the baseline and pilot needs, then track regressions.",
+      "group": "hardware"
+    },
+    {
+      "id": "B12.8",
+      "tags": ["AI", "SIM", "DEVICE"],
+      "line": 506,
+      "text": "Run end-to-end regression against the actual signed release candidate, not only Expo Go or a development build. Record accessibility checks and crash results.",
+      "group": "signed-release"
+    },
+    {
+      "id": "B13.1",
+      "tags": ["AI", "H-PRODUCT"],
+      "line": 514,
+      "text": "Define success measures before the pilot: first-session completion, time to useful outcome, hint usage, delayed unaided recall, comprehension of a new speaker, and success in a new scenario. Treat numeric targets as hypotheses until baseline data exists.",
+      "group": "pilot"
+    },
+    {
+      "id": "B13.1-B",
+      "tags": ["H-PRODUCT"],
+      "line": 517,
+      "text": "Accept the candidate, audience, collection/retention arrangements and predeclared feasibility criteria before recruitment.",
+      "group": "pilot"
+    },
+    {
+      "id": "B13.2",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 518,
+      "text": "Prepare equivalent pre/post/transfer tasks and delayed checks (for example, the next day and one week later); avoid simply repeating the memorized quiz.",
+      "group": "pilot"
+    },
+    {
+      "id": "B13.2-B",
+      "tags": ["H-LANGUAGE", "AI"],
+      "line": 520,
+      "text": "Author/accept exact Spanish prompts, variants, equivalent forms and novel-speaker assets, then integrate reviewed corrections.",
+      "group": "pilot"
+    },
+    {
+      "id": "B13.3",
+      "tags": ["H-PRODUCT", "H-LEARNER"],
+      "line": 521,
+      "text": "Recruit a small directional pilot, initially around 5\u20138 people spanning beginners and learners with basics; obtain consent and agree on appropriate data collection. This sample is not proof of broad efficacy.",
+      "group": "pilot"
+    },
+    {
+      "id": "B13.4",
+      "tags": ["H-LEARNER", "AI"],
+      "line": 522,
+      "text": "Observe independent first use and complete delayed checks; record confusion, pronunciation feedback problems, accessibility needs, motivation, and actual task performance.",
+      "group": "pilot"
+    },
+    {
+      "id": "B13.5",
+      "tags": ["AI"],
+      "line": 523,
+      "text": "Analyze modality-specific events and qualitative findings; distinguish usability results from learning effects and retention metrics.",
+      "group": "pilot"
+    },
+    {
+      "id": "B13.6",
+      "tags": ["AI", "H-PRODUCT"],
+      "line": 524,
+      "text": "Select fixes and expansion scope from evidence. Update this master plan before multiplying missions or introducing major paid AI features.",
+      "group": "pilot"
+    },
+    {
+      "id": "B14.2",
+      "tags": ["AI", "H-PRODUCT"],
+      "line": 533,
+      "text": "Prepare concrete free/core/paid options and cost scenarios. Consider a paid offline library and separately limited hosted AI; select pricing only after pilot feedback and cost analysis.",
+      "group": "commercial"
+    },
+    {
+      "id": "B14.2-B",
+      "tags": ["H-PRODUCT", "H-ACCOUNT"],
+      "line": 535,
+      "text": "Supply actual production/support/provider/storefront inputs and pilot evidence, then choose scope, budget and pricing.",
+      "group": "commercial"
+    },
+    {
+      "id": "B14.3",
+      "tags": ["AI", "H-ACCOUNT"],
+      "line": 536,
+      "text": "If charging, implement entitlements and restore purchases; configure products/accounts through authorized access. Verify sandbox purchase, cancellation, refund/revocation, offline entitlement, and reinstall flows on physical devices.",
+      "group": "commercial"
+    },
+    {
+      "id": "B14.4",
+      "tags": ["AI", "H-PRODUCT"],
+      "line": 537,
+      "text": "Update privacy policy, data disclosures, support/deletion flows, recording consent, and age/content suitability against actual shipped features and slang content. Obtain specialist review if a concrete unresolved requirement needs it.",
+      "group": "disclosures"
+    },
+    {
+      "id": "B14.5",
+      "tags": ["AI", "SIM"],
+      "line": 538,
+      "text": "Generate screenshots and preview material from the actual app at current store-required formats; verify current submission requirements rather than reusing obsolete device-size lists.",
+      "group": "store-assets"
+    },
+    {
+      "id": "B14.6",
+      "tags": ["H-ACCOUNT", "AI"],
+      "line": 539,
+      "text": "Resolve developer accounts, identity/agreements, signing, production configuration, and distribution access. AI prepares builds/metadata; owner-only account actions remain explicit.",
+      "group": "signed-release"
+    },
+    {
+      "id": "B14.7",
+      "tags": ["AI", "DEVICE", "H-PRODUCT"],
+      "line": 540,
+      "text": "Close B03 release-content gates, B12 candidate checks, and blocking pilot findings. Prepare rollout, migration recovery, monitoring, and support instructions.",
+      "group": "signed-release"
+    },
+    {
+      "id": "B14.8",
+      "tags": ["H-PRODUCT", "H-ACCOUNT", "AI"],
+      "line": 541,
+      "text": "Review the concrete candidate and authorize submission/publication. Submit through supported authorized tooling; record store outcome and any rejection follow-up.",
+      "group": "signed-release"
+    },
+    {
+      "id": "B15.1",
+      "tags": ["AI", "H-LEARNER"],
+      "line": 549,
+      "text": "Personal language collection: save something encountered in daily life, preserve context, review the explanation, and practice it later.",
+      "group": "conditional-experiments"
+    },
+    {
+      "id": "B15.2",
+      "tags": ["AI", "H-LANGUAGE"],
+      "line": 550,
+      "text": "Regional comparisons using several reviewed speakers and contextual notes, avoiding one-to-one dialect stereotypes.",
+      "group": "conditional-experiments"
+    },
+    {
+      "id": "B15.3",
+      "tags": ["AI", "H-LEARNER"],
+      "line": 551,
+      "text": "Trip-date preparation and downloadable destination packs after the basic daily planner proves useful.",
+      "group": "conditional-experiments"
+    },
+    {
+      "id": "B15.4",
+      "tags": ["AI"],
+      "line": 552,
+      "text": "Evaluate FSRS against the existing scheduler using suitable review history, retention calibration, workload, and safe migrations. Do not claim improved learning from an algorithm swap alone.",
+      "group": "conditional-experiments"
+    },
+    {
+      "id": "B15.5",
+      "tags": ["AI", "H-LANGUAGE", "H-ACCOUNT"],
+      "line": 553,
+      "text": "Native-speaker video and licensed media after rights, production cost, accessibility, downloads, and demand are established.",
+      "group": "conditional-experiments"
+    },
+    {
+      "id": "B15.6",
+      "tags": ["AI", "H-LEARNER", "DEVICE"],
+      "line": 554,
+      "text": "Open-ended AI conversation after structured speaking feedback proves reliable and its running cost is understood.",
+      "group": "conditional-experiments"
+    }
+  ]
+}

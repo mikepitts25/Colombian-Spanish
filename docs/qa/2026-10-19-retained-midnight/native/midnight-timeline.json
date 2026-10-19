@@ -1,0 +1,54 @@
+[
+  {
+    "utc": "2026-10-19T09:06:44.165100+00:00",
+    "expectedMarquesasDay": "2026-10-18",
+    "capturePath": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/E1D13420-043E-41F5-A926-DAA73C29747B",
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "daily": {
+      "date": "2026-10-18",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "keyHashes": {
+      "SRS_DECKS_V3": "f9c59a5ac9ceb3b28fca5376a3f8dcf7dac392046cf48c98a6907726a41dfa0e",
+      "SRS_DAILY_PLAN_V1": "e0a8829bf5e3ef39befbf2113e0c16f284a2f84ffaacf6701f97d208404f5919",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_PREFS_V1": "5b163b4c10153f041d48f37e36d819ac52536049754de61e0bf6becffc0e8d0c",
+      "SRS_DAILY_PROGRESS_V1": "486e2074e50af9fb27fcf29c5e391fa98cf5baad317ec1a4f43d6eb90248e5e7",
+      "SRS_STUDY_STREAK_V1": "77687bba5be349d1402c42c827d5d98ce8ee6dfc3142dcf3b2bb2f2f93a397e9",
+      "SRS_SEEN_WORDS_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "72a032b62d4aeb9445158d589ed51a44a101907367ee94ce169884fcb2abae45",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_LEARNING_EVENTS_V1": "ab43dbf0ec1b5c1d8e7bbdeb4f78302d088a4fc386dacf52aac63cd4818ab15b"
+    },
+    "journal": null
+  },
+  {
+    "utc": "2026-10-19T09:30:16.232453+00:00",
+    "expectedMarquesasDay": "2026-10-19",
+    "capturePath": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/E1D13420-043E-41F5-A926-DAA73C29747B",
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "daily": {
+      "date": "2026-10-19",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "keyHashes": {
+      "SRS_DECKS_V3": "f9c59a5ac9ceb3b28fca5376a3f8dcf7dac392046cf48c98a6907726a41dfa0e",
+      "SRS_DAILY_PLAN_V1": "e0a8829bf5e3ef39befbf2113e0c16f284a2f84ffaacf6701f97d208404f5919",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_PREFS_V1": "5b163b4c10153f041d48f37e36d819ac52536049754de61e0bf6becffc0e8d0c",
+      "SRS_DAILY_PROGRESS_V1": "0f8606873ab21991981365abb9d20269e218eb27d1cfc53f9c160c8cce0478f8",
+      "SRS_STUDY_STREAK_V1": "77687bba5be349d1402c42c827d5d98ce8ee6dfc3142dcf3b2bb2f2f93a397e9",
+      "SRS_SEEN_WORDS_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_LAST_STUDY_SESSION_V1": "72a032b62d4aeb9445158d589ed51a44a101907367ee94ce169884fcb2abae45",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_LEARNING_EVENTS_V1": "ab43dbf0ec1b5c1d8e7bbdeb4f78302d088a4fc386dacf52aac63cd4818ab15b"
+    },
+    "journal": null
+  }
+]
