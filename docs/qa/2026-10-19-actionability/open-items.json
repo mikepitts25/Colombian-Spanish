@@ -256,12 +256,13 @@
       "id": "tablet-and-lifecycle",
       "taskIds": ["B12.4", "B12.4-B", "B12.5", "B12.6"],
       "classification": "mixed-native-device",
-      "aiCanDoNow": "B12.6-B verifies local Files save/picker/preview/cancel on the current own-path compiled unsigned Release install. Continue distinct controllable permission/lifecycle/window/provider-error or replacement/reinstall cases; reuse the completed local Files path. Keep hardware-only outcomes separate.",
+      "aiCanDoNow": "B12.6-B covers compiled unsigned Release local Files save/picker/preview/cancel. B12.6-C now covers own-path mini same-build replacement and genuine removal/new-container reinstall/full-state restoration from an actual surviving product-generated Files backup. Continue distinct provider-error/overwrite, different-version upgrade, network/storage, permission/lifecycle/window cases; do not repeat completed local Files or reinstall recovery.",
       "requires": "Named control limitations, real low storage/network/routes/notification delivery and signed/hardware acceptance are not inferred from software mocks.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-release-bundle/README.md",
-        "docs/qa/2026-10-19-native-qa-bundle/README.md"
+        "docs/qa/2026-10-19-native-qa-bundle/README.md",
+        "docs/qa/2026-10-19-mini-reinstall-restore/README.md"
       ]
     },
     {

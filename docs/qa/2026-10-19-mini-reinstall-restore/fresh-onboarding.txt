@@ -1,0 +1,17 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Applied Mini QA" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 59-100
++					146 text Description: 🇨🇴, Secondary Actions: Cancel
++					147 text Description: ¡Bienvenido, parce!, Secondary Actions: Cancel
++					148 text Description: Español colombiano de verdad: jerga, voseo y cultura., Secondary Actions: Cancel
++					149 text Description: PASO 1 DE 3, Secondary Actions: Cancel
++					150 text Description: ¿Por qué aprendes español colombiano?, Secondary Actions: Cancel
++					151 element Description: ✈️, Voy de viaje a Colombia, Secondary Actions: Cancel
++					152 element Description: 🏠, Me mudo a Colombia, Secondary Actions: Cancel
++					153 element Description: ❤️, Mi pareja es colombiana, Secondary Actions: Cancel
++					154 element Description: 💼, Trabajo o negocios, Secondary Actions: Cancel
++					155 element Description: 🎶, Música, cultura y fútbol, Secondary Actions: Cancel
++					156 element Description: 📚, Quiero mejorar mi español, Secondary Actions: Cancel
++					157 element (disabled) Description: Siguiente, Secondary Actions: Cancel
++					158 element Secondary Actions: Cancel, Description: !, [expo-notifications] Error reading persisted server registration info:  Error: FunctionCallException: Calling the 'getRegistrationInfoAsync' function has failed (at ExpoModulesCore/AsyncFunctionDefinition.swift:123)
+→ Caused by: ERR_NOTIFICATIONS_KEYCHAIN_ACCESS: Keychain access failed: A required entitlement isn't present. (at ExpoNotifications/ServerRegistrationModule.swift:161)
+The focused UI element is 0 standard window Colombian Spanish Applied Mini QA – iPadOS 26.0, ID: com.apple.dt.DeviceKit.DeviceManagementWindow-AppWindow-1, Secondary Actions: Raise
