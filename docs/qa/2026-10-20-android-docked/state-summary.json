@@ -1,0 +1,291 @@
+[
+  {
+    "label": "onboarded",
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "e01283a2d4bf598c16eb07f9ed3a9c360e60497f1e2aa7e2da7296b227015fb8",
+      "SRS_DECKS_V3": "4f55acbb7ffb5b686340c1906d342cde8e9f1622f352f2213ed862e564331f34",
+      "SRS_LAST_STUDY_SESSION_V1": "c2b005c3169f3d1a75f8846ec04e907a1d2a9a9c7ff5ea014e8c67fb311feb6d",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0038",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0038", "0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvfvqyyj-2-i2of474g1nj"
+      },
+      "updatedAt": 1792452181699
+    },
+    "events": null
+  },
+  {
+    "label": "graded",
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "a4909def3d5b0a4179f2e4171707d7c050ad581ee910e13c1762244cf87ba092",
+      "SRS_DECKS_V3": "42a40ae4649ce5a109bf68fcf7527ab783c8c5af668d9931e6b8fd8f012671b0",
+      "SRS_LAST_STUDY_SESSION_V1": "d6a0f6261adc0c4cb7c94b3e8894d0d63baa0c0d998a57c0fede8b41e4888d4f",
+      "SRS_LEARNING_EVENTS_V1": "55039c4b99a1f681c5bba85c121d2ae952e237cd1969dba106a309cdd94fe3c4",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_SEEN_WORDS_V1": "989f413ce9e030347623bc35dcb165dab493749d85b1ab1df11dc6abf4bd0ccd",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvfvqyyj-2-i2of474g1nj"
+      },
+      "updatedAt": 1792452288265
+    },
+    "events": {
+      "schemaVersion": 1,
+      "events": [
+        {
+          "schemaVersion": 1,
+          "id": "mvfvt961-8-dql66lk118a",
+          "sessionId": "mvfvqyyj-2-i2of474g1nj",
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "modality": "recall",
+          "evidence": "self-rated",
+          "outcome": "incorrect",
+          "quality": 2,
+          "occurredAt": 1792452288262,
+          "hintsUsed": null,
+          "durationMs": 67481
+        }
+      ]
+    }
+  },
+  {
+    "label": "cold",
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "a4909def3d5b0a4179f2e4171707d7c050ad581ee910e13c1762244cf87ba092",
+      "SRS_DECKS_V3": "42a40ae4649ce5a109bf68fcf7527ab783c8c5af668d9931e6b8fd8f012671b0",
+      "SRS_LAST_STUDY_SESSION_V1": "d6a0f6261adc0c4cb7c94b3e8894d0d63baa0c0d998a57c0fede8b41e4888d4f",
+      "SRS_LEARNING_EVENTS_V1": "55039c4b99a1f681c5bba85c121d2ae952e237cd1969dba106a309cdd94fe3c4",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_SEEN_WORDS_V1": "989f413ce9e030347623bc35dcb165dab493749d85b1ab1df11dc6abf4bd0ccd",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvfvqyyj-2-i2of474g1nj"
+      },
+      "updatedAt": 1792452288265
+    },
+    "events": {
+      "schemaVersion": 1,
+      "events": [
+        {
+          "schemaVersion": 1,
+          "id": "mvfvt961-8-dql66lk118a",
+          "sessionId": "mvfvqyyj-2-i2of474g1nj",
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "modality": "recall",
+          "evidence": "self-rated",
+          "outcome": "incorrect",
+          "quality": 2,
+          "occurredAt": 1792452288262,
+          "hintsUsed": null,
+          "durationMs": 67481
+        }
+      ]
+    }
+  },
+  {
+    "label": "barrio-system",
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "a4909def3d5b0a4179f2e4171707d7c050ad581ee910e13c1762244cf87ba092",
+      "SRS_DECKS_V3": "42a40ae4649ce5a109bf68fcf7527ab783c8c5af668d9931e6b8fd8f012671b0",
+      "SRS_LAST_STUDY_SESSION_V1": "d6a0f6261adc0c4cb7c94b3e8894d0d63baa0c0d998a57c0fede8b41e4888d4f",
+      "SRS_LEARNING_EVENTS_V1": "55039c4b99a1f681c5bba85c121d2ae952e237cd1969dba106a309cdd94fe3c4",
+      "SRS_PREFS_V1": "44a9f3b8fae6179da597721e258401bc7ec0f549aca7dfb13a55cea9d3c7b733",
+      "SRS_SEEN_WORDS_V1": "989f413ce9e030347623bc35dcb165dab493749d85b1ab1df11dc6abf4bd0ccd",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "prefs": {
+      "themeId": "barrio",
+      "appearanceMode": "system",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all"
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvfvqyyj-2-i2of474g1nj"
+      },
+      "updatedAt": 1792452288265
+    },
+    "events": {
+      "schemaVersion": 1,
+      "events": [
+        {
+          "schemaVersion": 1,
+          "id": "mvfvt961-8-dql66lk118a",
+          "sessionId": "mvfvqyyj-2-i2of474g1nj",
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "modality": "recall",
+          "evidence": "self-rated",
+          "outcome": "incorrect",
+          "quality": 2,
+          "occurredAt": 1792452288262,
+          "hintsUsed": null,
+          "durationMs": 67481
+        }
+      ]
+    }
+  },
+  {
+    "label": "barrio-light",
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "a4909def3d5b0a4179f2e4171707d7c050ad581ee910e13c1762244cf87ba092",
+      "SRS_DECKS_V3": "42a40ae4649ce5a109bf68fcf7527ab783c8c5af668d9931e6b8fd8f012671b0",
+      "SRS_LAST_STUDY_SESSION_V1": "d6a0f6261adc0c4cb7c94b3e8894d0d63baa0c0d998a57c0fede8b41e4888d4f",
+      "SRS_LEARNING_EVENTS_V1": "55039c4b99a1f681c5bba85c121d2ae952e237cd1969dba106a309cdd94fe3c4",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "989f413ce9e030347623bc35dcb165dab493749d85b1ab1df11dc6abf4bd0ccd",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "prefs": {
+      "themeId": "barrio",
+      "appearanceMode": "light",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all"
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvfvqyyj-2-i2of474g1nj"
+      },
+      "updatedAt": 1792452288265
+    },
+    "events": {
+      "schemaVersion": 1,
+      "events": [
+        {
+          "schemaVersion": 1,
+          "id": "mvfvt961-8-dql66lk118a",
+          "sessionId": "mvfvqyyj-2-i2of474g1nj",
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "modality": "recall",
+          "evidence": "self-rated",
+          "outcome": "incorrect",
+          "quality": 2,
+          "occurredAt": 1792452288262,
+          "hintsUsed": null,
+          "durationMs": 67481
+        }
+      ]
+    }
+  }
+]
