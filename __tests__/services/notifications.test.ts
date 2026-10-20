@@ -238,3 +238,19 @@ test('morning window includes the next seven local calendar mornings before 08:0
     jest.useRealTimers();
   }
 });
+
+test('morning window uses current-zone calendar dates when native Date getters are stale', async () => {
+  const now = new Date(2026, 0, 5, 7);
+  jest.useFakeTimers({ now });
+  const getter = jest.spyOn(Date.prototype, 'getDate').mockReturnValue(6);
+  try {
+    await saveAndScheduleNotificationPreferences(DEFAULT_NOTIFICATION_PREFS);
+    const dates = morningCalls().map(([arg]) => arg.trigger.date as Date);
+    expect(dates).toHaveLength(7);
+    expect(require('../../src/utils/calendarDay').localDayKey(dates[0])).toBe('2026-01-05');
+    expect(require('../../src/utils/calendarDay').localHour(dates[0])).toBe(8);
+  } finally {
+    getter.mockRestore();
+    jest.useRealTimers();
+  }
+});

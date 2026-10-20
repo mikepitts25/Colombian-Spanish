@@ -1,0 +1,16 @@
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish'`
+
+PASS __tests__/screens/HomeScreen.test.tsx
+PASS __tests__/services/notifications.test.ts
+PASS __tests__/utils/calendarDay.test.ts
+PASS __tests__/utils/wordOfDay.test.ts
+
+Test Suites: 4 passed, 4 total
+Tests:       68 passed, 68 total
+Snapshots:   0 total
+Time:        5.495 s
+Ran all test suites matching /__tests__\/utils\/calendarDay.test.ts|__tests__\/utils\/wordOfDay.test.ts|__tests__\/screens\/HomeScreen.test.tsx|__tests__\/services\/notifications.test.ts/i.

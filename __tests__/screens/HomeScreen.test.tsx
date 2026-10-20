@@ -823,3 +823,16 @@ it('Barrio Retry repeats the selected direct deck start', async () => {
   expect(mockNavigate).toHaveBeenCalledWith('Study', { autoStartDeckId: 'other-deck' });
   ui.unmount();
 });
+
+test('greeting follows the current clock when Date hour getters retain an old zone', async () => {
+  jest.useFakeTimers();
+  jest.setSystemTime(new Date(2026, 9, 19, 22));
+  jest.spyOn(Date.prototype, 'getHours').mockReturnValue(8);
+  try {
+    const ui = renderWithTheme(<HomeScreen />);
+    await waitFor(() => expect(ui.getByText(/Good evening!/)).toBeTruthy());
+    ui.unmount();
+  } finally {
+    jest.useRealTimers();
+  }
+});

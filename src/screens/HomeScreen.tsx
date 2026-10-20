@@ -29,7 +29,7 @@ import { readDailyPlan } from '../storage/dailyPlans';
 import { DailyPlan } from '../storage/dailyPlanSchema';
 import { openRecommendedPlan } from '../storage/recommendedPlan';
 import { availableDailyResponse } from '../missions/dailyResponse';
-import { localDayKey } from '../utils/calendarDay';
+import { localDayKey, localHour } from '../utils/calendarDay';
 
 const COLOMBIAN_GREETINGS = [
   {
@@ -50,7 +50,7 @@ const COLOMBIAN_GREETINGS = [
 ];
 
 function getGreetingKey() {
-  const h = new Date().getHours();
+  const h = localHour();
   if (h < 12) return COLOMBIAN_GREETINGS[0];
   if (h < 19) return COLOMBIAN_GREETINGS[1];
   return COLOMBIAN_GREETINGS[2];

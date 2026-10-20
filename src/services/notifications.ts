@@ -3,6 +3,7 @@ import * as Notifications from 'expo-notifications';
 import { ALL_DECKS } from '../data/decks';
 import { getPrefs, UiLanguage } from '../storage/prefs';
 import { pickWordOfDay } from '../utils/wordOfDay';
+import { localDayAtHour } from '../utils/calendarDay';
 
 const NOTIFICATION_PREFS_KEY = 'SRS_NOTIFICATION_PREFS_V1';
 
@@ -99,9 +100,7 @@ function morningCopy(language: UiLanguage, date: Date): { title: string; body: s
 async function scheduleMorningWordOfDayWindow(language: UiLanguage) {
   const now = new Date();
   for (let offset = 0; offset < WORD_OF_DAY_WINDOW_DAYS; offset += 1) {
-    const fireAt = new Date(now);
-    fireAt.setDate(now.getDate() + offset);
-    fireAt.setHours(MORNING_HOUR, 0, 0, 0);
+    const fireAt = localDayAtHour(now, offset, MORNING_HOUR);
     if (fireAt.getTime() <= Date.now()) continue; // this morning already passed
 
     const { title, body } = morningCopy(language, fireAt);

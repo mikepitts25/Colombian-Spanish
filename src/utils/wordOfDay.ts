@@ -4,6 +4,7 @@
 // future days, e.g. to schedule push notifications).
 
 import { Deck, FlashCard } from '../types';
+import { localDayKey } from './calendarDay';
 
 export type WordOfDayPick = {
   deckId: string;
@@ -15,10 +16,7 @@ export type WordOfDayPick = {
 const COLOMBIAN_PATTERN = /(slang|jerga|coloquial|colombia|paisa|coste[nñ]o|rolo|valluno)/;
 
 export function dateKey(date: Date = new Date()): string {
-  const y = date.getFullYear();
-  const m = `${date.getMonth() + 1}`.padStart(2, '0');
-  const d = `${date.getDate()}`.padStart(2, '0');
-  return `${y}-${m}-${d}`;
+  return localDayKey(date);
 }
 
 // FNV-1a — small, stable string hash; good enough spread for daily rotation.
