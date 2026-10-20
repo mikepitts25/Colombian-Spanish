@@ -2,6 +2,10 @@
 
 Owner requested a practical remaining-work estimate and fewer idle applications/simulators on October 19, 2026. Audited against main `4d8ec2e` and the [current actionability index](../2026-10-19-actionability/open-items.json). This is a routing/cost-control correction, not app completion or a new product feature. No unchecked requirement is closed by this report.
 
+## Current iOS-only continuation, October20
+
+The [current iOS map](../2026-10-20-ios-remaining/README.md) retains nine known native case groups within the five broad packages: two bounded groups completed, six needing changed input/control capability, and one needing candidate/network/provider conditions. It routes43 overlapping local requirements; the127-row global roadmap also includes human, conditional and paused Android work. The seven remaining groups are not a task/session/credit guarantee. Keyboard/update/cache/learning-journal/full-restore cells completed through PR83 are reused. Android and security instructions below are historical where superseded by the owner pause/skip. No parent closes through this audit.
+
 ## How much work remains
 
 There are **127 unchecked requirement rows in29 work areas**, not127 independent coding tasks. Parent requirements repeat their children; many areas require human content acceptance, an owner decision, actual devices or a signed candidate. The index's nine local investigation areas below can be combined into **five QA work packages**. A package contains several acceptance cases; five packages is not a promise of five sessions, a fixed duration or a fixed credit charge.

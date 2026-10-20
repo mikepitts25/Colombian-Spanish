@@ -1,0 +1,363 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-10-20",
+  "sourceMain": "98049e76eef7e8c3fe9cef325631735e8edf9a63",
+  "scope": "iOS continuation routing within the existing five QA packages; not completion or an exhaustive new cross-product matrix. Android is owner-paused.",
+  "countsAreNotSessionsOrIndependentTasks": true,
+  "cases": [
+    {
+      "id": "IOS01",
+      "title": "Independent tablet-plan source protection",
+      "packages": [3],
+      "status": "completed-bounded",
+      "requirements": ["B01.6", "B01.6-B", "B01.6-B2", "B05.3-B2b2-B2"],
+      "nextAction": "Reuse the accepted bounded packet; broader parent/layout/provider/human gates remain separate.",
+      "dependency": "Completed with one owned iOS runtime at a time; resources stopped. No unchanged rerun needed.",
+      "evidence": [
+        "docs/qa/2026-10-20-ios-tablet-source/README.md",
+        "docs/qa/2026-10-18-independent-plan-tablet/REPORT.md",
+        "docs/qa/2026-10-18-remaining-ai-gates/README.md",
+        "docs/qa/2026-10-19-fresh-graded-editor/README.md"
+      ]
+    },
+    {
+      "id": "IOS02",
+      "title": "Malformed and oversized native backup selection",
+      "packages": [4],
+      "status": "completed-bounded",
+      "requirements": ["B12.6"],
+      "nextAction": "Reuse the accepted bounded packet; broader parent/layout/provider/human gates remain separate.",
+      "dependency": "Completed with one owned iOS runtime at a time; resources stopped. No unchanged rerun needed.",
+      "evidence": [
+        "docs/qa/2026-10-20-ios-file-input/README.md",
+        "docs/qa/2026-10-19-native-qa-bundle/README.md",
+        "docs/qa/2026-10-19-provider-read/README.md",
+        "src/services/backupFiles.ts",
+        "src/storage/backupValidation.ts"
+      ]
+    },
+    {
+      "id": "IOS03",
+      "title": "Precise maximum-text touch positioning",
+      "packages": [1, 2, 3],
+      "status": "tool-limited",
+      "requirements": ["B02.4-B2", "B08.3-C3", "B08.3-C3e", "B08.5-B8", "B12.5-C"],
+      "nextAction": "Use a changed input capability or measured actionable layout defect to expose narrow Again/Hard interval labels, Home middle/lower/maximum primary and remaining touch-only form controls. Preserve grades and distinguish accessibility positioning from touch-only input.",
+      "dependency": "Do not repeat failed gutter/wheel/drag-stop, unfocused keyboard, Physical Size or capture routes unchanged.",
+      "evidence": [
+        "docs/qa/2026-10-20-ios-touch-routing/README.md",
+        "docs/qa/2026-10-18-study-narrow-controls/REPORT.md",
+        "docs/qa/2026-10-19-long-draft-save/README.md",
+        "docs/qa/2026-10-19-native-qa-bundle/README.md"
+      ]
+    },
+    {
+      "id": "IOS04",
+      "title": "Spanish phone maximum long-deck count in Light and Dark",
+      "packages": [1],
+      "status": "tool-limited",
+      "requirements": ["B08.3-C3", "B08.3-C3e", "B08.5"],
+      "nextAction": "Capture complete Spanish maximum count without clipping in both Barrio themes using a changed reliable positioning route. Reuse accepted title and English count cells.",
+      "dependency": "Prior adjacent-target fractional paging, title click/drag and bottom-bound momentum did not establish the missing edges; do not replay unchanged.",
+      "evidence": [
+        "docs/qa/2026-10-19-phone-max-label/README.md",
+        "docs/qa/2026-10-19-native-qa-bundle/README.md",
+        "docs/qa/2026-10-20-ios-touch-routing/README.md"
+      ]
+    },
+    {
+      "id": "IOS05",
+      "title": "Native accent-popup input",
+      "packages": [3],
+      "status": "tool-limited",
+      "requirements": ["B04.5-B", "B05.3-B2b2-B2"],
+      "nextAction": "Establish a changed working long-press/accent-selection route on the named current exercise/plan input. Reuse accent-feedback, typed-string and normalization evidence; feedback is not popup entry.",
+      "dependency": "Known long-press routes did not expose/accept the popup; do not repeat those unchanged or call this inherently physical-only.",
+      "evidence": [
+        "docs/qa/2026-10-18-independent-plan-tablet/REPORT.md",
+        "docs/qa/2026-10-18-applied-mini/README.md"
+      ]
+    },
+    {
+      "id": "IOS06",
+      "title": "Reduced iPad window and multitasking layout",
+      "packages": [2, 3, 4],
+      "status": "tool-limited",
+      "requirements": ["B08.5", "B12.4", "B12.4-B"],
+      "nextAction": "Obtain an actual reduced learner viewport through a supported changed control route, then inspect the named layouts and preservation. Rotation and host canvas zoom are not reduced-window acceptance.",
+      "dependency": "Corner/edge/Stage Manager and native top-middle menu swipe failed; existing Windowed Apps selection is not proof of resize.",
+      "evidence": [
+        "docs/qa/2026-10-18-tablet-window/REPORT.md",
+        "docs/qa/2026-10-20-control-route-limits/README.md"
+      ]
+    },
+    {
+      "id": "IOS07",
+      "title": "VoiceOver focused activation and wider assistive acceptance",
+      "packages": [2, 3, 4],
+      "status": "tool-limited-and-human",
+      "requirements": ["B08.2-B", "B08.5-B8", "B12.4-B", "B12.5", "B08.6"],
+      "nextAction": "With actual focused control, prove screen-reader activation using a changed supported route. Keep direct coordinate toggles separate. Actual announcements, comfort and assistive-user judgments need relevant people.",
+      "dependency": "Switch focus works; Control-Option-Space and neutral-position double tap did not activate. Do not infer activation from AX tree or a direct switch click.",
+      "evidence": [
+        "docs/qa/2026-10-18-reminder-voiceover/REPORT.md",
+        "docs/qa/2026-10-20-control-route-limits/README.md",
+        "docs/qa/2026-10-19-mini-editor-focus/README.md"
+      ]
+    },
+    {
+      "id": "IOS08",
+      "title": "Live iOS system zone and DST changes",
+      "packages": [5],
+      "status": "tool-limited",
+      "requirements": ["B02.6", "B02.6-B", "B02.6-B2", "B05.5", "B05.5-B", "B08.3-C3e"],
+      "nextAction": "Use an actual supported system-zone/date control or relevant real boundary for still-unverified live-change cells; compare foreground Home/Progress/retained state. Reuse earned/retained/unfocused natural-midnight and cold-zone evidence.",
+      "dependency": "Simulator Settings has no usable Date & Time route. Process TZ, injected JS time, unit tests and host-clock changes do not supply this proof. Do not change the host clock.",
+      "evidence": [
+        "docs/qa/2026-10-18-barrio-home-calendar/README.md",
+        "docs/qa/2026-10-19-native-zone/README.md",
+        "docs/qa/2026-10-19-native-qa-bundle/README.md",
+        "docs/qa/2026-10-19-retained-midnight/README.md",
+        "docs/qa/2026-10-19-voice-navigation/README.md"
+      ]
+    },
+    {
+      "id": "IOS09",
+      "title": "Actual iOS offline/poor network and external provider conditions",
+      "packages": [3, 4, 5],
+      "status": "candidate-control-and-access",
+      "requirements": ["B07.3-B", "B12.6"],
+      "nextAction": "Use actual candidate/runtime network conditions and authorized provider where promised; verify cold local study/mission behavior and recoverable errors. Local Release without Metro is not proof the OS network is unavailable.",
+      "dependency": "A supported isolated network-control/provider route or physical device is needed; do not disrupt host networking/other projects or create provider accounts. Real downloaded-pack coverage is conditional on its approved implementation/content.",
+      "evidence": [
+        "docs/qa/2026-10-19-release-bundle/README.md",
+        "docs/qa/2026-10-19-native-qa-bundle/README.md",
+        "docs/superpowers/specs/2026-10-17-downloadable-audio-packs-design.md"
+      ]
+    }
+  ],
+  "openRequirementRoutes": [
+    {
+      "requirement": "B01.6",
+      "group": "native-source-and-queue",
+      "caseIds": ["IOS01", "IOS03"]
+    },
+    {
+      "requirement": "B01.6-B",
+      "group": "native-source-and-queue",
+      "caseIds": ["IOS01", "IOS03"]
+    },
+    {
+      "requirement": "B01.6-B2",
+      "group": "native-source-and-queue",
+      "caseIds": ["IOS01", "IOS03"]
+    },
+    {
+      "requirement": "B02.4",
+      "group": "native-source-and-queue",
+      "caseIds": ["IOS01", "IOS03"]
+    },
+    {
+      "requirement": "B02.4-B2",
+      "group": "native-source-and-queue",
+      "caseIds": ["IOS01", "IOS03"]
+    },
+    {
+      "requirement": "B02.6",
+      "group": "calendar-native",
+      "caseIds": ["IOS08"]
+    },
+    {
+      "requirement": "B02.6-B",
+      "group": "calendar-native",
+      "caseIds": ["IOS08"]
+    },
+    {
+      "requirement": "B02.6-B2",
+      "group": "calendar-native",
+      "caseIds": ["IOS08"]
+    },
+    {
+      "requirement": "B04.5",
+      "group": "exercise-native",
+      "caseIds": ["IOS05", "IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B04.5-B",
+      "group": "exercise-native",
+      "caseIds": ["IOS05", "IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B05.3",
+      "group": "whole-plan-native",
+      "caseIds": ["IOS01", "IOS03", "IOS05", "IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B05.3-B",
+      "group": "whole-plan-native",
+      "caseIds": ["IOS01", "IOS03", "IOS05", "IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B05.3-B2",
+      "group": "whole-plan-native",
+      "caseIds": ["IOS01", "IOS03", "IOS05", "IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B05.3-B2b",
+      "group": "whole-plan-native",
+      "caseIds": ["IOS01", "IOS03", "IOS05", "IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B05.3-B2b2",
+      "group": "whole-plan-native",
+      "caseIds": ["IOS01", "IOS03", "IOS05", "IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B05.3-B2b2-B",
+      "group": "whole-plan-native",
+      "caseIds": ["IOS01", "IOS03", "IOS05", "IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B05.3-B2b2-B2",
+      "group": "whole-plan-native",
+      "caseIds": ["IOS01", "IOS03", "IOS05", "IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B05.5",
+      "group": "calendar-native",
+      "caseIds": ["IOS08"]
+    },
+    {
+      "requirement": "B05.5-B",
+      "group": "calendar-native",
+      "caseIds": ["IOS08"]
+    },
+    {
+      "requirement": "B07.3",
+      "group": "mission-native",
+      "caseIds": ["IOS03", "IOS05", "IOS06", "IOS07", "IOS09"]
+    },
+    {
+      "requirement": "B07.3-B",
+      "group": "mission-native",
+      "caseIds": ["IOS03", "IOS05", "IOS06", "IOS07", "IOS09"]
+    },
+    {
+      "requirement": "B07.6",
+      "group": "mission-native",
+      "caseIds": ["IOS03", "IOS05", "IOS06", "IOS07", "IOS09"]
+    },
+    {
+      "requirement": "B08.1",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.2",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.2-B",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.3",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.3-C",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.3-C3",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.3-C3e",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.4",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.4-B",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.4-B2",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.5",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.5-B",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B08.5-B8",
+      "group": "visual-and-home",
+      "caseIds": ["IOS03", "IOS04", "IOS06", "IOS07", "IOS08"]
+    },
+    {
+      "requirement": "B09.2",
+      "group": "voice-native",
+      "caseIds": ["IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B09.2-B",
+      "group": "voice-native",
+      "caseIds": ["IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B09.2-B2",
+      "group": "voice-native",
+      "caseIds": ["IOS06", "IOS07"]
+    },
+    {
+      "requirement": "B12.4",
+      "group": "tablet-and-lifecycle",
+      "caseIds": ["IOS02", "IOS03", "IOS06", "IOS07", "IOS09"]
+    },
+    {
+      "requirement": "B12.4-B",
+      "group": "tablet-and-lifecycle",
+      "caseIds": ["IOS02", "IOS03", "IOS06", "IOS07", "IOS09"]
+    },
+    {
+      "requirement": "B12.5",
+      "group": "tablet-and-lifecycle",
+      "caseIds": ["IOS02", "IOS03", "IOS06", "IOS07", "IOS09"]
+    },
+    {
+      "requirement": "B12.5-C",
+      "group": "touch-route",
+      "caseIds": ["IOS03"]
+    },
+    {
+      "requirement": "B12.6",
+      "group": "tablet-and-lifecycle",
+      "caseIds": ["IOS02", "IOS03", "IOS06", "IOS07", "IOS09"]
+    }
+  ],
+  "externalGates": [
+    "Signed candidate/account authorization, actual notification delivery/taps and signed-production exclusions",
+    "Physical sensory/audio/routes/calls, daylight/tap comfort, thermal/battery/performance and relevant assistive-user feedback",
+    "Accepted language/content/variants, recorded performances and rights; actual consented learner pilot",
+    "Pending audio-pack written spec, mission-guidance direction and passport direction approvals; provider/sync/payment choices remain conditional",
+    "Android owner-paused and security owner-skipped; do not retry either as iOS work"
+  ]
+}

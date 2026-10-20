@@ -1,0 +1,21 @@
+{
+  "name": "colombian-spanish-backup-2026-10-20T13-05-31.586Z-2aeml7.json",
+  "bytes": 379149,
+  "sha256": "f6b9f49196690e2c1642aebc0ac6de0b1d7f0ab622bcd275e20c3981a0dfd6c2",
+  "exportedAt": "2026-10-20T13:05:31.571Z",
+  "version": 3,
+  "decks": 48,
+  "cards": 1402,
+  "eventCount": 11,
+  "stateKeys": [
+    "dailyPlan",
+    "missions",
+    "prefs",
+    "daily",
+    "streak",
+    "seenWords",
+    "quizHistory",
+    "lastSession",
+    "notificationPrefs"
+  ]
+}

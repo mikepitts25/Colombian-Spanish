@@ -1,0 +1,54 @@
+{
+  "sourceDevice": "2EDF21F0-7DBD-4B09-8D5F-85560FD0E730",
+  "sourceRecords": 11,
+  "sourceDecks": 48,
+  "sourceCards": 1402,
+  "sourceEvents": 10,
+  "sourceBeforeAndAfterExportHashes": {
+    "SRS_DAILY_PLAN_V1": "220a914f42c3952852f8c14dffd9f44b3b62caa4db676e9286b05424693c7865",
+    "SRS_DAILY_PROGRESS_V1": "e01283a2d4bf598c16eb07f9ed3a9c360e60497f1e2aa7e2da7296b227015fb8",
+    "SRS_DECKS_V3": "888eab09d97f8a460154d3c80de8a0ae2c3ce0a799013be5e4231c1f12d1e82a",
+    "SRS_LAST_STUDY_SESSION_V1": "4335d69976743e04ce16084d63dd71f1f6a98878bcc01a813e532aaa1db81db7",
+    "SRS_LEARNING_EVENTS_V1": "f03e17f3bfae25e4b833e8e2ec68d5600fb92ff737b9293f63cc99e844824da1",
+    "SRS_MISSIONS_V1": "e932158f2b198626be2e41221db5e67973cf7679b882548f15e0075865afd2b0",
+    "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "SRS_PREFS_V1": "7822aa7a13ea0564306ff5a8bad4cbb2b64755ff7ad31699ec4ea826a3c6f1d0",
+    "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "SRS_SEEN_WORDS_V1": "815f58994cd9f0ac2a76f3f1268e2d050d285847cf74989d0a66d81e51a10737",
+    "SRS_STUDY_STREAK_V1": "72e76aa60a3f21f517897e51c687f2b99e60f57e4743c986d61707dcea9705ea"
+  },
+  "export": {
+    "name": "colombian-spanish-backup-2026-10-20T12-49-52.672Z-hf7i4w.json",
+    "bytes": 378302,
+    "sha256": "00013266695b1b729929107408d1c883c22bf7560ef60fb05c877a72a4a98e26",
+    "exportedAt": "2026-10-20T12:49:52.657Z",
+    "version": 3,
+    "decks": 48,
+    "cards": 1402,
+    "eventCount": 10,
+    "stateKeys": [
+      "dailyPlan",
+      "missions",
+      "prefs",
+      "daily",
+      "streak",
+      "seenWords",
+      "quizHistory",
+      "lastSession",
+      "notificationPrefs"
+    ]
+  },
+  "interruption": {
+    "utc": "2026-10-20T12:50:25.696855+00:00",
+    "other": ["C100803B-D3D6-48B3-9615-7F74673A590D"],
+    "ownStopped": true
+  },
+  "tabletAppLaunched": true,
+  "tabletDataCaptured": true,
+  "sourceColdAfterTabletMutationProved": true,
+  "ownedMetroStopped": true,
+  "sourceAndTabletStopped": true,
+  "otherProjectNotStopped": true,
+  "continuation": "Other chat finished naturally; no message sent. Completed source cold and exact tablet recovery in B01.6-B2h.",
+  "finalEvidence": "../2026-10-20-ios-tablet-source/README.md"
+}

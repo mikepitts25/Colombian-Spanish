@@ -1,0 +1,15 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Release Bundle QA 20261019" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
++				122 container
++					123 heading Description: Vista previa del respaldo, Secondary Actions: Cancel
++					124 text Secondary Actions: Cancel, Description: Exportado: 2026-10-20T12:28:30.772Z
+47 decks · 1392 tarjetas · 1 observaciones.
+Añadir tarjetas nuevas conserva el contenido y los intervalos existentes. Reemplazar decks los sobrescribe. Todas las opciones combinan el historial de aprendizaje; se conservan las observaciones locales más recientes.
++					125 text Secondary Actions: Cancel, Description: Incluye preferencias, metas, racha, palabras vistas, resultados y sesión guardada. Solo Restaurar estado de la app los reemplaza junto con los decks; añadir o reemplazar decks conserva el estado local. Los datos ausentes se restablecen. Requiere reiniciar. Los permisos del dispositivo no se importan.
++					126 button Description: Restaurar estado de la app, Secondary Actions: Cancel
++					127 element Description: Añadir tarjetas nuevas, Secondary Actions: Cancel
++					128 button Description: Reemplazar decks, Secondary Actions: Cancel
++					129 element Description: Cancelar, Secondary Actions: Cancel
++					130 element Description: INICIO, Secondary Actions: Cancel
++					131 element Description: ESTUDIAR, Secondary Actions: Cancel
++					132 element Description: PROGRESO, Secondary Actions: Cancel
++					133 element (selected) Description: AJUSTES, Secondary Actions: Cancel

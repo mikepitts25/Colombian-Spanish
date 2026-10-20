@@ -1,0 +1,25 @@
+The following is a diff from the previous accessibility tree for Window: "Colombian Spanish Release Bundle QA 20261019" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
++				122 container
++					123 text Secondary Actions: Cancel, Description: Archivo de respaldo demasiado grande
+Elige un respaldo JSON de hasta 20 MB y 10 millones de caracteres. No se cambió ningún dato.
++					124 text Description: ⚙️ Ajustes, Secondary Actions: Cancel
++					125 text Description: APRENDIZAJE, Secondary Actions: Cancel
++					126 element Description: 🧭, Tus preferencias de aprendizaje, ›, Secondary Actions: Cancel
++					127 element Description: 🎯, Meta Diaria, 5 tarjetas por día, ›, Secondary Actions: Cancel
++					128 element Description: 🃏, Nuevas Tarjetas, 10 por día, ›, Secondary Actions: Cancel
++					129 element Description: 🔔, Recordatorios, Recordatorios de estudio por la mañana y por la noche, ›, Secondary Actions: Cancel
++					130 element Description: 📚, Gestionar Decks, Organiza y edita tus decks, ›, Secondary Actions: Cancel
++					131 text Description: APLICACIÓN, Secondary Actions: Cancel
++					132 element Description: 🎨, Tema, Clásico · Oscuro, ›, Secondary Actions: Cancel
++					133 element Description: 🔊, Preferencias de audio, Velocidad y vista previa de pronunciación, ›, Secondary Actions: Cancel
++					134 element Description: 🌐, Idioma de interfaz, Español, ›, Secondary Actions: Cancel
++					135 element Description: 💾, Exportar respaldo, Copia tus decks y resultados de práctica al portapapeles, ›, Secondary Actions: Cancel
++					136 element Description: 📥, Importar respaldo, Restaurar desde portapapeles, ›, Secondary Actions: Cancel
++					137 element Description: 📄, Guardar archivo de respaldo, Decks, historial y estado de la app · JSON, ›, Secondary Actions: Cancel
++					138 element Description: 📂, Importar archivo de respaldo, Vista previa antes de reemplazar o añadir tarjetas, ›, Secondary Actions: Cancel
++					139 text Description: SOBRE LA APP, Secondary Actions: Cancel
++					140 element Description: 📋, Versión, 1.0.1 · compilación 2, Secondary Actions: Cancel
++					141 element Description: INICIO, Secondary Actions: Cancel
++					142 element Description: ESTUDIAR, Secondary Actions: Cancel
++					143 element Description: PROGRESO, Secondary Actions: Cancel
++					144 element (selected) Description: AJUSTES, Secondary Actions: Cancel

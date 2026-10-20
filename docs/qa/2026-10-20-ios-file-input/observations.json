@@ -1,0 +1,44 @@
+{
+  "baseMain": "98049e76eef7e8c3fe9cef325631735e8edf9a63",
+  "app": "unsigned Release 1.0.1/build 2, iOS26 SE3",
+  "initialPid": 39910,
+  "finalColdPid": 42358,
+  "rawExactCheckpoints": [
+    "oversized-error",
+    "valid-preview",
+    "canceled",
+    "invalid-error",
+    "baseline",
+    "final-cold"
+  ],
+  "validPreview": {
+    "exportedAt": "2026-10-20T12:28:30.772Z",
+    "decks": 47,
+    "cards": 1392,
+    "events": 1,
+    "action": "Cancel; no import"
+  },
+  "oversizeFirstAttempt": {
+    "guard": {
+      "device": "D5502A06-4858-428C-901C-587B58280F64",
+      "target": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Shared/AppGroup/5C0949D5-49E4-472A-892E-82AD9E9EC36F/File Provider Storage/colombian-spanish-backup-2026-10-20T12-28-30.799Z-oex5y4.json",
+      "phase": "oversized-bytes",
+      "originalBytes": 372359,
+      "originalSha256": "ee68474574cda36eda5ef735a658474ad099c3cebe28561856878c1c06ce6fae",
+      "originalMode": "0o644",
+      "startedUtc": "2026-10-20T13:21:19.737135+00:00",
+      "stagedBytes": 20000001,
+      "stagedSha256": "911e01a54e199fb88c32f65b6ed2e8d5171da1eb7a8fec663e3acc4c61522f8c",
+      "restoredBytes": 372359,
+      "restoredSha256": "ee68474574cda36eda5ef735a658474ad099c3cebe28561856878c1c06ce6fae",
+      "restoredMode": "0o644",
+      "restoredUtc": "2026-10-20T13:24:19.912039+00:00"
+    },
+    "result": "Guard timed out before selection; valid preview opened and was canceled. Not oversized-input acceptance."
+  },
+  "acceptedOversizeAttempt": 2,
+  "deviceShutdown": true,
+  "deviceHubQuit": true,
+  "metroStarted": false,
+  "buildStarted": false
+}
