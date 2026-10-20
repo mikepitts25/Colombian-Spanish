@@ -1,0 +1,86 @@
+{
+  "checkpoints": [
+    {
+      "label": "start",
+      "hashes": {
+        "SRS_DAILY_PLAN_V1": "60a163be1464d1d5704387f566b3930b191c80a1c2af841bd4495dc242b925bb",
+        "SRS_DAILY_PROGRESS_V1": "34d5827dbe04c69a91ac1b475b0b7900b4d6b5105f38dd93e610b5d75e7d9828",
+        "SRS_DECKS_V3": "890fbca2992afc71d96d658d9d89b80fc36b82dca8cee58754c849103e26cf46",
+        "SRS_LAST_STUDY_SESSION_V1": "acc3360bb08416cb27dc46ae3b66d1baaeb88e921755cb3fad448888230edb73",
+        "SRS_LEARNING_EVENTS_V1": "abd9009eefcc47b8d6dce992514bfd93b4f1fdf4c7ba1c59ddadb6f639bb24a1",
+        "SRS_MISSIONS_V1": "4111aa632da2c70de963001438933486e200abc46b1f212992d332fc6a0b3f17",
+        "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+        "SRS_QUIZ_HISTORY_V1": "b1322a8b8123ca0f63e4a687f91d12b765d8a4f1d123cee7d225865653564576",
+        "SRS_SEEN_WORDS_V1": "655a3b823aff00d6f36a51872df8e186e7f98f57f2f1d12f8fe9d58032f7ac67",
+        "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+      }
+    },
+    {
+      "label": "cold-max",
+      "hashes": {
+        "SRS_DAILY_PLAN_V1": "60a163be1464d1d5704387f566b3930b191c80a1c2af841bd4495dc242b925bb",
+        "SRS_DAILY_PROGRESS_V1": "34d5827dbe04c69a91ac1b475b0b7900b4d6b5105f38dd93e610b5d75e7d9828",
+        "SRS_DECKS_V3": "890fbca2992afc71d96d658d9d89b80fc36b82dca8cee58754c849103e26cf46",
+        "SRS_LAST_STUDY_SESSION_V1": "acc3360bb08416cb27dc46ae3b66d1baaeb88e921755cb3fad448888230edb73",
+        "SRS_LEARNING_EVENTS_V1": "abd9009eefcc47b8d6dce992514bfd93b4f1fdf4c7ba1c59ddadb6f639bb24a1",
+        "SRS_MISSIONS_V1": "80e139fbbce8d9d9ce86578b7b4e5c3901144e3014a764f37ea5338b54312812",
+        "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+        "SRS_QUIZ_HISTORY_V1": "b1322a8b8123ca0f63e4a687f91d12b765d8a4f1d123cee7d225865653564576",
+        "SRS_SEEN_WORDS_V1": "655a3b823aff00d6f36a51872df8e186e7f98f57f2f1d12f8fe9d58032f7ac67",
+        "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+      }
+    },
+    {
+      "label": "after-dialogs",
+      "hashes": {
+        "SRS_DAILY_PLAN_V1": "60a163be1464d1d5704387f566b3930b191c80a1c2af841bd4495dc242b925bb",
+        "SRS_DAILY_PROGRESS_V1": "34d5827dbe04c69a91ac1b475b0b7900b4d6b5105f38dd93e610b5d75e7d9828",
+        "SRS_DECKS_V3": "890fbca2992afc71d96d658d9d89b80fc36b82dca8cee58754c849103e26cf46",
+        "SRS_LAST_STUDY_SESSION_V1": "acc3360bb08416cb27dc46ae3b66d1baaeb88e921755cb3fad448888230edb73",
+        "SRS_LEARNING_EVENTS_V1": "abd9009eefcc47b8d6dce992514bfd93b4f1fdf4c7ba1c59ddadb6f639bb24a1",
+        "SRS_MISSIONS_V1": "80e139fbbce8d9d9ce86578b7b4e5c3901144e3014a764f37ea5338b54312812",
+        "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+        "SRS_QUIZ_HISTORY_V1": "b1322a8b8123ca0f63e4a687f91d12b765d8a4f1d123cee7d225865653564576",
+        "SRS_SEEN_WORDS_V1": "655a3b823aff00d6f36a51872df8e186e7f98f57f2f1d12f8fe9d58032f7ac67",
+        "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+      }
+    },
+    {
+      "label": "final-cold",
+      "hashes": {
+        "SRS_DAILY_PLAN_V1": "60a163be1464d1d5704387f566b3930b191c80a1c2af841bd4495dc242b925bb",
+        "SRS_DAILY_PROGRESS_V1": "34d5827dbe04c69a91ac1b475b0b7900b4d6b5105f38dd93e610b5d75e7d9828",
+        "SRS_DECKS_V3": "890fbca2992afc71d96d658d9d89b80fc36b82dca8cee58754c849103e26cf46",
+        "SRS_LAST_STUDY_SESSION_V1": "acc3360bb08416cb27dc46ae3b66d1baaeb88e921755cb3fad448888230edb73",
+        "SRS_LEARNING_EVENTS_V1": "abd9009eefcc47b8d6dce992514bfd93b4f1fdf4c7ba1c59ddadb6f639bb24a1",
+        "SRS_MISSIONS_V1": "80e139fbbce8d9d9ce86578b7b4e5c3901144e3014a764f37ea5338b54312812",
+        "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+        "SRS_QUIZ_HISTORY_V1": "b1322a8b8123ca0f63e4a687f91d12b765d8a4f1d123cee7d225865653564576",
+        "SRS_SEEN_WORDS_V1": "655a3b823aff00d6f36a51872df8e186e7f98f57f2f1d12f8fe9d58032f7ac67",
+        "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+      }
+    }
+  ],
+  "intentionalMissionRetry": {
+    "revision": [2, 3],
+    "modelAnswerRevealed": [false, true],
+    "feedbackRemoved": true,
+    "nodeId": "greeting",
+    "completed": false,
+    "linkedDailyRunUnchanged": true
+  },
+  "coldLaunches": {
+    "maximumText": {
+      "launchState": "COLD",
+      "totalTimeMs": 1385
+    },
+    "restoredFont": {
+      "launchState": "COLD",
+      "totalTimeMs": 1356
+    }
+  }
+}
