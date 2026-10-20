@@ -103,3 +103,5 @@ The current SDK57 iOS development install now has [granted-recording background 
 ## October20 Android permission-loop fix
 
 [One diagnosed runtime fix](../2026-10-20-android-recording/README.md) removes unnecessary already-granted microphone requests that briefly background Android and cancel recording. The controller/service regression fails before and passes afterward;29 focused voice tests pass. Native Preparing is observed, but actual recording remains unaccepted because QEMU host audio hung/crashed and an input-disabled restart also hung. Original AVD configuration and temporary tracing were restored. All five packages remain open; no broad local suite/native rebuild/passed iOS replay was added.
+
+October20: [Android maximum-text mission keyboard](../2026-10-20-android-keyboard/README.md) closes one reproduced defect and its bounded native acceptance. All five packages still have named remaining cases; this adds one checked child, without changing the127 open parent/requirement rows or29 overlapping groups. Do not restart passed cases or multiply theme/language/device combinations beyond their named requirements.

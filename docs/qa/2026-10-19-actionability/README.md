@@ -119,3 +119,5 @@ Run `python3 docs/qa/2026-10-19-actionability/verify-index.py`. It checks exact 
 ## October20 Android permission-loop fix
 
 [The native trace and regression](../2026-10-20-android-recording/README.md) diagnose and fix already-granted permission requests backgrounding/canceling capture. Native flow now reaches Preparing. QEMU then hangs/crashes in host audio initialization; a changed input-disabled restart also hangs before adb. Restore/check state and permission at a stable boot; capture lifecycle remains open and this audio route must not be replayed unchanged. All five packages remain open.
+
+October20 Android keyboard follow-up: [B01.5-B7](../2026-10-20-android-keyboard/README.md) recovers the prior seven-record state exactly and fixes Spanish maximum-text mission input/Check above the software keyboard. A token-authenticated embedded non-audio control route works; the old generic input blocker above is superseded for this route. Named unaccepted cells and actual audio/provider gates remain open. No package is closed by this bounded fix.

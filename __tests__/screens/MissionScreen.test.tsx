@@ -2,7 +2,17 @@ import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
-import { AppState, AppStateStatus, DeviceEventEmitter, Dimensions, ScrollView } from 'react-native';
+import {
+  AppState,
+  AppStateStatus,
+  DeviceEventEmitter,
+  Dimensions,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { DAILY_RESPONSE } from '../../src/missions/dailyResponse';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MissionScreen from '../../src/screens/MissionScreen';
@@ -504,4 +514,28 @@ test('can reuse unchanged response frames after translation changes without wait
     DeviceEventEmitter.emit('keyboardDidShow', { endCoordinates: { screenY: 400, height: 267 } }),
   );
   expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 984, animated: false });
+});
+
+test('Android keyboard reduces the response viewport while preserving the focused draft', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  const ui = await begin();
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'Buenos dias');
+  fireEvent(ui.getByLabelText('Your response'), 'focus');
+  const avoiding = ui.UNSAFE_getByType(KeyboardAvoidingView);
+  const viewport = avoiding.findAllByType(View)[0];
+  await act(async () => {
+    fireEvent(viewport, 'layout', {
+      persist: jest.fn(),
+      nativeEvent: { layout: { x: 0, y: 0, width: 360, height: 700 } },
+    });
+  });
+  await act(async () => {
+    DeviceEventEmitter.emit('keyboardDidShow', {
+      endCoordinates: { screenX: 0, screenY: 400, width: 360, height: 300 },
+    });
+  });
+  expect(StyleSheet.flatten(viewport.props.style).height).toBe(400);
+  expect(ui.getByLabelText('Your response').props.value).toBe('Buenos dias');
+  await act(async () => DeviceEventEmitter.emit('keyboardDidHide', {}));
+  expect(StyleSheet.flatten(viewport.props.style).height).toBeUndefined();
 });

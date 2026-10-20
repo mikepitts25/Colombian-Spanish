@@ -1,0 +1,52 @@
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish'`
+
+FAIL __tests__/screens/MissionScreen.test.tsx
+  ✕ Android keyboard reduces the response viewport while preserving the focused draft (416 ms)
+  ○ skipped choice actions keep stable React list keys
+  ○ skipped complete draft flow records three assessed recalls and one recognition without changing daily/SRS state
+  ○ skipped retains failed submission for retry and resumes exact feedback without persisting raw text
+  ○ skipped hints are counted on explicit retries and incorrect answers permit assisted continuation
+  ○ skipped load failure offers retry and production gate prevents accessing draft content
+  ○ skipped blocks rapid actions and local exit during a pending checkpoint
+  ○ skipped preserves partial input when revealing a hint
+  ○ skipped allows local exit after a settled checkpoint failure while retaining retry
+  ○ skipped offers difficult-phrase recall/reveal without writing extra events or changing the completed checkpoint
+  ○ skipped a linked one-response activity starts its planned run and completes only that plan
+  ○ skipped times only actionable foreground segments, preserving hint/save retry timing without counting waits
+  ○ skipped cold response resume with feedback=false never invents a lost timing segment
+  ○ skipped cold response resume with feedback=true never invents a lost timing segment
+  ○ skipped notifies the parent when a pending save settles even after the player unmounts
+  ○ skipped a held response checkpoint retains draft and exactly one command across identity changes
+  ○ skipped reveals the measured focused response when the software keyboard opens without recording an answer
+  ○ skipped waits for current response geometry after rotation and live text changes, retaining the ungraded draft
+  ○ skipped keeps the focused response eligible after a hint revision without requiring refocus
+  ○ skipped can reuse unchanged response frames after translation changes without waiting for absent layout events
+
+  ● Android keyboard reduces the response viewport while preserving the focused draft
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: undefined
+
+      522 |     });
+      523 |   });
+    > 524 |   expect(StyleSheet.flatten(viewport.props.style).height).toBe(400);
+          |                                                           ^
+      525 |   expect(ui.getByLabelText('Your response').props.value).toBe('Buenos dias');
+      526 |   await act(async () => DeviceEventEmitter.emit('keyboardDidHide', {}));
+      527 |   expect(StyleSheet.flatten(viewport.props.style).height).toBeUndefined();
+
+      at Object.toBe (__tests__/screens/MissionScreen.test.tsx:524:59)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 19 skipped, 20 total
+Snapshots:   0 total
+Time:        2.355 s, estimated 7 s
+Ran all test suites matching /__tests__\/screens\/MissionScreen.test.tsx/i with tests matching "Android keyboard reduces".
