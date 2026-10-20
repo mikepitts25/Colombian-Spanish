@@ -1,0 +1,20 @@
+{
+  "01-backup-controls.png": "52ceb14a850cf28cb90cbdcdfb1b8ccfe8e1498e8d9be73aa885b847496d3a66",
+  "02-full-cache-export-error.png": "784f7637aea702919c0ff0cd34b643335c544893cf34ae7f9d0ee7f55d7d8919",
+  "03-same-process-retry.png": "6f3af7f8a295d1432ae9b06d0a039ef70ba5cf10e8f43c628b070ce029f8b6ac",
+  "04-final-cold-home.png": "ed6d46ed855e796f663f7d65f07d93ff9d57238acfda0419242f2d9b6828a44a",
+  "README.md": "acc55eb8f20d2faef2c6fd7a8164e9825007ea934444d8a420e6ec794e0141ec",
+  "after-retry-process.txt": "3d2b3a02f54406c9cfd834c5b69f88904a7d1c9acc584f939c7cd966d93d5fd0",
+  "cache-volume-guard.py": "78bd584ac1eb390e1a6da357174fcc113bf5e4d42a84c773cafb855c465dc765",
+  "cleanup.json": "e2ae9b5e169c777152cc5a6fa067393c8b68596c77d99b1f847d5dc806ddf3cc",
+  "exclusive-watch.jsonl": "850033b0992ef90f6729335ee678d973b1aa2a902dd318cf15fb35873fb73303",
+  "export-error.txt": "f3fd4ace8f21a1552025475080d2b968660fea7c0d49e4b0d044faeb9b412ce4",
+  "fault-active.json": "daa57ecf1f9350835b88b67cbae84c63074eb137e1a4ff6c3e03d1346638667d",
+  "fault-restored.json": "448d7df44d54b11929eafdeb9bd21b380c071c63ce104d87c3c71c97a8e1ef4b",
+  "retry-metadata.json": "b6075928827f68780d4b8f2f0c658c834c14a6c742297ef155a3d81a50498afc",
+  "same-process.txt": "3d2b3a02f54406c9cfd834c5b69f88904a7d1c9acc584f939c7cd966d93d5fd0",
+  "setup-attempt-restored.json": "145a75d83790d70fc1c2b6d95d1e96ee4ad4fa2747c50fa1118484c134726e5d",
+  "space-freed.json": "8744eb0a064c10b6a2f6c21226974131554265976200e57e16e41bad6e249ffe",
+  "state-summary.json": "7a25a6c6c6f9700b48349520ea86c3634b6c09b89a7484135955220c7fede18b",
+  "verify.py": "a0deba3f740f2ff02f3a1e7d4dedc30e4f96e87d55bc98abcca5c2fcec075cd5"
+}

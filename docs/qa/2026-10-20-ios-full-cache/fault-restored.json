@@ -1,0 +1,48 @@
+{
+  "device": "D5502A06-4858-428C-901C-587B58280F64",
+  "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/32204D2A-EE16-457C-9FF8-F20C1F521559",
+  "cache": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/32204D2A-EE16-457C-9FF8-F20C1F521559/Library/Caches",
+  "originalFiles": {
+    "colombian-spanish-backup-2026-10-19T18-32-18.019Z-fwz846.json": "9441ea68eeacf9bcd36ebe7e81254010966551d44ee54b6dbb3315ff8f72fc8d",
+    "colombian-spanish-backup-2026-10-20T11-05-41.019Z-0x7g6f.json": "210a96bc3bcd184cf7126992cdf6aca3fe2b053e0538a78a808ab483e3d07435",
+    "com.mikepitts.colombianspanish/Cache.db-shm": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+    "com.mikepitts.colombianspanish/Cache.db-wal": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "com.mikepitts.colombianspanish/Cache.db": "be14b5cf1d70e71b06cc20a33eb8ee3fce9f8feb5ebf72122061a79c01d6cfbd"
+  },
+  "imageBytes": 33554432,
+  "startedUtc": "2026-10-20T11:55:39.136329+00:00",
+  "mountEntities": [
+    {
+      "content-hint": "Apple_HFS",
+      "dev-entry": "/dev/disk22s1",
+      "mount-point": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/32204D2A-EE16-457C-9FF8-F20C1F521559/Library/Caches",
+      "potentially-mountable": true,
+      "unmapped-content-hint": "48465300-0000-11AA-AA11-00306543ECAC",
+      "volume-kind": "hfs"
+    },
+    {
+      "content-hint": "GUID_partition_scheme",
+      "dev-entry": "/dev/disk22",
+      "potentially-mountable": false,
+      "unmapped-content-hint": "GUID_partition_scheme"
+    }
+  ],
+  "mountedDevice": "/dev/disk22s1",
+  "totalBytes": 33513472,
+  "fillerErrno": 28,
+  "freeBytes": 16384,
+  "hostFreeBytes": 131698106368,
+  "fillerBytes": 32702464,
+  "detachExit": 0,
+  "detachOutput": "\"disk22\" ejected.\nhdiutil: WARNING: 'hdiutil detach ...' is deprecated. Please use 'diskutil eject ...' instead.\n",
+  "restoredSameFilesystem": true,
+  "restoredFiles": {
+    "colombian-spanish-backup-2026-10-19T18-32-18.019Z-fwz846.json": "9441ea68eeacf9bcd36ebe7e81254010966551d44ee54b6dbb3315ff8f72fc8d",
+    "colombian-spanish-backup-2026-10-20T11-05-41.019Z-0x7g6f.json": "210a96bc3bcd184cf7126992cdf6aca3fe2b053e0538a78a808ab483e3d07435",
+    "com.mikepitts.colombianspanish/Cache.db-shm": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+    "com.mikepitts.colombianspanish/Cache.db-wal": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "com.mikepitts.colombianspanish/Cache.db": "be14b5cf1d70e71b06cc20a33eb8ee3fce9f8feb5ebf72122061a79c01d6cfbd"
+  },
+  "originalFilesPreserved": true,
+  "restoredUtc": "2026-10-20T11:57:51.420373+00:00"
+}
