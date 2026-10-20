@@ -1,0 +1,23 @@
+{
+  "01-before-upgrade.png": "a6c4eb8552986d3b47881d1f2fad67010b83be95573b0fb7a46146aee57f80a0",
+  "02-updated-home.png": "3bdf33bab7179cda1cfc1a662a8455471c7d5918ba555e984094b238f67bdc00",
+  "03-resumed-queue.png": "9c978306209215e107232315c07429cb0e7ba5ff847d781b8980b5134e08c510",
+  "04-cache-write-error.png": "6c396fb55e98183220a2acd613f149dff9b26bd81021cb5019ec2c783a52775f",
+  "05-export-retry-share.png": "c8252fb592cb15dd147dcc6e51780898a182378b36513c51cbdc02d3c6e85489",
+  "06-final-cold-home.png": "f4d196629385f3c5800efd84185dbc631b4a12c4d2f93e055f5603c753b41eba",
+  "README.md": "583724bea972f3ce87d39499ae23fe4803e5e2af51dcae0e6182666d508a57a5",
+  "build-metadata.json": "de363157e290c60b2cf6ed255bac88b57b195a44d006745b21d144ca6fb36ca6",
+  "build-result.txt": "9e63de76c59ae682900a86d475049b9c6079e0c9f850c74c0f708e652bbd858d",
+  "cache-denied.json": "8181a7ac94bc19e551dd6439252fce08124d4df5f34a93d55527ff44f7264335",
+  "cache-guard.py": "289ac55da395e0c3fd69350ba9569eccbc96af83fac2454938016a0dbe8f4aef",
+  "cache-restored.json": "c520ac3b2e5cc39eb39024fadc460234bf4192c1363583dead5d7fbfd7bd2d96",
+  "cache-write-error.txt": "bf577c96951cfca9918dd7dbd9920b51665ddb19794761f169f3733b8252466d",
+  "cleanup.json": "9f9a204a3226bb8739e5d6fde502ea746a4a257a8e84cbab4eda66eeb5840d07",
+  "exclusive-watch.jsonl": "f11d0231a1dc94ff310ccd932f9acb768c4d41558d0202b37335f429fad7778a",
+  "first-v2-launch.txt": "60693465763b055c4aa57497c2260700f9a4a9c1a2d01406dfd6a3484aa2124b",
+  "retry-metadata.json": "cc795e512211f3869c0e2c0e7daee11e8313cab208a539a8a0595c9b7722420f",
+  "retry-process.txt": "8fb7abac2854b27f983ebb80cbe98b845b1247427e2f783644ae8272355c08c6",
+  "state-summary.json": "54b1a4ec9b71a987f34c2217acfc6f68872f3d8308ae9b3343f24ac68524c5fc",
+  "verify.py": "d61e43ed56c2ea859ea09e1aeccb42b37aa38e122bbd0a54844b9bb5befb758d",
+  "version-settings.txt": "f2bdac9b69dad3e3cc55eb3a9df5120d1d7e781b5a16c0aa164c72f38cb2f6dd"
+}

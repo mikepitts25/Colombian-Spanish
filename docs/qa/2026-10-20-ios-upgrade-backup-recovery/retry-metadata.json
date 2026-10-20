@@ -1,0 +1,22 @@
+{
+  "cacheFile": "colombian-spanish-backup-2026-10-20T11-05-41.019Z-0x7g6f.json",
+  "sha256": "210a96bc3bcd184cf7126992cdf6aca3fe2b053e0538a78a808ab483e3d07435",
+  "bytes": 372661,
+  "version": 3,
+  "exportedAt": "2026-10-20T11:05:41.009Z",
+  "decks": 47,
+  "cards": 1392,
+  "events": 2,
+  "stateKeys": [
+    "dailyPlan",
+    "missions",
+    "prefs",
+    "daily",
+    "streak",
+    "seenWords",
+    "quizHistory",
+    "lastSession",
+    "notificationPrefs"
+  ],
+  "restoredMode": "0o755"
+}
