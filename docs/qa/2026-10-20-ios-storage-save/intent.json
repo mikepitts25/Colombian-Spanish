@@ -1,0 +1,80 @@
+{
+  "cardChanges": [
+    {
+      "deckId": "deck-travel",
+      "before": {
+        "id": "0038",
+        "front": "maleta",
+        "back": "suitcase",
+        "example": "Empaca tu maleta que viajamos ma\u00f1ana. | Pack your suitcase, we'll travel tomorrow.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      "after": {
+        "id": "0038",
+        "front": "maleta",
+        "back": "suitcase",
+        "example": "Empaca tu maleta que viajamos ma\u00f1ana. | Pack your suitcase, we'll travel tomorrow.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792541540600,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      }
+    }
+  ],
+  "event": {
+    "schemaVersion": 1,
+    "id": "mvgn7inp-7-vc67av9ng7",
+    "sessionId": "mvgn5r9s-2-dhzt5sa8g6t",
+    "cardId": "0038",
+    "deckId": "deck-travel",
+    "modality": "recall",
+    "evidence": "self-rated",
+    "outcome": "incorrect",
+    "quality": 2,
+    "occurredAt": 1792498340603,
+    "hintsUsed": null,
+    "durationMs": 82129
+  },
+  "daily": {
+    "date": "2026-10-20",
+    "count": 1,
+    "target": 10,
+    "newCount": 1
+  },
+  "streak": {
+    "streak": 1,
+    "lastStudyDate": "2026-10-20",
+    "freezes": 0
+  },
+  "seenWords": [
+    {
+      "cardId": "0038",
+      "deckId": "deck-travel",
+      "front": "maleta",
+      "back": "suitcase",
+      "spanish": "maleta",
+      "english": "suitcase",
+      "lastSeen": 1792498340603,
+      "correctCount": 0,
+      "incorrectCount": 1
+    }
+  ],
+  "journalEntryKeys": [
+    "SRS_DECKS_V3",
+    "SRS_DAILY_PROGRESS_V1",
+    "SRS_SEEN_WORDS_V1",
+    "SRS_STUDY_STREAK_V1",
+    "SRS_LEARNING_EVENTS_V1",
+    "SRS_LAST_STUDY_SESSION_V1"
+  ],
+  "firstColdPid": 23453,
+  "secondColdPid": 23926,
+  "originalColdPid": 24134
+}
