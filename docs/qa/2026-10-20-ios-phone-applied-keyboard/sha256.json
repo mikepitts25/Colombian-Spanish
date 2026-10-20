@@ -1,0 +1,18 @@
+{
+  "01-spanish-default-keyboard.png": "5f8a5ae3a6ca1d5b5719a302bd943dc560ae45d4f5450cce6a10b6757cd7ae95",
+  "02-spanish-max-check.png": "600695fb032946959af4b1d36672ed44f44ec0b246791d05c1f3312ad9a2c46d",
+  "03-spanish-max-hint.png": "ec81c615e6d6288c99ea6f343b996fa5a596d9688620f4b89cbb4c4b8a140e1d",
+  "04-spanish-max-end.png": "1501ec76dd432962cfbb7870b64451e2b3c439b8dad63215178b538a91c29d3b",
+  "05-english-default-keyboard.png": "16ebfea3dd902497567adfc8db08e23fc0fbff99c1d45714a68e14d42d2ac247",
+  "06-english-max-check.png": "2de3c300449d2c6c62a4670dec09c97a021c6d3becd66a3c7680e0ae1d9c8860",
+  "07-english-max-hint.png": "3cf9c663d05dae0f43efd0d8424c0c5362cec1330e03844c4e65b43d63ac4518",
+  "08-english-max-end.png": "1ed5b8b4c96def0e1a83c7435a179058e17c2fd896dc756882f00972c3248103",
+  "09-restored-cold-home.png": "d2d4c0d2c024b43b1f53275719221f864603279e8939c67401f976a7e4e0cde3",
+  "README.md": "d2edb5cb9c899494f9c2c6c00a6b579456f5443def5a6cc170c374abaf19bd96",
+  "cleanup.json": "6033d0b56742e7dbb55cfa2031288c54adcdedb4d13218df61f99f05eb4deb1d",
+  "english-max-draft.txt": "5928e9e811cfa5ad6f1da912909be4e2c65eab0f1e4fa775481eea9af3f3e6fc",
+  "exclusive-watch.jsonl": "3377c3bd397292b714f5b3ce4a22a8171348edce85ab41548eec38265571bf0e",
+  "spanish-max-draft.txt": "f71d68a92cdd46e7df531945076b479baae8a3ab3ea6088b12c76cffeb2d66a9",
+  "state-summary.json": "a199ba4bdb33bf3b808ef9726e0d322e829f4ca9f9aea8960dd26ade9a654839",
+  "verify.py": "5405919066148ea1dd1bf5b0417f95a50db20213edc15004181d8851fbc2cee6"
+}
