@@ -1,0 +1,4 @@
+{"label": "before-restore", "utc": "2026-10-20T06:54:48.780052+00:00", "zone": "Europe/Berlin", "date": "Tue Oct 20 08:54:49 CEST 2026", "pid": "2038", "automaticTimeZone": "1", "automaticTime": "1", "fontScale": "1.0"}
+{"label": "restored-cold", "utc": "2026-10-20T07:00:28.994886+00:00", "zone": "Europe/Berlin", "date": "Tue Oct 20 09:00:29 CEST 2026", "pid": "2382", "automaticTimeZone": "1", "automaticTime": "1", "fontScale": "1.0"}
+{"label": "resumed", "utc": "2026-10-20T07:00:57.629035+00:00", "zone": "Europe/Berlin", "date": "Tue Oct 20 09:00:58 CEST 2026", "pid": "2382", "automaticTimeZone": "1", "automaticTime": "1", "fontScale": "1.0"}
+{"label": "completed-cold", "utc": "2026-10-20T07:16:58.997250+00:00", "zone": "Europe/Berlin", "date": "Tue Oct 20 09:16:59 CEST 2026", "pid": "2603", "automaticTimeZone": "1", "automaticTime": "1", "fontScale": "1.0"}
