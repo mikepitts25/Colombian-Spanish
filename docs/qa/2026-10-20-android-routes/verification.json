@@ -1,0 +1,26 @@
+{
+  "sourceMain": "d946d39682d37d6e0e63331d2a598fbfa6bdf56f",
+  "apkSha256": "063edd5f14639d85108bee27a916ba71c62fb5c06cfbdaa1cb271c8c82743102",
+  "avd": "Colombian_Spanish_QA",
+  "backupBytes": 372357,
+  "backupSha256": "c2425af318909a72dc5a927393e674fd076035e1a4c1f482f43a660f3d7fd7cf",
+  "backupTransport": "Read product-generated app cache file through official adb; push identical bytes to labeled local Downloads fixture; select via native document picker. No native share destination available.",
+  "lastObservedPermission": "RECORD_AUDIO granted=true flags ONE_TIME; recheck/reset at next exclusive boot",
+  "recordingAcceptance": "Open: Ready/no observed take after grant/retry; cause not established",
+  "filesSha256": {
+    "README.md": "194b002a2c771d964df7fc1c4b64619ef648e42e4a5030958e0f49b28ad620e7",
+    "backup-preview.jpg": "fdac9b7646cbcc8ceb6412f15f3e46c248be33bc9545d663cb7df99b3a6a3e22",
+    "denied-cache.txt": "6034223f2857a4b6107caaccdbf9e34bb19ca8a408ba8182d8a75d61499d961b",
+    "english-settings.jpg": "1d7ef08c019adf7c6d9eee8bfde3ac4186fe7467050ec29b360d8bb23f72ed00",
+    "exclusive-abort.json": "3e134e103d0f0432bb6e0dfcba9c398d0a9821c7862e70c3d3010d7cb4c09143",
+    "exclusive-watch.jsonl": "f41f47f8174cfd971bcc060ba74101b4b499e4e428ec8f75a130866b051e2461",
+    "microphone-denied.jpg": "4b1972bb5ca4d3d85700ca11990ae832ccf9edf48d69daf459373a0036649780",
+    "os-light.txt": "4de5828391b064d0dd27b624885b0e2e923736d14600848743e4ba84079f0b4d",
+    "resumed-card.jpg": "4d29d42140c2d40a83839b7b6e599093f971f5962dbbe3d0b71e32b62a9d5fa8",
+    "share-sheet.jpg": "57a376f0f5c0772ab0bb0aa754d2757077e28f5b786d1d788a59d2115bff2aaf",
+    "state-summary.json": "c2f3930da27adf2f349fc0b13540a193ebccd7d8335e3557fbb6ef29404e4f7f",
+    "verify-evidence.py": "357d7c0813a8d98f6d5a50cb5e7477cf18405b795eabeb349beb0c35a1b4963c",
+    "voice-record-attempt.jpg": "1ffb24de48c355e512d5478d44c355de45c499ef2f043f56b66aae9c9cb1d932",
+    "voice-text-alternative.jpg": "9f201788915d3a5b98a94f0a0bd60f890e8da00f99f707abb9e5d4d2d2a52b36"
+  }
+}
