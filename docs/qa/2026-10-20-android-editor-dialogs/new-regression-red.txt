@@ -1,0 +1,39 @@
+FAIL __tests__/screens/AddCardScreen.test.tsx
+  ✓ keeps one pending card intent and blocks edits through live resizing until confirmed saved (23 ms)
+  ✓ retains the exact failed card payload and identity for retry instead of losing or duplicating it (68 ms)
+  ✓ blocks missing selected deck without discarding entered card fields (9 ms)
+  ✓ new-deck retry retains one identity and modal draft through failure and resizing (80 ms)
+  ✓ can return to the retained draft after a target disappears without automatically submitting another create (62 ms)
+  ✓ keeps the keyboard viewport above the keyboard when the native header occupies 74 points (3 ms)
+  ✓ reveals the focused input after keyboard layout using measured input position, not the large label (4 ms)
+  ✓ ignores pre-resize field coordinates until both current field and input layouts arrive (8 ms)
+  ✓ Android keyboard leaves a reduced scroll viewport and retains an unsaved lower-field draft (6 ms)
+  ✕ Android New Deck dialog keeps its draft and actions in the keyboard-reduced viewport (14 ms)
+  AddCardScreen localization
+    ✓ renders Add Card labels in English by default (193 ms)
+    ✓ renders Add Card labels in Spanish when UI language is Spanish (5 ms)
+
+  ● Android New Deck dialog keeps its draft and actions in the keyboard-reduced viewport
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: undefined
+
+      290 |     });
+      291 |   });
+    > 292 |   expect(StyleSheet.flatten(viewport.props.style).height).toBe(400);
+          |                                                           ^
+      293 |   expect(ui.getByDisplayValue('Qa')).toBeTruthy();
+      294 |   fireEvent.press(ui.getByRole('button', { name: 'Cancel' }));
+      295 |   expect(mockUseDeck().createDeck).not.toHaveBeenCalled();
+
+      at Object.toBe (__tests__/screens/AddCardScreen.test.tsx:292:59)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 11 passed, 12 total
+Snapshots:   0 total
+Time:        1.674 s, estimated 2 s
+Ran all test suites within paths "__tests__/screens/AddCardScreen.test.tsx".

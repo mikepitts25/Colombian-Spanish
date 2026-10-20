@@ -113,3 +113,7 @@ October20 [iOS touch routing diagnosis](../2026-10-20-ios-touch-routing/README.m
 ## Android form viewport correction
 
 [B01.5-B13](../2026-10-20-android-form-keyboard/README.md) fixes a reproduced maximum-text keyboard defect in Add Card. Native example/Tags drafts and Save validation are above the open keyboard; canceled drafts leave all eleven records exact through cold launch. Reuse prior basic editor lifecycle and this Spanish/Barrio Light portrait cell. The Android candidate is portrait-locked, so landscape is unaccepted. All five packages and127 unchecked rows/29 overlapping groups remain open. One focused13-test run plus required CI replaces a duplicate broad local suite; all owned runtime resources are stopped.
+
+## Android deck-dialog/editor bundle
+
+[B01.5-B14](../2026-10-20-android-editor-dialogs/README.md) corrects three reproduced keyboard viewport defects together: New Deck, Rename and existing-card editor. Three real-layout regressions fail before;31 focused tests and native Spanish/Barrio Light/font2 retained drafts/full keyboard-open actions pass after. All drafts canceled, ten checkpoints preserve all eleven records through default-font/cold recovery. Other named language/theme/window/assistive/platform cases remain; five packages and127 unchecked rows/29 overlapping groups are still open. One exclusive emulator ran, then all owned runtime resources stopped. Required CI supplies broad checks without another local full suite.

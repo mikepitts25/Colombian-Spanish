@@ -280,7 +280,7 @@ export default function ManageDecksScreen() {
       <Modal visible={renameOpen} transparent animationType="fade" onRequestClose={closeRename}>
         <KeyboardAvoidingView
           style={styles.modalBackdrop}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
           <View style={styles.modalBody}>
             <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.header}>

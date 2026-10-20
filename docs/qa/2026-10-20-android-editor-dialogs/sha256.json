@@ -1,0 +1,16 @@
+{
+  "cleanup.json": "e844524efb37eff4c1a6c7f9bb0e0c93dfe0f9a1ca3f5c5a8fe4983994344d42",
+  "editor-green.jpg": "4ac188cdfbb21717cf73878ecd713396220c5dca183f4eed679f08baeeaf92ec",
+  "editor-red.jpg": "b79b7c95f546a3bc755219845375fa7da01db022a001b7fad50fed6a56dbcb90",
+  "editor-regression-red.txt": "a52f8bb699859c515c0ffaee61bb3c91b01b9eb15d572de9fea51306de9ed550",
+  "final-cold-home.jpg": "cf994f54276b18611a4303d3389d457db596bf60b2fa21f50cbce726e181356a",
+  "focused-green.txt": "d11607d90d68820303990ab91f8ba6b9f78a6aa68f55c629c60c71c14beff1b7",
+  "new-deck-green.jpg": "f56b2ac1a34094b71d102e74748252ab4168af82363109756cd36e8ab4d79718",
+  "new-deck-red.jpg": "1b69146ebc16f1ddca6501a8902c8a8b13c8f5752ca49dd46f6872ea03089177",
+  "new-regression-red.txt": "71b7d38ac61fe6cdbaf609f875a9ead042b46d5e4a9e4c7ad5486f3c5fa8d7e4",
+  "rename-green.jpg": "de6ca13b0f6cc199fcb418fa5aafcf501aad8b95d57cde5961e5e83ccdcdc8b9",
+  "rename-red.jpg": "2d6d62b5fb766530d888b29028ede2fb52fe4c6db2d6cb857c16346de2d08502",
+  "rename-regression-red.txt": "15b030a6c7f0ecfe4911e9f8c3c5cdb31d314f18cee75729a86ce03e01df5454",
+  "runtime-inventory.jsonl": "70d980681866964eac65b59d168e612ee20006df327f74ccbda9f6c26597777a",
+  "state-summary.json": "eb0aa0c46afda11577babc12bb16a5010b21e2b206a05a0f0c53a0124ca931bd"
+}

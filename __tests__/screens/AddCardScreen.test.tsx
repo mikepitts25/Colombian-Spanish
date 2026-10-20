@@ -271,3 +271,26 @@ test('Android keyboard leaves a reduced scroll viewport and retains an unsaved l
   await act(async () => DeviceEventEmitter.emit('keyboardDidHide', {}));
   expect(StyleSheet.flatten(viewport.props.style).height).toBeUndefined();
 });
+
+test('Android New Deck dialog keeps its draft and actions in the keyboard-reduced viewport', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  const ui = render(<AddCardScreen />);
+  fireEvent.press(ui.getByRole('button', { name: 'Choose a deck' }));
+  fireEvent.press(ui.getByText('➕ New deck'));
+  fireEvent.changeText(ui.getByPlaceholderText('Name (e.g., Colombianisms)'), 'Qa');
+  const avoiding = ui.UNSAFE_getAllByType(KeyboardAvoidingView).slice(-1)[0];
+  const viewport = avoiding.findAllByType(View)[0];
+  await act(async () => {
+    fireEvent(viewport, 'layout', {
+      persist: jest.fn(),
+      nativeEvent: { layout: { x: 0, y: 0, width: 360, height: 700 } },
+    });
+    DeviceEventEmitter.emit('keyboardDidShow', {
+      endCoordinates: { screenX: 0, screenY: 400, width: 360, height: 300 },
+    });
+  });
+  expect(StyleSheet.flatten(viewport.props.style).height).toBe(400);
+  expect(ui.getByDisplayValue('Qa')).toBeTruthy();
+  fireEvent.press(ui.getByRole('button', { name: 'Cancel' }));
+  expect(mockUseDeck().createDeck).not.toHaveBeenCalled();
+});

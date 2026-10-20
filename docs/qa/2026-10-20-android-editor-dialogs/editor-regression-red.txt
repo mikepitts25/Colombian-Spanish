@@ -1,0 +1,37 @@
+FAIL __tests__/screens/ReviewScreen.test.tsx
+  ✓ submits one editorial intent and blocks conflicting controls while saving (27 ms)
+  ✓ keeps a failed editorial draft and retries the exact original intent (21 ms)
+  ✓ retains the failed save intent across a live text-size change (28 ms)
+  ✓ Barrio selected filters use on-fill ink and preserve Classic white (21 ms)
+  ✓ Barrio filter viewports fit full 48-point chips plus focus rings while Classic retains 38 (15 ms)
+  ✕ Android editor reduces the keyboard viewport without saving an example draft (14 ms)
+  ReviewScreen review queue
+    ✓ accounts for the native header when keeping editor actions above the keyboard (153 ms)
+    ✓ saves inline edits as reviewed (21 ms)
+    ✓ marks a card as needing a native check (9 ms)
+    ✓ filters to cards missing an English example (15 ms)
+
+  ● Android editor reduces the keyboard viewport without saving an example draft
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 326
+    Received: undefined
+
+      282 |     });
+      283 |   });
+    > 284 |   expect(StyleSheet.flatten(viewport.props.style).height).toBe(326);
+          |                                                           ^
+      285 |   expect(ui.getByDisplayValue('Unsaved q')).toBeTruthy();
+      286 |   expect(update).not.toHaveBeenCalled();
+      287 |   await act(async () => DeviceEventEmitter.emit('keyboardDidHide', {}));
+
+      at Object.toBe (__tests__/screens/ReviewScreen.test.tsx:284:59)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 9 passed, 10 total
+Snapshots:   0 total
+Time:        2.63 s
+Ran all test suites within paths "__tests__/screens/ReviewScreen.test.tsx".

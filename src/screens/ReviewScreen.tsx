@@ -276,7 +276,7 @@ export default function ReviewScreen() {
       <KeyboardAvoidingView
         style={styles.keyboardWrap}
         keyboardVerticalOffset={headerHeight}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView
           key={fontScale}
