@@ -1,0 +1,11 @@
+{
+  "iosBooted": [],
+  "androidDevices": [],
+  "metroListening": false,
+  "studioRunning": false,
+  "emulatorExitCode": 0,
+  "monitorExitCode": 0,
+  "buildExitCode": 0,
+  "metroStarted": false,
+  "developmentApkRestoredWithoutLaunch": true
+}

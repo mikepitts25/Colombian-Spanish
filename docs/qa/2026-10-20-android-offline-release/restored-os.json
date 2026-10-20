@@ -1,0 +1,9 @@
+{
+  "airplane_mode_on": "0",
+  "wifi_on": "1",
+  "bluetooth_on": "1",
+  "auto_time": "1",
+  "auto_time_zone": "1",
+  "wifiStatus": "Wifi is enabled",
+  "fontScale": "1.0"
+}
