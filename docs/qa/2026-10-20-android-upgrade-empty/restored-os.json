@@ -1,0 +1,30 @@
+{
+  "autoTime": {
+    "exit": 0,
+    "output": "1"
+  },
+  "autoZone": {
+    "exit": 0,
+    "output": "1"
+  },
+  "zone": {
+    "exit": 0,
+    "output": "Europe/Berlin"
+  },
+  "font": {
+    "exit": 0,
+    "output": "1.0"
+  },
+  "airplane": {
+    "exit": 0,
+    "output": "0"
+  },
+  "network": {
+    "exit": 0,
+    "output": "Current network status:\n  download speed:          0 bits/s (0.0 KB/s)\n  upload speed:            0 bits/s (0.0 KB/s)\n  minimum latency:  0 ms\n  maximum latency:  0 ms\nOK"
+  },
+  "pid": {
+    "exit": 1,
+    "output": ""
+  }
+}

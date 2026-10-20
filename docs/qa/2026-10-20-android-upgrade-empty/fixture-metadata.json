@@ -1,0 +1,38 @@
+{
+  "empty-library-fixture.json": {
+    "bytes": 1294,
+    "sha256": "fe5bbb3df0a54381fffb332f79c55fa2964f44924c72e5d0b3b81590fedc3d46",
+    "decks": 0,
+    "cards": 0,
+    "events": 1,
+    "applicationStateFields": [
+      "dailyPlan",
+      "missions",
+      "prefs",
+      "daily",
+      "streak",
+      "seenWords",
+      "quizHistory",
+      "lastSession",
+      "notificationPrefs"
+    ]
+  },
+  "recovery-backup.json": {
+    "bytes": 372343,
+    "sha256": "8025633f99850046513ddf322393547621e7ec9fd92d24d8b46e5555535a3852",
+    "decks": 47,
+    "cards": 1392,
+    "events": 1,
+    "applicationStateFields": [
+      "dailyPlan",
+      "missions",
+      "prefs",
+      "daily",
+      "streak",
+      "seenWords",
+      "quizHistory",
+      "lastSession",
+      "notificationPrefs"
+    ]
+  }
+}

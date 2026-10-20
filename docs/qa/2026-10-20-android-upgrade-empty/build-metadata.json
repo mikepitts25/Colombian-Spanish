@@ -1,0 +1,11 @@
+{
+  "apkSha256": "0fbcac8007c020089d1969aa473bac5cd1b86df3176eac7aa29d7c106a8dc007",
+  "bytes": 72355289,
+  "sourceMain": "de470f19dafa254e0247f749636b61aafeeb7483",
+  "versionCode": 2,
+  "versionName": "1.0.1-qa",
+  "signing": "standard local debug key, not store",
+  "changes": "generated ignored native version metadata only; no product source/schema edits",
+  "bundleSha256": "ac36fbe217590e4cc457415ac2baccd2b567bccc2ee0cc5a801bd3ff67797227",
+  "bundleBytes": 5148160
+}

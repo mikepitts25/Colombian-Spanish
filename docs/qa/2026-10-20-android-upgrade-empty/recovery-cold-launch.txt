@@ -1,0 +1,7 @@
+Starting: Intent { cmp=com.mikepitts.colombianspanish/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.mikepitts.colombianspanish/.MainActivity
+TotalTime: 349
+WaitTime: 351
+Complete
