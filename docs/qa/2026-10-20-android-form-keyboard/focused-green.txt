@@ -1,0 +1,8 @@
+PASS __tests__/screens/AddCardScreen.test.tsx
+PASS __tests__/screens/AddCardScreen.theme.integration.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       13 passed, 13 total
+Snapshots:   0 total
+Time:        1.77 s, estimated 2 s
+Ran all test suites within paths "__tests__/screens/AddCardScreen.test.tsx", "__tests__/screens/AddCardScreen.theme.integration.test.tsx".

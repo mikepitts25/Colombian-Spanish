@@ -8,7 +8,7 @@
       "id": "android-setup",
       "taskIds": ["B01.5", "B01.5-B"],
       "classification": "ai-now-with-exclusive-runtime",
-      "aiCanDoNow": "Continue Android remaining authored practice and named language/theme/accessibility cells with docked touch. Already-granted microphone cancellation is fixed with a controller/service regression and native Preparing observation; actual take/Stop/Replay/Delete remains open. Reuse B01.5-B9/B10: Android same-install local full-state restore/cold and retained review-to-assisted-draft completion/cold are accepted; do not repeat these cells. B01.5-B11/B12 accept Android default-Spanish Quiz wrong/correct/results/missed-review/cold and disposable deck create/add/validation/rename/delete/cold; reuse these without closing broader layout/edit/filter/platform cells.",
+      "aiCanDoNow": "Continue Android remaining authored practice and named language/theme/accessibility cells with docked touch. Already-granted microphone cancellation is fixed with a controller/service regression and native Preparing observation; actual take/Stop/Replay/Delete remains open. Reuse B01.5-B9/B10: Android same-install local full-state restore/cold and retained review-to-assisted-draft completion/cold are accepted; do not repeat these cells. B01.5-B11/B12 accept Android default-Spanish Quiz wrong/correct/results/missed-review/cold and disposable deck create/add/validation/rename/delete/cold; reuse these without closing broader layout/edit/filter/platform cells. Reuse B01.5-B13: Android Spanish/Barrio Light/font2 Add Card lower-field keyboard access and touch validation are fixed and accepted with exact cold-state recovery. Other named form cells remain separate; this Android candidate is portrait-locked.",
       "requires": "Working exclusive native runtime; the last QEMU host audio preparation hung/crashed, and disabling AVD input also hung before adb. Original AVD config restored. Change the audio route before retrying capture; recheck state/permission and restore Spanish after stable boot. No share recipient on this image; no new SDK agreement needed.",
       "evidenceFiles": [
         "docs/qa/ANDROID_TOOLCHAIN.md",
@@ -18,7 +18,8 @@
         "docs/qa/2026-10-20-android-routes/README.md",
         "docs/qa/2026-10-20-android-recording/README.md",
         "docs/qa/2026-10-20-android-restore-plan/README.md",
-        "docs/qa/2026-10-20-android-quiz-editor/README.md"
+        "docs/qa/2026-10-20-android-quiz-editor/README.md",
+        "docs/qa/2026-10-20-android-form-keyboard/README.md"
       ]
     },
     {
@@ -41,13 +42,14 @@
       "id": "native-source-and-queue",
       "taskIds": ["B01.6", "B01.6-B", "B01.6-B2", "B02.4", "B02.4-B2"],
       "classification": "mixed-native",
-      "aiCanDoNow": "Reconcile fresh source/fixture evidence and perform remaining bounded queue/navigation/lifecycle checks on own-path installs. Do not replay known failed gestures unchanged. Reuse B01.5-B9/B10: Android same-install local full-state restore/cold and retained review-to-assisted-draft completion/cold are accepted; do not repeat these cells. B01.5-B11/B12 accept Android default-Spanish Quiz wrong/correct/results/missed-review/cold and disposable deck create/add/validation/rename/delete/cold; reuse these without closing broader layout/edit/filter/platform cells.",
+      "aiCanDoNow": "Reconcile fresh source/fixture evidence and perform remaining bounded queue/navigation/lifecycle checks on own-path installs. Do not replay known failed gestures unchanged. Reuse B01.5-B9/B10: Android same-install local full-state restore/cold and retained review-to-assisted-draft completion/cold are accepted; do not repeat these cells. B01.5-B11/B12 accept Android default-Spanish Quiz wrong/correct/results/missed-review/cold and disposable deck create/add/validation/rename/delete/cold; reuse these without closing broader layout/edit/filter/platform cells. Reuse B01.5-B13: Android Spanish/Barrio Light/font2 Add Card lower-field keyboard access and touch validation are fixed and accepted with exact cold-state recovery. Other named form cells remain separate; this Android candidate is portrait-locked.",
       "requires": "Named remaining native cases; exact source/destination protection where claimed. Android, genuine OS/storage failures and hardware remain separate.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-fresh-graded-editor/README.md",
         "docs/qa/2026-10-20-android-restore-plan/README.md",
-        "docs/qa/2026-10-20-android-quiz-editor/README.md"
+        "docs/qa/2026-10-20-android-quiz-editor/README.md",
+        "docs/qa/2026-10-20-android-form-keyboard/README.md"
       ]
     },
     {
@@ -199,7 +201,7 @@
         "B08.5-B8"
       ],
       "classification": "mixed-native-and-design",
-      "aiCanDoNow": "C3p completes English maximum long-title/count Light/Dark; C3q adds earned-counter Barrio midnight. B8g/B8h already cover English maximum-text dialogs and long Add/editor saves; B8i fixes header keyboard avoidance and verifies all four bilingual maximum editor actions. Finish Spanish maximum-count, other focused fields and touch/window cases using a changed reliable route or targeted diagnosis. Reuse docs/qa/2026-10-19-native-qa-bundle/README.md, including LogBox open/Dismiss, rather than replaying failed diagnostic/title/drag routes. New activity visuals/personalized next actions still need focused designs/content inputs. The B2e packet records an unsuccessful adjacent-target fractional-scroll probe for the Spanish count; do not repeat that route unchanged. B8j/B8k now cover bilingual mini maximum keyboard-open editor actions in portrait/separate landscape views. B8k adds both long translation/example drafts and exact rotation retention through a changed, paced simulator VoiceOver focus route. Reuse these cells; do not repeat earlier failed field-target/margin-drag/unfocused-toggle, Escape-dismissal or rapid-chord routes unchanged. October20 B01.5-B8/B05.5-B1 now prove Android maximum touch/Again-Hard and actual earned-counter live OS-zone foreground; reuse those cells. Remaining iOS precise-touch/count and distinct zone/DST/window/platform combinations stay open. October20 iOS input trace leaves Android-style drag-stop and wheel routes unaccepted; one motion jump followed by bottom momentum is not reliable intermediate positioning. Do not repeat those exact routes unchanged.",
+      "aiCanDoNow": "C3p completes English maximum long-title/count Light/Dark; C3q adds earned-counter Barrio midnight. B8g/B8h already cover English maximum-text dialogs and long Add/editor saves; B8i fixes header keyboard avoidance and verifies all four bilingual maximum editor actions. Finish Spanish maximum-count, other focused fields and touch/window cases using a changed reliable route or targeted diagnosis. Reuse docs/qa/2026-10-19-native-qa-bundle/README.md, including LogBox open/Dismiss, rather than replaying failed diagnostic/title/drag routes. New activity visuals/personalized next actions still need focused designs/content inputs. The B2e packet records an unsuccessful adjacent-target fractional-scroll probe for the Spanish count; do not repeat that route unchanged. B8j/B8k now cover bilingual mini maximum keyboard-open editor actions in portrait/separate landscape views. B8k adds both long translation/example drafts and exact rotation retention through a changed, paced simulator VoiceOver focus route. Reuse these cells; do not repeat earlier failed field-target/margin-drag/unfocused-toggle, Escape-dismissal or rapid-chord routes unchanged. October20 B01.5-B8/B05.5-B1 now prove Android maximum touch/Again-Hard and actual earned-counter live OS-zone foreground; reuse those cells. Remaining iOS precise-touch/count and distinct zone/DST/window/platform combinations stay open. October20 iOS input trace leaves Android-style drag-stop and wheel routes unaccepted; one motion jump followed by bottom momentum is not reliable intermediate positioning. Do not repeat those exact routes unchanged. Reuse B01.5-B13: Android Spanish/Barrio Light/font2 Add Card lower-field keyboard access and touch validation are fixed and accepted with exact cold-state recovery. Other named form cells remain separate; this Android candidate is portrait-locked.",
       "requires": "Known touch-only/window/keyboard control limits need a changed route or actual layout diagnosis, not repetitive captures. Android, physical acceptance, cultural/content decisions remain distinct.",
       "evidenceFiles": [
         "docs/superpowers/plans/2026-10-18-barrio-home.md",
@@ -210,7 +212,8 @@
         "docs/qa/2026-10-19-mini-editor-voice/README.md",
         "docs/qa/2026-10-19-mini-editor-focus/README.md",
         "docs/qa/2026-10-20-android-study-zone/README.md",
-        "docs/qa/2026-10-20-ios-touch-routing/README.md"
+        "docs/qa/2026-10-20-ios-touch-routing/README.md",
+        "docs/qa/2026-10-20-android-form-keyboard/README.md"
       ]
     },
     {
