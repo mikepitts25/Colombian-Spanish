@@ -3,10 +3,7 @@
   "captureTime": "2026-10-20 07:53:33.3228 +0200",
   "exception": {
     "codes": "0x0000000000000001, 0x0000000000000000",
-    "rawCodes": [
-      1,
-      0
-    ],
+    "rawCodes": [1, 0],
     "type": "EXC_BAD_ACCESS",
     "signal": "SIGSEGV",
     "subtype": "KERN_INVALID_ADDRESS at 0x0000000000000000"
