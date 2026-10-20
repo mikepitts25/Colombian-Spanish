@@ -242,7 +242,7 @@ export default function MissionScreen({
     <SafeAreaView style={styles.wrap}>
       <KeyboardAvoidingView
         style={styles.wrap}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView
           ref={content}

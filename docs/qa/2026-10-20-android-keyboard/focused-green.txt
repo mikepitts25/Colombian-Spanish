@@ -1,0 +1,33 @@
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish'`
+
+PASS __tests__/screens/MissionScreen.test.tsx (6.713 s)
+  ✓ choice actions keep stable React list keys (616 ms)
+  ✓ complete draft flow records three assessed recalls and one recognition without changing daily/SRS state (608 ms)
+  ✓ retains failed submission for retry and resumes exact feedback without persisting raw text (326 ms)
+  ✓ hints are counted on explicit retries and incorrect answers permit assisted continuation (375 ms)
+  ✓ load failure offers retry and production gate prevents accessing draft content (108 ms)
+  ✓ blocks rapid actions and local exit during a pending checkpoint (58 ms)
+  ✓ preserves partial input when revealing a hint (212 ms)
+  ✓ allows local exit after a settled checkpoint failure while retaining retry (214 ms)
+  ✓ offers difficult-phrase recall/reveal without writing extra events or changing the completed checkpoint (602 ms)
+  ✓ a linked one-response activity starts its planned run and completes only that plan (216 ms)
+  ✓ times only actionable foreground segments, preserving hint/save retry timing without counting waits (332 ms)
+  ✓ cold response resume with feedback=false never invents a lost timing segment (280 ms)
+  ✓ cold response resume with feedback=true never invents a lost timing segment (268 ms)
+  ✓ notifies the parent when a pending save settles even after the player unmounts (57 ms)
+  ✓ a held response checkpoint retains draft and exactly one command across identity changes (173 ms)
+  ✓ reveals the measured focused response when the software keyboard opens without recording an answer (170 ms)
+  ✓ waits for current response geometry after rotation and live text changes, retaining the ungraded draft (167 ms)
+  ✓ keeps the focused response eligible after a hint revision without requiring refocus (213 ms)
+  ✓ can reuse unchanged response frames after translation changes without waiting for absent layout events (163 ms)
+  ✓ Android keyboard reduces the response viewport while preserving the focused draft (161 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       20 passed, 20 total
+Snapshots:   0 total
+Time:        6.941 s
+Ran all test suites matching /__tests__\/screens\/MissionScreen.test.tsx/i.
