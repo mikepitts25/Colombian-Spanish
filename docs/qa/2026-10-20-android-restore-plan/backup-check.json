@@ -1,0 +1,17 @@
+{
+  "bytes": 375170,
+  "sha256": "470cb6193cf7442444a6596429a69181159fefd0406695b0369b9a748c64adf8",
+  "matchedStartFields": [
+    "dailyPlan",
+    "missions",
+    "prefs",
+    "daily",
+    "streak",
+    "seenWords",
+    "lastSession",
+    "decks",
+    "learningEvents"
+  ],
+  "absentFields": ["quizHistory", "notificationPrefs"],
+  "transport": "Product-generated cache file read via run-as, unchanged SDK push to dedicated Downloads; actual native document picker selected it."
+}
