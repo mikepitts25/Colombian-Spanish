@@ -1,0 +1,29 @@
+{
+  "name": "colombian-spanish-backup-2026-10-20T12-28-30.799Z-oex5y4.json",
+  "bytes": 372359,
+  "sha256": "ee68474574cda36eda5ef735a658474ad099c3cebe28561856878c1c06ce6fae",
+  "version": 3,
+  "exportedAt": "2026-10-20T12:28:30.772Z",
+  "decks": 47,
+  "cards": 1392,
+  "eventCount": 1,
+  "stateKeys": [
+    "dailyPlan",
+    "missions",
+    "prefs",
+    "daily",
+    "streak",
+    "seenWords",
+    "quizHistory",
+    "lastSession",
+    "notificationPrefs"
+  ],
+  "providerMatches": [
+    {
+      "path": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Shared/AppGroup/5C0949D5-49E4-472A-892E-82AD9E9EC36F/File Provider Storage/colombian-spanish-backup-2026-10-20T12-28-30.799Z-oex5y4.json",
+      "bytes": 372359,
+      "sha256": "ee68474574cda36eda5ef735a658474ad099c3cebe28561856878c1c06ce6fae"
+    }
+  ],
+  "providerAfterSha256": "ee68474574cda36eda5ef735a658474ad099c3cebe28561856878c1c06ce6fae"
+}

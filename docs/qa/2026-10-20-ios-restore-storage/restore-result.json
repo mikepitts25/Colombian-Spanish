@@ -1,0 +1,46 @@
+{
+  "changedExistingRaw": ["SRS_LEARNING_EVENTS_V1"],
+  "allExistingParsedExact": true,
+  "normalizedAbsentRecords": {
+    "SRS_NOTIFICATION_PREFS_V1": {},
+    "SRS_DAILY_PLAN_V1": {
+      "schemaVersion": 1,
+      "current": null
+    },
+    "SRS_MISSIONS_V1": {
+      "schemaVersion": 1,
+      "runs": []
+    },
+    "SRS_QUIZ_HISTORY_V1": []
+  },
+  "expectedSemanticHashes": {
+    "SRS_DAILY_PLAN_V1": "0c424c65a0154d590c3549e11079c7668f9965e8778435ad48e47e39f3610f62",
+    "SRS_DAILY_PROGRESS_V1": "3ed12f14e5d0f38fc7ef7493bd0b834616bc775e4d1fb1eb4773d1da06de67b4",
+    "SRS_DECKS_V3": "ef086ef69e0d314158210d5614f2e27876217da7456a246f2d00bf20b51bd6b5",
+    "SRS_LAST_STUDY_SESSION_V1": "5e17a1c3b63642d881adb4967cc09390007b2f418c159d423e95a0e3de8703b5",
+    "SRS_LEARNING_EVENTS_V1": "3524b84828ed1fced1680d8da4f7863c1f0280f6b925823b62868e5eebf8570c",
+    "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+    "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "SRS_PREFS_V1": "e7208aa8324dabc46760ce66a8bc2999e7bd72abf371b8fd4912958eecf0988c",
+    "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "SRS_SEEN_WORDS_V1": "884910174d089ba559fb4417b0c13920c6ec827f7c030164619bcbe95921ad65",
+    "SRS_STUDY_STREAK_V1": "35fe28eaab61c8146289f404b980b73eaaa83e4727e543e9b5696732dfe73288"
+  },
+  "event": {
+    "schemaVersion": 1,
+    "id": "mvgn7inp-7-vc67av9ng7",
+    "cardId": "0038",
+    "deckId": "deck-travel",
+    "sessionId": "mvgn5r9s-2-dhzt5sa8g6t",
+    "modality": "recall",
+    "outcome": "incorrect",
+    "evidence": "self-rated",
+    "occurredAt": 1792498340603,
+    "quality": 2,
+    "hintsUsed": null,
+    "durationMs": 82129
+  },
+  "retryPid": 26141,
+  "restoredColdPid": 27873,
+  "originalColdPid": 28098
+}
