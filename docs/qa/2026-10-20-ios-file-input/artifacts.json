@@ -1,0 +1,54 @@
+{
+  "01-invalid-picker.png": {
+    "bytes": 297811,
+    "sha256": "e16132728d9a27aa285009d4a2c06a0854bbb46d65084900bde00ee15b645c5b"
+  },
+  "02-invalid-json-error.png": {
+    "bytes": 334001,
+    "sha256": "7e7f69a8d396917012623757a510d2158fdf85fb4a250f7af0c6e58fc6c7efd2"
+  },
+  "03-oversized-picker.png": {
+    "bytes": 292201,
+    "sha256": "af35a247f3f2a31b8bda817edf2006dc5d9da973ebf82621215737e7779f0e63"
+  },
+  "04-oversized-error.png": {
+    "bytes": 335847,
+    "sha256": "a2e8fa8f59616a9811705f3820f4f0ca4ad2795a361648ea608f1c1a9b032daa"
+  },
+  "05-valid-retry-preview.png": {
+    "bytes": 344610,
+    "sha256": "9f6c5d897874f5a94386541ed09227c68a10e69e35f6a67024fb4c3c62000d97"
+  },
+  "06-final-cold.png": {
+    "bytes": 341523,
+    "sha256": "8243d48b313bd57e62e123796722ec47a3d75e0d8d1740509e6dd3b3f8f77655"
+  },
+  "checkpoints.json": {
+    "bytes": 13726,
+    "sha256": "3d7819a02baecd9aa72b217e8f754758facff915d596e5917c3bc380389447a6"
+  },
+  "invalid-error.txt": {
+    "bytes": 9302,
+    "sha256": "1662f6440b1b1e878d0ea0bc33d0df7b2c0eca45268a47de3ff85a6c379f1040"
+  },
+  "invalid-json-restored.json": {
+    "bytes": 834,
+    "sha256": "a2a1798ae3dda93d5de36f96af9d8c1ec720467e4ced675c72d94890c24d9778"
+  },
+  "observations.json": {
+    "bytes": 1668,
+    "sha256": "62cef96063c9bd2ec1848c720dfce1db9080fd3e6bb4e0433420125f5803c3ba"
+  },
+  "oversized-bytes-restored.json": {
+    "bytes": 844,
+    "sha256": "4d2d2aac6aa9f1e62a761256683a43efb14331c5b01658f0f5250af04cf249dd"
+  },
+  "oversized-error.txt": {
+    "bytes": 2520,
+    "sha256": "d5a02f23c15029d79326634c8901fba5168547e4fd8f9119bd6f82d46917b624"
+  },
+  "valid-preview.txt": {
+    "bytes": 1635,
+    "sha256": "0860ef4401dbda2af51ca48c0fb67b1865f5017decb49952544135afca58f41c"
+  }
+}

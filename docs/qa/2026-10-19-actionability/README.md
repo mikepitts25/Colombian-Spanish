@@ -4,6 +4,10 @@
 
 See the [October19 remaining-work/resource audit](../2026-10-19-remaining-work-budget/README.md) for the five consolidated QA packages, three pending feature approvals and overlap corrections. Later B08.5-B8g/B8h already cover English maximum-text dialog actions and long Add/editor saves; older report gap wording must not trigger unchanged repeats.
 
+## Current iOS-only routing, October20
+
+Use the [nine known iOS case groups and dependencies](../2026-10-20-ios-remaining/README.md) before this historical action list. Two bounded native bundles are complete; seven known groups remain: six need changed controls and one needs candidate/network/provider conditions. The map reuses completed iOS keyboard/update/storage/journal/restore evidence and routes43 overlapping local rows without closing their parents. Android is owner-paused; no build/emulator/development/merge follow-up is active.
+
 ## Work AI can still advance now
 
 1. The retained-plan/nonzero real-midnight observation is complete in [C3o](../2026-10-19-retained-midnight/README.md): natural daily-only reset with exact plan preservation and normal-cold recovery. Remaining live OS-zone/DST and earned/graded boundary cases remain distinct. Calendar unit tests/process cold-zone changes alone do not close those cases.
@@ -14,7 +18,7 @@ See the [October19 remaining-work/resource audit](../2026-10-19-remaining-work-b
 
 These bundles preserve the original master-plan scope. They do not authorize conditional B15 expansion, replace language acceptance with generated tests, or convert simulated behavior into physical evidence. Completed current packets should be checked before selecting another case, rather than recapturing an already proved cell.
 
-6. Android tooling now permits native compilation and visible launch; [current results and changed input requirement](../2026-10-20-android-native/README.md) replace the old SDK-agreement blocker. Remaining workflow acceptance needs a supported control route.
+6. Android tooling and prior native results are retained as historical evidence. Android is now owner-paused; do not start its remaining workflow checks or merge PR78.
 
 ## AI coding that waits on a specific decision
 

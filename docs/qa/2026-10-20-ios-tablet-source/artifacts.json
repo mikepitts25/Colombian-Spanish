@@ -1,0 +1,46 @@
+{
+  "01-source-export.png": {
+    "bytes": 317382,
+    "sha256": "0eee0b7046ad92f6fddd5c57a9378f8a94d69ab78cdf7dc6d7413e6786500477"
+  },
+  "02-tablet-export.png": {
+    "bytes": 332080,
+    "sha256": "a0f588b1f0a1328765d6e6d36edda21294953ad96e2f382ea92ab0594196b7a3"
+  },
+  "03-source-preview-on-tablet.png": {
+    "bytes": 307675,
+    "sha256": "de7764e1bad8a3169ebcfa85fec42e69014f32c7455379b2c3d0fb2979dc994c"
+  },
+  "04-source-linked-tablet-draft.png": {
+    "bytes": 318791,
+    "sha256": "5c37ef7423968048a5a9bfa9c047a602d4c9544d119582469af93a3d3d9edb86"
+  },
+  "05-source-cold-after-tablet.png": {
+    "bytes": 343495,
+    "sha256": "f630191acd31d1aeecb195d324dc6d2d19cc2cffb840e94ce6a488703ef1235f"
+  },
+  "06-tablet-recovery-preview.png": {
+    "bytes": 312418,
+    "sha256": "3431a54e1cadd3ca475bcca3a039166848e99d89ea158b2c668935e226bd343a"
+  },
+  "07-tablet-restored-cold.png": {
+    "bytes": 346819,
+    "sha256": "292210e0c538da9bd796842dc7c647a2ea6d1d887575acf2a06697d54514fe3e"
+  },
+  "checkpoints.json": {
+    "bytes": 21608,
+    "sha256": "0f5e5dec4db7f1fd8781a0a6740bd385cb26a625a98e9710a25d195b78ccda9a"
+  },
+  "observations.json": {
+    "bytes": 1418,
+    "sha256": "6d7cae91b96834c8d12279ec9a9cc8797bd1d7b1f7cf10aaa21e00db8792cbe9"
+  },
+  "source-backup-metadata.json": {
+    "bytes": 463,
+    "sha256": "e43dacdfdc95dc5a42174a50d51cd8846b68c2144bc4b3eb6ac351b4ed0f0da8"
+  },
+  "tablet-backup-metadata.json": {
+    "bytes": 463,
+    "sha256": "0675190e88c767c71de4d5af33b874185f9f78281273dec52e9d57a58e31a25d"
+  }
+}

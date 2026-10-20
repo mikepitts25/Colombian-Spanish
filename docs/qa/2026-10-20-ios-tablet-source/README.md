@@ -1,0 +1,17 @@
+# Independent iPad plan source protection
+
+B01.6-B2h, October20, base main98049e7. This finishes the missing actual source-cold protection of the independent tablet-plan R3 packet. It does not repeat or expand keyboard, grade, completion, maximum-text, accent-popup or resized-window acceptance. No runtime code changed.
+
+The actual source SE3 `2EDF21F0-7DBD-4B09-8D5F-85560FD0E730` and independently installed iPad Pro13 M4 `DABA2821-3619-4F4A-B0C3-54E70B31511F` ran SDK57 Debug1.0.0 on iOS/iPadOS26, one at a time. Each read resolved and validated its own app container through the SDK; no clone or learner-record preparation writes were used. See [checkpoints](checkpoints.json), [observations](observations.json) and [source](source-backup-metadata.json)/[tablet](tablet-backup-metadata.json) export metadata. Full raw snapshots and backup bodies remain host-only under `/tmp/colombian-ios-tablet-source`.
+
+1. The source had eleven records,48 decks/1402 cards/10 events, daily0/5 and the saved three-card ordinary queue. Its normal Settings Save file produced the378302-byte v3 backup; all eleven source raw values stayed exact.
+2. Tablet launch changed only its stale daily date Oct18→20; the resulting current-day baseline was preserved using its own379149-byte v3 Settings export. Its eleven-event history contained all ten source events plus its previously earned tablet event; that event was not created by this run.
+3. TextEdit's opened source backup body matched the host file exactly. Device Hub Send Clipboard, normal Import and Allow Paste showed the source timestamp/48 decks/1402 cards/10 events. Full-state restore and cold launch preserved merged eleven-event history. Screenshot-grounded Continue and Start draft created only the linked revision0 mission run; only `SRS_MISSIONS_V1` changed. No answer, hint, grade, End or credit was generated; the ordinary source queue stayed exact.
+4. After tablet shutdown, the actual source cold-launched. All eleven raw values exactly matched its pre-launch baseline. This is direct source-runtime proof after tablet mutation.
+5. The tablet imported its own exported backup through the same supported UI. Restore and actual cold launch recovered all eleven current-day baseline raw values exactly, including its original completed mission. Both simulators and owned Metro stopped; TextEdit quit.
+
+A resource guard detected another project's boot during the initial tablet boot and stopped only this project's tablet before app launch/data capture. That attempt is retained in observations. The other chat later finished naturally; no coordination message was sent and no other project was stopped. Accepted mutations occurred only after exclusive inventory returned. One stale TextEdit coordinate failed without changing content and was corrected from a fresh screenshot. Missing app AX nodes after import required screenshot-grounded Home controls; this is not touch-only or assistive acceptance.
+
+Seven unmodified CUA captures show source export, tablet export, source preview, linked draft, source cold, tablet recovery preview and final restored cold. The existing unsigned notification-entitlement warning remains; no delivery or signed acceptance is claimed. Broader source-audit/UI parents remain open; historical aliased runs are not retroactively certified. Android is paused and security skipped.
+
+Run `python3 docs/qa/2026-10-20-ios-tablet-source/verify.py` for passive recorded-evidence consistency only; it does not recreate native execution.

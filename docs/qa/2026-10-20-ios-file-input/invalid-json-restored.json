@@ -1,0 +1,15 @@
+{
+  "device": "D5502A06-4858-428C-901C-587B58280F64",
+  "target": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Shared/AppGroup/5C0949D5-49E4-472A-892E-82AD9E9EC36F/File Provider Storage/colombian-spanish-backup-2026-10-20T12-28-30.799Z-oex5y4.json",
+  "phase": "invalid-json",
+  "originalBytes": 372359,
+  "originalSha256": "ee68474574cda36eda5ef735a658474ad099c3cebe28561856878c1c06ce6fae",
+  "originalMode": "0o644",
+  "startedUtc": "2026-10-20T13:20:13.987275+00:00",
+  "stagedBytes": 8,
+  "stagedSha256": "a3094380a7a2bd4cebc260ad3044b534e4231c7621aa1ab2b8696a6394f9d1bd",
+  "restoredBytes": 372359,
+  "restoredSha256": "ee68474574cda36eda5ef735a658474ad099c3cebe28561856878c1c06ce6fae",
+  "restoredMode": "0o644",
+  "restoredUtc": "2026-10-20T13:21:19.503755+00:00"
+}

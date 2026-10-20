@@ -1,0 +1,54 @@
+{
+  "baseMain": "98049e76eef7e8c3fe9cef325631735e8edf9a63",
+  "app": "Debug 1.0.0/build 1.0.0, SDK57",
+  "pids": {
+    "sourceInitial": 30707,
+    "tabletInitial": 34910,
+    "tabletImportedCold": 36445,
+    "sourceAfterTabletCold": 37447,
+    "tabletRecovery": 38150,
+    "tabletRecoveryCold": 39226
+  },
+  "draftChangedKeys": ["SRS_MISSIONS_V1"],
+  "missionBefore": {
+    "schemaVersion": 1,
+    "runs": []
+  },
+  "missionDraft": {
+    "schemaVersion": 1,
+    "runs": [
+      {
+        "schemaVersion": 1,
+        "id": "mvcgu0hh-3-g3teof35o8k",
+        "missionId": "daily-morning-greeting",
+        "contentVersion": 1,
+        "nodeId": "greeting",
+        "revision": 0,
+        "hintsUsed": 0,
+        "assisted": false,
+        "modelAnswerRevealed": false,
+        "completed": false,
+        "activeTiming": {
+          "durationMs": 0
+        },
+        "reviewCardIds": [],
+        "updatedAt": 1792501849036
+      }
+    ]
+  },
+  "sourceRawExactCheckpoints": [
+    "source-exported",
+    "source-after-tablet-before-launch",
+    "source-cold-after-tablet"
+  ],
+  "tabletRawExactRecovery": ["tablet-restored", "tablet-restored-cold"],
+  "interruption": {
+    "utc": "2026-10-20T12:50:25.696855+00:00",
+    "other": ["C100803B-D3D6-48B3-9615-7F74673A590D"],
+    "ownStopped": true
+  },
+  "sourceAndTabletShutdown": true,
+  "ownedMetroStopped": true,
+  "textEditQuit": true,
+  "otherProjectUntouched": true
+}

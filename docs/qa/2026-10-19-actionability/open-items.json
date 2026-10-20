@@ -44,14 +44,15 @@
       "taskIds": ["B01.6", "B01.6-B", "B01.6-B2", "B02.4", "B02.4-B2"],
       "classification": "mixed-native",
       "aiCanDoNow": "Reconcile fresh source/fixture evidence and perform remaining bounded queue/navigation/lifecycle checks on own-path installs. Do not replay known failed gestures unchanged. Reuse B01.5-B9/B10: Android same-install local full-state restore/cold and retained review-to-assisted-draft completion/cold are accepted; do not repeat these cells. B01.5-B11/B12 accept Android default-Spanish Quiz wrong/correct/results/missed-review/cold and disposable deck create/add/validation/rename/delete/cold; reuse these without closing broader layout/edit/filter/platform cells. Reuse B01.5-B13: Android Spanish/Barrio Light/font2 Add Card lower-field keyboard access and touch validation are fixed and accepted with exact cold-state recovery. Other named form cells remain separate; this Android candidate is portrait-locked. Reuse B01.5-B14: Android font2 Spanish/Barrio Light New Deck/Rename/editor keyboard viewport defects are fixed; native retained drafts/full actions and cancel-only exact cold recovery pass. Other named cells remain open.",
-      "requires": "Named remaining native cases; exact source/destination protection where claimed. Android, genuine OS/storage failures and hardware remain separate.",
+      "requires": "Remaining iOS touch/layout cases in currentIosRouting; preserve exact source/destination evidence. B01.6-B2h completes the bounded independent tablet-plan source cold gap. Android is owner-paused. Hardware acceptance remains separate.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-fresh-graded-editor/README.md",
         "docs/qa/2026-10-20-android-restore-plan/README.md",
         "docs/qa/2026-10-20-android-quiz-editor/README.md",
         "docs/qa/2026-10-20-android-form-keyboard/README.md",
-        "docs/qa/2026-10-20-android-editor-dialogs/README.md"
+        "docs/qa/2026-10-20-android-editor-dialogs/README.md",
+        "docs/qa/2026-10-20-ios-tablet-source/README.md"
       ]
     },
     {
@@ -100,7 +101,7 @@
       "taskIds": ["B04.5", "B04.5-B"],
       "classification": "mixed-native",
       "aiCanDoNow": "Finish named current-player layout/keyboard/accent/correction checks where input works; retain fixture labels.",
-      "requires": "Accepted expanded exercise content for its later cases; changed input capability for known failed accent/gesture routes; Android setup separately.",
+      "requires": "Changed input capability for known failed iOS accent/gesture routes; accepted expanded content for conditional later exercise cases. Android is owner-paused, not a missing setup prerequisite.",
       "evidenceFiles": ["docs/qa/2026-10-18-remaining-ai-gates/README.md"]
     },
     {
@@ -124,7 +125,7 @@
       ],
       "classification": "mixed-native",
       "aiCanDoNow": "Continue specific iOS whole-plan keyboard/navigation/layout/restart cases using own-path draft fixtures. Runtime progression and calibration already exist. Reuse B01.5-B9/B10: Android same-install local full-state restore/cold and retained review-to-assisted-draft completion/cold are accepted; do not repeat these cells. B05.3-B2b2-B2g now covers narrow iOS phone Spanish/English maximum keyboard-open input/Check and separately accessibility-positioned Hint/End, exact eleven-record recovery; reuse this cell. Android work is paused by owner direction.",
-      "requires": "Remaining named native cells; changed control route for accent popup/touch-only cases; Android runtime and signed/hardware cases separately.",
+      "requires": "Remaining named iOS source/control cells in currentIosRouting; changed input capability for accent/touch/window cases. Android is owner-paused and signed/hardware acceptance remains separate.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-mini-voice/README.md",
@@ -168,7 +169,7 @@
       "taskIds": ["B07.3", "B07.3-B", "B07.6"],
       "classification": "mixed-native",
       "aiCanDoNow": "Finish named current authored-player native lifecycle/layout checks; keep draft and generated media boundaries clear.",
-      "requires": "Android setup, actual candidate/offline/media integration, plus the separately consented learner pilot.",
+      "requires": "Current iOS control/candidate/offline conditions, approved media/content integration and separately consented learner pilot. Android is owner-paused; its installed tooling is not an iOS prerequisite.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/pilot/READINESS.md"
@@ -225,7 +226,7 @@
       "taskIds": ["B09.2", "B09.2-B", "B09.2-B2"],
       "classification": "mixed-native",
       "aiCanDoNow": "B2c covers granted-capture background cleanup; B2d now covers live native Settings revocation, denied app behavior, app-settings recovery link and re-enabled new take/delete with OS-driven relaunches. B2g now covers mini Back from active capture, retained take and replay, zero-file cleanup and ready reentry in one process. Continue only distinct unverified OS interruption/window cases where controllable; do not repeat completed Back paths. Do not repeat basic capture, denial, background or completed permission recovery. Current unsigned Release excludes recording. B2e covers active capture through live native maximum-text resizing and Stop/Delete cleanup; reuse that result rather than replaying it. B2f covers actual mini active-capture rotation, retained take/max-landscape actions and deletion; do not replay this or the completed written-alternative rotation.",
-      "requires": "Authorized recording route; known Settings targeting/tool limits; Android, physical sound/routes and signed production exclusion evidence separately.",
+      "requires": "Remaining iOS control/window and actual signed/physical audio/route conditions in currentIosRouting. Completed native Settings revocation/re-enable and Back/background paths are reused. Android is owner-paused.",
       "evidenceFiles": [
         "docs/qa/2026-10-19-voice-denial/README.md",
         "docs/qa/2026-10-19-mini-voice/README.md",
@@ -286,7 +287,7 @@
       "taskIds": ["B12.4", "B12.4-B", "B12.5", "B12.6"],
       "classification": "mixed-native-device",
       "aiCanDoNow": "B12.6-B covers compiled unsigned Release local Files save/picker/preview/cancel. B12.6-C covers mini same-build replacement and genuine removal/new-container reinstall/full-state restoration from the actual Files backup. B12.6-D adds actual local provider collision Stop/Keep Both/Replace and readable replacement preview with exact app state. B12.6-E adds staged local unreadable-file picker cancellation and restored-file retry with exact state; no app error was observed. Continue app-level provider errors/cloud, different-version upgrade, network/storage, permission/lifecycle/window cases; reuse completed local Files/collision/reinstall evidence. The October20 native top-middle menu-bar probe exposed no menu/resized viewport despite Windowed Apps selected; do not repeat that route or earlier corner/Stage Manager attempts unchanged. Reuse B12.6-G (docs/qa/2026-10-20-android-storage-network/README.md): Android preview Release measured EDGE/2000ms cold Home/local export and actual32KiB-free export error/same-process retry preserve seven records through cold recovery. Recipient/provider handoff, other storage writes/restore, downloads/cloud, version upgrades and signed/physical cases remain open; do not repeat these accepted cells. Owner priority October20: Android paused; leave its PR78 open. Reuse iOS B12.6-I (docs/qa/2026-10-20-ios-upgrade-backup-recovery/README.md): current-code unsigned Release update and ordinary Continue/cold preserve11records apart from normal checkpoint timestamp; actual cache-write denial and same-process export retry preserve all11 resumed records. Not schema migration/low-storage/provider/signed proof. Continue only uncovered iOS cells. B12.6-J now accepts bounded iOS32MiB cache ENOSPC/export error, same-volume space recovery/same-process valid retry and exact cache/eleven-record cold preservation; reuse this cell. Whole-device pressure, other writes/restore/journal/provider and signed/hardware cases remain separate. B12.6-K covers bounded iOS learning-store ENOSPC, unchanged failed first journal write, same-answer retry to a durable six-entry journal, exact cold roll-forward/single credit/next queue and protected original-store cold recovery. Reuse these cells; originally named restore/whole-device/provider/signed/hardware cases remain distinct. This does not create a new task to exhaustively repeat all write boundaries. B12.6-L now covers real bounded iOS full-state restore storage failure, unchanged seven-record error state, same-process successful retry, supported missing-field/history normalization and exact eleven-record cold/source preservation. Reuse K journal recovery and L restore retry; do not create an exhaustive boundary matrix. Whole-device/provider/cloud, schema/signed/hardware and other originally named cases remain distinct.",
-      "requires": "Named control limitations, real low storage/network/routes/notification delivery and signed/hardware acceptance are not inferred from software mocks.",
+      "requires": "Named remaining iOS control/network and signed/hardware conditions in currentIosRouting. B12.6-M completes native malformed/oversized-byte selections and exact cold recovery. Completed bounded storage faults I-L are reused; whole-device pressure/actual notification delivery are separate. Android is owner-paused.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-release-bundle/README.md",
@@ -297,7 +298,8 @@
         "docs/qa/2026-10-20-control-route-limits/README.md",
         "docs/qa/2026-10-20-ios-full-cache/README.md",
         "docs/qa/2026-10-20-ios-storage-save/README.md",
-        "docs/qa/2026-10-20-ios-restore-storage/README.md"
+        "docs/qa/2026-10-20-ios-restore-storage/README.md",
+        "docs/qa/2026-10-20-ios-file-input/README.md"
       ]
     },
     {
@@ -448,7 +450,7 @@
       "id": "B02.1",
       "tags": ["AI", "H-LANGUAGE"],
       "line": 143,
-      "text": "Correct future-tense generation and audit the remaining tense/pronoun tables. Add independent expected-form fixtures including `hablar\u00e9`, `comer\u00e9`, irregular futures, and region-sensitive forms; have an editor validate the reference set.",
+      "text": "Correct future-tense generation and audit the remaining tense/pronoun tables. Add independent expected-form fixtures including `hablaré`, `comeré`, irregular futures, and region-sensitive forms; have an editor validate the reference set.",
       "group": "editor-language"
     },
     {
@@ -735,7 +737,7 @@
       "id": "B07.1",
       "tags": ["AI", "H-PRODUCT"],
       "line": 306,
-      "text": "Define the first mission: \u201cYour first morning in Medell\u00edn,\u201d including its outcome, required phrases, completion criteria, and assisted alternatives. Resolve its focused design before coding the new subsystem.",
+      "text": "Define the first mission: “Your first morning in Medellín,” including its outcome, required phrases, completion criteria, and assisted alternatives. Resolve its focused design before coding the new subsystem.",
       "group": "mission-content"
     },
     {
@@ -1141,7 +1143,7 @@
       "id": "B13.3",
       "tags": ["H-PRODUCT", "H-LEARNER"],
       "line": 521,
-      "text": "Recruit a small directional pilot, initially around 5\u20138 people spanning beginners and learners with basics; obtain consent and agree on appropriate data collection. This sample is not proof of broad efficacy.",
+      "text": "Recruit a small directional pilot, initially around 5–8 people spanning beginners and learners with basics; obtain consent and agree on appropriate data collection. This sample is not proof of broad efficacy.",
       "group": "pilot"
     },
     {
@@ -1263,5 +1265,6 @@
       "text": "Open-ended AI conversation after structured speaking feedback proves reliable and its running cost is understood.",
       "group": "conditional-experiments"
     }
-  ]
+  ],
+  "currentIosRouting": "docs/qa/2026-10-20-ios-remaining/README.md"
 }
