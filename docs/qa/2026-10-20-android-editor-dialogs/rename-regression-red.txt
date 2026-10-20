@@ -1,0 +1,34 @@
+FAIL __tests__/screens/ManageDecksScreen.test.tsx
+  ✓ keeps one rename and its draft across pending writes and live font changes (37 ms)
+  ✓ retains rejected rename text for exact retry and preserves the list query (29 ms)
+  ✓ handles failed confirmed Eliminar and ignores duplicate confirmation callbacks (8 ms)
+  ✓ handles failed confirmed Reiniciar and ignores duplicate confirmation callbacks (6 ms)
+  ✕ Android Rename retains an unsaved name within the keyboard-reduced dialog (10 ms)
+  ManageDecksScreen navigation
+    ✓ navigates directly to the Home tab (291 ms)
+    ✓ opens the translation review screen (4 ms)
+
+  ● Android Rename retains an unsaved name within the keyboard-reduced dialog
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: undefined
+
+      156 |     });
+      157 |   });
+    > 158 |   expect(StyleSheet.flatten(viewport.props.style).height).toBe(400);
+          |                                                           ^
+      159 |   expect(ui.getByDisplayValue('Prueba q')).toBeTruthy();
+      160 |   fireEvent.press(ui.getByText('Cancelar'));
+      161 |   expect(mockUseDeck().renameDeck).not.toHaveBeenCalled();
+
+      at Object.toBe (__tests__/screens/ManageDecksScreen.test.tsx:158:59)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 6 passed, 7 total
+Snapshots:   0 total
+Time:        1.248 s
+Ran all test suites within paths "__tests__/screens/ManageDecksScreen.test.tsx".

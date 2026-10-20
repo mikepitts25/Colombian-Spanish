@@ -1,6 +1,14 @@
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
-import { Alert, Dimensions } from 'react-native';
+import {
+  Alert,
+  Dimensions,
+  Platform,
+  KeyboardAvoidingView,
+  View,
+  StyleSheet,
+  DeviceEventEmitter,
+} from 'react-native';
 import ManageDecksScreen from '../../src/screens/ManageDecksScreen';
 import { useDeck } from '../../src/hooks/useDeck';
 
@@ -48,7 +56,10 @@ describe('ManageDecksScreen navigation', () => {
 });
 
 const originalWindow = Dimensions.get('window');
-afterEach(() => act(() => Dimensions.set({ window: originalWindow })));
+afterEach(() => {
+  act(() => Dimensions.set({ window: originalWindow }));
+  jest.restoreAllMocks();
+});
 const oneDeck = { id: 'd1', name: 'Prueba', cards: [] };
 
 test('keeps one rename and its draft across pending writes and live font changes', async () => {
@@ -137,3 +148,26 @@ test.each([
     expect(ui.getByRole('button', { name: 'Inicio', disabled: false })).toBeTruthy();
   },
 );
+
+test('Android Rename retains an unsaved name within the keyboard-reduced dialog', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [oneDeck] });
+  const ui = render(<ManageDecksScreen />);
+  fireEvent.press(ui.getByText('Renombrar'));
+  fireEvent.changeText(ui.getByPlaceholderText('Nombre del deck'), 'Prueba q');
+  const avoiding = ui.UNSAFE_getByType(KeyboardAvoidingView);
+  const viewport = avoiding.findAllByType(View)[0];
+  await act(async () => {
+    fireEvent(viewport, 'layout', {
+      persist: jest.fn(),
+      nativeEvent: { layout: { x: 0, y: 0, width: 360, height: 700 } },
+    });
+    DeviceEventEmitter.emit('keyboardDidShow', {
+      endCoordinates: { screenX: 0, screenY: 400, width: 360, height: 300 },
+    });
+  });
+  expect(StyleSheet.flatten(viewport.props.style).height).toBe(400);
+  expect(ui.getByDisplayValue('Prueba q')).toBeTruthy();
+  fireEvent.press(ui.getByText('Cancelar'));
+  expect(mockUseDeck().renameDeck).not.toHaveBeenCalled();
+});

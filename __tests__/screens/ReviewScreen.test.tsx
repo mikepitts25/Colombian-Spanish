@@ -2,6 +2,7 @@ import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import React from 'react';
 import {
   DeviceEventEmitter,
+  Platform,
   Dimensions,
   KeyboardAvoidingView,
   ScrollView,
@@ -257,4 +258,32 @@ test('Barrio filter viewports fit full 48-point chips plus focus rings while Cla
   for (const row of screen.UNSAFE_getAllByType(ScrollView).filter((row) => row.props.horizontal)) {
     expect(StyleSheet.flatten(row.props.style).height).toBe(38);
   }
+});
+
+it('Android editor reduces the keyboard viewport without saving an example draft', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  const update = jest.fn();
+  mockUseDeck.mockReturnValue({ ready: true, decks: [DECK], updateCardReview: update });
+  const ui = renderWithTheme(
+    <HeaderHeightContext.Provider value={74}>
+      <ReviewScreen />
+    </HeaderHeightContext.Provider>,
+  );
+  fireEvent.changeText(ui.getByPlaceholderText('Ejemplo con inglés después de |'), 'Unsaved q');
+  const avoiding = ui.UNSAFE_getByType(KeyboardAvoidingView);
+  const viewport = avoiding.findAllByType(View)[0];
+  await act(async () => {
+    fireEvent(viewport, 'layout', {
+      persist: jest.fn(),
+      nativeEvent: { layout: { x: 0, y: 0, width: 360, height: 700 } },
+    });
+    DeviceEventEmitter.emit('keyboardDidShow', {
+      endCoordinates: { screenX: 0, screenY: 400, width: 360, height: 300 },
+    });
+  });
+  expect(StyleSheet.flatten(viewport.props.style).height).toBe(326);
+  expect(ui.getByDisplayValue('Unsaved q')).toBeTruthy();
+  expect(update).not.toHaveBeenCalled();
+  await act(async () => DeviceEventEmitter.emit('keyboardDidHide', {}));
+  expect(StyleSheet.flatten(viewport.props.style).height).toBeUndefined();
 });
