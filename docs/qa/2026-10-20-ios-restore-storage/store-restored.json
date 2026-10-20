@@ -1,0 +1,40 @@
+{
+  "device": "D5502A06-4858-428C-901C-587B58280F64",
+  "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/32204D2A-EE16-457C-9FF8-F20C1F521559",
+  "target": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/32204D2A-EE16-457C-9FF8-F20C1F521559/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1",
+  "originalFiles": {
+    "d21320c260ecd25059f46a6362891261": "04083246b67ee5fc0064ff59e1d43e7d3d6599ce4875b58991d84f1f684777f3",
+    "manifest.json": "718f85af73b571eff762a812b9f6b87aca931f136b752802b70ea80ee5160942"
+  },
+  "startedUtc": "2026-10-20T12:27:35.215781+00:00",
+  "imageBytes": 33554432,
+  "mountEntities": [
+    {
+      "content-hint": "Apple_HFS",
+      "dev-entry": "/dev/disk22s1",
+      "mount-point": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/32204D2A-EE16-457C-9FF8-F20C1F521559/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1",
+      "potentially-mountable": true,
+      "unmapped-content-hint": "48465300-0000-11AA-AA11-00306543ECAC",
+      "volume-kind": "hfs"
+    },
+    {
+      "content-hint": "GUID_partition_scheme",
+      "dev-entry": "/dev/disk22",
+      "potentially-mountable": false,
+      "unmapped-content-hint": "GUID_partition_scheme"
+    }
+  ],
+  "mountedDevice": "/dev/disk22s1",
+  "totalBytes": 33513472,
+  "terminateExit": 0,
+  "terminateOutput": "",
+  "detachExit": 0,
+  "detachOutput": "\"disk22\" ejected.\nhdiutil: WARNING: 'hdiutil detach ...' is deprecated. Please use 'diskutil eject ...' instead.\n",
+  "restoredSameFilesystem": true,
+  "restoredFiles": {
+    "d21320c260ecd25059f46a6362891261": "04083246b67ee5fc0064ff59e1d43e7d3d6599ce4875b58991d84f1f684777f3",
+    "manifest.json": "718f85af73b571eff762a812b9f6b87aca931f136b752802b70ea80ee5160942"
+  },
+  "originalFilesPreserved": true,
+  "restoredUtc": "2026-10-20T12:33:10.313805+00:00"
+}

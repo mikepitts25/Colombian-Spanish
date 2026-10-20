@@ -1,0 +1,567 @@
+{
+  "original-before": {
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "recordCount": 11,
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "94ff9a83db525da0a3b4a40c35bea085849baa2895443045452c5f256e2e078a",
+      "SRS_DAILY_PROGRESS_V1": "e01283a2d4bf598c16eb07f9ed3a9c360e60497f1e2aa7e2da7296b227015fb8",
+      "SRS_DECKS_V3": "04083246b67ee5fc0064ff59e1d43e7d3d6599ce4875b58991d84f1f684777f3",
+      "SRS_LAST_STUDY_SESSION_V1": "e5fb1cbfbfa1eea20fa1e8a7727d407da82ace54eae77d8392490e4a4930b9ba",
+      "SRS_LEARNING_EVENTS_V1": "48719711865306ad2d32d1e0239da7f7c63db72d8b1303bc3bd297149924ef07",
+      "SRS_MISSIONS_V1": "e932158f2b198626be2e41221db5e67973cf7679b882548f15e0075865afd2b0",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_PREFS_V1": "074a52100d00ddbef173e9455b612ce6ebb1929893b86d3aa2d64899bc58f316",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_SEEN_WORDS_V1": "5c359f277cd176aed1b546d7d6c2e3a90970024fcd0e170bb5dc05af3abbb956",
+      "SRS_STUDY_STREAK_V1": "536be6a291136a5f540791d22b3678025c513df3345b0ff32fcbb01167e15c79"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "session": {
+      "deckId": "deck-greetings",
+      "cardId": "0010",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0010", "0011", "0012", "0013"],
+        "region": "all",
+        "sessionId": "mvexwgzp-2-qh72z2jcwzc",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1792494152932
+    },
+    "decks": 47,
+    "cards": 1392,
+    "eventCount": 2,
+    "journal": null,
+    "semanticHashes": {
+      "SRS_DAILY_PLAN_V1": "0c424c65a0154d590c3549e11079c7668f9965e8778435ad48e47e39f3610f62",
+      "SRS_DAILY_PROGRESS_V1": "5c35d3d57fdd46669510d4394536ce2d8f448842cb8021ee603e336763b5501a",
+      "SRS_DECKS_V3": "1980ac4aeacfbb5bcb44dfaf53faa8a8c31b4772748f28db6d51f6c8086d243a",
+      "SRS_LAST_STUDY_SESSION_V1": "3f21ebef7850d6d4f1b5a8be729c2942e23b40810469ca002ca2ddd102a2328d",
+      "SRS_LEARNING_EVENTS_V1": "8c3c2a3899a121d5544cd10213b2e22ec2eb3071d4e8ab8caf16d612ee1019d7",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_PREFS_V1": "651a361831b061deba98a6eacdf28a60cbebfd2824c98ab8e9af53c954f12b42",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_SEEN_WORDS_V1": "2e9fe2d56bd6b171b7fa10f0e7d8ff2d6ae2e38b28d26dbaba110ee66df396be",
+      "SRS_STUDY_STREAK_V1": "f9229e8bd2ae956bfc1d6940e195577323736310ff82b57d1a2471794e742978"
+    }
+  },
+  "reused-before-launch": {
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "recordCount": 7,
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "b411eb3412551c4f97f26e055b3efd76ad0d64b3c8cf3b65bd9cbb90b03291f5",
+      "SRS_DECKS_V3": "f6643c55b83c4901dda3689b571317582002a423f911939d96747ee5bb83b86f",
+      "SRS_LAST_STUDY_SESSION_V1": "640b204c15dbc0b4fc6abf835e3354de5a13c62e20ef680bb9653999124467a8",
+      "SRS_LEARNING_EVENTS_V1": "148fb2be464d47794295b98cb931f28c8246f4cf78dbae0d5c3730f67c0ca926",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_SEEN_WORDS_V1": "b2c20d1563d459a40d64621b594b47d1e0e8ff2e21793b3e2d26127f30489cfb",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 1,
+      "target": 10,
+      "newCount": 1
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvgn5r9s-2-dhzt5sa8g6t"
+      },
+      "updatedAt": 1792498450854
+    },
+    "decks": 47,
+    "cards": 1392,
+    "eventCount": 1,
+    "journal": null,
+    "semanticHashes": {
+      "SRS_DAILY_PROGRESS_V1": "3ed12f14e5d0f38fc7ef7493bd0b834616bc775e4d1fb1eb4773d1da06de67b4",
+      "SRS_DECKS_V3": "ef086ef69e0d314158210d5614f2e27876217da7456a246f2d00bf20b51bd6b5",
+      "SRS_LAST_STUDY_SESSION_V1": "5e17a1c3b63642d881adb4967cc09390007b2f418c159d423e95a0e3de8703b5",
+      "SRS_LEARNING_EVENTS_V1": "3524b84828ed1fced1680d8da4f7863c1f0280f6b925823b62868e5eebf8570c",
+      "SRS_PREFS_V1": "e7208aa8324dabc46760ce66a8bc2999e7bd72abf371b8fd4912958eecf0988c",
+      "SRS_SEEN_WORDS_V1": "884910174d089ba559fb4417b0c13920c6ec827f7c030164619bcbe95921ad65",
+      "SRS_STUDY_STREAK_V1": "35fe28eaab61c8146289f404b980b73eaaa83e4727e543e9b5696732dfe73288"
+    }
+  },
+  "baseline": {
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "recordCount": 7,
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "b411eb3412551c4f97f26e055b3efd76ad0d64b3c8cf3b65bd9cbb90b03291f5",
+      "SRS_DECKS_V3": "f6643c55b83c4901dda3689b571317582002a423f911939d96747ee5bb83b86f",
+      "SRS_LAST_STUDY_SESSION_V1": "640b204c15dbc0b4fc6abf835e3354de5a13c62e20ef680bb9653999124467a8",
+      "SRS_LEARNING_EVENTS_V1": "148fb2be464d47794295b98cb931f28c8246f4cf78dbae0d5c3730f67c0ca926",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_SEEN_WORDS_V1": "b2c20d1563d459a40d64621b594b47d1e0e8ff2e21793b3e2d26127f30489cfb",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 1,
+      "target": 10,
+      "newCount": 1
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvgn5r9s-2-dhzt5sa8g6t"
+      },
+      "updatedAt": 1792498450854
+    },
+    "decks": 47,
+    "cards": 1392,
+    "eventCount": 1,
+    "journal": null,
+    "semanticHashes": {
+      "SRS_DAILY_PROGRESS_V1": "3ed12f14e5d0f38fc7ef7493bd0b834616bc775e4d1fb1eb4773d1da06de67b4",
+      "SRS_DECKS_V3": "ef086ef69e0d314158210d5614f2e27876217da7456a246f2d00bf20b51bd6b5",
+      "SRS_LAST_STUDY_SESSION_V1": "5e17a1c3b63642d881adb4967cc09390007b2f418c159d423e95a0e3de8703b5",
+      "SRS_LEARNING_EVENTS_V1": "3524b84828ed1fced1680d8da4f7863c1f0280f6b925823b62868e5eebf8570c",
+      "SRS_PREFS_V1": "e7208aa8324dabc46760ce66a8bc2999e7bd72abf371b8fd4912958eecf0988c",
+      "SRS_SEEN_WORDS_V1": "884910174d089ba559fb4417b0c13920c6ec827f7c030164619bcbe95921ad65",
+      "SRS_STUDY_STREAK_V1": "35fe28eaab61c8146289f404b980b73eaaa83e4727e543e9b5696732dfe73288"
+    }
+  },
+  "before-restore": {
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "recordCount": 7,
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "b411eb3412551c4f97f26e055b3efd76ad0d64b3c8cf3b65bd9cbb90b03291f5",
+      "SRS_DECKS_V3": "f6643c55b83c4901dda3689b571317582002a423f911939d96747ee5bb83b86f",
+      "SRS_LAST_STUDY_SESSION_V1": "640b204c15dbc0b4fc6abf835e3354de5a13c62e20ef680bb9653999124467a8",
+      "SRS_LEARNING_EVENTS_V1": "148fb2be464d47794295b98cb931f28c8246f4cf78dbae0d5c3730f67c0ca926",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_SEEN_WORDS_V1": "b2c20d1563d459a40d64621b594b47d1e0e8ff2e21793b3e2d26127f30489cfb",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 1,
+      "target": 10,
+      "newCount": 1
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvgn5r9s-2-dhzt5sa8g6t"
+      },
+      "updatedAt": 1792498450854
+    },
+    "decks": 47,
+    "cards": 1392,
+    "eventCount": 1,
+    "journal": null,
+    "semanticHashes": {
+      "SRS_DAILY_PROGRESS_V1": "3ed12f14e5d0f38fc7ef7493bd0b834616bc775e4d1fb1eb4773d1da06de67b4",
+      "SRS_DECKS_V3": "ef086ef69e0d314158210d5614f2e27876217da7456a246f2d00bf20b51bd6b5",
+      "SRS_LAST_STUDY_SESSION_V1": "5e17a1c3b63642d881adb4967cc09390007b2f418c159d423e95a0e3de8703b5",
+      "SRS_LEARNING_EVENTS_V1": "3524b84828ed1fced1680d8da4f7863c1f0280f6b925823b62868e5eebf8570c",
+      "SRS_PREFS_V1": "e7208aa8324dabc46760ce66a8bc2999e7bd72abf371b8fd4912958eecf0988c",
+      "SRS_SEEN_WORDS_V1": "884910174d089ba559fb4417b0c13920c6ec827f7c030164619bcbe95921ad65",
+      "SRS_STUDY_STREAK_V1": "35fe28eaab61c8146289f404b980b73eaaa83e4727e543e9b5696732dfe73288"
+    }
+  },
+  "restore-error": {
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "recordCount": 7,
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "b411eb3412551c4f97f26e055b3efd76ad0d64b3c8cf3b65bd9cbb90b03291f5",
+      "SRS_DECKS_V3": "f6643c55b83c4901dda3689b571317582002a423f911939d96747ee5bb83b86f",
+      "SRS_LAST_STUDY_SESSION_V1": "640b204c15dbc0b4fc6abf835e3354de5a13c62e20ef680bb9653999124467a8",
+      "SRS_LEARNING_EVENTS_V1": "148fb2be464d47794295b98cb931f28c8246f4cf78dbae0d5c3730f67c0ca926",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_SEEN_WORDS_V1": "b2c20d1563d459a40d64621b594b47d1e0e8ff2e21793b3e2d26127f30489cfb",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 1,
+      "target": 10,
+      "newCount": 1
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvgn5r9s-2-dhzt5sa8g6t"
+      },
+      "updatedAt": 1792498450854
+    },
+    "decks": 47,
+    "cards": 1392,
+    "eventCount": 1,
+    "journal": null,
+    "semanticHashes": {
+      "SRS_DAILY_PROGRESS_V1": "3ed12f14e5d0f38fc7ef7493bd0b834616bc775e4d1fb1eb4773d1da06de67b4",
+      "SRS_DECKS_V3": "ef086ef69e0d314158210d5614f2e27876217da7456a246f2d00bf20b51bd6b5",
+      "SRS_LAST_STUDY_SESSION_V1": "5e17a1c3b63642d881adb4967cc09390007b2f418c159d423e95a0e3de8703b5",
+      "SRS_LEARNING_EVENTS_V1": "3524b84828ed1fced1680d8da4f7863c1f0280f6b925823b62868e5eebf8570c",
+      "SRS_PREFS_V1": "e7208aa8324dabc46760ce66a8bc2999e7bd72abf371b8fd4912958eecf0988c",
+      "SRS_SEEN_WORDS_V1": "884910174d089ba559fb4417b0c13920c6ec827f7c030164619bcbe95921ad65",
+      "SRS_STUDY_STREAK_V1": "35fe28eaab61c8146289f404b980b73eaaa83e4727e543e9b5696732dfe73288"
+    }
+  },
+  "after-retry": {
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "recordCount": 11,
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "94ff9a83db525da0a3b4a40c35bea085849baa2895443045452c5f256e2e078a",
+      "SRS_DAILY_PROGRESS_V1": "b411eb3412551c4f97f26e055b3efd76ad0d64b3c8cf3b65bd9cbb90b03291f5",
+      "SRS_DECKS_V3": "f6643c55b83c4901dda3689b571317582002a423f911939d96747ee5bb83b86f",
+      "SRS_LAST_STUDY_SESSION_V1": "640b204c15dbc0b4fc6abf835e3354de5a13c62e20ef680bb9653999124467a8",
+      "SRS_LEARNING_EVENTS_V1": "23fcb297a0c3ab408f5dc22f0760fb1534c45f6d99e033836c16405f1b5dd027",
+      "SRS_MISSIONS_V1": "e932158f2b198626be2e41221db5e67973cf7679b882548f15e0075865afd2b0",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_SEEN_WORDS_V1": "b2c20d1563d459a40d64621b594b47d1e0e8ff2e21793b3e2d26127f30489cfb",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 1,
+      "target": 10,
+      "newCount": 1
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvgn5r9s-2-dhzt5sa8g6t"
+      },
+      "updatedAt": 1792498450854
+    },
+    "decks": 47,
+    "cards": 1392,
+    "eventCount": 1,
+    "journal": null,
+    "semanticHashes": {
+      "SRS_DAILY_PLAN_V1": "0c424c65a0154d590c3549e11079c7668f9965e8778435ad48e47e39f3610f62",
+      "SRS_DAILY_PROGRESS_V1": "3ed12f14e5d0f38fc7ef7493bd0b834616bc775e4d1fb1eb4773d1da06de67b4",
+      "SRS_DECKS_V3": "ef086ef69e0d314158210d5614f2e27876217da7456a246f2d00bf20b51bd6b5",
+      "SRS_LAST_STUDY_SESSION_V1": "5e17a1c3b63642d881adb4967cc09390007b2f418c159d423e95a0e3de8703b5",
+      "SRS_LEARNING_EVENTS_V1": "3524b84828ed1fced1680d8da4f7863c1f0280f6b925823b62868e5eebf8570c",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_PREFS_V1": "e7208aa8324dabc46760ce66a8bc2999e7bd72abf371b8fd4912958eecf0988c",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_SEEN_WORDS_V1": "884910174d089ba559fb4417b0c13920c6ec827f7c030164619bcbe95921ad65",
+      "SRS_STUDY_STREAK_V1": "35fe28eaab61c8146289f404b980b73eaaa83e4727e543e9b5696732dfe73288"
+    }
+  },
+  "restored-cold": {
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "recordCount": 11,
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "94ff9a83db525da0a3b4a40c35bea085849baa2895443045452c5f256e2e078a",
+      "SRS_DAILY_PROGRESS_V1": "b411eb3412551c4f97f26e055b3efd76ad0d64b3c8cf3b65bd9cbb90b03291f5",
+      "SRS_DECKS_V3": "f6643c55b83c4901dda3689b571317582002a423f911939d96747ee5bb83b86f",
+      "SRS_LAST_STUDY_SESSION_V1": "640b204c15dbc0b4fc6abf835e3354de5a13c62e20ef680bb9653999124467a8",
+      "SRS_LEARNING_EVENTS_V1": "23fcb297a0c3ab408f5dc22f0760fb1534c45f6d99e033836c16405f1b5dd027",
+      "SRS_MISSIONS_V1": "e932158f2b198626be2e41221db5e67973cf7679b882548f15e0075865afd2b0",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_SEEN_WORDS_V1": "b2c20d1563d459a40d64621b594b47d1e0e8ff2e21793b3e2d26127f30489cfb",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 1,
+      "target": 10,
+      "newCount": 1
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "session": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvgn5r9s-2-dhzt5sa8g6t"
+      },
+      "updatedAt": 1792498450854
+    },
+    "decks": 47,
+    "cards": 1392,
+    "eventCount": 1,
+    "journal": null,
+    "semanticHashes": {
+      "SRS_DAILY_PLAN_V1": "0c424c65a0154d590c3549e11079c7668f9965e8778435ad48e47e39f3610f62",
+      "SRS_DAILY_PROGRESS_V1": "3ed12f14e5d0f38fc7ef7493bd0b834616bc775e4d1fb1eb4773d1da06de67b4",
+      "SRS_DECKS_V3": "ef086ef69e0d314158210d5614f2e27876217da7456a246f2d00bf20b51bd6b5",
+      "SRS_LAST_STUDY_SESSION_V1": "5e17a1c3b63642d881adb4967cc09390007b2f418c159d423e95a0e3de8703b5",
+      "SRS_LEARNING_EVENTS_V1": "3524b84828ed1fced1680d8da4f7863c1f0280f6b925823b62868e5eebf8570c",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_PREFS_V1": "e7208aa8324dabc46760ce66a8bc2999e7bd72abf371b8fd4912958eecf0988c",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_SEEN_WORDS_V1": "884910174d089ba559fb4417b0c13920c6ec827f7c030164619bcbe95921ad65",
+      "SRS_STUDY_STREAK_V1": "35fe28eaab61c8146289f404b980b73eaaa83e4727e543e9b5696732dfe73288"
+    }
+  },
+  "original-restored": {
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "recordCount": 11,
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "94ff9a83db525da0a3b4a40c35bea085849baa2895443045452c5f256e2e078a",
+      "SRS_DAILY_PROGRESS_V1": "e01283a2d4bf598c16eb07f9ed3a9c360e60497f1e2aa7e2da7296b227015fb8",
+      "SRS_DECKS_V3": "04083246b67ee5fc0064ff59e1d43e7d3d6599ce4875b58991d84f1f684777f3",
+      "SRS_LAST_STUDY_SESSION_V1": "e5fb1cbfbfa1eea20fa1e8a7727d407da82ace54eae77d8392490e4a4930b9ba",
+      "SRS_LEARNING_EVENTS_V1": "48719711865306ad2d32d1e0239da7f7c63db72d8b1303bc3bd297149924ef07",
+      "SRS_MISSIONS_V1": "e932158f2b198626be2e41221db5e67973cf7679b882548f15e0075865afd2b0",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_PREFS_V1": "074a52100d00ddbef173e9455b612ce6ebb1929893b86d3aa2d64899bc58f316",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_SEEN_WORDS_V1": "5c359f277cd176aed1b546d7d6c2e3a90970024fcd0e170bb5dc05af3abbb956",
+      "SRS_STUDY_STREAK_V1": "536be6a291136a5f540791d22b3678025c513df3345b0ff32fcbb01167e15c79"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "session": {
+      "deckId": "deck-greetings",
+      "cardId": "0010",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0010", "0011", "0012", "0013"],
+        "region": "all",
+        "sessionId": "mvexwgzp-2-qh72z2jcwzc",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1792494152932
+    },
+    "decks": 47,
+    "cards": 1392,
+    "eventCount": 2,
+    "journal": null,
+    "semanticHashes": {
+      "SRS_DAILY_PLAN_V1": "0c424c65a0154d590c3549e11079c7668f9965e8778435ad48e47e39f3610f62",
+      "SRS_DAILY_PROGRESS_V1": "5c35d3d57fdd46669510d4394536ce2d8f448842cb8021ee603e336763b5501a",
+      "SRS_DECKS_V3": "1980ac4aeacfbb5bcb44dfaf53faa8a8c31b4772748f28db6d51f6c8086d243a",
+      "SRS_LAST_STUDY_SESSION_V1": "3f21ebef7850d6d4f1b5a8be729c2942e23b40810469ca002ca2ddd102a2328d",
+      "SRS_LEARNING_EVENTS_V1": "8c3c2a3899a121d5544cd10213b2e22ec2eb3071d4e8ab8caf16d612ee1019d7",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_PREFS_V1": "651a361831b061deba98a6eacdf28a60cbebfd2824c98ab8e9af53c954f12b42",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_SEEN_WORDS_V1": "2e9fe2d56bd6b171b7fa10f0e7d8ff2d6ae2e38b28d26dbaba110ee66df396be",
+      "SRS_STUDY_STREAK_V1": "f9229e8bd2ae956bfc1d6940e195577323736310ff82b57d1a2471794e742978"
+    }
+  },
+  "original-cold": {
+    "device": "D5502A06-4858-428C-901C-587B58280F64",
+    "recordCount": 11,
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "94ff9a83db525da0a3b4a40c35bea085849baa2895443045452c5f256e2e078a",
+      "SRS_DAILY_PROGRESS_V1": "e01283a2d4bf598c16eb07f9ed3a9c360e60497f1e2aa7e2da7296b227015fb8",
+      "SRS_DECKS_V3": "04083246b67ee5fc0064ff59e1d43e7d3d6599ce4875b58991d84f1f684777f3",
+      "SRS_LAST_STUDY_SESSION_V1": "e5fb1cbfbfa1eea20fa1e8a7727d407da82ace54eae77d8392490e4a4930b9ba",
+      "SRS_LEARNING_EVENTS_V1": "48719711865306ad2d32d1e0239da7f7c63db72d8b1303bc3bd297149924ef07",
+      "SRS_MISSIONS_V1": "e932158f2b198626be2e41221db5e67973cf7679b882548f15e0075865afd2b0",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_PREFS_V1": "074a52100d00ddbef173e9455b612ce6ebb1929893b86d3aa2d64899bc58f316",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_SEEN_WORDS_V1": "5c359f277cd176aed1b546d7d6c2e3a90970024fcd0e170bb5dc05af3abbb956",
+      "SRS_STUDY_STREAK_V1": "536be6a291136a5f540791d22b3678025c513df3345b0ff32fcbb01167e15c79"
+    },
+    "daily": {
+      "date": "2026-10-20",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null,
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "general",
+      "homeRegion": "all"
+    },
+    "session": {
+      "deckId": "deck-greetings",
+      "cardId": "0010",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0010", "0011", "0012", "0013"],
+        "region": "all",
+        "sessionId": "mvexwgzp-2-qh72z2jcwzc",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1792494152932
+    },
+    "decks": 47,
+    "cards": 1392,
+    "eventCount": 2,
+    "journal": null,
+    "semanticHashes": {
+      "SRS_DAILY_PLAN_V1": "0c424c65a0154d590c3549e11079c7668f9965e8778435ad48e47e39f3610f62",
+      "SRS_DAILY_PROGRESS_V1": "5c35d3d57fdd46669510d4394536ce2d8f448842cb8021ee603e336763b5501a",
+      "SRS_DECKS_V3": "1980ac4aeacfbb5bcb44dfaf53faa8a8c31b4772748f28db6d51f6c8086d243a",
+      "SRS_LAST_STUDY_SESSION_V1": "3f21ebef7850d6d4f1b5a8be729c2942e23b40810469ca002ca2ddd102a2328d",
+      "SRS_LEARNING_EVENTS_V1": "8c3c2a3899a121d5544cd10213b2e22ec2eb3071d4e8ab8caf16d612ee1019d7",
+      "SRS_MISSIONS_V1": "a3790f0c9ab53b8a3a9452616382e7ec317820aed459e14b43b6de47f0e1bb73",
+      "SRS_NOTIFICATION_PREFS_V1": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "SRS_PREFS_V1": "651a361831b061deba98a6eacdf28a60cbebfd2824c98ab8e9af53c954f12b42",
+      "SRS_QUIZ_HISTORY_V1": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "SRS_SEEN_WORDS_V1": "2e9fe2d56bd6b171b7fa10f0e7d8ff2d6ae2e38b28d26dbaba110ee66df396be",
+      "SRS_STUDY_STREAK_V1": "f9229e8bd2ae956bfc1d6940e195577323736310ff82b57d1a2471794e742978"
+    }
+  }
+}

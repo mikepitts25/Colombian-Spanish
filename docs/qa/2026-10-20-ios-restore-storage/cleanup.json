@@ -1,0 +1,19 @@
+{
+  "samples": 186,
+  "collisions": 0,
+  "firstUtc": "2026-10-20T12:27:02.037064+00:00",
+  "lastUtc": "2026-10-20T12:33:46.555332+00:00",
+  "ios": {
+    "exit": 0,
+    "output": "{\n  \"devices\" : {\n    \"com.apple.CoreSimulator.SimRuntime.iOS-27-0\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-26-0\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-18-1\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-18-4\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-18-3\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-26-5\" : [\n\n    ]\n  }\n}"
+  },
+  "android": {
+    "exit": 0,
+    "output": "List of devices attached"
+  },
+  "processes": {
+    "exit": 1,
+    "output": ""
+  },
+  "qaImageMounted": false
+}

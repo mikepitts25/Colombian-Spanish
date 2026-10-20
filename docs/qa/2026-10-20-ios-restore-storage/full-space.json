@@ -1,0 +1,10 @@
+{
+  "device": "D5502A06-4858-428C-901C-587B58280F64",
+  "target": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/32204D2A-EE16-457C-9FF8-F20C1F521559/Library/Application Support/com.mikepitts.colombianspanish/RCTAsyncLocalStorage_V1",
+  "requestedReserve": 0,
+  "utc": "2026-10-20T12:30:30.378832+00:00",
+  "errno": 28,
+  "availableBytes": 24576,
+  "fillerBytes": 32309248,
+  "hostAvailableBytes": 134015488000
+}
