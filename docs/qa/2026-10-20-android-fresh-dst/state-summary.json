@@ -1,0 +1,195 @@
+{
+  "fresh": {
+    "recordCount": 4,
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "db784da456fc441ea55e7aa0b88f83df8357c0716c1a635f12c873aa895c1e37",
+      "SRS_DECKS_V3": "4adf66290f97e55f1437e2c2757b112a7635012e316b9039c4764c46d6d06216",
+      "SRS_LAST_STUDY_SESSION_V1": "a13d8684c3d0232932d5939a06bc5afdab23e0f2a6968505b8957b16113bba3a",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad"
+    },
+    "daily": {
+      "date": "2026-10-25",
+      "count": 0,
+      "target": 5,
+      "newCount": 0
+    },
+    "eventCount": 0,
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "checkpoint": {
+      "deckId": "deck-travel",
+      "cardId": "0038",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0038", "0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+        "region": "all",
+        "sessionId": "mvn68c38-2-mzz6pd8kddo"
+      },
+      "updatedAt": 1792893051201
+    },
+    "deckCount": 47,
+    "cardCount": 1392
+  },
+  "before-dst": {
+    "recordCount": 7,
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "2109b49c97f0a3e0922a64aafca0c8c37a8686a9aa499372651d455f353e3ea3",
+      "SRS_DECKS_V3": "2de077721be740102abec50c9dc1307847f54ddbaf9d1ccc99370f7a28a1b903",
+      "SRS_LAST_STUDY_SESSION_V1": "2404e7f1a479534fe7355b30f22846e14d9f7de9780d10bb2345823b0c5578c8",
+      "SRS_LEARNING_EVENTS_V1": "4c7e1fe791a52ffc01e574b595f61e8c499d78f17de4c0ecf2f1d89c09877abd",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_SEEN_WORDS_V1": "381c5c02b20e8dd0de1336b3845d79318d52d7982569984e66c32df149e26eda",
+      "SRS_STUDY_STREAK_V1": "a181de4ce12fde4c3609f482be614426fec52df313459e44f53fb7b9468d48ec"
+    },
+    "daily": {
+      "date": "2026-03-29",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "eventCount": 1,
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "checkpoint": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057"],
+        "region": "all",
+        "sessionId": "mnb1sct2-2-uhfdbkmryed",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1774745780949
+    },
+    "deckCount": 47,
+    "cardCount": 1392
+  },
+  "after-dst": {
+    "recordCount": 7,
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "2109b49c97f0a3e0922a64aafca0c8c37a8686a9aa499372651d455f353e3ea3",
+      "SRS_DECKS_V3": "2de077721be740102abec50c9dc1307847f54ddbaf9d1ccc99370f7a28a1b903",
+      "SRS_LAST_STUDY_SESSION_V1": "2404e7f1a479534fe7355b30f22846e14d9f7de9780d10bb2345823b0c5578c8",
+      "SRS_LEARNING_EVENTS_V1": "4c7e1fe791a52ffc01e574b595f61e8c499d78f17de4c0ecf2f1d89c09877abd",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_SEEN_WORDS_V1": "381c5c02b20e8dd0de1336b3845d79318d52d7982569984e66c32df149e26eda",
+      "SRS_STUDY_STREAK_V1": "a181de4ce12fde4c3609f482be614426fec52df313459e44f53fb7b9468d48ec"
+    },
+    "daily": {
+      "date": "2026-03-29",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "eventCount": 1,
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "checkpoint": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057"],
+        "region": "all",
+        "sessionId": "mnb1sct2-2-uhfdbkmryed",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1774745780949
+    },
+    "deckCount": 47,
+    "cardCount": 1392
+  },
+  "final-staged": {
+    "recordCount": 7,
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "2109b49c97f0a3e0922a64aafca0c8c37a8686a9aa499372651d455f353e3ea3",
+      "SRS_DECKS_V3": "2de077721be740102abec50c9dc1307847f54ddbaf9d1ccc99370f7a28a1b903",
+      "SRS_LAST_STUDY_SESSION_V1": "2404e7f1a479534fe7355b30f22846e14d9f7de9780d10bb2345823b0c5578c8",
+      "SRS_LEARNING_EVENTS_V1": "4c7e1fe791a52ffc01e574b595f61e8c499d78f17de4c0ecf2f1d89c09877abd",
+      "SRS_PREFS_V1": "d31c5f3246e23e50e03707e2c1d602c860c1dd8c233be5c9beff7f525f0d1fad",
+      "SRS_SEEN_WORDS_V1": "381c5c02b20e8dd0de1336b3845d79318d52d7982569984e66c32df149e26eda",
+      "SRS_STUDY_STREAK_V1": "a181de4ce12fde4c3609f482be614426fec52df313459e44f53fb7b9468d48ec"
+    },
+    "daily": {
+      "date": "2026-03-29",
+      "count": 1,
+      "target": 5,
+      "newCount": 1
+    },
+    "eventCount": 1,
+    "prefs": {
+      "themeId": "classic",
+      "appearanceMode": "system",
+      "autoSpeak": false,
+      "speechRate": 0.98,
+      "uiLanguage": "es",
+      "newCardsPerDay": 10,
+      "onboardingDone": true,
+      "learningReason": "travel",
+      "homeRegion": "all",
+      "learningLevel": "beginner",
+      "studyMinutes": 5,
+      "tripDate": null
+    },
+    "checkpoint": {
+      "deckId": "deck-travel",
+      "cardId": "0039",
+      "queue": {
+        "schemaVersion": 1,
+        "cardIds": ["0039", "0045", "0046", "0057"],
+        "region": "all",
+        "sessionId": "mnb1sct2-2-uhfdbkmryed",
+        "limits": {
+          "cardLimit": 6,
+          "newLimit": 5
+        }
+      },
+      "updatedAt": 1774745780949
+    },
+    "deckCount": 47,
+    "cardCount": 1392
+  }
+}

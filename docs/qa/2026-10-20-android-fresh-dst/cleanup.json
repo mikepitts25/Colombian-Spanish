@@ -1,0 +1,15 @@
+{
+  "hostUtc": "2026-10-20T09:59:22.333084+00:00",
+  "emulatorExit": 0,
+  "monitorExit": 0,
+  "transitionMonitorExit": 0,
+  "runtimeSamples": 525,
+  "sampledCollisions": 0,
+  "bootedIos": [],
+  "androidDevices": [],
+  "studioProcesses": [],
+  "metro8099Listeners": [],
+  "retainedAvd": "Colombian_Spanish_Release_QA",
+  "originalAvd": "Colombian_Spanish_QA untouched and shut down",
+  "finalApp": "local preview Release installed, stopped before restoring clock; March29 QA event intentionally retained; no current-day recovery launch claimed"
+}
