@@ -1,0 +1,9 @@
+{
+  "device": "D5502A06-4858-428C-901C-587B58280F64",
+  "container": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/32204D2A-EE16-457C-9FF8-F20C1F521559",
+  "cache": "/Users/mike/Library/Developer/CoreSimulator/Devices/D5502A06-4858-428C-901C-587B58280F64/data/Containers/Data/Application/32204D2A-EE16-457C-9FF8-F20C1F521559/Library/Caches",
+  "originalMode": "0o755",
+  "deniedMode": "0o555",
+  "startedUtc": "2026-10-20T11:04:37.813005+00:00",
+  "appliedMode": "0o555"
+}

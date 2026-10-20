@@ -1,0 +1,3 @@
+Source base de470f19dafa254e0247f749636b61aafeeb7483; generated native version2/1.0.1 only.
+SENTRY_DISABLE_AUTO_UPLOAD=true EAS_BUILD_PROFILE=preview NODE_ENV=production xcodebuild -workspace ios/ColombianSpanish.xcworkspace -scheme ColombianSpanish -configuration Release -sdk iphonesimulator -destination generic/platform=iOS\ Simulator -derivedDataPath /tmp/colombian-release-offline-build -jobs 2 ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build
+Exit0; ** BUILD SUCCEEDED **

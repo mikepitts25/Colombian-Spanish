@@ -1,0 +1,21 @@
+{
+  "base": "de470f19dafa254e0247f749636b61aafeeb7483",
+  "version": "1.0.1",
+  "build": "2",
+  "configuration": "Release",
+  "signingAllowed": false,
+  "files": {
+    "Info.plist": {
+      "sha256": "f05d4149683ccf5f564498708a0b2c246abf22b2dda6040cbf9879565b56c443",
+      "bytes": 2202
+    },
+    "ColombianSpanish": {
+      "sha256": "511b385bee342f9ebc1acb6fcd96dc52c73aecf891bc0c657beb49baa0a4c19e",
+      "bytes": 15861056
+    },
+    "main.jsbundle": {
+      "sha256": "f359299ecdd21ed1c3c1079ba594d664e26b33c360e210b2ac4c5eccf995b8ec",
+      "bytes": 5142968
+    }
+  }
+}
