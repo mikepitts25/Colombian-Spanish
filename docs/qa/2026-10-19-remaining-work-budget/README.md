@@ -95,3 +95,7 @@ The current SDK57 iOS development install now has [granted-recording background 
 ## October20 docked workflow follow-up
 
 [The next bounded Android batch](../2026-10-20-android-docked/README.md) supersedes the floating-input blocker: Dock Pinned works, Spanish Travel onboarding/one Hard grade/exact cold recovery and live System/Light override pass. Two checked children were added; all five packages and127 unchecked rows/29 overlapping groups remain open. Android practice/voice/files, remaining language/theme/accessibility cells and post-cold visual Study traversal are still required. Repeated other-chat simulator starts cause our guard to stop our AVD; stable exclusive availability is the current runtime constraint. No rebuild or broad local regression was repeated for this evidence-only batch.
+
+## October20 Android route bundle
+
+[Three bounded Android children](../2026-10-20-android-routes/README.md) add visual retained Study traversal, native local picker/preview/Cancel with exact source/learning preservation, and voice denial/text/Back. English UI works and OS Light is restored. Share-provider save and recording retry remain unaccepted; the latter needs diagnosis after a one-time grant produced no observed take. Another-chat overlap stopped only our emulator. No rebuild or duplicate broad local tests; all five packages and127 unchecked rows/29 groups remain open.
