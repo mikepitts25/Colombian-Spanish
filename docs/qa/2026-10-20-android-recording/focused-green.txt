@@ -1,0 +1,15 @@
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish'`
+
+PASS __tests__/services/voicePractice.test.ts
+PASS __tests__/screens/VoicePracticeScreen.test.tsx
+PASS __tests__/speaking/voicePractice.test.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       29 passed, 29 total
+Snapshots:   0 total
+Time:        1.807 s, estimated 2 s
+Ran all test suites matching /__tests__\/services\/voicePractice.test.ts|__tests__\/speaking\/voicePractice.test.ts|__tests__\/screens\/VoicePracticeScreen.test.tsx/i.

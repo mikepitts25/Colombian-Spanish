@@ -1,0 +1,19 @@
+[
+  {
+    "at": 1792471364326,
+    "value": { "type": "start", "closed": false, "busy": false, "phase": "idle" }
+  },
+  { "at": 1792471364351, "value": { "type": "phase", "patch": { "phase": "requesting" } } },
+  { "at": 1792471364352, "value": { "type": "permissionBegin" } },
+  { "at": 1792471364399, "value": { "type": "appState", "value": "background" } },
+  { "at": 1792471364603, "value": { "type": "appState", "value": "active" } },
+  { "at": 1792471364608, "value": { "type": "permissionEnd", "granted": true } },
+  {
+    "at": 1792471364697,
+    "value": { "type": "phase", "patch": { "phase": "idle", "hasTake": false } }
+  },
+  {
+    "at": 1792471364703,
+    "value": { "type": "phase", "patch": { "phase": "idle", "hasTake": false } }
+  }
+]

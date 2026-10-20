@@ -99,3 +99,7 @@ The current SDK57 iOS development install now has [granted-recording background 
 ## October20 Android route bundle
 
 [Three bounded Android children](../2026-10-20-android-routes/README.md) add visual retained Study traversal, native local picker/preview/Cancel with exact source/learning preservation, and voice denial/text/Back. English UI works and OS Light is restored. Share-provider save and recording retry remain unaccepted; the latter needs diagnosis after a one-time grant produced no observed take. Another-chat overlap stopped only our emulator. No rebuild or duplicate broad local tests; all five packages and127 unchecked rows/29 groups remain open.
+
+## October20 Android permission-loop fix
+
+[One diagnosed runtime fix](../2026-10-20-android-recording/README.md) removes unnecessary already-granted microphone requests that briefly background Android and cancel recording. The controller/service regression fails before and passes afterward;29 focused voice tests pass. Native Preparing is observed, but actual recording remains unaccepted because QEMU host audio hung/crashed and an input-disabled restart also hung. Original AVD configuration and temporary tracing were restored. All five packages remain open; no broad local suite/native rebuild/passed iOS replay was added.

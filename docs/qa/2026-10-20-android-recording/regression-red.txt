@@ -1,0 +1,62 @@
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish'`
+
+FAIL __tests__/services/voicePractice.test.ts
+  ✓ uses explicit permissions, foreground mode and bounded native capture (9 ms)
+  ✓ refuses non-owned-cache URI file:///documents/keep.m4a (5 ms)
+  ✓ refuses non-owned-cache URI file:///cache/../documents/keep.m4a (1 ms)
+  ✓ refuses non-owned-cache URI https://example.com/clip (1 ms)
+  ✓ refuses non-owned-cache URI file:///cache/%2e%2e/documents/keep.m4a (6 ms)
+  ✓ missing/oversized recordings cannot replay; failed deletion keeps identity for retry (2 ms)
+  ✓ a late seek after Stop cannot call native play (1 ms)
+  ✓ preserves a native-timed take when Expo resets duration before the JS Stop (1 ms)
+  ✕ already granted microphone capture does not open Android permission activity and cancel itself (1 ms)
+  ✕ ungranted microphone still requests permission only on the explicit recording action
+
+  ● already granted microphone capture does not open Android permission activity and cancel itself
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    Expected: {"forDuration": 30}
+
+    Number of calls: 0
+
+      146 |   });
+      147 |   await voice.start();
+    > 148 |   expect(rec.record).toHaveBeenCalledWith({ forDuration: 30 });
+          |                      ^
+      149 |   expect(requestRecordingPermissionsAsync).not.toHaveBeenCalled();
+      150 |   await voice.close();
+      151 | });
+
+      at Object.toHaveBeenCalledWith (__tests__/services/voicePractice.test.ts:148:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● ungranted microphone still requests permission only on the explicit recording action
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 0
+
+      157 |   expect(requestRecordingPermissionsAsync).not.toHaveBeenCalled();
+      158 |   await expect(ports.permission()).resolves.toEqual({ granted: false, canAskAgain: false });
+    > 159 |   expect(getRecordingPermissionsAsync).toHaveBeenCalledTimes(1);
+          |                                        ^
+      160 |   expect(requestRecordingPermissionsAsync).toHaveBeenCalledTimes(1);
+      161 | });
+      162 |
+
+      at Object.toHaveBeenCalledTimes (__tests__/services/voicePractice.test.ts:159:40)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 8 passed, 10 total
+Snapshots:   0 total
+Time:        0.717 s, estimated 1 s
+Ran all test suites matching /__tests__\/services\/voicePractice.test.ts/i.

@@ -1,5 +1,11 @@
+import { VoicePractice } from '../../src/speaking/voicePractice';
 import { createVoicePorts } from '../../src/services/voicePractice';
-import { createAudioPlayer, setAudioModeAsync, requestRecordingPermissionsAsync } from 'expo-audio';
+import {
+  createAudioPlayer,
+  setAudioModeAsync,
+  requestRecordingPermissionsAsync,
+  getRecordingPermissionsAsync,
+} from 'expo-audio';
 let mockExists = true,
   mockSize = 1024,
   mockDelete = jest.fn();
@@ -18,6 +24,7 @@ jest.mock('expo-file-system', () => ({
 }));
 jest.mock('../../src/services/tts', () => ({ stop: jest.fn() }));
 jest.mock('expo-audio', () => ({
+  getRecordingPermissionsAsync: jest.fn(async () => ({ granted: true, canAskAgain: true })),
   requestRecordingPermissionsAsync: jest.fn(async () => ({ granted: true, canAskAgain: true })),
   setAudioModeAsync: jest.fn(async () => {}),
   createAudioPlayer: jest.fn(() => ({
@@ -39,6 +46,12 @@ function recorder(uri = 'file:///cache/Audio/take.m4a') {
 }
 beforeEach(() => {
   jest.clearAllMocks();
+  (requestRecordingPermissionsAsync as jest.Mock)
+    .mockReset()
+    .mockResolvedValue({ granted: true, canAskAgain: true });
+  (getRecordingPermissionsAsync as jest.Mock)
+    .mockReset()
+    .mockResolvedValue({ granted: true, canAskAgain: true });
   mockExists = true;
   mockSize = 1024;
   mockDelete = jest.fn(() => {
@@ -130,4 +143,34 @@ test('preserves a native-timed take when Expo resets duration before the JS Stop
   } finally {
     jest.useRealTimers();
   }
+});
+
+test('already granted microphone capture does not open Android permission activity and cancel itself', async () => {
+  const rec = recorder();
+  const voice = new VoicePractice(createVoicePorts(rec));
+  // Android permission requests briefly background the Activity even when granted.
+  (requestRecordingPermissionsAsync as jest.Mock).mockImplementationOnce(async () => {
+    void voice.suspend();
+    return { granted: true, canAskAgain: true };
+  });
+  await voice.start();
+  expect(rec.record).toHaveBeenCalledWith({ forDuration: 30 });
+  expect(requestRecordingPermissionsAsync).not.toHaveBeenCalled();
+  await voice.close();
+});
+test('ungranted microphone still requests permission only on the explicit recording action', async () => {
+  (getRecordingPermissionsAsync as jest.Mock).mockResolvedValueOnce({
+    granted: false,
+    canAskAgain: true,
+  });
+  (requestRecordingPermissionsAsync as jest.Mock).mockResolvedValueOnce({
+    granted: false,
+    canAskAgain: false,
+  });
+  const ports = createVoicePorts(recorder());
+  expect(getRecordingPermissionsAsync).not.toHaveBeenCalled();
+  expect(requestRecordingPermissionsAsync).not.toHaveBeenCalled();
+  await expect(ports.permission()).resolves.toEqual({ granted: false, canAskAgain: false });
+  expect(getRecordingPermissionsAsync).toHaveBeenCalledTimes(1);
+  expect(requestRecordingPermissionsAsync).toHaveBeenCalledTimes(1);
 });

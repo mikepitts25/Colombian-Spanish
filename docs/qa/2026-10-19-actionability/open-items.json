@@ -8,14 +8,15 @@
       "id": "android-setup",
       "taskIds": ["B01.5", "B01.5-B"],
       "classification": "ai-now-with-exclusive-runtime",
-      "aiCanDoNow": "Use docked touch input for Android authored practice, recording retry/lifecycle, local restore and remaining theme/language/accessibility cases. Visual Study resume, English switch, local picker/preview/Cancel and voice denial/text/Back now pass within their scope.",
-      "requires": "Stable sole-runtime window; guard stops only our AVD on overlap. This emulator has no backup share recipient. Diagnose Ready/no-take after one-time microphone grant without inferring a fix; recheck/reset permission and restore Spanish next boot. OS Light is restored; no new SDK agreement needed.",
+      "aiCanDoNow": "Continue Android authored practice, local restore and named language/theme/accessibility cells with docked touch. Already-granted microphone cancellation is fixed with a controller/service regression and native Preparing observation; actual take/Stop/Replay/Delete remains open.",
+      "requires": "Working exclusive native runtime; the last QEMU host audio preparation hung/crashed, and disabling AVD input also hung before adb. Original AVD config restored. Change the audio route before retrying capture; recheck state/permission and restore Spanish after stable boot. No share recipient on this image; no new SDK agreement needed.",
       "evidenceFiles": [
         "docs/qa/ANDROID_TOOLCHAIN.md",
         "MASTER_PLAN.md",
         "docs/qa/2026-10-20-android-native/README.md",
         "docs/qa/2026-10-20-android-docked/README.md",
-        "docs/qa/2026-10-20-android-routes/README.md"
+        "docs/qa/2026-10-20-android-routes/README.md",
+        "docs/qa/2026-10-20-android-recording/README.md"
       ]
     },
     {
