@@ -1,0 +1,29 @@
+# Android fresh offline Release and staged native spring DST
+
+October20,2026; source main `9a9b2a5`, unchanged product source. B02.6-B2d bundles two remaining Package5 cells using the [existing local preview Release APK](../2026-10-20-android-offline-release/build-metadata.json); no rebuild or Metro. This is version1/1.0.0 with the standard debug signing key, not a store candidate. Production content/editorial acceptance is still pending.
+
+## Fresh offline first use
+
+Created a separate `Colombian_Spanish_Release_QA` Pixel6/API36 ARM64 AVD from the already installed official image, without another agreement response. The previous `Colombian_Spanish_QA` profile was never booted or modified. Before installation, package listing was empty. SDK reads showed airplane1, disabled Wi-Fi and no default route. The first normal MainActivity launch reported COLD.
+
+[Onboarding](01-fresh-onboarding.png) defaults to Spanish Classic. Selected travel, all regions and five cards/day through CUA. [First Study](02-fresh-study.png) opens the bundled Travel content with ten remaining. No answer or grade is applied during this first-use check. [Home](03-fresh-home.png) shows zero due,1392 new cards, ten new-card allowance and0/5. This is a seeded fresh library, not a persistently empty library. The ordinary onboarding queue limit10 and later Home suggestion5 are observed as distinct existing entry paths, not claimed equal.
+
+The first [read-only storage checkpoint](state-summary.json) has four records, zero count/newCount, Classic preferences,47 decks/1392 cards and no learning-event key. It was staged on October25 at02:50+0100. The collector initially assumed the event key existed; the host-only collector was corrected to treat its absence as zero. No app storage was written directly.
+
+## Actual OS spring transition after manual staging
+
+The fall-time picker chose the second02:50+0100, so it did not establish a fall rollback. Ruling: use the unambiguous spring boundary instead; autumn/repeated-hour coverage remains open. Through Android's own Date & time UI, set March29,2026 and01:55, leaving Europe/Berlin unchanged and automatic time temporarily off. No host-clock change, process-TZ injection or application clock mock was used.
+
+Cold-started Release at01:55:11+0100. Home's new-card action opened a five-card Travel queue. Revealed `maleta`/`suitcase`, tapped Bien once, then returned Home. Storage records exactly one self-rated recall event, quality4, daily1/5/new1 and the four-card remainder0039/0045/0046/0057, current0039. A read-only pre-transition snapshot required stopping Release, installing the same-certificate development APK without launching it, reading RKStorage through run-as, and reinstalling Release. These same-version replacements neither clear data nor turn Release into a debuggable app.
+
+The last pre-boundary COLD launch completed at01:56:40+0100. [Home before](04-before-dst-home.png) shows1/5,1391 new and nine new-card allowance. [OS reads](pre-transition-os.json) confirm Europe/Berlin, airplane1, disabled Wi-Fi, no default route, automatic time0 and PID2848. The [two-second read-only timeline](transition.jsonl) observes01:59:59+0100 →03:00:01+0200 with PID2848 throughout. The app stayed on foreground Home across the boundary. This is an actual emulator OS offset transition after manual staging; it is not natural host-calendar DST or a physical-device result.
+
+[Home afterward](05-after-dst-home.png) still shows1/5 and the same allowances. All seven raw records are byte-exact across before/after snapshots: daily date/count/target/newCount, decks/schedule, preferences, seen words, streak, learning event and full queue/checkpoint. A further COLD launch and [Progress](06-after-dst-progress.png) show one-day streak,1of5/20%,47 decks/1392 cards,one in review,zero due. Final staged records remain exact. Queue preservation is established from storage; this packet does not claim a post-DST Continue/resume interaction or reminder delivery.
+
+## Restoration and remaining scope
+
+Stopped the app, restored the local preview Release APK, then restored automatic time through native UI and disabled airplane mode. [Final OS reads](restored-os.json) show the actual October20 date, automatic time/zone1, Europe/Berlin,font1.0 and Wi-Fi enabled/connected. No launch after restoring the real date is claimed. The isolated profile intentionally retains the March29 QA grade and four-card checkpoint; the original QA profile remains untouched. Full raw records, SQLite copies and APKs are host-only under `/tmp/colombian-android-dst/` and `/tmp/colombian-android-offline/`.
+
+[Runtime samples](exclusive-watch.jsonl) show no overlapping iOS/Android runtime. Sampling cannot exclude transients. SDK lifecycle/install/read-only transport handled the emulator; every UI action and screenshot used CUA. No adb input, UI dump or screenshot. No new agreement, trust, report or account action. The emulator ran with audio disabled, so speech/recording is not accepted. [Cleanup](cleanup.json) records clean emulator and monitor exits, no runtimes, Metro or Studio process. The new AVD is retained shut down.
+
+No product fix was needed. Reuse prior passed checks; no duplicate broad local suite. This closes only fresh offline Android local-preview onboarding/zero-progress and Classic foreground spring-DST credit/state preservation. Autumn rollback, other platforms/themes/lifecycle combinations, persistent-empty/upgrade, reminders, poor network/storage/provider failures, signed distribution, content and physical acceptance remain open. Five QA packages and127 unchecked requirement rows/29 overlapping groups remain; this is one bundled checked child, not completion of its parent. Digests verify artifact consistency, not UI provenance or broad acceptance.
