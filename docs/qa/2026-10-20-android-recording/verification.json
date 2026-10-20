@@ -1,0 +1,16 @@
+{
+  "sourceMain": "c9402c3b0c802263b4e14f20fbd33a52f029e1b2",
+  "apkSha256": "063edd5f14639d85108bee27a916ba71c62fb5c06cfbdaa1cb271c8c82743102",
+  "nativeAcceptance": "Fixed permission loop reaches Preparing only; capture lifecycle remains open",
+  "filesSha256": {
+    "README.md": "f850df000ca2b386e81226eeee67be86efefa9f1d47114951ac4d3e25633eb6f",
+    "fixed-preparing.jpg": "6e3a49d394646ed27820c0e6d0f4e28d82ce44aa253032c85c167bb27d25915f",
+    "focused-green.txt": "5d18a26c8a168a2a629d37c15576fae9515179f912c93714a2a65f1f40739973",
+    "granted-request-trace.json": "72ca1ae601b5eccf48b00e3792be01f8e710f356c8153b022c50399382ff25ab",
+    "host-crash-summary.json": "79adfe8a70c696ce701a77f445a54588babf569af066c5f382ca17f8e73b706e",
+    "lint.txt": "028a569cb23b03387e5c94e6eaeac8bb51be94c4d33bb79a4ebe31a65ef77199",
+    "regression-red.txt": "2ed60f0b1c3098180fbdaf008b852a752cc93dc8c04035a183b0c7ccc0d8e6c0",
+    "runtime-inventory.jsonl": "3780244cf5044a4384664751a14af0b7b2c8dadb3ef04c904aee51b7fceffbdc",
+    "typecheck.txt": "23121729ef0464c4223699e75b4ec405b129ab908dad78e4da6191e788a6090f"
+  }
+}

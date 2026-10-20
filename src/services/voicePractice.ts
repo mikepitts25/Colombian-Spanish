@@ -3,6 +3,7 @@ import {
   createAudioPlayer,
   AudioPlayer,
   requestRecordingPermissionsAsync,
+  getRecordingPermissionsAsync,
   setAudioModeAsync,
 } from 'expo-audio';
 import { File, Paths } from 'expo-file-system';
@@ -57,7 +58,12 @@ export function createVoicePorts(recorder: AudioRecorder): VoicePorts {
   const restoreMode = () =>
     setAudioModeAsync({ allowsRecording: false, shouldPlayInBackground: false });
   return {
-    permission: () => requestRecordingPermissionsAsync(),
+    permission: async () => {
+      // Android can background the Activity even for an already-granted request.
+      // Avoid canceling foreground capture through the lifecycle safety handler.
+      const current = await getRecordingPermissionsAsync();
+      return current.granted ? current : requestRecordingPermissionsAsync();
+    },
     prepare: async () => {
       stop();
       stopPlayback();
