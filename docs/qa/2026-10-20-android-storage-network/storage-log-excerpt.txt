@@ -1,0 +1,13 @@
+10-20 12:23:02.313 E/installd(  504): Failed to free up 1041114316 on /data; final free space 126976: Success
+10-20 12:23:02.323 D/installd(  504): Purging /data/data/com.mikepitts.colombianspanish/cache/colombian-spanish-backup-2026-10-20T10-21-39.339Z-o91ci3.json size=376832 mod=1792491699 from UID=10150 used=417792 quota=93130469 ratio=44
+10-20 12:23:02.347 E/installd(  504): Failed to free up 1041114316 on /data; final free space 1085440: Success
+10-20 12:23:02.350 W/DeviceStorageMonitorService(  623): java.io.IOException: Failed to free 1041114316 on storage device at /data
+10-20 12:24:02.444 E/installd(  504): Failed to free up 1041114316 on /data; final free space 1490944: Success
+10-20 12:24:02.458 E/installd(  504): Failed to free up 1041114316 on /data; final free space 1490944: Success
+10-20 12:24:02.460 W/DeviceStorageMonitorService(  623): java.io.IOException: Failed to free 1041114316 on storage device at /data
+10-20 12:25:02.558 E/installd(  504): Failed to free up 1041114316 on /data; final free space 32768: Success
+10-20 12:25:02.568 E/installd(  504): Failed to free up 1041114316 on /data; final free space 32768: Success
+10-20 12:25:02.569 W/DeviceStorageMonitorService(  623): java.io.IOException: Failed to free 1041114316 on storage device at /data
+10-20 12:26:02.645 E/installd(  504): Failed to free up 1041114316 on /data; final free space 32768: Success
+10-20 12:26:02.661 E/installd(  504): Failed to free up 1041114316 on /data; final free space 32768: Success
+10-20 12:26:02.662 W/DeviceStorageMonitorService(  623): java.io.IOException: Failed to free 1041114316 on storage device at /data

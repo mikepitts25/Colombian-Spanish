@@ -1,0 +1,8 @@
+{
+  "hostUtc": "2026-10-20T10:26:24.365618+00:00",
+  "label": "after-pressure",
+  "df": "Filesystem       1K-blocks   Used Available Use% Mounted on\n/dev/block/dm-52  10167132 442720   9576956   5% /data/user/0\n",
+  "hostFreeBytes": 135230558208,
+  "removedOwnFiller": true,
+  "fillerStillExists": false
+}

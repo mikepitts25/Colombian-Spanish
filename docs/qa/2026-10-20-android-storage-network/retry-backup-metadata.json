@@ -1,0 +1,22 @@
+{
+  "cacheFile": "cache/colombian-spanish-backup-2026-10-20T10-26-45.072Z-hhuigu.json",
+  "bytes": 372343,
+  "sha256": "8025633f99850046513ddf322393547621e7ec9fd92d24d8b46e5555535a3852",
+  "kind": "colombian-spanish-backup",
+  "version": 3,
+  "exportedAt": "2026-10-20T10:26:45.059Z",
+  "decks": 47,
+  "cards": 1392,
+  "events": 1,
+  "applicationStateKeys": [
+    "dailyPlan",
+    "missions",
+    "prefs",
+    "daily",
+    "streak",
+    "seenWords",
+    "quizHistory",
+    "lastSession",
+    "notificationPrefs"
+  ]
+}

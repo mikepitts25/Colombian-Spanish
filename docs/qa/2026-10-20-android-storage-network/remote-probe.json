@@ -1,0 +1,22 @@
+[
+  {
+    "label": "normal",
+    "firstByteSeconds": 0.134,
+    "elapsedSeconds": 0.139,
+    "responseBytes": 888,
+    "httpOk": true,
+    "sha256": "73adce90cd9293de367d9b4c4e480c718f550531612b229ca30899500dadae82",
+    "stderr": "",
+    "status": "Current network status:\n  download speed:          0 bits/s (0.0 KB/s)\n  upload speed:            0 bits/s (0.0 KB/s)\n  minimum latency:  0 ms\n  maximum latency:  0 ms\nOK\n"
+  },
+  {
+    "label": "edge-2000ms",
+    "firstByteSeconds": 2.094,
+    "elapsedSeconds": 3.16,
+    "responseBytes": 891,
+    "httpOk": true,
+    "sha256": "241992967a6a510114d1927fa5b541ac40571a311a2125df65a26ec9994c27bb",
+    "stderr": "",
+    "status": "Current network status:\n  download speed:     473600 bits/s (57.8 KB/s)\n  upload speed:       473600 bits/s (57.8 KB/s)\n  minimum latency:  2000 ms\n  maximum latency:  2000 ms\nOK\n"
+  }
+]
