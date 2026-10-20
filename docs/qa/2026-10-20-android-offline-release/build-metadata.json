@@ -1,0 +1,11 @@
+{
+  "releaseApkSha256": "8de61593b22646984d3f79b92a89a31cd95f7f2e7f02b6ac2cc178f894b0e8a7",
+  "originalDevelopmentApkSha256": "063edd5f14639d85108bee27a916ba71c62fb5c06cfbdaa1cb271c8c82743102",
+  "embeddedBundleSha256": "ac36fbe217590e4cc457415ac2baccd2b567bccc2ee0cc5a801bd3ff67797227",
+  "embeddedBundleBytes": 5148160,
+  "arm64Only": true,
+  "sourceMain": "844a35dfa9ddb54941972b3279e07ba81aa7d668",
+  "buildProfile": "preview",
+  "gradleVariant": "Release",
+  "signing": "local debug key; certificates match original development APK"
+}

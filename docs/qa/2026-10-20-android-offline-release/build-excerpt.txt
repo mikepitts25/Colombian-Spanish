@@ -1,0 +1,5 @@
+Android Bundled 7534ms node_modules/expo/AppEntry.js (3334 modules)
+Copying 1419 asset files
+> Task :app:assembleRelease
+BUILD SUCCESSFUL in 3m 37s
+766 actionable tasks: 734 executed, 32 up-to-date

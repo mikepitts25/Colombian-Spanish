@@ -1,0 +1,8 @@
+{
+  "airplane_mode_on": "1",
+  "wifi_on": "3",
+  "bluetooth_on": "2",
+  "wifiStatus": "Wifi is disabled\nWifi scanning is only available when wifi is enabled",
+  "metroListening": false,
+  "defaultRoutePresent": false
+}

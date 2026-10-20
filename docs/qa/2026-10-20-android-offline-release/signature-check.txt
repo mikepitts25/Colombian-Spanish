@@ -1,0 +1,1 @@
+PASS: both APKs verify and signing certificate SHA256 matches.
