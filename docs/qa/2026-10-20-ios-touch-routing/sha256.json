@@ -1,0 +1,11 @@
+{
+  "README.md": "d05937a834b0ac6cab6115cd1f47eff17d339fccbe6626d1a661d1e5061a9241",
+  "diagnostic.patch": "deb06606105df3fb2af15aea429b6ff1420c9b0e8d7038859bedd682d4c4c41b",
+  "final-inventory.txt": "54aa6b3afefb44c86e323ed8885a9a1773505ee4da4350d7751a6e95329dae41",
+  "input-trace.txt": "553bb9e7860a74d9d96b3a2de75f6b13c817d7b8de422c8ac64b570c24ffb7ea",
+  "restored-cold.jpg": "2f550eb3d96185c0df8989ddf00ed8f061c829843b938ed91c28c881ac41040a",
+  "runtime-inventory.jsonl": "5c75f56dd1dc19fae62d7ea997cb055780a5243b115f7e4aa388b618fb4ffcdd",
+  "state.json": "af637b8c45cae8067c39b84c9cdcc02a5566e41d12cc31bc2c5066e2c2e7fb96",
+  "traced-bottom.jpg": "987d2ea7ac095963bd00a5d5d025f95b4e86d0cb5dc1f30ae44f1a7e383e0e2a",
+  "verify.py": "148da2d651635a1b1c3aed521e0788e294432230caa66f8009766e608279bead"
+}

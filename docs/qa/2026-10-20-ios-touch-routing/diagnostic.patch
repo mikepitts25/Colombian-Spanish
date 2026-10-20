@@ -1,0 +1,15 @@
+--- a/src/components/BarrioHomeContent.tsx
++++ b/src/components/BarrioHomeContent.tsx
+@@ -139,6 +139,12 @@
+   ];
+   return (
+     <ScrollView
++      onTouchStart={(e) => console.log("QA_TOUCH_START", e.nativeEvent.pageX, e.nativeEvent.pageY)}
++      onTouchMove={(e) => console.log("QA_TOUCH_MOVE", e.nativeEvent.pageX, e.nativeEvent.pageY)}
++      onTouchEnd={(e) => console.log("QA_TOUCH_END", e.nativeEvent.pageX, e.nativeEvent.pageY)}
++      onScrollBeginDrag={(e) => console.log("QA_SCROLL_BEGIN", e.nativeEvent.contentOffset.y)}
++      onScrollEndDrag={(e) => console.log("QA_SCROLL_END", e.nativeEvent.contentOffset.y)}
++      onMomentumScrollEnd={(e) => console.log("QA_SCROLL_MOMENTUM_END", e.nativeEvent.contentOffset.y)}
+       key={fontScale}
+       contentContainerStyle={styles.content}
+       showsVerticalScrollIndicator={false}

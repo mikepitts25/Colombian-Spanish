@@ -1,0 +1,21 @@
+# iOS touch routing: bounded diagnosis, no acceptance closure
+
+October20,2026, main `6027602`. Own existing SE3/iOS26 phone `2EDF21F0-7DBD-4B09-8D5F-85560FD0E730`, unchanged unsigned Debug binary, current SDK57 development JS on localhost8099. Only this simulator ran. No product source, native configuration or dependency changes remain. B08.3-C3e and maximum-text Study/Spanish-count cells stay open.
+
+## Changed route and measured result
+
+Spanish Barrio Dark, native Text11, VoiceOver off and Capture Keyboard off. Home starts with its retained applied written-practice plan. This is not the long-title fixture or an unstarted review plan.
+
+The Android short-drag/immediate-neutral-stop route did not expose the iOS primary. A right-gutter80px drag, then a content80px drag, each followed immediately by a right-gutter tap, left the greeting visible. A coordinate click successfully dismissed the known unsigned-notifications banner, confirming that coordinate taps reach the phone. Neither fractional0.1 nor whole1-page native wheel calls changed the observed view. Do not replay these routes unchanged.
+
+Temporary passive scroll callbacks then measured one short drag, a fresh maximum-size cold entry with the stop route, and a longer340px content drag. The first three recorded drag-start/end offsets were0/0. Those snapshots alone did **not** establish that motion was absent: a final trace with touch callbacks recorded start `(182.5,323.5)`, one move/end at `(182.5,53)`, drag start/end0, then momentum end8066.5. The next observation shows the bottom listening-preview button in [traced-bottom.jpg](traced-bottom.jpg), with normal source restored. It does not show the primary or establish reliable intermediate positioning.
+
+[input-trace.txt](input-trace.txt) contains only the actual Metro QA lines, in order. [diagnostic.patch](diagnostic.patch) preserves the final temporary callbacks; the first stage had only its three scroll callbacks. There were no scrollTo calls, storage writes, layout changes, responder overrides, timers or production behavior changes. Touch listeners/logging and Fast Refresh can affect event scheduling, so the observer trace cannot certify normal-app timing or identify the root cause in CUA, Device Hub, UIKit or this app. It disproves a blanket claim that no finger motion ever arrives. It does not prove continuous motion delivery or an app clipping defect. No speculative runtime fix follows.
+
+## Recovery and resource boundary
+
+Read-only own-container checkpoints preserve48 decks/1,402 cards/10 events. First launch advances only the zero daily date October19→20. Theme selection changes only preferences; no primary/deck action or grade is submitted. A host copy of the prior supported backup updates only its daily record, and all eleven reconstructed payload hashes match the current launched baseline before import. Normal TextEdit Open/Select All/Copy supplies the backup to Settings clipboard preview; Allow Paste and Restore app state use the product UI. Raw backup/deck contents remain host-only.
+
+Immediate restore and cold launch PID31374 recover all eleven launched-baseline hashes exactly. [Restored Classic Home](restored-cold.jpg) shows native Text3/Light, VoiceOver off and Capture Keyboard off. The known unsigned-notifications entitlement warning is unrelated to touch acceptance and remains unaccepted for delivery. All temporary callbacks were removed before recovery; the checked-in component matches main. The own phone, Metro, monitor, TextEdit document and Device Hub are stopped. [Final inventory](final-inventory.txt) has no booted iOS or Android device; sampled [runtime inventory](runtime-inventory.jsonl) records no other runtime during this batch.
+
+Run `python3 docs/qa/2026-10-20-ios-touch-routing/verify.py` for passive state/hash/trace consistency. This cannot replay UI, independently prove historical settings or certify missing acceptance. Five QA packages and127 unchecked parent/child requirements in29 overlapping groups remain open. Further touch work needs a different input capability or an actionable measured defect; original iOS Again/Hard, primary positioning and Spanish maximum-count Light/Dark stay unverified. No already-passed acceptance matrix or broad local test suite was repeated.
