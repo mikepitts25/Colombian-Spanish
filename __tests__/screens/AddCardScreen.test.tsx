@@ -2,6 +2,7 @@ import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import {
   Alert,
+  Platform,
   Dimensions,
   KeyboardAvoidingView,
   View,
@@ -70,7 +71,10 @@ describe('AddCardScreen localization', () => {
 });
 
 const originalWindow = Dimensions.get('window');
-afterEach(() => act(() => Dimensions.set({ window: originalWindow })));
+afterEach(() => {
+  act(() => Dimensions.set({ window: originalWindow }));
+  jest.restoreAllMocks();
+});
 function fillCard(ui: ReturnType<typeof render>) {
   fireEvent.changeText(ui.getByPlaceholderText('¿Qué más pues?'), '¿Listo?');
   fireEvent.changeText(ui.getByPlaceholderText('What’s up?'), 'Ready?');
@@ -240,4 +244,30 @@ test('ignores pre-resize field coordinates until both current field and input la
   });
   expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 1860, animated: false });
   expect(ui.getByDisplayValue('Q')).toBeTruthy();
+});
+
+test('Android keyboard leaves a reduced scroll viewport and retains an unsaved lower-field draft', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  const ui = render(
+    <HeaderHeightContext.Provider value={74}>
+      <AddCardScreen />
+    </HeaderHeightContext.Provider>,
+  );
+  fireEvent.changeText(ui.getByLabelText('Example sentence (optional)'), 'Qa');
+  const avoiding = ui.UNSAFE_getAllByType(KeyboardAvoidingView)[0];
+  const viewport = avoiding.findAllByType(View)[0];
+  await act(async () => {
+    fireEvent(viewport, 'layout', {
+      persist: jest.fn(),
+      nativeEvent: { layout: { x: 0, y: 0, width: 360, height: 700 } },
+    });
+    DeviceEventEmitter.emit('keyboardDidShow', {
+      endCoordinates: { screenX: 0, screenY: 400, width: 360, height: 300 },
+    });
+  });
+  expect(StyleSheet.flatten(viewport.props.style).height).toBe(326);
+  expect(ui.getByDisplayValue('Qa')).toBeTruthy();
+  expect(mockUseDeck().addCardToDeck).not.toHaveBeenCalled();
+  await act(async () => DeviceEventEmitter.emit('keyboardDidHide', {}));
+  expect(StyleSheet.flatten(viewport.props.style).height).toBeUndefined();
 });

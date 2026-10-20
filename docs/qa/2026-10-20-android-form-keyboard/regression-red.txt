@@ -1,0 +1,38 @@
+FAIL __tests__/screens/AddCardScreen.test.tsx
+  ✓ keeps one pending card intent and blocks edits through live resizing until confirmed saved (16 ms)
+  ✓ retains the exact failed card payload and identity for retry instead of losing or duplicating it (68 ms)
+  ✓ blocks missing selected deck without discarding entered card fields (10 ms)
+  ✓ new-deck retry retains one identity and modal draft through failure and resizing (82 ms)
+  ✓ can return to the retained draft after a target disappears without automatically submitting another create (68 ms)
+  ✓ keeps the keyboard viewport above the keyboard when the native header occupies 74 points (4 ms)
+  ✓ reveals the focused input after keyboard layout using measured input position, not the large label (4 ms)
+  ✓ ignores pre-resize field coordinates until both current field and input layouts arrive (8 ms)
+  ✕ Android keyboard leaves a reduced scroll viewport and retains an unsaved lower-field draft (7 ms)
+  AddCardScreen localization
+    ✓ renders Add Card labels in English by default (183 ms)
+    ✓ renders Add Card labels in Spanish when UI language is Spanish (4 ms)
+
+  ● Android keyboard leaves a reduced scroll viewport and retains an unsaved lower-field draft
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 326
+    Received: undefined
+
+      263 |     });
+      264 |   });
+    > 265 |   expect(StyleSheet.flatten(viewport.props.style).height).toBe(326);
+          |                                                           ^
+      266 |   expect(ui.getByDisplayValue('Qa')).toBeTruthy();
+      267 |   expect(mockUseDeck().addCardToDeck).not.toHaveBeenCalled();
+      268 |   await act(async () => DeviceEventEmitter.emit('keyboardDidHide', {}));
+
+      at Object.toBe (__tests__/screens/AddCardScreen.test.tsx:265:59)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 10 passed, 11 total
+Snapshots:   0 total
+Time:        1.54 s, estimated 2 s
+Ran all test suites within paths "__tests__/screens/AddCardScreen.test.tsx".

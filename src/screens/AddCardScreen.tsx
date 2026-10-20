@@ -254,7 +254,7 @@ export default function AddCardScreen() {
       <KeyboardAvoidingView
         style={styles.flex}
         keyboardVerticalOffset={headerHeight}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView
           ref={content}
