@@ -194,7 +194,7 @@
         "B08.5-B8"
       ],
       "classification": "mixed-native-and-design",
-      "aiCanDoNow": "C3p completes English maximum long-title/count Light/Dark; C3q adds earned-counter Barrio midnight. B8g/B8h already cover English maximum-text dialogs and long Add/editor saves; B8i fixes header keyboard avoidance and verifies all four bilingual maximum editor actions. Finish Spanish maximum-count, other focused fields and touch/window cases using a changed reliable route or targeted diagnosis. Reuse docs/qa/2026-10-19-native-qa-bundle/README.md, including LogBox open/Dismiss, rather than replaying failed diagnostic/title/drag routes. New activity visuals/personalized next actions still need focused designs/content inputs. The B2e packet records an unsuccessful adjacent-target fractional-scroll probe for the Spanish count; do not repeat that route unchanged. B8j/B8k now cover bilingual mini maximum keyboard-open editor actions in portrait/separate landscape views. B8k adds both long translation/example drafts and exact rotation retention through a changed, paced simulator VoiceOver focus route. Reuse these cells; do not repeat earlier failed field-target/margin-drag/unfocused-toggle, Escape-dismissal or rapid-chord routes unchanged. October20 B01.5-B8/B05.5-B1 now prove Android maximum touch/Again-Hard and actual earned-counter live OS-zone foreground; reuse those cells. Remaining iOS precise-touch/count and distinct zone/DST/window/platform combinations stay open.",
+      "aiCanDoNow": "C3p completes English maximum long-title/count Light/Dark; C3q adds earned-counter Barrio midnight. B8g/B8h already cover English maximum-text dialogs and long Add/editor saves; B8i fixes header keyboard avoidance and verifies all four bilingual maximum editor actions. Finish Spanish maximum-count, other focused fields and touch/window cases using a changed reliable route or targeted diagnosis. Reuse docs/qa/2026-10-19-native-qa-bundle/README.md, including LogBox open/Dismiss, rather than replaying failed diagnostic/title/drag routes. New activity visuals/personalized next actions still need focused designs/content inputs. The B2e packet records an unsuccessful adjacent-target fractional-scroll probe for the Spanish count; do not repeat that route unchanged. B8j/B8k now cover bilingual mini maximum keyboard-open editor actions in portrait/separate landscape views. B8k adds both long translation/example drafts and exact rotation retention through a changed, paced simulator VoiceOver focus route. Reuse these cells; do not repeat earlier failed field-target/margin-drag/unfocused-toggle, Escape-dismissal or rapid-chord routes unchanged. October20 B01.5-B8/B05.5-B1 now prove Android maximum touch/Again-Hard and actual earned-counter live OS-zone foreground; reuse those cells. Remaining iOS precise-touch/count and distinct zone/DST/window/platform combinations stay open. October20 iOS input trace leaves Android-style drag-stop and wheel routes unaccepted; one motion jump followed by bottom momentum is not reliable intermediate positioning. Do not repeat those exact routes unchanged.",
       "requires": "Known touch-only/window/keyboard control limits need a changed route or actual layout diagnosis, not repetitive captures. Android, physical acceptance, cultural/content decisions remain distinct.",
       "evidenceFiles": [
         "docs/superpowers/plans/2026-10-18-barrio-home.md",
@@ -204,7 +204,8 @@
         "docs/qa/2026-10-19-native-qa-bundle/README.md",
         "docs/qa/2026-10-19-mini-editor-voice/README.md",
         "docs/qa/2026-10-19-mini-editor-focus/README.md",
-        "docs/qa/2026-10-20-android-study-zone/README.md"
+        "docs/qa/2026-10-20-android-study-zone/README.md",
+        "docs/qa/2026-10-20-ios-touch-routing/README.md"
       ]
     },
     {
@@ -288,12 +289,13 @@
       "id": "touch-route",
       "taskIds": ["B12.5-C"],
       "classification": "tool-limited",
-      "aiCanDoNow": "Investigate a genuinely changed input route or targeted native layout evidence; do not replay documented failed gestures. October20 B01.5-B8/B05.5-B1 now prove Android maximum touch/Again-Hard and actual earned-counter live OS-zone foreground; reuse those cells. Remaining iOS precise-touch/count and distinct zone/DST/window/platform combinations stay open.",
+      "aiCanDoNow": "Investigate a genuinely changed input route or targeted native layout evidence; do not replay documented failed gestures. October20 B01.5-B8/B05.5-B1 now prove Android maximum touch/Again-Hard and actual earned-counter live OS-zone foreground; reuse those cells. Remaining iOS precise-touch/count and distinct zone/DST/window/platform combinations stay open. October20 iOS input trace leaves Android-style drag-stop and wheel routes unaccepted; one motion jump followed by bottom momentum is not reliable intermediate positioning. Do not repeat those exact routes unchanged.",
       "requires": "Reliable maximum-text touch-only positioning. This is a tooling/input limit, not inherently a requirement for a human or physical phone.",
       "evidenceFiles": [
         "docs/qa/2026-10-19-voice-denial/INPUT_NOTES.md",
         "docs/qa/2026-10-19-release-bundle/README.md",
-        "docs/qa/2026-10-20-android-study-zone/README.md"
+        "docs/qa/2026-10-20-android-study-zone/README.md",
+        "docs/qa/2026-10-20-ios-touch-routing/README.md"
       ]
     },
     {
@@ -823,7 +825,7 @@
       "id": "B08.3-C3e",
       "tags": ["SIM", "AI"],
       "line": 370,
-      "text": "Finish live day/zone cells; precise touch-only middle/maximum-primary positioning and visual long-deck acceptance remain open. Runtime-empty cold import reseeds by existing policy; do not repeat it as a persistent-empty UI test. Standalone Simulator app route unavailable; change input capability or diagnose layout before repeating failed gesture routes. Actual mini Settings General has no Date & Time row; searches Date/Time Zone returned No Results, all11 app hashes unchanged after return ([probe](docs/qa/2026-10-18-barrio-home-calendar/README.md)); no host clock change.",
+      "text": "Finish live day/zone cells; precise touch-only middle/maximum-primary positioning and visual long-deck acceptance remain open. Runtime-empty cold import reseeds by existing policy; do not repeat it as a persistent-empty UI test. Standalone Simulator app route unavailable; change input capability or diagnose layout before repeating failed gesture routes. Actual mini Settings General has no Date & Time row; searches Date/Time Zone returned No Results, all11 app hashes unchanged after return ([probe](docs/qa/2026-10-18-barrio-home-calendar/README.md)); no host clock change. October20 [phone input trace](docs/qa/2026-10-20-ios-touch-routing/README.md) records failed Android-style stop/wheel routes and one motion jump followed by bottom-bound momentum; no touch/count closure or app-defect claim. Do not repeat these routes unchanged.",
       "group": "visual-and-home"
     },
     {
