@@ -1,0 +1,29 @@
+# Android Quiz results and disposable deck/editor workflow
+
+October 20, 2026, source main `2fd9597b13fc51a7e2d67085185ff80e211465e3`. Existing SDK57 ARM64 development APK from the preceding Android packets; no source/dependency/native rebuild changes. One dedicated API36 `Colombian_Spanish_QA` emulator, Spanish/Barrio Light/font1.0. This closes B01.5-B11/B12 only; the broader five QA packages remain open.
+
+## Quiz: wrong/correct feedback, missed review and cold history
+
+The eleven-record baseline exactly matches [the preceding restore/plan packet](../2026-10-20-android-restore-plan/README.md). Home tools opened actual Quiz with six previously studied words available. One round used native touch controls: boleto deliberately wrong, then maleta, hotel, aeropuerto, guía and avión correct. [Wrong feedback](quiz-wrong-next.jpg) displayed the actual correct answer; [correct feedback](quiz-correct.jpg) displayed Correcto. Touch scrolling exposed each Next/result control. These are default-text portrait checks; no maximum-text, rotation, failed-write or mid-round cold recovery is inferred.
+
+[Results](quiz-results.jpg) showed5/6,83%, five correct and one missed. Stored history contains exactly one corresponding result with missedCardIds0039. Repasar errores opened [a one-word boleto round](missed-only.jpg), without creating an event/result merely by opening it. Selecting ticket and View results added one correct answer observation and a distinct1/1 result; the original5/6 result remained unchanged.
+
+After normal force-stop/cold launch, [Quiz history](quiz-cold-history.jpg) visibly retained both83%/5-of-6 with Review mistakes and100%/1-of-1 with no mistakes. All eleven pre-cold strings remained exact. Seven intentional answer-checked recognition observations were added across the two session IDs. All card schedules/decks, seen-word records, daily credit2/5/new2, streak, preferences, ordinary queue and completed daily plan/mission remained byte-exact. Recognition practice is not recall/proficiency evidence.
+
+## Editor: validation, create/add/rename and cleanup
+
+Explore → Add card → Choose deck → New deck created a disposable `Qa` deck using actual software keys. Blank Save produced [required front/back validation](blank-rejected.jpg) with no record change from the empty-deck state. The same software keyboard entered [Uno/One](card-draft.jpg); optional example/tags were left blank. Save produced [the added confirmation](card-saved.jpg), and read-only storage shows one card with exactly those strings, empty tags and initial reps0/interval0/ease2.5. The original47 decks and1,392 cards stayed exact.
+
+Explore → Manage decks used the native software keyboard to filter `qa`. Rename appendedq and Save changed only the temporary deck name to `Qaq`. All eleven values survived a normal cold restart exactly; reopening Manage decks showed [Qaq with one card](renamed-cold.jpg). This establishes persisted payload plus visible renamed-deck recovery, not a post-cold card-detail/editor reopen.
+
+The [native delete confirmation](delete-own-qa.jpg) named only this batch's disposable Qaq deck. Confirming removed it; the [qa-filtered list became empty](deck-removed.jpg). All eleven records then equal the pre-editor state byte-for-byte, including the original library hash. A final normal cold launch preserves those eleven strings and [completed-plan Home with2/5](final-cold-home.jpg). The seven intentional Quiz observations and two results are retained as QA history. No original deck/card was deleted, renamed or regraded.
+
+These are bounded Android default-text Spanish create/add/validation/rename/delete/cold cells. Long/multiline drafts, optional-field normalization, edit-existing-card, unreviewed-filter successive saves, keyboard-open actions, maximum text, rotation, bilingual/theme/window/assistive and genuine storage-failure cases remain open under their existing parents. This is not full R2 closure or a cross-install/source-isolation claim.
+
+## Resources, provenance and validation
+
+All UI actions and unmodified screenshots use CUA; official SDK commands handle app/emulator lifecycle and read-only storage/OS capture. No adb input/UI dumps/screenshots, app-storage writes, import fixtures, resets, reinstalls, new permission grants, agreements or diagnostics. The known token-authenticated headless/audio-none/no-snapshot emulator route and Metro8099 via reverse8081 were reused. Running Devices stayed open; no emulator crash occurred in this batch. Studio's existing safe-mode/cloud-version host notices temporarily overlaid the bottom right; controls were operated on unobstructed portions, and the notices expired without switching panes or updating/trusting the project.
+
+[Runtime samples](runtime-inventory.jsonl) detect no other booted simulator; two-second sampling cannot exclude unsampled overlap. Europe/Berlin, automatic time/zone1 and font1.0 remain unchanged. Owned emulator, Metro, Studio and monitor exited. [Final inventory](cleanup.json) confirms empty iOS/Android runtime inventories and no owned emulator/Studio/8099 Metro process. Other apps and unrelated root files remain untouched.
+
+[Eighteen bounded read-only summaries](state-summary.json), [derivation](collect-evidence.py), [digests](sha256.json) and `python3 docs/qa/2026-10-20-android-quiz-editor/verify.py` check baseline continuity, exact intended Quiz deltas, temporary-deck-only editor changes, cold equality, cleanup and samples. Raw databases/full library are not committed. Passive assertions require the screenshots/action report for UI provenance. Local validation covers this packet, checklist-index consistency, formatting and whitespace; no broad local regression or passed native scenario is replayed. Required CI and one focused fresh review gate merge. PR70's automatic post-merge CI39386504894 passed before this packet was prepared.
