@@ -123,12 +123,13 @@
         "B05.3-B2b2-B2"
       ],
       "classification": "mixed-native",
-      "aiCanDoNow": "Continue specific iOS whole-plan keyboard/navigation/layout/restart cases using own-path draft fixtures. Runtime progression and calibration already exist. Reuse B01.5-B9/B10: Android same-install local full-state restore/cold and retained review-to-assisted-draft completion/cold are accepted; do not repeat these cells.",
+      "aiCanDoNow": "Continue specific iOS whole-plan keyboard/navigation/layout/restart cases using own-path draft fixtures. Runtime progression and calibration already exist. Reuse B01.5-B9/B10: Android same-install local full-state restore/cold and retained review-to-assisted-draft completion/cold are accepted; do not repeat these cells. B05.3-B2b2-B2g now covers narrow iOS phone Spanish/English maximum keyboard-open input/Check and separately accessibility-positioned Hint/End, exact eleven-record recovery; reuse this cell. Android work is paused by owner direction.",
       "requires": "Remaining named native cells; changed control route for accent popup/touch-only cases; Android runtime and signed/hardware cases separately.",
       "evidenceFiles": [
         "docs/qa/2026-10-18-remaining-ai-gates/README.md",
         "docs/qa/2026-10-19-mini-voice/README.md",
-        "docs/qa/2026-10-20-android-restore-plan/README.md"
+        "docs/qa/2026-10-20-android-restore-plan/README.md",
+        "docs/qa/2026-10-20-ios-phone-applied-keyboard/README.md"
       ]
     },
     {
