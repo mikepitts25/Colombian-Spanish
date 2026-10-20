@@ -1,0 +1,9 @@
+{
+  "hostUtc": "2026-10-20T10:22:57.575486+00:00",
+  "label": "during-pressure",
+  "df": "Filesystem       1K-blocks     Used Available Use% Mounted on\n/dev/block/dm-52  10167132 10019552       124 100% /data/user/0\n",
+  "hostFreeBytes": 135241850880,
+  "allocatedRequestBytes": 9805307904,
+  "fallocateExit": 0,
+  "fallocateError": ""
+}

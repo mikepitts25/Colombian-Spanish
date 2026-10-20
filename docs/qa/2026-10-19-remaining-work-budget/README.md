@@ -127,3 +127,7 @@ October20 cold follow-up strengthens [B01.5-B14](../2026-10-20-android-editor-di
 ## October20 fresh Android Release and staged spring DST
 
 [B02.6-B2d](../2026-10-20-android-fresh-dst/README.md) adds two bounded Package5 cells in one bundle: clean isolated Android offline Release first use/zero progress, and manually staged actual OS spring DST with one earned credit. Same PID survives01:59:59+0100→03:00:01+0200; seven raw records/full queue remain exact and cold Progress agrees. Fall picker selected the second hour, so autumn rollback remains unaccepted. Automatic clock/networking restored; original QA profile untouched; emulator/Studio stopped cleanly. Existing APK reused, no rebuild/Metro/duplicate broad local suite. Five packages and127 unchecked requirement rows/29 overlapping groups remain.
+
+## October20 Android storage/network bundle
+
+[B12.6-G](../2026-10-20-android-storage-network/README.md) adds measured EDGE/2000ms cold Home/local export and actual32KiB-free backup error/same-process retry in one reused Release. The valid v3 retry export and seven exact records through cold recovery are accepted; no recipient handoff or broader storage/write/restore acceptance is implied. Wi-Fi/link/clock/font restored, filler removed, emulator/Studio stopped;704 runtime samples show zero observed collisions. No product patch, rebuild, Metro or duplicate broad local suite. Reuse these cells. Five packages and127 unchecked requirement rows/29 overlapping groups remain; these overlapping parent rows are not127 independent tasks.

@@ -1,0 +1,57 @@
+{
+  "avd": {
+    "exit": 0,
+    "output": "Colombian_Spanish_Release_QA\nOK",
+    "stderr": ""
+  },
+  "wifi": {
+    "exit": 0,
+    "output": "Wifi is enabled\nWifi scanning is only available when wifi is enabled\n==== Primary ClientModeManager instance ====\nWifi is connected to \"AndroidWifi\"\nWifiInfo: SSID: \"AndroidWifi\", BSSID: 02:15:b2:00:00:01, MAC: 02:15:b2:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 1Mbps, Tx Link speed: 1Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: 0, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: 1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none>\"AndroidWifi\"openMLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>\nsuccessfulTxPackets: 470\nsuccessfulTxPacketsPerSecond: 0.40753714438611516\nretriedTxPackets: 0\nretriedTxPacketsPerSecond: 0.0\nlostTxPackets: 0\nlostTxPacketsPerSecond: 0.0\nsuccessfulRxPackets: 363\nsuccessfulRxPacketsPerSecond: 0.32194080375860734",
+    "stderr": ""
+  },
+  "airplane": {
+    "exit": 0,
+    "output": "0",
+    "stderr": ""
+  },
+  "autoTime": {
+    "exit": 0,
+    "output": "1",
+    "stderr": ""
+  },
+  "autoZone": {
+    "exit": 0,
+    "output": "1",
+    "stderr": ""
+  },
+  "zone": {
+    "exit": 0,
+    "output": "Europe/Berlin",
+    "stderr": ""
+  },
+  "fontScale": {
+    "exit": 0,
+    "output": "1.0",
+    "stderr": ""
+  },
+  "network": {
+    "exit": 0,
+    "output": "Current network status:\n  download speed:          0 bits/s (0.0 KB/s)\n  upload speed:            0 bits/s (0.0 KB/s)\n  minimum latency:  0 ms\n  maximum latency:  0 ms\nOK",
+    "stderr": ""
+  },
+  "space": {
+    "exit": 0,
+    "output": "Filesystem       1K-blocks   Used Available Use% Mounted on\n/dev/block/dm-52  10167132 521372   9498304   6% /data/user/0",
+    "stderr": ""
+  },
+  "filler": {
+    "exit": 1,
+    "output": "",
+    "stderr": "ls: /data/local/tmp/colombian-spanish-qa-storage-20261020.fill: No such file or directory"
+  },
+  "appPid": {
+    "exit": 1,
+    "output": "",
+    "stderr": ""
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "hostUtc": "2026-10-20T10:24:55.866933+00:00",
+  "beforeDf": "Filesystem       1K-blocks     Used Available Use% Mounted on\n/dev/block/dm-52  10167132 10018220      1456 100% /data/user/0\n",
+  "availableBefore": 1490944,
+  "newSize": 9806766080,
+  "exitCode": 0,
+  "error": "",
+  "afterDf": "Filesystem       1K-blocks     Used Available Use% Mounted on\n/dev/block/dm-52  10167132 10019644        32 100% /data/user/0\n"
+}
