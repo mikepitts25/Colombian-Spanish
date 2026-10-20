@@ -1,0 +1,38 @@
+{
+  "procName": "qemu-system-aarch64-headless",
+  "captureTime": "2026-10-20 07:53:33.3228 +0200",
+  "exception": {
+    "codes": "0x0000000000000001, 0x0000000000000000",
+    "rawCodes": [
+      1,
+      0
+    ],
+    "type": "EXC_BAD_ACCESS",
+    "signal": "SIGSEGV",
+    "subtype": "KERN_INVALID_ADDRESS at 0x0000000000000000"
+  },
+  "termination": {
+    "flags": 0,
+    "code": 11,
+    "namespace": "SIGNAL",
+    "indicator": "Segmentation fault: 11",
+    "byProc": "exc handler",
+    "byPid": 14688
+  },
+  "faultingThread": 82,
+  "faultFrames": [
+    "unsymbolicated",
+    "android::emulation::control::UiControllerImpl::closeExtendedControls(grpc::ServerContext*, google::protobuf::Empty const*, android::emulation::control::ExtendedControlsStatus*)",
+    "grpc::internal::RpcMethodHandler<android::emulation::control::UiController::Service, google::protobuf::Empty, android::emulation::control::ExtendedControlsStatus, google::protobuf::MessageLite, google::protobuf::MessageLite>::RunHandler(grpc::internal::MethodHandler::HandlerParameter const&)",
+    "grpc::Server::SyncRequest::ContinueRunAfterInterception()",
+    "android::control::interceptor::BreadcrumbInterceptor::Intercept(grpc::experimental::InterceptorBatchMethods*)",
+    "android::control::interceptor::LoggingInterceptor::Intercept(grpc::experimental::InterceptorBatchMethods*)",
+    "grpc::internal::InterceptorBatchMethodsImpl::RunInterceptors(std::__1::function<void ()>)",
+    "grpc::Server::SyncRequest::Run(bool)",
+    "grpc::ThreadManager::MainWorkLoop()",
+    "grpc::ThreadManager::WorkerThread::WorkerThread(grpc::ThreadManager*)::$_0::__invoke(void*)",
+    "grpc_core::(anonymous namespace)::ThreadInternalsPosix::ThreadInternalsPosix(char const*, void (*)(void*), void*, bool*, grpc_core::Thread::Options const&)::'lambda'(void*)::__invoke(void*)",
+    "_pthread_start",
+    "thread_start"
+  ]
+}

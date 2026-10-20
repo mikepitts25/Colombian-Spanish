@@ -1,0 +1,47 @@
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish'`
+
+FAIL __tests__/services/notifications.test.ts
+  ✕ morning window uses current-zone calendar dates when native Date getters are stale (20 ms)
+  ○ skipped a newer disable waits for an in-flight launch refresh and leaves no stale reminders
+  ○ skipped retains saved choices on partial OS scheduling failure, cancels partial requests and recovers on retry
+  ○ skipped a failed durable write does not touch the OS schedule and does not poison later saves
+  ○ skipped denied permission with cannot-ask-again preserves choices without another prompt
+  ○ skipped no enabled reminder choices clears requests without asking for permission
+  ○ skipped normalizes known stored boolean fields and ignores malformed field values
+  ○ skipped morning window includes the next seven local calendar mornings before 08:00, and six after
+  notification preferences
+    ○ skipped returns default notification preferences when nothing is stored
+    ○ skipped persists preferences and schedules word-of-day mornings plus a nightly reminder
+    ○ skipped cancels scheduled reminders when notifications are disabled
+  refreshScheduledNotifications
+    ○ skipped re-schedules the rolling window from saved prefs without prompting
+    ○ skipped is a no-op when notification permission was never granted
+
+  ● morning window uses current-zone calendar dates when native Date getters are stale
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "2026-01-05"
+    Received: "2026-01-06"
+
+      248 |     const dates = morningCalls().map(([arg]) => arg.trigger.date as Date);
+      249 |     expect(dates).toHaveLength(7);
+    > 250 |     expect(require('../../src/utils/calendarDay').localDayKey(dates[0])).toBe('2026-01-05');
+          |                                                                          ^
+      251 |     expect(require('../../src/utils/calendarDay').localHour(dates[0])).toBe(8);
+      252 |   } finally {
+      253 |     getter.mockRestore();
+
+      at Object.toBe (__tests__/services/notifications.test.ts:250:74)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 12 skipped, 13 total
+Snapshots:   0 total
+Time:        0.787 s, estimated 1 s
+Ran all test suites matching /__tests__\/services\/notifications.test.ts/i with tests matching "morning window uses current-zone".

@@ -97,3 +97,13 @@ describe('pickWordOfDay', () => {
     expect(pick?.deckName).toBe('Custom Name');
   });
 });
+
+test('daily word identity uses the current calendar when Date getters are stale', () => {
+  const date = new Date(2026, 0, 5, 12);
+  const getter = jest.spyOn(Date.prototype, 'getDate').mockReturnValue(6);
+  try {
+    expect(dateKey(date)).toBe('2026-01-05');
+  } finally {
+    getter.mockRestore();
+  }
+});

@@ -1,0 +1,44 @@
+Calendar/word excerpts from the initial RED run. Corrected Home RED is separate.
+FAIL __tests__/utils/calendarDay.test.ts
+  ● uses the current system zone when native Date getters retain the previous zone
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Array [
+    -   "2026-10-19",
+    -   "2026-10-19",
+    +   "2026-10-20",
+    +   "2026-10-20",
+        "2026-10-20",
+      ]
+
+      44 |   });
+      45 |   expect(result.status).toBe(0);
+    > 46 |   expect(JSON.parse(result.stdout)).toEqual(['2026-10-19', '2026-10-19', '2026-10-20']);
+         |                                     ^
+      47 | });
+      48 |
+
+      at Object.toEqual (__tests__/utils/calendarDay.test.ts:46:37)
+
+FAIL __tests__/utils/wordOfDay.test.ts
+  ● daily word identity uses the current calendar when Date getters are stale
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "2026-01-05"
+    Received: "2026-01-06"
+
+      103 |   const getter = jest.spyOn(Date.prototype, 'getDate').mockReturnValue(6);
+      104 |   try {
+    > 105 |     expect(dateKey(date)).toBe('2026-01-05');
+          |                           ^
+      106 |   } finally {
+      107 |     getter.mockRestore();
+      108 |   }
+
+      at Object.toBe (__tests__/utils/wordOfDay.test.ts:105:27)
+

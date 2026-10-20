@@ -1,0 +1,2568 @@
+[
+  {
+    "label": "start",
+    "hashes": {
+      "SRS_DAILY_PROGRESS_V1": "a4909def3d5b0a4179f2e4171707d7c050ad581ee910e13c1762244cf87ba092",
+      "SRS_DECKS_V3": "42a40ae4649ce5a109bf68fcf7527ab783c8c5af668d9931e6b8fd8f012671b0",
+      "SRS_LAST_STUDY_SESSION_V1": "4e35e732667f62cd2fe36e1d37a475e3a41fbe3af4933b50dc40987ad9e50775",
+      "SRS_LEARNING_EVENTS_V1": "948bc906a5b04de892ae4e4de83a978aca251718318e6e0e76ffd2367dec67e8",
+      "SRS_MISSIONS_V1": "26e164f0f8f8a6249be83ac4b79dcb188c6c483763560adfb9d954ee4306e44a",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "989f413ce9e030347623bc35dcb165dab493749d85b1ab1df11dc6abf4bd0ccd",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "values": {
+      "SRS_DAILY_PROGRESS_V1": {
+        "date": "2026-10-20",
+        "count": 1,
+        "target": 5,
+        "newCount": 1
+      },
+      "SRS_SEEN_WORDS_V1": [
+        {
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "front": "maleta",
+          "back": "suitcase",
+          "spanish": "maleta",
+          "english": "suitcase",
+          "lastSeen": 1792452288257,
+          "correctCount": 0,
+          "incorrectCount": 1
+        }
+      ],
+      "SRS_STUDY_STREAK_V1": {
+        "streak": 1,
+        "lastStudyDate": "2026-10-20",
+        "freezes": 0
+      },
+      "SRS_LAST_STUDY_SESSION_V1": {
+        "deckId": "deck-travel",
+        "cardId": "0039",
+        "queue": {
+          "schemaVersion": 1,
+          "cardIds": ["0039", "0045", "0046", "0057", "0242", "0243", "0244", "0245", "0246"],
+          "region": "all",
+          "sessionId": "mvfvqyyj-2-i2of474g1nj"
+        },
+        "updatedAt": 1792453910520
+      },
+      "SRS_PREFS_V1": {
+        "themeId": "barrio",
+        "appearanceMode": "light",
+        "learningLevel": "beginner",
+        "studyMinutes": 5,
+        "tripDate": null,
+        "autoSpeak": false,
+        "speechRate": 0.98,
+        "uiLanguage": "es",
+        "newCardsPerDay": 10,
+        "onboardingDone": true,
+        "learningReason": "travel",
+        "homeRegion": "all"
+      },
+      "SRS_LEARNING_EVENTS_V1": {
+        "schemaVersion": 1,
+        "events": [
+          {
+            "schemaVersion": 1,
+            "id": "mvfvt961-8-dql66lk118a",
+            "cardId": "0038",
+            "deckId": "deck-travel",
+            "sessionId": "mvfvqyyj-2-i2of474g1nj",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792452288262,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 67481
+          },
+          {
+            "schemaVersion": 1,
+            "id": "production:[\"mvg8yieh-rdutvy1q3bp\",\"morning-greeting\",1]",
+            "cardId": "0010",
+            "deckId": "deck-greetings",
+            "sessionId": "mvg8yieh-rdutvy1q3bp",
+            "exercise": {
+              "id": "morning-greeting",
+              "contentVersion": 1,
+              "kind": "typed-recall"
+            },
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "answer-checked",
+            "occurredAt": 1792474615275,
+            "hintsUsed": 0,
+            "durationMs": 61405,
+            "missionId": "first-morning-medellin"
+          }
+        ]
+      },
+      "SRS_MISSIONS_V1": {
+        "schemaVersion": 1,
+        "runs": [
+          {
+            "schemaVersion": 1,
+            "id": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "contentVersion": 1,
+            "nodeId": "greeting",
+            "revision": 2,
+            "hintsUsed": 0,
+            "assisted": true,
+            "modelAnswerRevealed": false,
+            "completed": false,
+            "reviewCardIds": ["0010"],
+            "updatedAt": 1792474615275,
+            "lastOperation": {
+              "id": "mvg93sve-u99f8r1csza",
+              "key": "[\"mvg8yieh-rdutvy1q3bp\",\"greeting\",1,\"answer\",\"accent\"]"
+            },
+            "feedback": {
+              "status": "accent",
+              "answerIndex": 0
+            }
+          }
+        ]
+      }
+    },
+    "selectedCards": {
+      "0039": {
+        "id": "0039",
+        "front": "boleto",
+        "back": "ticket",
+        "example": "Ya compr\u00e9 el boleto de avi\u00f3n. | I already bought the plane ticket.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      "0045": {
+        "id": "0045",
+        "front": "aeropuerto",
+        "back": "airport",
+        "example": "Llegamos al aeropuerto dos horas antes. | We arrived at the airport two hours early.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      "0046": {
+        "id": "0046",
+        "front": "hotel",
+        "back": "hotel",
+        "example": "Reservamos un hotel en la playa. | We booked a hotel on the beach.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    "changedCardIdsFromStart": [],
+    "ungradedLibraryHash": "6e56134b2d7037a708d8d90f61aee9f55648efdff0a8dffd4442b3d57a2e02d5",
+    "libraryCounts": {
+      "decks": 47,
+      "cards": 1392
+    }
+  },
+  {
+    "label": "plan",
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "e4e133393c4804bb4d10230a5e40cd67c6d8e7760ede03fd857d4fb7064eb35d",
+      "SRS_DAILY_PROGRESS_V1": "a4909def3d5b0a4179f2e4171707d7c050ad581ee910e13c1762244cf87ba092",
+      "SRS_DECKS_V3": "42a40ae4649ce5a109bf68fcf7527ab783c8c5af668d9931e6b8fd8f012671b0",
+      "SRS_LAST_STUDY_SESSION_V1": "82c8140596a839af7783b6d62f29b191dd60d311dab2e1023ec1016a1d98b791",
+      "SRS_LEARNING_EVENTS_V1": "948bc906a5b04de892ae4e4de83a978aca251718318e6e0e76ffd2367dec67e8",
+      "SRS_MISSIONS_V1": "26e164f0f8f8a6249be83ac4b79dcb188c6c483763560adfb9d954ee4306e44a",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "989f413ce9e030347623bc35dcb165dab493749d85b1ab1df11dc6abf4bd0ccd",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "values": {
+      "SRS_DAILY_PROGRESS_V1": {
+        "date": "2026-10-20",
+        "count": 1,
+        "target": 5,
+        "newCount": 1
+      },
+      "SRS_SEEN_WORDS_V1": [
+        {
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "front": "maleta",
+          "back": "suitcase",
+          "spanish": "maleta",
+          "english": "suitcase",
+          "lastSeen": 1792452288257,
+          "correctCount": 0,
+          "incorrectCount": 1
+        }
+      ],
+      "SRS_STUDY_STREAK_V1": {
+        "streak": 1,
+        "lastStudyDate": "2026-10-20",
+        "freezes": 0
+      },
+      "SRS_PREFS_V1": {
+        "themeId": "barrio",
+        "appearanceMode": "light",
+        "learningLevel": "beginner",
+        "studyMinutes": 5,
+        "tripDate": null,
+        "autoSpeak": false,
+        "speechRate": 0.98,
+        "uiLanguage": "es",
+        "newCardsPerDay": 10,
+        "onboardingDone": true,
+        "learningReason": "travel",
+        "homeRegion": "all"
+      },
+      "SRS_LEARNING_EVENTS_V1": {
+        "schemaVersion": 1,
+        "events": [
+          {
+            "schemaVersion": 1,
+            "id": "mvfvt961-8-dql66lk118a",
+            "cardId": "0038",
+            "deckId": "deck-travel",
+            "sessionId": "mvfvqyyj-2-i2of474g1nj",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792452288262,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 67481
+          },
+          {
+            "schemaVersion": 1,
+            "id": "production:[\"mvg8yieh-rdutvy1q3bp\",\"morning-greeting\",1]",
+            "cardId": "0010",
+            "deckId": "deck-greetings",
+            "sessionId": "mvg8yieh-rdutvy1q3bp",
+            "exercise": {
+              "id": "morning-greeting",
+              "contentVersion": 1,
+              "kind": "typed-recall"
+            },
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "answer-checked",
+            "occurredAt": 1792474615275,
+            "hintsUsed": 0,
+            "durationMs": 61405,
+            "missionId": "first-morning-medellin"
+          }
+        ]
+      },
+      "SRS_MISSIONS_V1": {
+        "schemaVersion": 1,
+        "runs": [
+          {
+            "schemaVersion": 1,
+            "id": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "contentVersion": 1,
+            "nodeId": "greeting",
+            "revision": 2,
+            "hintsUsed": 0,
+            "assisted": true,
+            "modelAnswerRevealed": false,
+            "completed": false,
+            "reviewCardIds": ["0010"],
+            "updatedAt": 1792474615275,
+            "lastOperation": {
+              "id": "mvg93sve-u99f8r1csza",
+              "key": "[\"mvg8yieh-rdutvy1q3bp\",\"greeting\",1,\"answer\",\"accent\"]"
+            },
+            "feedback": {
+              "status": "accent",
+              "answerIndex": 0
+            }
+          }
+        ]
+      },
+      "SRS_DAILY_PLAN_V1": {
+        "schemaVersion": 1,
+        "current": {
+          "id": "mvg9sk2j-1-c7cywlzpd2",
+          "day": "2026-10-20",
+          "minutes": 5,
+          "createdAt": 1792475770215,
+          "phase": "review",
+          "review": {
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
+            "session": {
+              "deckId": "deck-travel",
+              "cardId": "0039",
+              "updatedAt": 1792475770215,
+              "queue": {
+                "schemaVersion": 1,
+                "cardIds": ["0039", "0045", "0046", "0057", "0242"],
+                "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+                "region": "all",
+                "limits": {
+                  "cardLimit": 5,
+                  "newLimit": 5
+                }
+              }
+            }
+          },
+          "applied": {
+            "missionId": "daily-morning-greeting",
+            "contentVersion": 1,
+            "runId": "mvg9sk2j-3-8r41uf6rygw"
+          }
+        }
+      },
+      "SRS_LAST_STUDY_SESSION_V1": {
+        "deckId": "deck-travel",
+        "cardId": "0039",
+        "queue": {
+          "schemaVersion": 1,
+          "cardIds": ["0039", "0045", "0046", "0057", "0242"],
+          "region": "all",
+          "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+          "limits": {
+            "cardLimit": 5,
+            "newLimit": 5
+          }
+        },
+        "updatedAt": 1792475770933
+      }
+    },
+    "selectedCards": {
+      "0039": {
+        "id": "0039",
+        "front": "boleto",
+        "back": "ticket",
+        "example": "Ya compr\u00e9 el boleto de avi\u00f3n. | I already bought the plane ticket.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      "0045": {
+        "id": "0045",
+        "front": "aeropuerto",
+        "back": "airport",
+        "example": "Llegamos al aeropuerto dos horas antes. | We arrived at the airport two hours early.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      "0046": {
+        "id": "0046",
+        "front": "hotel",
+        "back": "hotel",
+        "example": "Reservamos un hotel en la playa. | We booked a hotel on the beach.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    "changedCardIdsFromStart": [],
+    "ungradedLibraryHash": "6e56134b2d7037a708d8d90f61aee9f55648efdff0a8dffd4442b3d57a2e02d5",
+    "libraryCounts": {
+      "decks": 47,
+      "cards": 1392
+    }
+  },
+  {
+    "label": "again",
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "3abc50861030e70d74ac754d7bd6dfe7be985a3bc99344ecaa84084e6ec0e224",
+      "SRS_DAILY_PROGRESS_V1": "34d5827dbe04c69a91ac1b475b0b7900b4d6b5105f38dd93e610b5d75e7d9828",
+      "SRS_DECKS_V3": "e4611a27c99d3b0b89a517cb85aa5effe3d51d0f06754ed2da5a5595d3a9dee6",
+      "SRS_LAST_STUDY_SESSION_V1": "341d6ea243d0e960f333b9f8cf499db16e2b229c4e6721e5eba0ef7eae9c4e46",
+      "SRS_LEARNING_EVENTS_V1": "99fe04cb8faf6240501b42506d32122c872ae4274c379fb9caae1b265d8e836c",
+      "SRS_MISSIONS_V1": "26e164f0f8f8a6249be83ac4b79dcb188c6c483763560adfb9d954ee4306e44a",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "010cc168973fc8b6586a507622338ae799a6466e9bc77998c036963fa06e77cc",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "values": {
+      "SRS_PREFS_V1": {
+        "themeId": "barrio",
+        "appearanceMode": "light",
+        "learningLevel": "beginner",
+        "studyMinutes": 5,
+        "tripDate": null,
+        "autoSpeak": false,
+        "speechRate": 0.98,
+        "uiLanguage": "es",
+        "newCardsPerDay": 10,
+        "onboardingDone": true,
+        "learningReason": "travel",
+        "homeRegion": "all"
+      },
+      "SRS_MISSIONS_V1": {
+        "schemaVersion": 1,
+        "runs": [
+          {
+            "schemaVersion": 1,
+            "id": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "contentVersion": 1,
+            "nodeId": "greeting",
+            "revision": 2,
+            "hintsUsed": 0,
+            "assisted": true,
+            "modelAnswerRevealed": false,
+            "completed": false,
+            "reviewCardIds": ["0010"],
+            "updatedAt": 1792474615275,
+            "lastOperation": {
+              "id": "mvg93sve-u99f8r1csza",
+              "key": "[\"mvg8yieh-rdutvy1q3bp\",\"greeting\",1,\"answer\",\"accent\"]"
+            },
+            "feedback": {
+              "status": "accent",
+              "answerIndex": 0
+            }
+          }
+        ]
+      },
+      "SRS_DAILY_PLAN_V1": {
+        "schemaVersion": 1,
+        "current": {
+          "id": "mvg9sk2j-1-c7cywlzpd2",
+          "day": "2026-10-20",
+          "minutes": 5,
+          "createdAt": 1792475770215,
+          "phase": "review",
+          "review": {
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
+            "session": {
+              "deckId": "deck-travel",
+              "cardId": "0045",
+              "queue": {
+                "schemaVersion": 1,
+                "cardIds": ["0045", "0046", "0057", "0242"],
+                "region": "all",
+                "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+                "limits": {
+                  "cardLimit": 5,
+                  "newLimit": 5
+                }
+              },
+              "updatedAt": 1792475814083
+            }
+          },
+          "applied": {
+            "missionId": "daily-morning-greeting",
+            "contentVersion": 1,
+            "runId": "mvg9sk2j-3-8r41uf6rygw"
+          }
+        }
+      },
+      "SRS_DAILY_PROGRESS_V1": {
+        "date": "2026-10-20",
+        "count": 2,
+        "target": 5,
+        "newCount": 2
+      },
+      "SRS_SEEN_WORDS_V1": [
+        {
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "front": "maleta",
+          "back": "suitcase",
+          "spanish": "maleta",
+          "english": "suitcase",
+          "lastSeen": 1792452288257,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0039",
+          "deckId": "deck-travel",
+          "front": "boleto",
+          "back": "ticket",
+          "spanish": "boleto",
+          "english": "ticket",
+          "lastSeen": 1792475814090,
+          "correctCount": 0,
+          "incorrectCount": 1
+        }
+      ],
+      "SRS_STUDY_STREAK_V1": {
+        "streak": 1,
+        "lastStudyDate": "2026-10-20",
+        "freezes": 0
+      },
+      "SRS_LEARNING_EVENTS_V1": {
+        "schemaVersion": 1,
+        "events": [
+          {
+            "schemaVersion": 1,
+            "id": "mvfvt961-8-dql66lk118a",
+            "cardId": "0038",
+            "deckId": "deck-travel",
+            "sessionId": "mvfvqyyj-2-i2of474g1nj",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792452288262,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 67481
+          },
+          {
+            "schemaVersion": 1,
+            "id": "production:[\"mvg8yieh-rdutvy1q3bp\",\"morning-greeting\",1]",
+            "cardId": "0010",
+            "deckId": "deck-greetings",
+            "sessionId": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "exercise": {
+              "id": "morning-greeting",
+              "contentVersion": 1,
+              "kind": "typed-recall"
+            },
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "answer-checked",
+            "occurredAt": 1792474615275,
+            "hintsUsed": 0,
+            "durationMs": 61405
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9thun-b-x3eubf6ufx9",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "cardId": "0039",
+            "deckId": "deck-travel",
+            "modality": "recall",
+            "evidence": "self-rated",
+            "outcome": "incorrect",
+            "quality": 1,
+            "occurredAt": 1792475814091,
+            "hintsUsed": null,
+            "durationMs": 42971
+          }
+        ]
+      },
+      "SRS_LAST_STUDY_SESSION_V1": {
+        "deckId": "deck-travel",
+        "cardId": "0045",
+        "queue": {
+          "schemaVersion": 1,
+          "cardIds": ["0045", "0046", "0057", "0242"],
+          "region": "all",
+          "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+          "limits": {
+            "cardLimit": 5,
+            "newLimit": 5
+          }
+        },
+        "updatedAt": 1792475814092
+      }
+    },
+    "selectedCards": {
+      "0039": {
+        "id": "0039",
+        "front": "boleto",
+        "back": "ticket",
+        "example": "Ya compr\u00e9 el boleto de avi\u00f3n. | I already bought the plane ticket.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792476714083,
+        "reps": 0,
+        "interval": 0,
+        "ease": 1.96
+      },
+      "0045": {
+        "id": "0045",
+        "front": "aeropuerto",
+        "back": "airport",
+        "example": "Llegamos al aeropuerto dos horas antes. | We arrived at the airport two hours early.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      },
+      "0046": {
+        "id": "0046",
+        "front": "hotel",
+        "back": "hotel",
+        "example": "Reservamos un hotel en la playa. | We booked a hotel on the beach.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    "changedCardIdsFromStart": ["0039"],
+    "ungradedLibraryHash": "6e56134b2d7037a708d8d90f61aee9f55648efdff0a8dffd4442b3d57a2e02d5",
+    "libraryCounts": {
+      "decks": 47,
+      "cards": 1392
+    }
+  },
+  {
+    "label": "graded",
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "6ed28af0b9f1ec001a163fdc9cf323b1b7b02d8f9885095390064bde6741c9c1",
+      "SRS_DAILY_PROGRESS_V1": "0dca07b5053bac932c3c7f4d2f7afcaf523d19787dfc3c2bc7be75e141403b51",
+      "SRS_DECKS_V3": "1ebe0990e62f3e818fe397cab54d8091a650c3e4d0368f1bc373f848bec4ac5f",
+      "SRS_LAST_STUDY_SESSION_V1": "71a2683041ce868cda835307bf09d705a9144bebb728c6cdc0ba447c58070035",
+      "SRS_LEARNING_EVENTS_V1": "8bed05db3f006b6ed29f093a1dec77b1c630c3f39de4b0148a987e69fd74d786",
+      "SRS_MISSIONS_V1": "26e164f0f8f8a6249be83ac4b79dcb188c6c483763560adfb9d954ee4306e44a",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "38a804f874019d1e9157caa81ad18a2a2e12bce953020ee49120e9ec3813f182",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "values": {
+      "SRS_PREFS_V1": {
+        "themeId": "barrio",
+        "appearanceMode": "light",
+        "learningLevel": "beginner",
+        "studyMinutes": 5,
+        "tripDate": null,
+        "autoSpeak": false,
+        "speechRate": 0.98,
+        "uiLanguage": "es",
+        "newCardsPerDay": 10,
+        "onboardingDone": true,
+        "learningReason": "travel",
+        "homeRegion": "all"
+      },
+      "SRS_MISSIONS_V1": {
+        "schemaVersion": 1,
+        "runs": [
+          {
+            "schemaVersion": 1,
+            "id": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "contentVersion": 1,
+            "nodeId": "greeting",
+            "revision": 2,
+            "hintsUsed": 0,
+            "assisted": true,
+            "modelAnswerRevealed": false,
+            "completed": false,
+            "reviewCardIds": ["0010"],
+            "updatedAt": 1792474615275,
+            "lastOperation": {
+              "id": "mvg93sve-u99f8r1csza",
+              "key": "[\"mvg8yieh-rdutvy1q3bp\",\"greeting\",1,\"answer\",\"accent\"]"
+            },
+            "feedback": {
+              "status": "accent",
+              "answerIndex": 0
+            }
+          }
+        ]
+      },
+      "SRS_DAILY_PLAN_V1": {
+        "schemaVersion": 1,
+        "current": {
+          "id": "mvg9sk2j-1-c7cywlzpd2",
+          "day": "2026-10-20",
+          "minutes": 5,
+          "createdAt": 1792475770215,
+          "phase": "review",
+          "review": {
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
+            "session": {
+              "deckId": "deck-travel",
+              "cardId": "0046",
+              "queue": {
+                "schemaVersion": 1,
+                "cardIds": ["0046", "0057", "0242"],
+                "region": "all",
+                "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+                "limits": {
+                  "cardLimit": 5,
+                  "newLimit": 5
+                }
+              },
+              "updatedAt": 1792475830432
+            }
+          },
+          "applied": {
+            "missionId": "daily-morning-greeting",
+            "contentVersion": 1,
+            "runId": "mvg9sk2j-3-8r41uf6rygw"
+          }
+        }
+      },
+      "SRS_DAILY_PROGRESS_V1": {
+        "date": "2026-10-20",
+        "count": 3,
+        "target": 5,
+        "newCount": 3
+      },
+      "SRS_SEEN_WORDS_V1": [
+        {
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "front": "maleta",
+          "back": "suitcase",
+          "spanish": "maleta",
+          "english": "suitcase",
+          "lastSeen": 1792452288257,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0039",
+          "deckId": "deck-travel",
+          "front": "boleto",
+          "back": "ticket",
+          "spanish": "boleto",
+          "english": "ticket",
+          "lastSeen": 1792475814090,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0045",
+          "deckId": "deck-travel",
+          "front": "aeropuerto",
+          "back": "airport",
+          "spanish": "aeropuerto",
+          "english": "airport",
+          "lastSeen": 1792475830439,
+          "correctCount": 0,
+          "incorrectCount": 1
+        }
+      ],
+      "SRS_STUDY_STREAK_V1": {
+        "streak": 1,
+        "lastStudyDate": "2026-10-20",
+        "freezes": 0
+      },
+      "SRS_LEARNING_EVENTS_V1": {
+        "schemaVersion": 1,
+        "events": [
+          {
+            "schemaVersion": 1,
+            "id": "mvfvt961-8-dql66lk118a",
+            "cardId": "0038",
+            "deckId": "deck-travel",
+            "sessionId": "mvfvqyyj-2-i2of474g1nj",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792452288262,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 67481
+          },
+          {
+            "schemaVersion": 1,
+            "id": "production:[\"mvg8yieh-rdutvy1q3bp\",\"morning-greeting\",1]",
+            "cardId": "0010",
+            "deckId": "deck-greetings",
+            "sessionId": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "exercise": {
+              "id": "morning-greeting",
+              "contentVersion": 1,
+              "kind": "typed-recall"
+            },
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "answer-checked",
+            "occurredAt": 1792474615275,
+            "hintsUsed": 0,
+            "durationMs": 61405
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9thun-b-x3eubf6ufx9",
+            "cardId": "0039",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475814091,
+            "quality": 1,
+            "hintsUsed": null,
+            "durationMs": 42971
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9tugo-g-j0rzytxfq",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "cardId": "0045",
+            "deckId": "deck-travel",
+            "modality": "recall",
+            "evidence": "self-rated",
+            "outcome": "incorrect",
+            "quality": 2,
+            "occurredAt": 1792475830439,
+            "hintsUsed": null,
+            "durationMs": 16034
+          }
+        ]
+      },
+      "SRS_LAST_STUDY_SESSION_V1": {
+        "deckId": "deck-travel",
+        "cardId": "0046",
+        "queue": {
+          "schemaVersion": 1,
+          "cardIds": ["0046", "0057", "0242"],
+          "region": "all",
+          "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+          "limits": {
+            "cardLimit": 5,
+            "newLimit": 5
+          }
+        },
+        "updatedAt": 1792475830439
+      }
+    },
+    "selectedCards": {
+      "0039": {
+        "id": "0039",
+        "front": "boleto",
+        "back": "ticket",
+        "example": "Ya compr\u00e9 el boleto de avi\u00f3n. | I already bought the plane ticket.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792476714083,
+        "reps": 0,
+        "interval": 0,
+        "ease": 1.96
+      },
+      "0045": {
+        "id": "0045",
+        "front": "aeropuerto",
+        "back": "airport",
+        "example": "Llegamos al aeropuerto dos horas antes. | We arrived at the airport two hours early.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792519030433,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "0046": {
+        "id": "0046",
+        "front": "hotel",
+        "back": "hotel",
+        "example": "Reservamos un hotel en la playa. | We booked a hotel on the beach.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    "changedCardIdsFromStart": ["0039", "0045"],
+    "ungradedLibraryHash": "6e56134b2d7037a708d8d90f61aee9f55648efdff0a8dffd4442b3d57a2e02d5",
+    "libraryCounts": {
+      "decks": 47,
+      "cards": 1392
+    }
+  },
+  {
+    "label": "anchorage",
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "6ed28af0b9f1ec001a163fdc9cf323b1b7b02d8f9885095390064bde6741c9c1",
+      "SRS_DAILY_PROGRESS_V1": "0dca07b5053bac932c3c7f4d2f7afcaf523d19787dfc3c2bc7be75e141403b51",
+      "SRS_DECKS_V3": "1ebe0990e62f3e818fe397cab54d8091a650c3e4d0368f1bc373f848bec4ac5f",
+      "SRS_LAST_STUDY_SESSION_V1": "71a2683041ce868cda835307bf09d705a9144bebb728c6cdc0ba447c58070035",
+      "SRS_LEARNING_EVENTS_V1": "8bed05db3f006b6ed29f093a1dec77b1c630c3f39de4b0148a987e69fd74d786",
+      "SRS_MISSIONS_V1": "26e164f0f8f8a6249be83ac4b79dcb188c6c483763560adfb9d954ee4306e44a",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "38a804f874019d1e9157caa81ad18a2a2e12bce953020ee49120e9ec3813f182",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "values": {
+      "SRS_PREFS_V1": {
+        "themeId": "barrio",
+        "appearanceMode": "light",
+        "learningLevel": "beginner",
+        "studyMinutes": 5,
+        "tripDate": null,
+        "autoSpeak": false,
+        "speechRate": 0.98,
+        "uiLanguage": "es",
+        "newCardsPerDay": 10,
+        "onboardingDone": true,
+        "learningReason": "travel",
+        "homeRegion": "all"
+      },
+      "SRS_MISSIONS_V1": {
+        "schemaVersion": 1,
+        "runs": [
+          {
+            "schemaVersion": 1,
+            "id": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "contentVersion": 1,
+            "nodeId": "greeting",
+            "revision": 2,
+            "hintsUsed": 0,
+            "assisted": true,
+            "modelAnswerRevealed": false,
+            "completed": false,
+            "reviewCardIds": ["0010"],
+            "updatedAt": 1792474615275,
+            "lastOperation": {
+              "id": "mvg93sve-u99f8r1csza",
+              "key": "[\"mvg8yieh-rdutvy1q3bp\",\"greeting\",1,\"answer\",\"accent\"]"
+            },
+            "feedback": {
+              "status": "accent",
+              "answerIndex": 0
+            }
+          }
+        ]
+      },
+      "SRS_DAILY_PLAN_V1": {
+        "schemaVersion": 1,
+        "current": {
+          "id": "mvg9sk2j-1-c7cywlzpd2",
+          "day": "2026-10-20",
+          "minutes": 5,
+          "createdAt": 1792475770215,
+          "phase": "review",
+          "review": {
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
+            "session": {
+              "deckId": "deck-travel",
+              "cardId": "0046",
+              "queue": {
+                "schemaVersion": 1,
+                "cardIds": ["0046", "0057", "0242"],
+                "region": "all",
+                "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+                "limits": {
+                  "cardLimit": 5,
+                  "newLimit": 5
+                }
+              },
+              "updatedAt": 1792475830432
+            }
+          },
+          "applied": {
+            "missionId": "daily-morning-greeting",
+            "contentVersion": 1,
+            "runId": "mvg9sk2j-3-8r41uf6rygw"
+          }
+        }
+      },
+      "SRS_DAILY_PROGRESS_V1": {
+        "date": "2026-10-20",
+        "count": 3,
+        "target": 5,
+        "newCount": 3
+      },
+      "SRS_SEEN_WORDS_V1": [
+        {
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "front": "maleta",
+          "back": "suitcase",
+          "spanish": "maleta",
+          "english": "suitcase",
+          "lastSeen": 1792452288257,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0039",
+          "deckId": "deck-travel",
+          "front": "boleto",
+          "back": "ticket",
+          "spanish": "boleto",
+          "english": "ticket",
+          "lastSeen": 1792475814090,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0045",
+          "deckId": "deck-travel",
+          "front": "aeropuerto",
+          "back": "airport",
+          "spanish": "aeropuerto",
+          "english": "airport",
+          "lastSeen": 1792475830439,
+          "correctCount": 0,
+          "incorrectCount": 1
+        }
+      ],
+      "SRS_STUDY_STREAK_V1": {
+        "streak": 1,
+        "lastStudyDate": "2026-10-20",
+        "freezes": 0
+      },
+      "SRS_LEARNING_EVENTS_V1": {
+        "schemaVersion": 1,
+        "events": [
+          {
+            "schemaVersion": 1,
+            "id": "mvfvt961-8-dql66lk118a",
+            "cardId": "0038",
+            "deckId": "deck-travel",
+            "sessionId": "mvfvqyyj-2-i2of474g1nj",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792452288262,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 67481
+          },
+          {
+            "schemaVersion": 1,
+            "id": "production:[\"mvg8yieh-rdutvy1q3bp\",\"morning-greeting\",1]",
+            "cardId": "0010",
+            "deckId": "deck-greetings",
+            "sessionId": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "exercise": {
+              "id": "morning-greeting",
+              "contentVersion": 1,
+              "kind": "typed-recall"
+            },
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "answer-checked",
+            "occurredAt": 1792474615275,
+            "hintsUsed": 0,
+            "durationMs": 61405
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9thun-b-x3eubf6ufx9",
+            "cardId": "0039",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475814091,
+            "quality": 1,
+            "hintsUsed": null,
+            "durationMs": 42971
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9tugo-g-j0rzytxfq",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "cardId": "0045",
+            "deckId": "deck-travel",
+            "modality": "recall",
+            "evidence": "self-rated",
+            "outcome": "incorrect",
+            "quality": 2,
+            "occurredAt": 1792475830439,
+            "hintsUsed": null,
+            "durationMs": 16034
+          }
+        ]
+      },
+      "SRS_LAST_STUDY_SESSION_V1": {
+        "deckId": "deck-travel",
+        "cardId": "0046",
+        "queue": {
+          "schemaVersion": 1,
+          "cardIds": ["0046", "0057", "0242"],
+          "region": "all",
+          "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+          "limits": {
+            "cardLimit": 5,
+            "newLimit": 5
+          }
+        },
+        "updatedAt": 1792475830439
+      }
+    },
+    "selectedCards": {
+      "0039": {
+        "id": "0039",
+        "front": "boleto",
+        "back": "ticket",
+        "example": "Ya compr\u00e9 el boleto de avi\u00f3n. | I already bought the plane ticket.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792476714083,
+        "reps": 0,
+        "interval": 0,
+        "ease": 1.96
+      },
+      "0045": {
+        "id": "0045",
+        "front": "aeropuerto",
+        "back": "airport",
+        "example": "Llegamos al aeropuerto dos horas antes. | We arrived at the airport two hours early.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792519030433,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "0046": {
+        "id": "0046",
+        "front": "hotel",
+        "back": "hotel",
+        "example": "Reservamos un hotel en la playa. | We booked a hotel on the beach.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    "changedCardIdsFromStart": ["0039", "0045"],
+    "ungradedLibraryHash": "6e56134b2d7037a708d8d90f61aee9f55648efdff0a8dffd4442b3d57a2e02d5",
+    "libraryCounts": {
+      "decks": 47,
+      "cards": 1392
+    }
+  },
+  {
+    "label": "fixed-live",
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "6ed28af0b9f1ec001a163fdc9cf323b1b7b02d8f9885095390064bde6741c9c1",
+      "SRS_DAILY_PROGRESS_V1": "b64c3d84e7031f61fd0bbbf36d4e0ccfb3ea9a52e71b1d9a9f450d02b1425126",
+      "SRS_DECKS_V3": "1ebe0990e62f3e818fe397cab54d8091a650c3e4d0368f1bc373f848bec4ac5f",
+      "SRS_LAST_STUDY_SESSION_V1": "71a2683041ce868cda835307bf09d705a9144bebb728c6cdc0ba447c58070035",
+      "SRS_LEARNING_EVENTS_V1": "8bed05db3f006b6ed29f093a1dec77b1c630c3f39de4b0148a987e69fd74d786",
+      "SRS_MISSIONS_V1": "26e164f0f8f8a6249be83ac4b79dcb188c6c483763560adfb9d954ee4306e44a",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "38a804f874019d1e9157caa81ad18a2a2e12bce953020ee49120e9ec3813f182",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "values": {
+      "SRS_PREFS_V1": {
+        "themeId": "barrio",
+        "appearanceMode": "light",
+        "learningLevel": "beginner",
+        "studyMinutes": 5,
+        "tripDate": null,
+        "autoSpeak": false,
+        "speechRate": 0.98,
+        "uiLanguage": "es",
+        "newCardsPerDay": 10,
+        "onboardingDone": true,
+        "learningReason": "travel",
+        "homeRegion": "all"
+      },
+      "SRS_MISSIONS_V1": {
+        "schemaVersion": 1,
+        "runs": [
+          {
+            "schemaVersion": 1,
+            "id": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "contentVersion": 1,
+            "nodeId": "greeting",
+            "revision": 2,
+            "hintsUsed": 0,
+            "assisted": true,
+            "modelAnswerRevealed": false,
+            "completed": false,
+            "reviewCardIds": ["0010"],
+            "updatedAt": 1792474615275,
+            "lastOperation": {
+              "id": "mvg93sve-u99f8r1csza",
+              "key": "[\"mvg8yieh-rdutvy1q3bp\",\"greeting\",1,\"answer\",\"accent\"]"
+            },
+            "feedback": {
+              "status": "accent",
+              "answerIndex": 0
+            }
+          }
+        ]
+      },
+      "SRS_DAILY_PLAN_V1": {
+        "schemaVersion": 1,
+        "current": {
+          "id": "mvg9sk2j-1-c7cywlzpd2",
+          "day": "2026-10-20",
+          "minutes": 5,
+          "createdAt": 1792475770215,
+          "phase": "review",
+          "review": {
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
+            "session": {
+              "deckId": "deck-travel",
+              "cardId": "0046",
+              "queue": {
+                "schemaVersion": 1,
+                "cardIds": ["0046", "0057", "0242"],
+                "region": "all",
+                "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+                "limits": {
+                  "cardLimit": 5,
+                  "newLimit": 5
+                }
+              },
+              "updatedAt": 1792475830432
+            }
+          },
+          "applied": {
+            "missionId": "daily-morning-greeting",
+            "contentVersion": 1,
+            "runId": "mvg9sk2j-3-8r41uf6rygw"
+          }
+        }
+      },
+      "SRS_SEEN_WORDS_V1": [
+        {
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "front": "maleta",
+          "back": "suitcase",
+          "spanish": "maleta",
+          "english": "suitcase",
+          "lastSeen": 1792452288257,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0039",
+          "deckId": "deck-travel",
+          "front": "boleto",
+          "back": "ticket",
+          "spanish": "boleto",
+          "english": "ticket",
+          "lastSeen": 1792475814090,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0045",
+          "deckId": "deck-travel",
+          "front": "aeropuerto",
+          "back": "airport",
+          "spanish": "aeropuerto",
+          "english": "airport",
+          "lastSeen": 1792475830439,
+          "correctCount": 0,
+          "incorrectCount": 1
+        }
+      ],
+      "SRS_STUDY_STREAK_V1": {
+        "streak": 1,
+        "lastStudyDate": "2026-10-20",
+        "freezes": 0
+      },
+      "SRS_LEARNING_EVENTS_V1": {
+        "schemaVersion": 1,
+        "events": [
+          {
+            "schemaVersion": 1,
+            "id": "mvfvt961-8-dql66lk118a",
+            "cardId": "0038",
+            "deckId": "deck-travel",
+            "sessionId": "mvfvqyyj-2-i2of474g1nj",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792452288262,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 67481
+          },
+          {
+            "schemaVersion": 1,
+            "id": "production:[\"mvg8yieh-rdutvy1q3bp\",\"morning-greeting\",1]",
+            "cardId": "0010",
+            "deckId": "deck-greetings",
+            "sessionId": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "exercise": {
+              "id": "morning-greeting",
+              "contentVersion": 1,
+              "kind": "typed-recall"
+            },
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "answer-checked",
+            "occurredAt": 1792474615275,
+            "hintsUsed": 0,
+            "durationMs": 61405
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9thun-b-x3eubf6ufx9",
+            "cardId": "0039",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475814091,
+            "quality": 1,
+            "hintsUsed": null,
+            "durationMs": 42971
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9tugo-g-j0rzytxfq",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "cardId": "0045",
+            "deckId": "deck-travel",
+            "modality": "recall",
+            "evidence": "self-rated",
+            "outcome": "incorrect",
+            "quality": 2,
+            "occurredAt": 1792475830439,
+            "hintsUsed": null,
+            "durationMs": 16034
+          }
+        ]
+      },
+      "SRS_LAST_STUDY_SESSION_V1": {
+        "deckId": "deck-travel",
+        "cardId": "0046",
+        "queue": {
+          "schemaVersion": 1,
+          "cardIds": ["0046", "0057", "0242"],
+          "region": "all",
+          "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+          "limits": {
+            "cardLimit": 5,
+            "newLimit": 5
+          }
+        },
+        "updatedAt": 1792475830439
+      },
+      "SRS_DAILY_PROGRESS_V1": {
+        "date": "2026-10-19",
+        "count": 0,
+        "target": 5,
+        "newCount": 0
+      }
+    },
+    "selectedCards": {
+      "0039": {
+        "id": "0039",
+        "front": "boleto",
+        "back": "ticket",
+        "example": "Ya compr\u00e9 el boleto de avi\u00f3n. | I already bought the plane ticket.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792476714083,
+        "reps": 0,
+        "interval": 0,
+        "ease": 1.96
+      },
+      "0045": {
+        "id": "0045",
+        "front": "aeropuerto",
+        "back": "airport",
+        "example": "Llegamos al aeropuerto dos horas antes. | We arrived at the airport two hours early.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792519030433,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "0046": {
+        "id": "0046",
+        "front": "hotel",
+        "back": "hotel",
+        "example": "Reservamos un hotel en la playa. | We booked a hotel on the beach.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1754759195954,
+        "reps": 0,
+        "interval": 0,
+        "ease": 2.5
+      }
+    },
+    "changedCardIdsFromStart": ["0039", "0045"],
+    "ungradedLibraryHash": "6e56134b2d7037a708d8d90f61aee9f55648efdff0a8dffd4442b3d57a2e02d5",
+    "libraryCounts": {
+      "decks": 47,
+      "cards": 1392
+    }
+  },
+  {
+    "label": "positive",
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "4eaf5862e2aad3934cd9af745f14664023e1fcebf5f313714e38dab197662a4b",
+      "SRS_DAILY_PROGRESS_V1": "a4909def3d5b0a4179f2e4171707d7c050ad581ee910e13c1762244cf87ba092",
+      "SRS_DECKS_V3": "a018206cde7a873fd1cd42b0f39615a726aea559afe04742d5c2eaeec9515119",
+      "SRS_LAST_STUDY_SESSION_V1": "858d180abd07d9a69e93213ae7631aa7d647bfd7852369a64e19389d192d676b",
+      "SRS_LEARNING_EVENTS_V1": "f924d2f30802aea0e497f14255576fc3eba53420c0113f76f79ca4d5002d0f1c",
+      "SRS_MISSIONS_V1": "26e164f0f8f8a6249be83ac4b79dcb188c6c483763560adfb9d954ee4306e44a",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "9f751167e43cb9b7d1b8f1abbcf9c8a93c6778f284e67a98c16d00c9c8506e8b",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "values": {
+      "SRS_PREFS_V1": {
+        "themeId": "barrio",
+        "appearanceMode": "light",
+        "learningLevel": "beginner",
+        "studyMinutes": 5,
+        "tripDate": null,
+        "autoSpeak": false,
+        "speechRate": 0.98,
+        "uiLanguage": "es",
+        "newCardsPerDay": 10,
+        "onboardingDone": true,
+        "learningReason": "travel",
+        "homeRegion": "all"
+      },
+      "SRS_MISSIONS_V1": {
+        "schemaVersion": 1,
+        "runs": [
+          {
+            "schemaVersion": 1,
+            "id": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "contentVersion": 1,
+            "nodeId": "greeting",
+            "revision": 2,
+            "hintsUsed": 0,
+            "assisted": true,
+            "modelAnswerRevealed": false,
+            "completed": false,
+            "reviewCardIds": ["0010"],
+            "updatedAt": 1792474615275,
+            "lastOperation": {
+              "id": "mvg93sve-u99f8r1csza",
+              "key": "[\"mvg8yieh-rdutvy1q3bp\",\"greeting\",1,\"answer\",\"accent\"]"
+            },
+            "feedback": {
+              "status": "accent",
+              "answerIndex": 0
+            }
+          }
+        ]
+      },
+      "SRS_DAILY_PLAN_V1": {
+        "schemaVersion": 1,
+        "current": {
+          "id": "mvg9sk2j-1-c7cywlzpd2",
+          "day": "2026-10-20",
+          "minutes": 5,
+          "createdAt": 1792475770215,
+          "phase": "review",
+          "review": {
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
+            "session": {
+              "deckId": "deck-travel",
+              "cardId": "0057",
+              "queue": {
+                "schemaVersion": 1,
+                "cardIds": ["0057", "0242"],
+                "region": "all",
+                "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+                "limits": {
+                  "cardLimit": 5,
+                  "newLimit": 5
+                }
+              },
+              "updatedAt": 1792476546018
+            }
+          },
+          "applied": {
+            "missionId": "daily-morning-greeting",
+            "contentVersion": 1,
+            "runId": "mvg9sk2j-3-8r41uf6rygw"
+          }
+        }
+      },
+      "SRS_DAILY_PROGRESS_V1": {
+        "date": "2026-10-20",
+        "count": 1,
+        "target": 5,
+        "newCount": 1
+      },
+      "SRS_SEEN_WORDS_V1": [
+        {
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "front": "maleta",
+          "back": "suitcase",
+          "spanish": "maleta",
+          "english": "suitcase",
+          "lastSeen": 1792452288257,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0039",
+          "deckId": "deck-travel",
+          "front": "boleto",
+          "back": "ticket",
+          "spanish": "boleto",
+          "english": "ticket",
+          "lastSeen": 1792475814090,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0045",
+          "deckId": "deck-travel",
+          "front": "aeropuerto",
+          "back": "airport",
+          "spanish": "aeropuerto",
+          "english": "airport",
+          "lastSeen": 1792475830439,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0046",
+          "deckId": "deck-travel",
+          "front": "hotel",
+          "back": "hotel",
+          "spanish": "hotel",
+          "english": "hotel",
+          "lastSeen": 1792476546034,
+          "correctCount": 1,
+          "incorrectCount": 0
+        }
+      ],
+      "SRS_STUDY_STREAK_V1": {
+        "streak": 1,
+        "lastStudyDate": "2026-10-20",
+        "freezes": 0
+      },
+      "SRS_LEARNING_EVENTS_V1": {
+        "schemaVersion": 1,
+        "events": [
+          {
+            "schemaVersion": 1,
+            "id": "mvfvt961-8-dql66lk118a",
+            "cardId": "0038",
+            "deckId": "deck-travel",
+            "sessionId": "mvfvqyyj-2-i2of474g1nj",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792452288262,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 67481
+          },
+          {
+            "schemaVersion": 1,
+            "id": "production:[\"mvg8yieh-rdutvy1q3bp\",\"morning-greeting\",1]",
+            "cardId": "0010",
+            "deckId": "deck-greetings",
+            "sessionId": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "exercise": {
+              "id": "morning-greeting",
+              "contentVersion": 1,
+              "kind": "typed-recall"
+            },
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "answer-checked",
+            "occurredAt": 1792474615275,
+            "hintsUsed": 0,
+            "durationMs": 61405
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9thun-b-x3eubf6ufx9",
+            "cardId": "0039",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475814091,
+            "quality": 1,
+            "hintsUsed": null,
+            "durationMs": 42971
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9tugo-g-j0rzytxfq",
+            "cardId": "0045",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475830439,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 16034
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvga96m0-u-yy22cyi767i",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "cardId": "0046",
+            "deckId": "deck-travel",
+            "modality": "recall",
+            "evidence": "self-rated",
+            "outcome": "correct",
+            "quality": 4,
+            "occurredAt": 1792476546037,
+            "hintsUsed": null,
+            "durationMs": 15124
+          }
+        ]
+      },
+      "SRS_LAST_STUDY_SESSION_V1": {
+        "deckId": "deck-travel",
+        "cardId": "0057",
+        "queue": {
+          "schemaVersion": 1,
+          "cardIds": ["0057", "0242"],
+          "region": "all",
+          "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+          "limits": {
+            "cardLimit": 5,
+            "newLimit": 5
+          }
+        },
+        "updatedAt": 1792476546037
+      }
+    },
+    "selectedCards": {
+      "0039": {
+        "id": "0039",
+        "front": "boleto",
+        "back": "ticket",
+        "example": "Ya compr\u00e9 el boleto de avi\u00f3n. | I already bought the plane ticket.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792476714083,
+        "reps": 0,
+        "interval": 0,
+        "ease": 1.96
+      },
+      "0045": {
+        "id": "0045",
+        "front": "aeropuerto",
+        "back": "airport",
+        "example": "Llegamos al aeropuerto dos horas antes. | We arrived at the airport two hours early.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792519030433,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "0046": {
+        "id": "0046",
+        "front": "hotel",
+        "back": "hotel",
+        "example": "Reservamos un hotel en la playa. | We booked a hotel on the beach.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792562946018,
+        "reps": 1,
+        "interval": 1,
+        "ease": 2.5
+      }
+    },
+    "changedCardIdsFromStart": ["0039", "0045", "0046"],
+    "ungradedLibraryHash": "6e56134b2d7037a708d8d90f61aee9f55648efdff0a8dffd4442b3d57a2e02d5",
+    "libraryCounts": {
+      "decks": 47,
+      "cards": 1392
+    }
+  },
+  {
+    "label": "fixed-boundary",
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "4eaf5862e2aad3934cd9af745f14664023e1fcebf5f313714e38dab197662a4b",
+      "SRS_DAILY_PROGRESS_V1": "b64c3d84e7031f61fd0bbbf36d4e0ccfb3ea9a52e71b1d9a9f450d02b1425126",
+      "SRS_DECKS_V3": "a018206cde7a873fd1cd42b0f39615a726aea559afe04742d5c2eaeec9515119",
+      "SRS_LAST_STUDY_SESSION_V1": "858d180abd07d9a69e93213ae7631aa7d647bfd7852369a64e19389d192d676b",
+      "SRS_LEARNING_EVENTS_V1": "f924d2f30802aea0e497f14255576fc3eba53420c0113f76f79ca4d5002d0f1c",
+      "SRS_MISSIONS_V1": "26e164f0f8f8a6249be83ac4b79dcb188c6c483763560adfb9d954ee4306e44a",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "9f751167e43cb9b7d1b8f1abbcf9c8a93c6778f284e67a98c16d00c9c8506e8b",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "values": {
+      "SRS_PREFS_V1": {
+        "themeId": "barrio",
+        "appearanceMode": "light",
+        "learningLevel": "beginner",
+        "studyMinutes": 5,
+        "tripDate": null,
+        "autoSpeak": false,
+        "speechRate": 0.98,
+        "uiLanguage": "es",
+        "newCardsPerDay": 10,
+        "onboardingDone": true,
+        "learningReason": "travel",
+        "homeRegion": "all"
+      },
+      "SRS_MISSIONS_V1": {
+        "schemaVersion": 1,
+        "runs": [
+          {
+            "schemaVersion": 1,
+            "id": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "contentVersion": 1,
+            "nodeId": "greeting",
+            "revision": 2,
+            "hintsUsed": 0,
+            "assisted": true,
+            "modelAnswerRevealed": false,
+            "completed": false,
+            "reviewCardIds": ["0010"],
+            "updatedAt": 1792474615275,
+            "lastOperation": {
+              "id": "mvg93sve-u99f8r1csza",
+              "key": "[\"mvg8yieh-rdutvy1q3bp\",\"greeting\",1,\"answer\",\"accent\"]"
+            },
+            "feedback": {
+              "status": "accent",
+              "answerIndex": 0
+            }
+          }
+        ]
+      },
+      "SRS_DAILY_PLAN_V1": {
+        "schemaVersion": 1,
+        "current": {
+          "id": "mvg9sk2j-1-c7cywlzpd2",
+          "day": "2026-10-20",
+          "minutes": 5,
+          "createdAt": 1792475770215,
+          "phase": "review",
+          "review": {
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
+            "session": {
+              "deckId": "deck-travel",
+              "cardId": "0057",
+              "queue": {
+                "schemaVersion": 1,
+                "cardIds": ["0057", "0242"],
+                "region": "all",
+                "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+                "limits": {
+                  "cardLimit": 5,
+                  "newLimit": 5
+                }
+              },
+              "updatedAt": 1792476546018
+            }
+          },
+          "applied": {
+            "missionId": "daily-morning-greeting",
+            "contentVersion": 1,
+            "runId": "mvg9sk2j-3-8r41uf6rygw"
+          }
+        }
+      },
+      "SRS_SEEN_WORDS_V1": [
+        {
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "front": "maleta",
+          "back": "suitcase",
+          "spanish": "maleta",
+          "english": "suitcase",
+          "lastSeen": 1792452288257,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0039",
+          "deckId": "deck-travel",
+          "front": "boleto",
+          "back": "ticket",
+          "spanish": "boleto",
+          "english": "ticket",
+          "lastSeen": 1792475814090,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0045",
+          "deckId": "deck-travel",
+          "front": "aeropuerto",
+          "back": "airport",
+          "spanish": "aeropuerto",
+          "english": "airport",
+          "lastSeen": 1792475830439,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0046",
+          "deckId": "deck-travel",
+          "front": "hotel",
+          "back": "hotel",
+          "spanish": "hotel",
+          "english": "hotel",
+          "lastSeen": 1792476546034,
+          "correctCount": 1,
+          "incorrectCount": 0
+        }
+      ],
+      "SRS_STUDY_STREAK_V1": {
+        "streak": 1,
+        "lastStudyDate": "2026-10-20",
+        "freezes": 0
+      },
+      "SRS_LEARNING_EVENTS_V1": {
+        "schemaVersion": 1,
+        "events": [
+          {
+            "schemaVersion": 1,
+            "id": "mvfvt961-8-dql66lk118a",
+            "cardId": "0038",
+            "deckId": "deck-travel",
+            "sessionId": "mvfvqyyj-2-i2of474g1nj",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792452288262,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 67481
+          },
+          {
+            "schemaVersion": 1,
+            "id": "production:[\"mvg8yieh-rdutvy1q3bp\",\"morning-greeting\",1]",
+            "cardId": "0010",
+            "deckId": "deck-greetings",
+            "sessionId": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "exercise": {
+              "id": "morning-greeting",
+              "contentVersion": 1,
+              "kind": "typed-recall"
+            },
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "answer-checked",
+            "occurredAt": 1792474615275,
+            "hintsUsed": 0,
+            "durationMs": 61405
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9thun-b-x3eubf6ufx9",
+            "cardId": "0039",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475814091,
+            "quality": 1,
+            "hintsUsed": null,
+            "durationMs": 42971
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9tugo-g-j0rzytxfq",
+            "cardId": "0045",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475830439,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 16034
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvga96m0-u-yy22cyi767i",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "cardId": "0046",
+            "deckId": "deck-travel",
+            "modality": "recall",
+            "evidence": "self-rated",
+            "outcome": "correct",
+            "quality": 4,
+            "occurredAt": 1792476546037,
+            "hintsUsed": null,
+            "durationMs": 15124
+          }
+        ]
+      },
+      "SRS_LAST_STUDY_SESSION_V1": {
+        "deckId": "deck-travel",
+        "cardId": "0057",
+        "queue": {
+          "schemaVersion": 1,
+          "cardIds": ["0057", "0242"],
+          "region": "all",
+          "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+          "limits": {
+            "cardLimit": 5,
+            "newLimit": 5
+          }
+        },
+        "updatedAt": 1792476546037
+      },
+      "SRS_DAILY_PROGRESS_V1": {
+        "date": "2026-10-19",
+        "count": 0,
+        "target": 5,
+        "newCount": 0
+      }
+    },
+    "selectedCards": {
+      "0039": {
+        "id": "0039",
+        "front": "boleto",
+        "back": "ticket",
+        "example": "Ya compr\u00e9 el boleto de avi\u00f3n. | I already bought the plane ticket.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792476714083,
+        "reps": 0,
+        "interval": 0,
+        "ease": 1.96
+      },
+      "0045": {
+        "id": "0045",
+        "front": "aeropuerto",
+        "back": "airport",
+        "example": "Llegamos al aeropuerto dos horas antes. | We arrived at the airport two hours early.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792519030433,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "0046": {
+        "id": "0046",
+        "front": "hotel",
+        "back": "hotel",
+        "example": "Reservamos un hotel en la playa. | We booked a hotel on the beach.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792562946018,
+        "reps": 1,
+        "interval": 1,
+        "ease": 2.5
+      }
+    },
+    "changedCardIdsFromStart": ["0039", "0045", "0046"],
+    "ungradedLibraryHash": "6e56134b2d7037a708d8d90f61aee9f55648efdff0a8dffd4442b3d57a2e02d5",
+    "libraryCounts": {
+      "decks": 47,
+      "cards": 1392
+    }
+  },
+  {
+    "label": "restored",
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "4eaf5862e2aad3934cd9af745f14664023e1fcebf5f313714e38dab197662a4b",
+      "SRS_DAILY_PROGRESS_V1": "e01283a2d4bf598c16eb07f9ed3a9c360e60497f1e2aa7e2da7296b227015fb8",
+      "SRS_DECKS_V3": "a018206cde7a873fd1cd42b0f39615a726aea559afe04742d5c2eaeec9515119",
+      "SRS_LAST_STUDY_SESSION_V1": "858d180abd07d9a69e93213ae7631aa7d647bfd7852369a64e19389d192d676b",
+      "SRS_LEARNING_EVENTS_V1": "f924d2f30802aea0e497f14255576fc3eba53420c0113f76f79ca4d5002d0f1c",
+      "SRS_MISSIONS_V1": "26e164f0f8f8a6249be83ac4b79dcb188c6c483763560adfb9d954ee4306e44a",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "9f751167e43cb9b7d1b8f1abbcf9c8a93c6778f284e67a98c16d00c9c8506e8b",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "values": {
+      "SRS_PREFS_V1": {
+        "themeId": "barrio",
+        "appearanceMode": "light",
+        "learningLevel": "beginner",
+        "studyMinutes": 5,
+        "tripDate": null,
+        "autoSpeak": false,
+        "speechRate": 0.98,
+        "uiLanguage": "es",
+        "newCardsPerDay": 10,
+        "onboardingDone": true,
+        "learningReason": "travel",
+        "homeRegion": "all"
+      },
+      "SRS_MISSIONS_V1": {
+        "schemaVersion": 1,
+        "runs": [
+          {
+            "schemaVersion": 1,
+            "id": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "contentVersion": 1,
+            "nodeId": "greeting",
+            "revision": 2,
+            "hintsUsed": 0,
+            "assisted": true,
+            "modelAnswerRevealed": false,
+            "completed": false,
+            "reviewCardIds": ["0010"],
+            "updatedAt": 1792474615275,
+            "lastOperation": {
+              "id": "mvg93sve-u99f8r1csza",
+              "key": "[\"mvg8yieh-rdutvy1q3bp\",\"greeting\",1,\"answer\",\"accent\"]"
+            },
+            "feedback": {
+              "status": "accent",
+              "answerIndex": 0
+            }
+          }
+        ]
+      },
+      "SRS_DAILY_PLAN_V1": {
+        "schemaVersion": 1,
+        "current": {
+          "id": "mvg9sk2j-1-c7cywlzpd2",
+          "day": "2026-10-20",
+          "minutes": 5,
+          "createdAt": 1792475770215,
+          "phase": "review",
+          "review": {
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
+            "session": {
+              "deckId": "deck-travel",
+              "cardId": "0057",
+              "queue": {
+                "schemaVersion": 1,
+                "cardIds": ["0057", "0242"],
+                "region": "all",
+                "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+                "limits": {
+                  "cardLimit": 5,
+                  "newLimit": 5
+                }
+              },
+              "updatedAt": 1792476546018
+            }
+          },
+          "applied": {
+            "missionId": "daily-morning-greeting",
+            "contentVersion": 1,
+            "runId": "mvg9sk2j-3-8r41uf6rygw"
+          }
+        }
+      },
+      "SRS_SEEN_WORDS_V1": [
+        {
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "front": "maleta",
+          "back": "suitcase",
+          "spanish": "maleta",
+          "english": "suitcase",
+          "lastSeen": 1792452288257,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0039",
+          "deckId": "deck-travel",
+          "front": "boleto",
+          "back": "ticket",
+          "spanish": "boleto",
+          "english": "ticket",
+          "lastSeen": 1792475814090,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0045",
+          "deckId": "deck-travel",
+          "front": "aeropuerto",
+          "back": "airport",
+          "spanish": "aeropuerto",
+          "english": "airport",
+          "lastSeen": 1792475830439,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0046",
+          "deckId": "deck-travel",
+          "front": "hotel",
+          "back": "hotel",
+          "spanish": "hotel",
+          "english": "hotel",
+          "lastSeen": 1792476546034,
+          "correctCount": 1,
+          "incorrectCount": 0
+        }
+      ],
+      "SRS_STUDY_STREAK_V1": {
+        "streak": 1,
+        "lastStudyDate": "2026-10-20",
+        "freezes": 0
+      },
+      "SRS_LEARNING_EVENTS_V1": {
+        "schemaVersion": 1,
+        "events": [
+          {
+            "schemaVersion": 1,
+            "id": "mvfvt961-8-dql66lk118a",
+            "cardId": "0038",
+            "deckId": "deck-travel",
+            "sessionId": "mvfvqyyj-2-i2of474g1nj",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792452288262,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 67481
+          },
+          {
+            "schemaVersion": 1,
+            "id": "production:[\"mvg8yieh-rdutvy1q3bp\",\"morning-greeting\",1]",
+            "cardId": "0010",
+            "deckId": "deck-greetings",
+            "sessionId": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "exercise": {
+              "id": "morning-greeting",
+              "contentVersion": 1,
+              "kind": "typed-recall"
+            },
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "answer-checked",
+            "occurredAt": 1792474615275,
+            "hintsUsed": 0,
+            "durationMs": 61405
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9thun-b-x3eubf6ufx9",
+            "cardId": "0039",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475814091,
+            "quality": 1,
+            "hintsUsed": null,
+            "durationMs": 42971
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9tugo-g-j0rzytxfq",
+            "cardId": "0045",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475830439,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 16034
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvga96m0-u-yy22cyi767i",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "cardId": "0046",
+            "deckId": "deck-travel",
+            "modality": "recall",
+            "evidence": "self-rated",
+            "outcome": "correct",
+            "quality": 4,
+            "occurredAt": 1792476546037,
+            "hintsUsed": null,
+            "durationMs": 15124
+          }
+        ]
+      },
+      "SRS_LAST_STUDY_SESSION_V1": {
+        "deckId": "deck-travel",
+        "cardId": "0057",
+        "queue": {
+          "schemaVersion": 1,
+          "cardIds": ["0057", "0242"],
+          "region": "all",
+          "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+          "limits": {
+            "cardLimit": 5,
+            "newLimit": 5
+          }
+        },
+        "updatedAt": 1792476546037
+      },
+      "SRS_DAILY_PROGRESS_V1": {
+        "date": "2026-10-20",
+        "count": 0,
+        "target": 5,
+        "newCount": 0
+      }
+    },
+    "selectedCards": {
+      "0039": {
+        "id": "0039",
+        "front": "boleto",
+        "back": "ticket",
+        "example": "Ya compr\u00e9 el boleto de avi\u00f3n. | I already bought the plane ticket.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792476714083,
+        "reps": 0,
+        "interval": 0,
+        "ease": 1.96
+      },
+      "0045": {
+        "id": "0045",
+        "front": "aeropuerto",
+        "back": "airport",
+        "example": "Llegamos al aeropuerto dos horas antes. | We arrived at the airport two hours early.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792519030433,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "0046": {
+        "id": "0046",
+        "front": "hotel",
+        "back": "hotel",
+        "example": "Reservamos un hotel en la playa. | We booked a hotel on the beach.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792562946018,
+        "reps": 1,
+        "interval": 1,
+        "ease": 2.5
+      }
+    },
+    "changedCardIdsFromStart": ["0039", "0045", "0046"],
+    "ungradedLibraryHash": "6e56134b2d7037a708d8d90f61aee9f55648efdff0a8dffd4442b3d57a2e02d5",
+    "libraryCounts": {
+      "decks": 47,
+      "cards": 1392
+    }
+  },
+  {
+    "label": "cold",
+    "hashes": {
+      "SRS_DAILY_PLAN_V1": "4eaf5862e2aad3934cd9af745f14664023e1fcebf5f313714e38dab197662a4b",
+      "SRS_DAILY_PROGRESS_V1": "e01283a2d4bf598c16eb07f9ed3a9c360e60497f1e2aa7e2da7296b227015fb8",
+      "SRS_DECKS_V3": "a018206cde7a873fd1cd42b0f39615a726aea559afe04742d5c2eaeec9515119",
+      "SRS_LAST_STUDY_SESSION_V1": "858d180abd07d9a69e93213ae7631aa7d647bfd7852369a64e19389d192d676b",
+      "SRS_LEARNING_EVENTS_V1": "f924d2f30802aea0e497f14255576fc3eba53420c0113f76f79ca4d5002d0f1c",
+      "SRS_MISSIONS_V1": "26e164f0f8f8a6249be83ac4b79dcb188c6c483763560adfb9d954ee4306e44a",
+      "SRS_PREFS_V1": "5ca89ecd955ec833c6f163e3899548e6710d656158de14df1afd4053b1376f92",
+      "SRS_SEEN_WORDS_V1": "9f751167e43cb9b7d1b8f1abbcf9c8a93c6778f284e67a98c16d00c9c8506e8b",
+      "SRS_STUDY_STREAK_V1": "5aa8460725176e7f98133bec709163824eef5edb91bbc7292a0ba821b525eb56"
+    },
+    "values": {
+      "SRS_PREFS_V1": {
+        "themeId": "barrio",
+        "appearanceMode": "light",
+        "learningLevel": "beginner",
+        "studyMinutes": 5,
+        "tripDate": null,
+        "autoSpeak": false,
+        "speechRate": 0.98,
+        "uiLanguage": "es",
+        "newCardsPerDay": 10,
+        "onboardingDone": true,
+        "learningReason": "travel",
+        "homeRegion": "all"
+      },
+      "SRS_MISSIONS_V1": {
+        "schemaVersion": 1,
+        "runs": [
+          {
+            "schemaVersion": 1,
+            "id": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "contentVersion": 1,
+            "nodeId": "greeting",
+            "revision": 2,
+            "hintsUsed": 0,
+            "assisted": true,
+            "modelAnswerRevealed": false,
+            "completed": false,
+            "reviewCardIds": ["0010"],
+            "updatedAt": 1792474615275,
+            "lastOperation": {
+              "id": "mvg93sve-u99f8r1csza",
+              "key": "[\"mvg8yieh-rdutvy1q3bp\",\"greeting\",1,\"answer\",\"accent\"]"
+            },
+            "feedback": {
+              "status": "accent",
+              "answerIndex": 0
+            }
+          }
+        ]
+      },
+      "SRS_DAILY_PLAN_V1": {
+        "schemaVersion": 1,
+        "current": {
+          "id": "mvg9sk2j-1-c7cywlzpd2",
+          "day": "2026-10-20",
+          "minutes": 5,
+          "createdAt": 1792475770215,
+          "phase": "review",
+          "review": {
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
+            "session": {
+              "deckId": "deck-travel",
+              "cardId": "0057",
+              "queue": {
+                "schemaVersion": 1,
+                "cardIds": ["0057", "0242"],
+                "region": "all",
+                "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+                "limits": {
+                  "cardLimit": 5,
+                  "newLimit": 5
+                }
+              },
+              "updatedAt": 1792476546018
+            }
+          },
+          "applied": {
+            "missionId": "daily-morning-greeting",
+            "contentVersion": 1,
+            "runId": "mvg9sk2j-3-8r41uf6rygw"
+          }
+        }
+      },
+      "SRS_SEEN_WORDS_V1": [
+        {
+          "cardId": "0038",
+          "deckId": "deck-travel",
+          "front": "maleta",
+          "back": "suitcase",
+          "spanish": "maleta",
+          "english": "suitcase",
+          "lastSeen": 1792452288257,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0039",
+          "deckId": "deck-travel",
+          "front": "boleto",
+          "back": "ticket",
+          "spanish": "boleto",
+          "english": "ticket",
+          "lastSeen": 1792475814090,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0045",
+          "deckId": "deck-travel",
+          "front": "aeropuerto",
+          "back": "airport",
+          "spanish": "aeropuerto",
+          "english": "airport",
+          "lastSeen": 1792475830439,
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        {
+          "cardId": "0046",
+          "deckId": "deck-travel",
+          "front": "hotel",
+          "back": "hotel",
+          "spanish": "hotel",
+          "english": "hotel",
+          "lastSeen": 1792476546034,
+          "correctCount": 1,
+          "incorrectCount": 0
+        }
+      ],
+      "SRS_STUDY_STREAK_V1": {
+        "streak": 1,
+        "lastStudyDate": "2026-10-20",
+        "freezes": 0
+      },
+      "SRS_LEARNING_EVENTS_V1": {
+        "schemaVersion": 1,
+        "events": [
+          {
+            "schemaVersion": 1,
+            "id": "mvfvt961-8-dql66lk118a",
+            "cardId": "0038",
+            "deckId": "deck-travel",
+            "sessionId": "mvfvqyyj-2-i2of474g1nj",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792452288262,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 67481
+          },
+          {
+            "schemaVersion": 1,
+            "id": "production:[\"mvg8yieh-rdutvy1q3bp\",\"morning-greeting\",1]",
+            "cardId": "0010",
+            "deckId": "deck-greetings",
+            "sessionId": "mvg8yieh-rdutvy1q3bp",
+            "missionId": "first-morning-medellin",
+            "exercise": {
+              "id": "morning-greeting",
+              "contentVersion": 1,
+              "kind": "typed-recall"
+            },
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "answer-checked",
+            "occurredAt": 1792474615275,
+            "hintsUsed": 0,
+            "durationMs": 61405
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9thun-b-x3eubf6ufx9",
+            "cardId": "0039",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475814091,
+            "quality": 1,
+            "hintsUsed": null,
+            "durationMs": 42971
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvg9tugo-g-j0rzytxfq",
+            "cardId": "0045",
+            "deckId": "deck-travel",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "modality": "recall",
+            "outcome": "incorrect",
+            "evidence": "self-rated",
+            "occurredAt": 1792475830439,
+            "quality": 2,
+            "hintsUsed": null,
+            "durationMs": 16034
+          },
+          {
+            "schemaVersion": 1,
+            "id": "mvga96m0-u-yy22cyi767i",
+            "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+            "planId": "mvg9sk2j-1-c7cywlzpd2",
+            "cardId": "0046",
+            "deckId": "deck-travel",
+            "modality": "recall",
+            "evidence": "self-rated",
+            "outcome": "correct",
+            "quality": 4,
+            "occurredAt": 1792476546037,
+            "hintsUsed": null,
+            "durationMs": 15124
+          }
+        ]
+      },
+      "SRS_LAST_STUDY_SESSION_V1": {
+        "deckId": "deck-travel",
+        "cardId": "0057",
+        "queue": {
+          "schemaVersion": 1,
+          "cardIds": ["0057", "0242"],
+          "region": "all",
+          "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
+          "limits": {
+            "cardLimit": 5,
+            "newLimit": 5
+          }
+        },
+        "updatedAt": 1792476546037
+      },
+      "SRS_DAILY_PROGRESS_V1": {
+        "date": "2026-10-20",
+        "count": 0,
+        "target": 5,
+        "newCount": 0
+      }
+    },
+    "selectedCards": {
+      "0039": {
+        "id": "0039",
+        "front": "boleto",
+        "back": "ticket",
+        "example": "Ya compr\u00e9 el boleto de avi\u00f3n. | I already bought the plane ticket.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792476714083,
+        "reps": 0,
+        "interval": 0,
+        "ease": 1.96
+      },
+      "0045": {
+        "id": "0045",
+        "front": "aeropuerto",
+        "back": "airport",
+        "example": "Llegamos al aeropuerto dos horas antes. | We arrived at the airport two hours early.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792519030433,
+        "reps": 0,
+        "interval": 0.5,
+        "ease": 2.1799999999999997
+      },
+      "0046": {
+        "id": "0046",
+        "front": "hotel",
+        "back": "hotel",
+        "example": "Reservamos un hotel en la playa. | We booked a hotel on the beach.",
+        "tags": ["travel"],
+        "createdAt": 1754759195954,
+        "due": 1792562946018,
+        "reps": 1,
+        "interval": 1,
+        "ease": 2.5
+      }
+    },
+    "changedCardIdsFromStart": ["0039", "0045", "0046"],
+    "ungradedLibraryHash": "6e56134b2d7037a708d8d90f61aee9f55648efdff0a8dffd4442b3d57a2e02d5",
+    "libraryCounts": {
+      "decks": 47,
+      "cards": 1392
+    }
+  }
+]

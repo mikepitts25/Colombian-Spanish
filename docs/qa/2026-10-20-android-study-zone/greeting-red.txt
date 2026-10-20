@@ -1,0 +1,276 @@
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish' ; watchman watch-project '/Users/mike/.codex/worktrees/barrio-controls/Colombian-Spanish'`
+
+FAIL __tests__/screens/HomeScreen.test.tsx
+  ✕ greeting follows the current clock when Date hour getters retain an old zone (297 ms)
+  ○ skipped uses measured active review pace for Home limits and labels it as an estimate
+  ○ skipped refreshes daily progress and streak when the app returns to the foreground
+  ○ skipped refreshes the remaining new-card budget from preferences on foreground
+  ○ skipped waits for a fresh provider budget before starting a session
+  ○ skipped shows a retryable preparation failure without navigating
+  ○ skipped uses saved purpose/time and refreshes the recommendation after foreground preference changes
+  ○ skipped keeps the due count and full translated unit accessible when text grows
+  ○ skipped resumes the persisted plan phase directly instead of replacing it with a new suggestion
+  ○ skipped a failed initial plan read offers Retry without opening unlinked practice
+  ○ skipped uses the same calibrated written-response allowance in the Home preview
+  ○ skipped shows familiar-only catch-up in en without hiding the new-card allowance
+  ○ skipped shows familiar-only catch-up in es without hiding the new-card allowance
+  ○ skipped refreshes the catch-up boundary when Start crosses midnight after Home loads
+  ○ skipped theme identity changes Home composition while preserving recommendation routes and Classic return
+  ○ skipped Barrio audio entry uses the common decorative icon while Classic retains its glyph
+  ○ skipped Barrio keeps one held production start through theme, language and live text changes
+  ○ skipped Barrio retries a rejected start while its original controller remains mounted
+  ○ skipped Barrio read failure overrides a pending presentation snapshot
+  ○ skipped Barrio Retry repeats the selected direct deck start
+  HomeScreen quick actions
+    ○ skipped navigates to quiz, difficult words, phrases, and add-card flows
+    ○ skipped does not show the manage-decks floating plus action
+    ○ skipped keeps full deck browsing out of Home and links to Study instead
+    ○ skipped shows one primary study action for due cards
+    ○ skipped does not render the standalone summary stats strip
+    ○ skipped renders key Home labels in Spanish when UI language is Spanish
+    ○ skipped renders exactly one Word of the Day card from slang content
+    ○ skipped is stable across re-renders on the same day
+    ○ skipped falls back to general content when no slang content exists
+    ○ skipped plays the Word of the Day audio
+  Home workload honesty
+    ○ skipped separates new cards, reviews due now, and reviews scheduled later today
+    ○ skipped shows a fresh library without presenting every new card as overdue
+    ○ skipped starts due reviews directly instead of opening the Study landing
+    ○ skipped offers browsing when the new-card allowance is exhausted
+    ○ skipped keeps the empty-library route usable
+
+  ● greeting follows the current clock when Date hour getters retain an old zone
+
+    Unable to find an element with text: /Good evening!/
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View />[39m
+        [36m<View />[39m
+        [36m<View />[39m
+      [36m</View>[39m
+      [36m<RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m☀️[0m
+                [0m [0m
+                [0mGood morning![0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mReady to learn today?[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m👤[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mToday[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m0 reviews due[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mstudied cards ready to review now[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m2 new in library[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mNew cards available today: 2[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m🔥 [0m
+                  [0m0[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mDaily goal[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0m0/10[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<View />[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<Text>[39m
+              [0mSuggested: Colombian Slang · up to 2 cards · about 2 min[0m
+            [36m</Text>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mStudy new cards[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mWord of the Day[0m
+              [36m</Text>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Listen: chimba"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0m🔊[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<Text>[39m
+              [0mchimba[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mawesome[0m
+              [0m • Colombian Slang[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mTools[0m
+            [36m</Text>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mEditorial draft · text practice only[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mVoice self-check (draft)[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mListening preview (draft)[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0m🎯[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mQuiz[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0m↻[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mDifficult[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0m🗣️[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mPhrases[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0m＋[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mAdd Card[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mDecks due for review[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mNo decks are due right now[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mBrowse all decks[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mNo reviews due now[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mNew cards are separate from scheduled reviews.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</RCTScrollView>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      831 |   try {
+      832 |     const ui = renderWithTheme(<HomeScreen />);
+    > 833 |     await waitFor(() => expect(ui.getByText(/Good evening!/)).toBeTruthy());
+          |                  ^
+      834 |     ui.unmount();
+      835 |   } finally {
+      836 |     jest.useRealTimers();
+
+      at Object.<anonymous> (__tests__/screens/HomeScreen.test.tsx:833:18)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 34 skipped, 35 total
+Snapshots:   0 total
+Time:        1.293 s, estimated 4 s
+Ran all test suites matching /__tests__\/screens\/HomeScreen.test.tsx/i with tests matching "greeting follows the current clock".
