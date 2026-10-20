@@ -41,9 +41,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -65,22 +63,13 @@
           "createdAt": 1792475770215,
           "phase": "review",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "cardId": "0057",
               "queue": {
                 "schemaVersion": 1,
-                "cardIds": [
-                  "0057",
-                  "0242"
-                ],
+                "cardIds": ["0057", "0242"],
                 "region": "all",
                 "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
                 "limits": {
@@ -237,10 +226,7 @@
         "cardId": "0057",
         "queue": {
           "schemaVersion": 1,
-          "cardIds": [
-            "0057",
-            "0242"
-          ],
+          "cardIds": ["0057", "0242"],
           "region": "all",
           "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
           "limits": {
@@ -257,10 +243,7 @@
         "newCount": 0
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -268,9 +251,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -282,9 +263,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -336,9 +315,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -360,22 +337,13 @@
           "createdAt": 1792475770215,
           "phase": "review",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "cardId": "0057",
               "queue": {
                 "schemaVersion": 1,
-                "cardIds": [
-                  "0057",
-                  "0242"
-                ],
+                "cardIds": ["0057", "0242"],
                 "region": "all",
                 "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
                 "limits": {
@@ -532,10 +500,7 @@
         "cardId": "0057",
         "queue": {
           "schemaVersion": 1,
-          "cardIds": [
-            "0057",
-            "0242"
-          ],
+          "cardIds": ["0057", "0242"],
           "region": "all",
           "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
           "limits": {
@@ -552,10 +517,7 @@
         "newCount": 0
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -563,9 +525,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -577,9 +537,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -631,9 +589,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -655,22 +611,13 @@
           "createdAt": 1792475770215,
           "phase": "review",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "cardId": "0057",
               "queue": {
                 "schemaVersion": 1,
-                "cardIds": [
-                  "0057",
-                  "0242"
-                ],
+                "cardIds": ["0057", "0242"],
                 "region": "all",
                 "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
                 "limits": {
@@ -827,10 +774,7 @@
         "cardId": "0057",
         "queue": {
           "schemaVersion": 1,
-          "cardIds": [
-            "0057",
-            "0242"
-          ],
+          "cardIds": ["0057", "0242"],
           "region": "all",
           "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
           "limits": {
@@ -847,10 +791,7 @@
         "newCount": 0
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -858,9 +799,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -872,9 +811,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -912,9 +849,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -936,22 +871,13 @@
           "createdAt": 1792475770215,
           "phase": "review",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "cardId": "0057",
               "queue": {
                 "schemaVersion": 1,
-                "cardIds": [
-                  "0057",
-                  "0242"
-                ],
+                "cardIds": ["0057", "0242"],
                 "region": "all",
                 "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
                 "limits": {
@@ -1108,10 +1034,7 @@
         "cardId": "0057",
         "queue": {
           "schemaVersion": 1,
-          "cardIds": [
-            "0057",
-            "0242"
-          ],
+          "cardIds": ["0057", "0242"],
           "region": "all",
           "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
           "limits": {
@@ -1142,10 +1065,7 @@
         "homeRegion": "all"
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -1153,9 +1073,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -1167,9 +1085,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -1207,9 +1123,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -1231,22 +1145,13 @@
           "createdAt": 1792475770215,
           "phase": "review",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "cardId": "0057",
               "queue": {
                 "schemaVersion": 1,
-                "cardIds": [
-                  "0057",
-                  "0242"
-                ],
+                "cardIds": ["0057", "0242"],
                 "region": "all",
                 "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
                 "limits": {
@@ -1403,10 +1308,7 @@
         "cardId": "0057",
         "queue": {
           "schemaVersion": 1,
-          "cardIds": [
-            "0057",
-            "0242"
-          ],
+          "cardIds": ["0057", "0242"],
           "region": "all",
           "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
           "limits": {
@@ -1437,10 +1339,7 @@
         "homeRegion": "all"
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -1448,9 +1347,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -1462,9 +1359,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -1499,22 +1394,13 @@
           "createdAt": 1792475770215,
           "phase": "review",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "cardId": "0057",
               "queue": {
                 "schemaVersion": 1,
-                "cardIds": [
-                  "0057",
-                  "0242"
-                ],
+                "cardIds": ["0057", "0242"],
                 "region": "all",
                 "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
                 "limits": {
@@ -1546,9 +1432,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -1638,10 +1522,7 @@
         "cardId": "0057",
         "queue": {
           "schemaVersion": 1,
-          "cardIds": [
-            "0057",
-            "0242"
-          ],
+          "cardIds": ["0057", "0242"],
           "region": "all",
           "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
           "limits": {
@@ -1736,10 +1617,7 @@
         ]
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -1747,9 +1625,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -1761,9 +1637,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -1798,22 +1672,13 @@
           "createdAt": 1792475770215,
           "phase": "review",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "cardId": "0057",
               "queue": {
                 "schemaVersion": 1,
-                "cardIds": [
-                  "0057",
-                  "0242"
-                ],
+                "cardIds": ["0057", "0242"],
                 "region": "all",
                 "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
                 "limits": {
@@ -1845,9 +1710,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -1937,10 +1800,7 @@
         "cardId": "0057",
         "queue": {
           "schemaVersion": 1,
-          "cardIds": [
-            "0057",
-            "0242"
-          ],
+          "cardIds": ["0057", "0242"],
           "region": "all",
           "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
           "limits": {
@@ -2035,10 +1895,7 @@
         ]
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -2046,9 +1903,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -2060,9 +1915,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -2097,22 +1950,13 @@
           "createdAt": 1792475770215,
           "phase": "review",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "cardId": "0057",
               "queue": {
                 "schemaVersion": 1,
-                "cardIds": [
-                  "0057",
-                  "0242"
-                ],
+                "cardIds": ["0057", "0242"],
                 "region": "all",
                 "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
                 "limits": {
@@ -2144,9 +1988,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -2320,10 +2162,7 @@
         "cardId": "0057",
         "queue": {
           "schemaVersion": 1,
-          "cardIds": [
-            "0057",
-            "0242"
-          ],
+          "cardIds": ["0057", "0242"],
           "region": "all",
           "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
           "limits": {
@@ -2334,10 +2173,7 @@
         "updatedAt": 1792479643434
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -2345,9 +2181,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -2359,9 +2193,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -2401,9 +2233,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -2441,21 +2271,13 @@
           "createdAt": 1792475770215,
           "phase": "review",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "cardId": "0242",
               "queue": {
                 "schemaVersion": 1,
-                "cardIds": [
-                  "0242"
-                ],
+                "cardIds": ["0242"],
                 "region": "all",
                 "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
                 "limits": {
@@ -2644,9 +2466,7 @@
         "cardId": "0242",
         "queue": {
           "schemaVersion": 1,
-          "cardIds": [
-            "0242"
-          ],
+          "cardIds": ["0242"],
           "region": "all",
           "sessionId": "mvg9sk2j-2-0gmsyiphkv1f",
           "limits": {
@@ -2657,10 +2477,7 @@
         "updatedAt": 1792479687502
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -2668,9 +2485,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566087479,
         "reps": 1,
@@ -2682,9 +2497,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1754759195954,
         "reps": 0,
@@ -2692,9 +2505,7 @@
         "ease": 2.5
       }
     },
-    "changedCardIdsFromStart": [
-      "0057"
-    ]
+    "changedCardIdsFromStart": ["0057"]
   },
   {
     "label": "applied-ready",
@@ -2726,9 +2537,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -2766,13 +2575,7 @@
           "createdAt": 1792475770215,
           "phase": "applied",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "queue": {
@@ -3002,10 +2805,7 @@
         "updatedAt": 1792479728432
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -3013,9 +2813,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566087479,
         "reps": 1,
@@ -3027,9 +2825,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566128419,
         "reps": 1,
@@ -3037,10 +2833,7 @@
         "ease": 2.5
       }
     },
-    "changedCardIdsFromStart": [
-      "0057",
-      "0242"
-    ]
+    "changedCardIdsFromStart": ["0057", "0242"]
   },
   {
     "label": "applied-open",
@@ -3072,9 +2865,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -3112,13 +2903,7 @@
           "createdAt": 1792475770215,
           "phase": "applied",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "queue": {
@@ -3348,10 +3133,7 @@
         "updatedAt": 1792479728432
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -3359,9 +3141,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566087479,
         "reps": 1,
@@ -3373,9 +3153,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566128419,
         "reps": 1,
@@ -3383,10 +3161,7 @@
         "ease": 2.5
       }
     },
-    "changedCardIdsFromStart": [
-      "0057",
-      "0242"
-    ]
+    "changedCardIdsFromStart": ["0057", "0242"]
   },
   {
     "label": "applied-started",
@@ -3429,13 +3204,7 @@
           "createdAt": 1792475770215,
           "phase": "applied",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "queue": {
@@ -3678,9 +3447,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -3711,10 +3478,7 @@
         ]
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -3722,9 +3486,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566087479,
         "reps": 1,
@@ -3736,9 +3498,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566128419,
         "reps": 1,
@@ -3746,10 +3506,7 @@
         "ease": 2.5
       }
     },
-    "changedCardIdsFromStart": [
-      "0057",
-      "0242"
-    ]
+    "changedCardIdsFromStart": ["0057", "0242"]
   },
   {
     "label": "applied-feedback",
@@ -3792,13 +3549,7 @@
           "createdAt": 1792475770215,
           "phase": "applied",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "queue": {
@@ -4060,9 +3811,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -4087,9 +3836,7 @@
             "activeTiming": {
               "durationMs": 501238
             },
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792480331573,
             "feedback": {
               "status": "accent",
@@ -4103,10 +3850,7 @@
         ]
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -4114,9 +3858,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566087479,
         "reps": 1,
@@ -4128,9 +3870,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566128419,
         "reps": 1,
@@ -4138,10 +3878,7 @@
         "ease": 2.5
       }
     },
-    "changedCardIdsFromStart": [
-      "0057",
-      "0242"
-    ]
+    "changedCardIdsFromStart": ["0057", "0242"]
   },
   {
     "label": "applied-advanced",
@@ -4414,9 +4151,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -4441,9 +4176,7 @@
             "activeTiming": {
               "durationMs": 501238
             },
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792480393602,
             "lastOperation": {
               "id": "mvgcjngi-0dh8fq5sw1ae",
@@ -4461,13 +4194,7 @@
           "createdAt": 1792475770215,
           "phase": "complete",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "queue": {
@@ -4491,10 +4218,7 @@
         }
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -4502,9 +4226,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566087479,
         "reps": 1,
@@ -4516,9 +4238,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566128419,
         "reps": 1,
@@ -4526,10 +4246,7 @@
         "ease": 2.5
       }
     },
-    "changedCardIdsFromStart": [
-      "0057",
-      "0242"
-    ]
+    "changedCardIdsFromStart": ["0057", "0242"]
   },
   {
     "label": "completed-home",
@@ -4802,9 +4519,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -4829,9 +4544,7 @@
             "activeTiming": {
               "durationMs": 501238
             },
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792480393602,
             "lastOperation": {
               "id": "mvgcjngi-0dh8fq5sw1ae",
@@ -4849,13 +4562,7 @@
           "createdAt": 1792475770215,
           "phase": "complete",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "queue": {
@@ -4879,10 +4586,7 @@
         }
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -4890,9 +4594,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566087479,
         "reps": 1,
@@ -4904,9 +4606,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566128419,
         "reps": 1,
@@ -4914,10 +4614,7 @@
         "ease": 2.5
       }
     },
-    "changedCardIdsFromStart": [
-      "0057",
-      "0242"
-    ]
+    "changedCardIdsFromStart": ["0057", "0242"]
   },
   {
     "label": "completed-cold",
@@ -5190,9 +4887,7 @@
             "assisted": true,
             "modelAnswerRevealed": false,
             "completed": false,
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792474615275,
             "lastOperation": {
               "id": "mvg93sve-u99f8r1csza",
@@ -5217,9 +4912,7 @@
             "activeTiming": {
               "durationMs": 501238
             },
-            "reviewCardIds": [
-              "0010"
-            ],
+            "reviewCardIds": ["0010"],
             "updatedAt": 1792480393602,
             "lastOperation": {
               "id": "mvgcjngi-0dh8fq5sw1ae",
@@ -5237,13 +4930,7 @@
           "createdAt": 1792475770215,
           "phase": "complete",
           "review": {
-            "initialCardIds": [
-              "0039",
-              "0045",
-              "0046",
-              "0057",
-              "0242"
-            ],
+            "initialCardIds": ["0039", "0045", "0046", "0057", "0242"],
             "session": {
               "deckId": "deck-travel",
               "queue": {
@@ -5267,10 +4954,7 @@
         }
       }
     },
-    "libraryCounts": [
-      47,
-      1392
-    ],
+    "libraryCounts": [47, 1392],
     "ungradedLibraryHash": "a79ff87f9401085751698458fbed2b0952c88906f356b52d3285904b747b6b60",
     "selectedCards": {
       "0057": {
@@ -5278,9 +4962,7 @@
         "front": "avi\u00f3n",
         "back": "airplane",
         "example": "El avi\u00f3n sali\u00f3 con retraso. | The plane left late.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566087479,
         "reps": 1,
@@ -5292,9 +4974,7 @@
         "front": "gu\u00eda",
         "back": "guide",
         "example": "Contratamos una gu\u00eda para el tour. | We hired a guide for the tour.",
-        "tags": [
-          "travel"
-        ],
+        "tags": ["travel"],
         "createdAt": 1754759195954,
         "due": 1792566128419,
         "reps": 1,
@@ -5302,9 +4982,6 @@
         "ease": 2.5
       }
     },
-    "changedCardIdsFromStart": [
-      "0057",
-      "0242"
-    ]
+    "changedCardIdsFromStart": ["0057", "0242"]
   }
 ]

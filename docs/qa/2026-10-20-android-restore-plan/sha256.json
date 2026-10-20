@@ -2,7 +2,7 @@
   "applied-accent-feedback.jpg": "143b9d1fac7a8a41ea00d59d82373d60022a600407669e4bea4dfa7dae4051c0",
   "applied-complete.jpg": "75ae75b0fba7593fc28342ec80629c3a5db85c9324da2080e8390e0bc167ba3c",
   "applied-editorial-gate.jpg": "ee37df48c7bb95fb858669fb1b47671825218eb68a193e500ccfa17e11f47acc",
-  "backup-check.json": "22d581cfa6fb51d5116035258995b7040a0c6eefee4ec74915cf54a3f6490bee",
+  "backup-check.json": "b8542d09cda4d33c2713b4aa54b37801b93fbb66d3f4e2befa22942f269a386f",
   "backup-preview.jpg": "d32f026a24537e230dc067bdc701f08b5b92336784d98736c793610b586f7b40",
   "cleanup.json": "50a8115d81db4722a051eb5f56a57c4b09c5f7e257934ca72f768c49c0c7b921",
   "completed-cold-home.jpg": "18dcb4457dc4a2faa05978f9394234ce148b722d3b576ea0735069b6ffdf6d35",
@@ -13,5 +13,5 @@
   "restored-cold-home.jpg": "3d45f1629df07bc0617fe587623a0dcd0df4a659a945211de47f7e62e21d0fc1",
   "review-complete-handoff.jpg": "de36fc963e979dcc6ca5fcc37d06ec89eac58003af8ccf676b90dae79ea0d555",
   "runtime-inventory.jsonl": "fd6ae6556e466f5b28bfb64273e5b2a704f3e740a684326632ee34e01ffab351",
-  "state-summary.json": "2277e203e6cb6ca1f8c9292b457a8c9d7a349766cafefa083f6aebe20ff40569"
+  "state-summary.json": "1584370100772b3b45237f75c7aca1c7a9e7a30888d3d958b3b50fc0d890c426"
 }

@@ -12,9 +12,6 @@
     "decks",
     "learningEvents"
   ],
-  "absentFields": [
-    "quizHistory",
-    "notificationPrefs"
-  ],
+  "absentFields": ["quizHistory", "notificationPrefs"],
   "transport": "Product-generated cache file read via run-as, unchanged SDK push to dedicated Downloads; actual native document picker selected it."
 }
