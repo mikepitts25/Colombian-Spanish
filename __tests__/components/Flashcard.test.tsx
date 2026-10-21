@@ -57,6 +57,34 @@ function makeCard(overrides: Partial<FlashCard> = {}): FlashCard {
 
 afterEach(() => jest.restoreAllMocks());
 
+it.each([
+  [18, 10, true],
+  [-18, 10, true],
+  [4, 2, false],
+  [10, 18, false],
+  [0, -25, false],
+])('arbitrates card movement dx=%s dy=%s before child controls', (dx, dy, captures) => {
+  let handlers: any;
+  const original = PanResponder.create;
+  jest.spyOn(PanResponder, 'create').mockImplementation((config) => {
+    handlers = config;
+    return original(config);
+  });
+  render(<Flashcard card={makeCard()} onGrade={jest.fn()} />);
+  expect(handlers.onMoveShouldSetPanResponderCapture?.(null, { dx, dy }) ?? false).toBe(captures);
+});
+
+it('keeps an acquired horizontal swipe when the parent requests scrolling', () => {
+  let responder: ReturnType<typeof PanResponder.create>;
+  const original = PanResponder.create;
+  jest.spyOn(PanResponder, 'create').mockImplementation((config) => {
+    responder = original(config);
+    return responder;
+  });
+  render(<Flashcard card={makeCard()} onGrade={jest.fn()} />);
+  expect(responder!.panHandlers.onResponderTerminationRequest!({} as any)).toBe(false);
+});
+
 beforeEach(() => {
   jest.clearAllMocks();
   mockLanguage = 'es';

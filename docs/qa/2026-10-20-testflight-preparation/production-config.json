@@ -1,0 +1,16 @@
+{
+  "scope": "Local production config introspection; not a signed binary",
+  "node": "v22.16.0",
+  "name": "Colombian Spanish",
+  "version": "1.0.0",
+  "bundleIdentifier": "com.mikepitts.colombianspanish",
+  "supportsTablet": true,
+  "runtimeVersion": {
+    "policy": "fingerprint"
+  },
+  "microphoneUsageDescriptionPresent": false,
+  "usesNonExemptEncryption": false,
+  "sceneManifestPresent": true,
+  "updatesConfigured": true,
+  "userInterfaceStyle": "automatic"
+}

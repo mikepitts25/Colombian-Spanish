@@ -151,8 +151,13 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
       // RN registers these callbacks; create does not read or invoke their refs during render.
       // eslint-disable-next-line react-hooks/refs
       PanResponder.create({
+        // Claim horizontal movement before the face's press target. Leave vertical
+        // movement to the study page, including the content-sized large-text face.
+        onMoveShouldSetPanResponderCapture: (_e, gs) =>
+          !gestureBusy.current && Math.abs(gs.dx) > 8 && Math.abs(gs.dx) > Math.abs(gs.dy),
         onMoveShouldSetPanResponder: (_e, gs) =>
           !gestureBusy.current && Math.abs(gs.dx) > 8 && Math.abs(gs.dx) > Math.abs(gs.dy),
+        onPanResponderTerminationRequest: () => false,
         onPanResponderMove: (_e, gs) => {
           if (!gestureBusy.current) translateX.setValue(latest.current.reducedMotion ? 0 : gs.dx);
         },

@@ -1,0 +1,13 @@
+{
+  "id": "4afaa68f-b881-49b3-a108-f7f46b0f0948",
+  "status": "FINISHED",
+  "platform": "IOS",
+  "distribution": "STORE",
+  "buildProfile": "editorial-beta",
+  "appVersion": "1.0.0",
+  "appBuildVersion": "1.0.3",
+  "createdAt": "2026-10-21T20:46:03.130Z",
+  "updatedAt": "2026-10-21T20:52:08.292Z",
+  "completedAt": "2026-10-21T20:52:08.113Z",
+  "gitCommitHash": "92697365927c50217753b068c4f1510591143dfb"
+}

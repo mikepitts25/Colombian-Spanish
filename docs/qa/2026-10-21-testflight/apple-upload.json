@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "method": "Direct Apple altool upload-package",
+  "deliveryUuid": "7cff031f-f2c9-4e36-bb43-fdebb045c3c8",
+  "version": "1.0.0",
+  "build": "1.0.3",
+  "ipaBytes": 45222790,
+  "ipaSha256": "a3ffd90027b792399cc0f89261149a2c77d43d211bb367e584c182fb7b6f0b15",
+  "message": "UPLOAD SUCCEEDED with no errors"
+}

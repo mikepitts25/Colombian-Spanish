@@ -1,0 +1,53 @@
+# EAS uses this file instead of .gitignore. Keep the existing local exclusions.
+node_modules/
+.expo/
+.superpowers/
+.worktrees/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+.DS_Store
+ios/Pods/
+ios/build/
+ios/*.xcworkspace/
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcodeproj/project.xcworkspace/
+android/build/
+android/app/build/
+android/.gradle/
+android/local.properties
+.env
+.env.local
+.env.*.local
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.tmp
+*.temp
+/ios
+/android
+__pycache__/
+
+# Local analysis history and agent workspace state are not build inputs.
+.Rhistory
+.RData
+.Ruserdata
+.claude/
+
+# Retain the editorial ledger required by eas-build-post-install.
+# Native screenshots, design captures and release evidence stay in the repo.
+/docs/qa/
+/docs/design/
+/docs/release/
+/docs/superpowers/
+/docs/pilot/
+/docs/privacy/
+/docs/product/

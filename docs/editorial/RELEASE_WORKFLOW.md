@@ -38,6 +38,12 @@ Audio files and grammar outside cards are not covered by this text fingerprint. 
 - `npm run release:preflight` checks the **entire currently bundled deck library**. It fails while any bundled card lacks current text acceptance. The current expected result is failure with 1,392 blocked cards.
 - The standard EAS `production` profile runs that check through `eas-build-post-install`. Development/preview builds retain the working library and do not claim release acceptance. CI validates ledger structure and exercises positive/negative fixtures, while ordinary project-generation/JS-bundle jobs do not certify release content.
 
+### Owner-authorized editorial-review TestFlight beta
+
+On October 21, 2026 the owner explicitly directed using TestFlight to perform the pending editorial review and authorized building/uploading that beta. The dedicated `editorial-beta` profile inherits production signing/build behavior and uses store distribution, with development previews and microphone recording still excluded. Its build hook validates the real ledger, reports the exact number of cards awaiting acceptance and labels them **not accepted for public release**. It does not add human decisions or change fingerprints.
+
+This named beta exception is for collecting editorial and device feedback. It does not make `npm run release:preflight` or the standard `production` hook pass; both continue to reject unaccepted teaching content. Record exact beta build identity and tester access separately from language acceptance, physical-device checks, external beta review and public App Store release.
+
 The filtered JSON artifact is not silently substituted into the running app. Until a selected reviewed library is deliberately integrated, production remains blocked by the full-library check. This preserves stored learner content rather than deleting unreviewed cards during an upgrade. Any later subset integration must account for existing stored decks, phrasebook/grammar/mission content, asset references and backup migration.
 
 Manual native builds, OTA updates and custom EAS workflows must explicitly run `npm run release:preflight`; custom build jobs do not automatically execute EAS npm hooks. See [Expo's lifecycle hook documentation](https://docs.expo.dev/build-reference/npm-hooks/). Do not bypass this check to publish the development library. No build signing, account settings, submission or publication is performed here.

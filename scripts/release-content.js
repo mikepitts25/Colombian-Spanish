@@ -15,6 +15,17 @@ function run(args, root = path.join(__dirname, '..')) {
   if (
     args.length === 1 &&
     args[0] === '--build-hook' &&
+    process.env.EAS_BUILD_PROFILE === 'editorial-beta'
+  ) {
+    const report = loadEditorialReport(root);
+    console.log(
+      `Editorial-review TestFlight beta: ${report.blockedIds.length} cards await current acceptance; not accepted for public release.`,
+    );
+    return;
+  }
+  if (
+    args.length === 1 &&
+    args[0] === '--build-hook' &&
     process.env.EAS_BUILD_PROFILE !== 'production'
   ) {
     console.log('Development/preview build: deck editorial release gate not applied.');

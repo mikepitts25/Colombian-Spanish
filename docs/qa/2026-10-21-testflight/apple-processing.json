@@ -1,0 +1,13 @@
+{
+  "appId": "6825514456",
+  "id": "7cff031f-f2c9-4e36-bb43-fdebb045c3c8",
+  "build": "1.0.3",
+  "processingState": "VALID",
+  "uploadedDate": "2026-10-21T13:57:51-07:00",
+  "usesNonExemptEncryption": false,
+  "betaDetail": {
+    "autoNotifyEnabled": true,
+    "internalBuildState": "IN_BETA_TESTING",
+    "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+  }
+}

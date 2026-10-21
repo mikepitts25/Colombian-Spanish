@@ -5,7 +5,7 @@ Updated **2026-10-16** for B14.1. [MASTER_PLAN.md](MASTER_PLAN.md), especially B
 ## Candidate facts and catalogue gate
 
 - Repository configuration currently names Colombian Spanish, version 1.0.0, with iOS bundle ID / Android package `com.mikepitts.colombianspanish`. EAS uses remote app versions and production auto-increment; read the actual built candidate's identifiers/build number before submission. The in-app Settings version string is not evidence of the binary version.
-- iPad is enabled and the configured interface is dark. Do not promise both themes or a fully accepted tablet experience yet.
+- iPad is enabled and the native interface style is automatic; current app settings include appearance choices. Final candidate/theme/tablet acceptance remains separate from configuration.
 - Development inventory: **47 decks / 1,392 cards / 1,392 bundled generated audio mappings**. The actual release count must come from the accepted release export. All current cards await current editorial acceptance; production content preflight intentionally blocks the empty accepted catalogue.
 - Text mission and three-clip listening practice are development-only editorial previews. They must not appear in released-feature marketing until deliberately accepted and included in a candidate.
 - There are no implemented payments, hosted conversation service, sync accounts or accepted human dialogue recordings. Do not advertise them or assign a price to hypothetical entitlements.
@@ -27,6 +27,8 @@ Use this only if the final candidate contains the described features and accepte
 Remove the historical “only app,” “clearest accent,” “master expressions,” “speak like a true Colombian,” “authentic recordings,” universal no-network/no-tracking and unsupported learning-effect claims. [Current competition and positioning](COMPETITIVE_ANALYSIS.md) documents the evidence and product hypothesis.
 
 ## Release gates
+
+The owner authorized bounded iOS TestFlight preparation on October20. Use [the active TestFlight handoff](docs/release/TESTFLIGHT.md) for beta order, engineering/access evidence and candidate gates. This does not mark the public-launch checklist complete.
 
 - [ ] **AI + language editor:** accept exact card/mission/audio versions; generate the selected release library and run content preflight. Region/register assertions, slang suitability and human recording rights require real evidence.
 - [ ] **AI + owner:** verify final name, subtitle, descriptions, keywords, support contact and privacy/support URLs against actual behavior; keep gated/planned functionality out of screenshots and text.

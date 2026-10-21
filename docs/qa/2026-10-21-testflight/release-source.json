@@ -1,0 +1,14 @@
+{
+  "baseCommit": "92697365927c50217753b068c4f1510591143dfb",
+  "scope": "Working-tree build inputs; release documentation may be added after cloud upload",
+  "files": {
+    "app.json": "fa1c972a6c38a895c20e1e1f3fdd1dc66f262d8b0928fb2dfba2017f91f24b46",
+    "app.config.js": "1286e6f06da7ce8fe0b64b82627a3d84dfc997845f45515f5402e9b929263a68",
+    "eas.json": "69d95a0875eef9ce3768db389f66d8a794552cbe43a186db079a73e756d4e0af",
+    ".easignore": "b8b43c94ef99b22cfd92e0cd51ab0d9deb90ac81ad0a69792a745ee1e074a701",
+    "scripts/release-content.js": "983079867d44599fd2c1a01676f3e1e7287ad1b62086e9e5b2ad6b2a65bc31eb",
+    "package.json": "3d7654649eafd714b53e922505676938f6c36809cd5d11eeaeca473fe02752f1",
+    "package-lock.json": "cf151c4b129cbdfff14f008eb21f583a7a9449b03a805fd6a88417beef6f387e",
+    "docs/editorial/review-ledger.json": "cbd65b60bbea3094e0cedf1a2a21040f9c1343972922d36348b2481bc6f9da98"
+  }
+}
