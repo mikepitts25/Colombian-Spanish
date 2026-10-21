@@ -1,0 +1,5 @@
+
+> colombian-spanish-srs@1.0.0 release:preflight
+> node scripts/release-content.js --check
+
+Deck release blocked: 1392 cards lack current attributed text acceptance. See docs/editorial/RELEASE_WORKFLOW.md.

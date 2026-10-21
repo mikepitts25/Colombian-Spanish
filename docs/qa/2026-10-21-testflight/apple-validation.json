@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "method": "Apple altool validate-app",
+  "version": "1.0.0",
+  "build": "1.0.3",
+  "ipaSha256": "a3ffd90027b792399cc0f89261149a2c77d43d211bb367e584c182fb7b6f0b15",
+  "message": "VERIFY SUCCEEDED with no errors"
+}

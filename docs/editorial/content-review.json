@@ -171,7 +171,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/llan-004.mp3",
+        "path": "assets/audio/pronunciation/llan-004-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -213,7 +213,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/llan-005.mp3",
+        "path": "assets/audio/pronunciation/llan-005-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -549,7 +549,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/llan-013.mp3",
+        "path": "assets/audio/pronunciation/llan-013-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -761,7 +761,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/llan-018.mp3",
+        "path": "assets/audio/pronunciation/llan-018-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -845,7 +845,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/llan-020.mp3",
+        "path": "assets/audio/pronunciation/llan-020-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -1179,7 +1179,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/pirop-004.mp3",
+        "path": "assets/audio/pronunciation/pirop-004-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -1221,7 +1221,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/pirop-006.mp3",
+        "path": "assets/audio/pronunciation/pirop-006-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -27474,7 +27474,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1125.mp3",
+        "path": "assets/audio/pronunciation/1125-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -27842,7 +27842,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1134.mp3",
+        "path": "assets/audio/pronunciation/1134-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -28619,7 +28619,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1153.mp3",
+        "path": "assets/audio/pronunciation/1153-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -30146,7 +30146,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1219.mp3",
+        "path": "assets/audio/pronunciation/1219-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -33696,7 +33696,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1402.mp3",
+        "path": "assets/audio/pronunciation/1402-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -33819,7 +33819,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1405.mp3",
+        "path": "assets/audio/pronunciation/1405-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -33860,7 +33860,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1406.mp3",
+        "path": "assets/audio/pronunciation/1406-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -33983,7 +33983,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1409.mp3",
+        "path": "assets/audio/pronunciation/1409-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -34024,7 +34024,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1410.mp3",
+        "path": "assets/audio/pronunciation/1410-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -34064,7 +34064,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1411.mp3",
+        "path": "assets/audio/pronunciation/1411-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -35318,7 +35318,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1442.mp3",
+        "path": "assets/audio/pronunciation/1442-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -35400,7 +35400,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1444.mp3",
+        "path": "assets/audio/pronunciation/1444-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -39728,7 +39728,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1800.mp3",
+        "path": "assets/audio/pronunciation/1800-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -39810,7 +39810,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1802.mp3",
+        "path": "assets/audio/pronunciation/1802-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -39851,7 +39851,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1803.mp3",
+        "path": "assets/audio/pronunciation/1803-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -41411,7 +41411,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/1841.mp3",
+        "path": "assets/audio/pronunciation/1841-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -45946,7 +45946,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/cost-007.mp3",
+        "path": "assets/audio/pronunciation/cost-007-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -46072,7 +46072,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/cost-010.mp3",
+        "path": "assets/audio/pronunciation/cost-010-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -46282,7 +46282,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/cost-015.mp3",
+        "path": "assets/audio/pronunciation/cost-015-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -46366,7 +46366,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/cost-017.mp3",
+        "path": "assets/audio/pronunciation/cost-017-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -46408,7 +46408,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/cost-018.mp3",
+        "path": "assets/audio/pronunciation/cost-018-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -46492,7 +46492,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/cost-020.mp3",
+        "path": "assets/audio/pronunciation/cost-020-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -47034,7 +47034,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/med-013.mp3",
+        "path": "assets/audio/pronunciation/med-013-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -47576,7 +47576,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/med-026.mp3",
+        "path": "assets/audio/pronunciation/med-026-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -47990,7 +47990,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/phrase-001.mp3",
+        "path": "assets/audio/pronunciation/phrase-001-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -48359,7 +48359,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/phrase-010.mp3",
+        "path": "assets/audio/pronunciation/phrase-010-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -48688,7 +48688,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/phrase-018.mp3",
+        "path": "assets/audio/pronunciation/phrase-018-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -48975,7 +48975,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/phrase-025.mp3",
+        "path": "assets/audio/pronunciation/phrase-025-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -49182,7 +49182,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/phrase-030.mp3",
+        "path": "assets/audio/pronunciation/phrase-030-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -49510,7 +49510,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/phrase-038.mp3",
+        "path": "assets/audio/pronunciation/phrase-038-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -49551,7 +49551,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/phrase-039.mp3",
+        "path": "assets/audio/pronunciation/phrase-039-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -49592,7 +49592,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/phrase-040.mp3",
+        "path": "assets/audio/pronunciation/phrase-040-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -49839,7 +49839,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/pirop-009.mp3",
+        "path": "assets/audio/pronunciation/pirop-009-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -49921,7 +49921,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/pirop-011.mp3",
+        "path": "assets/audio/pronunciation/pirop-011-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -50379,7 +50379,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/rest-009.mp3",
+        "path": "assets/audio/pronunciation/rest-009-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -50422,7 +50422,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/rest-010.mp3",
+        "path": "assets/audio/pronunciation/rest-010-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -51707,7 +51707,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/rest-041.mp3",
+        "path": "assets/audio/pronunciation/rest-041-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -52036,7 +52036,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/rolo-001.mp3",
+        "path": "assets/audio/pronunciation/rolo-001-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -52120,7 +52120,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/rolo-003.mp3",
+        "path": "assets/audio/pronunciation/rolo-003-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -52162,7 +52162,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/rolo-004.mp3",
+        "path": "assets/audio/pronunciation/rolo-004-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -52456,7 +52456,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/rolo-011.mp3",
+        "path": "assets/audio/pronunciation/rolo-011-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -52582,7 +52582,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/rolo-014.mp3",
+        "path": "assets/audio/pronunciation/rolo-014-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -55933,7 +55933,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-001.mp3",
+        "path": "assets/audio/pronunciation/val-001-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -56017,7 +56017,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-003.mp3",
+        "path": "assets/audio/pronunciation/val-003-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -56101,7 +56101,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-005.mp3",
+        "path": "assets/audio/pronunciation/val-005-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -56143,7 +56143,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-006.mp3",
+        "path": "assets/audio/pronunciation/val-006-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -56185,7 +56185,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-007.mp3",
+        "path": "assets/audio/pronunciation/val-007-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -56311,7 +56311,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-010.mp3",
+        "path": "assets/audio/pronunciation/val-010-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -56437,7 +56437,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-013.mp3",
+        "path": "assets/audio/pronunciation/val-013-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -56479,7 +56479,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-014.mp3",
+        "path": "assets/audio/pronunciation/val-014-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -56521,7 +56521,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-015.mp3",
+        "path": "assets/audio/pronunciation/val-015-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -56605,7 +56605,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-017.mp3",
+        "path": "assets/audio/pronunciation/val-017-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null
@@ -56647,7 +56647,7 @@
       "reviewedAt": null,
       "reviewer": null,
       "audio": {
-        "path": "assets/audio/pronunciation/val-018.mp3",
+        "path": "assets/audio/pronunciation/val-018-alternatives-v1.mp3",
         "kind": "generated",
         "provenance": "scripts/generate-elevenlabs-audio.js; ElevenLabs generated pronunciation library",
         "humanReviewed": null

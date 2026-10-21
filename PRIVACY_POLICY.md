@@ -1,6 +1,6 @@
 # Colombian Spanish — data and privacy
 
-Updated October 16, 2026. This describes the repository's current behavior. The release owner must supply a public contact and confirm service/project settings against the actual signed build before publishing this document.
+Updated October 21, 2026. This describes the repository's current behavior. App-specific public coverage is published at [the company privacy policy](https://colibricodellc.com/privacy-policy/#colombian-spanish). Support: mike@colibricodellc.com; privacy requests: privacy@colibricodellc.com. These are existing published company contacts; inbox delivery was not tested here. Confirm actual signed-build behavior when recording candidate acceptance.
 
 ## Learning data on your device
 
@@ -17,6 +17,8 @@ Core flashcard and quiz data can be used locally. This does not mean every app/b
 - **Audio:** bundled generated pronunciation files play locally. Missing or failed ordinary-card playback can use the device's text-to-speech service. Assessed draft listening clips require bundled audio and refuse that fallback. Optional flashcard speech is Off by default and starts only after an explicit answer reveal when enabled; Stop, leaving the card and backgrounding cancel pending requests. Voice availability and any service/network behavior depend on the operating system and voice settings; offline speech is not promised for every device or custom phrase.
 
 The developer's separate audio-generation script can send authored text to ElevenLabs when deliberately run with developer credentials. The learning app does not call that script to synthesize learner content during ordinary use.
+
+The owner-authorized `editorial-beta` profile disables dotenv loading, excludes local `.env` files from the build upload and uses the production EAS environment, whose project/account variable listings are empty. The intended TestFlight candidate therefore does not enable optional Sentry reporting. Apple separately collects and shares TestFlight installation, usage, crash and feedback information under [its TestFlight privacy notice](https://www.apple.com/legal/privacy/data/en/test-flight/). We use beta information to investigate issues and improve the app and do not share it with third parties. Invitation/feedback details may identify testers; do not include private learning content in feedback unless deliberately sharing it for support. Verify the completed candidate rather than inferring its behavior from a local dotenv-enabled QA export.
 
 ## Development-only voice self-check
 
@@ -40,4 +42,4 @@ Removing the app typically removes its local application storage, subject to pla
 
 ## Release contact and review
 
-A verified support/privacy contact must be supplied by the release owner before publication. Until then this repository document is a technical disclosure draft, not evidence that store forms, consent requirements, provider retention or a signed build have been reviewed. Changes to recording, hosted AI, accounts, sync or analytics require a new data-flow review and updated disclosure.
+The owner authorized the company-site update on October 21, 2026. The live page now includes Colombian Spanish-specific data practices and the existing company support/privacy contacts. This publication does not establish completion of store forms, provider-retention checks or signed-device acceptance. Changes to recording, hosted AI, accounts, sync or analytics require a new data-flow review and updated disclosure.

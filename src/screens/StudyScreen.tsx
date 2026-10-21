@@ -944,6 +944,9 @@ export default function StudyScreen() {
         ref={sessionScroll}
         contentContainerStyle={styles.sessionScroll}
         showsVerticalScrollIndicator={false}
+        bounces={false}
+        alwaysBounceVertical={false}
+        directionalLockEnabled
       >
         <View
           key={`header-${fontScale}`}

@@ -236,6 +236,17 @@ describe('StudyScreen landing', () => {
     );
   });
 
+  it('prevents study-page overscroll from pulling a card down during a swipe', async () => {
+    const screen = renderStudyScreen();
+    fireEvent.press(await screen.findByText('Comunicación'));
+    await screen.findByText('hola');
+    const scroll = screen.UNSAFE_getByType(ScrollView);
+    expect(scroll.props.bounces).toBe(false);
+    expect(scroll.props.alwaysBounceVertical).toBe(false);
+    expect(scroll.props.directionalLockEnabled).toBe(true);
+    expect(scroll.props.scrollEnabled).not.toBe(false);
+  });
+
   it('starts a session from a search result and activates the result deck', async () => {
     const screen = renderStudyScreen();
 

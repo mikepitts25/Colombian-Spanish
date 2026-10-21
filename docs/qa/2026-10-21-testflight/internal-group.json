@@ -1,0 +1,9 @@
+{
+  "id": "5e728680-1304-436b-8b07-357d2deea811",
+  "name": "Editorial Review",
+  "isInternalGroup": true,
+  "hasAccessToAllBuilds": true,
+  "testerCount": 2,
+  "ownerAccountsOnly": true,
+  "publicLinkEnabled": null
+}

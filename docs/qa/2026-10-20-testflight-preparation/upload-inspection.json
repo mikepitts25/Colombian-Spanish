@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "92697365927c50217753b068c4f1510591143dfb",
+  "scope": "EAS production source upload staging, not a signed IPA or uploaded archive; empty ignored directories may remain",
+  "stagingPath": "/tmp/colombian-spanish-testflight-upload-verified-20261020",
+  "assetFilesByteExact": 1421,
+  "requiredInputsByteExact": [
+    "package.json",
+    "package-lock.json",
+    "app.json",
+    "app.config.js",
+    "eas.json",
+    "scripts/release-content.js",
+    "scripts/lib/editorial-release.js",
+    "scripts/lib/project-data.js",
+    "docs/editorial/review-ledger.json",
+    "src/data/decks/index.ts",
+    "vendor/braces-3.0.3.tgz"
+  ],
+  "pathsWithNoUploadedFiles": [
+    ".env",
+    ".env.local",
+    ".claude",
+    "docs/qa",
+    "docs/design",
+    "docs/release",
+    "ios",
+    "android",
+    "node_modules"
+  ],
+  "localHistoryPreserved": true,
+  "contentGate": "Deck release blocked: 1392 cards lack current attributed text acceptance. See docs/editorial/RELEASE_WORKFLOW.md.",
+  "ignoreFileSha256": "b8b43c94ef99b22cfd92e0cd51ab0d9deb90ac81ad0a69792a745ee1e074a701"
+}

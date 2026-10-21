@@ -22,9 +22,25 @@
       "env": {
         "EXPO_USE_PRECOMPILED_MODULES": "0"
       }
+    },
+    "editorial-beta": {
+      "extends": "production",
+      "distribution": "store",
+      "environment": "production",
+      "node": "22.16.0",
+      "env": {
+        "EXPO_NO_DOTENV": "1",
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
+        "EXPO_NO_TELEMETRY": "1"
+      }
     }
   },
   "submit": {
-    "production": {}
+    "production": {},
+    "editorial-beta": {
+      "ios": {
+        "ascAppId": "6825514456"
+      }
+    }
   }
 }

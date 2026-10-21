@@ -98,6 +98,17 @@ it('allows development hook but blocks the current unreviewed production library
 it('requires a reason for an editorial decision', () => {
   expect(() => evaluateEditorial([deck], ledger([{ ...record(), note: '' }]))).toThrow();
 });
+it('explicitly identifies the owner-authorized TestFlight catalogue as awaiting editorial review', () => {
+  const script = path.resolve(__dirname, '../../scripts/release-content.js');
+  const result = spawnSync(process.execPath, [script, '--build-hook'], {
+    env: { ...process.env, EAS_BUILD_PROFILE: 'editorial-beta' },
+    encoding: 'utf8',
+  });
+  expect(result.status).toBe(0);
+  expect(result.stdout).toContain('Editorial-review TestFlight beta');
+  expect(result.stdout).toContain('1392');
+  expect(result.stdout).toContain('not accepted for public release');
+});
 it('exports no empty pack and rejects unsupported ledger schema', () => {
   expect(() => evaluateEditorial([deck], { schemaVersion: 9, records: [] })).toThrow();
   const script = path.resolve(__dirname, '../../scripts/release-content.js');

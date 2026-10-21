@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const ts = require('typescript');
+const { pronunciationText } = require('../src/utils/pronunciationText');
 
 const ROOT = path.join(__dirname, '..');
 const DECKS_DIR = path.join(ROOT, 'src/data/decks');
@@ -79,8 +80,9 @@ function collectDeckCards(decksDir = DECKS_DIR) {
   return Array.from(byId.values()).sort((a, b) => a.id.localeCompare(b.id));
 }
 
-function fileNameForCardId(cardId) {
-  return `${cardId.replace(/[^a-zA-Z0-9._-]/g, '_')}.mp3`;
+function fileNameForCardId(cardId, front = '') {
+  const version = pronunciationText(front) !== front ? '-alternatives-v1' : '';
+  return `${cardId.replace(/[^a-zA-Z0-9._-]/g, '_')}${version}.mp3`;
 }
 
 function normalizeLimit(rawLimit) {
@@ -104,7 +106,7 @@ function buildGenerationPlan(cards, audioDir, options) {
   const skipped = [];
   let toGenerate = cards.map((card) => ({
     ...card,
-    fileName: fileNameForCardId(card.id),
+    fileName: fileNameForCardId(card.id, card.front),
   }));
 
   if (!force) {
@@ -127,7 +129,11 @@ function renderManifest(cards) {
   ];
 
   if (cards.length === 0) {
-    lines.push('export const pronunciationAudio: Record<string, number> = {};', '');
+    lines.push(
+      'export const pronunciationAudio: Record<string, number> = {};',
+      'export const pronunciationAudioText: Record<string, string> = {};',
+      '',
+    );
     return lines.join('\n');
   }
 
@@ -138,10 +144,16 @@ function renderManifest(cards) {
     .sort((a, b) => a.id.localeCompare(b.id))
     .forEach((card) => {
       lines.push(
-        `  ${JSON.stringify(card.id)}: require('../../assets/audio/pronunciation/${fileNameForCardId(card.id)}'),`,
+        `  ${JSON.stringify(card.id)}: require('../../assets/audio/pronunciation/${fileNameForCardId(card.id, card.front)}'),`,
       );
     });
 
+  lines.push('};', 'export const pronunciationAudioText: Record<string, string> = {');
+  cards
+    .filter((card) => pronunciationText(card.front) !== card.front)
+    .forEach((card) => {
+      lines.push(`  ${JSON.stringify(card.id)}: ${JSON.stringify(pronunciationText(card.front))},`);
+    });
   lines.push('};', '');
   return lines.join('\n');
 }
@@ -179,7 +191,7 @@ async function generateAudioFile({ apiKey, voiceId, card, outputPath }) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      text: card.front,
+      text: pronunciationText(card.front),
       model_id: MODEL_ID,
     }),
   });
@@ -231,7 +243,7 @@ async function main(argv = process.argv.slice(2), env = process.env) {
   }
 
   const generatedCards = cards.filter((card) =>
-    fs.existsSync(path.join(AUDIO_DIR, fileNameForCardId(card.id))),
+    fs.existsSync(path.join(AUDIO_DIR, fileNameForCardId(card.id, card.front))),
   );
 
   if (options.dryRun) {

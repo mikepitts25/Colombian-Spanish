@@ -6,6 +6,7 @@ const {
   DEFAULT_VOICE_ID,
   buildGenerationPlan,
   fileNameForCardId,
+  generateAudioFile,
   main,
   parseArgs,
   renderManifest,
@@ -98,4 +99,63 @@ describe('generate-elevenlabs-audio helpers', () => {
       logSpy.mockRestore();
     }
   });
+});
+
+describe('alternative pronunciation generation', () => {
+  it('does not reuse a legacy shorthand recording', () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'pronunciation-alternatives-'));
+    fs.writeFileSync(path.join(tmp, 'dating.mp3'), 'legacy');
+    const plan = buildGenerationPlan([{ id: 'dating', front: 'Eres muy lindo/a' }], tmp, {});
+    expect(plan.toGenerate).toEqual([
+      { id: 'dating', front: 'Eres muy lindo/a', fileName: 'dating-alternatives-v1.mp3' },
+    ]);
+    expect(plan.skipped).toEqual([]);
+  });
+
+  it('sends expanded text to the recording provider', async () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'pronunciation-request-'));
+    const fetchSpy = jest.spyOn(global, 'fetch').mockResolvedValue({
+      ok: true,
+      arrayBuffer: async () => new Uint8Array([1, 2]).buffer,
+    });
+    try {
+      await generateAudioFile({
+        apiKey: 'test',
+        voiceId: 'test',
+        card: { id: 'dating', front: 'Eres muy lindo/a' },
+        outputPath: path.join(tmp, 'test.mp3'),
+      });
+      expect(JSON.parse(fetchSpy.mock.calls[0][1].body).text).toBe(
+        'Eres muy lindo. Eres muy linda.',
+      );
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+});
+
+it('publishes corrected recording sources with their expanded transcripts', () => {
+  const ts = require('typescript');
+  const compiled = ts.transpileModule(
+    renderManifest([{ id: 'dating', front: 'Eres muy lindo/a' }]),
+    {
+      compilerOptions: { module: ts.ModuleKind.CommonJS },
+    },
+  ).outputText;
+  const exports = {};
+  const loadAsset = jest.fn(() => 42);
+  new Function('exports', 'require', compiled)(exports, loadAsset);
+  expect(loadAsset).toHaveBeenCalledWith(
+    '../../assets/audio/pronunciation/dating-alternatives-v1.mp3',
+  );
+  expect(exports.pronunciationAudio.dating).toBe(42);
+  expect(exports.pronunciationAudioText.dating).toBe('Eres muy lindo. Eres muy linda.');
+});
+
+it('reuses corrected recordings on subsequent generation runs', () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'pronunciation-corrected-'));
+  fs.writeFileSync(path.join(tmp, 'dating-alternatives-v1.mp3'), 'corrected');
+  const plan = buildGenerationPlan([{ id: 'dating', front: 'Eres muy lindo/a' }], tmp, {});
+  expect(plan.toGenerate).toEqual([]);
+  expect(plan.skipped).toHaveLength(1);
 });

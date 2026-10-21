@@ -1,0 +1,11 @@
+{
+  "profileId": "8C72N8GF8W",
+  "state": "ACTIVE",
+  "type": "IOS_APP_STORE",
+  "expires": "2027-05-06T18:57:03.000+00:00",
+  "entitlements": {
+    "applicationIdentifier": "33YM89B48D.com.mikepitts.colombianspanish",
+    "apsEnvironment": "production",
+    "getTaskAllow": false
+  }
+}
