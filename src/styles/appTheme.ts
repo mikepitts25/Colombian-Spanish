@@ -102,8 +102,8 @@ const classic: AppTheme = immutable({
   colors: {
     ...classicColors,
     dividerEdge: 'rgba(148,163,184,0.12)',
-    swipeEasyInk: 'rgba(16,185,129,0.72)',
-    swipeHardInk: 'rgba(248,113,113,0.72)',
+    swipeEasyInk: '#10b981',
+    swipeHardInk: '#f87171',
     translucentSurface: 'rgba(2,6,23,0.55)',
     regionEdge: '#10b981',
     selectedWash: 'rgba(255,218,0,0.15)',

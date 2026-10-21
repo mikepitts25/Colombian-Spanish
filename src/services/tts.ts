@@ -1,8 +1,9 @@
 import { createAudioPlayer, type AudioPlayer } from 'expo-audio';
 import * as Speech from 'expo-speech';
-import { pronunciationAudio } from '../data/audioManifest';
+import { pronunciationAudio, pronunciationAudioText } from '../data/audioManifest';
 import { FlashCard } from '../types';
 import { getPrefs } from '../storage/prefs';
+import { pronunciationText } from '../utils/pronunciationText';
 
 type PronunciationCard = Pick<FlashCard, 'id' | 'front'>;
 export type PlaybackResult = { source: 'generated' | 'device' | 'cancelled'; loop: boolean };
@@ -66,7 +67,13 @@ export async function speakCard(
   const requestId = activeRequestId;
   const rate = await playbackRate(override);
   if (requestId !== activeRequestId) return cancelled();
-  const source = pronunciationAudio[id];
+  const spokenText = pronunciationText(front);
+  // Legacy recordings contain literal slash notation. Use them only after they
+  // have been regenerated with a matching expanded transcript.
+  const source =
+    spokenText === front || pronunciationAudioText[id] === spokenText
+      ? pronunciationAudio[id]
+      : undefined;
   if (source) {
     try {
       const player = createAudioPlayer(source);
@@ -82,18 +89,18 @@ export async function speakCard(
       if (requestId !== activeRequestId) return cancelled();
       releasePlayer(currentPlayer);
       if (requireBundled) throw new Error('Required bundled audio is unavailable');
-      return fallback(front, rate);
+      return fallback(spokenText, rate);
     }
   }
   if (requireBundled) throw new Error('Required bundled audio is unavailable');
-  return fallback(front, rate);
+  return fallback(spokenText, rate);
 }
 export async function speak(text: string, lang = DEFAULT_LANGUAGE): Promise<PlaybackResult> {
   interruptPlayback();
   const requestId = activeRequestId;
   const rate = await playbackRate();
   if (requestId !== activeRequestId) return cancelled();
-  return fallback(text, rate, lang);
+  return fallback(lang.startsWith('es') ? pronunciationText(text) : text, rate, lang);
 }
 export function stop() {
   interruptPlayback();

@@ -356,16 +356,17 @@ describe('StudyScreen session', () => {
     expect(screen.queryByText('general-card')).toBeNull();
   });
 
-  it('renders compact region filters with an overflow affordance', async () => {
+  it('renders every region filter without a clipped horizontal strip', async () => {
     const screen = renderStudyScreen();
 
     await openCommunicationSession(screen);
 
-    expect(screen.getByTestId('region-filter-scroll')).toBeTruthy();
-    expect(screen.getByTestId('region-filter-overflow-cue')).toBeTruthy();
+    expect(screen.getByTestId('region-filters')).toBeTruthy();
+    expect(screen.queryByTestId('region-filter-scroll')).toBeNull();
     expect(screen.getByText('Todo')).toBeTruthy();
     expect(screen.getByText('Paisa')).toBeTruthy();
     expect(screen.getByText('Valluno')).toBeTruthy();
+    expect(screen.getByText('Llanero')).toBeTruthy();
   });
 
   it('uses clear tap-to-answer copy for the flashcard hint', async () => {

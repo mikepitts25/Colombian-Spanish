@@ -4,7 +4,7 @@
     "slug": "colombian-spanish",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon-colombian-speech-v1.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",

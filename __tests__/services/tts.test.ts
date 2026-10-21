@@ -11,6 +11,10 @@ jest.mock('../../src/data/audioManifest', () => ({
   pronunciationAudio: {
     '0009': 1009,
     '0010': 1010,
+    corrected: 1011,
+  },
+  pronunciationAudioText: {
+    corrected: 'Eres muy lindo. Eres muy linda.',
   },
 }));
 
@@ -345,6 +349,52 @@ describe('assessed bundled playback', () => {
     });
     await expect(
       speakCard({ id: '0009', front: 'hidden' }, { requireBundled: true }),
+    ).rejects.toThrow('bundled');
+    expect(mockSpeak).not.toHaveBeenCalled();
+  });
+});
+
+describe('spoken alternatives', () => {
+  it.each([
+    ['Eres muy lindo/a', 'Eres muy lindo. Eres muy linda.'],
+    [
+      'Soy alérgico/a a la penicilina',
+      'Soy alérgico a la penicilina. Soy alérgica a la penicilina.',
+    ],
+    ['director/a', 'director. directora.'],
+    ['Estás muy churro/churra', 'Estás muy churro. Estás muy churra.'],
+    ['¿Estás soltero/a?', '¿Estás soltero? ¿Estás soltera?'],
+    ['Me llamo... / Mi nombre es...', 'Me llamo... Mi nombre es...'],
+    ['Estoy perdido / perdida', 'Estoy perdido. Estoy perdida.'],
+    ['Hoy / Mañana / Ayer', 'Hoy. Mañana. Ayer.'],
+  ])('speaks complete alternatives for %s', async (front, expected) => {
+    await speakCard({ id: 'missing', front });
+    expect(mockSpeak).toHaveBeenCalledWith(expected, expect.any(Object));
+  });
+
+  it('bypasses legacy bundled shorthand recordings', async () => {
+    await speakCard({ id: '0009', front: 'Eres muy lindo/a' });
+    expect(mockCreateAudioPlayer).not.toHaveBeenCalled();
+    expect(mockSpeak).toHaveBeenCalledWith('Eres muy lindo. Eres muy linda.', expect.any(Object));
+  });
+
+  it('plays a regenerated recording matching the expanded text', async () => {
+    await speakCard({ id: 'corrected', front: 'Eres muy lindo/a' });
+    expect(mockCreateAudioPlayer).toHaveBeenCalledWith(1011);
+    expect(mockSpeak).not.toHaveBeenCalled();
+  });
+
+  it('normalizes direct Spanish speech too', async () => {
+    await speak('compañero/a de trabajo');
+    expect(mockSpeak).toHaveBeenCalledWith(
+      'compañero de trabajo. compañera de trabajo.',
+      expect.any(Object),
+    );
+  });
+
+  it('keeps assessed playback unavailable for legacy shorthand recordings', async () => {
+    await expect(
+      speakCard({ id: '0009', front: 'lindo/a' }, { requireBundled: true }),
     ).rejects.toThrow('bundled');
     expect(mockSpeak).not.toHaveBeenCalled();
   });

@@ -889,11 +889,10 @@
       "background": "bg",
       "minimum": 4.5,
       "purpose": "text/icon ink on route surfaces",
-      "foregroundValue": "rgba(248,113,113,0.72)",
+      "foregroundValue": "#f87171",
       "backgroundValue": "#020617",
-      "ratio": 4.129,
-      "pass": false,
-      "exception": "Preserved Classic legacy pair; this migration does not certify Classic accessibility."
+      "ratio": 7.293,
+      "pass": true
     },
     {
       "themeId": "classic",
@@ -902,11 +901,10 @@
       "background": "surface",
       "minimum": 4.5,
       "purpose": "text/icon ink on route surfaces",
-      "foregroundValue": "rgba(248,113,113,0.72)",
+      "foregroundValue": "#f87171",
       "backgroundValue": "#0f172a",
-      "ratio": 3.873,
-      "pass": false,
-      "exception": "Preserved Classic legacy pair; this migration does not certify Classic accessibility."
+      "ratio": 6.454,
+      "pass": true
     },
     {
       "themeId": "classic",
@@ -915,11 +913,10 @@
       "background": "surfaceElevated",
       "minimum": 4.5,
       "purpose": "text/icon ink on route surfaces",
-      "foregroundValue": "rgba(248,113,113,0.72)",
+      "foregroundValue": "#f87171",
       "backgroundValue": "#1e293b",
-      "ratio": 3.377,
-      "pass": false,
-      "exception": "Preserved Classic legacy pair; this migration does not certify Classic accessibility."
+      "ratio": 5.288,
+      "pass": true
     },
     {
       "themeId": "classic",
@@ -928,11 +925,10 @@
       "background": "bg",
       "minimum": 4.5,
       "purpose": "text/icon ink on route surfaces",
-      "foregroundValue": "rgba(16,185,129,0.72)",
+      "foregroundValue": "#10b981",
       "backgroundValue": "#020617",
-      "ratio": 4.473,
-      "pass": false,
-      "exception": "Preserved Classic legacy pair; this migration does not certify Classic accessibility."
+      "ratio": 7.953,
+      "pass": true
     },
     {
       "themeId": "classic",
@@ -941,11 +937,10 @@
       "background": "surface",
       "minimum": 4.5,
       "purpose": "text/icon ink on route surfaces",
-      "foregroundValue": "rgba(16,185,129,0.72)",
+      "foregroundValue": "#10b981",
       "backgroundValue": "#0f172a",
-      "ratio": 4.212,
-      "pass": false,
-      "exception": "Preserved Classic legacy pair; this migration does not certify Classic accessibility."
+      "ratio": 7.038,
+      "pass": true
     },
     {
       "themeId": "classic",
@@ -954,11 +949,10 @@
       "background": "surfaceElevated",
       "minimum": 4.5,
       "purpose": "text/icon ink on route surfaces",
-      "foregroundValue": "rgba(16,185,129,0.72)",
+      "foregroundValue": "#10b981",
       "backgroundValue": "#1e293b",
-      "ratio": 3.68,
-      "pass": false,
-      "exception": "Preserved Classic legacy pair; this migration does not certify Classic accessibility."
+      "ratio": 5.767,
+      "pass": true
     },
     {
       "themeId": "classic",

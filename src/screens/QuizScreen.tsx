@@ -536,13 +536,14 @@ export default function QuizScreen() {
   const progressText = `${Math.min((session.currentIndex ?? 0) + 1, session.questions.length)} / ${session.questions.length}`;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
       <ScrollView
+        style={styles.questionViewport}
         key={`${session.id}:${session.currentIndex}:${fontScale}`}
         testID="quiz-question-scroll"
         contentContainerStyle={styles.questionScroll}
       >
-        <View style={styles.header}>
+        <View style={styles.questionHeader}>
           <Text style={styles.headerTitle}>{t('quiz.title')}</Text>
           <Text style={styles.progressText}>{progressText}</Text>
         </View>
@@ -608,9 +609,15 @@ export default function QuizScreen() {
             </Text>
           </View>
         )}
-        {showFeedback && (
+      </ScrollView>
+      {showFeedback && (
+        <View style={styles.questionFooter}>
           <Pressable
-            style={({ pressed }) => [styles.primaryButton, controlSurface(theme, pressed, saving)]}
+            style={({ pressed }) => [
+              styles.primaryButton,
+              styles.nextButton,
+              controlSurface(theme, pressed, saving),
+            ]}
             onPress={() => void handleNext(isCorrect)}
             accessibilityRole="button"
             accessibilityState={{ disabled: saving, busy: saving }}
@@ -622,8 +629,8 @@ export default function QuizScreen() {
               )}
             </Text>
           </Pressable>
-        )}
-      </ScrollView>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -631,7 +638,15 @@ export default function QuizScreen() {
 const makeStyles = ({ colors, elevation }: AppTheme) =>
   StyleSheet.create({
     container: { flex: 1, backgroundColor: colors.bg },
-    questionScroll: { paddingBottom: spacing(3) },
+    questionViewport: { flex: 1 },
+    questionScroll: { paddingHorizontal: spacing(3), paddingVertical: spacing(2), gap: spacing(2) },
+    questionHeader: { gap: 4 },
+    questionFooter: {
+      paddingHorizontal: spacing(3),
+      paddingTop: spacing(1),
+      paddingBottom: spacing(1),
+    },
+    nextButton: { marginTop: 0, paddingVertical: spacing(1.5) },
     center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: spacing(4) },
     loadingText: { color: colors.textSecondary, fontSize: typography.size.lg },
 
@@ -816,14 +831,12 @@ const makeStyles = ({ colors, elevation }: AppTheme) =>
 
     questionCard: {
       backgroundColor: colors.surface,
-      marginHorizontal: spacing(3),
-      marginVertical: spacing(2),
-      padding: spacing(4),
+      padding: spacing(2),
       borderRadius: radius['2xl'],
       borderWidth: 1,
       borderColor: colors.border,
       alignItems: 'center',
-      gap: spacing(1.5),
+      gap: spacing(1),
       ...elevation.lg,
     },
     questionLabel: {
@@ -846,10 +859,13 @@ const makeStyles = ({ colors, elevation }: AppTheme) =>
       textTransform: 'uppercase',
     },
 
-    optionsContainer: { padding: spacing(3), gap: spacing(2) },
+    optionsContainer: { gap: spacing(1) },
     optionButton: {
       backgroundColor: colors.surfaceElevated,
-      padding: spacing(3),
+      minHeight: 48,
+      justifyContent: 'center',
+      paddingHorizontal: spacing(2),
+      paddingVertical: spacing(1.5),
       borderRadius: radius.lg,
       borderWidth: 1,
       borderColor: colors.border,
@@ -863,9 +879,7 @@ const makeStyles = ({ colors, elevation }: AppTheme) =>
     },
 
     feedbackContainer: {
-      marginHorizontal: spacing(3),
-      marginTop: spacing(2),
-      padding: spacing(3),
+      padding: spacing(1.5),
       borderRadius: radius.lg,
       alignItems: 'center',
     },

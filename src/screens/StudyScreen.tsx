@@ -971,17 +971,7 @@ export default function StudyScreen() {
           >
             <Text style={styles.sessionBackText}>{t('study.session.back')}</Text>
           </Pressable>
-          <View style={[styles.sessionTitleBlock, largeText && styles.noFlex]}>
-            <Text style={styles.sessionEyebrow}>{t('tabs.study')}</Text>
-            <View style={styles.deckTitleRow}>
-              <Text allowFontScaling={false} accessible={false} style={styles.deckPillFlag}>
-                🇨🇴
-              </Text>
-              <Text style={styles.deckTitle} numberOfLines={largeText ? undefined : 1}>
-                {deckTitle}
-              </Text>
-            </View>
-          </View>
+          <Text style={styles.sessionEyebrow}>{t('tabs.study')}</Text>
           <View style={[styles.studyHeaderActions, largeText && styles.wrapped]}>
             {card && (
               <Pressable
@@ -1002,76 +992,60 @@ export default function StudyScreen() {
           </View>
         </View>
 
+        <View style={styles.deckTitleRow}>
+          <Text allowFontScaling={false} accessible={false} style={styles.deckPillFlag}>
+            🇨🇴
+          </Text>
+          <Text style={styles.deckTitle}>{deckTitle}</Text>
+        </View>
+
         <View style={styles.progressTrack}>
           <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
         </View>
 
-        <View style={styles.regionFilterWrap}>
-          <ScrollView
-            testID="region-filter-scroll"
-            key={`regions-${fontScale}`}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={[
-              styles.regionScroller,
-              largeText && { maxHeight: undefined, height: Math.ceil(34 * fontScale) },
-            ]}
-            contentContainerStyle={styles.regionRow}
-          >
-            {REGION_FILTERS.map((region) => (
-              <Pressable
-                key={region.id}
-                accessibilityRole="button"
-                accessibilityState={{
-                  selected: activeRegion === region.id,
-                  disabled:
-                    gradeSaving ||
-                    gradeError === 'save' ||
-                    gradeError === 'stale' ||
-                    checkpointBusy ||
-                    checkpointFailed ||
-                    planOpening ||
-                    planOpenError,
-                }}
-                disabled={
+        <View testID="region-filters" style={styles.regionRow}>
+          {REGION_FILTERS.map((region) => (
+            <Pressable
+              key={region.id}
+              accessibilityRole="button"
+              accessibilityState={{
+                selected: activeRegion === region.id,
+                disabled:
                   gradeSaving ||
                   gradeError === 'save' ||
                   gradeError === 'stale' ||
                   checkpointBusy ||
                   checkpointFailed ||
                   planOpening ||
-                  planOpenError
-                }
-                style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
-                onPress={() => changeRegion(region.id)}
+                  planOpenError,
+              }}
+              disabled={
+                gradeSaving ||
+                gradeError === 'save' ||
+                gradeError === 'stale' ||
+                checkpointBusy ||
+                checkpointFailed ||
+                planOpening ||
+                planOpenError
+              }
+              style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
+              onPress={() => changeRegion(region.id)}
+            >
+              <Text
+                style={[
+                  styles.regionChipText,
+                  activeRegion === region.id && styles.regionChipTextActive,
+                ]}
               >
-                <Text
-                  style={[
-                    styles.regionChipText,
-                    activeRegion === region.id && styles.regionChipTextActive,
-                  ]}
-                >
-                  {t(REGION_LABEL_KEYS[region.id])}
-                </Text>
-              </Pressable>
-            ))}
-          </ScrollView>
-          <View
-            testID="region-filter-overflow-cue"
-            pointerEvents="none"
-            style={styles.regionOverflowCue}
-          >
-            <View style={styles.regionOverflowFadeWide} />
-            <View style={styles.regionOverflowFadeTight} />
-            <Text allowFontScaling={false} accessible={false} style={styles.regionOverflowChevron}>
-              ›
-            </Text>
-          </View>
+                {t(REGION_LABEL_KEYS[region.id])}
+              </Text>
+            </Pressable>
+          ))}
         </View>
 
-        <View key={`hints-${fontScale}`} style={[styles.swipeHints, largeText && styles.stacked]}>
-          <Text style={styles.swipeHard}>{t('study.hint.hard')}</Text>
+        <View key={`hints-${fontScale}`} style={styles.swipeHints}>
           <Text style={styles.swipeTap}>{t('study.hint.flip')}</Text>
+          <Text style={styles.swipeHard}>{t('study.hint.hard')}</Text>
           <Text style={styles.swipeEasy}>{t('study.hint.easy')}</Text>
         </View>
 
@@ -1374,26 +1348,25 @@ const makeStyles = ({ colors }: AppTheme) =>
       borderColor: colors.neutralEdge,
     },
     sessionBackText: { color: colors.brand, fontSize: 12, fontWeight: '900' },
-    sessionTitleBlock: {
-      minWidth: 0,
-      flex: 1,
-    },
     sessionEyebrow: {
-      color: colors.textTertiary,
+      flex: 1,
+      color: colors.textSecondary,
       fontSize: 10,
       fontWeight: '800',
       textTransform: 'uppercase',
     },
     deckTitleRow: {
       flexDirection: 'row',
-      alignItems: 'center',
-      gap: 7,
-      marginTop: 3,
+      alignItems: 'flex-start',
+      gap: 8,
+      marginHorizontal: 18,
+      marginBottom: 12,
     },
     studyHeaderActions: {
       flexDirection: 'row',
       alignItems: 'center',
       gap: 8,
+      flexShrink: 1,
     },
     favoriteBtn: {
       width: 48,
@@ -1411,14 +1384,15 @@ const makeStyles = ({ colors }: AppTheme) =>
       fontWeight: '800',
       lineHeight: 24,
     },
-    deckPillFlag: { fontSize: 17 },
+    deckPillFlag: { fontSize: 20, marginTop: 2 },
     deckTitle: {
       color: colors.textPrimary,
-      fontSize: 18,
+      fontSize: 22,
       fontWeight: '900',
       flexShrink: 1,
     },
     cardsLeftPill: {
+      flexShrink: 1,
       paddingHorizontal: 12,
       paddingVertical: 7,
       borderRadius: 20,
@@ -1428,24 +1402,18 @@ const makeStyles = ({ colors }: AppTheme) =>
     },
     cardsLeftText: { color: colors.brand, fontSize: 13, fontWeight: '800' },
 
-    regionFilterWrap: {
-      position: 'relative',
-      minHeight: 44,
-      marginBottom: 8,
-    },
-    regionScroller: {
-      flexGrow: 0,
-      maxHeight: 44,
-    },
     regionRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
       alignItems: 'center',
       gap: 8,
       paddingHorizontal: 18,
-      paddingRight: 52,
+      marginBottom: 12,
     },
     regionChip: {
-      minHeight: 34,
-      paddingVertical: 6,
+      minHeight: 44,
+      maxWidth: '100%',
+      paddingVertical: 8,
       justifyContent: 'center',
       paddingHorizontal: 13,
       borderRadius: 17,
@@ -1459,44 +1427,29 @@ const makeStyles = ({ colors }: AppTheme) =>
     },
     regionChipText: { color: colors.textSecondary, fontSize: 12, fontWeight: '800' },
     regionChipTextActive: { color: colors.regionInk, fontWeight: '900' },
-    regionOverflowCue: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      width: 52,
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-    },
-    regionOverflowFadeWide: {
-      ...StyleSheet.absoluteFill,
-      backgroundColor: colors.translucentSurface,
-    },
-    regionOverflowFadeTight: {
-      position: 'absolute',
-      right: 0,
-      top: 0,
-      bottom: 0,
-      width: 30,
-      backgroundColor: colors.bg,
-    },
-    regionOverflowChevron: {
-      color: colors.brand,
-      fontSize: 22,
-      fontWeight: '900',
-      paddingRight: 16,
-    },
-
     swipeHints: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      flexWrap: 'wrap',
       alignItems: 'center',
+      gap: 6,
       paddingHorizontal: 20,
       marginBottom: 10,
     },
-    swipeHard: { color: colors.swipeHardInk, fontSize: 12, fontWeight: '800' },
-    swipeTap: { color: colors.textSecondary, fontSize: 12, fontWeight: '700' },
-    swipeEasy: { color: colors.swipeEasyInk, fontSize: 12, fontWeight: '800' },
+    swipeHard: { color: colors.swipeHardInk, fontSize: 12, fontWeight: '800', flex: 1 },
+    swipeTap: {
+      color: colors.textSecondary,
+      fontSize: 12,
+      fontWeight: '700',
+      width: '100%',
+      textAlign: 'center',
+    },
+    swipeEasy: {
+      color: colors.swipeEasyInk,
+      fontSize: 12,
+      fontWeight: '800',
+      flex: 1,
+      textAlign: 'right',
+    },
 
     cardArea: {
       flexGrow: 1,

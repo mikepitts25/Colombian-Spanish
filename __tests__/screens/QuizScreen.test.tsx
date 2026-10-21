@@ -300,7 +300,8 @@ describe('early quiz practice', () => {
     fireEvent.press(screen.getByText('back-c0'));
     await screen.findByText('See results');
     const scroll = screen.getByTestId('quiz-question-scroll');
-    fireEvent.press(within(scroll).getByText('See results'));
+    expect(within(scroll).queryByText('See results')).toBeNull();
+    fireEvent.press(screen.getByRole('button', { name: 'See results' }));
     expect(await screen.findByText('Quiz Complete')).toBeTruthy();
     expect(screen.getByText('Nice work recognizing these words.')).toBeTruthy();
     expect(recordQuizResult).toHaveBeenLastCalledWith(
