@@ -1,0 +1,15 @@
+Running altool at path '/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources/altool'...
+
+2026-10-22 07:45:40.046  INFO: [ContentDelivery.Uploader.7CA4C796C0] 
+==========================================
+VERIFY SUCCEEDED with no errors
+==========================================
+{
+  "details" : {
+
+  },
+  "os-version" : "Version 27.2 (Build 26B5112a)",
+  "success-message" : "No errors validating archive at '/Users/mike/Library/Caches/ColombianSpanish/ColombianSpanish-1.0.0-1.0.4.ipa'.",
+  "tool-path" : "/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources",
+  "tool-version" : "27.0.5 (2.1)"
+}

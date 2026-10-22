@@ -1,0 +1,10 @@
+{
+  "commit": "981b2bc7e90f91f4d9a85636b140752771ee35bd",
+  "buildId": "d60a17f2-c083-41d1-894b-9bb9fcc49180",
+  "profile": "editorial-beta",
+  "version": "1.0.0",
+  "build": "1.0.4",
+  "icon": "assets/icon-colombian-speech-v1.png",
+  "sourceCleanAtBuild": true,
+  "branch": "main"
+}

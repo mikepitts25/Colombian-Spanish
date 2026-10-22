@@ -1,0 +1,13 @@
+{
+  "id": "d60a17f2-c083-41d1-894b-9bb9fcc49180",
+  "status": "FINISHED",
+  "platform": "IOS",
+  "buildProfile": "editorial-beta",
+  "distribution": "STORE",
+  "appIdentifier": "com.mikepitts.colombianspanish",
+  "appVersion": "1.0.0",
+  "appBuildVersion": "1.0.4",
+  "gitCommitHash": "981b2bc7e90f91f4d9a85636b140752771ee35bd",
+  "createdAt": "2026-10-22T05:37:48.457Z",
+  "completedAt": "2026-10-22T05:43:50.527Z"
+}

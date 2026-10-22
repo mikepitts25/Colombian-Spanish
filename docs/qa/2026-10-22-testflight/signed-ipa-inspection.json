@@ -1,0 +1,33 @@
+{
+  "bundleIdentifier": "com.mikepitts.colombianspanish",
+  "version": "1.0.0",
+  "build": "1.0.4",
+  "platform": "iphoneos",
+  "microphoneUsageDescriptionPresent": false,
+  "signatureDeepStrictVerified": true,
+  "applicationIdentifier": "33YM89B48D.com.mikepitts.colombianspanish",
+  "apsEnvironment": "production",
+  "getTaskAllow": false,
+  "generatedPronunciationFilesMatched": 1392,
+  "ipaBytes": 43895658,
+  "ipaSha256": "0a661e53775f7d81fb91412a922b827fa14494ecb1afa56e635a32db9a34ba49",
+  "mainBundleSha256": "7d3393939ffc1862b25563f517353675de41b4b12728050691c9f7a8c6f814c9",
+  "privacyManifests": [
+    "PrivacyInfo.xcprivacy",
+    "React-timing_privacy.bundle/PrivacyInfo.xcprivacy",
+    "ExpoSystemUI_privacy.bundle/PrivacyInfo.xcprivacy",
+    "ReachabilitySwift.bundle/PrivacyInfo.xcprivacy",
+    "Sentry.bundle/PrivacyInfo.xcprivacy",
+    "ExpoConstants_privacy.bundle/PrivacyInfo.xcprivacy",
+    "React-cxxreact_privacy.bundle/PrivacyInfo.xcprivacy",
+    "ExpoApplication_privacy.bundle/PrivacyInfo.xcprivacy",
+    "ExpoNotifications_privacy.bundle/PrivacyInfo.xcprivacy",
+    "ExpoFileSystem_privacy.bundle/PrivacyInfo.xcprivacy",
+    "RNCAsyncStorage_resources.bundle/PrivacyInfo.xcprivacy",
+    "React-Core_privacy.bundle/PrivacyInfo.xcprivacy",
+    "EASClient_privacy.bundle/PrivacyInfo.xcprivacy",
+    "Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_folly.bundle/PrivacyInfo.xcprivacy",
+    "Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_glog.bundle/PrivacyInfo.xcprivacy",
+    "Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_boost.bundle/PrivacyInfo.xcprivacy"
+  ]
+}

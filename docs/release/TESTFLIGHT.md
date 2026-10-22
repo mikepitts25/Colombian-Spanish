@@ -1,6 +1,6 @@
 # iOS TestFlight preparation
 
-Updated October 21, 2026. Tracks B14.6-A in [MASTER_PLAN.md](../../MASTER_PLAN.md). Android remains paused; skipped security work is unchanged.
+Updated October 22, 2026. Tracks B14.6-A in [MASTER_PLAN.md](../../MASTER_PLAN.md). Android remains paused; skipped security work is unchanged.
 
 ## Active editorial-review beta
 
@@ -11,6 +11,10 @@ App Store Connect record **6825514456**, name **Colombian Spanish**, bundle ID `
 Delivered EAS build **4afaa68f-b881-49b3-a108-f7f46b0f0948**, version **1.0.0 (1.0.3)**. The exact signed IPA passed deep/strict signature and asset/permission inspection, Apple validation and upload. Apple build **7cff031f-f2c9-4e36-bb43-fdebb045c3c8** is **VALID / IN_BETA_TESTING**; the internal **Editorial Review** group contains it and the editorial notes are saved. [Delivery evidence](../qa/2026-10-21-testflight/README.md). This establishes internal availability, not installation or completed device/editorial acceptance.
 
 The company policy now includes [Colombian Spanish coverage](https://colibricodellc.com/privacy-policy/#colombian-spanish). Existing company support/privacy contacts and this URL are saved in the beta metadata. Internal group **Editorial Review** is created for the owner's existing accounts. No external-review submission or public App Store release is authorized by this beta delivery.
+
+## October22 update
+
+Delivered committed main `981b2bc` as EAS build **d60a17f2-c083-41d1-894b-9bb9fcc49180**, version **1.0.0 (1.0.4)**. The signed app contains the new Colombian speech bubble icon, study/quiz layout refinements and pronunciation fixes. Apple validation/upload succeeded; processing is **VALID / IN_BETA_TESTING** and the exact build is verified in **Editorial Review**, with saved tester notes. [Delivery evidence](../qa/2026-10-22-testflight/README.md). This supersedes build1.0.3 as the latest internal beta; editorial, hardware and public-release acceptance remain open.
 
 ## October20 preparation baseline
 

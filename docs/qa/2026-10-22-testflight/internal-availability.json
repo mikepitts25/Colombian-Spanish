@@ -1,0 +1,11 @@
+{
+  "buildId": "16f1ff5f-78cf-4884-895d-2dd04b23490b",
+  "version": "1.0.0",
+  "build": "1.0.4",
+  "groupId": "5e728680-1304-436b-8b07-357d2deea811",
+  "groupName": "Editorial Review",
+  "internalGroupContainsExactBuild": true,
+  "notesSavedAndReadBack": true,
+  "notes": "Updated Colombian speech bubble app icon. Study layout now wraps regional filters, shows the full deck title and clarifies swipe hints. Quiz feedback keeps Next accessible. Spanish pronunciation expands slash alternatives and avoids incompatible legacy recordings. Please check these changes on your device and continue editorial review of the draft catalogue. Teaching content remains pending human acceptance.",
+  "verifiedAt": "2026-10-22T05:50:02.281Z"
+}
