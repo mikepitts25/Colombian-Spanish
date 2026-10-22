@@ -1,6 +1,6 @@
 Running altool at path '/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources/altool'...
 
-2026-10-22 07:47:15.285  INFO: [ContentDelivery.Uploader.770CC796C0] 
+2026-10-22 07:47:15.285  INFO: [ContentDelivery.Uploader.770CC796C0]
 ==========================================
 UPLOAD SUCCEEDED with no errors
 Delivery UUID: 16f1ff5f-78cf-4884-895d-2dd04b23490b
