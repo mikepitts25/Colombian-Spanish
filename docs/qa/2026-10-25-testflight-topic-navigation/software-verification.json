@@ -1,0 +1,30 @@
+{
+  "fullJest": {
+    "suitesPassed": 117,
+    "testsPassed": 1208
+  },
+  "typecheckPassed": true,
+  "lintPassed": true,
+  "wholeRepositoryFormattingPassed": true,
+  "dataValidation": {
+    "decks": 47,
+    "cards": 1392,
+    "audioEntries": 1392
+  },
+  "editorialLedgerValid": true,
+  "cardsAwaitingHumanAcceptance": 1392,
+  "calendarIntegrationZones": [
+    "Europe/Berlin",
+    "America/Bogota",
+    "America/New_York",
+    "Pacific/Auckland"
+  ],
+  "pythonTestsPassed": 14,
+  "expoDoctorPassed": false,
+  "expoDoctorNotes": [
+    "Existing legacy splash schema and direct config-plugins dependency warnings.",
+    "expo-asset direct peer dependency warning; ExpoAsset 57.0.20 was autolinked into the signed native archive.",
+    "Patch updates are available for expo, expo-notifications and expo-sharing; dependencies were preserved for this bounded release."
+  ],
+  "physicalDeviceAcceptanceComplete": false
+}

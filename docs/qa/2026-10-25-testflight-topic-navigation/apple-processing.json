@@ -1,0 +1,38 @@
+{
+  "verifiedAt": "2026-10-25T10:44:35.175Z",
+  "appId": "6825514456",
+  "build": "1.0.6",
+  "builds": [
+    {
+      "id": "56a9b96b-fa7e-4eea-93fa-4b720a1ee524",
+      "build": "1.0.6",
+      "processingState": "VALID",
+      "uploadedDate": "2026-10-25T03:43:12-07:00",
+      "usesNonExemptEncryption": false
+    }
+  ],
+  "betaDetails": [
+    {
+      "id": "56a9b96b-fa7e-4eea-93fa-4b720a1ee524",
+      "autoNotifyEnabled": true,
+      "internalBuildState": "IN_BETA_TESTING",
+      "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+    }
+  ],
+  "preReleaseVersions": [
+    {
+      "id": "18857fec-b7ae-485c-a04c-8f9ead14abef",
+      "version": "1.0.0",
+      "platform": "IOS"
+    }
+  ],
+  "groups": [
+    {
+      "id": "5e728680-1304-436b-8b07-357d2deea811",
+      "name": "Editorial Review",
+      "isInternalGroup": true,
+      "hasAccessToAllBuilds": true
+    }
+  ],
+  "exactBuildInInternalGroup": true
+}

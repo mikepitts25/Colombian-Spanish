@@ -1,0 +1,40 @@
+{
+  "verifiedAt": "2026-10-25T10:45:29.897Z",
+  "appId": "6825514456",
+  "build": "1.0.6",
+  "builds": [
+    {
+      "id": "56a9b96b-fa7e-4eea-93fa-4b720a1ee524",
+      "build": "1.0.6",
+      "processingState": "VALID",
+      "uploadedDate": "2026-10-25T03:43:12-07:00",
+      "usesNonExemptEncryption": false
+    }
+  ],
+  "betaDetails": [
+    {
+      "id": "56a9b96b-fa7e-4eea-93fa-4b720a1ee524",
+      "autoNotifyEnabled": true,
+      "internalBuildState": "IN_BETA_TESTING",
+      "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+    }
+  ],
+  "preReleaseVersions": [
+    {
+      "id": "18857fec-b7ae-485c-a04c-8f9ead14abef",
+      "version": "1.0.0",
+      "platform": "IOS"
+    }
+  ],
+  "notesSavedAndReadBack": true,
+  "notes": "Topic selection is now easier: on Home, tap Choose a topic below the study button. While studying, tap Change topic by the topic title; Home now returns to the Home screen. The topic browser marks your current topic and Continue studying returns to your existing card, region and session. Please test switching topics, returning without switching, and the English/Spanish layouts on your device. Draft teaching content remains pending human editorial acceptance.",
+  "groups": [
+    {
+      "id": "5e728680-1304-436b-8b07-357d2deea811",
+      "name": "Editorial Review",
+      "isInternalGroup": true,
+      "hasAccessToAllBuilds": true
+    }
+  ],
+  "exactBuildInInternalGroup": true
+}

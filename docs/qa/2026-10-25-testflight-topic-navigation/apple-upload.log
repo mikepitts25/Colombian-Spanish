@@ -1,0 +1,19 @@
+{
+  "details" : {
+    "delivery-uuid" : "56a9b96b-fa7e-4eea-93fa-4b720a1ee524",
+    "transferred" : "43863343 bytes in 13.644 seconds (3.2MB/s, 25.718Mbps)"
+  },
+  "os-version" : "Version 27.2 (Build 26B5112a)",
+  "success-message" : "No errors uploading archive at '/Users/mike/Library/Caches/ColombianSpanish/ColombianSpanish-topic-navigation.ipa'.",
+  "tool-path" : "/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources",
+  "tool-version" : "27.0.5 (2.1)"
+}
+
+Running altool at path '/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources/altool'...
+
+2026-10-25 11:41:56.000  INFO: [ContentDelivery.Uploader.77A10896C0]
+==========================================
+UPLOAD SUCCEEDED with no errors
+Delivery UUID: 56a9b96b-fa7e-4eea-93fa-4b720a1ee524
+Transferred 43863343 bytes in 13.644 seconds (3.2MB/s, 25.718Mbps)
+==========================================

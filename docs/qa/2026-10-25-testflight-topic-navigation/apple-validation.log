@@ -1,0 +1,16 @@
+{
+  "details" : {
+
+  },
+  "os-version" : "Version 27.2 (Build 26B5112a)",
+  "success-message" : "No errors validating archive at '/Users/mike/Library/Caches/ColombianSpanish/ColombianSpanish-topic-navigation.ipa'.",
+  "tool-path" : "/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources",
+  "tool-version" : "27.0.5 (2.1)"
+}
+
+Running altool at path '/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources/altool'...
+
+2026-10-25 11:40:14.105  INFO: [ContentDelivery.Uploader.753D0896C0]
+==========================================
+VERIFY SUCCEEDED with no errors
+==========================================

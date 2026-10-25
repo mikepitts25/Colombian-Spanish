@@ -1,0 +1,30 @@
+{
+  "app-store-attributes" : {
+    "buildAudienceType" : "APP_STORE_ELIGIBLE",
+    "computedMinMacOsVersion" : "12.0",
+    "computedMinVisionOsVersion" : "1.0",
+    "expirationDate" : "expirationDate",
+    "expired" : false,
+    "iconAssetToken" : {
+      "height" : 152,
+      "templateUrl" : "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6f/a9/a3/6fa9a340-885a-23b9-dba5-7f23dcca622c/AppIcon76x76@2x_U007eipad.png/{w}x{h}bb.{f}",
+      "width" : 152
+    },
+    "lsMinimumSystemVersion" : "12.0",
+    "minOsVersion" : "16.4",
+    "processingState" : "VALID",
+    "uploadedDate" : "uploadedDate",
+    "usesNonExemptEncryption" : false,
+    "version" : "1.0.6"
+  },
+  "build-audience-type" : "APP_STORE_ELIGIBLE",
+  "build-status" : "VALID",
+  "delivery-uuid" : "56a9b96b-fa7e-4eea-93fa-4b720a1ee524",
+  "expiration-date" : "1/23/27, 11:43:12 AM",
+  "import-status" : "VALID",
+  "is-on-app-store-connect" : true,
+  "uploaded-date" : "10/25/26, 11:43:12 AM",
+  "uses-non-exempt-encryption" : false
+}
+
+Running altool at path '/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources/altool'...

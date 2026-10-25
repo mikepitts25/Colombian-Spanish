@@ -1,0 +1,14 @@
+{
+  "commit": "920947cb813f8026930f6b89d508d3cef23c64e4",
+  "branch": "main",
+  "sourceCleanAtArchive": true,
+  "buildMethod": "local EAS managed native archive, followed by local xcodebuild App Store export",
+  "profile": "editorial-beta",
+  "version": "1.0.0",
+  "build": "1.0.6",
+  "archivePath": "~/Library/Developer/Xcode/Archives/2026-10-25/ColombianSpanish 2026-10-25 11.35.01.xcarchive",
+  "ipaPath": "~/Library/Caches/ColombianSpanish/ColombianSpanish-topic-navigation.ipa",
+  "localBuildTrackingId": "ce764c9c-36e4-48ee-9622-6a8dd35c077c",
+  "unusedBuildNumber": "1.0.5",
+  "unusedBuildReason": "Initial local archive failed signing; never uploaded."
+}

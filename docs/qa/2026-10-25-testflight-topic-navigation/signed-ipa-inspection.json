@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "920947cb813f8026930f6b89d508d3cef23c64e4",
+  "localBuild": true,
+  "bundleIdentifier": "com.mikepitts.colombianspanish",
+  "version": "1.0.0",
+  "build": "1.0.6",
+  "platform": "iPhoneOS",
+  "minimumOSVersion": "16.4",
+  "signatureDeepStrictVerified": true,
+  "microphoneUsageDescriptionPresent": false,
+  "applicationIdentifier": "33YM89B48D.com.mikepitts.colombianspanish",
+  "apsEnvironment": "production",
+  "getTaskAllow": false,
+  "profileUUID": "21abaaf4-4ce5-4fb1-8727-fafebadacb4c",
+  "profileName": "Colombian Spanish Local TestFlight 2026-10-25",
+  "profileExpires": "2027-05-09T10:05:48",
+  "appStoreDistribution": true,
+  "generatedPronunciationFilesMatched": 1392,
+  "topicNavigationStringsPresent": {
+    "topicBrowserRequest": true,
+    "Choose a topic": true,
+    "Change topic": true,
+    "Continue studying": true,
+    "Cambiar tema": true,
+    "Seguir estudiando": true
+  },
+  "ipaBytes": 43863343,
+  "ipaSha256": "cc839410fd4c70c34105250e48578fd9527d036e8e8638e0cc5573b8fc040130",
+  "mainBundleSha256": "b81f3c97d38c6369e233674ae1d05fe76ca8d753984161526ba239645d80a46a"
+}

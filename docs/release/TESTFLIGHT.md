@@ -1,6 +1,6 @@
 # iOS TestFlight preparation
 
-Updated October 22, 2026. Tracks B14.6-A in [MASTER_PLAN.md](../../MASTER_PLAN.md). Android remains paused; skipped security work is unchanged.
+Updated October 25, 2026. Tracks B14.6-A in [MASTER_PLAN.md](../../MASTER_PLAN.md). Android remains paused; skipped security work is unchanged.
 
 ## Active editorial-review beta
 
@@ -15,6 +15,12 @@ The company policy now includes [Colombian Spanish coverage](https://colibricode
 ## October22 update
 
 Delivered committed main `981b2bc` as EAS build **d60a17f2-c083-41d1-894b-9bb9fcc49180**, version **1.0.0 (1.0.4)**. The signed app contains the new Colombian speech bubble icon, study/quiz layout refinements and pronunciation fixes. Apple validation/upload succeeded; processing is **VALID / IN_BETA_TESTING** and the exact build is verified in **Editorial Review**, with saved tester notes. [Delivery evidence](../qa/2026-10-22-testflight/README.md). This supersedes build1.0.3 as the latest internal beta; editorial, hardware and public-release acceptance remain open.
+
+## October25 local topic-selection update
+
+Delivered clean main `920947c` as a **locally built** iOS archive and signed App Store IPA, version **1.0.0 (1.0.6)**. Home now offers **Choose a topic**, Study offers **Change topic**, and the explicit **Home** action returns to Home. **Continue studying** preserves the active card queue and region while checking saved-session ownership.
+
+Apple validation and upload succeeded; the exact build `56a9b96b-fa7e-4eea-93fa-4b720a1ee524` is **VALID / IN_BETA_TESTING** in the existing **Editorial Review** group, with saved tester notes. [Local build and delivery evidence](../qa/2026-10-25-testflight-topic-navigation/README.md). This is the latest internal beta. Build1.0.5 was an unused local signing attempt and was never uploaded. Device/editorial/public-release gates remain open.
 
 ## October20 preparation baseline
 
