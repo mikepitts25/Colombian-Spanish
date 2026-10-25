@@ -238,6 +238,8 @@ export default function BarrioHomeContent(props: BarrioHomeContentProps) {
           </Text>
         )}
         {actionButton(t(action), props.onPrimary, primaryDisabled, true, model.pending)}
+        {model.kind !== 'browse' &&
+          actionButton(t('home.chooseTopic'), props.onBrowseStudy, model.pending)}
         {model.managePlanId &&
           actionButton(
             t('home.barrio.manage'),

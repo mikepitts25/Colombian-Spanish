@@ -29,6 +29,7 @@ import { useLanguage } from '../context/LanguageContext';
 import {
   CATEGORY_DISPLAY,
   getDeckDisplayName,
+  getCategoryForDeck,
   getDecksForCategory,
   getPreferredDeckForCategory,
 } from '../utils/deckCategories';
@@ -40,6 +41,7 @@ import { speakCard } from '../services/tts';
 import {
   StudyQueueSnapshot,
   copySessionInput,
+  sameStudySession,
   StaleStudySessionError,
 } from '../storage/studySession';
 import { isNewCard, formatIntervalShort, previewInterval } from '../utils/srs';
@@ -113,6 +115,7 @@ export default function StudyScreen() {
   const route = useRoute<any>();
   const { t } = useLanguage();
   const [mode, setMode] = useState<StudyMode>('landing');
+  const [topicBrowserOpen, setTopicBrowserOpen] = useState(false);
   const dailyPlan = useRef<string | undefined>(undefined);
   const [resumePlanId, setResumePlanId] = useState<string | undefined>();
   const [planOpening, setPlanOpening] = useState(false);
@@ -316,7 +319,8 @@ export default function StudyScreen() {
     mode === 'session' && card
       ? `${learningSession.current}:${activeDeckId}:${card.id}`
       : undefined,
-    !checkpointBusy &&
+    !topicBrowserOpen &&
+      !checkpointBusy &&
       !checkpointFailed &&
       !gradeSaving &&
       !gradeError &&
@@ -342,6 +346,70 @@ export default function StudyScreen() {
   }, [card]);
   const deckTitle = activeDeck ? getDeckDisplayName(activeDeck) : '';
   const showResults = searching && q.trim().length > 0;
+  const navigationBlocked =
+    gradeSaving ||
+    gradeError === 'save' ||
+    gradeError === 'stale' ||
+    checkpointBusy ||
+    checkpointFailed ||
+    planOpening ||
+    planOpenError;
+  const hasCurrentSession = mode === 'session' && queueDeckId.current === activeDeckId;
+
+  function openTopicBrowser() {
+    if (navigationBlocked || grading.current || pendingGrade.current || checkpointBlocked.current)
+      return;
+    setQ('');
+    setSearching(false);
+    setTopicBrowserOpen(true);
+  }
+
+  async function continueCurrentSession() {
+    if (navigationBlocked || checkpointBlocked.current || !activeDeck) return;
+    const version = sessionVersion.current;
+    checkpointBlocked.current = true;
+    setCheckpointBusy(true);
+    try {
+      const stored = await getLastStudySession();
+      if (version !== sessionVersion.current) return;
+      // Validate ownership without rebuilding or rewriting the live queue. A backup
+      // restore or another activity may have replaced the checkpoint while browsing.
+      if (
+        !sameStudySession(stored, {
+          deckId: activeDeck.id,
+          ...(queuedCardIds[0] ? { cardId: queuedCardIds[0] } : {}),
+          queue: {
+            schemaVersion: 1,
+            cardIds: queuedCardIds,
+            region: activeRegion,
+            sessionId: learningSession.current,
+            ...(boundedLimits.current ? { limits: { ...boundedLimits.current } } : {}),
+          },
+        })
+      )
+        setGradeError('stale');
+      setResumeLoadError(false);
+      setTopicBrowserOpen(false);
+    } catch {
+      if (version === sessionVersion.current) setResumeLoadError(true);
+    } finally {
+      if (version === sessionVersion.current) {
+        checkpointBlocked.current = false;
+        setCheckpointBusy(false);
+      }
+    }
+  }
+
+  const topicBrowserRequest = route.params?.topicBrowserRequest;
+  useEffect(() => {
+    if (!ready || !topicBrowserRequest) return;
+    // Consume once, including when a pending save prevents navigation. A later retry
+    // must be an explicit action, not a delayed jump away from the recovery UI.
+    nav.setParams({ topicBrowserRequest: undefined });
+    openTopicBrowser();
+    // The request is an event; changes to save status must not replay it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, topicBrowserRequest]);
 
   useEffect(() => {
     if (!ready) return undefined;
@@ -480,6 +548,7 @@ export default function StudyScreen() {
     setStartCardId(cardId);
     setActiveRegion(saved?.queue?.region ?? 'all');
     setMode('session');
+    setTopicBrowserOpen(false);
     return true;
   }
 
@@ -757,7 +826,7 @@ export default function StudyScreen() {
     );
   }
 
-  if (mode === 'landing') {
+  if (mode === 'landing' || topicBrowserOpen) {
     return (
       <SafeAreaView style={styles.wrap}>
         {planStatus}
@@ -768,8 +837,30 @@ export default function StudyScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.landingHeader}>
-            <Text style={styles.landingTitle}>{t('study.landing.title')}</Text>
+            <Text style={styles.landingTitle}>{t('study.topics.title')}</Text>
           </View>
+
+          {hasCurrentSession && (
+            <Pressable
+              accessibilityRole="button"
+              disabled={navigationBlocked}
+              style={[styles.resumeCard, largeText && styles.stacked]}
+              onPress={() => void continueCurrentSession()}
+            >
+              <View style={[styles.resumeTextBlock, largeText && styles.noFlex]}>
+                <Text style={styles.resumeDeckName}>
+                  {t('study.topics.current', { topic: deckTitle })}
+                </Text>
+              </View>
+              <Text style={styles.resumeCta}>{t('study.topics.continue')}</Text>
+            </Pressable>
+          )}
+
+          {hasCurrentSession && resumeLoadError && (
+            <Text accessibilityRole="alert" style={styles.resumeEmptyText}>
+              {t('study.resume.loadError')}
+            </Text>
+          )}
 
           <View style={styles.searchBar}>
             <Text style={styles.searchIcon}>🔍</Text>
@@ -862,6 +953,11 @@ export default function StudyScreen() {
                 {visibleCategories.map((cat) => (
                   <Pressable
                     key={cat.key}
+                    accessibilityRole="button"
+                    accessibilityLabel={t(cat.labelKey)}
+                    accessibilityState={{
+                      selected: hasCurrentSession && getCategoryForDeck(activeDeck) === cat.key,
+                    }}
                     style={[
                       styles.catCard,
                       largeText && styles.catCardExpanded,
@@ -885,51 +981,56 @@ export default function StudyScreen() {
                     >
                       {t(cat.labelKey)}
                     </Text>
+                    {hasCurrentSession && getCategoryForDeck(activeDeck) === cat.key && (
+                      <Text style={[styles.catLabel, { color: cat.color }]}>✓</Text>
+                    )}
                   </Pressable>
                 ))}
               </View>
 
-              <View style={styles.resumeBlock}>
-                <Text style={styles.sectionTitle}>{t('study.resume.title')}</Text>
-                {resumeLoadError ? (
-                  <View style={styles.resumeEmptyCard}>
-                    <Text accessibilityRole="alert" style={styles.resumeEmptyText}>
-                      {t('study.resume.loadError')}
-                    </Text>
-                    <Pressable
-                      accessibilityRole="button"
-                      onPress={() => setResumeLoadAttempt((value) => value + 1)}
-                    >
-                      <Text style={styles.resumeCta}>{t('study.resume.retry')}</Text>
-                    </Pressable>
-                  </View>
-                ) : resumeDeck ? (
-                  <Pressable
-                    style={[styles.resumeCard, largeText && styles.stacked]}
-                    onPress={() =>
-                      startSession(
-                        resumeDeck.id,
-                        resumeSession?.cardId,
-                        resumeSession,
-                        undefined,
-                        resumePlanId,
-                      )
-                    }
-                  >
-                    <View style={[styles.resumeTextBlock, largeText && styles.noFlex]}>
-                      <Text style={styles.resumeDeckName}>{getDeckDisplayName(resumeDeck)}</Text>
-                      <Text style={styles.resumeDeckMeta}>
-                        {resumeDeck.cards.length} {t('common.cards')}
+              {!hasCurrentSession && (
+                <View style={styles.resumeBlock}>
+                  <Text style={styles.sectionTitle}>{t('study.resume.title')}</Text>
+                  {resumeLoadError ? (
+                    <View style={styles.resumeEmptyCard}>
+                      <Text accessibilityRole="alert" style={styles.resumeEmptyText}>
+                        {t('study.resume.loadError')}
                       </Text>
+                      <Pressable
+                        accessibilityRole="button"
+                        onPress={() => setResumeLoadAttempt((value) => value + 1)}
+                      >
+                        <Text style={styles.resumeCta}>{t('study.resume.retry')}</Text>
+                      </Pressable>
                     </View>
-                    <Text style={styles.resumeCta}>{t('study.resume.cta')}</Text>
-                  </Pressable>
-                ) : (
-                  <View style={styles.resumeEmptyCard}>
-                    <Text style={styles.resumeEmptyText}>{t('study.resume.empty')}</Text>
-                  </View>
-                )}
-              </View>
+                  ) : resumeDeck ? (
+                    <Pressable
+                      style={[styles.resumeCard, largeText && styles.stacked]}
+                      onPress={() =>
+                        startSession(
+                          resumeDeck.id,
+                          resumeSession?.cardId,
+                          resumeSession,
+                          undefined,
+                          resumePlanId,
+                        )
+                      }
+                    >
+                      <View style={[styles.resumeTextBlock, largeText && styles.noFlex]}>
+                        <Text style={styles.resumeDeckName}>{getDeckDisplayName(resumeDeck)}</Text>
+                        <Text style={styles.resumeDeckMeta}>
+                          {resumeDeck.cards.length} {t('common.cards')}
+                        </Text>
+                      </View>
+                      <Text style={styles.resumeCta}>{t('study.resume.cta')}</Text>
+                    </Pressable>
+                  ) : (
+                    <View style={styles.resumeEmptyCard}>
+                      <Text style={styles.resumeEmptyText}>{t('study.resume.empty')}</Text>
+                    </View>
+                  )}
+                </View>
+              )}
             </>
           )}
         </ScrollView>
@@ -955,21 +1056,18 @@ export default function StudyScreen() {
           <Pressable
             accessibilityRole="button"
             style={styles.sessionBackBtn}
-            disabled={
-              gradeSaving ||
-              gradeError === 'save' ||
-              gradeError === 'stale' ||
-              checkpointBusy ||
-              checkpointFailed ||
-              planOpening ||
-              planOpenError
-            }
+            disabled={navigationBlocked}
             onPress={() => {
-              if (!grading.current && !pendingGrade.current && !checkpointBlocked.current)
-                setMode('landing');
+              if (
+                !navigationBlocked &&
+                !grading.current &&
+                !pendingGrade.current &&
+                !checkpointBlocked.current
+              )
+                nav.navigate('Home');
             }}
           >
-            <Text style={styles.sessionBackText}>{t('study.session.back')}</Text>
+            <Text style={styles.sessionBackText}>{t('tabs.home')}</Text>
           </Pressable>
           <Text style={styles.sessionEyebrow}>{t('tabs.study')}</Text>
           <View style={[styles.studyHeaderActions, largeText && styles.wrapped]}>
@@ -992,11 +1090,19 @@ export default function StudyScreen() {
           </View>
         </View>
 
-        <View style={styles.deckTitleRow}>
+        <View style={[styles.deckTitleRow, styles.wrapped]}>
           <Text allowFontScaling={false} accessible={false} style={styles.deckPillFlag}>
             🇨🇴
           </Text>
           <Text style={styles.deckTitle}>{deckTitle}</Text>
+          <Pressable
+            accessibilityRole="button"
+            disabled={navigationBlocked}
+            style={styles.sessionBackBtn}
+            onPress={openTopicBrowser}
+          >
+            <Text style={styles.sessionBackText}>{t('study.topics.change')}</Text>
+          </Pressable>
         </View>
 
         <View style={styles.progressTrack}>

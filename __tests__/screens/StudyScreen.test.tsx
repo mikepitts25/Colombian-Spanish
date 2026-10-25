@@ -109,7 +109,9 @@ function renderStudyScreen(ctxOverrides: Record<string, any> = {}) {
   const setActiveDeckId = jest.fn((deckId: string) => {
     activeDeckId = deckId;
   });
-  const recordAnswer = jest.fn().mockResolvedValue(undefined);
+  const recordAnswer = jest.fn(async (_id: string, _quality: number, options: any) => {
+    mockGetLastStudySession.mockResolvedValue({ ...options.nextSession, updatedAt: 1000 });
+  });
   const toggleFavorite = jest.fn().mockResolvedValue(undefined);
   const getStudyBatch = jest.fn((size?: number) => {
     if (ctxOverrides.getStudyBatch) return ctxOverrides.getStudyBatch(size);
@@ -160,7 +162,11 @@ beforeEach(() => {
   mockGetDailyProgress.mockResolvedValue({ count: 3, target: 10 });
   mockIncrementDailyProgress.mockResolvedValue({ count: 4, target: 10 });
   mockGetLastStudySession.mockResolvedValue(undefined);
-  mockSaveLastStudySession.mockImplementation(async (payload) => ({ ...payload, updatedAt: 1000 }));
+  mockSaveLastStudySession.mockImplementation(async (payload) => {
+    const saved = { ...payload, updatedAt: 1000 };
+    mockGetLastStudySession.mockResolvedValue(saved);
+    return saved;
+  });
 });
 
 describe('StudyScreen landing', () => {
@@ -203,8 +209,8 @@ describe('StudyScreen landing', () => {
   it('opens on the Study landing with search, categories, and resume', async () => {
     const { getByText, getByPlaceholderText, queryByText } = renderStudyScreen();
 
-    expect(getByText('Estudiar')).toBeTruthy();
-    expect(getByPlaceholderText('Busca palabras, frases o decks...')).toBeTruthy();
+    expect(getByText('Elegir un tema')).toBeTruthy();
+    expect(getByPlaceholderText('Busca palabras, frases o temas...')).toBeTruthy();
     expect(getByText('📂 Categorías')).toBeTruthy();
     expect(getByText('Continuar sesión')).toBeTruthy();
     expect(queryByText('hola')).toBeNull();
@@ -251,7 +257,7 @@ describe('StudyScreen landing', () => {
     const screen = renderStudyScreen();
 
     fireEvent.changeText(
-      screen.getByPlaceholderText('Busca palabras, frases o decks...'),
+      screen.getByPlaceholderText('Busca palabras, frases o temas...'),
       'celular',
     );
     fireEvent.press(await screen.findByText('celular'));
@@ -293,10 +299,10 @@ describe('StudyScreen landing', () => {
     const screen = renderStudyScreen();
 
     await openCommunicationSession(screen);
-    fireEvent.press(screen.getByText('Volver'));
+    fireEvent.press(screen.getByText('Cambiar tema'));
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText('Busca palabras, frases o decks...')).toBeTruthy();
+      expect(screen.getByPlaceholderText('Busca palabras, frases o temas...')).toBeTruthy();
     });
   });
 });
@@ -645,7 +651,7 @@ it('keeps the current session and region while a grade is unresolved', async () 
   await openCommunicationSession(screen);
   fireEvent.press(screen.getByText('Bien'));
   fireEvent.press(screen.getByText('Paisa'));
-  fireEvent.press(screen.getByText('Volver'));
+  fireEvent.press(screen.getByText('Cambiar tema'));
   expect(screen.getByText('hola')).toBeTruthy();
   await act(async () => finish());
   expect(await screen.findByText('adios')).toBeTruthy();
@@ -794,8 +800,8 @@ it('clears an earlier resume-load error after a new session checkpoint saves', a
   const screen = renderStudyScreen();
   await screen.findByText('No se pudo cargar la sesión guardada. Reintenta para continuar.');
   await openCommunicationSession(screen);
-  fireEvent.press(screen.getByText('Volver'));
-  expect(await screen.findByText('Continuar')).toBeTruthy();
+  fireEvent.press(screen.getByText('Cambiar tema'));
+  expect(await screen.findByText('Seguir estudiando')).toBeTruthy();
   expect(
     screen.queryByText('No se pudo cargar la sesión guardada. Reintenta para continuar.'),
   ).toBeNull();
@@ -1097,7 +1103,7 @@ test('retains the landing search across live text-size changes without starting 
   const window = Dimensions.get('window');
   const screenMetrics = Dimensions.get('screen');
   const screen = renderStudyScreen();
-  const input = await screen.findByPlaceholderText('Busca palabras, frases o decks...');
+  const input = await screen.findByPlaceholderText('Busca palabras, frases o temas...');
   fireEvent.changeText(input, 'hola');
   try {
     await act(async () =>
@@ -1367,8 +1373,8 @@ test('detached manual checkpoints clear their old plan linkage before ordinary r
     expect(ui.recordAnswer.mock.calls[0][2].planId).toBe('plan');
     fireEvent.press(ui.getByText('General'));
     await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
-    fireEvent.press(ui.getByText('Volver'));
-    fireEvent.press(await ui.findByText('Continuar'));
+    fireEvent.press(ui.getByText('Cambiar tema'));
+    fireEvent.press(await ui.findByText('Seguir estudiando'));
     await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
     await act(async () => fireEvent.press(ui.getByText('Bien')));
     expect(ui.recordAnswer.mock.calls[1][2].planId).toBeUndefined();
@@ -1420,7 +1426,7 @@ test('Barrio audio entry uses the common decorative icon while Classic retains i
   initial.unmount();
   const screen = renderWithTheme(<StudyScreen />);
   fireEvent.changeText(
-    await screen.findByPlaceholderText('Busca palabras, frases o decks...'),
+    await screen.findByPlaceholderText('Busca palabras, frases o temas...'),
     'hola',
   );
   screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
@@ -1432,4 +1438,109 @@ test('Barrio audio entry uses the common decorative icon while Classic retains i
   expect(require('../../src/services/tts').speakCard).toHaveBeenCalledTimes(1);
   screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
   expect(screen.getAllByText('🔊').length).toBeGreaterThan(0);
+});
+
+describe('explicit topic navigation', () => {
+  it('navigates Home instead of using an ambiguous Back action', async () => {
+    const ui = renderStudyScreen();
+    await openCommunicationSession(ui);
+    fireEvent.press(ui.getByText('INICIO'));
+    expect(mockNavigate).toHaveBeenCalledWith('Home');
+    expect(ui.queryByText('Volver')).toBeNull();
+  });
+
+  it('preserves the remaining queue and session identity across browsing', async () => {
+    const ui = renderStudyScreen();
+    await openCommunicationSession(ui);
+    await act(async () => fireEvent.press(ui.getByText('Bien')));
+    expect(ui.getByText('adios')).toBeTruthy();
+    const batchCalls = ui.getStudyBatch.mock.calls.length;
+    const checkpointCalls = mockSaveLastStudySession.mock.calls.length;
+    fireEvent.press(ui.getByText('Cambiar tema'));
+    expect(ui.getByText('Tema actual: Greetings')).toBeTruthy();
+    expect(ui.getByRole('button', { name: 'Comunicación' })).toHaveAccessibilityState({
+      selected: true,
+    });
+    await act(async () => fireEvent.press(ui.getByText('Seguir estudiando')));
+    expect(ui.getByText('adios')).toBeTruthy();
+    expect(ui.getStudyBatch).toHaveBeenCalledTimes(batchCalls);
+    expect(mockSaveLastStudySession).toHaveBeenCalledTimes(checkpointCalls);
+    await act(async () => fireEvent.press(ui.getByText('Bien')));
+    expect(ui.recordAnswer.mock.calls[1][2].sessionId).toBe(
+      ui.recordAnswer.mock.calls[0][2].sessionId,
+    );
+  });
+
+  it('opens the chooser from repeated Home requests even with a mounted session', async () => {
+    const ui = renderStudyScreen();
+    await openCommunicationSession(ui);
+    for (const request of [101, 102]) {
+      mockRouteParams = { topicBrowserRequest: request };
+      ui.rerender(<StudyScreen />);
+      expect(await ui.findByText('Elegir un tema')).toBeTruthy();
+      expect(mockSetParams).toHaveBeenCalledWith({ topicBrowserRequest: undefined });
+      await act(async () => fireEvent.press(ui.getByText('Seguir estudiando')));
+      expect(ui.getByText('hola')).toBeTruthy();
+    }
+  });
+
+  it('switches to another topic through the existing session start path', async () => {
+    const ui = renderStudyScreen();
+    await openCommunicationSession(ui);
+    fireEvent.press(ui.getByText('Cambiar tema'));
+    fireEvent.press(ui.getByText('Tecnología'));
+    expect(await ui.findByText('celular')).toBeTruthy();
+    expect(ui.setActiveDeckId).toHaveBeenLastCalledWith(TECH_DECK.id);
+  });
+
+  it('keeps grade recovery visible when Home requests a chooser during a failed save', async () => {
+    const ui = renderStudyScreen({ recordAnswer: jest.fn().mockRejectedValue(new Error('disk')) });
+    await openCommunicationSession(ui);
+    await act(async () => fireEvent.press(ui.getByText('Bien')));
+    expect(ui.getByText('Cambiar tema')).toBeDisabled();
+    expect(ui.getByText('INICIO')).toBeDisabled();
+    mockRouteParams = { topicBrowserRequest: 103 };
+    ui.rerender(<StudyScreen />);
+    expect(ui.queryByText('Elegir un tema')).toBeNull();
+    expect(ui.getByText('Intentar guardar de nuevo')).toBeTruthy();
+    expect(mockSetParams).toHaveBeenCalledWith({ topicBrowserRequest: undefined });
+  });
+});
+
+it('keeps the selected region and pauses active timing without changing card identity while browsing', async () => {
+  const timing = jest
+    .spyOn(require('../../src/hooks/useActiveStudyTime'), 'useActiveStudyTime')
+    .mockReturnValue(() => 12000);
+  try {
+    const ui = renderStudyScreen({ decks: [{ ...GREETINGS_DECK, cards: MIXED_REGION_CARDS }] });
+    fireEvent.press(await ui.findByText('Comunicación'));
+    await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
+    fireEvent.press(ui.getByText('Paisa'));
+    await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
+    expect(ui.getByText('que hubo')).toBeTruthy();
+    const before = timing.mock.calls[timing.mock.calls.length - 1];
+    expect(before[1]).toBe(true);
+    fireEvent.press(ui.getByText('Cambiar tema'));
+    expect(timing).toHaveBeenLastCalledWith(before[0], false);
+    await act(async () => fireEvent.press(ui.getByText('Seguir estudiando')));
+    expect(ui.getByText('que hubo')).toBeTruthy();
+    expect(ui.getByRole('button', { name: 'Paisa' })).toHaveAccessibilityState({ selected: true });
+    expect(timing).toHaveBeenLastCalledWith(before[0], true);
+  } finally {
+    timing.mockRestore();
+  }
+});
+
+it('keeps the browser usable when checking the continuing session fails and allows retry', async () => {
+  const ui = renderStudyScreen();
+  await openCommunicationSession(ui);
+  fireEvent.press(ui.getByText('Cambiar tema'));
+  mockGetLastStudySession.mockRejectedValueOnce(new Error('disk read'));
+  await act(async () => fireEvent.press(ui.getByText('Seguir estudiando')));
+  expect(
+    ui.getByText('No se pudo cargar la sesión guardada. Reintenta para continuar.'),
+  ).toBeTruthy();
+  expect(ui.getByText('Seguir estudiando')).not.toBeDisabled();
+  await act(async () => fireEvent.press(ui.getByText('Seguir estudiando')));
+  expect(ui.getByText('hola')).toBeTruthy();
 });

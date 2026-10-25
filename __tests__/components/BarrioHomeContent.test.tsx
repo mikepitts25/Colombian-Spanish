@@ -98,7 +98,7 @@ test.each([
   [{ kind: 'unavailablePlan', action: 'existingStart' }, 'Open saved plan'],
   [{ kind: 'completedToday', action: 'existingStart' }, 'View completed plan'],
   [{ kind: 'appliedOnly', action: 'existingStart' }, 'Start my plan'],
-  [{ kind: 'browse', action: 'browse', reason: 'empty' }, 'Browse all decks'],
+  [{ kind: 'browse', action: 'browse', reason: 'empty' }, 'Browse all topics'],
 ] as const)('primary action follows its state: %j', (state, label) => {
   const value = props({
     presentation: { pending: false, startError: false, phases: [], ...state } as HomePresentation,
@@ -127,7 +127,7 @@ test('all practice/discovery and full-name deck callbacks retain their precise m
     fireEvent.press(ui.getByRole('button', { name: label }));
     expect(value.onTool).toHaveBeenLastCalledWith(route);
   }
-  fireEvent.press(ui.getByRole('button', { name: 'Browse all decks' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Browse all topics' }));
   expect(value.onBrowseStudy).toHaveBeenCalledTimes(1);
   const name = value.dueDecks[0].name;
   expect(ui.getByText(name).props.numberOfLines).toBeUndefined();

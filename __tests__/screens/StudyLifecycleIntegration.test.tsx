@@ -831,8 +831,8 @@ test.each([
       await assertRestored();
       expect(await getLearningEvents()).toEqual(events);
       if (target === 'edited') {
-        fireEvent.press(screen.getByText('Volver'));
-        fireEvent.press(await screen.findByText('Continuar'));
+        fireEvent.press(screen.getByText('Cambiar tema'));
+        await act(async () => fireEvent.press(screen.getByText('Seguir estudiando')));
         await screen.findByText(
           'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
         );
@@ -990,8 +990,8 @@ test.each([
     };
     await assertRestored();
     if (target === 'capped' && boundary === 'held') {
-      fireEvent.press(screen.getByText('Volver'));
-      fireEvent.press(await screen.findByText('Continuar'));
+      fireEvent.press(screen.getByText('Cambiar tema'));
+      await act(async () => fireEvent.press(screen.getByText('Seguir estudiando')));
       await screen.findByText(
         'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
       );
@@ -1003,8 +1003,8 @@ test.each([
       await assertRestored();
     }
     if (target === 'removed') {
-      expect(screen.getByText('Volver')).toBeDisabled();
-      fireEvent.press(screen.getByText('Volver'));
+      expect(screen.getByText('Cambiar tema')).toBeDisabled();
+      fireEvent.press(screen.getByText('Cambiar tema'));
       expect(screen.queryByText('Continuar')).toBeNull();
       await assertRestored();
     }
@@ -1105,8 +1105,8 @@ test.each(['first-open', 'after-manual-study'] as const)(
       expect.objectContaining({ planId: plan.id, cardId: plan.review.session.cardId, quality: 4 }),
     ]);
     if (mode === 'after-manual-study') {
-      fireEvent.press(screen.getByText('Volver'));
-      await screen.findByText('Continuar');
+      fireEvent.press(screen.getByText('Cambiar tema'));
+      await screen.findByText('Seguir estudiando');
       await saveLastStudySession({
         deckId: 'beta',
         cardId: 'manual',
@@ -1118,7 +1118,7 @@ test.each(['first-open', 'after-manual-study'] as const)(
         },
       });
       const before = await captureBackupSnapshot();
-      fireEvent.press(screen.getByText('Continuar'));
+      await act(async () => fireEvent.press(screen.getByText('Seguir estudiando')));
       await screen.findByText(
         'La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.',
       );

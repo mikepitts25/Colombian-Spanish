@@ -200,14 +200,14 @@ describe('HomeScreen quick actions', () => {
 
     const { getByText, queryByText } = render(<HomeScreen />);
 
-    await waitFor(() => expect(getByText('Browse all decks')).toBeTruthy());
+    await waitFor(() => expect(getByText('Browse all topics')).toBeTruthy());
 
     expect(queryByText('Todos los Decks')).toBeNull();
     expect(queryByText('Rested deck')).toBeNull();
 
-    fireEvent.press(getByText('Browse all decks'));
+    fireEvent.press(getByText('Browse all topics'));
 
-    expect(mockNavigate).toHaveBeenCalledWith('Study');
+    expect(mockNavigate).toHaveBeenCalledWith('Study', { topicBrowserRequest: expect.any(Number) });
   });
 
   it('shows one primary study action for due cards', async () => {
@@ -233,7 +233,7 @@ describe('HomeScreen quick actions', () => {
     await waitFor(() => expect(getByText('Estudiar tarjetas pendientes')).toBeTruthy());
     expect(getByText('Herramientas')).toBeTruthy();
     expect(getByText('Decks para repasar')).toBeTruthy();
-    expect(getByText('Ver todos los decks')).toBeTruthy();
+    expect(getByText('Ver todos los temas')).toBeTruthy();
   });
 
   it('renders exactly one Word of the Day card from slang content', async () => {
@@ -379,8 +379,8 @@ describe('Home workload honesty', () => {
     });
     const screen = render(<HomeScreen />);
     expect(await screen.findByText('New cards available today: 0')).toBeTruthy();
-    fireEvent.press(screen.getByText('Browse study decks'));
-    expect(mockNavigate).toHaveBeenCalledWith('Study');
+    fireEvent.press(screen.getByText('Browse study topics'));
+    expect(mockNavigate).toHaveBeenCalledWith('Study', { topicBrowserRequest: expect.any(Number) });
     expect(screen.queryByText('Study new cards')).toBeNull();
   });
 
@@ -388,8 +388,8 @@ describe('Home workload honesty', () => {
     mockUseDeck.mockReturnValue({ ready: true, decks: [], setActiveDeckId: jest.fn() });
     const screen = render(<HomeScreen />);
     expect(await screen.findByText('0 reviews due')).toBeTruthy();
-    fireEvent.press(await screen.findByText('Browse study decks'));
-    expect(mockNavigate).toHaveBeenCalledWith('Study');
+    fireEvent.press(await screen.findByText('Browse study topics'));
+    expect(mockNavigate).toHaveBeenCalledWith('Study', { topicBrowserRequest: expect.any(Number) });
   });
 });
 
@@ -836,3 +836,15 @@ test('greeting follows the current clock when Date hour getters retain an old zo
     jest.useRealTimers();
   }
 });
+
+it.each(['classic', 'barrio'] as const)(
+  'offers a direct topic chooser in the %s Home hero',
+  async (id) => {
+    const ui = renderWithTheme(<HomeScreen />);
+    ui.applyTheme({ themeId: id, appearanceMode: 'dark' });
+    const chooser = await ui.findByText('Choose a topic');
+    fireEvent.press(chooser);
+    expect(mockNavigate).toHaveBeenCalledWith('Study', { topicBrowserRequest: expect.any(Number) });
+    expect(mockReload).not.toHaveBeenCalled();
+  },
+);

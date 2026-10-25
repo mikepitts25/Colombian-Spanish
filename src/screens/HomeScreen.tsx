@@ -133,6 +133,7 @@ export default function HomeScreen() {
   const { ready, decks, activeDeckId, setActiveDeckId, reload } = useDeck();
   const nav = useNavigation<any>();
   const starting = useRef(false);
+  const topicRequestSequence = useRef(0);
   // Retry repeats the failed entry action; the controller still refreshes its inputs.
   const lastStartIntent = useRef<
     { kind: 'plan' } | { kind: 'study'; deckId: string; bounded: boolean } | undefined
@@ -232,9 +233,14 @@ export default function HomeScreen() {
   });
   const dueCardSub = t(totalDue === 1 ? 'home.dueSubOne' : 'home.dueSubMany');
 
+  const browseTopics = () => {
+    topicRequestSequence.current += 1;
+    nav.navigate('Study', { topicBrowserRequest: topicRequestSequence.current });
+  };
+
   const startStudy = async (deckId?: string, bounded = false) => {
     if (!deckId) {
-      nav.navigate('Study');
+      browseTopics();
       return;
     }
     if (starting.current) return;
@@ -272,7 +278,7 @@ export default function HomeScreen() {
           fresh.lastStudyDay,
         );
         if (!freshRecommendation) {
-          nav.navigate('Study');
+          browseTopics();
           return;
         }
         deckId = freshRecommendation.deckId;
@@ -307,7 +313,7 @@ export default function HomeScreen() {
       await reload({ requireFreshBudget: true });
       const plan = await openRecommendedPlan(SHOW_REVIEW_TOOLS);
       if (!plan) {
-        nav.navigate('Study');
+        browseTopics();
         return;
       }
       if (plan.phase === 'review') {
@@ -367,7 +373,7 @@ export default function HomeScreen() {
         return;
       }
       if (presentation.action === 'browse') {
-        nav.navigate('Study');
+        browseTopics();
         return;
       }
       // Display-only snapshot. The original operation still refreshes its own inputs atomically.
@@ -415,7 +421,9 @@ export default function HomeScreen() {
           onManagePlan={(planId) => {
             if (!starting.current) nav.navigate('DailyPlan', { planId });
           }}
-          onBrowseStudy={() => nav.navigate('Study')}
+          onBrowseStudy={() => {
+            if (!starting.current) browseTopics();
+          }}
           onDeckPress={(deckId) => {
             void startStudy(deckId);
           }}
@@ -575,6 +583,14 @@ export default function HomeScreen() {
                       )}
             </Text>
           </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            disabled={studyStarting}
+            onPress={browseTopics}
+            style={{ minHeight: 48, justifyContent: 'center', alignItems: 'center' }}
+          >
+            <Text style={styles.browseLink}>{t('home.chooseTopic')}</Text>
+          </Pressable>
           {unfinishedPlan && (
             <Pressable
               accessibilityRole="button"
@@ -675,7 +691,8 @@ export default function HomeScreen() {
             <Pressable
               accessibilityRole="button"
               style={[styles.browseAction, largeText && styles.browseActionLarge]}
-              onPress={() => nav.navigate('Study')}
+              onPress={browseTopics}
+              disabled={studyStarting}
             >
               <Text style={styles.browseLink}>{t('home.browseAllDecks')}</Text>
             </Pressable>
