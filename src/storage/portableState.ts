@@ -1,3 +1,4 @@
+import { validateAdventureState, emptyAdventures } from '../adventures/state';
 import { validateMissionEnvelope } from '../missions/engine';
 import { validateDailyPlanEnvelope } from './dailyPlanSchema';
 import { LEARNING_LEVELS, STUDY_MINUTES, isTripDate } from '../utils/learningProfile';
@@ -6,6 +7,7 @@ import { storedDayKey } from '../utils/calendarDay';
 import { StorageAccess } from './durableStorage';
 
 const FIELDS = {
+  adventures: { key: 'SRS_ADVENTURES_V1', empty: emptyAdventures() },
   dailyPlan: { key: 'SRS_DAILY_PLAN_V1', empty: { schemaVersion: 1, current: null } },
   missions: { key: 'SRS_MISSIONS_V1', empty: { schemaVersion: 1, runs: [] } },
   prefs: { key: 'SRS_PREFS_V1', empty: {} },
@@ -20,9 +22,10 @@ const FIELDS = {
   notificationPrefs: { key: 'SRS_NOTIFICATION_PREFS_V1', empty: {} },
 } as const;
 export type PortableState = Record<
-  Exclude<keyof typeof FIELDS, 'missions' | 'dailyPlan'>,
+  Exclude<keyof typeof FIELDS, 'missions' | 'dailyPlan' | 'adventures'>,
   unknown | null
 > & {
+  adventures?: unknown | null;
   missions?: unknown | null;
   dailyPlan?: unknown | null;
 };
@@ -54,6 +57,14 @@ function uniqueRows(
 }
 function valid(name: keyof PortableState, value: unknown): boolean {
   if (value === null) return true;
+  if (name === 'adventures') {
+    try {
+      validateAdventureState(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }
   if (name === 'dailyPlan') {
     try {
       validateDailyPlanEnvelope(value);
@@ -174,7 +185,7 @@ export function validatePortableState(value: unknown): asserts value is Portable
     Object.keys(value).some((name) => !names.includes(name as keyof PortableState)) ||
     !names.every(
       (name) =>
-        (['missions', 'dailyPlan'].includes(name) && value[name] === undefined) ||
+        (['missions', 'dailyPlan', 'adventures'].includes(name) && value[name] === undefined) ||
         (Object.prototype.hasOwnProperty.call(value, name) && valid(name, value[name])),
     )
   )

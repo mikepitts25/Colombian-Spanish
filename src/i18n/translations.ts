@@ -707,7 +707,7 @@ export const translations = {
     'settings.file.preview':
       'Exportado: {date}\n{decks} decks · {cards} tarjetas · {events} observaciones.\nAñadir tarjetas nuevas conserva el contenido y los intervalos existentes. Reemplazar decks los sobrescribe. Todas las opciones combinan el historial de aprendizaje; se conservan las observaciones locales más recientes.',
     'settings.file.stateIncluded':
-      'Incluye preferencias, metas, racha, palabras vistas, resultados y sesión guardada. Solo Restaurar estado de la app los reemplaza junto con los decks; añadir o reemplazar decks conserva el estado local. Los datos ausentes se restablecen. Requiere reiniciar. Los permisos del dispositivo no se importan.',
+      'Incluye preferencias, metas, racha, palabras vistas, resultados y sesión guardada. Incluye el progreso de las aventuras y los sellos del pasaporte. Restaurar una copia anterior reemplaza el progreso más reciente. Solo Restaurar estado de la app los reemplaza junto con los decks; añadir o reemplazar decks conserva el estado local. Los datos ausentes se restablecen. Requiere reiniciar. Los permisos del dispositivo no se importan.',
     'settings.file.stateOmitted':
       'Este respaldo antiguo no incluye preferencias ni el resto del estado de la app.',
     'settings.file.restoreState': 'Restaurar estado de la app',
@@ -1484,7 +1484,7 @@ export const translations = {
     'settings.file.preview':
       'Exported: {date}\n{decks} decks · {cards} cards · {events} observations.\nAdd new cards keeps existing content and schedules. Replace decks overwrites them. Every option merges learning history and keeps newer local observations.',
     'settings.file.stateIncluded':
-      'Includes preferences, daily goals, streak, seen words, results and saved session. Only Restore app state replaces these along with decks; adding or replacing decks keeps local app state. Missing source values reset to defaults. Restart required. Device permissions are not imported.',
+      'Includes preferences, daily goals, streak, seen words, results and saved session. Includes café adventure progress and passport stamps. Restoring an older backup replaces newer adventure progress. Only Restore app state replaces these along with decks; adding or replacing decks keeps local app state. Missing source values reset to defaults. Restart required. Device permissions are not imported.',
     'settings.file.stateOmitted': 'This older backup omits preferences and other app state.',
     'settings.file.restoreState': 'Restore app state',
     'settings.file.restart':
