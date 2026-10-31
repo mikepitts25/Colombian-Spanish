@@ -353,6 +353,14 @@ export default function SettingsScreen() {
       >
         <Text style={styles.pageTitle}>⚙️ {t('settings.title')}</Text>
 
+        <View style={styles.groupCard}>
+          <SettingsRow
+            emoji="📚"
+            title={t('library.link')}
+            subtitle={t('library.linkSubtitle')}
+            onPress={() => nav.navigate('Library')}
+          />
+        </View>
         {/* Aprendizaje */}
         <Text style={styles.groupLabel}>{t('settings.section.learning')}</Text>
         <View style={styles.groupCard}>

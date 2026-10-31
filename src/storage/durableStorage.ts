@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const JOURNAL_KEY = 'SRS_WRITE_JOURNAL_V1';
 const DATA_KEYS = new Set([
+  'SRS_LIBRARY_COHORT_V1',
   'SRS_DECKS_V3',
   'SRS_DAILY_PROGRESS_V1',
   'SRS_LAST_STUDY_SESSION_V1',

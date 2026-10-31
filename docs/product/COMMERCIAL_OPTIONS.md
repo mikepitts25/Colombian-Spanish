@@ -1,5 +1,7 @@
 # Commercial options for owner review
 
+**October 31 decision:** the owner selected generous free core plus a US$19.99 one-time library unlock and authorized integration. See [current scope/configuration](LIBRARY_UNLOCK.md). The scenarios below remain historical analysis, not the selected product contract.
+
 Prepared 2026-10-16 for B14.2-A. These are concrete product options and hypothetical cost scenarios, not selected prices, vendor quotes, a revenue forecast or authorization to introduce payments. No paywall, billing account, customer contact or purchase was created. [Current competition](../../COMPETITIVE_ANALYSIS.md) and the [pilot](../pilot/PROTOCOL.md) inform the next decision.
 
 The current app has no entitlements or paid hosted service. Its 1,392-card development catalogue has no currently accepted release cards. A saleable library depends first on accepted content/rights, a verified candidate and a clear maintenance/support commitment. Do not charge for an unsupported authenticity or learning-effect claim.

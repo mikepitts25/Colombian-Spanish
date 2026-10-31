@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getLearningEvents } from '../../src/storage/learningEvents';
-import { act, fireEvent, waitFor, within } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
 import { Dimensions, ScrollView } from 'react-native';
 import QuizScreen from '../../src/screens/QuizScreen';
 import { Deck, FlashCard } from '../../src/types';
@@ -467,4 +467,23 @@ test('Barrio Finish shows pressed and pending paint while preserving one result 
   screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
   expect(screen.getByText('See results')).toHaveStyle({ color: '#020617' });
   await act(async () => release([]));
+});
+
+test('stops an active quiz when learning access changes, including cached distractor content', async () => {
+  mockUseDeck.mockReturnValue({ ready: true, decks: [DECK] });
+  const ui = render(<QuizScreen />);
+  fireEvent.press(await ui.findByText('Start Quiz'));
+  await waitFor(() => expect(ui.queryByText('Start Quiz')).toBeNull());
+  const optionsBefore = CARDS.filter((card) => ui.queryByText(card.back));
+  expect(optionsBefore.length).toBeGreaterThan(1);
+  // Retain the current question's card, but remove access to the distractors.
+  const current = CARDS.find((card) => ui.queryByText(card.front))!;
+  expect(current).toBeDefined();
+  mockUseDeck.mockReturnValue({ ready: true, decks: [{ ...DECK, cards: [current] }] });
+  ui.rerender(<QuizScreen />);
+  expect(ui.queryByText(current.front)).toBeNull();
+  expect(
+    ui.getByText('Your available library changed. Start a new quiz with your accessible cards.'),
+  ).toBeTruthy();
+  expect(await getLearningEvents()).toEqual([]);
 });

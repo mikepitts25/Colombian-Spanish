@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AudioPreferencesScreen from '../screens/AudioPreferencesScreen';
 import ThemeSettingsScreen from '../screens/ThemeSettingsScreen';
 
+import LibraryScreen from '../screens/LibraryScreen';
 import ListeningScreen from '../screens/ListeningScreen';
 import VoicePracticeScreen from '../screens/VoicePracticeScreen';
 import MissionScreen from '../screens/MissionScreen';
@@ -154,6 +155,7 @@ export default function RootNavigator() {
         component={ThemeSettingsScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="Library" component={LibraryScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Root" component={Tabs} options={{ headerShown: false }} />
       <Stack.Screen name="DailyPlan" component={DailyPlanScreen} options={{ headerShown: false }} />
       <Stack.Screen

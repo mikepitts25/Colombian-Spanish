@@ -22,7 +22,7 @@ const SEED_CARD: FlashCard = {
 };
 
 const SEED_DECK: Deck = {
-  id: 'deck-seed',
+  id: 'deck-greetings',
   name: 'Seed Deck',
   cards: [SEED_CARD],
 };
@@ -30,7 +30,7 @@ const SEED_DECK: Deck = {
 jest.mock('../../src/data/decks', () => ({
   ALL_DECKS: [
     {
-      id: 'deck-seed',
+      id: 'deck-greetings',
       name: 'Seed Deck',
       cards: [
         {
@@ -108,7 +108,7 @@ describe('DeckProvider initialization', () => {
     });
     const stored = await AsyncStorage.getItem('SRS_DECKS_V3');
     const parsed = JSON.parse(stored!);
-    expect(parsed[0].id).toBe('deck-seed');
+    expect(parsed[0].id).toBe('deck-greetings');
   });
 
   it('does not duplicate existing seed decks on re-mount', async () => {
@@ -141,7 +141,7 @@ describe('DeckProvider initialization', () => {
     };
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', [oldStoredCard])]),
+      JSON.stringify([makeStoredDeck('deck-greetings', [oldStoredCard])]),
     );
 
     const { getByTestId } = renderWithProvider(<Consumer />);
@@ -175,7 +175,7 @@ describe('DeckProvider initialization', () => {
     };
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', [reviewedStoredCard])]),
+      JSON.stringify([makeStoredDeck('deck-greetings', [reviewedStoredCard])]),
     );
 
     const { getByTestId } = renderWithProvider(<Consumer />);
@@ -198,9 +198,12 @@ describe('DeckProvider initialization', () => {
 
   it('sets activeDeckId to first deck', async () => {
     const { getByTestId } = renderWithProvider(<Consumer />);
-    await waitFor(() => expect(getByTestId('active-deck-id').props.children).toBe('deck-seed'), {
-      timeout: 10000,
-    });
+    await waitFor(
+      () => expect(getByTestId('active-deck-id').props.children).toBe('deck-greetings'),
+      {
+        timeout: 10000,
+      },
+    );
   });
 });
 
@@ -211,7 +214,7 @@ describe('getStudyBatch', () => {
     const cards = [makeCard('c1'), makeCard('c2'), makeCard('c3')];
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', cards)]),
+      JSON.stringify([makeStoredDeck('deck-greetings', cards)]),
     );
 
     let batch: FlashCard[] = [];
@@ -229,7 +232,7 @@ describe('getStudyBatch', () => {
     const cards = Array.from({ length: 10 }, (_, i) => makeCard(`c${i}`));
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', cards)]),
+      JSON.stringify([makeStoredDeck('deck-greetings', cards)]),
     );
 
     let batch: FlashCard[] = [];
@@ -251,7 +254,7 @@ describe('recordAnswer', () => {
     const card = makeCard('grade-me', { reps: 0, ease: 2.5 });
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+      JSON.stringify([makeStoredDeck('deck-greetings', [card])]),
     );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
@@ -281,7 +284,7 @@ describe('recordAnswer', () => {
     });
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+      JSON.stringify([makeStoredDeck('deck-greetings', [card])]),
     );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
@@ -302,7 +305,7 @@ describe('recordAnswer', () => {
     expect(stored).toEqual([
       expect.objectContaining({
         cardId: 'quiz-word',
-        deckId: 'deck-seed',
+        deckId: 'deck-greetings',
         front: 'parce',
         back: 'friend / buddy',
         spanish: 'parce',
@@ -317,7 +320,7 @@ describe('recordAnswer', () => {
     const card = makeCard('streak-word');
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+      JSON.stringify([makeStoredDeck('deck-greetings', [card])]),
     );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
@@ -343,7 +346,7 @@ describe('recordAnswer', () => {
     const card = makeCard('real-id');
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+      JSON.stringify([makeStoredDeck('deck-greetings', [card])]),
     );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
@@ -370,7 +373,7 @@ describe('recordAnswer', () => {
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
       JSON.stringify([
-        makeStoredDeck('deck-seed', [activeCard]),
+        makeStoredDeck('deck-greetings', [activeCard]),
         makeStoredDeck('deck-other', [difficultCard]),
       ]),
     );
@@ -402,7 +405,7 @@ describe('toggleFavorite', () => {
     const card = makeCard('fav-card', { favorite: false });
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+      JSON.stringify([makeStoredDeck('deck-greetings', [card])]),
     );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
@@ -428,7 +431,7 @@ describe('toggleFavorite', () => {
     const card = makeCard('fav-card', { favorite: true });
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+      JSON.stringify([makeStoredDeck('deck-greetings', [card])]),
     );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
@@ -462,7 +465,7 @@ describe('updateCardReview', () => {
     });
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', [card])]),
+      JSON.stringify([makeStoredDeck('deck-greetings', [card])]),
     );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
@@ -577,7 +580,7 @@ describe('resetDeckProgress', () => {
     const studiedCard = makeCard('studied', { reps: 5, interval: 14, ease: 2.9 });
     await AsyncStorage.setItem(
       'SRS_DECKS_V3',
-      JSON.stringify([makeStoredDeck('deck-seed', [studiedCard])]),
+      JSON.stringify([makeStoredDeck('deck-greetings', [studiedCard])]),
     );
 
     let ctx: ReturnType<typeof useDeckContext> | null = null;
@@ -591,7 +594,7 @@ describe('resetDeckProgress', () => {
     await waitFor(() => expect(ctx?.ready).toBe(true), { timeout: 10000 });
 
     await act(async () => {
-      await ctx!.resetDeckProgress('deck-seed');
+      await ctx!.resetDeckProgress('deck-greetings');
     });
 
     const stored = JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!);
@@ -604,7 +607,10 @@ describe('resetDeckProgress', () => {
 
 it('keeps provider state unchanged when the grade journal cannot be saved', async () => {
   const card = makeCard('write-failure');
-  await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([makeStoredDeck('deck-seed', [card])]));
+  await AsyncStorage.setItem(
+    'SRS_DECKS_V3',
+    JSON.stringify([makeStoredDeck('deck-greetings', [card])]),
+  );
   let ctx: ReturnType<typeof useDeckContext> | undefined;
   renderWithProvider(
     <Consumer
@@ -759,7 +765,7 @@ describe('custom create intent recovery', () => {
     const card = { id: 'custom-retry', front: 'parce', back: 'friend', tags: ['custom'] };
     try {
       await act(async () => {
-        await expect(context().addCardToDeck('deck-seed', card)).rejects.toThrow(
+        await expect(context().addCardToDeck('deck-greetings', card)).rejects.toThrow(
           'interrupted apply',
         );
       });
@@ -783,7 +789,7 @@ describe('custom create intent recovery', () => {
       })),
     );
     await act(async () => {
-      await context().addCardToDeck('deck-seed', card);
+      await context().addCardToDeck('deck-greetings', card);
     });
     const stored = await loadDecks();
     expect(stored[0].cards).toHaveLength(2);

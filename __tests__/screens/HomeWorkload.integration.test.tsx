@@ -39,7 +39,7 @@ jest.mock('../../src/services/tts', () => ({ speakCard: jest.fn(), stop: jest.fn
 jest.mock('../../src/data/decks', () => ({
   ALL_DECKS: [
     {
-      id: 'fresh',
+      id: 'deck-travel',
       name: 'Travel',
       cards: [
         {

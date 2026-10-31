@@ -208,23 +208,11 @@ src/
 
 ## 💰 Monetization Plan
 
-### Premium Tier: $4.99 (One-time)
+### One-time library unlock: intended US$19.99
 
-| Feature     | Free    | Premium        |
-| ----------- | ------- | -------------- |
-| Cards       | 200     | 1,016+         |
-| Decks       | 7       | 35+            |
-| Audio       | TTS     | Native speaker |
-| Favorites   | 50      | Unlimited      |
-| Cloud sync  | ❌      | ✅             |
-| New content | Monthly | Weekly         |
+Owner selected October 31, 2026. Ten starter collections and all core learning tools remain free. The one-time unlock covers the additional bundled collections, with generated pronunciation included for accessible content. No subscription, ads, favorite limits, promised human recordings or cloud sync are part of this offer.
 
-### Revenue Projections
-
-- **Month 1:** $0-100 (launch)
-- **Month 3:** $200-500 (word of mouth)
-- **Month 6:** $500-1,000 (steady)
-- **Year 1:** $5,000-10,000
+See [current product scope, account setup and acceptance](docs/product/LIBRARY_UNLOCK.md). Store/RevenueCat configuration and real billing acceptance remain open. Historical revenue projections were unsupported and are removed; actual demand and profit are not established.
 
 ---
 

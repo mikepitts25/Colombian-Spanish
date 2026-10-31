@@ -6,6 +6,12 @@ import {
   resetDeckProgressById,
   getDailyProgress,
 } from '../storage/storage';
+import { accessibleDecks, isPaidBundledCard } from '../billing/catalog';
+import { usePurchases } from './PurchaseContext';
+import { initializeLibraryCohort } from '../storage/libraryCohort';
+import { withStorageTransaction } from '../storage/durableStorage';
+import { saveDecks } from '../storage/storage';
+import { validateBackupDecks } from '../storage/backupValidation';
 import { getPrefs } from '../storage/prefs';
 import { commitFlashcardAnswer, AnswerOptions } from '../storage/flashcardAnswer';
 import { createLearningSessionId } from '../storage/learningEvents';
@@ -28,6 +34,9 @@ try {
 type Ctx = {
   ready: boolean;
   decks: Deck[];
+  allDecks: Deck[];
+  hasFullLibrary: boolean;
+  legacyLibrary: boolean;
   activeDeck: Deck | undefined;
   activeDeckId: string | undefined;
   setActiveDeckId: (id: string) => void;
@@ -95,7 +104,14 @@ function mergeSeedDeckContent(storedDeck: Deck, seedDeck: Deck): Deck {
 }
 
 export function DeckProvider({ children }: { children: ReactNode }) {
-  const [decks, setDecks] = useState<Deck[]>([]);
+  const [storedDecks, setDecks] = useState<Deck[]>([]);
+  const purchases = usePurchases();
+  const [legacyLibrary, setLegacyLibrary] = useState(false);
+  const hasFullLibrary = legacyLibrary || purchases.fullLibrary;
+  const decks = useMemo(
+    () => accessibleDecks(storedDecks, hasFullLibrary),
+    [storedDecks, hasFullLibrary],
+  );
   const [ready, setReady] = useState(false);
   const [startupError, setStartupError] = useState(false);
   const [startupAttempt, setStartupAttempt] = useState(0);
@@ -104,8 +120,17 @@ export function DeckProvider({ children }: { children: ReactNode }) {
   const [newIntroducedToday, setNewIntroducedToday] = useState(0);
 
   async function seedOrMerge() {
-    const working = await mutateDecks((stored) => {
-      if (!stored.length) return JSON.parse(JSON.stringify(SEED_DECKS)) as Deck[];
+    let legacy = false;
+    const working = await withStorageTransaction(async (tx) => {
+      const raw = await tx.getItem('SRS_DECKS_V3');
+      const stored: Deck[] = raw === null ? [] : JSON.parse(raw);
+      validateBackupDecks(stored);
+      legacy = await initializeLibraryCohort(tx, stored.length > 0);
+      if (!stored.length) {
+        const seeded = JSON.parse(JSON.stringify(SEED_DECKS)) as Deck[];
+        await saveDecks(seeded, tx);
+        return seeded;
+      }
       const seedsById = new Map(SEED_DECKS.map((d) => [d.id, d]));
       const merged = stored.map((deck) => {
         const seedDeck = seedsById.get(deck.id);
@@ -115,8 +140,10 @@ export function DeckProvider({ children }: { children: ReactNode }) {
       for (const deck of SEED_DECKS) {
         if (!present.has(deck.id)) merged.push(JSON.parse(JSON.stringify(deck)) as Deck);
       }
+      await saveDecks(merged, tx);
       return merged;
     });
+    setLegacyLibrary(legacy);
     setDecks(working);
     if (!activeDeckId && working.length > 0) setActiveDeckId(working[0].id);
   }
@@ -164,6 +191,9 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     quality: 0 | 1 | 2 | 3 | 4 | 5,
     options?: AnswerOptions,
   ) {
+    if (!hasFullLibrary && isPaidBundledCard(cardId)) {
+      throw new Error('Library access required');
+    }
     const identity = options ?? {
       attemptId: createLearningSessionId(),
       sessionId: createLearningSessionId(),
@@ -302,6 +332,9 @@ export function DeckProvider({ children }: { children: ReactNode }) {
   const value: Ctx = {
     ready,
     decks,
+    allDecks: storedDecks,
+    hasFullLibrary,
+    legacyLibrary,
     activeDeck,
     activeDeckId,
     setActiveDeckId,

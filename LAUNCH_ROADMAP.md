@@ -35,11 +35,11 @@ Legend: 🟢 done · 🟡 in progress · 🔴 not started · ⏸️ deferred
 
 ## Phase 3 — Ship (Weeks 3–4)
 
-| #   | Item                                      | Status | Notes                                                                                                            |
-| --- | ----------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------- |
-| 3.1 | Store listings + screenshots              | 🔴     | Subtitle: "Slang, Voseo & Paisa Culture". Keywords: parcero, paisa, Medellín, Colombian slang, voseo.            |
-| 3.2 | Monetization (RevenueCat lifetime unlock) | ⏸️     | **Deferred by decision** — revisit before submission. Free core + one-time unlock recommended over subscription. |
-| 3.3 | Submit iOS + Android                      | 🔴     |                                                                                                                  |
+| #   | Item                                     | Status | Notes                                                                                                                                                                             |
+| --- | ---------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 3.1 | Store listings + screenshots             | 🔴     | Subtitle: "Slang, Voseo & Paisa Culture". Keywords: parcero, paisa, Medellín, Colombian slang, voseo.                                                                             |
+| 3.2 | Monetization (RevenueCat library unlock) | 🟡     | Owner selected free core + US$19.99 one-time purchase on October 31. Code integrated; [account configuration and billing acceptance](docs/product/LIBRARY_UNLOCK.md) remain open. |
+| 3.3 | Submit iOS + Android                     | 🔴     |                                                                                                                                                                                   |
 
 ## Phase 4 — Post-launch (deferred)
 

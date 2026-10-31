@@ -254,3 +254,15 @@ test('morning window uses current-zone calendar dates when native Date getters a
     jest.useRealTimers();
   }
 });
+
+test('scheduled words always come from free starter collections', async () => {
+  const { ALL_DECKS } = require('../../src/data/decks');
+  const { FREE_DECK_IDS } = require('../../src/billing/catalog');
+  const phrases = ALL_DECKS.filter((deck: any) => FREE_DECK_IDS.has(deck.id)).flatMap((deck: any) =>
+    deck.cards.map((card: any) => card.front),
+  );
+  await saveAndScheduleNotificationPreferences(DEFAULT_NOTIFICATION_PREFS);
+  for (const [arg] of morningCalls()) {
+    expect(phrases.some((phrase: string) => arg.content.title.includes(phrase))).toBe(true);
+  }
+});

@@ -2,6 +2,53 @@ import { UiLanguage } from '../storage/prefs';
 
 export const translations = {
   es: {
+    'library.quizChanged':
+      'Tu biblioteca disponible cambió. Empieza un nuevo quiz con tus tarjetas disponibles.',
+    'library.quizRestart': 'Volver a preparar el quiz',
+    'library.title': 'Tu biblioteca colombiana',
+    'library.intro':
+      'Aprende a tu ritmo. Conserva lo esencial gratis o explora más colecciones colombianas con una sola compra.',
+    'library.freeTitle': 'Gratis para ti',
+    'library.freeCount': '{decks} colecciones iniciales · {cards} tarjetas',
+    'library.freeTools':
+      'El repaso, los quizzes, la pronunciación incluida, las favoritas, tus tarjetas, el progreso y las copias de seguridad siguen gratis. Sin anuncios ni límites por errores.',
+    'library.fullTitle': 'Biblioteca colombiana completa',
+    'library.paidCount': '{decks} colecciones adicionales · {cards} tarjetas adicionales',
+    'library.scope':
+      'Desbloquea las colecciones adicionales que aparecen abajo y su pronunciación incluida. Incluye las correcciones de estas colecciones. No incluye futuros cursos vendidos por separado ni servicios en línea.',
+    'library.oneTime': 'Una sola compra. Sin suscripción.',
+    'library.buy': 'Desbloquear biblioteca · {price}',
+    'library.unlocked': 'Tu biblioteca completa está desbloqueada.',
+    'library.legacy':
+      'Gracias por aprender con nosotros desde el principio. Tu instalación actual conserva su biblioteca sin costo. Este acceso solo en este dispositivo no es una compra de la tienda y puede perderse al desinstalar o cambiar de dispositivo. Las copias de seguridad conservan tu progreso, no este acceso.',
+    'library.continue': 'Seguir aprendiendo',
+    'library.continueFree': 'Seguir aprendiendo gratis',
+    'library.unavailable':
+      'Las compras no están disponibles ahora. Puedes seguir aprendiendo gratis.',
+    'library.restore': 'Restaurar compras',
+    'library.restoreNote':
+      'Restaura tu compra con la misma cuenta de la tienda. Una copia del progreso no restaura el acceso comprado. Tu progreso se conserva si cambia el acceso.',
+    'library.retry': 'Actualizar tienda',
+    'library.working': 'Consultando la tienda…',
+    'library.collections': 'Colecciones adicionales incluidas',
+    'library.cardCount': '{count} tarjetas',
+    'library.preview': 'Ver muestra de la colección: {name}',
+    'library.sample': 'Frase de muestra',
+    'library.audio':
+      'La pronunciación incluida es audio generado, con voz del dispositivo como alternativa cuando está disponible. No es una grabación humana ni una evaluación de pronunciación.',
+    'library.status.unavailable':
+      'Las compras no están disponibles ahora. Puedes seguir aprendiendo gratis.',
+    'library.status.error':
+      'No se pudo conectar con la tienda. Tu progreso sigue guardado. Actualiza la tienda o intenta restaurar cuando tengas conexión.',
+    'library.status.cancelled': 'Compra cancelada. Puedes seguir aprendiendo gratis.',
+    'library.status.pending':
+      'La tienda aún no ha confirmado el acceso. Si el pago o la aprobación están pendientes, espera la confirmación y luego actualiza o restaura. Puedes seguir aprendiendo gratis.',
+    'library.status.purchased': 'Compra confirmada. Disfruta tu biblioteca.',
+    'library.status.restored': 'Tu compra de la biblioteca se ha restaurado.',
+    'library.status.nothing':
+      'No se encontró una compra de la biblioteca en esta cuenta. Si compraste con otra cuenta, cambia de cuenta y vuelve a restaurar.',
+    'library.link': 'Explorar la biblioteca completa',
+    'library.linkSubtitle': 'Contenido esencial gratis y biblioteca con una sola compra',
     'home.barrio.intro': 'Un poco de práctica para hoy.',
     'home.barrio.planEyebrow': 'TU PLAN DIARIO',
     'home.barrio.freshTitle': 'Un paso para hoy',
@@ -744,6 +791,53 @@ export const translations = {
     'nav.difficultWords': 'Palabras Difíciles',
   },
   en: {
+    'library.quizChanged':
+      'Your available library changed. Start a new quiz with your accessible cards.',
+    'library.quizRestart': 'Return to quiz setup',
+    'library.title': 'Your Colombian library',
+    'library.intro':
+      'Learn at your own pace. Keep the essentials free, or explore more Colombian collections with one purchase.',
+    'library.freeTitle': 'Yours for free',
+    'library.freeCount': '{decks} starter collections · {cards} cards',
+    'library.freeTools':
+      'Review, quizzes, included pronunciation, favorites, custom cards, progress and backups stay free. No ads or limits on mistakes.',
+    'library.fullTitle': 'Full Colombian Library',
+    'library.paidCount': '{decks} additional collections · {cards} additional cards',
+    'library.scope':
+      'Unlock the additional collections listed below and their included pronunciation. Corrections to these collections are included. Future separately sold courses and online services are not included.',
+    'library.oneTime': 'One-time purchase. No subscription.',
+    'library.buy': 'Unlock library · {price}',
+    'library.unlocked': 'Your full library is unlocked.',
+    'library.legacy':
+      'Thank you for learning with us early. Your existing installation keeps its library at no charge. This device-only access is not a store purchase and may be lost after uninstalling or changing devices. Backups preserve learning progress, not this access grant.',
+    'library.continue': 'Continue learning',
+    'library.continueFree': 'Continue learning for free',
+    'library.unavailable':
+      'Purchases are unavailable right now. Your free learning is still available.',
+    'library.restore': 'Restore purchases',
+    'library.restoreNote':
+      'Restore a library purchase using the same store account. A learning backup does not restore purchase access. Progress stays saved if purchase access changes.',
+    'library.retry': 'Refresh store',
+    'library.working': 'Checking with the store…',
+    'library.collections': 'Included additional collections',
+    'library.cardCount': '{count} cards',
+    'library.preview': 'Preview collection: {name}',
+    'library.sample': 'Sample phrase',
+    'library.audio':
+      'Included pronunciation is generated audio, with device speech as a fallback where available. It is not a human recording or a pronunciation assessment.',
+    'library.status.unavailable':
+      'Purchases are unavailable right now. Your free learning is still available.',
+    'library.status.error':
+      'Could not reach the store. Your learning is still saved. Refresh the store or try restoring again when connected.',
+    'library.status.cancelled': 'Purchase cancelled. You can keep learning for free.',
+    'library.status.pending':
+      'The store has not confirmed access yet. If approval or payment is pending, wait for confirmation, then refresh or restore. You can keep learning for free.',
+    'library.status.purchased': 'Purchase confirmed. Enjoy your library.',
+    'library.status.restored': 'Your library purchase has been restored.',
+    'library.status.nothing':
+      'No library purchase was found for this store account. If you bought it with another account, switch accounts and restore again.',
+    'library.link': 'Explore the full library',
+    'library.linkSubtitle': 'Free essentials and a one-time library unlock',
     'home.barrio.intro': 'A little practice for today.',
     'home.barrio.planEyebrow': 'YOUR DAILY PLAN',
     'home.barrio.freshTitle': 'One step for today',

@@ -1,5 +1,6 @@
 import AsyncStorage from '../storage/durableStorage';
 import * as Notifications from 'expo-notifications';
+import { accessibleDecks } from '../billing/catalog';
 import { ALL_DECKS } from '../data/decks';
 import { getPrefs, UiLanguage } from '../storage/prefs';
 import { pickWordOfDay } from '../utils/wordOfDay';
@@ -73,7 +74,7 @@ async function scheduleDailyReminder(hour: number, minute: number, title: string
 }
 
 function morningCopy(language: UiLanguage, date: Date): { title: string; body: string } {
-  const word = pickWordOfDay(ALL_DECKS, date);
+  const word = pickWordOfDay(accessibleDecks(ALL_DECKS, false), date);
   if (!word) {
     return language === 'es'
       ? {

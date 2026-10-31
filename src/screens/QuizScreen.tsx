@@ -123,10 +123,25 @@ export default function QuizScreen() {
     });
   }, [activeRegion, cardRowsById, seenWords]);
 
+  // Questions and distractors are snapshots: invalidate them when access/content changes.
+  const sessionAvailable = useMemo(() => {
+    if (!session) return true;
+    const meanings = new Set(allCards.map((row) => row.card.back));
+    return session.questions.every((question) => {
+      const row = cardRowsById.get(question.cardId);
+      return (
+        row?.deckId === question.deckId &&
+        row.card.front === question.spanish &&
+        row.card.back === question.correctAnswer &&
+        question.options.every((option) => meanings.has(option))
+      );
+    });
+  }, [allCards, cardRowsById, session]);
+
   const currentQuestion = useMemo(() => {
-    if (!session || quizComplete) return null;
+    if (!session || quizComplete || !sessionAvailable) return null;
     return session.questions[session.currentIndex] ?? null;
-  }, [session, quizComplete]);
+  }, [session, quizComplete, sessionAvailable]);
 
   const filteredHistory = useMemo(() => {
     if (activeRegion === 'all') return quizHistory;
@@ -249,7 +264,7 @@ export default function QuizScreen() {
 
   const handleNext = useCallback(
     async (wasCorrect: boolean) => {
-      if (!session || !answered.current || advancing.current) return;
+      if (!session || !sessionAvailable || !answered.current || advancing.current) return;
       advancing.current = true;
       setSaving(true);
       const nextAnswers = [...session.answers, wasCorrect];
@@ -281,11 +296,11 @@ export default function QuizScreen() {
         if (mounted.current) setSaving(false);
       }
     },
-    [finishQuiz, session],
+    [finishQuiz, session, sessionAvailable],
   );
 
   const persistAnswer = useCallback(async () => {
-    if (!pending.current || submitting.current) return;
+    if (!sessionAvailable || !pending.current || submitting.current) return;
     submitting.current = true;
     setSaving(true);
     setSaveError(false);
@@ -304,7 +319,7 @@ export default function QuizScreen() {
       submitting.current = false;
       if (mounted.current) setSaving(false);
     }
-  }, []);
+  }, [sessionAvailable]);
 
   const handleSelectOption = useCallback(
     (option: string) => {
@@ -394,6 +409,32 @@ export default function QuizScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.center}>
           <Text style={styles.loadingText}>{t('common.loading')}</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (session && !sessionAvailable) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.center}>
+          <Text accessibilityRole="alert" style={styles.emptySub}>
+            {t('library.quizChanged')}
+          </Text>
+          <Pressable
+            accessibilityRole="button"
+            style={styles.primaryButton}
+            onPress={() => {
+              pending.current = null;
+              answered.current = false;
+              setSession(null);
+              setQuizComplete(false);
+              setShowFeedback(false);
+              setSaveError(false);
+            }}
+          >
+            <Text style={styles.primaryButtonText}>{t('library.quizRestart')}</Text>
+          </Pressable>
         </View>
       </SafeAreaView>
     );

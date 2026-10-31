@@ -8,7 +8,7 @@ Updated **2026-10-16** for B14.1. [MASTER_PLAN.md](MASTER_PLAN.md), especially B
 - iPad is enabled and the native interface style is automatic; current app settings include appearance choices. Final candidate/theme/tablet acceptance remains separate from configuration.
 - Development inventory: **47 decks / 1,392 cards / 1,392 bundled generated audio mappings**. The actual release count must come from the accepted release export. All current cards await current editorial acceptance; production content preflight intentionally blocks the empty accepted catalogue.
 - Text mission and three-clip listening practice are development-only editorial previews. They must not appear in released-feature marketing until deliberately accepted and included in a candidate.
-- There are no implemented payments, hosted conversation service, sync accounts or accepted human dialogue recordings. Do not advertise them or assign a price to hypothetical entitlements.
+- One-time library purchase/restore code is integrated with conditional RevenueCat configuration; [account setup and device billing acceptance](docs/product/LIBRARY_UNLOCK.md) are still required before advertising or selling it. Hosted conversation service, sync accounts and accepted human dialogue recordings remain absent.
 
 ## Copy for candidate review
 
@@ -38,7 +38,7 @@ The owner authorized bounded iOS TestFlight preparation on October20. Use [the a
 - [ ] **AI + device access:** build and test the named signed candidate on promised iOS/Android support boundaries and enabled iPads. Cover backups/restore/reinstall/upgrade, offline cold launch, interruptions, audio routes, permissions/reminders, accessibility, performance and crash behavior. Expo Go and JavaScript bundles are supplementary evidence.
 - [ ] **Owner + AI:** confirm code licensing and content/asset/audio rights; the repository currently has no checked-in LICENSE file.
 - [ ] **Owner + AI:** resolve developer identity, distribution/signing access, agreements, required account data and production settings. AI can prepare builds and metadata; owner actions and publication remain explicit.
-- [ ] **Owner + AI, conditional:** select whether charging is justified, then implement/configure entitlements and restore purchases. Test purchase/cancellation/refund/offline/reinstall in the appropriate sandbox and on hardware before advertising paid access. No billing SDK/provider or price is selected by this document.
+- [ ] **Owner + AI, conditional:** select whether charging is justified, then implement/configure entitlements and restore purchases. Test purchase/cancellation/refund/offline/reinstall in the appropriate sandbox and on hardware before advertising paid access. Owner selected RevenueCat and intended US$19.99 one-time library purchase on October 31; code is integrated, while configured products and real transaction/device acceptance remain open.
 - [ ] **Owner:** approve the concrete candidate and submitted listing. Store submission/publication is not authorized by a development merge.
 
 ## Reproducible engineering checks

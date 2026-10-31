@@ -8998,6 +8998,104 @@
       "path": "App.tsx",
       "role": "danger",
       "line": 39
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|bg|1",
+      "base": "src/screens/LibraryScreen.tsx|bg",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "bg",
+      "line": 158
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|textPrimary|1",
+      "base": "src/screens/LibraryScreen.tsx|textPrimary",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "textPrimary",
+      "line": 167
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|textPrimary|2",
+      "base": "src/screens/LibraryScreen.tsx|textPrimary",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "textPrimary",
+      "line": 168
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|textPrimary|3",
+      "base": "src/screens/LibraryScreen.tsx|textPrimary",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "textPrimary",
+      "line": 169
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|textSecondary|1",
+      "base": "src/screens/LibraryScreen.tsx|textSecondary",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "textSecondary",
+      "line": 170
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|surface|1",
+      "base": "src/screens/LibraryScreen.tsx|surface",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "surface",
+      "line": 172
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|border|1",
+      "base": "src/screens/LibraryScreen.tsx|border",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "border",
+      "line": 173
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|border|2",
+      "base": "src/screens/LibraryScreen.tsx|border",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "border",
+      "line": 185
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|textPrimary|4",
+      "base": "src/screens/LibraryScreen.tsx|textPrimary",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "textPrimary",
+      "line": 188
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|brand|1",
+      "base": "src/screens/LibraryScreen.tsx|brand",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "brand",
+      "line": 189
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|brand|2",
+      "base": "src/screens/LibraryScreen.tsx|brand",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "brand",
+      "line": 189
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|onBrand|1",
+      "base": "src/screens/LibraryScreen.tsx|onBrand",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "onBrand",
+      "line": 190
+    },
+    {
+      "key": "src/screens/LibraryScreen.tsx|border|3",
+      "base": "src/screens/LibraryScreen.tsx|border",
+      "path": "src/screens/LibraryScreen.tsx",
+      "role": "border",
+      "line": 192
+    },
+    {
+      "key": "src/screens/StudyScreen.tsx|brand|15",
+      "base": "src/screens/StudyScreen.tsx|brand",
+      "path": "src/screens/StudyScreen.tsx",
+      "role": "brand",
+      "line": 1582
     }
   ],
   "contrastPairs": [

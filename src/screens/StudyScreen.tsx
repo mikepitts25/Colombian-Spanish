@@ -836,6 +836,15 @@ export default function StudyScreen() {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
+          <Pressable
+            accessibilityRole="button"
+            style={{ minHeight: 48, justifyContent: 'center', paddingVertical: 12 }}
+            onPress={() => nav.navigate('Library')}
+          >
+            <Text style={{ color: colors.brand, fontSize: 16, fontWeight: '700' }}>
+              {t('library.link')}
+            </Text>
+          </Pressable>
           <View style={styles.landingHeader}>
             <Text style={styles.landingTitle}>{t('study.topics.title')}</Text>
           </View>

@@ -6,6 +6,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import RootNavigator from './src/navigation';
 import { LanguageProvider } from './src/context/LanguageContext';
 import { ThemeProvider, useAppTheme } from './src/context/ThemeContext';
+import { PurchaseProvider } from './src/context/PurchaseContext';
 import { DeckProvider } from './src/hooks/useDeck';
 import ErrorBoundary, { CrashBoundary } from './src/components/ErrorBoundary';
 import StorageGate from './src/components/StorageGate';
@@ -43,11 +44,13 @@ function ReadyApp() {
   );
   return (
     <NavigationContainer theme={navigationTheme}>
-      <DeckProvider>
-        <LanguageProvider>
-          <RootNavigator />
-        </LanguageProvider>
-      </DeckProvider>
+      <PurchaseProvider>
+        <DeckProvider>
+          <LanguageProvider>
+            <RootNavigator />
+          </LanguageProvider>
+        </DeckProvider>
+      </PurchaseProvider>
     </NavigationContainer>
   );
 }
