@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-31",
+  "branch": "codex/cafe-adventures",
+  "base": "7e0d327",
+  "jest": {
+    "suites": 126,
+    "tests": 1271,
+    "passed": true
+  },
+  "typecheck": true,
+  "eslint": true,
+  "prettier": true,
+  "themeAudit": {
+    "errors": 0,
+    "contrastPairs": 418
+  },
+  "data": {
+    "decks": 47,
+    "cards": 1392,
+    "audioEntries": 1392
+  },
+  "native": {
+    "device": "D526D97E-05FD-4830-A49D-288A3896210C",
+    "ordinaryBundleSha256": "985031ec0ed6a8db2c99bc869b2e0844a5f8ebbfa8a133a238c51dc78d799b07",
+    "nativeHost": "copied existing simulator shell",
+    "freshNativeCompilation": false,
+    "ordinaryHomeObserved": true,
+    "adventureInteractionVerified": false,
+    "controlBlocker": "Device Hub AX acquisition timed out"
+  },
+  "editorialAcceptance": false,
+  "publicRelease": false
+}

@@ -1,6 +1,6 @@
 # Café Adventures Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Deliver two connected café visits, optional warm-ups and a durable practice passport.
 
@@ -33,10 +33,10 @@
 
 **Interfaces:** `AdventureDefinition { pack, requiredNodeIds, warmupCardIds }`; `resolveAdventure(id, decks, mode): ResolvedAdventure | undefined`; `canonicalJson(value): string`; `sha256(text): string`. Resolved identity binds pack, required nodes, warm-up references and source-card teaching fingerprints. Mode is `preview | accepted`.
 
-- [ ] Write tests asserting known SHA-256 vectors, key-order stability, scheduling independence, changed teaching text/pack/required nodes invalidates acceptance, empty/withdrawn manifest denies accepted mode, both scripts validate against real decks.
-- [ ] Run `npx jest __tests__/adventures/content.test.ts --runInBand --watchman=false`; expect missing-module failure before implementation.
-- [ ] Implement deterministic hashing without a new native dependency, draft version-2 first café pack and version-1 return visit; retain legacy `FIRST_MORNING` for current previews/daily response. Acceptance manifest starts empty.
-- [ ] Re-run content tests; expect all pass. Commit content and tests.
+- [x] Write tests asserting known SHA-256 vectors, key-order stability, scheduling independence, changed teaching text/pack/required nodes invalidates acceptance, empty/withdrawn manifest denies accepted mode, both scripts validate against real decks.
+- [x] Run `npx jest __tests__/adventures/content.test.ts --runInBand --watchman=false`; expect missing-module failure before implementation.
+- [x] Implement deterministic hashing without a new native dependency, draft version-2 first café pack and version-1 return visit; retain legacy `FIRST_MORNING` for current previews/daily response. Acceptance manifest starts empty.
+- [x] Re-run content tests; expect all pass. Commit content and tests.
 
 ## Task 2: Durable evidence, outcomes and backup
 
@@ -44,10 +44,10 @@
 
 **Interfaces:** `readAdventures(access?): Promise<AdventureState>`; `createAdventureAdapter(id, mode, getDecks)` supplies `load`, `start`, `apply`, `warmup`; store functions re-resolve eligibility inside every operation. `AdventureState` holds `runs`, `milestones`, `outcomes`; `validateAdventureState` is strict and import-safe. Each adventure run wraps a validated `MissionRun` plus identity, mode, warm-up and per-node correct statuses.
 
-- [ ] Write real-storage tests for supported/unsupported completions, retry/skip/accent behavior, mode isolation, preserved legacy state, once-only retry after injected write failure, no downgrade, stable unlock, version invalidation, bounds, legacy backup reset and rejected duplicates.
-- [ ] Run storage tests; expect missing feature failures.
-- [ ] Implement mode-scoped adapter using the pure engine and durable coordinator; atomically persist attempt events, run evidence, milestones and outcomes. Store evidence alongside the run rather than modifying the general-purpose engine schema. Register optional portable backup state and explicit restore warning.
-- [ ] Run adventure tests plus `__tests__/storage/portableBackup.test.ts`, mission engine/storage tests; expect pass. Commit durable feature and tests.
+- [x] Write real-storage tests for supported/unsupported completions, retry/skip/accent behavior, mode isolation, preserved legacy state, once-only retry after injected write failure, no downgrade, stable unlock, version invalidation, bounds, legacy backup reset and rejected duplicates.
+- [x] Run storage tests; expect missing feature failures.
+- [x] Implement mode-scoped adapter using the pure engine and durable coordinator; atomically persist attempt events, run evidence, milestones and outcomes. Store evidence alongside the run rather than modifying the general-purpose engine schema. Register optional portable backup state and explicit restore warning.
+- [x] Run adventure tests plus `__tests__/storage/portableBackup.test.ts`, mission engine/storage tests; expect pass. Commit durable feature and tests.
 
 ## Task 3: Scenes, warm-up, passport and navigation
 
@@ -55,20 +55,22 @@
 
 **Interfaces:** Optional `MissionScreen` adapter/availability/heading/notice/run-action/result slots preserve existing defaults. `AdventureEntry` and `PracticePassport` read fresh focused state with scoped retry and use registry eligibility; `AdventureScreen` owns warm-up state and scene adapter; navigation parameters carry episode ID/mode only and are revalidated.
 
-- [ ] Add failing UI tests for complete visit → stamp → next visit, optional warm-up persistence, unavailable production content, both themes and daily-plan entry priority.
-- [ ] Run new tests; expect absent UI failures.
-- [ ] Implement the scenes using existing controls, keyboard behavior, bilingual copy and static stamps; add focus/foreground eligibility checks and exact-save retries. Add optional Home entry after primary activity and passport in Progress.
-- [ ] Run scene/Home/Progress/Barrio and adventure tests; expect pass. Commit UI feature and tests.
+- [x] Add failing UI tests for complete visit → stamp → next visit, optional warm-up persistence, unavailable production content, both themes and daily-plan entry priority.
+- [x] Run new tests; expect absent UI failures.
+- [x] Implement the scenes using existing controls, keyboard behavior, bilingual copy and static stamps; add focus/foreground eligibility checks and exact-save retries. Add optional Home entry after primary activity and passport in Progress.
+- [x] Run scene/Home/Progress/Barrio and adventure tests; expect pass. Commit UI feature and tests.
 
 ## Task 4: Verification, editorial/pilot package and review
 
 **Files:** Create `docs/qa/2026-10-31-cafe-adventures/REPORT.md`, `docs/pilot/CAFE_ADVENTURES.md`; update design status and plan checkboxes.
 
-- [ ] Run full Jest suite, typecheck, lint, format checks and content validation; fix confirmed regressions with tests.
-- [ ] Follow `docs/qa/SIMULATOR_PREFLIGHT.md`, build dedicated iOS simulator candidate and exercise the available UI controls. Record actual coverage and limitations, including any unavailable controls.
-- [ ] Prepare two-episode editorial checklist and local pilot worksheet (comprehension, help comfort, voluntary return, delayed recall), with no fabricated acceptance or participant results.
-- [ ] Obtain a fresh whole-branch code review, address material findings, re-run relevant checks and commit evidence.
+- [x] Run full Jest suite, typecheck, lint, format checks and content validation; fix confirmed regressions with tests.
+- [x] Follow `docs/qa/SIMULATOR_PREFLIGHT.md`, build dedicated iOS simulator candidate and exercise the available UI controls. Record actual coverage and limitations, including any unavailable controls.
+- [x] Prepare two-episode editorial checklist and local pilot worksheet (comprehension, help comfort, voluntary return, delayed recall), with no fabricated acceptance or participant results.
+- [x] Obtain a fresh whole-branch code review, address material findings, re-run relevant checks and commit evidence.
 
 ## Execution record
 
 Native implementation in this session follows the owner's approval to implement; no further product choice is needed. Native managed-worktree calls rejected available arguments, so an ignored `.worktrees/cafe-adventures` Git worktree on `codex/cafe-adventures` provides isolation. Runtime publication and genuine editorial acceptance remain separate.
+
+Native interaction remains open: Device Hub control acquisition timed out; ordinary native startup and container isolation were observed, while adventure touch/keyboard/restore acceptance was not. See the verification report.

@@ -1,6 +1,6 @@
 import type { Deck } from '../types';
 import { SHOW_REVIEW_TOOLS } from '../config';
-import { AdventureMode, resolveAdventure } from '../adventures/content';
+import { AdventureMode, resolveAdventure, definitionFingerprint } from '../adventures/content';
 import {
   AdventureRun,
   AdventureState,
@@ -46,19 +46,26 @@ export function createAdventureAdapter(
   id: string,
   mode: AdventureMode,
   getDecks: () => Deck[],
+  expectedFingerprint = resolveAdventure(id, getDecks(), mode)?.fingerprint,
 ): MissionStorageAdapter {
   const resolve = () => {
     if (mode === 'preview' && !SHOW_REVIEW_TOOLS)
       throw new Error('Draft adventures are unavailable');
     const definition = resolveAdventure(id, getDecks(), mode);
     if (!definition) throw new Error('Adventure content unavailable');
+    if (definition.fingerprint !== expectedFingerprint)
+      throw new Error('Adventure content changed since display');
     return definition;
   };
   const find = (state: AdventureState) =>
     state.runs.find((r) => r.mode === mode && r.mission.missionId === id);
   const current = (entry: AdventureRun | undefined) => {
     const def = resolve();
-    if (!entry || entry.fingerprint !== def.fingerprint)
+    if (
+      !entry ||
+      entry.fingerprint !== def.fingerprint ||
+      entry.definitionFingerprint !== definitionFingerprint(def)
+    )
       throw new Error('Adventure content changed');
     validateMissionRun(def.pack, entry.mission);
     if (entry.correctNodeIds.some((n) => !def.requiredNodeIds.includes(n)))
@@ -106,6 +113,7 @@ export function createAdventureAdapter(
         state.runs.push({
           mode,
           fingerprint: def.fingerprint,
+          definitionFingerprint: definitionFingerprint(def),
           mission,
           warmupUsed: false,
           correctNodeIds: [],
@@ -123,6 +131,7 @@ export function createAdventureAdapter(
         entry!.mission = result.state;
         if (command.type === 'retry') entry!.mission.assisted = true;
         if (result.event) {
+          if (entry!.warmupUsed) result.event.assistance = 'model-answer';
           if (
             result.event.outcome === 'correct' &&
             def.requiredNodeIds.includes(command.nodeId) &&

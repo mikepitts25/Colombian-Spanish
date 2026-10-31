@@ -1,3 +1,4 @@
+import PracticePassport from '../components/PracticePassport';
 import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
@@ -147,6 +148,8 @@ export default function ProgressScreen() {
         <View style={styles.titleRow}>
           <Text style={styles.pageTitle}>{t('progress.title')}</Text>
         </View>
+
+        <PracticePassport />
 
         {/* Streak hero */}
         <View style={[styles.streakCard, largeText && styles.stacked]}>

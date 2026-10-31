@@ -241,3 +241,14 @@ export function resolveAdventure(
     return undefined;
   }
 }
+
+/** Authored structure identity allows historical run validation without a live deck snapshot. */
+export function definitionFingerprint(def: AdventureDefinition): string {
+  return sha256(
+    canonicalJson({
+      pack: def.pack,
+      requiredNodeIds: def.requiredNodeIds,
+      warmupCardIds: def.warmupCardIds,
+    }),
+  );
+}

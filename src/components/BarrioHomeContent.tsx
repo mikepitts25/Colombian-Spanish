@@ -21,6 +21,7 @@ type ToolRoute =
   | 'VoicePracticePreview'
   | 'ListeningPreview';
 export type BarrioHomeContentProps = {
+  adventureEntry?: React.ReactNode;
   presentation: HomePresentation;
   greeting: string;
   activity?: {
@@ -247,6 +248,8 @@ export default function BarrioHomeContent(props: BarrioHomeContentProps) {
             model.pending,
           )}
       </View>
+
+      {props.adventureEntry}
 
       {activity && (
         <View style={styles.section}>

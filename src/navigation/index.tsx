@@ -1,3 +1,5 @@
+import AdventuresScreen from '../screens/AdventuresScreen';
+import AdventureScreen from '../screens/AdventureScreen';
 import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
@@ -157,6 +159,16 @@ export default function RootNavigator() {
       />
       <Stack.Screen name="Library" component={LibraryScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Root" component={Tabs} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Adventures"
+        component={AdventuresScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Adventure"
+        component={AdventureScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
       <Stack.Screen name="DailyPlan" component={DailyPlanScreen} options={{ headerShown: false }} />
       <Stack.Screen
         name="Notifications"

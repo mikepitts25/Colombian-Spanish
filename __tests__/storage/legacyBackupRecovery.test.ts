@@ -86,7 +86,7 @@ it('replays a failed legacy full-state migration before reads without duplicate 
   ).rejects.toThrow('migration write unavailable');
   const journal = await AsyncStorage.getItem(JOURNAL);
   expect(journal).not.toBeNull();
-  expect(JSON.parse(journal!).entries).toHaveLength(11);
+  expect(JSON.parse(journal!).entries).toHaveLength(12);
   // Preferences were written before the failure, but the remaining after-images must still replay.
   expect(JSON.parse((await AsyncStorage.getItem('SRS_PREFS_V1'))!)).toEqual(
     source.applicationState.prefs,
@@ -103,6 +103,7 @@ it('replays a failed legacy full-state migration before reads without duplicate 
     ...source.applicationState,
     dailyPlan: { schemaVersion: 1, current: null },
     missions: { schemaVersion: 1, runs: [] },
+    adventures: { schemaVersion: 1, runs: [], milestones: [], outcomes: [] },
   });
   expect(await AsyncStorage.getItem(JOURNAL)).toBeNull();
   // Stale legacy streak remains present but cannot override the restored canonical value.

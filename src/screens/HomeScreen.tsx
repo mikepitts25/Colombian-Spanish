@@ -1,3 +1,6 @@
+import { readAdventures } from '../storage/adventures';
+import type { AdventureState } from '../adventures/state';
+import AdventureEntry from '../components/AdventureEntry';
 import ThemeIcon from '../components/ThemeIcon';
 import BarrioHomeContent from '../components/BarrioHomeContent';
 import { deriveHomePresentation, HomePresentation } from '../utils/homePresentation';
@@ -97,15 +100,20 @@ type DeckWithDue = Deck & {
 };
 
 async function loadHomeProgress() {
-  const [daily, streak, prefs, events, plan, timings, lastStudyDay] = await Promise.all([
-    getDailyProgress(),
-    getStreakState(),
-    getPrefs(),
-    getLearningEvents(),
-    readDailyPlan(),
-    readActivityTimings(),
-    getLastStudyDay(),
-  ]);
+  const [daily, streak, prefs, events, plan, timings, lastStudyDay, adventures] = await Promise.all(
+    [
+      getDailyProgress(),
+      getStreakState(),
+      getPrefs(),
+      getLearningEvents(),
+      readDailyPlan(),
+      readActivityTimings(),
+      getLastStudyDay(),
+      readAdventures()
+        .then((state) => ({ state, error: false }))
+        .catch(() => ({ state: undefined, error: true })),
+    ],
+  );
   const now = Date.now();
   return {
     count: daily.count,
@@ -121,6 +129,7 @@ async function loadHomeProgress() {
     plan,
     timings,
     lastStudyDay,
+    adventures,
   };
 }
 
@@ -162,6 +171,7 @@ export default function HomeScreen() {
     plan: undefined as DailyPlan | undefined,
     timings: [] as ActivityTimingSample[],
     lastStudyDay: undefined as string | undefined,
+    adventures: { state: undefined as AdventureState | undefined, error: false },
   });
   const { count: dailyCount, target: dailyTarget, streak, freezes } = activity;
   const greeting = useMemo(() => {
@@ -392,6 +402,13 @@ export default function HomeScreen() {
     return (
       <SafeAreaView style={styles.wrap}>
         <BarrioHomeContent
+          adventureEntry={
+            <AdventureEntry
+              progress={error ? undefined : activity.adventures}
+              lastDay={activity.lastStudyDay}
+              onRetry={() => setReadAttempt((n) => n + 1)}
+            />
+          }
           presentation={presentation}
           greeting={t(greeting.textKey)}
           activity={
@@ -602,6 +619,12 @@ export default function HomeScreen() {
             </Pressable>
           )}
         </View>
+
+        <AdventureEntry
+          progress={error ? undefined : activity.adventures}
+          lastDay={activity.lastStudyDay}
+          onRetry={() => setReadAttempt((n) => n + 1)}
+        />
 
         {wordOfDay ? (
           <View style={styles.wordCard}>

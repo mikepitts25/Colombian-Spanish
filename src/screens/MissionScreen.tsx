@@ -7,6 +7,7 @@ import { useActiveStudyTime } from '../hooks/useActiveStudyTime';
 import { isTimedResponse } from '../missions/activeTiming';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  AppState,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -28,10 +29,14 @@ import { LocalizedText, MissionPack, validateMission } from '../missions/schema'
 import { MissionCommand, MissionRun } from '../missions/engine';
 import { applyMissionCommand, loadMissionRun, startMissionRun } from '../storage/missions';
 import MissionFollowUp from '../components/MissionFollowUp';
+import type { MissionStorageAdapter } from '../missions/storageAdapter';
+import type { FlashCard } from '../types';
 
-type Pending =
+type Pending = (
   | { kind: 'start'; id: string; at: number; expectedRunId?: string }
-  | { kind: 'command'; command: MissionCommand };
+  | { kind: 'command'; command: MissionCommand }
+  | { kind: 'warmup'; runId: string }
+) & { persistence?: MissionStorageAdapter };
 const identity = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 
 export default function MissionScreen({
@@ -42,6 +47,13 @@ export default function MissionScreen({
   onSavingChange,
   footer,
   blocked = false,
+  adapter,
+  availability,
+  eyebrow,
+  notice,
+  startLabel,
+  warmupCards,
+  renderCompletion,
 }: {
   pack?: MissionPack;
   planId?: string;
@@ -50,6 +62,13 @@ export default function MissionScreen({
   onSavingChange?: (saving: boolean) => void;
   footer?: React.ReactNode;
   blocked?: boolean;
+  adapter?: MissionStorageAdapter;
+  availability?: boolean;
+  eyebrow?: string;
+  notice?: string;
+  startLabel?: string;
+  warmupCards?: FlashCard[];
+  renderCompletion?: (run: MissionRun) => React.ReactNode;
 } = {}) {
   const styles = useThemedStyles(makeStyles);
   const { fontScale, width } = useWindowDimensions();
@@ -57,6 +76,7 @@ export default function MissionScreen({
   const nav = useNavigation<any>();
   const { ready, decks } = useDeck();
   const [reviewing, setReviewing] = useState(false);
+  const [warmupOpen, setWarmupOpen] = useState(false);
   const [run, setRun] = useState<MissionRun>();
   const [loading, setLoading] = useState(true),
     [loadError, setLoadError] = useState(false);
@@ -113,6 +133,7 @@ export default function MissionScreen({
   const listening = pack.nodes.some((node) => node.kind === 'listening');
   const local = (value: LocalizedText) => value[language];
   const available = useMemo(() => {
+    if (availability !== undefined) return ready && availability;
     if (!SHOW_REVIEW_TOOLS || !ready) return false;
     try {
       validateMission(pack, {
@@ -127,7 +148,7 @@ export default function MissionScreen({
     } catch {
       return false;
     }
-  }, [ready, decks, pack]);
+  }, [ready, decks, pack, availability]);
   const readActiveTime = useActiveStudyTime(
     timedResponse && run ? `${run.id}:${run.nodeId}:${run.revision}` : undefined,
     available &&
@@ -141,12 +162,22 @@ export default function MissionScreen({
       !run.completed &&
       !run.feedback,
   );
+  const persistence = useMemo<MissionStorageAdapter>(
+    () =>
+      adapter ?? {
+        load: () => (planId ? loadMissionRun(pack, planId) : loadMissionRun(pack)),
+        start: (id, at, expectedRunId) => startMissionRun(pack, id, at, expectedRunId, planId),
+        apply: (command) => applyMissionCommand(pack, command, planId),
+      },
+    [adapter, pack, planId],
+  );
   const load = useCallback(async () => {
     const request = ++generation.current;
     try {
-      const result = planId ? await loadMissionRun(pack, planId) : await loadMissionRun(pack);
+      const result = await persistence.load();
       if (mounted.current && request === generation.current) {
         timingContinuous.current = !result.run || !!result.run.feedback || result.run.completed;
+        setLoadError(false);
         setRun(result.run);
         expectedRun.current = result.expectedRunId ?? result.run?.id;
         setContentChanged(result.contentChanged);
@@ -157,7 +188,7 @@ export default function MissionScreen({
     } finally {
       if (mounted.current && request === generation.current) setLoading(false);
     }
-  }, [pack, planId]);
+  }, [persistence]);
   useEffect(() => {
     mounted.current = true;
     // Mission availability starts an asynchronous persisted-run read.
@@ -167,27 +198,44 @@ export default function MissionScreen({
       mounted.current = false;
     };
   }, [available, load]);
+  useEffect(() => {
+    if (!adapter) return;
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state === 'active' && !busy.current && !pending.current) void load();
+    });
+    return () => subscription.remove();
+  }, [adapter, load]);
   const execute = async (intent: Pending) => {
     if (busy.current || blocked) return;
     busy.current = true;
+    generation.current++;
     onSavingChange?.(true);
-    pending.current = intent;
+    const boundPersistence = intent.persistence ?? persistence;
+    pending.current = { ...intent, persistence: boundPersistence };
     setSaving(true);
     setSaveError(false);
     try {
       const next =
         intent.kind === 'start'
-          ? await startMissionRun(pack, intent.id, intent.at, intent.expectedRunId, planId)
-          : await applyMissionCommand(pack, intent.command, planId);
+          ? await boundPersistence.start(intent.id, intent.at, intent.expectedRunId)
+          : intent.kind === 'warmup'
+            ? await boundPersistence.warmup!(intent.runId)
+            : await boundPersistence.apply(intent.command);
       pending.current = undefined;
       if (mounted.current) {
-        if (intent.kind === 'start') timingContinuous.current = true;
+        if (intent.kind === 'start') {
+          timingContinuous.current = true;
+          setWarmupOpen(false);
+          setReviewing(false);
+        }
+        if (intent.kind === 'warmup') setWarmupOpen(true);
         setRun(next);
         expectedRun.current = next.id;
         setContentChanged(false);
         if (
           intent.kind === 'start' ||
-          ['advance', 'retry', 'answer'].includes(intent.command.type)
+          (intent.kind === 'command' &&
+            ['advance', 'retry', 'answer'].includes(intent.command.type))
         ) {
           setAnswer('');
           startedAt.current = Date.now();
@@ -261,17 +309,34 @@ export default function MissionScreen({
               busy={saving}
             />
           }
-          {!SHOW_REVIEW_TOOLS || (ready && !available) ? (
+          {(availability === undefined && !SHOW_REVIEW_TOOLS) || (ready && !available) ? (
             <Text style={styles.body}>{t('mission.unavailable')}</Text>
           ) : (
             <>
               <Text style={styles.eyebrow}>
-                {t(listening ? 'listening.generated' : 'mission.draft')}
+                {eyebrow ?? t(listening ? 'listening.generated' : 'mission.draft')}
               </Text>
               <Text style={styles.title}>{local(pack.title)}</Text>
               <Text style={styles.body}>
-                {t(listening ? 'listening.notice' : 'mission.notice')}
+                {notice ?? t(listening ? 'listening.notice' : 'mission.notice')}
               </Text>
+              {run &&
+              !run.completed &&
+              !contentChanged &&
+              !loadError &&
+              !warmupOpen &&
+              warmupCards?.length &&
+              persistence.warmup ? (
+                <View style={styles.card}>
+                  <Text style={styles.body}>{t('adventure.warmupNote')}</Text>
+                  <ActionButton
+                    label={t('adventure.warmup')}
+                    action={() => void execute({ kind: 'warmup', runId: run.id })}
+                    off={disabled}
+                    busy={saving}
+                  />
+                </View>
+              ) : null}
               {!ready || loading ? (
                 <Text style={styles.body}>{t('mission.loading')}</Text>
               ) : loadError ? (
@@ -298,21 +363,43 @@ export default function MissionScreen({
                   {
                     <ActionButton
                       label={t('mission.startVersion')}
-                      action={start}
-                      off={disabled}
+                      action={() => {
+                        if (adapter && run && !run.completed) setRestart(true);
+                        else start();
+                      }}
+                      off={disabled || (adapter !== undefined && restart)}
                       busy={saving}
                     />
                   }
+                  {adapter && restart && (
+                    <>
+                      <Text style={styles.body}>{t('mission.restartQuestion')}</Text>
+                      <ActionButton
+                        label={t('mission.restart')}
+                        action={start}
+                        off={disabled}
+                        busy={saving}
+                      />
+                      <ActionButton
+                        label={t('mission.cancel')}
+                        action={() => setRestart(false)}
+                        off={disabled}
+                        busy={saving}
+                      />
+                    </>
+                  )}
                 </>
               ) : !run ? (
                 <ActionButton
-                  label={t(planId ? 'plan.startReply' : 'mission.start')}
+                  label={startLabel ?? t(planId ? 'plan.startReply' : 'mission.start')}
                   action={start}
                   off={disabled}
                   busy={saving}
                 />
               ) : node ? (
-                reviewing && followUpCards.length > 0 ? (
+                warmupOpen && warmupCards?.length ? (
+                  <MissionFollowUp cards={warmupCards} onDone={() => setWarmupOpen(false)} />
+                ) : reviewing && followUpCards.length > 0 ? (
                   <MissionFollowUp
                     key={followUpCards.map((c) => c.id).join(':')}
                     cards={followUpCards}
@@ -471,9 +558,13 @@ export default function MissionScreen({
                     )}
                     {node.kind === 'complete' && (
                       <>
-                        <Text style={styles.feedback}>
-                          {t(run.assisted ? 'mission.assisted' : 'mission.unaided')}
-                        </Text>
+                        {renderCompletion ? (
+                          renderCompletion(run)
+                        ) : (
+                          <Text style={styles.feedback}>
+                            {t(run.assisted ? 'mission.assisted' : 'mission.unaided')}
+                          </Text>
+                        )}
                         {run.reviewCardIds.length > 0 && (
                           <>
                             <Text style={styles.heading}>{t('mission.review')}</Text>

@@ -1,9 +1,10 @@
-import { MissionRun, validateMissionEnvelope } from '../missions/engine';
+import { MissionRun, validateMissionEnvelope, validateMissionRun } from '../missions/engine';
 import { only, record, text } from '../missions/schema';
-import type { AdventureMode } from './content';
+import { ADVENTURES, AdventureMode, definitionFingerprint } from './content';
 export interface AdventureRun {
   mode: AdventureMode;
   fingerprint: string;
+  definitionFingerprint: string;
   mission: MissionRun;
   warmupUsed: boolean;
   correctNodeIds: string[];
@@ -60,9 +61,17 @@ export function validateAdventureState(value: unknown): asserts value is Adventu
     ids = new Set();
   for (const run of state.runs) {
     if (
-      !only(run, ['mode', 'fingerprint', 'mission', 'warmupUsed', 'correctNodeIds']) ||
+      !only(run, [
+        'mode',
+        'fingerprint',
+        'definitionFingerprint',
+        'mission',
+        'warmupUsed',
+        'correctNodeIds',
+      ]) ||
       !mode(run.mode) ||
       !hash(run.fingerprint) ||
+      !hash(run.definitionFingerprint) ||
       typeof run.warmupUsed !== 'boolean' ||
       !Array.isArray(run.correctNodeIds) ||
       run.correctNodeIds.length > 50 ||
@@ -72,6 +81,14 @@ export function validateAdventureState(value: unknown): asserts value is Adventu
       fail();
     validateMissionEnvelope({ schemaVersion: 1, runs: [run.mission] });
     if (run.warmupUsed && !run.mission.assisted) fail();
+    const known = ADVENTURES.find(
+      (d) =>
+        d.pack.id === run.mission.missionId && d.pack.contentVersion === run.mission.contentVersion,
+    );
+    if (known && run.definitionFingerprint === definitionFingerprint(known)) {
+      validateMissionRun(known.pack, run.mission);
+      if (run.correctNodeIds.some((id) => !known.requiredNodeIds.includes(id))) fail();
+    }
     const key = JSON.stringify([run.mode, run.mission.missionId]);
     if (slots.has(key) || ids.has(run.mission.id)) fail();
     slots.add(key);

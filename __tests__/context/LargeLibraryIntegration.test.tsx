@@ -173,6 +173,7 @@ test('round-trips every card, long Unicode field and graded progress through por
     ...source.applicationState,
     dailyPlan: { schemaVersion: 1, current: null },
     missions: { schemaVersion: 1, runs: [] },
+    adventures: { schemaVersion: 1, runs: [], milestones: [], outcomes: [] },
     prefs: {},
     quizHistory: [],
     lastSession: {},

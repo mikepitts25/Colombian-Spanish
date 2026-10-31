@@ -984,6 +984,7 @@ test.each([
       expect(snapshot.decks).toEqual(restoredDecks);
       expect(snapshot.applicationState).toEqual({
         ...restoredState,
+        adventures: { schemaVersion: 1, runs: [], milestones: [], outcomes: [] },
         lastSession: resumed ? { ...restoredSession, updatedAt: now } : restoredSession,
       });
       expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();

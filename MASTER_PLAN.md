@@ -1090,3 +1090,7 @@ The owner authorized merging only useful, relevant changes that do not conflict 
 ### October 31, 2026 — library monetization integration
 
 Owner selected generous free core and US$19.99 one-time library unlock. [Product/configuration handoff](docs/product/LIBRARY_UNLOCK.md) records ten free starter collections, native RevenueCat non-consumable purchase/restore, bilingual library UI, existing-installation compatibility and separate account/device gates. B14.2-B has a selected model and intended price; demand/cost validation remains open. B14.3 code integration does not establish configured products, real sandbox transactions, editorial acceptance or release readiness. No public submission or TestFlight upload is implied.
+
+### Café adventures implementation — 2026-10-31
+
+The owner approved the two-visit café adventure and passport design. The feature adds connected draft visits, optional warm-ups, durable mode-scoped story milestones/stamps, Home/Progress handoffs and portable-state recovery. Automated evidence and independent review are recorded in [the report](docs/qa/2026-10-31-cafe-adventures/REPORT.md). Ordinary native startup was observed on a fresh own-container simulator; adventure interaction remains unverified because native controls were unavailable. The accepted-mission registry remains empty, so genuine editorial acceptance, learner outcomes, signed/physical-device acceptance and public release are not closed. Existing Study, daily plans and legacy mission state are retained.

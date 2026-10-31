@@ -2,6 +2,46 @@ import { UiLanguage } from '../storage/prefs';
 
 export const translations = {
   es: {
+    'adventure.title': 'Aventuras en la cafetería',
+    'adventure.invitation':
+      'Una cafetería conocida, una conversación breve y algo útil para practicar.',
+    'adventure.welcomeBack': 'Qué bueno verte de nuevo. Empieza con un repaso breve.',
+    'adventure.open': 'Explorar las aventuras',
+    'adventure.intro':
+      'Conoce a Ana y Nico. Practica un poco de español y vuelve para otra visita. Siempre puedes pedir ayuda.',
+    'adventure.shortVisit': 'Una visita breve',
+    'adventure.draft': 'Práctica en borrador',
+    'adventure.notice':
+      'Lee, escribe y elige tus respuestas. Esta práctica no evalúa el habla ni la escucha.',
+    'adventure.draftNotice':
+      'Historia y lenguaje en borrador para revisión. Los sellos de muestra se guardan aparte del pasaporte aceptado.',
+    'adventure.start': 'Empezar visita',
+    'adventure.resume': 'Continuar visita',
+    'adventure.view': 'Ver visita guardada',
+    'adventure.locked': 'Completa la primera visita para continuar la historia.',
+    'adventure.unavailable': 'Esta visita no está disponible. Vuelve a tu práctica.',
+    'adventure.empty':
+      'Las nuevas visitas aparecerán aquí cuando estén listas. Tu práctica habitual está disponible en Inicio.',
+    'adventure.loadError': 'No se pudo cargar tu progreso en las aventuras. Intenta de nuevo.',
+    'adventure.warmup': 'Repasar tres frases',
+    'adventure.warmupNote':
+      'Repaso opcional antes de responder. Si lo usas, esta visita se registra como completada con apoyo.',
+    'adventure.passport': 'Tu pasaporte de práctica',
+    'adventure.passportNote':
+      'Pequeños recuerdos de las prácticas completadas. Estos sellos no certifican tu nivel.',
+    'adventure.emptyPassport':
+      'Completa las tareas de una visita para conseguir tu primer sello. Puedes usar ayuda.',
+    'adventure.previewStamp': 'Sello de muestra conseguido',
+    'adventure.stamp': 'Sello de la cafetería conseguido',
+    'adventure.supported': 'Completada con apoyo',
+    'adventure.independent': 'Completada sin apoyo registrado',
+    'adventure.reviewed': 'Práctica revisada',
+    'adventure.reviewedNote':
+      'Llegaste al final de la visita. Inténtalo de nuevo cuando quieras practicar las tareas pendientes.',
+    'adventure.next': 'Próxima visita: De vuelta en la cafetería de Ana',
+    'adventure.revisit': 'Practicar de nuevo',
+    'adventure.version': 'Versión',
+    'adventure.historical': 'Práctica anterior guardada; esta versión no está disponible ahora',
     'library.quizChanged':
       'Tu biblioteca disponible cambió. Empieza un nuevo quiz con tus tarjetas disponibles.',
     'library.quizRestart': 'Volver a preparar el quiz',
@@ -791,6 +831,45 @@ export const translations = {
     'nav.difficultWords': 'Palabras Difíciles',
   },
   en: {
+    'adventure.title': 'Café adventures',
+    'adventure.invitation': 'A familiar café, a short encounter and something useful to practise.',
+    'adventure.welcomeBack': 'Welcome back. Start with a short warm-up.',
+    'adventure.open': 'Explore café adventures',
+    'adventure.intro':
+      'Meet Ana and Nico. Practise a little Spanish, then return for another visit. Help is always available.',
+    'adventure.shortVisit': 'A short visit',
+    'adventure.draft': 'Draft practice',
+    'adventure.notice':
+      'Read, type and choose your replies. This is practice, not a speaking or listening assessment.',
+    'adventure.draftNotice':
+      'Draft story and language for review. Preview stamps stay separate from the accepted passport.',
+    'adventure.start': 'Start visit',
+    'adventure.resume': 'Resume visit',
+    'adventure.view': 'View saved visit',
+    'adventure.locked': 'Complete the first visit to continue the story.',
+    'adventure.unavailable': 'This visit is not available. Return to your practice.',
+    'adventure.empty':
+      'New visits will appear here when they are ready. Your usual practice is available from Home.',
+    'adventure.loadError': 'Your adventure progress could not be loaded. Try again.',
+    'adventure.warmup': 'Warm up with three phrases',
+    'adventure.warmupNote':
+      'Optional practice before your reply. Using it records this visit as completed with support.',
+    'adventure.passport': 'Your practice passport',
+    'adventure.passportNote':
+      'Small reminders of completed practice. These stamps are not proficiency certificates.',
+    'adventure.emptyPassport':
+      'Complete a visit’s tasks to collect your first stamp. Help is welcome.',
+    'adventure.previewStamp': 'Preview stamp earned',
+    'adventure.stamp': 'Café stamp earned',
+    'adventure.supported': 'Completed with support',
+    'adventure.independent': 'Completed without recorded help',
+    'adventure.reviewed': 'Practice reviewed',
+    'adventure.reviewedNote':
+      'You reached the end of the visit. Try again whenever you want to practise the remaining tasks.',
+    'adventure.next': 'Next visit: Back at Ana’s café',
+    'adventure.revisit': 'Practise again',
+    'adventure.version': 'Version',
+    'adventure.historical': 'Saved earlier practice; this version is currently unavailable',
     'library.quizChanged':
       'Your available library changed. Start a new quiz with your accessible cards.',
     'library.quizRestart': 'Return to quiz setup',
