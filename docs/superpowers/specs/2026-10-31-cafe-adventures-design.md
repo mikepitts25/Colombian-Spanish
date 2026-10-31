@@ -1,6 +1,6 @@
 # Café adventures and practice passport
 
-Status: recommended direction selected by the owner on 2026-10-31; written design awaiting approval. No implementation or teaching-content acceptance is claimed.
+Status: recommended direction selected by the owner on 2026-10-31; written design approved by the owner on 2026-10-31. Implementation in progress; teaching-content acceptance remains separate.
 
 ## Intent and scope
 
