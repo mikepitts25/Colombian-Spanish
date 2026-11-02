@@ -1,5 +1,5 @@
 import type { Deck } from '../types';
-import { SHOW_REVIEW_TOOLS } from '../config';
+import { SHOW_CAFE_DRAFTS } from '../config';
 import { AdventureMode, resolveAdventure, definitionFingerprint } from '../adventures/content';
 import {
   AdventureRun,
@@ -49,7 +49,7 @@ export function createAdventureAdapter(
   expectedFingerprint = resolveAdventure(id, getDecks(), mode)?.fingerprint,
 ): MissionStorageAdapter {
   const resolve = () => {
-    if (mode === 'preview' && !SHOW_REVIEW_TOOLS)
+    if (mode === 'preview' && !SHOW_CAFE_DRAFTS)
       throw new Error('Draft adventures are unavailable');
     const definition = resolveAdventure(id, getDecks(), mode);
     if (!definition) throw new Error('Adventure content unavailable');

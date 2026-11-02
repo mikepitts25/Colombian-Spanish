@@ -5,6 +5,10 @@ module.exports = ({ config }) => {
   const blocked = config.android?.blockedPermissions ?? [];
   return {
     ...config,
+    extra: {
+      ...config.extra,
+      cafeEditorialPreview: process.env.EAS_BUILD_PROFILE === 'editorial-beta',
+    },
     android: {
       ...config.android,
       blockedPermissions: recordingPreview

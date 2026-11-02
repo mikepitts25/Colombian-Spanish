@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useRef, useLayoutEffect } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { SHOW_REVIEW_TOOLS } from '../config';
+import { SHOW_CAFE_DRAFTS } from '../config';
 import { useDeck } from '../hooks/useDeck';
 import { useLanguage } from '../context/LanguageContext';
 import { useThemedStyles } from '../context/ThemeContext';
@@ -86,7 +86,7 @@ export default function AdventureScreen({
   useLayoutEffect(() => {
     decksRef.current = decks;
   }, [decks]);
-  const allowed = mode === 'accepted' || (mode === 'preview' && SHOW_REVIEW_TOOLS);
+  const allowed = mode === 'accepted' || (mode === 'preview' && SHOW_CAFE_DRAFTS);
   const def = allowed && ready ? resolveAdventure(id, decks, mode!) : undefined;
   const adapter = useMemo(
     // The adapter only reads this getter inside an asynchronous storage operation.

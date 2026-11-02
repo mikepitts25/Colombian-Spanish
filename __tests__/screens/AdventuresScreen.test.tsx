@@ -10,12 +10,16 @@ import { translations } from '../../src/i18n/translations';
 const mockNavigate = jest.fn(),
   mockBack = jest.fn();
 let mockPreview = true;
+let mockCafeOverride: boolean | undefined;
 let mockLanguage: 'en' | 'es' = 'en';
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate, goBack: mockBack }),
   useFocusEffect: (cb: () => void) => require('react').useEffect(cb, [cb]),
 }));
 jest.mock('../../src/config', () => ({
+  get SHOW_CAFE_DRAFTS() {
+    return mockCafeOverride ?? mockPreview;
+  },
   get SHOW_REVIEW_TOOLS() {
     return mockPreview;
   },
@@ -33,6 +37,7 @@ jest.mock('../../src/context/LanguageContext', () => ({
 beforeEach(async () => {
   await AsyncStorage.clear();
   mockPreview = true;
+  mockCafeOverride = undefined;
   mockLanguage = 'en';
   jest.clearAllMocks();
 });
@@ -147,4 +152,12 @@ test('a failed pending start retains its original adapter across content refresh
   fireEvent.press(ui.getByText('Retry save'));
   await waitFor(() => expect(original.start).toHaveBeenCalledTimes(2));
   expect(refreshed.start).not.toHaveBeenCalled();
+});
+
+test('the editorial store flag opens only cafe drafts without developer review tools', async () => {
+  mockPreview = false;
+  mockCafeOverride = true;
+  const ui = scene();
+  expect(await ui.findByText('Start visit')).toBeTruthy();
+  expect(ui.getByText('Draft practice')).toBeTruthy();
 });

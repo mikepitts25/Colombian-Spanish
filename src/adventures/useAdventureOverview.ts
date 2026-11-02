@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useDeck } from '../hooks/useDeck';
 import { useFocusedAsync } from '../hooks/useFocusedAsync';
-import { SHOW_REVIEW_TOOLS } from '../config';
+import { SHOW_CAFE_DRAFTS } from '../config';
 import { ADVENTURES, resolveAdventure, ResolvedAdventure } from './content';
 import { emptyAdventures } from './state';
 import { readAdventures } from '../storage/adventures';
@@ -14,7 +14,7 @@ export function useAdventureOverview() {
     ? ADVENTURES.flatMap((def) => {
         const value =
           resolveAdventure(def.pack.id, decks, 'accepted') ??
-          (SHOW_REVIEW_TOOLS ? resolveAdventure(def.pack.id, decks, 'preview') : undefined);
+          (SHOW_CAFE_DRAFTS ? resolveAdventure(def.pack.id, decks, 'preview') : undefined);
         return value ? [value] : [];
       })
     : [];
@@ -31,7 +31,7 @@ export function useAdventureOverview() {
     loaded: false,
   });
   const state = error ? emptyAdventures() : value.state;
-  const historical = state.outcomes.some((o) => o.mode === 'accepted' || SHOW_REVIEW_TOOLS);
+  const historical = state.outcomes.some((o) => o.mode === 'accepted' || SHOW_CAFE_DRAFTS);
   return {
     available,
     state,

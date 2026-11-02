@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { SHOW_REVIEW_TOOLS } from '../config';
+import { SHOW_CAFE_DRAFTS } from '../config';
 import { ADVENTURES } from '../adventures/content';
 import { useAdventureOverview } from '../adventures/useAdventureOverview';
 import { useThemedStyles } from '../context/ThemeContext';
@@ -32,7 +32,7 @@ export default function PracticePassport() {
             <Text style={styles.body}>{t('adventure.emptyPassport')}</Text>
           )}
           {overview.state.outcomes
-            .filter((o) => o.mode === 'accepted' || SHOW_REVIEW_TOOLS)
+            .filter((o) => o.mode === 'accepted' || SHOW_CAFE_DRAFTS)
             .map((outcome) => {
               const def = ADVENTURES.find((d) => d.pack.id === outcome.missionId);
               const available = overview.available.some(

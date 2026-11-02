@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useLanguage } from '../context/LanguageContext';
 import { useThemedStyles } from '../context/ThemeContext';
 import { useDeck } from '../hooks/useDeck';
-import { SHOW_REVIEW_TOOLS } from '../config';
+import { SHOW_CAFE_DRAFTS } from '../config';
 import { ADVENTURES, resolveAdventure } from '../adventures/content';
 import type { AdventureState } from '../adventures/state';
 import { dayDistance, localDayKey } from '../utils/calendarDay';
@@ -27,11 +27,11 @@ export default function AdventureEntry({
     ADVENTURES.some(
       (def) =>
         resolveAdventure(def.pack.id, decks, 'accepted') ||
-        (SHOW_REVIEW_TOOLS && resolveAdventure(def.pack.id, decks, 'preview')),
+        (SHOW_CAFE_DRAFTS && resolveAdventure(def.pack.id, decks, 'preview')),
     );
   const historical =
     !progress?.error &&
-    progress?.state?.outcomes.some((o) => o.mode === 'accepted' || SHOW_REVIEW_TOOLS);
+    progress?.state?.outcomes.some((o) => o.mode === 'accepted' || SHOW_CAFE_DRAFTS);
   if (!available && !historical && !progress?.error) return null;
   const returning = lastDay !== undefined && (dayDistance(lastDay, localDayKey()) ?? 0) >= 7;
   return (
