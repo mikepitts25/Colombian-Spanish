@@ -1,0 +1,29 @@
+{
+  "jest": {
+    "suites": 127,
+    "tests": 1278,
+    "passed": true
+  },
+  "typecheck": true,
+  "lint": true,
+  "formatting": true,
+  "data": {
+    "decks": 47,
+    "cards": 1392,
+    "audioEntries": 1392
+  },
+  "editorialLedgerStructureValid": true,
+  "cardsAwaitingHumanAcceptance": 1392,
+  "calendarZones": ["Europe/Berlin", "America/Bogota", "America/New_York", "Pacific/Auckland"],
+  "pythonQaTests": 14,
+  "scopedIndependentReview": {
+    "passed": true,
+    "suites": 2,
+    "tests": 15
+  },
+  "githubCi": {
+    "url": "https://github.com/mikepitts25/Colombian-Spanish/actions/runs/41522871799",
+    "conclusion": "success",
+    "jobs": 4
+  }
+}

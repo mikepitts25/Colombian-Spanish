@@ -1,0 +1,31 @@
+{
+  "bundleIdentifier": "com.mikepitts.colombianspanish",
+  "version": "1.0.0",
+  "build": "1.0.7",
+  "platform": "iphoneos",
+  "minimumOSVersion": "16.4",
+  "signatureDeepStrictVerified": true,
+  "cafeDraftsEnabled": true,
+  "embeddedConfig": "EXConstants.bundle/app.config",
+  "microphoneUsageDescriptionPresent": false,
+  "getTaskAllow": false,
+  "apsEnvironment": "production",
+  "applicationIdentifier": "33YM89B48D.com.mikepitts.colombianspanish",
+  "profileUUID": "21abaaf4-4ce5-4fb1-8727-fafebadacb4c",
+  "profileName": "Colombian Spanish Local TestFlight 2026-10-25",
+  "profileExpires": "2027-05-09T10:05:48",
+  "profileCertificateSha1": ["F7B57F7B2BBAC766D62D9A88571DE5F0E81084F5"],
+  "appStoreDistribution": true,
+  "pronunciationFilesMatched": 1392,
+  "cafeStrings": {
+    "Warm up with three phrases": true,
+    "Preview stamp earned": true,
+    "back-at-anas-cafe": true,
+    "cafeEditorialPreview": true
+  },
+  "ipaBytes": 50508529,
+  "ipaSha256": "83ddb5776cf77776cf447ea38e58ebdad97d9aca4975e297322bc5188070d8f3",
+  "mainBundleSha256": "22e849f1857c9bb5d862d1bdc460f1e0cfffa69108b6893d417d10d973dd23b2",
+  "broadReviewToolsEnabled": false,
+  "broadReviewToolsEvidence": "Source flag remains __DEV__ only; Release archive production bundle plus configuration-matrix/scene tests passed."
+}

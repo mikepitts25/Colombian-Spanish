@@ -1,0 +1,16 @@
+{
+  "details" : {
+
+  },
+  "os-version" : "Version 27.2 (Build 26B123)",
+  "success-message" : "No errors validating archive at '/Users/mike/Builds/Colombian-Spanish/2026-11-02/ColombianSpanish-cafe.ipa'.",
+  "tool-path" : "/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources",
+  "tool-version" : "27.10.4 (2.2)"
+}
+
+Running altool at path '/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources/altool'...
+
+2026-11-02 21:58:58.581  INFO: [ContentDelivery.Uploader.74B4869740] 
+==========================================
+VERIFY SUCCEEDED with no errors
+==========================================

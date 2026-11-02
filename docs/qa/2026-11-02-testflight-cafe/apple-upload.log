@@ -1,0 +1,20 @@
+{
+  "details" : {
+    "delivery-uuid" : "ddc4605e-73c8-40c5-88a8-9a3b7cf70310",
+    "transferred" : "50508529 bytes in 21.898 seconds (2.3MB/s, 18.452Mbps)"
+  },
+  "os-version" : "Version 27.2 (Build 26B123)",
+  "success-message" : "No errors uploading archive at '/Users/mike/Builds/Colombian-Spanish/2026-11-02/ColombianSpanish-cafe.ipa'.",
+  "tool-path" : "/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources",
+  "tool-version" : "27.10.4 (2.2)"
+}
+
+Running altool at path '/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources/altool'...
+
+2026-11-02 22:01:43.019 ERROR: [ContentDelivery.Uploader.783EC99740] Failed to create URL for 'CDUploaderStateInfoResumeFilePath'. The file doesn’t exist. (4) The file doesn’t exist.
+2026-11-02 22:01:43.020  INFO: [ContentDelivery.Uploader.783EC99740] 
+==========================================
+UPLOAD SUCCEEDED with no errors
+Delivery UUID: ddc4605e-73c8-40c5-88a8-9a3b7cf70310
+Transferred 50508529 bytes in 21.898 seconds (2.3MB/s, 18.452Mbps)
+==========================================

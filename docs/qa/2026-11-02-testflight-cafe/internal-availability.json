@@ -1,0 +1,92 @@
+{
+  "verifiedAt": "2026-11-02T21:05:47.528Z",
+  "appId": "6825514456",
+  "builds": [
+    {
+      "id": "ddc4605e-73c8-40c5-88a8-9a3b7cf70310",
+      "version": "1.0.7",
+      "uploadedDate": "2026-11-02T13:02:46-08:00",
+      "expirationDate": "2027-01-31T13:02:46-08:00",
+      "expired": false,
+      "minOsVersion": "16.4",
+      "lsMinimumSystemVersion": "12.0",
+      "computedMinMacOsVersion": "12.0",
+      "computedMinVisionOsVersion": "1.0",
+      "iconAssetToken": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/05/40/c3/0540c30c-bc28-168a-0d26-01763e68010d/AppIcon76x76@2x_U007eipad.png/{w}x{h}bb.{f}",
+        "width": 152,
+        "height": 152
+      },
+      "processingState": "VALID",
+      "buildAudienceType": "APP_STORE_ELIGIBLE",
+      "usesNonExemptEncryption": false
+    }
+  ],
+  "included": [
+    {
+      "type": "preReleaseVersions",
+      "id": "18857fec-b7ae-485c-a04c-8f9ead14abef",
+      "attributes": {
+        "version": "1.0.0",
+        "platform": "IOS"
+      },
+      "relationships": {
+        "builds": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/builds",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/builds"
+          }
+        },
+        "app": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/app",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/app"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef"
+      }
+    },
+    {
+      "type": "buildBetaDetails",
+      "id": "ddc4605e-73c8-40c5-88a8-9a3b7cf70310",
+      "attributes": {
+        "autoNotifyEnabled": true,
+        "internalBuildState": "IN_BETA_TESTING",
+        "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+      },
+      "relationships": {
+        "build": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/ddc4605e-73c8-40c5-88a8-9a3b7cf70310/relationships/build",
+            "related": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/ddc4605e-73c8-40c5-88a8-9a3b7cf70310/build"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/ddc4605e-73c8-40c5-88a8-9a3b7cf70310"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "5e728680-1304-436b-8b07-357d2deea811",
+      "name": "Editorial Review",
+      "createdDate": "2026-10-21T20:43:52.765Z",
+      "isInternalGroup": true,
+      "hasAccessToAllBuilds": true,
+      "publicLinkEnabled": null,
+      "publicLinkId": null,
+      "publicLinkLimitEnabled": null,
+      "publicLinkLimit": null,
+      "publicLink": null,
+      "feedbackEnabled": true,
+      "iosBuildsAvailableForAppleSiliconMac": true,
+      "iosBuildsAvailableForAppleVision": true
+    }
+  ],
+  "exactBuildInInternalGroup": true,
+  "notesSavedAndReadBack": true,
+  "notes": "This internal editorial beta adds two connected cafe visits with Ana and Nico, optional three-phrase warm-ups, and a persistent practice passport. The cafe stories and preview stamps are explicitly drafts for review; they do not represent proficiency or accepted teaching content.\n\nWhat to test:\n1. On Home, open Explore cafe adventures beneath your main daily activity. Start Breakfast at Ana’s cafe, try the optional warm-up and hints, and finish the visit. Correct responses on every task earn a preview stamp; a reviewed-only visit can still continue the story.\n2. Open Back at Ana’s cafe and try the changed request. Check that the next visit stays unlocked and earlier stamps survive replay.\n3. Leave an unfinished visit, close the app and return. Confirm the same visit resumes and your ordinary daily plan and card progress remain intact.\n4. Open Progress to inspect the practice passport. Try English/Spanish, Classic/Barrio, and your usual larger text settings.\n5. Check that help is comfortable to use and support labels match what you used. Please report confusing wording, valid Spanish answers rejected by the finite matcher, awkward keyboard/scroll behavior or lost progress.\n\nThe bundled card library still awaits human editorial acceptance. This beta is for the existing internal Editorial Review group; speaking/listening assessment, learner retention and public release are not established."
+}
