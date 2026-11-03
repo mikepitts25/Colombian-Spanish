@@ -27,6 +27,15 @@ export const translations = {
     'adventure.warmupNote':
       'Repaso opcional antes de responder. Si lo usas, esta visita se registra como completada con apoyo.',
     'adventure.passport': 'Tu pasaporte de práctica',
+    'adventure.passportCover': 'PASAPORTE',
+    'adventure.openPassport': 'Abrir pasaporte',
+    'adventure.closePassport': 'Cerrar pasaporte',
+    'adventure.passportTagline': 'Pequeñas visitas. Nuevas historias. Un sello a la vez.',
+    'adventure.firstStamp': 'Tu primer sello te espera',
+    'adventure.stampCountOne': '1 sello conseguido',
+    'adventure.stampCount': '{count} sellos conseguidos',
+    'adventure.firstVisit': 'Empieza tu primera visita',
+    'adventure.continue': 'Continúa tu aventura',
     'adventure.passportNote':
       'Pequeños recuerdos de las prácticas completadas. Estos sellos no certifican tu nivel.',
     'adventure.emptyPassport':
@@ -856,6 +865,15 @@ export const translations = {
     'adventure.warmupNote':
       'Optional practice before your reply. Using it records this visit as completed with support.',
     'adventure.passport': 'Your practice passport',
+    'adventure.passportCover': 'PASSPORT',
+    'adventure.openPassport': 'Open passport',
+    'adventure.closePassport': 'Close passport',
+    'adventure.passportTagline': 'Little visits. New stories. Stamps along the way.',
+    'adventure.firstStamp': 'Your first stamp awaits',
+    'adventure.stampCountOne': '1 stamp collected',
+    'adventure.stampCount': '{count} stamps collected',
+    'adventure.firstVisit': 'Start your first visit',
+    'adventure.continue': 'Continue your adventure',
     'adventure.passportNote':
       'Small reminders of completed practice. These stamps are not proficiency certificates.',
     'adventure.emptyPassport':

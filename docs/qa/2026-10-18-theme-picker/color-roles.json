@@ -9180,6 +9180,104 @@
       "path": "App.tsx",
       "role": "danger",
       "line": 40
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|borderBrand|1",
+      "base": "src/components/PracticePassport.tsx|borderBrand",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "borderBrand",
+      "line": 189
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|deepSurface|1",
+      "base": "src/components/PracticePassport.tsx|deepSurface",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "deepSurface",
+      "line": 190
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|brand|1",
+      "base": "src/components/PracticePassport.tsx|brand",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "brand",
+      "line": 200
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|bg|1",
+      "base": "src/components/PracticePassport.tsx|bg",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "bg",
+      "line": 206
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|borderBrand|2",
+      "base": "src/components/PracticePassport.tsx|borderBrand",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "borderBrand",
+      "line": 215
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|brand|2",
+      "base": "src/components/PracticePassport.tsx|brand",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "brand",
+      "line": 217
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|brand|3",
+      "base": "src/components/PracticePassport.tsx|brand",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "brand",
+      "line": 218
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|gradient|1",
+      "base": "src/components/PracticePassport.tsx|gradient",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "gradient",
+      "line": 220
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|gradient|2",
+      "base": "src/components/PracticePassport.tsx|gradient",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "gradient",
+      "line": 221
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|gradient|3",
+      "base": "src/components/PracticePassport.tsx|gradient",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "gradient",
+      "line": 222
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|brand|4",
+      "base": "src/components/PracticePassport.tsx|brand",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "brand",
+      "line": 224
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|textPrimary|1",
+      "base": "src/components/PracticePassport.tsx|textPrimary",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "textPrimary",
+      "line": 225
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|textSecondary|1",
+      "base": "src/components/PracticePassport.tsx|textSecondary",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "textSecondary",
+      "line": 226
+    },
+    {
+      "key": "src/components/PracticePassport.tsx|brand|5",
+      "base": "src/components/PracticePassport.tsx|brand",
+      "path": "src/components/PracticePassport.tsx",
+      "role": "brand",
+      "line": 227
     }
   ],
   "contrastPairs": [

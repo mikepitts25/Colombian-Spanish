@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, waitFor } from '@testing-library/react-native';
+import { fireEvent, waitFor, within } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import AdventureScreen from '../../src/screens/AdventureScreen';
@@ -237,4 +237,83 @@ test('the final visit keeps the passport available without a next visit', async 
   expect(ui.queryByText(/Next visit:/)).toBeNull();
   fireEvent.press(ui.getByText('Your practice passport'));
   expect(mockNavigate).toHaveBeenCalledWith('Adventures');
+});
+
+test('compact passport opens a collection and starts the first visit directly', async () => {
+  const ui = renderWithTheme(<AdventuresScreen />);
+  fireEvent.press(await ui.findByLabelText('Open passport'));
+  expect(await ui.findByText('Your first stamp awaits')).toBeTruthy();
+  expect(mockNavigate).not.toHaveBeenCalled();
+  fireEvent.press(ui.getByText('Start your first visit'));
+  expect(mockNavigate).toHaveBeenCalledWith('Adventure', {
+    id: ADVENTURES[0].pack.id,
+    mode: 'preview',
+  });
+  expect(ui.queryByText('Your first stamp awaits')).toBeNull();
+});
+
+test('passport closes back to visits without navigating to the current screen', async () => {
+  const ui = renderWithTheme(<AdventuresScreen />);
+  fireEvent.press(await ui.findByLabelText('Open passport'));
+  fireEvent.press(ui.getByText('Close passport'));
+  expect(ui.queryByText('Your first stamp awaits')).toBeNull();
+  expect(ui.getByLabelText('Open passport')).toBeTruthy();
+  expect(ui.queryByText('Explore adventures')).toBeNull();
+  expect(mockNavigate).not.toHaveBeenCalled();
+});
+
+test('passport keeps earned stamps and continues the next unlocked visit', async () => {
+  await finishSavedVisit(0);
+  const ui = renderWithTheme(<AdventuresScreen />);
+  expect(await ui.findByText('1 stamp collected')).toBeTruthy();
+  expect(ui.getByLabelText('Open passport').props.accessibilityValue).toEqual({
+    text: '1 stamp collected',
+  });
+  fireEvent.press(ui.getByLabelText('Open passport'));
+  expect(
+    await ui.findByText(/Preview stamp earned · Completed without recorded help/),
+  ).toBeTruthy();
+  fireEvent.press(ui.getByText('Continue your adventure'));
+  expect(mockNavigate).toHaveBeenCalledWith('Adventure', {
+    id: ADVENTURES[1].pack.id,
+    mode: 'preview',
+  });
+});
+
+test('passport resumes an unfinished visit', async () => {
+  const { ALL_DECKS } = require('../../src/data/decks');
+  await createAdventureAdapter(ADVENTURES[0].pack.id, 'preview', () => ALL_DECKS).start(
+    'passport-resume',
+    100,
+  );
+  const ui = renderWithTheme(<AdventuresScreen />);
+  fireEvent.press(await ui.findByLabelText('Open passport'));
+  fireEvent.press(within(ui.getByTestId('passport-collection')).getByText('Resume visit'));
+  expect(mockNavigate).toHaveBeenCalledWith('Adventure', {
+    id: ADVENTURES[0].pack.id,
+    mode: 'preview',
+  });
+});
+
+test('Spanish passport opens and dismisses its localized collection', async () => {
+  mockLanguage = 'es';
+  const ui = renderWithTheme(<AdventuresScreen />);
+  fireEvent.press(await ui.findByLabelText('Abrir pasaporte'));
+  expect(ui.getByText('Tu primer sello te espera')).toBeTruthy();
+  fireEvent.press(ui.getByText('Cerrar pasaporte'));
+  expect(ui.queryByText('Tu primer sello te espera')).toBeNull();
+});
+
+test('a fully stamped passport offers revisits without inventing another visit', async () => {
+  for (let index = 0; index < ADVENTURES.length; index++) await finishSavedVisit(index);
+  const ui = renderWithTheme(<AdventuresScreen />);
+  fireEvent.press(await ui.findByLabelText('Open passport'));
+  const collection = within(ui.getByTestId('passport-collection'));
+  expect(collection.queryByText('Continue your adventure')).toBeNull();
+  expect(collection.queryByText('Start your first visit')).toBeNull();
+  fireEvent.press(collection.getByText('Practise again: Breakfast at Ana’s café'));
+  expect(mockNavigate).toHaveBeenCalledWith('Adventure', {
+    id: ADVENTURES[0].pack.id,
+    mode: 'preview',
+  });
 });

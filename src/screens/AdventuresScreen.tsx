@@ -25,6 +25,7 @@ export default function AdventuresScreen() {
         <Text accessibilityRole="header" style={styles.title}>
           {t('adventure.title')}
         </Text>
+        <PracticePassport />
         <Text style={styles.body}>
           {t(overview.returning ? 'adventure.welcomeBack' : 'adventure.intro')}
         </Text>
@@ -75,7 +76,6 @@ export default function AdventuresScreen() {
                 </View>
               );
             })}
-            <PracticePassport />
           </>
         )}
       </ScrollView>
