@@ -1,0 +1,92 @@
+{
+  "verifiedAt": "2026-11-03T20:22:43.878Z",
+  "appId": "6825514456",
+  "builds": [
+    {
+      "id": "eec35480-0c70-401c-8a1e-85840645613d",
+      "version": "1.0.10",
+      "uploadedDate": "2026-11-03T12:18:59-08:00",
+      "expirationDate": "2027-02-01T12:18:59-08:00",
+      "expired": false,
+      "minOsVersion": "16.4",
+      "lsMinimumSystemVersion": "12.0",
+      "computedMinMacOsVersion": "12.0",
+      "computedMinVisionOsVersion": "1.0",
+      "iconAssetToken": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1f/de/57/1fde57ed-4f35-c52c-aa5b-25fbc7be1bd8/AppIcon76x76@2x_U007eipad.png/{w}x{h}bb.{f}",
+        "width": 152,
+        "height": 152
+      },
+      "processingState": "VALID",
+      "buildAudienceType": "APP_STORE_ELIGIBLE",
+      "usesNonExemptEncryption": false
+    }
+  ],
+  "included": [
+    {
+      "type": "preReleaseVersions",
+      "id": "18857fec-b7ae-485c-a04c-8f9ead14abef",
+      "attributes": {
+        "version": "1.0.0",
+        "platform": "IOS"
+      },
+      "relationships": {
+        "builds": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/builds",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/builds"
+          }
+        },
+        "app": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/app",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/app"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef"
+      }
+    },
+    {
+      "type": "buildBetaDetails",
+      "id": "eec35480-0c70-401c-8a1e-85840645613d",
+      "attributes": {
+        "autoNotifyEnabled": true,
+        "internalBuildState": "IN_BETA_TESTING",
+        "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+      },
+      "relationships": {
+        "build": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/eec35480-0c70-401c-8a1e-85840645613d/relationships/build",
+            "related": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/eec35480-0c70-401c-8a1e-85840645613d/build"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/eec35480-0c70-401c-8a1e-85840645613d"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "5e728680-1304-436b-8b07-357d2deea811",
+      "name": "Editorial Review",
+      "createdDate": "2026-10-21T20:43:52.765Z",
+      "isInternalGroup": true,
+      "hasAccessToAllBuilds": true,
+      "publicLinkEnabled": null,
+      "publicLinkId": null,
+      "publicLinkLimitEnabled": null,
+      "publicLinkLimit": null,
+      "publicLink": null,
+      "feedbackEnabled": true,
+      "iosBuildsAvailableForAppleSiliconMac": true,
+      "iosBuildsAvailableForAppleVision": true
+    }
+  ],
+  "exactBuildInInternalGroup": true,
+  "notesSavedAndReadBack": true,
+  "notes": "Café home — 1.0.0 (1.0.10)\n\nHome is now a welcoming illustrated Colombian café, with daylight, warm afternoon colors and evening lamplight that follow your device's local time. Subtle steam rises from the cup. English uses “Let’s practice.”\n\nPlease try:\n1. Open Home and tap Let’s practice. Check that it starts your suggested session. If you have a saved plan, Continue practicing should resume the same plan.\n2. Use Choose a topic and select another collection. Check your usual study progress, custom cards and daily allowance after updating.\n3. Check the café in the morning, afternoon and evening. Return to the app after backgrounding or a local timezone change; the greeting and lighting should refresh.\n4. Enable Reduce Motion: the steam and pulsing lamplight should stop. Leave Home or background the app and return.\n5. Try English/Spanish, Classic/Barrio, larger text and VoiceOver on iPhone/iPad. At the largest text sizes the decorative illustration is omitted so practice content has more room; check scrolling from the buttons and cards.\n6. Scroll below the invitation to find word audio, Favorites, Explore and your study tools. Open available neighborhood adventures and your existing passport.\n\nUpdate the existing app through TestFlight and keep it installed to preserve local progress.\n\nThis remains the internal editorial-review beta. Story scripts, bundled language/pronunciation, physical-device touch/accessibility/audio and billing acceptance are still open. Draft stamps stay separate from accepted practice. No external or public release is included."
+}

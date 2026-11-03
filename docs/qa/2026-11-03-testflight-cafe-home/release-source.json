@@ -1,0 +1,16 @@
+{
+  "commit": "312270233e23cac1504c897d7e5f3f46ef5fe95b",
+  "branch": "main",
+  "version": "1.0.0",
+  "build": "1.0.10",
+  "sourceCleanAtArchive": true,
+  "profile": "editorial-beta",
+  "cafeDraftsEnabled": true,
+  "broadReviewToolsEnabled": false,
+  "microphonePermission": false,
+  "method": "local Xcode archive and manual App Store export",
+  "certificateSha1": "F7B57F7B2BBAC766D62D9A88571DE5F0E81084F5",
+  "profileUuid": "21abaaf4-4ce5-4fb1-8727-fafebadacb4c",
+  "archivePath": "/Users/mike/Builds/Colombian-Spanish/2026-11-03-cafe-home/ColombianSpanish.xcarchive",
+  "ipaPath": "/Users/mike/Builds/Colombian-Spanish/2026-11-03-cafe-home/ColombianSpanish-cafe-home.ipa"
+}

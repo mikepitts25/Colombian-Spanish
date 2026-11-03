@@ -1,0 +1,25 @@
+{
+  "verifiedAt": "2026-11-03T20:11:11.691580+00:00",
+  "sourceCommit": "312270233e23cac1504c897d7e5f3f46ef5fe95b",
+  "mergedMainJestSuitesPassed": 128,
+  "mergedMainJestTestsPassed": 1317,
+  "snapshotsPassed": 1,
+  "typecheck": "passed",
+  "eslint": "passed, zero warnings",
+  "wholeRepositoryPrettier": "passed",
+  "projectData": "passed: 47 decks / 1392 cards / 1392 pronunciation files",
+  "editorialLedger": "valid structure; 1392 cards await current human acceptance",
+  "editorialBetaBuildHook": "passed for internal editorial review",
+  "calendarZones": "passed four-zone calendar integration",
+  "pythonQaTestsPassed": 14,
+  "signedArtifactInspection": "passed; caf\u00e9 artwork and bilingual controls verified; pronunciation hashes match source",
+  "nativeVisualEvidence": "morning/afternoon/evening and maximum text inspected in separate compatible simulator shell; see ../2026-11-03-cafe-home/REPORT.md",
+  "physicalDevice": "pending",
+  "nativeTouchAndVoiceOver": "pending",
+  "humanEditorialAcceptance": "pending",
+  "githubCi": {
+    "conclusion": "success",
+    "jobsPassed": 4,
+    "url": "https://github.com/mikepitts25/Colombian-Spanish/actions/runs/41708903425"
+  }
+}
