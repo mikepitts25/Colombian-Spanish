@@ -317,3 +317,26 @@ test('a fully stamped passport offers revisits without inventing another visit',
     mode: 'preview',
   });
 });
+
+test.each(['classic', 'barrio'] as const)(
+  'accepts Agua por favor in the return café visit in %s',
+  async (themeId) => {
+    await finishSavedVisit(0);
+    const ui = renderWithTheme(
+      <AdventureScreen route={{ params: { id: 'back-at-anas-cafe', mode: 'preview' } }} />,
+    );
+    ui.applyTheme({ themeId, appearanceMode: 'dark' });
+    fireEvent.press(await ui.findByText('Start visit'));
+    fireEvent.press(await ui.findByText('Continue'));
+    fireEvent.changeText(await ui.findByLabelText('Your response'), 'Buenos dias');
+    fireEvent.press(ui.getByText('Check answer'));
+    fireEvent.press(await ui.findByText('Continue'));
+    expect(await ui.findByText('Ask for water')).toBeTruthy();
+    fireEvent.changeText(ui.getByLabelText('Your response'), 'Agua por favor');
+    fireEvent.press(ui.getByText('Check answer'));
+    expect(await ui.findByText('Correct')).toBeTruthy();
+    expect(ui.getByText('Agua, por favor')).toBeTruthy();
+    expect(ui.queryByText('Try again')).toBeNull();
+    expect(ui.getByText('Continue')).toBeTruthy();
+  },
+);

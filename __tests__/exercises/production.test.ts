@@ -37,13 +37,13 @@ test.each(['Sí, gracias', '  ¡SÍ,   GRACIAS! ', 'Si\u0301, gracias', 'Claro, 
     expect(assess(answer)).toMatchObject({ status: 'correct', independent: true, hintsUsed: 0 });
   },
 );
-test('accepts missing accents while preserving ñ and internal punctuation', () => {
+test('accepts missing accents and optional punctuation while preserving ñ', () => {
   expect(assess('Si, gracias')).toMatchObject({
     status: 'correct',
     independent: true,
     correctAnswer: 'Sí, gracias',
   });
-  expect(assess('Sí gracias').status).toBe('incorrect');
+  expect(assess('Sí gracias').status).toBe('correct');
   const year = { ...exercise, acceptedAnswers: ['año'] };
   expect(assessProductionAnswer(year, 'ano', 0).status).toBe('incorrect');
   expect(assessProductionAnswer({ ...exercise, acceptedAnswers: ['tú'] }, 'tu', 0).status).toBe(
@@ -295,3 +295,46 @@ test.each(['Un cafeito, por favor', 'Un cafecito', 'Un cafecito, sin azúcar, po
     ).toBe('incorrect');
   },
 );
+
+// A missing comma must not turn an otherwise correct conversational request into a retry.
+test.each([
+  'Agua por favor',
+  'agua,por favor',
+  '¡Agua por favor!',
+  '“Agua”—por…favor',
+  'Agüita por favor',
+])('accepts punctuation-independent water requests: %s', (answer) => {
+  const value = { ...exercise, acceptedAnswers: ['Agua, por favor'] };
+  expect(assessProductionAnswer(value, answer, 0)).toMatchObject({
+    status: 'correct',
+    independent: true,
+    correctAnswer: 'Agua, por favor',
+  });
+  expect(
+    createProductionObservation(value, {
+      sessionId: 'punctuation',
+      attempt: 0,
+      answer,
+      hintsUsed: 0,
+      occurredAt: 1000,
+      durationMs: 10,
+    }).outcome,
+  ).toBe('correct');
+});
+test.each(['Agua', 'Agua porfavor', 'Por favor agua', 'Agua sin gas por favor'])(
+  'punctuation tolerance still requires the authored words: %s',
+  (answer) => {
+    expect(
+      assessProductionAnswer({ ...exercise, acceptedAnswers: ['Agua, por favor'] }, answer, 0)
+        .status,
+    ).toBe('incorrect');
+  },
+);
+test('punctuation-only Unicode input remains unanswered', () => {
+  expect(assess('—…“”()').status).toBe('empty');
+  expect(() => validateProductionExercise({ ...exercise, acceptedAnswers: ['—…“”()'] })).toThrow();
+});
+test('retains an exact authored punctuation variant for feedback', () => {
+  const value = { ...exercise, acceptedAnswers: ['Agua, por favor', 'Agua por favor'] };
+  expect(assessProductionAnswer(value, 'Agua por favor', 0).correctAnswer).toBe('Agua por favor');
+});

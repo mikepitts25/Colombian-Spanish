@@ -13,7 +13,7 @@ export interface ProductionExercise {
   hints: string[];
 }
 
-// Keep authored spelling for feedback and exact-match preference; only outer punctuation is cosmetic.
+// Keep authored spelling and punctuation for feedback and exact-match preference.
 function normalizeAnswer(answer: string): string {
   return answer
     .normalize('NFKC')
@@ -38,8 +38,15 @@ const diminutives: Record<string, string> = {
   juguito: 'jugo',
 };
 function matchingAnswer(answer: string): string {
-  return withoutVowelMarks(answer).replace(/[\p{L}\p{M}]+/gu, (word) =>
-    Object.prototype.hasOwnProperty.call(diminutives, word) ? diminutives[word] : word,
+  return (
+    withoutVowelMarks(answer)
+      // Punctuation separates words but is never a requirement for a conversational reply.
+      .replace(/\p{P}+/gu, ' ')
+      .replace(/\s+/gu, ' ')
+      .trim()
+      .replace(/[\p{L}\p{M}]+/gu, (word) =>
+        Object.prototype.hasOwnProperty.call(diminutives, word) ? diminutives[word] : word,
+      )
   );
 }
 const text = (value: unknown, max: number): value is string =>
@@ -75,7 +82,7 @@ export function validateProductionExercise(value: unknown): ProductionExercise {
     item.acceptedAnswers.length < 1 ||
     item.acceptedAnswers.length > 20 ||
     !Array.from(item.acceptedAnswers).every(
-      (answer) => text(answer, 256) && normalizeAnswer(answer).length > 0,
+      (answer) => text(answer, 256) && matchingAnswer(normalizeAnswer(answer)).length > 0,
     ) ||
     !Array.isArray(item.hints) ||
     item.hints.length > 5 ||
@@ -127,7 +134,7 @@ export function assessProductionAnswer(
     ? exactIndex
     : accepted.findIndex((candidate) => matchingAnswer(candidate) === equivalent);
   const correct = matchingIndex >= 0;
-  const status: 'empty' | 'correct' | 'incorrect' = !normalized
+  const status: 'empty' | 'correct' | 'incorrect' = !equivalent
     ? 'empty'
     : correct
       ? 'correct'

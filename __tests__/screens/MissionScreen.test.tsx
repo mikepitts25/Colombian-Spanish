@@ -540,7 +540,7 @@ test('Android keyboard reduces the response viewport while preserving the focuse
   expect(StyleSheet.flatten(viewport.props.style).height).toBeUndefined();
 });
 
-test('correct accentless replies show the accented model and only Continue, then accept cafecito', async () => {
+test('correct accentless and punctuation-free replies show the authored model and only Continue', async () => {
   const ui = await begin();
   fireEvent.changeText(ui.getByLabelText('Your response'), 'buenos dias');
   fireEvent.press(ui.getByText('Check answer'));
@@ -549,7 +549,7 @@ test('correct accentless replies show the accented model and only Continue, then
   expect(ui.queryByText('Try again')).toBeNull();
   fireEvent.press(ui.getByText('Continue'));
   await ui.findByText('Ask for coffee');
-  fireEvent.changeText(ui.getByLabelText('Your response'), 'Un cafecito, por favor');
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'Un cafecito por favor');
   fireEvent.press(ui.getByText('Check answer'));
   await ui.findByText('Correct');
   expect(ui.getByText('Un café, por favor')).toBeTruthy();
