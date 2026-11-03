@@ -1,0 +1,16 @@
+{
+  "commit": "5212c6d97bfc19fc6e774d090a5b5e2859a4812d",
+  "branch": "main",
+  "version": "1.0.0",
+  "build": "1.0.9",
+  "sourceCleanAtArchive": true,
+  "profile": "editorial-beta",
+  "cafeDraftsEnabled": true,
+  "broadReviewToolsEnabled": false,
+  "microphonePermission": false,
+  "method": "local Xcode archive and manual App Store export",
+  "certificateSha1": "F7B57F7B2BBAC766D62D9A88571DE5F0E81084F5",
+  "profileUuid": "21abaaf4-4ce5-4fb1-8727-fafebadacb4c",
+  "archivePath": "/Users/mike/Builds/Colombian-Spanish/2026-11-03-passport/ColombianSpanish.xcarchive",
+  "ipaPath": "/Users/mike/Builds/Colombian-Spanish/2026-11-03-passport/ColombianSpanish-passport.ipa"
+}

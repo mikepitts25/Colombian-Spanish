@@ -1,0 +1,20 @@
+{
+  "details" : {
+    "delivery-uuid" : "dfa592b8-fb91-4eed-afbf-ce10940d54e2",
+    "transferred" : "50524029 bytes in 22.458 seconds (2.2MB/s, 17.998Mbps)"
+  },
+  "os-version" : "Version 27.2 (Build 26B123)",
+  "success-message" : "No errors uploading archive at '/Users/mike/Builds/Colombian-Spanish/2026-11-03-passport/ColombianSpanish-passport.ipa'.",
+  "tool-path" : "/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources",
+  "tool-version" : "27.10.4 (2.2)"
+}
+
+Running altool at path '/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources/altool'...
+
+2026-11-03 17:43:14.739 ERROR: [ContentDelivery.Uploader.74AA859740] Failed to create URL for 'CDUploaderStateInfoResumeFilePath'. The file doesn’t exist. (4) The file doesn’t exist.
+2026-11-03 17:43:14.740  INFO: [ContentDelivery.Uploader.74AA859740] 
+==========================================
+UPLOAD SUCCEEDED with no errors
+Delivery UUID: dfa592b8-fb91-4eed-afbf-ce10940d54e2
+Transferred 50524029 bytes in 22.458 seconds (2.2MB/s, 17.998Mbps)
+==========================================

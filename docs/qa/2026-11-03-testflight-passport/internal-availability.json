@@ -1,0 +1,92 @@
+{
+  "verifiedAt": "2026-11-03T16:46:55.819Z",
+  "appId": "6825514456",
+  "builds": [
+    {
+      "id": "dfa592b8-fb91-4eed-afbf-ce10940d54e2",
+      "version": "1.0.9",
+      "uploadedDate": "2026-11-03T08:44:27-08:00",
+      "expirationDate": "2027-02-01T08:44:27-08:00",
+      "expired": false,
+      "minOsVersion": "16.4",
+      "lsMinimumSystemVersion": "12.0",
+      "computedMinMacOsVersion": "12.0",
+      "computedMinVisionOsVersion": "1.0",
+      "iconAssetToken": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/63/ee/12/63ee1214-8c6f-795b-ba64-af3c8b2fdc80/AppIcon76x76@2x_U007eipad.png/{w}x{h}bb.{f}",
+        "width": 152,
+        "height": 152
+      },
+      "processingState": "VALID",
+      "buildAudienceType": "APP_STORE_ELIGIBLE",
+      "usesNonExemptEncryption": false
+    }
+  ],
+  "included": [
+    {
+      "type": "preReleaseVersions",
+      "id": "18857fec-b7ae-485c-a04c-8f9ead14abef",
+      "attributes": {
+        "version": "1.0.0",
+        "platform": "IOS"
+      },
+      "relationships": {
+        "builds": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/builds",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/builds"
+          }
+        },
+        "app": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/app",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/app"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef"
+      }
+    },
+    {
+      "type": "buildBetaDetails",
+      "id": "dfa592b8-fb91-4eed-afbf-ce10940d54e2",
+      "attributes": {
+        "autoNotifyEnabled": true,
+        "internalBuildState": "IN_BETA_TESTING",
+        "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+      },
+      "relationships": {
+        "build": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/dfa592b8-fb91-4eed-afbf-ce10940d54e2/relationships/build",
+            "related": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/dfa592b8-fb91-4eed-afbf-ce10940d54e2/build"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/dfa592b8-fb91-4eed-afbf-ce10940d54e2"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "5e728680-1304-436b-8b07-357d2deea811",
+      "name": "Editorial Review",
+      "createdDate": "2026-10-21T20:43:52.765Z",
+      "isInternalGroup": true,
+      "hasAccessToAllBuilds": true,
+      "publicLinkEnabled": null,
+      "publicLinkId": null,
+      "publicLinkLimitEnabled": null,
+      "publicLinkLimit": null,
+      "publicLink": null,
+      "feedbackEnabled": true,
+      "iosBuildsAvailableForAppleSiliconMac": true,
+      "iosBuildsAvailableForAppleVision": true
+    }
+  ],
+  "exactBuildInInternalGroup": true,
+  "notesSavedAndReadBack": true,
+  "notes": "Compact practice passport — 1.0.0 (1.0.9)\n\nThe passport now appears directly below the Neighbourhood adventures heading as a compact cover. Tap Open passport to see your collection. The same cover is available on Progress.\n\nPlease try:\n1. On Adventures, tap the passport cover. It should open the collection immediately. Close passport should return to your existing list position.\n2. With no stamps, use Start your first visit. With saved progress, use Resume visit or Continue your adventure. The action should open the next available visit directly.\n3. Check existing café and neighbourhood stamps, preview/support labels and completion dates. Revisit a completed scene and check that progress and stamp identities remain intact.\n4. Finish the final visit and open the passport. All earned stamps should remain available, with revisit actions.\n5. Try English/Spanish, Classic/Barrio, larger text and VoiceOver. Check card scrolling and the collection sheet on iPhone/iPad.\n\nUpdate the existing app through TestFlight; keep it installed to preserve local progress. Usual study progress, custom cards and backups are unchanged by this UI update.\n\nThis is the internal editorial-review beta. Story scripts and bundled language/pronunciation still await human acceptance. Draft stamps remain separate from accepted practice. Physical-device visual, touch, accessibility, audio and billing acceptance remain open; no external or public release is included."
+}

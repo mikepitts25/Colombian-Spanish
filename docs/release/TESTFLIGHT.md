@@ -2,6 +2,10 @@
 
 Updated October 25, 2026. Tracks B14.6-A in [MASTER_PLAN.md](../../MASTER_PLAN.md). Android remains paused; skipped security work is unchanged.
 
+## November 3 compact passport update
+
+Delivered merged, pushed source `5212c6d` as locally archived **1.0.0 (1.0.9)**. The passport is now a compact cover near the top of Adventures; tapping opens the collection with a direct Start/Resume/Continue action. Apple verified **VALID / IN_BETA_TESTING**, exact **Editorial Review** membership and saved tester notes. This supersedes older latest-build statements below. [Candidate, verification and delivery evidence](../qa/2026-11-03-testflight-passport/README.md). Physical-device visual, touch and accessibility acceptance remains open; no external or public release was made.
+
 ## November 3 neighbourhood update
 
 Delivered merged, pushed source `5de36fd` as locally archived **1.0.0 (1.0.8)**. The six new missions extend the existing passport collection to eight visits. Apple verified **VALID / IN_BETA_TESTING**, exact **Editorial Review** membership and saved tester notes. This supersedes older latest-build statements below. [Candidate, verification and delivery evidence](../qa/2026-11-03-testflight-neighbourhood/README.md). Draft/editorial and physical-device acceptance remain separate; no external or public release was made.
