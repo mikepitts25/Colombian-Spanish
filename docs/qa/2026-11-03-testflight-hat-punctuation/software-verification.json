@@ -1,0 +1,26 @@
+{
+  "verifiedAt": "2026-11-03T21:31:25.139905+00:00",
+  "sourceCommit": "cbfd35d11090187826c089c63dfc1be9b34f7d66",
+  "jestSuitesPassed": 128,
+  "jestTestsPassed": 1330,
+  "snapshotsPassed": 1,
+  "focusedUiAndAnswerTestsPassed": 98,
+  "regressionProof": "unit and exact return-caf\u00e9 interaction tests failed before the change and passed afterward in both themes",
+  "typecheck": "passed",
+  "eslint": "passed, zero warnings",
+  "wholeRepositoryFormatting": "passed",
+  "projectData": "47 decks / 1392 cards / 1392 pronunciation files",
+  "editorialLedger": "valid structure; human acceptance remains pending",
+  "editorialBetaHook": "passed",
+  "calendarZones": "passed four-zone integration",
+  "pythonQaTestsPassed": 14,
+  "independentReview": "no Important or Critical findings; matcher contract and day/night hat alignment reviewed",
+  "signedInspection": "deep/strict signature and signer/profile match; exact new illustration hashes and all pronunciation files verified",
+  "physicalDevice": "not performed",
+  "githubCi": {
+    "conclusion": "success",
+    "status": "completed",
+    "jobsPassed": 4,
+    "url": "https://github.com/mikepitts25/Colombian-Spanish/actions/runs/41721652261"
+  }
+}

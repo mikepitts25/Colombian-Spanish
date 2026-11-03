@@ -1,0 +1,16 @@
+{
+  "commit": "cbfd35d11090187826c089c63dfc1be9b34f7d66",
+  "branch": "main",
+  "version": "1.0.0",
+  "build": "1.0.11",
+  "sourceCleanAtArchive": true,
+  "profile": "editorial-beta",
+  "cafeDraftsEnabled": true,
+  "broadReviewToolsEnabled": false,
+  "microphonePermission": false,
+  "method": "local Xcode archive and manual App Store export",
+  "certificateSha1": "F7B57F7B2BBAC766D62D9A88571DE5F0E81084F5",
+  "profileUuid": "21abaaf4-4ce5-4fb1-8727-fafebadacb4c",
+  "archivePath": "/Users/mike/Builds/Colombian-Spanish/2026-11-03-hat-punctuation/ColombianSpanish.xcarchive",
+  "ipaPath": "/Users/mike/Builds/Colombian-Spanish/2026-11-03-hat-punctuation/ColombianSpanish-hat-punctuation.ipa"
+}

@@ -1,0 +1,20 @@
+{
+  "details" : {
+    "delivery-uuid" : "44e98711-dff7-4e2b-ae1a-af94e496398d",
+    "transferred" : "52323894 bytes in 20.681 seconds (2.5MB/s, 20.240Mbps)"
+  },
+  "os-version" : "Version 27.2 (Build 26B123)",
+  "success-message" : "No errors uploading archive at '/Users/mike/Builds/Colombian-Spanish/2026-11-03-hat-punctuation/ColombianSpanish-hat-punctuation.ipa'.",
+  "tool-path" : "/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources",
+  "tool-version" : "27.10.4 (2.2)"
+}
+
+Running altool at path '/Applications/Xcode.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources/altool'...
+
+2026-11-03 22:37:10.387 ERROR: [ContentDelivery.Uploader.7B06879740] Failed to create URL for 'CDUploaderStateInfoResumeFilePath'. The file doesn’t exist. (4) The file doesn’t exist.
+2026-11-03 22:37:10.389  INFO: [ContentDelivery.Uploader.7B06879740] 
+==========================================
+UPLOAD SUCCEEDED with no errors
+Delivery UUID: 44e98711-dff7-4e2b-ae1a-af94e496398d
+Transferred 52323894 bytes in 20.681 seconds (2.5MB/s, 20.240Mbps)
+==========================================

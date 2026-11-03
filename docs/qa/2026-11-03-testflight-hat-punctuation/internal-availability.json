@@ -1,0 +1,92 @@
+{
+  "verifiedAt": "2026-11-03T21:41:52.642Z",
+  "appId": "6825514456",
+  "builds": [
+    {
+      "id": "44e98711-dff7-4e2b-ae1a-af94e496398d",
+      "version": "1.0.11",
+      "uploadedDate": "2026-11-03T13:38:39-08:00",
+      "expirationDate": "2027-02-01T13:38:39-08:00",
+      "expired": false,
+      "minOsVersion": "16.4",
+      "lsMinimumSystemVersion": "12.0",
+      "computedMinMacOsVersion": "12.0",
+      "computedMinVisionOsVersion": "1.0",
+      "iconAssetToken": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/51/71/cb51710c-3a29-fa43-7bf5-10cb8ba52b05/AppIcon76x76@2x_U007eipad.png/{w}x{h}bb.{f}",
+        "width": 152,
+        "height": 152
+      },
+      "processingState": "VALID",
+      "buildAudienceType": "APP_STORE_ELIGIBLE",
+      "usesNonExemptEncryption": false
+    }
+  ],
+  "included": [
+    {
+      "type": "preReleaseVersions",
+      "id": "18857fec-b7ae-485c-a04c-8f9ead14abef",
+      "attributes": {
+        "version": "1.0.0",
+        "platform": "IOS"
+      },
+      "relationships": {
+        "builds": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/builds",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/builds"
+          }
+        },
+        "app": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/app",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/app"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef"
+      }
+    },
+    {
+      "type": "buildBetaDetails",
+      "id": "44e98711-dff7-4e2b-ae1a-af94e496398d",
+      "attributes": {
+        "autoNotifyEnabled": true,
+        "internalBuildState": "IN_BETA_TESTING",
+        "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+      },
+      "relationships": {
+        "build": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/44e98711-dff7-4e2b-ae1a-af94e496398d/relationships/build",
+            "related": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/44e98711-dff7-4e2b-ae1a-af94e496398d/build"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/44e98711-dff7-4e2b-ae1a-af94e496398d"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "5e728680-1304-436b-8b07-357d2deea811",
+      "name": "Editorial Review",
+      "createdDate": "2026-10-21T20:43:52.765Z",
+      "isInternalGroup": true,
+      "hasAccessToAllBuilds": true,
+      "publicLinkEnabled": null,
+      "publicLinkId": null,
+      "publicLinkLimitEnabled": null,
+      "publicLinkLimit": null,
+      "publicLink": null,
+      "feedbackEnabled": true,
+      "iosBuildsAvailableForAppleSiliconMac": true,
+      "iosBuildsAvailableForAppleVision": true
+    }
+  ],
+  "exactBuildInInternalGroup": true,
+  "notesSavedAndReadBack": true,
+  "notes": "Caf\u00e9 hat and punctuation fix \u2014 1.0.0 (1.0.11)\n\nThe caf\u00e9 host now wears a black-and-cream Colombian sombrero vueltiao in both daylight and evening scenes.\n\nWritten interactions now ignore punctuation. \u201cAgua por favor\u201d is accepted for \u201cAgua, por favor.\u201d Missing commas, spacing around punctuation and sentence marks should not trigger a correction. The model reply still shows its authored spelling and punctuation. Existing missing-accent and familiar diminutive support remains available; required words, word order and \u00f1 still matter.\n\nPlease try:\n1. In Back at Ana\u2019s caf\u00e9, ask for water with Agua por favor. It should show Correct and Continue. If your current visit is already showing a correction, tap Try again and submit the same phrase.\n2. Try Un cafecito por favor and other everyday replies without commas or final punctuation. The supplied model answer should remain visible after a correct reply.\n3. Check that genuinely incomplete or changed replies still need correction: Agua alone should not satisfy a request that requires por favor.\n4. Check the hat in morning, afternoon and evening lighting. Steam, time changes and Reduce Motion should work as before.\n5. Try English/Spanish and both themes. Existing study progress, adventures, stamps and custom cards should remain available.\n\nUpdate the existing app through TestFlight and keep it installed to preserve local progress. This remains the internal editorial-review beta; human language/pronunciation/story acceptance and physical-device touch, VoiceOver, audio and billing acceptance remain open."
+}

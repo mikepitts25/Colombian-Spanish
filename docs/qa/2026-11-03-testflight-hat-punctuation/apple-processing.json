@@ -1,0 +1,90 @@
+{
+  "verifiedAt": "2026-11-03T21:41:52.642Z",
+  "appId": "6825514456",
+  "builds": [
+    {
+      "id": "44e98711-dff7-4e2b-ae1a-af94e496398d",
+      "version": "1.0.11",
+      "uploadedDate": "2026-11-03T13:38:39-08:00",
+      "expirationDate": "2027-02-01T13:38:39-08:00",
+      "expired": false,
+      "minOsVersion": "16.4",
+      "lsMinimumSystemVersion": "12.0",
+      "computedMinMacOsVersion": "12.0",
+      "computedMinVisionOsVersion": "1.0",
+      "iconAssetToken": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/51/71/cb51710c-3a29-fa43-7bf5-10cb8ba52b05/AppIcon76x76@2x_U007eipad.png/{w}x{h}bb.{f}",
+        "width": 152,
+        "height": 152
+      },
+      "processingState": "VALID",
+      "buildAudienceType": "APP_STORE_ELIGIBLE",
+      "usesNonExemptEncryption": false
+    }
+  ],
+  "included": [
+    {
+      "type": "preReleaseVersions",
+      "id": "18857fec-b7ae-485c-a04c-8f9ead14abef",
+      "attributes": {
+        "version": "1.0.0",
+        "platform": "IOS"
+      },
+      "relationships": {
+        "builds": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/builds",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/builds"
+          }
+        },
+        "app": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/app",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/app"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef"
+      }
+    },
+    {
+      "type": "buildBetaDetails",
+      "id": "44e98711-dff7-4e2b-ae1a-af94e496398d",
+      "attributes": {
+        "autoNotifyEnabled": true,
+        "internalBuildState": "IN_BETA_TESTING",
+        "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+      },
+      "relationships": {
+        "build": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/44e98711-dff7-4e2b-ae1a-af94e496398d/relationships/build",
+            "related": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/44e98711-dff7-4e2b-ae1a-af94e496398d/build"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/44e98711-dff7-4e2b-ae1a-af94e496398d"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "5e728680-1304-436b-8b07-357d2deea811",
+      "name": "Editorial Review",
+      "createdDate": "2026-10-21T20:43:52.765Z",
+      "isInternalGroup": true,
+      "hasAccessToAllBuilds": true,
+      "publicLinkEnabled": null,
+      "publicLinkId": null,
+      "publicLinkLimitEnabled": null,
+      "publicLinkLimit": null,
+      "publicLink": null,
+      "feedbackEnabled": true,
+      "iosBuildsAvailableForAppleSiliconMac": true,
+      "iosBuildsAvailableForAppleVision": true
+    }
+  ],
+  "exactBuildInInternalGroup": true
+}

@@ -2,6 +2,10 @@
 
 Updated October 25, 2026. Tracks B14.6-A in [MASTER_PLAN.md](../../MASTER_PLAN.md). Android remains paused; skipped security work is unchanged.
 
+## November 3 café hat and punctuation fix
+
+Delivered merged, pushed source `cbfd35d` as locally archived **1.0.0 (1.0.11)**. The café host wears a sombrero vueltiao in both lighting variants, and typed interactions accept punctuation-free replies such as “Agua por favor.” Required words, word order, ñ and authored feedback remain intact. All 1,330 tests and four GitHub validation jobs passed. Apple verified **VALID / IN_BETA_TESTING**, exact **Editorial Review** membership for the existing three testers, and saved tester notes. [Candidate and delivery evidence](../qa/2026-11-03-testflight-hat-punctuation/README.md). This supersedes older latest-build statements below.
+
 ## November 3 café Home update
 
 Delivered merged, pushed source `3122702` as locally archived **1.0.0 (1.0.10)**. Home now opens into the illustrated Colombian café, with local-time lighting, subtle steam and American English Practice controls. Apple verified **VALID / IN_BETA_TESTING**, exact **Editorial Review** membership for the existing three testers, and saved tester notes. All 1,317 tests and four GitHub validation jobs passed. This supersedes older latest-build statements below. [Signed candidate, verification and delivery evidence](../qa/2026-11-03-testflight-cafe-home/README.md). Physical-device touch/VoiceOver and human editorial acceptance remain open; no external or public release was made.
