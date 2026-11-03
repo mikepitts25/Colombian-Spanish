@@ -37,13 +37,17 @@ test.each(['Sí, gracias', '  ¡SÍ,   GRACIAS! ', 'Si\u0301, gracias', 'Claro, 
     expect(assess(answer)).toMatchObject({ status: 'correct', independent: true, hintsUsed: 0 });
   },
 );
-test('retains meaningful accents, ñ and internal punctuation', () => {
-  expect(assess('Si, gracias')).toMatchObject({ status: 'accent', correctAnswer: 'Sí, gracias' });
+test('accepts missing accents while preserving ñ and internal punctuation', () => {
+  expect(assess('Si, gracias')).toMatchObject({
+    status: 'correct',
+    independent: true,
+    correctAnswer: 'Sí, gracias',
+  });
   expect(assess('Sí gracias').status).toBe('incorrect');
   const year = { ...exercise, acceptedAnswers: ['año'] };
   expect(assessProductionAnswer(year, 'ano', 0).status).toBe('incorrect');
   expect(assessProductionAnswer({ ...exercise, acceptedAnswers: ['tú'] }, 'tu', 0).status).toBe(
-    'accent',
+    'correct',
   );
 });
 test('returns explicit correction and authored explanation without inventing synonyms', () => {
@@ -251,3 +255,43 @@ test('new production observations require explicit numeric elapsed duration', ()
     ).toThrow();
   }
 });
+
+// Removing accent/diminutive matching must fail these learner-visible outcomes.
+test.each([
+  ['Buenos días', 'buenos dias'],
+  ['Un café, por favor', 'Un cafecito, por favor'],
+  ['Un tinto, por favor', 'Un tintico, por favor'],
+  ['Un tinto, por favor', 'Un tintito, por favor'],
+  ['Agua, por favor', 'Agüita, por favor'],
+  ['Agua, por favor', 'aguita, por favor'],
+  ['Un pan, por favor', 'Un pancito, por favor'],
+  ['Un pan, por favor', 'Un panecito, por favor'],
+  ['Un jugo, por favor', 'Un juguito, por favor'],
+])('accepts %s as %s and keeps the authored model answer', (model, answer) => {
+  const value = { ...exercise, acceptedAnswers: [model] };
+  expect(assessProductionAnswer(value, answer, 0)).toMatchObject({
+    status: 'correct',
+    independent: true,
+    correctAnswer: model,
+  });
+  expect(assessProductionAnswer(value, answer, 1).independent).toBe(false);
+  expect(
+    createProductionObservation(value, {
+      sessionId: 'accepted-variant',
+      attempt: 0,
+      answer,
+      hintsUsed: 0,
+      occurredAt: 1000,
+      durationMs: 10,
+    }).outcome,
+  ).toBe('correct');
+});
+test.each(['Un cafeito, por favor', 'Un cafecito', 'Un cafecito, sin azúcar, por favor'])(
+  'does not accept invented endings or changed phrase requirements: %s',
+  (answer) => {
+    expect(
+      assessProductionAnswer({ ...exercise, acceptedAnswers: ['Un café, por favor'] }, answer, 0)
+        .status,
+    ).toBe('incorrect');
+  },
+);

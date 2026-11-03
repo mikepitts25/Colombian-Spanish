@@ -13,7 +13,7 @@ export interface ProductionExercise {
   hints: string[];
 }
 
-// Only outer sentence punctuation is cosmetic. Keep internal punctuation, accents and ñ.
+// Keep authored spelling for feedback and exact-match preference; only outer punctuation is cosmetic.
 function normalizeAnswer(answer: string): string {
   return answer
     .normalize('NFKC')
@@ -25,6 +25,22 @@ function normalizeAnswer(answer: string): string {
 function withoutVowelMarks(answer: string): string {
   const replacements: Record<string, string> = { á: 'a', é: 'e', í: 'i', ó: 'o', ú: 'u', ü: 'u' };
   return answer.replace(/[áéíóúü]/gu, (letter) => replacements[letter]);
+}
+// Explicit conversational equivalents only: arbitrary suffix stripping can change meaning.
+// Match whole words so a diminutive cannot alter another word or remove phrase requirements.
+const diminutives: Record<string, string> = {
+  cafecito: 'cafe',
+  tintico: 'tinto',
+  tintito: 'tinto',
+  aguita: 'agua',
+  pancito: 'pan',
+  panecito: 'pan',
+  juguito: 'jugo',
+};
+function matchingAnswer(answer: string): string {
+  return withoutVowelMarks(answer).replace(/[\p{L}\p{M}]+/gu, (word) =>
+    Object.prototype.hasOwnProperty.call(diminutives, word) ? diminutives[word] : word,
+  );
 }
 const text = (value: unknown, max: number): value is string =>
   typeof value === 'string' && value.trim().length > 0 && value.length <= max;
@@ -106,21 +122,21 @@ export function assessProductionAnswer(
   const accepted = exercise.acceptedAnswers.map(normalizeAnswer);
   const exactIndex = accepted.indexOf(normalized);
   const exact = exactIndex >= 0;
-  const nearIndex = accepted.findIndex(
-    (candidate) => withoutVowelMarks(candidate) === withoutVowelMarks(normalized),
-  );
-  const status: 'empty' | 'correct' | 'accent' | 'incorrect' = !normalized
+  const equivalent = matchingAnswer(normalized);
+  const matchingIndex = exact
+    ? exactIndex
+    : accepted.findIndex((candidate) => matchingAnswer(candidate) === equivalent);
+  const correct = matchingIndex >= 0;
+  const status: 'empty' | 'correct' | 'incorrect' = !normalized
     ? 'empty'
-    : exact
+    : correct
       ? 'correct'
-      : nearIndex >= 0
-        ? 'accent'
-        : 'incorrect';
+      : 'incorrect';
   return {
     status,
-    independent: exact && hintsUsed === 0,
+    independent: correct && hintsUsed === 0,
     hintsUsed,
-    correctAnswer: exercise.acceptedAnswers[exact ? exactIndex : Math.max(0, nearIndex)],
+    correctAnswer: exercise.acceptedAnswers[Math.max(0, matchingIndex)],
     explanation: exercise.explanation,
   };
 }

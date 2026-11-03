@@ -532,14 +532,14 @@ export default function MissionScreen({
                                 )}
                               </Text>
                             )}
-                            {
+                            {run.feedback.status !== 'correct' && (
                               <ActionButton
                                 label={t('mission.retryAnswer')}
                                 action={() => command('retry')}
                                 off={disabled}
                                 busy={saving}
                               />
-                            }
+                            )}
                             {
                               <ActionButton
                                 label={t(

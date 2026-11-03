@@ -126,13 +126,13 @@ test('retains failed submission for retry and resumes exact feedback without per
   expect(ui.getByLabelText('Your response')).toHaveProp('value', 'buenos dias');
   expect(ui.getByLabelText('Your response')).toHaveStyle({ color: '#18352F' });
   fireEvent.press(ui.getByText('Retry save'));
-  await ui.findByText('Check the accents');
+  await ui.findByText('Correct');
   const state = (await missionStorage.loadMissionRun(FIRST_MORNING)).run!;
-  expect(state.assisted).toBe(true);
+  expect(state.assisted).toBe(false);
   expect(await getLearningEvents()).toHaveLength(1);
   ui.unmount();
   const resumed = render(<MissionScreen />);
-  await resumed.findByText('Check the accents');
+  await resumed.findByText('Correct');
   expect(resumed.queryByLabelText('Your response')).toBeNull();
   expect(await AsyncStorage.getItem('SRS_MISSIONS_V1')).not.toContain('buenos dias');
 });
@@ -538,4 +538,25 @@ test('Android keyboard reduces the response viewport while preserving the focuse
   expect(ui.getByLabelText('Your response').props.value).toBe('Buenos dias');
   await act(async () => DeviceEventEmitter.emit('keyboardDidHide', {}));
   expect(StyleSheet.flatten(viewport.props.style).height).toBeUndefined();
+});
+
+test('correct accentless replies show the accented model and only Continue, then accept cafecito', async () => {
+  const ui = await begin();
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'buenos dias');
+  fireEvent.press(ui.getByText('Check answer'));
+  await ui.findByText('Correct');
+  expect(ui.getByText('Buenos días')).toBeTruthy();
+  expect(ui.queryByText('Try again')).toBeNull();
+  fireEvent.press(ui.getByText('Continue'));
+  await ui.findByText('Ask for coffee');
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'Un cafecito, por favor');
+  fireEvent.press(ui.getByText('Check answer'));
+  await ui.findByText('Correct');
+  expect(ui.getByText('Un café, por favor')).toBeTruthy();
+  expect(ui.queryByText('Try again')).toBeNull();
+  fireEvent.press(ui.getByText('Continue'));
+  fireEvent.press(await ui.findByText('Accept water'));
+  await ui.findByText('Correct');
+  expect(ui.queryByText('Try again')).toBeNull();
+  expect(ui.getByText('Continue')).toBeTruthy();
 });
