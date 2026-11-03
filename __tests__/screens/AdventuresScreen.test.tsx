@@ -5,7 +5,7 @@ import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import AdventureScreen from '../../src/screens/AdventureScreen';
 import AdventuresScreen from '../../src/screens/AdventuresScreen';
 import { ADVENTURES } from '../../src/adventures/content';
-import { readAdventures } from '../../src/storage/adventures';
+import { createAdventureAdapter, readAdventures } from '../../src/storage/adventures';
 import { translations } from '../../src/i18n/translations';
 const mockNavigate = jest.fn(),
   mockBack = jest.fn();
@@ -99,7 +99,10 @@ test('release cannot open draft scenes or advertise unavailable adventures', asy
 });
 test('episode two remains visibly locked until visit one has saved', async () => {
   const ui = renderWithTheme(<AdventuresScreen />);
-  expect(await ui.findByText('Complete the first visit to continue the story.')).toBeTruthy();
+  expect(
+    await ui.findByText('Complete “Breakfast at Ana’s café” to continue the story.'),
+  ).toBeTruthy();
+  expect(ui.getByText('Complete “The bill, please” to continue the story.')).toBeTruthy();
   expect(mockNavigate).not.toHaveBeenCalled();
   await waitFor(() => expect(ui.getByText('Breakfast at Ana’s café')).toBeTruthy());
 });
@@ -160,4 +163,78 @@ test('the editorial store flag opens only cafe drafts without developer review t
   const ui = scene();
   expect(await ui.findByText('Start visit')).toBeTruthy();
   expect(ui.getByText('Draft practice')).toBeTruthy();
+});
+
+async function finishSavedVisit(index: number) {
+  const def = ADVENTURES[index];
+  const { ALL_DECKS } = require('../../src/data/decks');
+  const a = createAdventureAdapter(def.pack.id, 'preview', () => ALL_DECKS);
+  let run = await a.start(`screen-visit-${index}`, 100);
+  let seq = 0;
+  const command = (type: 'advance' | 'answer', extra = {}) => ({
+    id: `screen-op-${index}-${++seq}`,
+    type,
+    runId: run.id,
+    nodeId: run.nodeId,
+    expectedRevision: run.revision,
+    at: 100 + seq,
+    ...extra,
+  });
+  while (!run.completed) {
+    const node = def.pack.nodes.find((n) => n.id === run.nodeId)!;
+    if (node.kind === 'production' || node.kind === 'choice')
+      run = await a.apply(
+        command(
+          'answer',
+          node.kind === 'production'
+            ? { answer: node.exercise.acceptedAnswers[0], durationMs: 5 }
+            : { choiceId: node.options.find((o) => o.correct)!.id, durationMs: 5 },
+        ),
+      );
+    run = await a.apply(command('advance'));
+  }
+}
+
+test.each(['en', 'es'] as const)(
+  'completion beyond the first café visit names and opens the next mission in %s',
+  async (language) => {
+    mockLanguage = language;
+    await finishSavedVisit(0);
+    await finishSavedVisit(1);
+    const ui = renderWithTheme(
+      <AdventureScreen
+        route={{
+          params: {
+            id: ADVENTURES[1].pack.id,
+            mode: 'preview',
+          },
+        }}
+      />,
+    );
+    const label =
+      language === 'en' ? 'Next visit: The bill, please' : 'Próxima visita: La cuenta, por favor';
+    fireEvent.press(await ui.findByText(label));
+    expect(mockNavigate).toHaveBeenCalledWith('Adventure', {
+      id: ADVENTURES[2].pack.id,
+      mode: 'preview',
+    });
+  },
+);
+
+test('the final visit keeps the passport available without a next visit', async () => {
+  for (let index = 0; index < ADVENTURES.length; index++) await finishSavedVisit(index);
+  const ui = renderWithTheme(
+    <AdventureScreen
+      route={{
+        params: {
+          id: ADVENTURES[7].pack.id,
+          mode: 'preview',
+        },
+      }}
+    />,
+  );
+  expect(await ui.findByText('Preview stamp earned')).toBeTruthy();
+  expect(ui.queryByText(/Next visit:/)).toBeNull();
+  fireEvent.press(ui.getByText('Your practice passport'));
+  expect(mockNavigate).toHaveBeenCalledWith('Adventures');
 });

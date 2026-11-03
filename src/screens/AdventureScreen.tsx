@@ -40,9 +40,20 @@ function AdventureCompletion({ run, mode }: { run: MissionRun; mode: AdventureMo
   const earned = snapshot.value.outcomes.find(
     (o) => o.mode === mode && o.missionId === run.missionId && o.fingerprint === entry.fingerprint,
   );
-  const next = ADVENTURES[1];
-  const nextAvailable =
-    run.missionId === ADVENTURES[0].pack.id && resolveAdventure(next.pack.id, decks, mode);
+  const next = ADVENTURES.filter((candidate) =>
+    candidate.pack.prerequisites.includes(run.missionId),
+  )
+    .map((candidate) => resolveAdventure(candidate.pack.id, decks, mode))
+    .find(
+      (candidate) =>
+        candidate &&
+        candidate.pack.prerequisites.every((id) =>
+          snapshot.value.milestones.some((m) => m.mode === mode && m.missionId === id),
+        ) &&
+        !snapshot.value.milestones.some(
+          (m) => m.mode === mode && m.missionId === candidate.pack.id,
+        ),
+    );
   return (
     <View style={{ gap: 16 }}>
       {qualified && earned ? (
@@ -60,13 +71,13 @@ function AdventureCompletion({ run, mode }: { run: MissionRun; mode: AdventureMo
           <Text style={styles.body}>{t('adventure.reviewedNote')}</Text>
         </>
       )}
-      {nextAvailable && (
+      {next && (
         <AdventureButton
-          label={t('adventure.next')}
+          label={t('adventure.next', { title: next.pack.title[language] })}
           onPress={() => nav.navigate('Adventure', { id: next.pack.id, mode })}
         />
       )}
-      {!nextAvailable && <Text style={styles.body}>{def.pack.title[language]}</Text>}
+      {!next && <Text style={styles.body}>{def.pack.title[language]}</Text>}
       <AdventureButton label={t('adventure.passport')} onPress={() => nav.navigate('Adventures')} />
     </View>
   );

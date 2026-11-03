@@ -2,9 +2,9 @@ import { UiLanguage } from '../storage/prefs';
 
 export const translations = {
   es: {
-    'adventure.title': 'Aventuras en la cafetería',
+    'adventure.title': 'Aventuras por el barrio',
     'adventure.invitation':
-      'Una cafetería conocida, una conversación breve y algo útil para practicar.',
+      'Visita el barrio con Ana y Nico y practica español en situaciones cotidianas.',
     'adventure.welcomeBack': 'Qué bueno verte de nuevo. Empieza con un repaso breve.',
     'adventure.open': 'Explorar las aventuras',
     'adventure.intro':
@@ -18,7 +18,7 @@ export const translations = {
     'adventure.start': 'Empezar visita',
     'adventure.resume': 'Continuar visita',
     'adventure.view': 'Ver visita guardada',
-    'adventure.locked': 'Completa la primera visita para continuar la historia.',
+    'adventure.locked': 'Completa «{title}» para continuar la historia.',
     'adventure.unavailable': 'Esta visita no está disponible. Vuelve a tu práctica.',
     'adventure.empty':
       'Las nuevas visitas aparecerán aquí cuando estén listas. Tu práctica habitual está disponible en Inicio.',
@@ -32,13 +32,13 @@ export const translations = {
     'adventure.emptyPassport':
       'Completa las tareas de una visita para conseguir tu primer sello. Puedes usar ayuda.',
     'adventure.previewStamp': 'Sello de muestra conseguido',
-    'adventure.stamp': 'Sello de la cafetería conseguido',
+    'adventure.stamp': 'Sello del pasaporte conseguido',
     'adventure.supported': 'Completada con apoyo',
     'adventure.independent': 'Completada sin apoyo registrado',
     'adventure.reviewed': 'Práctica revisada',
     'adventure.reviewedNote':
       'Llegaste al final de la visita. Inténtalo de nuevo cuando quieras practicar las tareas pendientes.',
-    'adventure.next': 'Próxima visita: De vuelta en la cafetería de Ana',
+    'adventure.next': 'Próxima visita: {title}',
     'adventure.revisit': 'Practicar de nuevo',
     'adventure.version': 'Versión',
     'adventure.historical': 'Práctica anterior guardada; esta versión no está disponible ahora',
@@ -831,10 +831,11 @@ export const translations = {
     'nav.difficultWords': 'Palabras Difíciles',
   },
   en: {
-    'adventure.title': 'Café adventures',
-    'adventure.invitation': 'A familiar café, a short encounter and something useful to practise.',
+    'adventure.title': 'Neighbourhood adventures',
+    'adventure.invitation':
+      'Explore the neighbourhood with Ana and Nico and practise everyday Spanish.',
     'adventure.welcomeBack': 'Welcome back. Start with a short warm-up.',
-    'adventure.open': 'Explore café adventures',
+    'adventure.open': 'Explore adventures',
     'adventure.intro':
       'Meet Ana and Nico. Practise a little Spanish, then return for another visit. Help is always available.',
     'adventure.shortVisit': 'A short visit',
@@ -846,7 +847,7 @@ export const translations = {
     'adventure.start': 'Start visit',
     'adventure.resume': 'Resume visit',
     'adventure.view': 'View saved visit',
-    'adventure.locked': 'Complete the first visit to continue the story.',
+    'adventure.locked': 'Complete “{title}” to continue the story.',
     'adventure.unavailable': 'This visit is not available. Return to your practice.',
     'adventure.empty':
       'New visits will appear here when they are ready. Your usual practice is available from Home.',
@@ -860,13 +861,13 @@ export const translations = {
     'adventure.emptyPassport':
       'Complete a visit’s tasks to collect your first stamp. Help is welcome.',
     'adventure.previewStamp': 'Preview stamp earned',
-    'adventure.stamp': 'Café stamp earned',
+    'adventure.stamp': 'Passport stamp earned',
     'adventure.supported': 'Completed with support',
     'adventure.independent': 'Completed without recorded help',
     'adventure.reviewed': 'Practice reviewed',
     'adventure.reviewedNote':
       'You reached the end of the visit. Try again whenever you want to practise the remaining tasks.',
-    'adventure.next': 'Next visit: Back at Ana’s café',
+    'adventure.next': 'Next visit: {title}',
     'adventure.revisit': 'Practise again',
     'adventure.version': 'Version',
     'adventure.historical': 'Saved earlier practice; this version is currently unavailable',
@@ -1563,7 +1564,7 @@ export const translations = {
     'settings.file.preview':
       'Exported: {date}\n{decks} decks · {cards} cards · {events} observations.\nAdd new cards keeps existing content and schedules. Replace decks overwrites them. Every option merges learning history and keeps newer local observations.',
     'settings.file.stateIncluded':
-      'Includes preferences, daily goals, streak, seen words, results and saved session. Includes café adventure progress and passport stamps. Restoring an older backup replaces newer adventure progress. Only Restore app state replaces these along with decks; adding or replacing decks keeps local app state. Missing source values reset to defaults. Restart required. Device permissions are not imported.',
+      'Includes preferences, daily goals, streak, seen words, results and saved session. Includes adventure progress and passport stamps. Restoring an older backup replaces newer adventure progress. Only Restore app state replaces these along with decks; adding or replacing decks keeps local app state. Missing source values reset to defaults. Restart required. Device permissions are not imported.',
     'settings.file.stateOmitted': 'This older backup omits preferences and other app state.',
     'settings.file.restoreState': 'Restore app state',
     'settings.file.restart':

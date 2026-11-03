@@ -6,6 +6,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useThemedStyles } from '../context/ThemeContext';
 import { useAdventureOverview } from '../adventures/useAdventureOverview';
 import { AdventureButton, adventureStyles } from '../components/AdventureUI';
+import { ADVENTURES } from '../adventures/content';
 import PracticePassport from '../components/PracticePassport';
 export default function AdventuresScreen() {
   const overview = useAdventureOverview(),
@@ -40,10 +41,12 @@ export default function AdventuresScreen() {
           <>
             {!ordered.length && <Text style={styles.body}>{t('adventure.empty')}</Text>}
             {ordered.map((def) => {
-              const locked = def.pack.prerequisites.some(
+              const missingPrerequisite = def.pack.prerequisites.find(
                 (id) =>
                   !overview.state.milestones.some((m) => m.mode === def.mode && m.missionId === id),
               );
+              const locked = !!missingPrerequisite;
+              const prerequisite = ADVENTURES.find((d) => d.pack.id === missingPrerequisite);
               const run = overview.state.runs.find(
                 (r) => r.mode === def.mode && r.mission.missionId === def.pack.id,
               );
@@ -56,7 +59,11 @@ export default function AdventuresScreen() {
                     {def.pack.title[language]}
                   </Text>
                   <Text style={styles.body}>
-                    {t(locked ? 'adventure.locked' : 'adventure.shortVisit')}
+                    {locked
+                      ? t('adventure.locked', {
+                          title: prerequisite?.pack.title[language] ?? missingPrerequisite!,
+                        })
+                      : t('adventure.shortVisit')}
                   </Text>
                   <AdventureButton
                     label={t(

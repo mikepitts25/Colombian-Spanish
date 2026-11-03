@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`original café identities remain compatible with saved passports 1`] = `
+[
+  "0806e2ad36e61fa59a5fabb76141b033f65c0dc9eac44223f1ca4a843deee8c4",
+  "2f9beda2e5c0ea02b20ee09ddec80193565716bfd4b5e418f998820b1a123f90",
+]
+`;

@@ -264,3 +264,64 @@ test('a legitimate historical structure remains readable after a same-version no
     def.pack.nodes[def.pack.nodes.length - 1].id = original;
   }
 });
+
+test('all eight visits earn persistent stamps, survive backup and do not duplicate on replay', async () => {
+  expect(ADVENTURES).toHaveLength(8);
+  async function completeVisit(index: number, supported = false) {
+    const def = ADVENTURES[index];
+    const a = createAdventureAdapter(def.pack.id, 'preview', () => ALL_DECKS);
+    const old = await a.load();
+    let run = await a.start(`tour-${++sequence}`, 100, old.run?.id);
+    if (supported) run = await a.warmup!(run.id);
+    while (!run.completed) {
+      const node = def.pack.nodes.find((n) => n.id === run.nodeId)!;
+      if (node.kind === 'production' || node.kind === 'choice') {
+        run = await a.apply(
+          command(
+            run,
+            'answer',
+            node.kind === 'production'
+              ? { answer: node.exercise.acceptedAnswers[0], durationMs: 5 }
+              : { choiceId: node.options.find((o) => o.correct)!.id, durationMs: 5 },
+          ),
+        );
+      }
+      run = await a.apply(command(run, 'advance'));
+    }
+  }
+  for (let index = 0; index < ADVENTURES.length; index++) {
+    if (index) {
+      await expect(
+        createAdventureAdapter(ADVENTURES[index].pack.id, 'accepted', () => ALL_DECKS).start(
+          `accepted-${index}`,
+          100,
+        ),
+      ).rejects.toThrow();
+    }
+    if (index + 1 < ADVENTURES.length) {
+      await expect(
+        createAdventureAdapter(ADVENTURES[index + 1].pack.id, 'preview', () => ALL_DECKS).start(
+          `locked-${index}`,
+          100,
+        ),
+      ).rejects.toThrow();
+    }
+    await completeVisit(index, index % 2 === 1);
+    expect((await readAdventures()).outcomes).toHaveLength(index + 1);
+  }
+  const state = await readAdventures();
+  for (let index = 0; index < ADVENTURES.length; index++) {
+    expect(state.outcomes.find((o) => o.missionId === ADVENTURES[index].pack.id)?.supported).toBe(
+      index % 2 === 1,
+    );
+    await completeVisit(index, true);
+  }
+  expect(await readAdventures()).toMatchObject({
+    outcomes: state.outcomes,
+    milestones: state.milestones,
+  });
+  const snapshot = await captureBackupSnapshot();
+  await AsyncStorage.clear();
+  await withStorageTransaction((tx) => writePortableState(tx, snapshot.applicationState!));
+  expect((await readAdventures()).outcomes).toEqual(state.outcomes);
+});

@@ -2,6 +2,7 @@ import { createHash } from 'crypto';
 import { canonicalJson, sha256 } from '../../src/adventures/identity';
 import { ADVENTURES, resolveAdventure, adventureIdentity } from '../../src/adventures/content';
 import { ALL_DECKS as decks } from '../../src/data/decks';
+import { accessibleDecks } from '../../src/billing/catalog';
 import { validateMission } from '../../src/missions/schema';
 
 test('SHA-256 matches trusted UTF-8 vectors and canonical keys are stable', () => {
@@ -9,8 +10,8 @@ test('SHA-256 matches trusted UTF-8 vectors and canonical keys are stable', () =
     expect(sha256(value)).toBe(createHash('sha256').update(value).digest('hex'));
   expect(canonicalJson({ b: [2, { z: 3, a: 4 }], a: 1 })).toBe('{"a":1,"b":[2,{"a":4,"z":3}]}');
 });
-test('two connected draft episodes validate against real source cards', () => {
-  expect(ADVENTURES).toHaveLength(2);
+test('eight connected draft episodes validate against real source cards', () => {
+  expect(ADVENTURES).toHaveLength(8);
   for (const definition of ADVENTURES) {
     expect(() => validateMission(definition.pack)).not.toThrow();
     expect(resolveAdventure(definition.pack.id, decks, 'preview')).toBeDefined();
@@ -59,4 +60,31 @@ test('acceptance binds exact identity, attribution and withdrawal', () => {
       records: [{ ...record, fingerprint: '0'.repeat(64) }],
     }),
   ).toBeUndefined();
+});
+
+test('original café identities remain compatible with saved passports', () => {
+  expect(ADVENTURES.slice(0, 2).map((def) => adventureIdentity(def, decks))).toMatchSnapshot();
+});
+
+// Missing content or paid-only sources would make visits disappear for free learners.
+test('all visits resolve with the free library and form a reachable story sequence', () => {
+  const free = accessibleDecks(decks, false);
+  expect(ADVENTURES.map((d) => d.pack.title.en)).toEqual([
+    'Breakfast at Ana’s café',
+    'Back at Ana’s café',
+    'The bill, please',
+    'Breakfast to go',
+    'At the fruit stall',
+    'Finding the plaza',
+    'A taxi across town',
+    'Lunch with Nico',
+  ]);
+  ADVENTURES.forEach((def, index) => {
+    expect(resolveAdventure(def.pack.id, free, 'preview')).toBeDefined();
+    expect(def.pack.prerequisites).toEqual(index ? [ADVENTURES[index - 1].pack.id] : []);
+    expect(new Set(def.warmupCardIds).size).toBe(3);
+    expect(def.requiredNodeIds).toEqual(
+      def.pack.nodes.filter((n) => n.kind === 'production' || n.kind === 'choice').map((n) => n.id),
+    );
+  });
 });

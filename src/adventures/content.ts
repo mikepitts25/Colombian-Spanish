@@ -3,6 +3,7 @@ import { FIRST_MORNING } from '../missions/firstMorning';
 import { MissionPack, ProductionNode, validateMission } from '../missions/schema';
 import { canonicalJson, sha256 } from './identity';
 import acceptance from './acceptance.json';
+import { NEIGHBOURHOOD_ADVENTURES } from './neighbourhood';
 export type AdventureMode = 'preview' | 'accepted';
 export interface AdventureDefinition {
   pack: MissionPack;
@@ -147,6 +148,7 @@ export const ADVENTURES: readonly AdventureDefinition[] = [
     requiredNodeIds: ['greeting', 'water', 'confirm', 'thanks'],
     warmupCardIds: ['0010', '0025', '1148'],
   },
+  ...NEIGHBOURHOOD_ADVENTURES,
 ];
 export function adventureIdentity(def: AdventureDefinition, decks: Deck[]): string {
   const ids = new Set([
