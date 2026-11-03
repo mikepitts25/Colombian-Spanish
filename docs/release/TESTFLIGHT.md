@@ -2,6 +2,10 @@
 
 Updated October 25, 2026. Tracks B14.6-A in [MASTER_PLAN.md](../../MASTER_PLAN.md). Android remains paused; skipped security work is unchanged.
 
+## November 3 neighbourhood update
+
+Delivered merged, pushed source `5de36fd` as locally archived **1.0.0 (1.0.8)**. The six new missions extend the existing passport collection to eight visits. Apple verified **VALID / IN_BETA_TESTING**, exact **Editorial Review** membership and saved tester notes. This supersedes older latest-build statements below. [Candidate, verification and delivery evidence](../qa/2026-11-03-testflight-neighbourhood/README.md). Draft/editorial and physical-device acceptance remain separate; no external or public release was made.
+
 ## Active editorial-review beta
 
 The owner explicitly authorized building and uploading the current catalogue to TestFlight **to perform the pending editorial review**. That supersedes the October20 content-before-beta dependency below. The dedicated `editorial-beta` profile uses store distribution, production EAS environment, Node22 and disabled dotenv loading. The beta build hook validates the ledger and explicitly reports its unaccepted catalogue; the public `production` hook and `npm run release:preflight` stay strict. No language acceptance is invented.

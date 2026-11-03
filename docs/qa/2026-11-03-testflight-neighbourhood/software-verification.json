@@ -1,0 +1,25 @@
+{
+  "verifiedAt": "2026-11-03T07:47:17.203613+00:00",
+  "sourceCommit": "5de36fd",
+  "jestSuitesPassed": 127,
+  "jestTestsPassed": 1284,
+  "snapshotsPassed": 1,
+  "mergedJestSuitesPassed": 127,
+  "mergedJestTestsPassed": 1284,
+  "typecheck": "passed",
+  "eslint": "passed, zero warnings",
+  "wholeRepositoryPrettier": "passed",
+  "projectData": "passed, 47 decks / 1392 cards / 1392 audio entries",
+  "editorialLedger": "valid structure, 1392 cards await acceptance",
+  "calendarZones": "passed four-zone checks",
+  "pythonQaTestsPassed": 14,
+  "independentReview": "no material findings",
+  "physicalDevice": "not performed",
+  "humanEditorialAcceptance": "pending",
+  "githubCi": {
+    "runId": 41598637300,
+    "conclusion": "success",
+    "jobsPassed": 4,
+    "url": "https://github.com/mikepitts25/Colombian-Spanish/actions/runs/41598637300"
+  }
+}

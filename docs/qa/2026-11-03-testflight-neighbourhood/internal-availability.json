@@ -1,0 +1,92 @@
+{
+  "verifiedAt": "2026-11-03T07:57:05.861Z",
+  "appId": "6825514456",
+  "builds": [
+    {
+      "id": "9b0c96a0-d0a1-4b30-be2b-639efc78bd99",
+      "version": "1.0.8",
+      "uploadedDate": "2026-11-02T23:54:48-08:00",
+      "expirationDate": "2027-01-31T23:54:48-08:00",
+      "expired": false,
+      "minOsVersion": "16.4",
+      "lsMinimumSystemVersion": "12.0",
+      "computedMinMacOsVersion": "12.0",
+      "computedMinVisionOsVersion": "1.0",
+      "iconAssetToken": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c2/84/4c/c2844cc9-369e-6d3c-70f0-41e8bd1433e7/AppIcon76x76@2x_U007eipad.png/{w}x{h}bb.{f}",
+        "width": 152,
+        "height": 152
+      },
+      "processingState": "VALID",
+      "buildAudienceType": "APP_STORE_ELIGIBLE",
+      "usesNonExemptEncryption": false
+    }
+  ],
+  "included": [
+    {
+      "type": "preReleaseVersions",
+      "id": "18857fec-b7ae-485c-a04c-8f9ead14abef",
+      "attributes": {
+        "version": "1.0.0",
+        "platform": "IOS"
+      },
+      "relationships": {
+        "builds": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/builds",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/builds"
+          }
+        },
+        "app": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/relationships/app",
+            "related": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef/app"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/preReleaseVersions/18857fec-b7ae-485c-a04c-8f9ead14abef"
+      }
+    },
+    {
+      "type": "buildBetaDetails",
+      "id": "9b0c96a0-d0a1-4b30-be2b-639efc78bd99",
+      "attributes": {
+        "autoNotifyEnabled": true,
+        "internalBuildState": "IN_BETA_TESTING",
+        "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+      },
+      "relationships": {
+        "build": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/9b0c96a0-d0a1-4b30-be2b-639efc78bd99/relationships/build",
+            "related": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/9b0c96a0-d0a1-4b30-be2b-639efc78bd99/build"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/buildBetaDetails/9b0c96a0-d0a1-4b30-be2b-639efc78bd99"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "5e728680-1304-436b-8b07-357d2deea811",
+      "name": "Editorial Review",
+      "createdDate": "2026-10-21T20:43:52.765Z",
+      "isInternalGroup": true,
+      "hasAccessToAllBuilds": true,
+      "publicLinkEnabled": null,
+      "publicLinkId": null,
+      "publicLinkLimitEnabled": null,
+      "publicLinkLimit": null,
+      "publicLink": null,
+      "feedbackEnabled": true,
+      "iosBuildsAvailableForAppleSiliconMac": true,
+      "iosBuildsAvailableForAppleVision": true
+    }
+  ],
+  "exactBuildInInternalGroup": true,
+  "notesSavedAndReadBack": true,
+  "notes": "This internal editorial beta expands the neighbourhood story from two to eight visits with Ana and Nico, using the existing practice passport stamps. The six new visits are The bill, please; Breakfast to go; At the fruit stall; Finding the plaza; A taxi across town; and Lunch with Nico. Stories and preview stamps remain drafts for editorial review.\n\nWhat to test:\n1. Update from build 1.0.7 and confirm existing cafe progress and passport stamps remain. On Home, open Explore adventures under Neighbourhood adventures. Existing completed cafe visits should unlock The bill, please.\n2. Complete the six new visits in sequence. Check that locked cards name the needed visit and each completion offers the correct next visit. The last visit should return you to the passport.\n3. Try optional warm-ups, hints and corrections. Correctly answering every required task earns a preview stamp, with support recorded when used. A reviewed-only completion can advance the story without earning a stamp.\n4. Replay visits and restart the app. Confirm earned stamps are preserved without duplicates and unfinished visits resume. Export and restore a current backup; restoring an older backup intentionally replaces newer progress.\n5. Try English/Spanish, Classic/Barrio, larger text, keyboard entry and scrolling from cards/buttons. Ordinary daily plans and card progress should remain intact.\n6. Report valid Spanish variants rejected by the finite matcher, unclear instructions, awkward touch/keyboard layouts or save/resume failures.\n\nAll eight visits use cards from the existing free library. Teaching content and generated pronunciation still await human acceptance. Speaking/listening assessment, learner retention and physical-device acceptance are not established by automated checks."
+}
