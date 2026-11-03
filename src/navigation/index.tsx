@@ -1,3 +1,4 @@
+import { cafeColors } from '../styles/cafeTheme';
 import AdventuresScreen from '../screens/AdventuresScreen';
 import AdventureScreen from '../screens/AdventureScreen';
 import Pressable from '../components/ThemedPressable';
@@ -8,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { Text, View, StyleSheet, useWindowDimensions } from 'react-native';
+import { Image, Text, View, StyleSheet, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AudioPreferencesScreen from '../screens/AudioPreferencesScreen';
 import ThemeSettingsScreen from '../screens/ThemeSettingsScreen';
@@ -64,11 +65,27 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
   const { fontScale } = useWindowDimensions();
   const expandedText = fontScale >= 1.4;
   const { t } = useLanguage();
+  const cafeHome = state.routes[state.index]?.name === 'Home';
+  const cafeIcons = [
+    require('../../assets/theme-icons/home.png'),
+    require('../../assets/theme-icons/study.png'),
+    require('../../assets/theme-icons/progress.png'),
+    require('../../assets/theme-icons/settings.png'),
+  ];
 
   return (
-    <View style={[styles.tabBarOuter, { paddingBottom: Math.max(insets.bottom, 8) }]}>
+    <View
+      style={[
+        styles.tabBarOuter,
+        cafeHome && cafeTabs.outer,
+        { paddingBottom: Math.max(insets.bottom, 8) },
+      ]}
+    >
       {/* Recreate native text measurements when Dynamic Type changes live. */}
-      <View key={fontScale} style={[styles.tabPill, expandedText && styles.tabPillExpanded]}>
+      <View
+        key={fontScale}
+        style={[styles.tabPill, expandedText && styles.tabPillExpanded, cafeHome && cafeTabs.bar]}
+      >
         {state.routes.map((route: any, index: number) => {
           const focused = state.index === index;
           const tab = TABS[index];
@@ -83,17 +100,42 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
                 styles.tabItem,
                 expandedText && styles.tabItemExpanded,
                 focused && styles.tabItemActive,
+                cafeHome && cafeTabs.item,
               ]}
               onPress={() => navigation.navigate(route.name)}
               android_ripple={null}
             >
-              <ThemeIcon
-                name={tab.icon}
-                size={18}
-                color={focused ? colors.onBrand : colors.textSecondary}
-              />
-              <Text style={[styles.tabLabel, focused && styles.tabLabelActive]}>
-                {t(tab.labelKey)}
+              {cafeHome ? (
+                <Image
+                  source={cafeIcons[index]}
+                  accessible={false}
+                  style={{
+                    width: 22,
+                    height: 22,
+                    tintColor: focused ? cafeColors.yellow : cafeColors.secondary,
+                  }}
+                />
+              ) : (
+                <ThemeIcon
+                  name={tab.icon}
+                  size={18}
+                  color={focused ? colors.onBrand : colors.textSecondary}
+                />
+              )}
+              <Text
+                maxFontSizeMultiplier={cafeHome ? 1.8 : undefined}
+                style={[
+                  styles.tabLabel,
+                  focused && styles.tabLabelActive,
+                  cafeHome && {
+                    color: focused ? cafeColors.yellow : cafeColors.secondary,
+                    textTransform: 'none',
+                  },
+                ]}
+              >
+                {cafeHome
+                  ? t(tab.labelKey).charAt(0) + t(tab.labelKey).slice(1).toLowerCase()
+                  : t(tab.labelKey)}
               </Text>
             </Pressable>
           );
@@ -102,6 +144,24 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
     </View>
   );
 }
+
+const cafeTabs = StyleSheet.create({
+  outer: {
+    backgroundColor: cafeColors.evening,
+    paddingHorizontal: 12,
+    paddingTop: 6,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: cafeColors.tabBorder,
+  },
+  bar: {
+    backgroundColor: cafeColors.clear,
+    borderWidth: 0,
+    borderRadius: 0,
+    padding: 0,
+    minHeight: 58,
+  },
+  item: { backgroundColor: cafeColors.clear, borderRadius: 12, gap: 5 },
+});
 
 function Tabs() {
   return (

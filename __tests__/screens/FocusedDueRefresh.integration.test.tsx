@@ -60,7 +60,7 @@ it('Home discovers a scheduled review becoming due without leaving the screen', 
     jest.advanceTimersByTime(60000);
   });
   expect(screen.getAllByText('1 review due').length).toBeGreaterThan(0);
-  expect(screen.getByText('Study due cards')).toBeTruthy();
+  expect(screen.getByText('Let’s practice')).toBeTruthy();
 });
 
 it('Progress discovers a scheduled review becoming due without leaving the screen', async () => {

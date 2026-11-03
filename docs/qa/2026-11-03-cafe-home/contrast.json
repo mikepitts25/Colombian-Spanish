@@ -1,0 +1,56 @@
+[
+  {
+    "foreground": "cream",
+    "background": "morning",
+    "ratio": 10.310061542035807,
+    "minimum": 4.5
+  },
+  {
+    "foreground": "secondary",
+    "background": "morning",
+    "ratio": 8.566879117845119,
+    "minimum": 4.5
+  },
+  {
+    "foreground": "cream",
+    "background": "afternoon",
+    "ratio": 9.81226156554764,
+    "minimum": 4.5
+  },
+  {
+    "foreground": "secondary",
+    "background": "afternoon",
+    "ratio": 8.153245095773297,
+    "minimum": 4.5
+  },
+  {
+    "foreground": "cream",
+    "background": "evening",
+    "ratio": 13.741574999229096,
+    "minimum": 4.5
+  },
+  {
+    "foreground": "secondary",
+    "background": "evening",
+    "ratio": 11.418206518673507,
+    "minimum": 4.5
+  },
+  {
+    "foreground": "cream",
+    "background": "card",
+    "ratio": 10.902189349318556,
+    "minimum": 4.5
+  },
+  {
+    "foreground": "secondary",
+    "background": "card",
+    "ratio": 9.058892412491694,
+    "minimum": 4.5
+  },
+  {
+    "foreground": "onYellow",
+    "background": "yellow",
+    "ratio": 9.930546821638439,
+    "minimum": 4.5
+  }
+]

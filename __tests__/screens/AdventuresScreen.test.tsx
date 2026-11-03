@@ -311,7 +311,7 @@ test('a fully stamped passport offers revisits without inventing another visit',
   const collection = within(ui.getByTestId('passport-collection'));
   expect(collection.queryByText('Continue your adventure')).toBeNull();
   expect(collection.queryByText('Start your first visit')).toBeNull();
-  fireEvent.press(collection.getByText('Practise again: Breakfast at Ana’s café'));
+  fireEvent.press(collection.getByText('Practice again: Breakfast at Ana’s café'));
   expect(mockNavigate).toHaveBeenCalledWith('Adventure', {
     id: ADVENTURES[0].pack.id,
     mode: 'preview',

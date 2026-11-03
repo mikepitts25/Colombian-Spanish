@@ -47,7 +47,7 @@ test('all four tab routes/selected semantics survive live theme and maximum-font
     </ThemeProvider>,
   );
   await ui.findByRole('tab', { name: 'INICIO' });
-  expect(ui.getByText('🏠')).toBeTruthy();
+  expect(ui.UNSAFE_getAllByType(Image)).toHaveLength(4);
   act(() => current.applySelection({ themeId: 'barrio', appearanceMode: 'light' }));
   expect(ui.queryByText('🏠')).toBeNull();
   expect(ui.UNSAFE_getAllByType(Image)).toHaveLength(4);
@@ -59,5 +59,5 @@ test('all four tab routes/selected semantics survive live theme and maximum-font
   fireEvent.press(ui.getByRole('tab', { name: 'AJUSTES' }));
   expect(mockNavigate).toHaveBeenCalledWith('Settings');
   act(() => current.applySelection({ themeId: 'classic', appearanceMode: 'light' }));
-  expect(ui.getByText('🏠')).toBeTruthy();
+  expect(ui.UNSAFE_getAllByType(Image)).toHaveLength(4);
 });

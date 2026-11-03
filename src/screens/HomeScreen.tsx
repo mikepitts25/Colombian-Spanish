@@ -2,7 +2,7 @@ import { readAdventures } from '../storage/adventures';
 import type { AdventureState } from '../adventures/state';
 import AdventureEntry from '../components/AdventureEntry';
 import ThemeIcon from '../components/ThemeIcon';
-import BarrioHomeContent from '../components/BarrioHomeContent';
+import CafeHomeContent from '../components/CafeHomeContent';
 import { deriveHomePresentation, HomePresentation } from '../utils/homePresentation';
 import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
@@ -11,7 +11,7 @@ import { readActivityTimings } from '../storage/missions';
 import { calibratedActivitySeconds, ActivityTimingSample } from '../missions/activeTiming';
 import { SHOW_REVIEW_TOOLS } from '../config';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { radius } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
@@ -32,32 +32,7 @@ import { readDailyPlan } from '../storage/dailyPlans';
 import { DailyPlan } from '../storage/dailyPlanSchema';
 import { openRecommendedPlan } from '../storage/recommendedPlan';
 import { availableDailyResponse } from '../missions/dailyResponse';
-import { localDayKey, localHour } from '../utils/calendarDay';
-
-const COLOMBIAN_GREETINGS = [
-  {
-    textKey: 'home.greeting.morning' as const,
-    subKey: 'home.greeting.morningSub' as const,
-    emoji: '☀️',
-  },
-  {
-    textKey: 'home.greeting.afternoon' as const,
-    subKey: 'home.greeting.afternoonSub' as const,
-    emoji: '🌤️',
-  },
-  {
-    textKey: 'home.greeting.night' as const,
-    subKey: 'home.greeting.nightSub' as const,
-    emoji: '🌙',
-  },
-];
-
-function getGreetingKey() {
-  const h = localHour();
-  if (h < 12) return COLOMBIAN_GREETINGS[0];
-  if (h < 19) return COLOMBIAN_GREETINGS[1];
-  return COLOMBIAN_GREETINGS[2];
-}
+import { localDayKey } from '../utils/calendarDay';
 
 const CATEGORY_COLORS: Record<string, string> = {
   Colombianisms: '#FFDA00',
@@ -137,8 +112,8 @@ export default function HomeScreen() {
   const styles = useThemedStyles(makeStyles);
   const appTheme = useAppTheme();
   const { colors } = useAppTheme();
-  const { fontScale } = useWindowDimensions();
-  const largeText = fontScale >= 1.4;
+  const { fontScale, width } = useWindowDimensions();
+  const largeText = fontScale >= 1.4 || width < 360;
   const { ready, decks, activeDeckId, setActiveDeckId, reload } = useDeck();
   const nav = useNavigation<any>();
   const starting = useRef(false);
@@ -147,7 +122,9 @@ export default function HomeScreen() {
   const lastStartIntent = useRef<
     { kind: 'plan' } | { kind: 'study'; deckId: string; bounded: boolean } | undefined
   >(undefined);
-  const [barrioPending, setBarrioPending] = useState<HomePresentation | undefined>(undefined);
+  const [pendingPresentation, setPendingPresentation] = useState<HomePresentation | undefined>(
+    undefined,
+  );
   const [studyStarting, setStudyStarting] = useState(false);
   const [studyStartError, setStudyStartError] = useState(false);
   const { t } = useLanguage();
@@ -174,11 +151,6 @@ export default function HomeScreen() {
     adventures: { state: undefined as AdventureState | undefined, error: false },
   });
   const { count: dailyCount, target: dailyTarget, streak, freezes } = activity;
-  const greeting = useMemo(() => {
-    void activity.now;
-    return getGreetingKey();
-  }, [activity.now]);
-
   const workload = useMemo<DeckWithDue[]>(
     () =>
       (decks || []).map((deck) => ({
@@ -338,24 +310,21 @@ export default function HomeScreen() {
     }
   };
 
-  const barrioModel =
-    appTheme.id === 'barrio'
-      ? deriveHomePresentation({
-          ready,
-          loaded: activity.loaded,
-          readError: error,
-          now: activity.now,
-          plan: activity.plan,
-          response,
-          recommendation,
-          recommendedDeck,
-          totalCards: (decks || []).reduce((sum, deck) => sum + deck.cards.length, 0),
-          totalNew,
-          newAvailableToday,
-          starting: studyStarting,
-          startError: studyStartError,
-        })
-      : undefined;
+  const cafeModel = deriveHomePresentation({
+    ready,
+    loaded: activity.loaded,
+    readError: error,
+    now: activity.now,
+    plan: activity.plan,
+    response,
+    recommendation,
+    recommendedDeck,
+    totalCards: (decks || []).reduce((sum, deck) => sum + deck.cards.length, 0),
+    totalNew,
+    newAvailableToday,
+    starting: studyStarting,
+    startError: studyStartError,
+  });
 
   if (!ready) {
     return (
@@ -368,421 +337,330 @@ export default function HomeScreen() {
     );
   }
 
-  if (barrioModel) {
-    const presentation =
-      studyStarting &&
-      barrioPending &&
-      barrioModel.kind !== 'readError' &&
-      barrioModel.kind !== 'loading'
-        ? { ...barrioPending, pending: true, startError: false }
-        : barrioModel;
-    const primary = () => {
-      if (starting.current || presentation.pending || presentation.action === 'none') return;
-      if (presentation.action === 'retryRead') {
-        setReadAttempt((value) => value + 1);
-        return;
-      }
-      if (presentation.action === 'browse') {
-        browseTopics();
-        return;
-      }
-      // Display-only snapshot. The original operation still refreshes its own inputs atomically.
-      setBarrioPending({ ...presentation, startError: false });
-      const retryIntent = studyStartError ? lastStartIntent.current : undefined;
-      const operation =
-        retryIntent?.kind === 'study'
-          ? startStudy(retryIntent.deckId, retryIntent.bounded)
-          : retryIntent?.kind === 'plan' || activity.plan || response
-            ? startPlan()
-            : startStudy(recommendedDeck?.id, true);
-      void operation.finally(() => {
-        setBarrioPending(undefined);
-      });
-    };
-    return (
-      <SafeAreaView style={styles.wrap}>
-        <BarrioHomeContent
-          adventureEntry={
-            <AdventureEntry
-              progress={error ? undefined : activity.adventures}
-              lastDay={activity.lastStudyDay}
-              onRetry={() => setReadAttempt((n) => n + 1)}
-            />
-          }
-          presentation={presentation}
-          greeting={t(greeting.textKey)}
-          activity={
-            activity.loaded && !error
-              ? {
-                  dailyCount,
-                  dailyTarget,
-                  streak,
-                  freezes,
-                  totalDue,
-                  totalNew,
-                  newAvailableToday,
-                }
-              : undefined
-          }
-          word={wordOfDay}
-          dueDecks={quickDecks.map((deck) => ({
-            id: deck.id,
-            name: getDeckDisplayName(deck),
-            cardCount: deck.cards.length,
-            dueCount: deck.dueCount,
-          }))}
-          reviewMeasured={activity.measuredSeconds !== undefined}
-          replyMeasured={responseSeconds !== undefined}
-          showDevelopment={SHOW_REVIEW_TOOLS}
-          onPrimary={primary}
-          onManagePlan={(planId) => {
-            if (!starting.current) nav.navigate('DailyPlan', { planId });
-          }}
-          onBrowseStudy={() => {
-            if (!starting.current) browseTopics();
-          }}
-          onDeckPress={(deckId) => {
-            void startStudy(deckId);
-          }}
-          onWordAudio={(card) => {
-            void speakCard(card);
-          }}
-          onTool={(route) => nav.navigate(route)}
-        />
-      </SafeAreaView>
-    );
-  }
+  const presentation =
+    studyStarting &&
+    pendingPresentation &&
+    cafeModel.kind !== 'readError' &&
+    cafeModel.kind !== 'loading'
+      ? { ...pendingPresentation, pending: true, startError: false }
+      : cafeModel;
+  const primary = () => {
+    if (starting.current || presentation.pending || presentation.action === 'none') return;
+    if (presentation.action === 'retryRead') {
+      setReadAttempt((value) => value + 1);
+      return;
+    }
+    if (presentation.action === 'browse') {
+      browseTopics();
+      return;
+    }
+    // Display-only snapshot. The original operation still refreshes its own inputs atomically.
+    setPendingPresentation({ ...presentation, startError: false });
+    const retryIntent = studyStartError ? lastStartIntent.current : undefined;
+    const operation =
+      retryIntent?.kind === 'study'
+        ? startStudy(retryIntent.deckId, retryIntent.bounded)
+        : retryIntent?.kind === 'plan' || activity.plan || response
+          ? startPlan()
+          : startStudy(recommendedDeck?.id, true);
+    void operation.finally(() => {
+      setPendingPresentation(undefined);
+    });
+  };
 
   return (
-    <SafeAreaView style={styles.wrap}>
-      {/* Colombian flag stripe */}
-      <View style={styles.flagStripe}>
-        <View style={[styles.flagBand, { backgroundColor: '#FFDA00', flex: 2 }]} />
-        <View style={[styles.flagBand, { backgroundColor: '#003893', flex: 1 }]} />
-        <View style={[styles.flagBand, { backgroundColor: '#CE1126', flex: 1 }]} />
-      </View>
-
-      <ScrollView
-        key={fontScale}
-        contentContainerStyle={styles.scroll}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.header}>
-          <View style={styles.greetingWrap}>
-            <Text style={styles.greeting}>
-              {greeting.emoji} {t(greeting.textKey)}
-            </Text>
-            <Text style={styles.greetingSub}>{t(greeting.subKey)}</Text>
-          </View>
-          <Pressable style={styles.avatarBtn} onPress={() => nav.navigate('Settings')}>
-            <Text style={styles.avatarText} allowFontScaling={false}>
-              👤
-            </Text>
-          </Pressable>
-        </View>
-
-        {error && (
-          <Text accessibilityRole="alert" style={styles.todaySub}>
-            {t('home.progressUnavailable')}
-          </Text>
-        )}
-        <View style={styles.todayCard}>
-          <View style={[styles.todayHeader, largeText && styles.stackedHeader]}>
-            <View style={styles.todaySummary}>
-              <Text style={styles.eyebrow}>{t('home.today')}</Text>
-              {largeText ? (
-                <View accessible accessibilityLabel={dueCardLabel}>
-                  <Text style={styles.todayTitle} accessible={false}>
-                    {totalDue.toLocaleString()}
-                  </Text>
-                  <Text style={styles.todayDueUnit} accessible={false}>
-                    {t('home.dueUnit', { plural: totalDue === 1 ? '' : 's' })}
-                  </Text>
-                </View>
-              ) : (
-                <Text style={styles.todayTitle}>{dueCardLabel}</Text>
-              )}
-              <Text style={styles.todaySub}>{dueCardSub}</Text>
-              <Text style={styles.todaySub}>
-                {t('home.newInLibrary', { count: totalNew.toLocaleString() })}
-              </Text>
-              {activity.loaded && !error && (
-                <Text style={styles.todaySub}>
-                  {t('home.newAvailableToday', { count: newAvailableToday })}
-                </Text>
-              )}
-            </View>
-            <View style={styles.streakPill}>
-              <Text style={styles.streakText}>
-                🔥 {streak}
-                {freezes > 0 ? `  🧊${freezes}` : ''}
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.goalPanel}>
-            <View style={[styles.goalHeader, largeText && styles.stackedHeader]}>
-              <Text style={styles.goalLabel}>{t('home.dailyGoal')}</Text>
-              <Text style={styles.goalValue}>{dailyGoalLabel}</Text>
-            </View>
-            <View style={styles.goalTrack}>
-              <View style={[styles.goalFill, { width: `${dailyGoalProgress * 100}%` }]} />
-            </View>
-          </View>
-
-          {recommendation && recommendedDeck && !unfinishedPlan && !completedToday && (
-            <Text style={styles.todaySub}>
-              {t('home.reviewEstimate', {
-                deck: getDeckDisplayName(recommendedDeck),
-                count: recommendation.cardCount,
-                minutes: recommendation.estimatedMinutes,
-              })}
-            </Text>
-          )}
-          {recommendation?.catchUp && !unfinishedPlan && !completedToday && (
-            <Text style={styles.todaySub}>{t('plan.catchUp')}</Text>
-          )}
-          {(unfinishedPlan || response || completedToday) && (
-            <Text style={styles.todaySub}>
-              {t(
-                completedToday
-                  ? 'plan.done'
-                  : unfinishedPlan?.phase === 'applied'
-                    ? 'plan.nextReply'
-                    : response
-                      ? 'plan.summary'
-                      : 'plan.reviewSummary',
-                { minutes: unfinishedPlan?.minutes ?? activity.profile.studyMinutes ?? 5 },
-              )}
-            </Text>
-          )}
-          {studyStartError && (
-            <Text accessibilityRole="alert" style={styles.todaySub}>
-              {t('home.studyStartError')}
-            </Text>
-          )}
-          {responseSeconds !== undefined && (
-            <Text style={styles.todaySub}>{t('plan.measuredReply')}</Text>
-          )}
-          {recommendation && activity.measuredSeconds !== undefined && (
-            <Text style={styles.todaySub}>{t('home.measuredEstimate')}</Text>
-          )}
-          <Pressable
-            disabled={studyStarting || (!activity.loaded && !error)}
-            style={styles.primaryButton}
-            onPress={() =>
-              error
-                ? setReadAttempt((value) => value + 1)
-                : activity.plan || response
-                  ? void startPlan()
-                  : void startStudy(recommendedDeck?.id, true)
-            }
-          >
-            <Text style={styles.primaryButtonText}>
-              {studyStarting || (!activity.loaded && !error)
-                ? t('common.loading')
-                : error
-                  ? t('mission.retry')
-                  : activity.plan || response
-                    ? t(
-                        completedToday
-                          ? 'plan.completedAction'
-                          : unfinishedPlan
-                            ? 'plan.resume'
-                            : 'plan.start',
-                      )
-                    : t(
-                        totalDue > 0
-                          ? 'home.studyDueCards'
-                          : recommendedDeck
-                            ? 'home.studyNewCards'
-                            : 'home.browseStudyDecks',
-                      )}
-            </Text>
-          </Pressable>
-          <Pressable
-            accessibilityRole="button"
-            disabled={studyStarting}
-            onPress={browseTopics}
-            style={{ minHeight: 48, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <Text style={styles.browseLink}>{t('home.chooseTopic')}</Text>
-          </Pressable>
-          {unfinishedPlan && (
-            <Pressable
-              accessibilityRole="button"
-              disabled={studyStarting}
-              onPress={() => nav.navigate('DailyPlan', { planId: unfinishedPlan.id })}
-              style={{ minHeight: 48, justifyContent: 'center', alignItems: 'center' }}
-            >
-              <Text style={{ color: colors.brand, fontWeight: '700' }}>{t('plan.manage')}</Text>
-            </Pressable>
-          )}
-        </View>
-
+    <CafeHomeContent
+      presentation={presentation}
+      activity={activity.loaded && !error ? { count: dailyCount, target: dailyTarget } : undefined}
+      onPrimary={primary}
+      onBrowse={() => {
+        if (!starting.current) browseTopics();
+      }}
+      onManage={(planId) => {
+        if (!starting.current) nav.navigate('DailyPlan', { planId });
+      }}
+      onSettings={() => nav.navigate('Settings')}
+      adventure={
         <AdventureEntry
+          compact
           progress={error ? undefined : activity.adventures}
           lastDay={activity.lastStudyDay}
           onRetry={() => setReadAttempt((n) => n + 1)}
         />
-
-        {wordOfDay ? (
-          <View style={styles.wordCard}>
-            <View style={styles.wordHeader}>
-              <Text style={styles.wordEyebrow}>{t('home.wordOfDay')}</Text>
-              <Pressable
-                style={[
-                  styles.wordAudioButton,
-                  appTheme.id === 'barrio' && { backgroundColor: colors.audioSurface },
-                ]}
-                accessibilityRole="button"
-                accessibilityLabel={`${t('common.listen')}: ${wordOfDay.card.front}`}
-                onPress={() => void speakCard(wordOfDay.card)}
-              >
-                {appTheme.id === 'classic' ? (
-                  <Text style={styles.wordAudioIcon}>🔊</Text>
+      }
+    >
+      {activity.loaded && !error && (
+        <>
+          <View style={styles.todayCard}>
+            <Text accessibilityRole="header" style={styles.sectionTitle}>
+              {t('home.cafe.details')}
+            </Text>
+            <View style={[styles.todayHeader, largeText && styles.stackedHeader]}>
+              <View style={styles.todaySummary}>
+                <Text style={styles.eyebrow}>{t('home.today')}</Text>
+                {largeText ? (
+                  <View accessible accessibilityLabel={dueCardLabel}>
+                    <Text style={styles.todayTitle} accessible={false}>
+                      {totalDue.toLocaleString()}
+                    </Text>
+                    <Text style={styles.todayDueUnit} accessible={false}>
+                      {t('home.dueUnit', { plural: totalDue === 1 ? '' : 's' })}
+                    </Text>
+                  </View>
                 ) : (
-                  <ThemeIcon name="audio" size={15} color={colors.audioText} />
+                  <Text style={styles.todayTitle}>{dueCardLabel}</Text>
                 )}
+                <Text style={styles.todaySub}>{dueCardSub}</Text>
+                <Text style={styles.todaySub}>
+                  {t('home.newInLibrary', { count: totalNew.toLocaleString() })}
+                </Text>
+                {activity.loaded && !error && (
+                  <Text style={styles.todaySub}>
+                    {t('home.newAvailableToday', { count: newAvailableToday })}
+                  </Text>
+                )}
+              </View>
+              <View style={styles.streakPill}>
+                <Text style={styles.streakText}>
+                  🔥 {streak}
+                  {freezes > 0 ? `  🧊${freezes}` : ''}
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.goalPanel}>
+              <View style={[styles.goalHeader, largeText && styles.stackedHeader]}>
+                <Text style={styles.goalLabel}>{t('home.dailyGoal')}</Text>
+                <Text style={styles.goalValue}>{dailyGoalLabel}</Text>
+              </View>
+              <View style={styles.goalTrack}>
+                <View style={[styles.goalFill, { width: `${dailyGoalProgress * 100}%` }]} />
+              </View>
+            </View>
+
+            {recommendation && recommendedDeck && !unfinishedPlan && !completedToday && (
+              <Text style={styles.todaySub}>
+                {t('home.reviewEstimate', {
+                  deck: getDeckDisplayName(recommendedDeck),
+                  count: recommendation.cardCount,
+                  minutes: recommendation.estimatedMinutes,
+                })}
+              </Text>
+            )}
+            {recommendation?.catchUp && !unfinishedPlan && !completedToday && (
+              <Text style={styles.todaySub}>{t('plan.catchUp')}</Text>
+            )}
+            {responseSeconds !== undefined && (
+              <Text style={styles.todaySub}>{t('plan.measuredReply')}</Text>
+            )}
+            {recommendation && activity.measuredSeconds !== undefined && (
+              <Text style={styles.todaySub}>{t('home.measuredEstimate')}</Text>
+            )}
+            {(unfinishedPlan || response || completedToday) && (
+              <Text style={styles.todaySub}>
+                {t(
+                  completedToday
+                    ? 'plan.done'
+                    : unfinishedPlan?.phase === 'applied'
+                      ? 'plan.nextReply'
+                      : response
+                        ? 'plan.summary'
+                        : 'plan.reviewSummary',
+                  { minutes: unfinishedPlan?.minutes ?? activity.profile.studyMinutes ?? 5 },
+                )}
+              </Text>
+            )}
+          </View>
+          {wordOfDay ? (
+            <View style={styles.wordCard}>
+              <View style={styles.wordHeader}>
+                <Text style={styles.wordEyebrow}>{t('home.wordOfDay')}</Text>
+                <Pressable
+                  style={[
+                    styles.wordAudioButton,
+                    appTheme.id === 'barrio' && { backgroundColor: colors.audioSurface },
+                  ]}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${t('common.listen')}: ${wordOfDay.card.front}`}
+                  onPress={() => void speakCard(wordOfDay.card)}
+                >
+                  {appTheme.id === 'classic' ? (
+                    <Text style={styles.wordAudioIcon}>🔊</Text>
+                  ) : (
+                    <ThemeIcon name="audio" size={15} color={colors.audioText} />
+                  )}
+                </Pressable>
+              </View>
+              <Text style={styles.wordFront}>{wordOfDay.card.front}</Text>
+              <Text style={styles.wordBack}>
+                {wordOfDay.card.back}
+                {wordOfDay.deckName ? ` • ${wordOfDay.deckName}` : ''}
+              </Text>
+            </View>
+          ) : null}
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{t('home.tools')}</Text>
+            {SHOW_REVIEW_TOOLS && (
+              <Pressable
+                accessibilityRole="button"
+                style={[styles.quickAction, { minHeight: 48 }]}
+                onPress={() => nav.navigate('MissionPreview')}
+              >
+                <Text style={styles.quickActionLabel}>{t('mission.draft')}</Text>
+              </Pressable>
+            )}
+            {SHOW_REVIEW_TOOLS && (
+              <Pressable
+                accessibilityRole="button"
+                style={styles.quickAction}
+                onPress={() => nav.navigate('VoicePracticePreview')}
+              >
+                <Text style={styles.quickActionLabel}>{t('voice.preview')}</Text>
+              </Pressable>
+            )}
+            {SHOW_REVIEW_TOOLS && (
+              <Pressable
+                accessibilityRole="button"
+                style={[styles.quickAction, { minHeight: 48 }]}
+                onPress={() => nav.navigate('ListeningPreview')}
+              >
+                <Text style={styles.quickActionLabel}>{t('listening.preview')}</Text>
+              </Pressable>
+            )}
+            <View style={styles.quickActions}>
+              <Pressable
+                accessibilityRole="button"
+                style={[styles.quickAction, largeText && styles.quickActionStacked]}
+                onPress={() => nav.navigate('Quiz')}
+              >
+                <Text style={styles.quickActionIcon}>🎯</Text>
+                <Text style={styles.quickActionLabel}>{t('home.tool.quiz')}</Text>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
+                style={[styles.quickAction, largeText && styles.quickActionStacked]}
+                onPress={() => nav.navigate('DifficultWords')}
+              >
+                <Text style={styles.quickActionIcon}>↻</Text>
+                <Text style={styles.quickActionLabel}>{t('home.tool.difficult')}</Text>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
+                style={[styles.quickAction, largeText && styles.quickActionStacked]}
+                onPress={() => nav.navigate('Phrases')}
+              >
+                <Text style={styles.quickActionIcon}>🗣️</Text>
+                <Text style={styles.quickActionLabel}>{t('home.tool.phrases')}</Text>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
+                style={[styles.quickAction, largeText && styles.quickActionStacked]}
+                onPress={() => nav.navigate('AddCard')}
+              >
+                <Text style={styles.quickActionIcon}>＋</Text>
+                <Text style={styles.quickActionLabel}>{t('home.tool.addCard')}</Text>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
+                style={[styles.quickAction, largeText && styles.quickActionStacked]}
+                onPress={() => nav.navigate('Phrasebook')}
+              >
+                <Text style={styles.quickActionLabel}>{t('home.barrio.favorites')}</Text>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
+                style={[styles.quickAction, largeText && styles.quickActionStacked]}
+                onPress={() => nav.navigate('Explore')}
+              >
+                <Text style={styles.quickActionLabel}>{t('home.barrio.explore')}</Text>
               </Pressable>
             </View>
-            <Text style={styles.wordFront}>{wordOfDay.card.front}</Text>
-            <Text style={styles.wordBack}>
-              {wordOfDay.card.back}
-              {wordOfDay.deckName ? ` • ${wordOfDay.deckName}` : ''}
-            </Text>
           </View>
-        ) : null}
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('home.tools')}</Text>
-          {SHOW_REVIEW_TOOLS && (
-            <Pressable
-              accessibilityRole="button"
-              style={[styles.quickAction, { minHeight: 48 }]}
-              onPress={() => nav.navigate('MissionPreview')}
-            >
-              <Text style={styles.quickActionLabel}>{t('mission.draft')}</Text>
-            </Pressable>
-          )}
-          {SHOW_REVIEW_TOOLS && (
-            <Pressable
-              accessibilityRole="button"
-              style={styles.quickAction}
-              onPress={() => nav.navigate('VoicePracticePreview')}
-            >
-              <Text style={styles.quickActionLabel}>{t('voice.preview')}</Text>
-            </Pressable>
-          )}
-          {SHOW_REVIEW_TOOLS && (
-            <Pressable
-              accessibilityRole="button"
-              style={[styles.quickAction, { minHeight: 48 }]}
-              onPress={() => nav.navigate('ListeningPreview')}
-            >
-              <Text style={styles.quickActionLabel}>{t('listening.preview')}</Text>
-            </Pressable>
-          )}
-          <View style={styles.quickActions}>
-            <Pressable style={styles.quickAction} onPress={() => nav.navigate('Quiz')}>
-              <Text style={styles.quickActionIcon}>🎯</Text>
-              <Text style={styles.quickActionLabel}>{t('home.tool.quiz')}</Text>
-            </Pressable>
-            <Pressable style={styles.quickAction} onPress={() => nav.navigate('DifficultWords')}>
-              <Text style={styles.quickActionIcon}>↻</Text>
-              <Text style={styles.quickActionLabel}>{t('home.tool.difficult')}</Text>
-            </Pressable>
-            <Pressable style={styles.quickAction} onPress={() => nav.navigate('Phrases')}>
-              <Text style={styles.quickActionIcon}>🗣️</Text>
-              <Text style={styles.quickActionLabel}>{t('home.tool.phrases')}</Text>
-            </Pressable>
-            <Pressable style={styles.quickAction} onPress={() => nav.navigate('AddCard')}>
-              <Text style={styles.quickActionIcon}>＋</Text>
-              <Text style={styles.quickActionLabel}>{t('home.tool.addCard')}</Text>
-            </Pressable>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <View style={[styles.sectionHeader, largeText && styles.stackedHeader]}>
-            <View style={styles.sectionHeading}>
-              <Text style={styles.sectionTitle}>{t('home.dueDecks')}</Text>
-              <Text style={styles.sectionSub}>
-                {quickDecks.length > 0 ? t('home.dueDecksSub') : t('home.noDueDecksSub')}
-              </Text>
+          <View style={styles.section}>
+            <View style={[styles.sectionHeader, largeText && styles.stackedHeader]}>
+              <View style={styles.sectionHeading}>
+                <Text style={styles.sectionTitle}>{t('home.dueDecks')}</Text>
+                <Text style={styles.sectionSub}>
+                  {quickDecks.length > 0 ? t('home.dueDecksSub') : t('home.noDueDecksSub')}
+                </Text>
+              </View>
+              <Pressable
+                accessibilityRole="button"
+                style={[styles.browseAction, largeText && styles.browseActionLarge]}
+                onPress={browseTopics}
+                disabled={studyStarting}
+              >
+                <Text style={styles.browseLink}>{t('home.browseAllDecks')}</Text>
+              </Pressable>
             </View>
-            <Pressable
-              accessibilityRole="button"
-              style={[styles.browseAction, largeText && styles.browseActionLarge]}
-              onPress={browseTopics}
-              disabled={studyStarting}
-            >
-              <Text style={styles.browseLink}>{t('home.browseAllDecks')}</Text>
-            </Pressable>
-          </View>
 
-          {quickDecks.length > 0 ? (
-            <View style={styles.dueDeckList}>
-              {quickDecks.map((deck) => {
-                const color = CATEGORY_COLORS[deck.cat] ?? colors.mutedInk;
-                const emoji = CATEGORY_EMOJIS[deck.cat] ?? '📦';
-                const isActive = deck.id === activeDeckId;
-                return (
-                  <Pressable
-                    key={deck.id}
-                    style={[
-                      styles.deckRow,
-                      isActive && {
-                        borderColor: appTheme.id === 'classic' ? color + '99' : colors.border,
-                      },
-                    ]}
-                    onPress={() => startStudy(deck.id)}
-                  >
-                    <View
+            {quickDecks.length > 0 ? (
+              <View style={styles.dueDeckList}>
+                {quickDecks.map((deck) => {
+                  const color = CATEGORY_COLORS[deck.cat] ?? colors.mutedInk;
+                  const emoji = CATEGORY_EMOJIS[deck.cat] ?? '📦';
+                  const isActive = deck.id === activeDeckId;
+                  return (
+                    <Pressable
+                      key={deck.id}
+                      accessibilityRole="button"
+                      accessibilityLabel={`${getDeckDisplayName(deck)}, ${deck.dueCount}`}
+                      disabled={studyStarting}
                       style={[
-                        styles.deckIconWrap,
-                        {
-                          backgroundColor:
-                            appTheme.id === 'classic' ? color + '20' : colors.surfaceElevated,
+                        styles.deckRow,
+                        largeText && styles.stackedHeader,
+                        isActive && {
+                          borderColor: appTheme.id === 'classic' ? color + '99' : colors.border,
                         },
                       ]}
+                      onPress={() => startStudy(deck.id)}
                     >
-                      <Text style={styles.deckEmoji}>{emoji}</Text>
-                    </View>
-                    <View style={styles.deckInfo}>
-                      <Text style={styles.deckName} numberOfLines={1}>
-                        {getDeckDisplayName(deck)}
-                      </Text>
-                      <Text style={styles.deckMeta}>
-                        {t('addCard.cardCount', {
-                          count: deck.cards.length,
-                          plural: deck.cards.length === 1 ? '' : 's',
-                        })}
-                      </Text>
-                    </View>
-                    <View style={styles.duePill}>
-                      <Text style={styles.duePillText}>
-                        {t('home.dueLabel', {
-                          count: deck.dueCount,
-                          plural: deck.dueCount === 1 ? '' : 's',
-                        })}
-                      </Text>
-                    </View>
-                  </Pressable>
-                );
-              })}
-            </View>
-          ) : (
-            <View style={styles.emptyDueState}>
-              <Text style={styles.emptyTitle}>{t('home.allCaughtUp')}</Text>
-              <Text style={styles.emptyText}>
-                {t(totalNew > 0 ? 'home.newSeparate' : 'home.emptyDueText')}
-              </Text>
-            </View>
-          )}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+                      <View
+                        style={[
+                          styles.deckIconWrap,
+                          {
+                            backgroundColor:
+                              appTheme.id === 'classic' ? color + '20' : colors.surfaceElevated,
+                          },
+                        ]}
+                      >
+                        <Text style={styles.deckEmoji}>{emoji}</Text>
+                      </View>
+                      <View style={styles.deckInfo}>
+                        <Text style={styles.deckName}>{getDeckDisplayName(deck)}</Text>
+                        <Text style={styles.deckMeta}>
+                          {t('addCard.cardCount', {
+                            count: deck.cards.length,
+                            plural: deck.cards.length === 1 ? '' : 's',
+                          })}
+                        </Text>
+                      </View>
+                      <View style={styles.duePill}>
+                        <Text style={styles.duePillText}>
+                          {t('home.dueLabel', {
+                            count: deck.dueCount,
+                            plural: deck.dueCount === 1 ? '' : 's',
+                          })}
+                        </Text>
+                      </View>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            ) : (
+              <View style={styles.emptyDueState}>
+                <Text style={styles.emptyTitle}>{t('home.allCaughtUp')}</Text>
+                <Text style={styles.emptyText}>
+                  {t(totalNew > 0 ? 'home.newSeparate' : 'home.emptyDueText')}
+                </Text>
+              </View>
+            )}
+          </View>
+        </>
+      )}
+    </CafeHomeContent>
   );
 }
 
@@ -949,6 +827,7 @@ const makeStyles = ({ colors }: AppTheme) =>
       gap: 10,
     },
     quickAction: {
+      padding: 12,
       flexBasis: '48%',
       flexGrow: 1,
       minHeight: 54,
@@ -967,10 +846,14 @@ const makeStyles = ({ colors }: AppTheme) =>
       fontWeight: '800',
     },
     quickActionLabel: {
+      flexShrink: 1,
+      textAlign: 'center',
       color: colors.textPrimary,
       fontSize: 13,
       fontWeight: '800',
     },
+
+    quickActionStacked: { flexBasis: '100%' },
 
     section: { paddingHorizontal: 16, marginBottom: 18, gap: 10 },
     sectionHeader: {

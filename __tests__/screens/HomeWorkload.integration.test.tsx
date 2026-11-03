@@ -1,8 +1,9 @@
+import { AccessibilityInfo } from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
-import { AppState, Dimensions } from 'react-native';
+import { AppState, AppStateStatus, Dimensions } from 'react-native';
 import * as prefsStorage from '../../src/storage/prefs';
 import { DeckProvider } from '../../src/context/DeckContext';
 import HomeScreen from '../../src/screens/HomeScreen';
@@ -130,9 +131,10 @@ it.each(['classic', 'barrio'] as const)(
       await screen.findByText('New cards available today: 0');
       if (themeId === 'barrio')
         act(() => mockTheme.applySelection({ themeId, appearanceMode: 'light' }));
-      const startLabel = themeId === 'barrio' ? 'Start my plan' : 'Study new cards';
+      const startLabel = 'Let’s practice';
       jest.setSystemTime(new Date(2026, 9, 15, 12));
-      const foreground = subscription.mock.calls.at(-1)![1];
+      const foreground = (state: AppStateStatus) =>
+        subscription.mock.calls.forEach(([, listener]) => listener(state));
       await act(async () => foreground('active'));
       await screen.findByText(startLabel);
       const prefsRead = jest
@@ -143,12 +145,12 @@ it.each(['classic', 'barrio'] as const)(
         await screen.findByText(
           themeId === 'barrio'
             ? 'Could not open your practice. Try opening it again.'
-            : 'Could not prepare the session. Please try again.',
+            : 'Could not open your practice. Try opening it again.',
         ),
       ).toBeTruthy();
       expect(screen.queryByText('1 left')).toBeNull();
       prefsRead.mockRestore();
-      fireEvent.press(screen.getByText(themeId === 'barrio' ? 'Retry' : startLabel));
+      fireEvent.press(screen.getByText('Retry'));
       expect(await screen.findByText('1 left')).toBeTruthy();
       expect(screen.getByText('new prompt')).toBeTruthy();
       screen.unmount();
@@ -160,6 +162,7 @@ it.each(['classic', 'barrio'] as const)(
 );
 
 beforeEach(() => {
+  (AccessibilityInfo.isReduceMotionEnabled as jest.Mock).mockResolvedValue(true);
   jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() });
   mockAllowDraft = false;
   jest.clearAllMocks();
@@ -195,10 +198,13 @@ async function setupHome(allowDraft = false, stored?: DailyPlan) {
     stored?.phase === 'complete'
       ? 'View completed plan'
       : stored
-        ? 'Continue daily plan'
+        ? stored.phase === 'applied' &&
+          stored.applied?.contentVersion !== DAILY_RESPONSE.contentVersion
+          ? 'Open saved plan'
+          : 'Continue practicing'
         : allowDraft
-          ? 'Start daily plan'
-          : 'Study new cards',
+          ? 'Let’s practice'
+          : 'Let’s practice',
   );
   act(() => mockTheme.applySelection({ themeId: 'barrio', appearanceMode: 'light' }));
   return { ui, navigations };
@@ -252,10 +258,10 @@ it('Barrio production handoff reaches real Study without manufacturing a durable
     studyMinutes: 3,
   });
   const ui = render(<Harness />);
-  await ui.findByText('Study new cards');
+  await ui.findByText('Let’s practice');
   act(() => mockTheme.applySelection({ themeId: 'barrio', appearanceMode: 'light' }));
   expect(ui.queryByText('Written reply · editorial draft')).toBeNull();
-  fireEvent.press(ui.getByRole('button', { name: 'Start my plan' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Let’s practice' }));
   await ui.findByText('1 left');
   expect(ui.getByText('new prompt')).toBeTruthy();
   expect(await AsyncStorage.getItem('SRS_DAILY_PLAN_V1')).toBeNull();
@@ -279,7 +285,7 @@ it('prior-day retained queue survives real theme/language/provider changes and o
         };
       }),
   );
-  fireEvent.press(ui.getByRole('button', { name: 'Continue my plan' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Continue practicing' }));
   await waitFor(() => expect(start).toHaveBeenCalledTimes(1));
   fireEvent.press(ui.getByRole('button', { name: 'Loading...' }));
   const window = Dimensions.get('window'),
@@ -326,13 +332,14 @@ it('a failed foreground read hides stale activity and Retry reloads without open
   const read = jest
     .spyOn(dailyPlans, 'readDailyPlan')
     .mockRejectedValueOnce(new Error('disk unavailable'));
-  const foreground = (AppState.addEventListener as jest.Mock).mock.calls.at(-1)![1];
+  const foreground = (state: AppStateStatus) =>
+    (AppState.addEventListener as jest.Mock).mock.calls.forEach(([, listener]) => listener(state));
   await act(async () => foreground('active'));
   await ui.findByText('Try loading your plan again before starting practice.');
   expect(ui.queryByText('0 reviews recorded today')).toBeNull();
   expect(navigations).toEqual([]);
   fireEvent.press(ui.getByRole('button', { name: 'Retry' }));
-  await ui.findByRole('button', { name: 'Start my plan' });
+  await ui.findByRole('button', { name: 'Let’s practice' });
   expect(navigations).toEqual([]);
   expect(await learningSnapshot()).toEqual(before);
   read.mockRestore();
@@ -347,11 +354,14 @@ it('completed today remains optional, then a new day starts one fresh exact plan
     const setup = await setupHome(false, stored);
     ui = setup.ui;
     expect(ui.getByRole('button', { name: 'View completed plan' })).toBeTruthy();
-    expect(ui.queryByRole('button', { name: 'Start my plan' })).toBeNull();
+    expect(ui.queryByRole('button', { name: 'Let’s practice' })).toBeNull();
     jest.setSystemTime(new Date(2032, 0, 9, 12));
-    const foreground = (AppState.addEventListener as jest.Mock).mock.calls.at(-1)![1];
+    const foreground = (state: AppStateStatus) =>
+      (AppState.addEventListener as jest.Mock).mock.calls.forEach(([, listener]) =>
+        listener(state),
+      );
     await act(async () => foreground('active'));
-    fireEvent.press(await ui.findByRole('button', { name: 'Start my plan' }));
+    fireEvent.press(await ui.findByRole('button', { name: 'Let’s practice' }));
     await waitFor(() => expect(setup.navigations).toHaveLength(1));
     const fresh = await readDailyPlan();
     expect(fresh?.id).not.toBe('retained-plan');
