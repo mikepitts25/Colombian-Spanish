@@ -1,0 +1,33 @@
+{
+  "verifiedAt": "2026-11-07T16:13:33.343283+00:00",
+  "sourceCommit": "696b28d289992a578a55a0b55dbfe4f67154af2c",
+  "jest": {
+    "suites": 130,
+    "tests": 1351,
+    "snapshots": 1,
+    "result": "passed"
+  },
+  "typecheck": "passed",
+  "eslint": "passed",
+  "repositoryFormatting": "passed",
+  "contentValidation": {
+    "decks": 47,
+    "cards": 1392,
+    "pronunciationEntries": 1392,
+    "result": "passed"
+  },
+  "editorialLedgerStructuralValidation": "passed",
+  "editorialCardsAwaitingAcceptance": 1392,
+  "calendarZones": ["Europe/Berlin", "America/Bogota", "America/New_York", "Pacific/Auckland"],
+  "calendarChecks": "passed",
+  "pythonQA": {
+    "tests": 14,
+    "result": "passed"
+  },
+  "githubCI": {
+    "runId": 42389433034,
+    "result": "success"
+  },
+  "nativeArchive": "succeeded",
+  "signedArtifactInspection": "passed"
+}

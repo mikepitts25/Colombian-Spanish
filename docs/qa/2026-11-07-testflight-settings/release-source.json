@@ -1,0 +1,14 @@
+{
+  "commit": "696b28d289992a578a55a0b55dbfe4f67154af2c",
+  "branch": "main",
+  "version": "1.0.0",
+  "build": "1.0.12",
+  "sourceCleanAtArchive": true,
+  "profile": "editorial-beta",
+  "cafeDraftsEnabled": true,
+  "broadReviewToolsEnabled": false,
+  "microphonePermission": false,
+  "method": "local Xcode archive and manual App Store export",
+  "archivePath": "/Users/mike/Builds/Colombian-Spanish/2026-11-07-settings/ColombianSpanish.xcarchive",
+  "ipaPath": "/Users/mike/Builds/Colombian-Spanish/2026-11-07-settings/ColombianSpanish-settings.ipa"
+}

@@ -1,6 +1,10 @@
 # iOS TestFlight preparation
 
-Updated October 25, 2026. Tracks B14.6-A in [MASTER_PLAN.md](../../MASTER_PLAN.md). Android remains paused; skipped security work is unchanged.
+Updated November 7, 2026. Tracks B14.6-A in [MASTER_PLAN.md](../../MASTER_PLAN.md). Android remains paused; skipped security work is unchanged.
+
+## November 7 settings and button reliability update
+
+Delivered merged, pushed source `696b28d` as locally archived **1.0.0 (1.0.12)**. The update fixes durable language switching and recovery, notification-permission recovery, topic-browser routing and audio-settings save completion, and clarifies settings actions. All 1,351 tests and four GitHub validation jobs passed. Apple verified **VALID / IN_BETA_TESTING**, exact **Editorial Review** membership for the existing three testers, and saved/read-back tester notes. [Candidate and delivery evidence](../qa/2026-11-07-testflight-settings/README.md). This supersedes older latest-build statements below. Physical-device and human editorial acceptance remain separate.
 
 ## November 3 café hat and punctuation fix
 
