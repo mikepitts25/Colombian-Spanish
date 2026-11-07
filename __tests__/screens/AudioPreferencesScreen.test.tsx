@@ -6,11 +6,13 @@ import AudioPreferencesScreen from '../../src/screens/AudioPreferencesScreen';
 import * as prefs from '../../src/storage/prefs';
 import { speakCard, stop } from '../../src/services/tts';
 const mockBack = jest.fn();
+let mockFocused = true;
 const originalWindow = Dimensions.get('window');
 afterEach(() => act(() => Dimensions.set({ window: originalWindow })));
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ goBack: mockBack }),
-  useFocusEffect: (cb: () => void) => require('react').useEffect(cb, [cb]),
+  useFocusEffect: (cb: () => void) =>
+    require('react').useEffect(() => (mockFocused ? cb() : undefined), [cb, mockFocused]),
 }));
 jest.mock('../../src/services/tts', () => ({
   speakCard: jest.fn(async () => ({ source: 'generated', loop: false })),
@@ -25,6 +27,7 @@ jest.mock('../../src/context/LanguageContext', () => ({
 beforeEach(async () => {
   jest.restoreAllMocks();
   jest.clearAllMocks();
+  mockFocused = true;
   await AsyncStorage.clear();
 });
 test('loads existing speed, previews selected unsaved speed and explicitly saves only that preference', async () => {
@@ -187,4 +190,29 @@ test('keeps a valid loaded custom rate selectable and allows restoring the suppo
   fireEvent.press(ui.getByRole('button', { name: 'Save audio preferences' }));
   await ui.findByText('Audio preferences saved.');
   expect(await prefs.getPrefs()).toMatchObject({ speechRate: 0.98, autoSpeak: false });
+});
+
+test('finishes a pending save while blurred so returning does not leave audio settings locked', async () => {
+  let finish!: () => void;
+  const originalSave = prefs.setPrefs;
+  jest.spyOn(prefs, 'setPrefs').mockImplementationOnce(async (patch) => {
+    await new Promise<void>((resolve) => {
+      finish = resolve;
+    });
+    return originalSave(patch);
+  });
+  const ui = render(<AudioPreferencesScreen />);
+  await ui.findByText('Save audio preferences');
+  fireEvent.press(ui.getByRole('radio', { name: '0.75×' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save audio preferences' }));
+  mockFocused = false;
+  ui.rerender(<AudioPreferencesScreen />);
+  await act(async () => finish());
+  mockFocused = true;
+  ui.rerender(<AudioPreferencesScreen />);
+  expect(
+    ui.getByRole('button', { name: 'Save audio preferences' }).props.accessibilityState.disabled,
+  ).toBe(false);
+  expect(ui.getByText('Audio preferences saved.')).toBeTruthy();
+  expect((await prefs.getPrefs()).speechRate).toBe(0.75);
 });

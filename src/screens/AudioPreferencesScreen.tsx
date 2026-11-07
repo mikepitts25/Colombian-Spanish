@@ -51,15 +51,17 @@ export default function AudioPreferencesScreen() {
     }
   }, []);
   useEffect(() => {
+    mounted.current = true;
     // Load persisted external state; setters run after the asynchronous storage read.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void load();
+    return () => {
+      mounted.current = false;
+    };
   }, [load]);
   useFocusEffect(
     useCallback(() => {
-      mounted.current = true;
       return () => {
-        mounted.current = false;
         previewId.current++;
         stop();
       };

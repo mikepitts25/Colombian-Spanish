@@ -39,12 +39,14 @@ function SettingsRow({
   disabled?: boolean;
 }) {
   const styles = useThemedStyles(makeStyles);
+  const Row = onPress ? Pressable : View;
   return (
-    <Pressable
+    <Row
       style={styles.settingsRow}
       onPress={onPress}
       disabled={disabled}
-      accessibilityState={{ disabled }}
+      accessibilityRole={onPress ? 'button' : undefined}
+      accessibilityState={onPress ? { disabled } : undefined}
     >
       <Text style={styles.rowEmoji} allowFontScaling={false} accessible={false}>
         {emoji}
@@ -58,7 +60,7 @@ function SettingsRow({
           ›
         </Text>
       )}
-    </Pressable>
+    </Row>
   );
 }
 
@@ -89,6 +91,22 @@ export default function SettingsScreen() {
   const [filePreview, setFilePreview] = useState<BackupSnapshot | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const [newPerDay, setNewPerDay] = useState(10);
+  const languageAction = useRef(false);
+  const [languageBusy, setLanguageBusy] = useState(false);
+
+  async function changeLanguage() {
+    if (languageAction.current) return;
+    languageAction.current = true;
+    setLanguageBusy(true);
+    try {
+      await toggleLanguage();
+    } catch {
+      Alert.alert(t('settings.language.errorTitle'), t('settings.language.errorMessage'));
+    } finally {
+      languageAction.current = false;
+      setLanguageBusy(false);
+    }
+  }
 
   const [summaryError, setSummaryError] = useState(false);
   useFocusEffect(
@@ -431,7 +449,9 @@ export default function SettingsScreen() {
             emoji="🌐"
             title={t('settings.language.title')}
             subtitle={t('settings.language.subtitle')}
-            onPress={toggleLanguage}
+            chevron={false}
+            disabled={languageBusy || fileBusy}
+            onPress={() => void changeLanguage()}
           />
           <Divider />
           <SettingsRow

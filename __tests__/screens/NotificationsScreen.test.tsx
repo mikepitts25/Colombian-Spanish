@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Linking } from 'react-native';
 import { act, fireEvent, render } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
@@ -145,4 +145,41 @@ it('offers only implemented reminders and accurately explains daily timing and t
   expect(ui.getByText(/Streak and achievement alerts are not sent/)).toBeTruthy();
   expect(ui.queryByTestId('notification-achievements-toggle')).toBeNull();
   expect(ui.queryByText('Mon • Tue • Wed • Thu • Fri')).toBeNull();
+});
+
+it('opens system settings after permission denial and can reapply reminders after permission is granted', async () => {
+  (Notifications.getPermissionsAsync as jest.Mock).mockResolvedValue({
+    status: 'denied',
+    canAskAgain: false,
+  });
+  const openSettings = jest.spyOn(Linking, 'openSettings').mockResolvedValue();
+  const ui = render(<NotificationsScreen />);
+  await ui.findByRole('switch', { name: 'Notifications', disabled: false });
+  fireEvent(ui.getByTestId('notification-night-toggle'), 'valueChange', true);
+  fireEvent.press(await ui.findByRole('button', { name: 'Open system settings' }));
+  expect(openSettings).toHaveBeenCalledTimes(1);
+  (Notifications.getPermissionsAsync as jest.Mock).mockResolvedValue({
+    status: 'granted',
+    canAskAgain: true,
+  });
+  fireEvent.press(ui.getByRole('button', { name: 'Retry' }));
+  await ui.findByText(
+    'Preferences saved. Reminders scheduled; delivery depends on system settings.',
+  );
+  expect(Notifications.scheduleNotificationAsync).toHaveBeenCalled();
+});
+
+it('keeps recovery available if the system settings link fails', async () => {
+  (Notifications.getPermissionsAsync as jest.Mock).mockResolvedValue({
+    status: 'denied',
+    canAskAgain: false,
+  });
+  jest.spyOn(Linking, 'openSettings').mockRejectedValueOnce(new Error('unavailable'));
+  const ui = render(<NotificationsScreen />);
+  await ui.findByRole('switch', { name: 'Notifications', disabled: false });
+  fireEvent(ui.getByTestId('notification-night-toggle'), 'valueChange', true);
+  fireEvent.press(await ui.findByRole('button', { name: 'Open system settings' }));
+  await ui.findByText(/Could not open system settings/);
+  expect(ui.getByRole('button', { name: 'Retry' })).toBeEnabled();
+  expect((await getNotificationPreferences()).nightOn).toBe(true);
 });

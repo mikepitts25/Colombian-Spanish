@@ -323,7 +323,7 @@ export const translations = {
     'profile.minutes': '{count} minutos',
     'profile.trip': 'Fecha de viaje (opcional, AAAA-MM-DD)',
     'profile.tripNote':
-      'Déjala vacía para quitarla. No cambia tu meta diaria ni tu límite de tarjetas nuevas.',
+      'Se guarda solo como referencia. No cambia tu plan de estudio, tu meta diaria ni tu límite de tarjetas nuevas. Déjala vacía para quitarla.',
     'profile.invalidDate': 'Escribe una fecha válida en formato AAAA-MM-DD.',
     'profile.loadError': 'No se pudieron cargar tus preferencias.',
     'profile.saveError': 'No se pudo guardar. Tus cambios siguen aquí.',
@@ -602,6 +602,9 @@ export const translations = {
       'No se pudieron cargar tus preferencias. Tus ajustes no han cambiado.',
     'notifications.saving': 'Guardando preferencias de recordatorios…',
     'notifications.retry': 'Reintentar',
+    'notifications.openSettings': 'Abrir ajustes del sistema',
+    'notifications.settingsError':
+      'No se pudieron abrir los ajustes del sistema. Abre Ajustes en tu dispositivo y permite las notificaciones para esta app. Después vuelve y pulsa Reintentar.',
     'notifications.saveError':
       'No se pudieron guardar las preferencias. Se muestran las opciones anteriores. Intenta el cambio otra vez.',
     'notifications.scheduled':
@@ -755,6 +758,8 @@ export const translations = {
     'settings.manageDecks.subtitle': 'Organiza y edita tus decks',
     'settings.language.title': 'Idioma de interfaz',
     'settings.language.subtitle': 'Español',
+    'settings.language.errorTitle': 'No se pudo cambiar el idioma',
+    'settings.language.errorMessage': 'No se pudo confirmar el cambio. Intenta cambiarlo otra vez.',
     'settings.export.title': 'Exportar respaldo',
     'settings.export.subtitle': 'Copia tus decks y resultados de práctica al portapapeles',
     'settings.import.title': 'Importar respaldo',
@@ -1174,7 +1179,7 @@ export const translations = {
     'profile.minutes': '{count} minutes',
     'profile.trip': 'Trip date (optional, YYYY-MM-DD)',
     'profile.tripNote':
-      'Leave blank to remove it. This does not change your daily goal or new-card limit.',
+      'Saved for reference only. This does not change your study plan, daily goal, or new-card limit. Leave blank to remove it.',
     'profile.invalidDate': 'Enter a real date in YYYY-MM-DD format.',
     'profile.loadError': 'Could not load your preferences.',
     'profile.saveError': 'Could not save. Your edits are still here.',
@@ -1446,6 +1451,9 @@ export const translations = {
       'Could not load reminder preferences. Your settings have not changed.',
     'notifications.saving': 'Saving reminder preferences…',
     'notifications.retry': 'Retry',
+    'notifications.openSettings': 'Open system settings',
+    'notifications.settingsError':
+      'Could not open system settings. Open Settings on your device and allow notifications for this app. Then return and tap Retry.',
     'notifications.saveError':
       'Could not save preferences. Previous choices are shown. Try the change again.',
     'notifications.scheduled':
@@ -1599,6 +1607,8 @@ export const translations = {
     'settings.manageDecks.subtitle': 'Organize and edit your decks',
     'settings.language.title': 'UI language',
     'settings.language.subtitle': 'English',
+    'settings.language.errorTitle': 'Could not change language',
+    'settings.language.errorMessage': 'The change could not be confirmed. Try the change again.',
     'settings.export.title': 'Export Backup',
     'settings.export.subtitle': 'Copy your decks and practice results to the clipboard',
     'settings.import.title': 'Import Backup',

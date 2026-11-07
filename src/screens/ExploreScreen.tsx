@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { spacing, radius } from '../styles/theme';
 import { useLanguage } from '../context/LanguageContext';
+import { createLearningSessionId } from '../storage/learningEvents';
 
 export default function ExploreScreen() {
   const styles = useThemedStyles(makeStyles);
@@ -18,7 +19,15 @@ export default function ExploreScreen() {
       id: 'browse',
       title: t('explore.browseDecks'),
       description: t('explore.browseDecksSub'),
-      onPress: () => nav.navigate('Root', { screen: 'Study' }, { pop: true }),
+      onPress: () =>
+        nav.navigate(
+          'Root',
+          {
+            screen: 'Study',
+            params: { topicBrowserRequest: createLearningSessionId() },
+          },
+          { pop: true },
+        ),
     },
     {
       id: 'phrasebook',
@@ -51,6 +60,7 @@ export default function ExploreScreen() {
         {options.map((option) => (
           <Pressable
             key={option.id}
+            accessibilityRole="button"
             style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
             onPress={option.onPress}
           >

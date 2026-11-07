@@ -163,7 +163,7 @@ describe('SettingsScreen rendering', () => {
   it('calls toggleLanguage when the UI language row is pressed', async () => {
     const { getByText } = render(<SettingsScreen />);
     await waitFor(() => getByText('Idioma de interfaz'));
-    fireEvent.press(getByText('Idioma de interfaz'));
+    await act(async () => fireEvent.press(getByText('Idioma de interfaz')));
     expect(mockToggleLanguage).toHaveBeenCalledTimes(1);
   });
 
@@ -754,4 +754,57 @@ test('opens the theme picker with Classic as the default theme identity', async 
   expect(ui.getByText('Clásico · Oscuro')).toBeTruthy();
   fireEvent.press(ui.getByText('Tema'));
   expect(mockNavigate).toHaveBeenCalledWith('ThemeSettings');
+});
+
+test('exposes settings destinations as named buttons and version metadata as static information', async () => {
+  const ui = render(<SettingsScreen />);
+  await ui.findByText('10 tarjetas por día');
+  expect(ui.getByRole('button', { name: /Tema/ })).toBeTruthy();
+  expect(ui.queryByRole('button', { name: /1.2.3/ })).toBeNull();
+});
+
+test('reports a failed language save and unlocks the control for retry', async () => {
+  mockToggleLanguage.mockRejectedValueOnce(new Error('disk full'));
+  const ui = render(<SettingsScreen />);
+  await ui.findByText('10 tarjetas por día');
+  await act(async () => fireEvent.press(ui.getByText('Idioma de interfaz')));
+  expect(mockAlert).toHaveBeenCalledWith('No se pudo cambiar el idioma', expect.any(String));
+  mockToggleLanguage.mockResolvedValueOnce(undefined);
+  await act(async () => fireEvent.press(ui.getByText('Idioma de interfaz')));
+  expect(mockToggleLanguage).toHaveBeenCalledTimes(2);
+});
+
+test('prevents a second language change until the first change finishes saving', async () => {
+  let finish!: () => void;
+  mockToggleLanguage.mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  const ui = render(<SettingsScreen />);
+  await ui.findByText('10 tarjetas por día');
+  fireEvent.press(ui.getByRole('button', { name: /Idioma de interfaz/ }));
+  expect(ui.getByRole('button', { name: /Idioma de interfaz/ })).toBeDisabled();
+  fireEvent.press(ui.getByRole('button', { name: /Idioma de interfaz/ }));
+  expect(mockToggleLanguage).toHaveBeenCalledTimes(1);
+  await act(async () => finish());
+  expect(ui.getByRole('button', { name: /Idioma de interfaz/ })).toBeEnabled();
+});
+
+test.each([
+  ['library.link', 'Library'],
+  ['profile.title', 'LearningPreferences'],
+  ['settings.dailyGoal.title', 'DailyGoal'],
+  ['settings.newCards.title', 'DailyGoal'],
+  ['settings.reminders.title', 'Notifications'],
+  ['settings.manageDecks.title', 'ManageDecks'],
+  ['theme.title', 'ThemeSettings'],
+  ['audio.title', 'AudioPreferences'],
+] as const)('connects %s to its working settings screen', async (key, route) => {
+  const { translate } = require('../../src/i18n/translations');
+  const ui = render(<SettingsScreen />);
+  await ui.findByText('10 tarjetas por día');
+  fireEvent.press(ui.getByRole('button', { name: new RegExp(translate('es', key)) }));
+  expect(mockNavigate).toHaveBeenCalledWith(route);
 });

@@ -5,6 +5,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { translate, TranslationKey } from '../i18n/translations';
@@ -28,22 +29,66 @@ const fallbackLanguageContext: LanguageContextValue = {
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<UiLanguage>('es');
+  const current = useRef<UiLanguage>('es');
+  const changes = useRef(0);
+  const pending = useRef<Promise<void>>(Promise.resolve());
+  const mounted = useRef(true);
 
   useEffect(() => {
-    (async () => {
-      const prefs = await getPrefs();
-      setLanguageState(prefs.uiLanguage);
-    })();
+    mounted.current = true;
+    let active = true;
+    const revision = changes.current;
+    void getPrefs()
+      .then((prefs) => {
+        if (active && revision === changes.current) {
+          current.current = prefs.uiLanguage;
+          setLanguageState(prefs.uiLanguage);
+        }
+      })
+      .catch(() => {
+        // Keep the current language usable; an explicit change can retry storage.
+      });
+    return () => {
+      active = false;
+      mounted.current = false;
+    };
   }, []);
 
-  const setLanguage = useCallback(async (nextLanguage: UiLanguage) => {
-    setLanguageState(nextLanguage);
-    await setPrefs({ uiLanguage: nextLanguage });
+  const changeLanguage = useCallback((nextLanguage?: UiLanguage) => {
+    changes.current++;
+    const operation = pending.current.then(async () => {
+      const next = nextLanguage ?? (current.current === 'es' ? 'en' : 'es');
+      try {
+        await setPrefs({ uiLanguage: next });
+      } catch (error) {
+        // A rejected write may have committed a roll-forward journal. Reading
+        // through durable storage recovers it before confirming the UI value.
+        const recovered = await getPrefs().catch(() => undefined);
+        if (recovered?.uiLanguage !== next) throw error;
+      }
+      current.current = next;
+      if (mounted.current) setLanguageState(next);
+      // Refresh copy without prompting for permission or undoing a saved language
+      // if the native scheduler is unavailable. Its own screen exposes recovery.
+      void Promise.resolve()
+        .then(() => {
+          // Load the native notification module only for a saved language change.
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          const { refreshScheduledNotifications } =
+            require('../services/notifications') as typeof import('../services/notifications');
+          return refreshScheduledNotifications();
+        })
+        .catch(() => {});
+    });
+    pending.current = operation.catch(() => {});
+    return operation;
   }, []);
 
-  const toggleLanguage = useCallback(async () => {
-    await setLanguage(language === 'es' ? 'en' : 'es');
-  }, [language, setLanguage]);
+  const setLanguage = useCallback(
+    (nextLanguage: UiLanguage) => changeLanguage(nextLanguage),
+    [changeLanguage],
+  );
+  const toggleLanguage = useCallback(() => changeLanguage(), [changeLanguage]);
 
   const t = useCallback(
     (key: TranslationKey, values?: Record<string, string | number>) =>

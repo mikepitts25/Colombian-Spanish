@@ -2,7 +2,15 @@ import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Switch, useWindowDimensions } from 'react-native';
+import {
+  Linking,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Switch,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
@@ -68,6 +76,7 @@ export default function NotificationsScreen() {
   const [loadError, setLoadError] = useState(false);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<NotificationScheduleResult | 'save-error'>();
+  const [settingsError, setSettingsError] = useState(false);
   const mounted = useRef(false);
   const reading = useRef(false);
   const submitting = useRef(false);
@@ -101,6 +110,7 @@ export default function NotificationsScreen() {
     submitting.current = true;
     setSaving(true);
     setStatus(undefined);
+    setSettingsError(false);
     const previous = prefs;
     setPrefs(next);
     try {
@@ -174,6 +184,25 @@ export default function NotificationsScreen() {
           <Text accessibilityLiveRegion="polite" style={styles.body}>
             {statusText}
           </Text>
+        )}
+        {settingsError && (
+          <Text accessibilityRole="alert" style={styles.body}>
+            {t('notifications.settingsError')}
+          </Text>
+        )}
+        {status === 'denied' && (
+          <Pressable
+            accessibilityRole="button"
+            disabled={saving}
+            accessibilityState={{ disabled: saving }}
+            onPress={() => {
+              setSettingsError(false);
+              void Linking.openSettings().catch(() => setSettingsError(true));
+            }}
+            style={styles.back}
+          >
+            <Text style={styles.backText}>{t('notifications.openSettings')}</Text>
+          </Pressable>
         )}
         {(loadError || status === 'error' || status === 'denied') && (
           <Pressable
