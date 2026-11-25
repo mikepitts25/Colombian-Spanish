@@ -1,11 +1,17 @@
 import React from 'react';
+import { AccessibilityInfo, Modal } from 'react-native';
 import { fireEvent, waitFor, within } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import AdventureScreen from '../../src/screens/AdventureScreen';
 import AdventuresScreen from '../../src/screens/AdventuresScreen';
 import { ADVENTURES } from '../../src/adventures/content';
+import * as adventureContent from '../../src/adventures/content';
+import { ALL_DECKS } from '../../src/data/decks';
 import { createAdventureAdapter, readAdventures } from '../../src/storage/adventures';
+import { restoreBackup } from '../../src/storage/backupRestore';
+import { captureBackupSnapshot, parseBackupText } from '../../src/storage/backupSnapshot';
+import { saveDecks } from '../../src/storage/storage';
 import { translations } from '../../src/i18n/translations';
 const mockNavigate = jest.fn(),
   mockBack = jest.fn();
@@ -54,13 +60,13 @@ test.each(['classic', 'barrio'] as const)(
     fireEvent.press(await ui.findByText('Continue'));
     for (const answer of ['Buenos días', 'Un café, por favor']) {
       fireEvent.changeText(await ui.findByLabelText('Your response'), answer);
-      fireEvent.press(ui.getByText('Check answer'));
+      fireEvent.press(ui.getByText('Check reply'));
       fireEvent.press(await ui.findByText('Continue'));
     }
     fireEvent.press(await ui.findByText('Accept water'));
     fireEvent.press(await ui.findByText('Continue'));
     fireEvent.changeText(await ui.findByLabelText('Your response'), 'gracias');
-    fireEvent.press(ui.getByText('Check answer'));
+    fireEvent.press(ui.getByText('Check reply'));
     fireEvent.press(await ui.findByText('Continue'));
     expect(await ui.findByText('Preview stamp earned')).toBeTruthy();
     expect(await ui.findByText('Completed without recorded help')).toBeTruthy();
@@ -96,9 +102,18 @@ test('release cannot open draft scenes or advertise unavailable adventures', asy
       'New visits will appear here when they are ready. Your usual practice is available from Home.',
     ),
   ).toBeTruthy();
+  expect(list.queryByRole('button', { name: 'Open passport' })).toBeNull();
+  fireEvent.press(list.getByRole('button', { name: 'Back to practice' }));
+  expect(mockNavigate).toHaveBeenLastCalledWith('Root', { screen: 'Study' }, { pop: true });
 });
 test('episode two remains visibly locked until visit one has saved', async () => {
   const ui = renderWithTheme(<AdventuresScreen />);
+  const start = await ui.findByRole('button', { name: 'Start: Breakfast at Ana’s café' });
+  expect(ui.getAllByRole('button').indexOf(start)).toBeLessThan(
+    ui.getAllByRole('button').indexOf(ui.getByLabelText('Open passport')),
+  );
+  expect(ui.queryByText('Complete “Breakfast at Ana’s café” to continue the story.')).toBeNull();
+  fireEvent.press(ui.getByRole('button', { name: 'Later visits' }));
   expect(
     await ui.findByText('Complete “Breakfast at Ana’s café” to continue the story.'),
   ).toBeTruthy();
@@ -165,14 +180,20 @@ test('the editorial store flag opens only cafe drafts without developer review t
   expect(ui.getByText('Draft practice')).toBeTruthy();
 });
 
-async function finishSavedVisit(index: number) {
+async function finishSavedVisit(
+  index: number,
+  mode: adventureContent.AdventureMode = 'preview',
+  { warmup = false, skip = false } = {},
+) {
   const def = ADVENTURES[index];
-  const { ALL_DECKS } = require('../../src/data/decks');
-  const a = createAdventureAdapter(def.pack.id, 'preview', () => ALL_DECKS);
-  let run = await a.start(`screen-visit-${index}`, 100);
+  const a = createAdventureAdapter(def.pack.id, mode, () => ALL_DECKS);
+  const existing = (await a.load()).run?.id;
+  const id = existing ? `${existing}-revisit` : `screen-visit-${index}`;
+  let run = await a.start(id, 100, existing);
+  if (warmup) run = await a.warmup!(id);
   let seq = 0;
   const command = (type: 'advance' | 'answer', extra = {}) => ({
-    id: `screen-op-${index}-${++seq}`,
+    id: `${id}-op-${++seq}`,
     type,
     runId: run.id,
     nodeId: run.nodeId,
@@ -187,13 +208,98 @@ async function finishSavedVisit(index: number) {
         command(
           'answer',
           node.kind === 'production'
-            ? { answer: node.exercise.acceptedAnswers[0], durationMs: 5 }
+            ? {
+                answer:
+                  skip && node.id === 'greeting' ? 'incorrect' : node.exercise.acceptedAnswers[0],
+                durationMs: 5,
+              }
             : { choiceId: node.options.find((o) => o.correct)!.id, durationMs: 5 },
         ),
       );
     run = await a.apply(command('advance'));
   }
 }
+
+test('an unearned stamp leaves a review action and the unlocked next visit', async () => {
+  await finishSavedVisit(0, 'preview', { skip: true });
+  const ui = scene();
+  expect(await ui.findByText('Practice reviewed')).toBeTruthy();
+  expect(ui.queryByRole('button', { name: 'View my stamp' })).toBeNull();
+  expect(ui.getByRole('button', { name: 'Next visit: Back at Ana’s café' })).toBeTruthy();
+  fireEvent.press(ui.getByRole('button', { name: 'Review phrases from this visit' }));
+  expect(await ui.findByText('Return to mission')).toBeTruthy();
+  expect((await readAdventures()).outcomes).toEqual([]);
+});
+
+test('an accepted café pair can earn, improve, revisit and restore stamps with previews disabled', async () => {
+  mockPreview = false;
+  const realResolve = adventureContent.resolveAdventure;
+  const fixture: adventureContent.AcceptanceManifest = {
+    schemaVersion: 1,
+    records: ADVENTURES.slice(0, 2).map((def) => ({
+      missionId: def.pack.id,
+      contentVersion: def.pack.contentVersion,
+      fingerprint: adventureContent.adventureIdentity(def, ALL_DECKS),
+      status: 'reviewed',
+      reviewer: { kind: 'human', id: 'test-only-acceptance' },
+      reviewedAt: '2026-01-01T00:00:00Z',
+    })),
+  };
+  const resolver = jest
+    .spyOn(adventureContent, 'resolveAdventure')
+    .mockImplementation((id, decks, mode) => realResolve(id, decks, mode, fixture));
+  try {
+    const initial = renderWithTheme(<AdventuresScreen />);
+    expect(
+      await initial.findByRole('button', { name: 'Start: Breakfast at Ana’s café' }),
+    ).toBeTruthy();
+    expect(initial.queryByText('Draft practice')).toBeNull();
+    initial.unmount();
+
+    await finishSavedVisit(0, 'accepted', { warmup: true });
+    const first = (await readAdventures()).outcomes[0];
+    expect(first).toMatchObject({ mode: 'accepted', supported: true });
+    await finishSavedVisit(0, 'accepted');
+    expect((await readAdventures()).outcomes).toEqual([{ ...first, supported: false }]);
+
+    const list = renderWithTheme(<AdventuresScreen />);
+    fireEvent.press(await list.findByRole('button', { name: 'Start: Back at Ana’s café' }));
+    expect(mockNavigate).toHaveBeenCalledWith('Adventure', {
+      id: ADVENTURES[1].pack.id,
+      mode: 'accepted',
+    });
+    expect(list.getByRole('button', { name: 'Revisit: Breakfast at Ana’s café' })).toBeTruthy();
+    list.unmount();
+
+    await finishSavedVisit(1, 'accepted');
+    await saveDecks(ALL_DECKS);
+    const expected = await readAdventures();
+    const backup = parseBackupText(JSON.stringify(await captureBackupSnapshot()));
+    await AsyncStorage.clear();
+    await restoreBackup(
+      backup.decks,
+      backup.learningEvents,
+      'replace-state',
+      backup.applicationState,
+    );
+    expect(await readAdventures()).toEqual(expected);
+    expect((await captureBackupSnapshot()).learningEvents).toEqual(backup.learningEvents);
+    expect(expected.outcomes).toHaveLength(2);
+
+    const completed = renderWithTheme(
+      <AdventureScreen route={{ params: { id: ADVENTURES[1].pack.id, mode: 'accepted' } }} />,
+    );
+    fireEvent.press(await completed.findByRole('button', { name: 'View my stamp' }));
+    const passport = within(await completed.findByTestId('passport-collection'));
+    expect(passport.getByText(ADVENTURES[1].pack.title.en)).toBeTruthy();
+    expect(
+      passport.getAllByText(/Passport stamp earned · Completed without recorded help/),
+    ).toHaveLength(2);
+    expect(passport.queryByText(/Preview stamp/)).toBeNull();
+  } finally {
+    resolver.mockRestore();
+  }
+});
 
 test.each(['en', 'es'] as const)(
   'completion beyond the first café visit names and opens the next mission in %s',
@@ -235,8 +341,15 @@ test('the final visit keeps the passport available without a next visit', async 
   );
   expect(await ui.findByText('Preview stamp earned')).toBeTruthy();
   expect(ui.queryByText(/Next visit:/)).toBeNull();
-  fireEvent.press(ui.getByText('Your practice passport'));
-  expect(mockNavigate).toHaveBeenCalledWith('Adventures');
+  fireEvent.press(ui.getByRole('button', { name: 'View my stamp' }));
+  expect(await ui.findByTestId('passport-collection')).toBeTruthy();
+  expect(
+    within(ui.getByTestId('passport-collection')).getByText(ADVENTURES[7].pack.title.en),
+  ).toBeTruthy();
+  expect(mockNavigate).not.toHaveBeenCalled();
+  fireEvent.press(ui.getByRole('button', { name: 'Close passport' }));
+  expect(ui.queryByTestId('passport-collection')).toBeNull();
+  expect(ui.getByRole('button', { name: 'View my stamp' })).toBeTruthy();
 });
 
 test('compact passport opens a collection and starts the first visit directly', async () => {
@@ -260,6 +373,13 @@ test('passport closes back to visits without navigating to the current screen', 
   expect(ui.getByLabelText('Open passport')).toBeTruthy();
   expect(ui.queryByText('Explore adventures')).toBeNull();
   expect(mockNavigate).not.toHaveBeenCalled();
+});
+
+test('the passport opens without a slide under Reduce Motion', async () => {
+  jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValueOnce(true);
+  const ui = renderWithTheme(<AdventuresScreen />);
+  fireEvent.press(await ui.findByRole('button', { name: 'Open passport' }));
+  expect(ui.UNSAFE_getByType(Modal).props.animationType).toBe('none');
 });
 
 test('passport keeps earned stamps and continues the next unlocked visit', async () => {
@@ -329,11 +449,11 @@ test.each(['classic', 'barrio'] as const)(
     fireEvent.press(await ui.findByText('Start visit'));
     fireEvent.press(await ui.findByText('Continue'));
     fireEvent.changeText(await ui.findByLabelText('Your response'), 'Buenos dias');
-    fireEvent.press(ui.getByText('Check answer'));
+    fireEvent.press(ui.getByText('Check reply'));
     fireEvent.press(await ui.findByText('Continue'));
     expect(await ui.findByText('Ask for water')).toBeTruthy();
     fireEvent.changeText(ui.getByLabelText('Your response'), 'Agua por favor');
-    fireEvent.press(ui.getByText('Check answer'));
+    fireEvent.press(ui.getByText('Check reply'));
     expect(await ui.findByText('Correct')).toBeTruthy();
     expect(ui.getByText('Agua, por favor')).toBeTruthy();
     expect(ui.queryByText('Try again')).toBeNull();

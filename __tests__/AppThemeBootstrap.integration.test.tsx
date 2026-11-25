@@ -31,6 +31,7 @@ jest.mock('../src/context/LanguageContext', () => ({
 }));
 jest.mock('../src/services/notifications', () => ({
   refreshScheduledNotifications: jest.fn(async () => {}),
+  watchReminderResponses: () => ({ flush: jest.fn(), remove: jest.fn() }),
 }));
 jest.mock('../src/services/crashReporting', () => ({
   initCrashReporting: jest.fn(),

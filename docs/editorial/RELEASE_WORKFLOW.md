@@ -38,13 +38,59 @@ Audio files and grammar outside cards are not covered by this text fingerprint. 
 - `npm run release:preflight` checks the **entire currently bundled deck library**. It fails while any bundled card lacks current text acceptance. The current expected result is failure with 1,392 blocked cards.
 - The standard EAS `production` profile runs that check through `eas-build-post-install`. Development/preview builds retain the working library and do not claim release acceptance. CI validates ledger structure and exercises positive/negative fixtures, while ordinary project-generation/JS-bundle jobs do not certify release content.
 
+### Christmas free-only subset inputs
+
+The proposed [C0 inventory](christmas-c0-candidate.json) identifies the exact free cards, two café visits and files for review. Record the card decisions in `review-ledger.json` and the visit decisions in `src/adventures/acceptance.json`. Store pronunciation listening evidence and distribution rights with the owner and reviewer. The release approval record references that evidence without embedding it in the generated manifest.
+
+When a clip speaks an expanded alternative, its candidate `audio` entry must also pin the exact spoken text in `transcriptOverride`. An ordinary card-front pronunciation needs only its path and checksum.
+
+After approval is given, create `docs/editorial/christmas-release-approval.json` with this structure. Use the SHA-256 of the exact candidate file bytes. The `offer` and `distributionRights` entries come from the owner, and `pronunciation` comes from the human reviewer who heard the selected clips. Each `evidence` value points to the applicable decision or review record. The placeholders below are illustrative.
+
+```json
+{
+  "schemaVersion": 1,
+  "candidateSha256": "<SHA-256 of christmas-c0-candidate.json>",
+  "offer": {
+    "reviewer": "<owner attribution>",
+    "reviewedAt": "<ISO timestamp>",
+    "evidence": "<scope decision reference>"
+  },
+  "pronunciation": {
+    "reviewer": "<human reviewer attribution>",
+    "reviewedAt": "<ISO timestamp>",
+    "evidence": "<listening review for the selected clips>"
+  },
+  "distributionRights": {
+    "reviewer": "<owner attribution>",
+    "reviewedAt": "<ISO timestamp>",
+    "evidence": "<distribution clearance for the selected audio and café artwork>"
+  }
+}
+```
+
+Run `node scripts/release-content.js --emit-subset /absolute/path/manifest.json` to emit the reviewed input manifest. Run `node scripts/release-content.js --check-subset /absolute/path/manifest.json` to compare it with current approved inputs. An existing output can be reused when its contents match exactly. Recheck any corrected card, visit or asset and obtain sign-off for the resulting scope before generating a new manifest.
+
+The iOS `christmas-subset` profile generates its deck catalogue, visit definitions and pronunciation registry from the same verified inputs. It requires current approvals at preflight and bundle time. Run the scoped preflight with:
+
+```sh
+COLOMBIAN_SPANISH_CATALOGUE=christmas-subset npm run release:preflight
+```
+
+Preflight prints the bundle digest and writes the generated manifest to `.expo/christmas-subset/<digest>/manifest.json`. Metro regenerates and checks the outputs against current approved inputs before bundling.
+
+The subset profile exposes free learning and prior purchase recovery. It disables new checkout and over-the-air updates. The standard production preflight and build hook continue to check the full library.
+
+Subset startup adds missing reviewed cards and preserves stored records for cards outside the release. A progress export still includes those records. A restore classifies the existing device before loading the file, and the original installation's courtesy status stays on that device. The purchase provider continues to verify ownership separately.
+
+A verified purchase can be recognized in the subset, whose study catalogue only contains reviewed release cards and the learner's own cards. If an existing customer depends on any excluded purchased collection, resolve their continued access before shipping this profile as an update. The signed candidate still needs the physical-device upgrade and store restore checks in the Christmas release plan.
+
 ### Owner-authorized editorial-review TestFlight beta
 
 On October 21, 2026 the owner explicitly directed using TestFlight to perform the pending editorial review and authorized building/uploading that beta. The dedicated `editorial-beta` profile inherits production signing/build behavior and uses store distribution, with development previews and microphone recording still excluded. Its build hook validates the real ledger, reports the exact number of cards awaiting acceptance and labels them **not accepted for public release**. It does not add human decisions or change fingerprints.
 
 This named beta exception is for collecting editorial and device feedback. It does not make `npm run release:preflight` or the standard `production` hook pass; both continue to reject unaccepted teaching content. Record exact beta build identity and tester access separately from language acceptance, physical-device checks, external beta review and public App Store release.
 
-The filtered JSON artifact is not silently substituted into the running app. Until a selected reviewed library is deliberately integrated, production remains blocked by the full-library check. This preserves stored learner content rather than deleting unreviewed cards during an upgrade. Any later subset integration must account for existing stored decks, phrasebook/grammar/mission content, asset references and backup migration.
+The editorial beta continues to bundle the full working library. The separate Christmas subset profile performs the reviewed catalogue substitution during its own build.
 
 Manual native builds, OTA updates and custom EAS workflows must explicitly run `npm run release:preflight`; custom build jobs do not automatically execute EAS npm hooks. See [Expo's lifecycle hook documentation](https://docs.expo.dev/build-reference/npm-hooks/). Do not bypass this check to publish the development library. No build signing, account settings, submission or publication is performed here.
 

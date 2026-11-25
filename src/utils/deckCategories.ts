@@ -292,8 +292,39 @@ export function getDecksForCategory(decks: readonly Deck[], category: CategoryKe
   return decks.filter((deck) => getCategoryForDeck(deck) === category);
 }
 
-export function getDeckDisplayName(deck: Pick<Deck, 'id' | 'name'>) {
-  return DISPLAY_NAME_BY_DECK_ID[deck.id] || deck.name;
+const SPANISH_DISPLAY_NAME_BY_DECK_ID: Record<string, string> = {
+  'deck-accommodation-phrases': 'Frases de alojamiento',
+  'deck-actions': 'Acciones',
+  'deck-body': 'El cuerpo',
+  'deck-clothing': 'Ropa',
+  'deck-colors': 'Colores',
+  'deck-costeno': 'Jerga costeña (Caribe)',
+  'deck-dates_time': 'Fechas y horas',
+  'deck-holidays': 'Festivos',
+  'deck-llanero': 'Jerga llanera (Los Llanos)',
+  'deck-medical-phrases': 'Frases de salud y emergencias',
+  'deck-nature': 'Naturaleza',
+  'deck-numbers': 'Números',
+  'deck-paisa': 'Jerga paisa (Medellín)',
+  'deck-piropos': 'Piropos y cumplidos',
+  'deck-places': 'Lugares',
+  'deck-professions': 'Profesiones',
+  'deck-restaurant-phrases': 'Frases de restaurante',
+  'deck-rolo': 'Jerga rola (Bogotá)',
+  'deck-rolo-slang': 'Jerga rola (Bogotá)',
+  'deck-school': 'Escuela',
+  'deck-shopping': 'Compras',
+  'deck-social-phrases': 'Frases para salir y socializar',
+  'deck-sports': 'Deportes',
+  'deck-transport-phrases': 'Frases de transporte',
+  'deck-travel': 'Viajes',
+  'deck-useful-phrases': 'Frases esenciales',
+  'deck-valluno': 'Jerga valluna (Cali)',
+};
+
+export function getDeckDisplayName(deck: Pick<Deck, 'id' | 'name'>, language: 'en' | 'es' = 'en') {
+  const names = language === 'es' ? SPANISH_DISPLAY_NAME_BY_DECK_ID : DISPLAY_NAME_BY_DECK_ID;
+  return names[deck.id] || deck.name;
 }
 
 export function getPreferredDeckForCategory(decks: readonly Deck[], category: CategoryKey) {

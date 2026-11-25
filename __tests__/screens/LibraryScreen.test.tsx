@@ -92,3 +92,58 @@ it('supports Spanish purchase, restore and continued free learning copy', async 
   expect(ui.getByRole('button', { name: 'Restaurar compras' })).toBeTruthy();
   expect(ui.getByRole('button', { name: 'Seguir aprendiendo gratis' })).toBeTruthy();
 });
+
+describe('free-only release', () => {
+  const data = require('../../src/data/decks');
+  const catalog = require('../../src/billing/catalog');
+  const originalDecks = Object.getOwnPropertyDescriptor(data, 'ALL_DECKS')!;
+  const originalMode = Object.getOwnPropertyDescriptor(catalog, 'isFreeOnlyRelease');
+
+  beforeEach(() => {
+    Object.defineProperty(catalog, 'isFreeOnlyRelease', { configurable: true, value: true });
+    const greeting = originalDecks.value.find(({ id }: { id: string }) => id === 'deck-greetings');
+    const food = originalDecks.value.find(({ id }: { id: string }) => id === 'deck-food');
+    Object.defineProperty(data, 'ALL_DECKS', {
+      configurable: true,
+      value: [
+        { ...greeting, cards: [greeting.cards[0]] },
+        { ...food, cards: [food.cards[0]] },
+      ],
+    });
+  });
+
+  afterEach(() => {
+    Object.defineProperty(data, 'ALL_DECKS', originalDecks);
+    if (originalMode) Object.defineProperty(catalog, 'isFreeOnlyRelease', originalMode);
+    else delete catalog.isFreeOnlyRelease;
+  });
+
+  it('shows only the shipped free catalogue and its samples even when the store client offers a product', async () => {
+    const purchase = jest.fn(async () => true);
+    const ui = open(billing({ purchase }));
+    await ui.findByText('All collections in this version are free.');
+    expect(ui.getByText('2 starter collections · 2 cards')).toBeTruthy();
+    expect(ui.queryByText(/additional collections/i)).toBeNull();
+    expect(ui.queryByText(/One-time purchase|19,99/)).toBeNull();
+    expect(ui.queryByRole('button', { name: /Unlock library/ })).toBeNull();
+    const samples = ui.getAllByRole('button', { name: /Preview collection:/ });
+    expect(samples).toHaveLength(2);
+    fireEvent.press(ui.getByRole('button', { name: 'Preview collection: Greetings' }));
+    expect(ui.getByText('hola')).toBeTruthy();
+    expect(ui.queryByText('Sample phrase')).toBeTruthy();
+    expect(purchase).not.toHaveBeenCalled();
+  });
+
+  it('retains prior purchase recovery and does not promise unshipped collections', async () => {
+    mockLanguage = 'es';
+    const restore = jest.fn(async () => true);
+    const ui = open(billing({ restore }));
+    await ui.findByText('Todas las colecciones de esta versión son gratis.');
+    const recovery = await ui.findByRole('button', { name: 'Restaurar compras', disabled: false });
+    fireEvent.press(recovery);
+    await ui.findByText('Tu compra de la biblioteca se ha restaurado.');
+    expect(restore).toHaveBeenCalledTimes(1);
+    expect(ui.queryByText('Tu biblioteca completa está desbloqueada.')).toBeNull();
+    expect(ui.queryByRole('button', { name: /Desbloquear biblioteca/ })).toBeNull();
+  });
+});

@@ -68,7 +68,7 @@ export default function MissionScreen({
   notice?: string;
   startLabel?: string;
   warmupCards?: FlashCard[];
-  renderCompletion?: (run: MissionRun) => React.ReactNode;
+  renderCompletion?: (run: MissionRun, review?: () => void) => React.ReactNode;
 } = {}) {
   const styles = useThemedStyles(makeStyles);
   const { fontScale, width } = useWindowDimensions();
@@ -97,24 +97,27 @@ export default function MissionScreen({
   const focusedResponse = useRef<string | undefined>(undefined);
   const responseIdentity =
     run && !run.feedback && !run.completed ? `${run.id}:${run.nodeId}` : undefined;
-  const layoutKey = `${responseIdentity}:${fontScale}:${width}`;
-  const responseLayout = useRef<{ key: string; cardY?: number; inputY?: number }>({ key: '' });
+  const typedFeedback =
+    !!run?.feedback &&
+    !contentChanged &&
+    pack.nodes.some((node) => node.id === run.nodeId && node.kind === 'production');
+  const layoutKey = `${typedFeedback ? `feedback:${run?.id}:${run?.nodeId}` : responseIdentity}:${fontScale}:${width}`;
+  const responseLayout = useRef<{ key: string; cardY?: number; responseY?: number }>({ key: '' });
   const revealResponse = useCallback(() => {
     const layout = responseLayout.current;
     if (
-      !responseIdentity ||
-      focusedResponse.current !== responseIdentity ||
+      (!typedFeedback && (!responseIdentity || focusedResponse.current !== responseIdentity)) ||
       layout.key !== layoutKey ||
       layout.cardY === undefined ||
-      layout.inputY === undefined
+      layout.responseY === undefined
     )
       return;
     content.current?.scrollTo({
-      y: Math.max(0, layout.cardY + layout.inputY - 16),
+      y: Math.max(0, layout.cardY + layout.responseY - 16),
       animated: false,
     });
-  }, [responseIdentity, layoutKey]);
-  const recordResponseLayout = (part: 'cardY' | 'inputY', y: number) => {
+  }, [responseIdentity, layoutKey, typedFeedback]);
+  const recordResponseLayout = (part: 'cardY' | 'responseY', y: number) => {
     const previous = responseLayout.current;
     responseLayout.current = {
       ...(previous.key === layoutKey ? previous : {}),
@@ -125,8 +128,14 @@ export default function MissionScreen({
   };
   useEffect(() => {
     const shown = Keyboard.addListener('keyboardDidShow', revealResponse);
-    return () => shown.remove();
-  }, [revealResponse]);
+    const hidden = Keyboard.addListener('keyboardDidHide', () => {
+      if (typedFeedback) revealResponse();
+    });
+    return () => {
+      shown.remove();
+      hidden.remove();
+    };
+  }, [revealResponse, typedFeedback]);
   useEffect(() => {
     if (planId && run?.completed && !contentChanged) onCompleted?.();
   }, [planId, run?.completed, contentChanged, onCompleted]);
@@ -229,6 +238,12 @@ export default function MissionScreen({
           setReviewing(false);
         }
         if (intent.kind === 'warmup') setWarmupOpen(true);
+        if (
+          intent.kind === 'command' &&
+          intent.command.type === 'answer' &&
+          intent.command.answer !== undefined
+        )
+          Keyboard.dismiss();
         setRun(next);
         expectedRun.current = next.id;
         setContentChanged(false);
@@ -307,6 +322,7 @@ export default function MissionScreen({
               }}
               off={saving || blocked}
               busy={saving}
+              secondary
             />
           }
           {(availability === undefined && !SHOW_REVIEW_TOOLS) || (ready && !available) ? (
@@ -317,26 +333,11 @@ export default function MissionScreen({
                 {eyebrow ?? t(listening ? 'listening.generated' : 'mission.draft')}
               </Text>
               <Text style={styles.title}>{local(pack.title)}</Text>
-              <Text style={styles.body}>
-                {notice ?? t(listening ? 'listening.notice' : 'mission.notice')}
-              </Text>
-              {run &&
-              !run.completed &&
-              !contentChanged &&
-              !loadError &&
-              !warmupOpen &&
-              warmupCards?.length &&
-              persistence.warmup ? (
-                <View style={styles.card}>
-                  <Text style={styles.body}>{t('adventure.warmupNote')}</Text>
-                  <ActionButton
-                    label={t('adventure.warmup')}
-                    action={() => void execute({ kind: 'warmup', runId: run.id })}
-                    off={disabled}
-                    busy={saving}
-                  />
-                </View>
-              ) : null}
+              {(!run || !renderCompletion || contentChanged) && (
+                <Text style={styles.body}>
+                  {notice ?? t(listening ? 'listening.notice' : 'mission.notice')}
+                </Text>
+              )}
               {!ready || loading ? (
                 <Text style={styles.body}>{t('mission.loading')}</Text>
               ) : loadError ? (
@@ -407,6 +408,7 @@ export default function MissionScreen({
                   />
                 ) : (
                   <View
+                    key={typedFeedback ? 'typed-feedback' : 'turn'}
                     testID="mission-node"
                     style={styles.card}
                     onLayout={(event) => recordResponseLayout('cardY', event.nativeEvent.layout.y)}
@@ -454,7 +456,7 @@ export default function MissionScreen({
                                 <ThemedTextInput
                                   accessibilityLabel={t('mission.answer')}
                                   onLayout={(event) =>
-                                    recordResponseLayout('inputY', event.nativeEvent.layout.y)
+                                    recordResponseLayout('responseY', event.nativeEvent.layout.y)
                                   }
                                   onFocus={() => {
                                     focusedResponse.current = responseIdentity;
@@ -475,7 +477,9 @@ export default function MissionScreen({
                                 />
                                 {
                                   <ActionButton
-                                    label={t('mission.check')}
+                                    label={t(
+                                      renderCompletion ? 'adventure.checkReply' : 'mission.check',
+                                    )}
                                     action={() =>
                                       command('answer', {
                                         answer,
@@ -509,11 +513,22 @@ export default function MissionScreen({
                                 action={() => command('hint')}
                                 off={disabled}
                                 busy={saving}
+                                secondary
                               />
                             )}
                           </>
                         ) : (
-                          <View accessibilityLiveRegion="polite">
+                          <View
+                            testID="mission-feedback"
+                            accessibilityLiveRegion="polite"
+                            style={styles.feedbackPanel}
+                            onLayout={
+                              typedFeedback
+                                ? (event) =>
+                                    recordResponseLayout('responseY', event.nativeEvent.layout.y)
+                                : undefined
+                            }
+                          >
                             <Text style={styles.feedback}>
                               {t(`mission.${run.feedback.status}`)}
                             </Text>
@@ -550,6 +565,7 @@ export default function MissionScreen({
                                 action={() => command('advance')}
                                 off={disabled}
                                 busy={saving}
+                                secondary={run.feedback.status !== 'correct'}
                               />
                             }
                           </View>
@@ -559,13 +575,18 @@ export default function MissionScreen({
                     {node.kind === 'complete' && (
                       <>
                         {renderCompletion ? (
-                          renderCompletion(run)
+                          renderCompletion(
+                            run,
+                            followUpCards.length && !disabled
+                              ? () => setReviewing(true)
+                              : undefined,
+                          )
                         ) : (
                           <Text style={styles.feedback}>
                             {t(run.assisted ? 'mission.assisted' : 'mission.unaided')}
                           </Text>
                         )}
-                        {run.reviewCardIds.length > 0 && (
+                        {!renderCompletion && run.reviewCardIds.length > 0 && (
                           <>
                             <Text style={styles.heading}>{t('mission.review')}</Text>
                             {run.reviewCardIds.map((id) => (
@@ -576,7 +597,7 @@ export default function MissionScreen({
                             ))}
                           </>
                         )}
-                        {followUpCards.length > 0 && (
+                        {!renderCompletion && followUpCards.length > 0 && (
                           <ActionButton
                             label={t('mission.reviewAction')}
                             action={() => setReviewing(true)}
@@ -602,6 +623,7 @@ export default function MissionScreen({
                                   action={() => setRestart(false)}
                                   off={disabled}
                                   busy={saving}
+                                  secondary
                                 />
                               }
                             </>
@@ -611,12 +633,32 @@ export default function MissionScreen({
                               action={() => setRestart(true)}
                               off={disabled}
                               busy={saving}
+                              secondary={!!renderCompletion}
                             />
                           ))}
                       </>
                     )}
                   </View>
                 )
+              ) : null}
+              {run &&
+              node &&
+              !run.completed &&
+              !run.feedback &&
+              !loadError &&
+              !warmupOpen &&
+              warmupCards?.length &&
+              persistence.warmup ? (
+                <View style={styles.card}>
+                  <ActionButton
+                    label={t('adventure.warmup')}
+                    action={() => void execute({ kind: 'warmup', runId: run.id })}
+                    off={disabled}
+                    busy={saving}
+                    secondary
+                  />
+                  <Text style={styles.body}>{t('adventure.warmupNote')}</Text>
+                </View>
               ) : null}
               {saveError && (
                 <>
@@ -669,6 +711,12 @@ const makeStyles = ({ colors }: AppTheme) =>
       marginVertical: 4,
     },
     buttonText: { fontSize: 16, color: colors.textInverse, fontWeight: '700', textAlign: 'center' },
+    secondaryButton: {
+      backgroundColor: colors.surfaceElevated,
+      borderColor: colors.border,
+      borderWidth: 1,
+    },
+    secondaryText: { color: colors.textPrimary },
     disabled: { opacity: 0.5 },
     input: {
       minHeight: 52,
@@ -680,7 +728,8 @@ const makeStyles = ({ colors }: AppTheme) =>
       fontSize: 20,
     },
     hint: { fontSize: 16, color: colors.brand, lineHeight: 24 },
-    feedback: { fontSize: 20, fontWeight: '700', color: colors.brand, marginVertical: 12 },
+    feedbackPanel: { gap: 12 },
+    feedback: { fontSize: 20, fontWeight: '700', color: colors.brand },
   });
 
 function ActionButton({
@@ -688,11 +737,13 @@ function ActionButton({
   action,
   off,
   busy = false,
+  secondary = false,
 }: {
   label: string;
   action: () => void;
   off: boolean;
   busy?: boolean;
+  secondary?: boolean;
 }) {
   const styles = useThemedStyles(makeStyles);
   const theme = useAppTheme();
@@ -705,11 +756,14 @@ function ActionButton({
       onPress={action}
       style={({ pressed }) => [
         styles.button,
+        secondary && styles.secondaryButton,
         off && styles.disabled,
-        controlSurface(theme, pressed, off),
+        controlSurface(theme, pressed, off, !secondary),
       ]}
     >
-      <Text style={[styles.buttonText, controlText(theme, off)]}>{label}</Text>
+      <Text style={[styles.buttonText, secondary && styles.secondaryText, controlText(theme, off)]}>
+        {label}
+      </Text>
     </Pressable>
   );
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { FlashCard } from '../types';
@@ -7,6 +7,7 @@ import { speakCard, stop } from '../services/tts';
 
 // Automatic speech is tied to an explicit reveal, never mounting or regaining focus.
 export function useCardAudio(card: FlashCard) {
+  const [audioRequested, setAudioRequested] = useState(false);
   const request = useRef(0),
     focused = useRef(true),
     foreground = useRef(
@@ -16,10 +17,14 @@ export function useCardAudio(card: FlashCard) {
   useLayoutEffect(() => {
     current.current = card;
   }, [card]);
-  const cancel = useCallback(() => {
+  const stopRequest = useCallback(() => {
     request.current++;
     stop();
   }, []);
+  const cancel = useCallback(() => {
+    stopRequest();
+    setAudioRequested(false);
+  }, [stopRequest]);
   useFocusEffect(
     useCallback(() => {
       focused.current = true;
@@ -37,11 +42,27 @@ export function useCardAudio(card: FlashCard) {
     return () => sub.remove();
   }, [cancel]);
   useEffect(() => {
-    cancel();
-    return cancel;
-  }, [card.id, cancel]);
+    stopRequest();
+    const stopped = request.current;
+    void Promise.resolve().then(() => {
+      if (request.current === stopped) setAudioRequested(false);
+    });
+    return stopRequest;
+  }, [card.id, stopRequest]);
+  const play = async (snapshot: FlashCard, id: number) => {
+    const onPlaybackEnd = () => {
+      if (request.current === id) setAudioRequested(false);
+    };
+    try {
+      const result = await speakCard(snapshot, { onPlaybackEnd });
+      if (result?.source === 'cancelled') onPlaybackEnd();
+    } catch {
+      onPlaybackEnd();
+    }
+  };
   const prepareReveal = () => {
     cancel();
+    setAudioRequested(true);
     const id = request.current,
       snapshot = current.current;
     // The animation may finish after Stop, blur, background or another flip.
@@ -56,18 +77,23 @@ export function useCardAudio(card: FlashCard) {
             focused.current &&
             foreground.current &&
             current.current.id === snapshot.id
-          )
-            await speakCard(snapshot);
+          ) {
+            await play(snapshot, id);
+          } else if (request.current === id) {
+            setAudioRequested(false);
+          }
         } catch {
-          /* The explicit replay action remains available. */
+          if (request.current === id) setAudioRequested(false);
         }
       })();
     };
   };
   const say = () => {
     cancel();
-    if (focused.current && foreground.current)
-      void Promise.resolve(speakCard(current.current)).catch(() => {});
+    if (focused.current && foreground.current) {
+      setAudioRequested(true);
+      void play(current.current, request.current);
+    }
   };
-  return { say, cancel, prepareReveal };
+  return { say, cancel, prepareReveal, audioRequested };
 }

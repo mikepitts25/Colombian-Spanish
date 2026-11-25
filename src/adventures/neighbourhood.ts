@@ -1,4 +1,4 @@
-import type { AdventureDefinition } from './content';
+import type { AdventureDefinition } from './definitions';
 import type { ChoiceNode, LocalizedText, MissionNode, ProductionNode } from '../missions/schema';
 
 const l = (en: string, es: string): LocalizedText => ({ en, es });

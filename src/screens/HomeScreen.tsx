@@ -1,5 +1,7 @@
+import ReminderOffer from '../components/ReminderOffer';
 import { readAdventures } from '../storage/adventures';
 import type { AdventureState } from '../adventures/state';
+import { ADVENTURES, resolveAdventure } from '../adventures/content';
 import AdventureEntry from '../components/AdventureEntry';
 import ThemeIcon from '../components/ThemeIcon';
 import CafeHomeContent from '../components/CafeHomeContent';
@@ -24,7 +26,7 @@ import { speakCard } from '../services/tts';
 import { getCategoryForDeck, getDeckDisplayName } from '../utils/deckCategories';
 import { pickWordOfDay } from '../utils/wordOfDay';
 import { isNewCard } from '../utils/srs';
-import { getPrefs, Prefs } from '../storage/prefs';
+import { getPrefs, Prefs, UiLanguage } from '../storage/prefs';
 import { recommendDailyReview } from '../utils/dailyReview';
 import { getLearningEvents } from '../storage/learningEvents';
 import { calibratedReviewSeconds } from '../utils/reviewPace';
@@ -68,6 +70,27 @@ const CATEGORY_EMOJIS: Record<string, string> = {
   Other: '📦',
 };
 
+function chooseNextVisit(state: AdventureState | undefined, decks: Deck[], language: UiLanguage) {
+  if (!state) return undefined;
+  const complete = new Set(
+    state.milestones.filter((row) => row.mode === 'accepted').map((row) => row.missionId),
+  );
+  const candidates = ADVENTURES.flatMap(({ pack }) => {
+    if (complete.has(pack.id) || !pack.prerequisites.every((id) => complete.has(id))) return [];
+    const def = resolveAdventure(pack.id, decks, 'accepted');
+    if (!def) return [];
+    const resume = state.runs.some(
+      (row) =>
+        row.mode === 'accepted' &&
+        row.mission.missionId === pack.id &&
+        row.fingerprint === def.fingerprint &&
+        !row.mission.completed,
+    );
+    return [{ id: pack.id, title: pack.title[language], resume }];
+  });
+  return candidates.find((visit) => visit.resume) ?? candidates[0];
+}
+
 type DeckWithDue = Deck & {
   dueCount: number;
   newCount: number;
@@ -90,6 +113,11 @@ async function loadHomeProgress() {
     ],
   );
   const now = Date.now();
+  const today = localDayKey(new Date(now));
+  const happenedToday = (timestamp: number) =>
+    timestamp <= now &&
+    now - timestamp <= 26 * 60 * 60 * 1000 &&
+    localDayKey(new Date(timestamp)) === today;
   return {
     count: daily.count,
     target: daily.target,
@@ -100,6 +128,12 @@ async function loadHomeProgress() {
     profile: prefs as Partial<Prefs>,
     loaded: true,
     now,
+    reminderSuccess:
+      events.some((event) => event.outcome === 'correct' && happenedToday(event.occurredAt)) ||
+      (adventures.state?.outcomes.some(
+        (outcome) => outcome.mode === 'accepted' && happenedToday(outcome.earnedAt),
+      ) ??
+        false),
     measuredSeconds: calibratedReviewSeconds(events, now),
     plan,
     timings,
@@ -114,20 +148,23 @@ export default function HomeScreen() {
   const { colors } = useAppTheme();
   const { fontScale, width } = useWindowDimensions();
   const largeText = fontScale >= 1.4 || width < 360;
-  const { ready, decks, activeDeckId, setActiveDeckId, reload } = useDeck();
+  const { ready, decks, activeDeckId, setActiveDeckId, reload, hasFullLibrary } = useDeck();
   const nav = useNavigation<any>();
   const starting = useRef(false);
   const topicRequestSequence = useRef(0);
   // Retry repeats the failed entry action; the controller still refreshes its inputs.
   const lastStartIntent = useRef<
-    { kind: 'plan' } | { kind: 'study'; deckId: string; bounded: boolean } | undefined
+    | { kind: 'plan' }
+    | { kind: 'study'; deckId: string; bounded: boolean }
+    | { kind: 'visit'; id: string }
+    | undefined
   >(undefined);
   const [pendingPresentation, setPendingPresentation] = useState<HomePresentation | undefined>(
     undefined,
   );
   const [studyStarting, setStudyStarting] = useState(false);
   const [studyStartError, setStudyStartError] = useState(false);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [initialNow] = useState(() => Date.now());
   const [readAttempt, setReadAttempt] = useState(0);
   const loadProgress = useCallback(() => {
@@ -144,6 +181,7 @@ export default function HomeScreen() {
     profile: {} as Partial<Prefs>,
     loaded: false,
     now: initialNow,
+    reminderSuccess: false,
     measuredSeconds: undefined as number | undefined,
     plan: undefined as DailyPlan | undefined,
     timings: [] as ActivityTimingSample[],
@@ -201,9 +239,17 @@ export default function HomeScreen() {
       : undefined;
   const recommendedDeck = workload.find((deck) => deck.id === recommendation?.deckId);
 
+  const nextVisit = useMemo(() => {
+    if (!ready || error || !activity.loaded) return undefined;
+    return chooseNextVisit(activity.adventures.state, decks, language);
+  }, [activity.adventures.state, activity.loaded, decks, error, language, ready]);
+
   const wordOfDay = useMemo(
-    () => pickWordOfDay(decks || [], new Date(activity.now), getDeckDisplayName),
-    [decks, activity.now],
+    () =>
+      pickWordOfDay(decks || [], new Date(activity.now), (deck) =>
+        getDeckDisplayName(deck, language),
+      ),
+    [decks, activity.now, language],
   );
 
   const dailyGoalProgress = dailyTarget > 0 ? Math.min(dailyCount / dailyTarget, 1) : 0;
@@ -293,7 +339,7 @@ export default function HomeScreen() {
     setStudyStartError(false);
     try {
       await reload({ requireFreshBudget: true });
-      const plan = await openRecommendedPlan(SHOW_REVIEW_TOOLS);
+      const plan = await openRecommendedPlan(SHOW_REVIEW_TOOLS, hasFullLibrary, activeDeckId);
       if (!plan) {
         browseTopics();
         return;
@@ -310,6 +356,35 @@ export default function HomeScreen() {
     }
   };
 
+  const startVisit = async (id: string) => {
+    lastStartIntent.current = { kind: 'visit', id };
+    starting.current = true;
+    setStudyStarting(true);
+    setStudyStartError(false);
+    try {
+      const fresh = await loadHomeProgress();
+      if (nav.isFocused?.() === false) return;
+      const plan = fresh.plan;
+      if (plan?.phase === 'review') {
+        await reload({ requireFreshBudget: true });
+        if (nav.isFocused?.() !== false) nav.navigate('Study', { dailyPlanId: plan.id });
+      } else if (plan?.phase === 'applied') {
+        nav.navigate('DailyPlan', { planId: plan.id });
+      } else if (fresh.adventures.error) {
+        setStudyStartError(true);
+      } else if (chooseNextVisit(fresh.adventures.state, decks, language)?.id === id) {
+        nav.navigate('Adventure', { id, mode: 'accepted' });
+      } else {
+        setReadAttempt((n) => n + 1);
+      }
+    } catch {
+      setStudyStartError(true);
+    } finally {
+      starting.current = false;
+      setStudyStarting(false);
+    }
+  };
+
   const cafeModel = deriveHomePresentation({
     ready,
     loaded: activity.loaded,
@@ -317,6 +392,7 @@ export default function HomeScreen() {
     now: activity.now,
     plan: activity.plan,
     response,
+    nextVisit,
     recommendation,
     recommendedDeck,
     totalCards: (decks || []).reduce((sum, deck) => sum + deck.cards.length, 0),
@@ -358,11 +434,13 @@ export default function HomeScreen() {
     setPendingPresentation({ ...presentation, startError: false });
     const retryIntent = studyStartError ? lastStartIntent.current : undefined;
     const operation =
-      retryIntent?.kind === 'study'
-        ? startStudy(retryIntent.deckId, retryIntent.bounded)
-        : retryIntent?.kind === 'plan' || activity.plan || response
-          ? startPlan()
-          : startStudy(recommendedDeck?.id, true);
+      presentation.action === 'openVisit'
+        ? startVisit(presentation.visit.id)
+        : retryIntent?.kind === 'study'
+          ? startStudy(retryIntent.deckId, retryIntent.bounded)
+          : retryIntent?.kind === 'plan' || activity.plan || response
+            ? startPlan()
+            : startStudy(recommendedDeck?.id, true);
     void operation.finally(() => {
       setPendingPresentation(undefined);
     });
@@ -371,7 +449,7 @@ export default function HomeScreen() {
   return (
     <CafeHomeContent
       presentation={presentation}
-      activity={activity.loaded && !error ? { count: dailyCount, target: dailyTarget } : undefined}
+      recommendedDeckName={recommendedDeck && getDeckDisplayName(recommendedDeck, language)}
       onPrimary={primary}
       onBrowse={() => {
         if (!starting.current) browseTopics();
@@ -379,18 +457,21 @@ export default function HomeScreen() {
       onManage={(planId) => {
         if (!starting.current) nav.navigate('DailyPlan', { planId });
       }}
-      onSettings={() => nav.navigate('Settings')}
       adventure={
-        <AdventureEntry
-          compact
-          progress={error ? undefined : activity.adventures}
-          lastDay={activity.lastStudyDay}
-          onRetry={() => setReadAttempt((n) => n + 1)}
-        />
+        !error &&
+        !['loading', 'visit'].includes(presentation.kind) && (
+          <AdventureEntry
+            compact
+            progress={error ? undefined : activity.adventures}
+            lastDay={activity.lastStudyDay}
+            onRetry={() => setReadAttempt((n) => n + 1)}
+          />
+        )
       }
     >
       {activity.loaded && !error && (
         <>
+          {(activity.reminderSuccess || completedToday) && <ReminderOffer />}
           <View style={styles.todayCard}>
             <Text accessibilityRole="header" style={styles.sectionTitle}>
               {t('home.cafe.details')}
@@ -438,15 +519,6 @@ export default function HomeScreen() {
               </View>
             </View>
 
-            {recommendation && recommendedDeck && !unfinishedPlan && !completedToday && (
-              <Text style={styles.todaySub}>
-                {t('home.reviewEstimate', {
-                  deck: getDeckDisplayName(recommendedDeck),
-                  count: recommendation.cardCount,
-                  minutes: recommendation.estimatedMinutes,
-                })}
-              </Text>
-            )}
             {recommendation?.catchUp && !unfinishedPlan && !completedToday && (
               <Text style={styles.todaySub}>{t('plan.catchUp')}</Text>
             )}
@@ -606,7 +678,7 @@ export default function HomeScreen() {
                     <Pressable
                       key={deck.id}
                       accessibilityRole="button"
-                      accessibilityLabel={`${getDeckDisplayName(deck)}, ${deck.dueCount}`}
+                      accessibilityLabel={`${getDeckDisplayName(deck, language)}, ${deck.dueCount}`}
                       disabled={studyStarting}
                       style={[
                         styles.deckRow,
@@ -629,7 +701,7 @@ export default function HomeScreen() {
                         <Text style={styles.deckEmoji}>{emoji}</Text>
                       </View>
                       <View style={styles.deckInfo}>
-                        <Text style={styles.deckName}>{getDeckDisplayName(deck)}</Text>
+                        <Text style={styles.deckName}>{getDeckDisplayName(deck, language)}</Text>
                         <Text style={styles.deckMeta}>
                           {t('addCard.cardCount', {
                             count: deck.cards.length,
@@ -804,15 +876,16 @@ const makeStyles = ({ colors }: AppTheme) =>
       gap: 12,
     },
     wordEyebrow: {
+      flexShrink: 1,
       color: colors.brand,
       fontSize: 12,
       fontWeight: '800',
       textTransform: 'uppercase',
     },
     wordAudioButton: {
-      width: 36,
-      height: 36,
-      borderRadius: 18,
+      width: 48,
+      height: 48,
+      borderRadius: 24,
       backgroundColor: colors.accentBlue,
       alignItems: 'center',
       justifyContent: 'center',

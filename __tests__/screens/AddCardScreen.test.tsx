@@ -89,8 +89,8 @@ test('keeps one pending card intent and blocks edits through live resizing until
   mockUseDeck.mockReturnValue({ ...mockUseDeck(), addCardToDeck: save });
   const ui = render(<AddCardScreen />);
   fillCard(ui);
-  fireEvent.press(ui.getByText('Save card ✓'));
-  fireEvent.press(ui.getByText('Save card ✓'));
+  fireEvent.press(ui.getByText('Save card'));
+  fireEvent.press(ui.getByText('Save card'));
   expect(save).toHaveBeenCalledTimes(1);
   act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
   expect(ui.getByDisplayValue('¿Listo?').props.editable).toBe(false);
@@ -105,7 +105,7 @@ test('retains the exact failed card payload and identity for retry instead of lo
   mockUseDeck.mockReturnValue({ ...mockUseDeck(), addCardToDeck: save });
   const ui = render(<AddCardScreen />);
   fillCard(ui);
-  fireEvent.press(ui.getByText('Save card ✓'));
+  fireEvent.press(ui.getByText('Save card'));
   await ui.findByText('Could not confirm the save. Your draft is kept. Retry the same save.');
   expect(ui.getByDisplayValue('¿Listo?')).toBeTruthy();
   const first = save.mock.calls[0];
@@ -122,7 +122,7 @@ test('blocks missing selected deck without discarding entered card fields', () =
   fillCard(ui);
   mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [] });
   ui.rerender(<AddCardScreen />);
-  fireEvent.press(ui.getByText('Save card ✓'));
+  fireEvent.press(ui.getByText('Save card'));
   expect(mockUseDeck().addCardToDeck).not.toHaveBeenCalled();
   expect(ui.getByDisplayValue('¿Listo?')).toBeTruthy();
 });
@@ -135,7 +135,7 @@ test('new-deck retry retains one identity and modal draft through failure and re
   mockUseDeck.mockReturnValue({ ...mockUseDeck(), createDeck: create });
   const ui = render(<AddCardScreen />);
   fireEvent.press(ui.getByRole('button', { name: 'Choose a deck' }));
-  fireEvent.press(ui.getByText('➕ New deck'));
+  fireEvent.press(ui.getByRole('button', { name: 'New deck' }));
   fireEvent.changeText(ui.getByPlaceholderText('Name (e.g., Colombianisms)'), 'Practice');
   fireEvent.press(ui.getByRole('button', { name: 'Create' }));
   await ui.findByText('Could not confirm the save. Your draft is kept. Retry the same save.');
@@ -153,7 +153,7 @@ test('can return to the retained draft after a target disappears without automat
   mockUseDeck.mockReturnValue({ ...mockUseDeck(), addCardToDeck: save });
   const ui = render(<AddCardScreen />);
   fillCard(ui);
-  fireEvent.press(ui.getByText('Save card ✓'));
+  fireEvent.press(ui.getByText('Save card'));
   await ui.findByText('Could not confirm the save. Your draft is kept. Retry the same save.');
   fireEvent.press(ui.getByRole('button', { name: 'Return to editing' }));
   expect(ui.getByDisplayValue('¿Listo?').props.editable).toBe(true);
@@ -185,6 +185,7 @@ test('keeps the keyboard viewport above the keyboard when the native header occu
 
 test('reveals the focused input after keyboard layout using measured input position, not the large label', () => {
   const ui = render(<AddCardScreen />);
+  fireEvent.press(ui.getByRole('button', { name: 'Optional details' }));
   const scroll = ui.UNSAFE_getAllByType(ScrollView)[0].instance;
   const tags = ui.UNSAFE_getAllByType(TextInput)[3];
   scroll.scrollTo.mockClear();
@@ -217,6 +218,7 @@ test('reveals the focused input after keyboard layout using measured input posit
 
 test('ignores pre-resize field coordinates until both current field and input layouts arrive', () => {
   const ui = render(<AddCardScreen />);
+  fireEvent.press(ui.getByRole('button', { name: 'Optional details' }));
   const first = ui.UNSAFE_getAllByType(TextInput)[3];
   fireEvent.changeText(first, 'Q');
   fireEvent(ui.getByTestId('add-card-field-3'), 'layout', {
@@ -253,7 +255,8 @@ test('Android keyboard leaves a reduced scroll viewport and retains an unsaved l
       <AddCardScreen />
     </HeaderHeightContext.Provider>,
   );
-  fireEvent.changeText(ui.getByLabelText('Example sentence (optional)'), 'Qa');
+  fireEvent.press(ui.getByRole('button', { name: 'Optional details' }));
+  fireEvent.changeText(ui.getByLabelText('Example sentence'), 'Qa');
   const avoiding = ui.UNSAFE_getAllByType(KeyboardAvoidingView)[0];
   const viewport = avoiding.findAllByType(View)[0];
   await act(async () => {
@@ -276,7 +279,7 @@ test('Android New Deck dialog keeps its draft and actions in the keyboard-reduce
   jest.replaceProperty(Platform, 'OS', 'android');
   const ui = render(<AddCardScreen />);
   fireEvent.press(ui.getByRole('button', { name: 'Choose a deck' }));
-  fireEvent.press(ui.getByText('➕ New deck'));
+  fireEvent.press(ui.getByRole('button', { name: 'New deck' }));
   fireEvent.changeText(ui.getByPlaceholderText('Name (e.g., Colombianisms)'), 'Qa');
   const avoiding = ui.UNSAFE_getAllByType(KeyboardAvoidingView).slice(-1)[0];
   const viewport = avoiding.findAllByType(View)[0];
@@ -293,4 +296,53 @@ test('Android New Deck dialog keeps its draft and actions in the keyboard-reduce
   expect(ui.getByDisplayValue('Qa')).toBeTruthy();
   fireEvent.press(ui.getByRole('button', { name: 'Cancel' }));
   expect(mockUseDeck().createDeck).not.toHaveBeenCalled();
+});
+
+test('focuses the first missing card field and preserves the draft while the learner corrects it', () => {
+  const focus = jest.spyOn(TextInput.prototype, 'focus');
+  const ui = render(<AddCardScreen />);
+  const front = ui.getByLabelText('Front (Colombian Spanish)');
+
+  fireEvent.press(ui.getByRole('button', { name: 'Save card' }));
+  expect(focus).toHaveBeenCalledTimes(1);
+  expect(focus.mock.contexts[0]).toBe(ui.UNSAFE_getAllByType(TextInput)[0].instance);
+  expect(ui.getByText('Enter the Colombian Spanish.')).toBeTruthy();
+  fireEvent.changeText(front, '¿Listo?');
+
+  fireEvent.press(ui.getByRole('button', { name: 'Save card' }));
+  expect(focus).toHaveBeenCalledTimes(2);
+  expect(focus.mock.contexts[1]).toBe(ui.UNSAFE_getAllByType(TextInput)[1].instance);
+  expect(ui.getByText('Enter the English translation.')).toBeTruthy();
+  expect(ui.getByDisplayValue('¿Listo?')).toBeTruthy();
+  expect(mockUseDeck().addCardToDeck).not.toHaveBeenCalled();
+});
+
+test('optional details retain their draft when collapsed and the destination changes', async () => {
+  mockUseDeck.mockReturnValue({
+    ...mockUseDeck(),
+    decks: [...mockUseDeck().decks, { id: 'deck-b', name: 'Café', cards: [] }],
+  });
+  const ui = render(<AddCardScreen />);
+  fillCard(ui);
+  expect(ui.queryByLabelText('Example sentence')).toBeNull();
+  fireEvent.press(ui.getByRole('button', { name: 'Optional details', expanded: false }));
+  fireEvent.changeText(ui.getByLabelText('Example sentence'), '¿Listo para salir?');
+  fireEvent.changeText(ui.getByLabelText('Tags (comma-separated)'), 'café, viajes');
+  fireEvent.press(ui.getByRole('button', { name: 'Optional details', expanded: true }));
+
+  fireEvent.press(ui.getByRole('button', { name: 'Choose a deck' }));
+  fireEvent.press(ui.getByRole('radio', { name: 'Café' }));
+  expect(ui.getByDisplayValue('¿Listo?')).toBeTruthy();
+  expect(ui.queryByLabelText('Example sentence')).toBeNull();
+  await act(async () => fireEvent.press(ui.getByRole('button', { name: 'Save card' })));
+  expect(mockUseDeck().addCardToDeck).toHaveBeenCalledWith(
+    'deck-b',
+    expect.objectContaining({
+      front: '¿Listo?',
+      back: 'Ready?',
+      example: '¿Listo para salir?',
+      tags: ['café', 'viajes'],
+    }),
+  );
+  expect(Alert.alert).toHaveBeenCalledWith('Added', 'Card added to Café');
 });

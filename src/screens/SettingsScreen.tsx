@@ -2,7 +2,15 @@ import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useRef, useState } from 'react';
-import { Alert, StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
+import {
+  Alert,
+  Linking,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
@@ -22,6 +30,7 @@ import * as Clipboard from 'expo-clipboard';
 import * as Application from 'expo-application';
 import Constants, { ExecutionEnvironment } from 'expo-constants';
 import { useLanguage } from '../context/LanguageContext';
+import { isFreeOnlyRelease } from '../billing/catalog';
 
 function SettingsRow({
   emoji,
@@ -30,6 +39,7 @@ function SettingsRow({
   onPress,
   chevron = true,
   disabled = false,
+  role = 'button',
 }: {
   emoji: string;
   title: string;
@@ -37,6 +47,7 @@ function SettingsRow({
   onPress?: () => void;
   chevron?: boolean;
   disabled?: boolean;
+  role?: 'button' | 'link';
 }) {
   const styles = useThemedStyles(makeStyles);
   const Row = onPress ? Pressable : View;
@@ -45,7 +56,7 @@ function SettingsRow({
       style={styles.settingsRow}
       onPress={onPress}
       disabled={disabled}
-      accessibilityRole={onPress ? 'button' : undefined}
+      accessibilityRole={onPress ? role : undefined}
       accessibilityState={onPress ? { disabled } : undefined}
     >
       <Text style={styles.rowEmoji} allowFontScaling={false} accessible={false}>
@@ -71,9 +82,9 @@ function Divider() {
 
 export default function SettingsScreen() {
   const styles = useThemedStyles(makeStyles);
-  const { colors } = useAppTheme();
   const { fontScale } = useWindowDimensions();
   const appTheme = useAppTheme();
+  const { colors } = appTheme;
   const nav = useNavigation<any>();
   const { t, toggleLanguage } = useLanguage();
   const buildLabel = t(
@@ -85,12 +96,11 @@ export default function SettingsScreen() {
       build: Application.nativeBuildVersion?.trim() || t('settings.version.unknown'),
     },
   );
-  const [target, setTarget] = useState(10);
+  const [limits, setLimits] = useState<{ target: number; cap: number }>();
   const fileAction = useRef(false);
   const [fileBusy, setFileBusy] = useState(false);
   const [filePreview, setFilePreview] = useState<BackupSnapshot | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
-  const [newPerDay, setNewPerDay] = useState(10);
   const languageAction = useRef(false);
   const [languageBusy, setLanguageBusy] = useState(false);
 
@@ -115,8 +125,7 @@ export default function SettingsScreen() {
       void Promise.all([getDailyProgress(), getPrefs()])
         .then(([daily, prefs]) => {
           if (!active) return;
-          setTarget(daily.target ?? 10);
-          setNewPerDay(prefs.newCardsPerDay);
+          setLimits({ target: daily.target ?? 10, cap: prefs.newCardsPerDay });
           setSummaryError(false);
         })
         .catch(() => {
@@ -127,6 +136,14 @@ export default function SettingsScreen() {
       };
     }, []),
   );
+
+  async function openLink(url: string) {
+    try {
+      await Linking.openURL(url);
+    } catch {
+      Alert.alert(t('settings.linkError'), url.replace(/^mailto:/, ''));
+    }
+  }
 
   async function exportBackup() {
     try {
@@ -363,146 +380,161 @@ export default function SettingsScreen() {
           </Pressable>
         </ScrollView>
       )}
-      <ScrollView
-        key={`settings-${fontScale}`}
-        style={filePreview ? { display: 'none' } : undefined}
-        contentContainerStyle={styles.scroll}
-        showsVerticalScrollIndicator={false}
-      >
-        <Text style={styles.pageTitle}>⚙️ {t('settings.title')}</Text>
+      {!filePreview && (
+        <ScrollView
+          key={`settings-${fontScale}`}
+          contentContainerStyle={styles.scroll}
+          showsVerticalScrollIndicator={false}
+        >
+          <Text style={styles.pageTitle}>⚙️ {t('settings.title')}</Text>
 
-        <View style={styles.groupCard}>
-          <SettingsRow
-            emoji="📚"
-            title={t('library.link')}
-            subtitle={t('library.linkSubtitle')}
-            onPress={() => nav.navigate('Library')}
-          />
-        </View>
-        {/* Aprendizaje */}
-        <Text style={styles.groupLabel}>{t('settings.section.learning')}</Text>
-        <View style={styles.groupCard}>
-          <SettingsRow
-            emoji="🧭"
-            title={t('profile.title')}
-            onPress={() => nav.navigate('LearningPreferences')}
-          />
-          <Divider />
-          <SettingsRow
-            emoji="🎯"
-            title={t('settings.dailyGoal.title')}
-            subtitle={
-              summaryError
-                ? t('settings.learningSummaryUnavailable')
-                : t('settings.dailyGoal.subtitle', { count: target })
-            }
-            onPress={() => nav.navigate('DailyGoal')}
-          />
-          <Divider />
-          <SettingsRow
-            emoji="🃏"
-            title={t('settings.newCards.title')}
-            subtitle={
-              summaryError
-                ? t('settings.learningSummaryUnavailable')
-                : t('settings.newCards.subtitle', { count: newPerDay })
-            }
-            onPress={() => nav.navigate('DailyGoal')}
-          />
-          <Divider />
-          <SettingsRow
-            emoji="🔔"
-            title={t('settings.reminders.title')}
-            subtitle={t('settings.reminders.subtitle')}
-            onPress={() => nav.navigate('Notifications')}
-          />
-          <Divider />
-          <SettingsRow
-            emoji="📚"
-            title={t('settings.manageDecks.title')}
-            subtitle={t('settings.manageDecks.subtitle')}
-            onPress={() => nav.navigate('ManageDecks')}
-          />
-        </View>
+          <Text accessibilityRole="header" style={styles.groupLabel}>
+            {t('settings.section.learning')}
+          </Text>
+          <View style={styles.groupCard}>
+            <SettingsRow
+              emoji="🧭"
+              title={t('profile.title')}
+              onPress={() => nav.navigate('LearningPreferences')}
+            />
+            <Divider />
+            <SettingsRow
+              emoji="🎯"
+              title={t('settings.limits.title')}
+              subtitle={
+                summaryError
+                  ? t('settings.learningSummaryUnavailable')
+                  : limits && t('settings.limits.summary', limits)
+              }
+              onPress={() => nav.navigate('DailyGoal')}
+            />
+            <Divider />
+            <SettingsRow
+              emoji="🔔"
+              title={t('settings.reminders.title')}
+              subtitle={t('settings.reminders.subtitle')}
+              onPress={() => nav.navigate('Notifications')}
+            />
+            <Divider />
+            <SettingsRow
+              emoji="📚"
+              title={t('settings.manageDecks.title')}
+              subtitle={t('settings.manageDecks.subtitle')}
+              onPress={() => nav.navigate('ManageDecks')}
+            />
+          </View>
 
-        {/* App */}
-        <Text style={styles.groupLabel}>{t('settings.section.app')}</Text>
-        <View style={styles.groupCard}>
-          <SettingsRow
-            emoji="🎨"
-            title={t('theme.title')}
-            subtitle={t('theme.summary', {
-              theme: t(`theme.${appTheme.id}`),
-              appearance: t(`theme.${appTheme.appearance}`),
-            })}
-            onPress={() => nav.navigate('ThemeSettings')}
-          />
-          <Divider />
-          <SettingsRow
-            emoji="🔊"
-            title={t('audio.title')}
-            subtitle={t('audio.settingsNote')}
-            onPress={() => nav.navigate('AudioPreferences')}
-          />
-          <Divider />
-          <SettingsRow
-            emoji="🌐"
-            title={t('settings.language.title')}
-            subtitle={t('settings.language.subtitle')}
-            chevron={false}
-            disabled={languageBusy || fileBusy}
-            onPress={() => void changeLanguage()}
-          />
-          <Divider />
-          <SettingsRow
-            emoji="💾"
-            title={t('settings.export.title')}
-            subtitle={t('settings.export.subtitle')}
-            disabled={fileBusy || filePreview !== null}
-            onPress={() => runFileAction(exportBackup)}
-          />
-          <Divider />
-          <SettingsRow
-            emoji="📥"
-            title={t('settings.import.title')}
-            subtitle={t('settings.import.subtitle')}
-            disabled={fileBusy || filePreview !== null}
-            onPress={() => runFileAction(importBackup)}
-          />
-          <Divider />
-          <SettingsRow
-            emoji="📄"
-            title={t('settings.file.export')}
-            subtitle={t('settings.file.exportSub')}
-            disabled={fileBusy || filePreview !== null}
-            onPress={() =>
-              runFileAction(async () => {
-                const snapshot = await captureBackupSnapshot();
-                await shareBackupFile(JSON.stringify(snapshot), t('settings.file.export'));
-              })
-            }
-          />
-          <Divider />
-          <SettingsRow
-            emoji="📂"
-            title={t('settings.file.import')}
-            subtitle={t('settings.file.importSub')}
-            disabled={fileBusy || filePreview !== null}
-            onPress={() => runFileAction(importFile)}
-          />
-        </View>
+          <Text accessibilityRole="header" style={styles.groupLabel}>
+            {t('settings.section.app')}
+          </Text>
+          <View style={styles.groupCard}>
+            <SettingsRow
+              emoji="🎨"
+              title={t('theme.title')}
+              subtitle={t('theme.summary', {
+                theme: t(`theme.${appTheme.id}`),
+                appearance: t(`theme.${appTheme.appearance}`),
+              })}
+              onPress={() => nav.navigate('ThemeSettings')}
+            />
+            <Divider />
+            <SettingsRow
+              emoji="🔊"
+              title={t('audio.title')}
+              subtitle={t('audio.settingsNote')}
+              onPress={() => nav.navigate('AudioPreferences')}
+            />
+            <Divider />
+            <SettingsRow
+              emoji="🌐"
+              title={t('settings.language.title')}
+              subtitle={t('settings.language.subtitle')}
+              chevron={false}
+              disabled={languageBusy || fileBusy}
+              onPress={() => void changeLanguage()}
+            />
+          </View>
 
-        {/* Sobre la App */}
-        <Text style={styles.groupLabel}>{t('settings.section.about')}</Text>
-        <View style={styles.groupCard}>
-          <SettingsRow
-            emoji="📋"
-            title={t('settings.version.title')}
-            subtitle={buildLabel}
-            chevron={false}
-          />
-        </View>
-      </ScrollView>
+          <Text accessibilityRole="header" style={styles.groupLabel}>
+            {t(isFreeOnlyRelease ? 'settings.section.library' : 'settings.section.purchases')}
+          </Text>
+          <View style={styles.groupCard}>
+            <SettingsRow
+              emoji="📚"
+              title={t(isFreeOnlyRelease ? 'library.freeOnlyLink' : 'library.link')}
+              subtitle={t(
+                isFreeOnlyRelease ? 'library.freeOnlyLinkSubtitle' : 'library.linkSubtitle',
+              )}
+              onPress={() => nav.navigate('Library')}
+            />
+          </View>
+
+          <Text accessibilityRole="header" style={styles.groupLabel}>
+            {t('settings.section.about')}
+          </Text>
+          <View style={styles.groupCard}>
+            <SettingsRow
+              emoji="📄"
+              title={t('settings.file.export')}
+              subtitle={t('settings.file.exportSub')}
+              disabled={fileBusy || filePreview !== null}
+              onPress={() =>
+                runFileAction(async () => {
+                  const snapshot = await captureBackupSnapshot();
+                  await shareBackupFile(JSON.stringify(snapshot), t('settings.file.export'));
+                })
+              }
+            />
+            <Divider />
+            <SettingsRow
+              emoji="📂"
+              title={t('settings.file.import')}
+              subtitle={t('settings.file.importSub')}
+              disabled={fileBusy || filePreview !== null}
+              onPress={() => runFileAction(importFile)}
+            />
+            <Divider />
+            <SettingsRow
+              emoji="💾"
+              title={t('settings.export.title')}
+              subtitle={t('settings.export.subtitle')}
+              disabled={fileBusy || filePreview !== null}
+              onPress={() => runFileAction(exportBackup)}
+            />
+            <Divider />
+            <SettingsRow
+              emoji="📥"
+              title={t('settings.import.title')}
+              subtitle={t('settings.import.subtitle')}
+              disabled={fileBusy || filePreview !== null}
+              onPress={() => runFileAction(importBackup)}
+            />
+            <Divider />
+            <SettingsRow
+              emoji="✉️"
+              title={t('settings.support')}
+              role="link"
+              onPress={() => void openLink('mailto:mike@colibricodellc.com')}
+            />
+            <Divider />
+            <SettingsRow
+              emoji="🔒"
+              title={t('settings.privacy')}
+              role="link"
+              onPress={() =>
+                void openLink('https://colibricodellc.com/privacy-policy/#colombian-spanish')
+              }
+            />
+            <Divider />
+            <SettingsRow
+              emoji="📋"
+              title={t('settings.version.title')}
+              subtitle={buildLabel}
+              chevron={false}
+            />
+          </View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
@@ -551,6 +583,7 @@ const makeStyles = ({ colors }: AppTheme) =>
       flexDirection: 'row',
       alignItems: 'center',
       gap: 12,
+      minHeight: 48,
       paddingVertical: 14,
       paddingHorizontal: 16,
     },

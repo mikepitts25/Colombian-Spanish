@@ -11,6 +11,11 @@ function loadDataModule(file, cache = new Map()) {
   );
   if (!resolved) throw new Error(`Data module not found: ${file}`);
   if (cache.has(resolved)) return cache.get(resolved).exports;
+  if (path.extname(resolved) === '.json') {
+    const module = { exports: JSON.parse(fs.readFileSync(resolved, 'utf8')) };
+    cache.set(resolved, module);
+    return module.exports;
+  }
   const module = { exports: {} };
   cache.set(resolved, module);
   const source = ts.transpileModule(fs.readFileSync(resolved, 'utf8'), {

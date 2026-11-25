@@ -5,6 +5,7 @@ import type { recommendDailyReview } from './dailyReview';
 import { localDayKey } from './calendarDay';
 
 export type DailyReviewRecommendation = NonNullable<ReturnType<typeof recommendDailyReview>>;
+export type HomeVisit = { id: string; title: string; resume: boolean };
 export type HomePhase = {
   kind: 'review' | 'reply';
   current: boolean;
@@ -18,6 +19,7 @@ export type HomePresentationInput = {
   now: number;
   plan?: DailyPlan;
   response?: Pick<MissionPack, 'id' | 'contentVersion'>;
+  nextVisit?: HomeVisit;
   recommendation?: DailyReviewRecommendation;
   recommendedDeck?: Pick<Deck, 'id'>;
   totalCards: number;
@@ -40,6 +42,7 @@ export type HomePresentation = {
       action: 'existingStart';
     }
   | { kind: 'recommendation'; action: 'existingStart'; suggestion: DailyReviewRecommendation }
+  | { kind: 'visit'; action: 'openVisit'; visit: HomeVisit }
   | { kind: 'browse'; action: 'browse'; reason: 'empty' | 'cap' | 'noDue' }
 );
 
@@ -89,8 +92,11 @@ export function deriveHomePresentation(input: HomePresentationInput): HomePresen
         phases,
         managePlanId: plan.id,
       };
-    return { ...status, kind: 'completedToday', action: 'existingStart', phases };
+    if (!input.nextVisit)
+      return { ...status, kind: 'completedToday', action: 'existingStart', phases };
   }
+  if (input.nextVisit)
+    return { ...status, kind: 'visit', action: 'openVisit', visit: input.nextVisit, phases: [] };
   if (
     recommendation &&
     input.recommendedDeck?.id === recommendation.deckId &&

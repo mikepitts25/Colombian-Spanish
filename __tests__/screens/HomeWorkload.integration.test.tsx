@@ -131,7 +131,7 @@ it.each(['classic', 'barrio'] as const)(
       await screen.findByText('New cards available today: 0');
       if (themeId === 'barrio')
         act(() => mockTheme.applySelection({ themeId, appearanceMode: 'light' }));
-      const startLabel = 'Let’s practice';
+      const startLabel = 'Review cards';
       jest.setSystemTime(new Date(2026, 9, 15, 12));
       const foreground = (state: AppStateStatus) =>
         subscription.mock.calls.forEach(([, listener]) => listener(state));
@@ -201,10 +201,10 @@ async function setupHome(allowDraft = false, stored?: DailyPlan) {
         ? stored.phase === 'applied' &&
           stored.applied?.contentVersion !== DAILY_RESPONSE.contentVersion
           ? 'Open saved plan'
-          : 'Continue practicing'
+          : 'Continue your review'
         : allowDraft
-          ? 'Let’s practice'
-          : 'Let’s practice',
+          ? 'Review cards'
+          : 'Review cards',
   );
   act(() => mockTheme.applySelection({ themeId: 'barrio', appearanceMode: 'light' }));
   return { ui, navigations };
@@ -258,10 +258,10 @@ it('Barrio production handoff reaches real Study without manufacturing a durable
     studyMinutes: 3,
   });
   const ui = render(<Harness />);
-  await ui.findByText('Let’s practice');
+  await ui.findByText('Review cards');
   act(() => mockTheme.applySelection({ themeId: 'barrio', appearanceMode: 'light' }));
   expect(ui.queryByText('Written reply · editorial draft')).toBeNull();
-  fireEvent.press(ui.getByRole('button', { name: 'Let’s practice' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Review cards' }));
   await ui.findByText('1 left');
   expect(ui.getByText('new prompt')).toBeTruthy();
   expect(await AsyncStorage.getItem('SRS_DAILY_PLAN_V1')).toBeNull();
@@ -285,7 +285,7 @@ it('prior-day retained queue survives real theme/language/provider changes and o
         };
       }),
   );
-  fireEvent.press(ui.getByRole('button', { name: 'Continue practicing' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Continue your review' }));
   await waitFor(() => expect(start).toHaveBeenCalledTimes(1));
   fireEvent.press(ui.getByRole('button', { name: 'Loading...' }));
   const window = Dimensions.get('window'),
@@ -339,7 +339,7 @@ it('a failed foreground read hides stale activity and Retry reloads without open
   expect(ui.queryByText('0 reviews recorded today')).toBeNull();
   expect(navigations).toEqual([]);
   fireEvent.press(ui.getByRole('button', { name: 'Retry' }));
-  await ui.findByRole('button', { name: 'Let’s practice' });
+  await ui.findByRole('button', { name: 'Review cards' });
   expect(navigations).toEqual([]);
   expect(await learningSnapshot()).toEqual(before);
   read.mockRestore();
@@ -354,14 +354,14 @@ it('completed today remains optional, then a new day starts one fresh exact plan
     const setup = await setupHome(false, stored);
     ui = setup.ui;
     expect(ui.getByRole('button', { name: 'View completed plan' })).toBeTruthy();
-    expect(ui.queryByRole('button', { name: 'Let’s practice' })).toBeNull();
+    expect(ui.queryByRole('button', { name: 'Review cards' })).toBeNull();
     jest.setSystemTime(new Date(2032, 0, 9, 12));
     const foreground = (state: AppStateStatus) =>
       (AppState.addEventListener as jest.Mock).mock.calls.forEach(([, listener]) =>
         listener(state),
       );
     await act(async () => foreground('active'));
-    fireEvent.press(await ui.findByRole('button', { name: 'Let’s practice' }));
+    fireEvent.press(await ui.findByRole('button', { name: 'Review cards' }));
     await waitFor(() => expect(setup.navigations).toHaveLength(1));
     const fresh = await readDailyPlan();
     expect(fresh?.id).not.toBe('retained-plan');

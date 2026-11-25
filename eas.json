@@ -23,6 +23,15 @@
         "EXPO_USE_PRECOMPILED_MODULES": "0"
       }
     },
+    "christmas-subset": {
+      "extends": "production",
+      "distribution": "store",
+      "environment": "production",
+      "env": {
+        "COLOMBIAN_SPANISH_CATALOGUE": "christmas-subset",
+        "EXPO_NO_DOTENV": "1"
+      }
+    },
     "editorial-beta": {
       "extends": "production",
       "distribution": "store",

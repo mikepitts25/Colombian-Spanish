@@ -4,38 +4,82 @@ import Pressable from './ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import type { AppTheme } from '../styles/appTheme';
 import { controlSurface, controlText } from '../styles/controlStates';
+import type { ResolvedAdventure } from '../adventures/content';
+import type { AdventureState } from '../adventures/state';
+
+export function visitStatus(def: ResolvedAdventure, state: AdventureState) {
+  const finished = (id: string) =>
+    state.milestones.some((milestone) => milestone.mode === def.mode && milestone.missionId === id);
+  const prerequisite = def.pack.prerequisites.find((id) => !finished(id));
+  if (prerequisite) return { kind: 'locked' as const, prerequisite };
+  const unfinished = state.runs.some(
+    (run) =>
+      run.mode === def.mode &&
+      run.fingerprint === def.fingerprint &&
+      run.mission.missionId === def.pack.id &&
+      !run.mission.completed,
+  );
+  if (unfinished) return { kind: 'resume' as const };
+  return { kind: finished(def.pack.id) ? ('revisit' as const) : ('start' as const) };
+}
+
 export function AdventureButton({
   label,
   onPress,
   disabled = false,
+  secondary = false,
+  buttonRef,
+  expanded,
 }: {
   label: string;
   onPress: () => void;
   disabled?: boolean;
+  secondary?: boolean;
+  buttonRef?: React.Ref<View>;
+  expanded?: boolean;
 }) {
   const theme = useAppTheme(),
     styles = useThemedStyles(adventureStyles);
   return (
     <Pressable
+      ref={buttonRef}
       accessibilityRole="button"
       accessibilityLabel={label}
-      accessibilityState={{ disabled }}
+      accessibilityState={{ disabled, expanded }}
       disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
+        secondary && styles.secondaryButton,
         disabled && { opacity: 0.5 },
-        controlSurface(theme, pressed, disabled),
+        controlSurface(theme, pressed, disabled, !secondary),
       ]}
     >
-      <Text style={[styles.buttonText, controlText(theme, disabled)]}>{label}</Text>
+      <Text
+        style={[styles.buttonText, secondary && styles.secondaryText, controlText(theme, disabled)]}
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 }
-export function CafeStamp({ title, description }: { title: string; description: string }) {
+export function CafeStamp({
+  title,
+  description,
+  stampRef,
+}: {
+  title: string;
+  description: string;
+  stampRef?: React.Ref<View>;
+}) {
   const styles = useThemedStyles(adventureStyles);
   return (
-    <View accessible accessibilityLabel={`${title}. ${description}`} style={styles.stamp}>
+    <View
+      ref={stampRef}
+      accessible
+      accessibilityLabel={`${title}. ${description}`}
+      style={styles.stamp}
+    >
       <View
         accessible={false}
         accessibilityElementsHidden
@@ -73,6 +117,12 @@ export const adventureStyles = ({ colors }: AppTheme) =>
       backgroundColor: colors.brand,
     },
     buttonText: { fontSize: 16, fontWeight: '700', textAlign: 'center', color: colors.onBrand },
+    secondaryButton: {
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    secondaryText: { color: colors.textPrimary },
     stamp: {
       borderWidth: 2,
       borderStyle: 'dashed',

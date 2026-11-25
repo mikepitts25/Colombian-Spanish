@@ -43,6 +43,7 @@ export function abandonDailyPlan(id: string): Promise<void> {
     const current = await readDailyPlan(tx);
     if (!current) return;
     if (current.id !== id) throw new Error('Stale daily plan');
+    if (current.phase === 'complete') return;
     await tx.setItem(KEY, JSON.stringify({ schemaVersion: 1, current: null }));
   });
 }

@@ -12,8 +12,23 @@ import { createAdventureAdapter, readAdventures } from '../storage/adventures';
 import { emptyAdventures } from '../adventures/state';
 import type { MissionRun } from '../missions/engine';
 import MissionScreen from './MissionScreen';
-import { AdventureButton, CafeStamp, adventureStyles } from '../components/AdventureUI';
-function AdventureCompletion({ run, mode }: { run: MissionRun; mode: AdventureMode }) {
+import {
+  AdventureButton,
+  CafeStamp,
+  adventureStyles,
+  visitStatus,
+} from '../components/AdventureUI';
+import PracticePassport from '../components/PracticePassport';
+
+function AdventureCompletion({
+  run,
+  mode,
+  review,
+}: {
+  run: MissionRun;
+  mode: AdventureMode;
+  review?: () => void;
+}) {
   const { decks } = useDeck(),
     { t, language } = useLanguage(),
     nav = useNavigation<any>();
@@ -26,7 +41,11 @@ function AdventureCompletion({ run, mode }: { run: MissionRun; mode: AdventureMo
         <Text accessibilityRole="alert" style={styles.body}>
           {t('adventure.loadError')}
         </Text>
-        <AdventureButton label={t('adventure.open')} onPress={() => nav.navigate('Adventures')} />
+        <AdventureButton
+          label={t('adventure.open')}
+          secondary
+          onPress={() => nav.navigate('Adventures', undefined, { pop: true })}
+        />
       </>
     );
   const entry = snapshot.value.runs.find(
@@ -40,23 +59,19 @@ function AdventureCompletion({ run, mode }: { run: MissionRun; mode: AdventureMo
   const earned = snapshot.value.outcomes.find(
     (o) => o.mode === mode && o.missionId === run.missionId && o.fingerprint === entry.fingerprint,
   );
+  const stamp = qualified ? earned : undefined;
   const next = ADVENTURES.filter((candidate) =>
     candidate.pack.prerequisites.includes(run.missionId),
   )
     .map((candidate) => resolveAdventure(candidate.pack.id, decks, mode))
-    .find(
-      (candidate) =>
-        candidate &&
-        candidate.pack.prerequisites.every((id) =>
-          snapshot.value.milestones.some((m) => m.mode === mode && m.missionId === id),
-        ) &&
-        !snapshot.value.milestones.some(
-          (m) => m.mode === mode && m.missionId === candidate.pack.id,
-        ),
-    );
+    .find((candidate) => {
+      if (!candidate) return false;
+      const status = visitStatus(candidate, snapshot.value);
+      return status.kind === 'start' || status.kind === 'resume';
+    });
   return (
     <View style={{ gap: 16 }}>
-      {qualified && earned ? (
+      {stamp ? (
         <CafeStamp
           title={t(mode === 'preview' ? 'adventure.previewStamp' : 'adventure.stamp')}
           description={t(
@@ -69,16 +84,25 @@ function AdventureCompletion({ run, mode }: { run: MissionRun; mode: AdventureMo
             {t('adventure.reviewed')}
           </Text>
           <Text style={styles.body}>{t('adventure.reviewedNote')}</Text>
+          {review && <AdventureButton label={t('adventure.reviewReplies')} onPress={review} />}
         </>
       )}
       {next && (
         <AdventureButton
-          label={t('adventure.next', { title: next.pack.title[language] })}
+          label={t(
+            visitStatus(next, snapshot.value).kind === 'resume'
+              ? 'adventure.visit.resume'
+              : 'adventure.next',
+            { title: next.pack.title[language] },
+          )}
+          secondary={!stamp && !!review}
           onPress={() => nav.navigate('Adventure', { id: next.pack.id, mode })}
         />
       )}
-      {!next && <Text style={styles.body}>{def.pack.title[language]}</Text>}
-      <AdventureButton label={t('adventure.passport')} onPress={() => nav.navigate('Adventures')} />
+      {stamp && <PracticePassport stamp={stamp} primary={!next} />}
+      {stamp && review && (
+        <AdventureButton label={t('adventure.reviewReplies')} onPress={review} secondary />
+      )}
     </View>
   );
 }
@@ -121,7 +145,7 @@ export default function AdventureScreen({
     return (
       <SafeAreaView style={styles.wrap}>
         <View style={styles.content}>
-          <AdventureButton label={t('mission.back')} onPress={() => nav.goBack()} />
+          <AdventureButton label={t('mission.back')} secondary onPress={() => nav.goBack()} />
           <Text accessibilityRole="alert" style={styles.body}>
             {t('adventure.unavailable')}
           </Text>
@@ -141,7 +165,9 @@ export default function AdventureScreen({
       notice={t(mode === 'preview' ? 'adventure.draftNotice' : 'adventure.notice')}
       startLabel={t('adventure.start')}
       warmupCards={warmupCards}
-      renderCompletion={(run) => <AdventureCompletion run={run} mode={mode!} />}
+      renderCompletion={(run, review) => (
+        <AdventureCompletion run={run} mode={mode!} review={review} />
+      )}
     />
   );
 }

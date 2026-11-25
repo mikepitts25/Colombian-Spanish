@@ -399,3 +399,35 @@ describe('spoken alternatives', () => {
     expect(mockSpeak).not.toHaveBeenCalled();
   });
 });
+
+test('finishes a single generated preview once and ignores completion signals from stopped players', async () => {
+  const addListener = jest.fn(
+    (_event: string, _listener: (status: { didJustFinish: boolean }) => void) => ({
+      remove: jest.fn(),
+    }),
+  );
+  const player = makePlayer({ addListener });
+  mockCreateAudioPlayer.mockReturnValue(player);
+  const onPlaybackEnd = jest.fn();
+  await speakCard({ id: '0009', front: 'hola' }, { onPlaybackEnd });
+  const status = addListener.mock.calls[0][1];
+  status({ didJustFinish: false });
+  expect(onPlaybackEnd).not.toHaveBeenCalled();
+  status({ didJustFinish: true });
+  status({ didJustFinish: true });
+  expect(onPlaybackEnd).toHaveBeenCalledTimes(1);
+
+  const otherPlaybackEnd = jest.fn();
+  await speakCard({ id: '0009', front: 'hola' }, { onPlaybackEnd: otherPlaybackEnd });
+  const latest = addListener.mock.calls[1][1];
+  stop();
+  latest({ didJustFinish: true });
+  expect(otherPlaybackEnd).not.toHaveBeenCalled();
+});
+
+test('reports the device utterance ending to its preview', async () => {
+  const onPlaybackEnd = jest.fn();
+  await speakCard({ id: 'missing-card', front: 'hola' }, { loop: true, onPlaybackEnd });
+  mockSpeak.mock.calls[0][1].onDone();
+  expect(onPlaybackEnd).toHaveBeenCalledTimes(1);
+});

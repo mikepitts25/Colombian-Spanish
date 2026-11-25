@@ -1,0 +1,1125 @@
+{
+  "schemaVersion": 1,
+  "scope": "C0 review proposal. The app does not consume this file.",
+  "sourceCommit": "7ed24865fda92a4d9ca203122e3adf4cdab61f7d",
+  "status": "pending owner signoff, human editorial acceptance, and production subset integration",
+  "proposedOffer": {
+    "catalogue": "integrated subset",
+    "newSales": "free-only",
+    "freeCardCount": 61,
+    "freeDeckCount": 4,
+    "paidDecks": [],
+    "paidCardCount": 0,
+    "excludedFreeStarterDeckIds": [
+      "deck-transport",
+      "deck-medical-phrases",
+      "deck-numbers",
+      "deck-useful-phrases",
+      "deck-restaurant-phrases",
+      "deck-accommodation-phrases"
+    ],
+    "freeDecks": [
+      {
+        "id": "deck-conversation",
+        "name": "Frases de Conversación",
+        "cards": [
+          {
+            "id": "1148",
+            "spanish": "Gracias",
+            "english": "Thank you",
+            "version": 1,
+            "teachingFingerprint": "628769248110f62cebe1511e4c3f58a31f8e150be303bee4a2077fd0dcf874d5",
+            "audio": {
+              "path": "assets/audio/pronunciation/1148.mp3",
+              "sha256": "0990d7b992fe3090104109c3603307f1a94c37a8b4560b4bb533b885a1fa7d56"
+            }
+          }
+        ]
+      },
+      {
+        "id": "deck-food",
+        "name": "Comida y Bebida",
+        "cards": [
+          {
+            "id": "0017",
+            "spanish": "arroz",
+            "english": "rice",
+            "version": 1,
+            "teachingFingerprint": "295ff2d93aef1615ab63cf6971aa3835f9d3943360638714aef5ee639fe34bb7",
+            "audio": {
+              "path": "assets/audio/pronunciation/0017.mp3",
+              "sha256": "745bd4489c23e11bc7ebfe110e18b2b9b39b0e65a6636c6d4db2eed2fdf1bf34"
+            }
+          },
+          {
+            "id": "0018",
+            "spanish": "pollo",
+            "english": "chicken",
+            "version": 1,
+            "teachingFingerprint": "6c1bcb064b86ec8e671ca5c9ee28d8b4ce96598fea1e4f6e8acee0f2d04c2ec1",
+            "audio": {
+              "path": "assets/audio/pronunciation/0018.mp3",
+              "sha256": "4ddb3fc44e792ed84a93057d77e7ecf59e17aedb90deb5194049e8f2ccf73a8c"
+            }
+          },
+          {
+            "id": "0019",
+            "spanish": "arepa",
+            "english": "arepa (corn cake)",
+            "version": 1,
+            "teachingFingerprint": "5a500a481e6908741610dfed565d898ea76418599d454b29d72b58ffb2a00f68",
+            "audio": {
+              "path": "assets/audio/pronunciation/0019.mp3",
+              "sha256": "64ae6cecc999aac0d5044dad1504c5abfdb9ef71a824ddcc6da6b39b8df214a7"
+            }
+          },
+          {
+            "id": "0020",
+            "spanish": "pan",
+            "english": "bread",
+            "version": 1,
+            "teachingFingerprint": "3ef864103fddd8e88ff4cb03cc9d4a782304fd6c250995c8a0ba4324625042ce",
+            "audio": {
+              "path": "assets/audio/pronunciation/0020.mp3",
+              "sha256": "9914c9b84357b969ee1b227473632414b048fc64ab6034de831e7a09e963a70f"
+            }
+          },
+          {
+            "id": "0021",
+            "spanish": "frijoles",
+            "english": "beans",
+            "version": 1,
+            "teachingFingerprint": "255d61627feafa61419df0a770a794db382671791be59e8ce6d11566b0737ce4",
+            "audio": {
+              "path": "assets/audio/pronunciation/0021.mp3",
+              "sha256": "4489bffc47070fc5b0ba2c208768967bc96e16bb696972684d8e35b7d4d87933"
+            }
+          },
+          {
+            "id": "0022",
+            "spanish": "carne",
+            "english": "meat",
+            "version": 1,
+            "teachingFingerprint": "2fd63eb621f7274b17bcc93b771d7b324343e466be8919541a6c03bf7f98e8cf",
+            "audio": {
+              "path": "assets/audio/pronunciation/0022.mp3",
+              "sha256": "9e06b87a6a6d5af67d42270cf074f01c0017fcb9af10d0792d7524c88c388b75"
+            }
+          },
+          {
+            "id": "0023",
+            "spanish": "jugo",
+            "english": "juice",
+            "version": 1,
+            "teachingFingerprint": "6c35ac4b5156d01adff5cd5b5318339718da7d467a7bb99f9fafb3aa62dea765",
+            "audio": {
+              "path": "assets/audio/pronunciation/0023.mp3",
+              "sha256": "6a08f8cfcb23e4ef518c7788cbcac5db4d1cf20a17b34f95161bc1fd7e6596f3"
+            }
+          },
+          {
+            "id": "0024",
+            "spanish": "café",
+            "english": "coffee",
+            "version": 1,
+            "teachingFingerprint": "dcb31a8aa71170305343c6ce3c405966c9c7187d19b5eb38bb17bfd58545596d",
+            "audio": {
+              "path": "assets/audio/pronunciation/0024.mp3",
+              "sha256": "19d655878a8c8b83d6bd511fb061b05bc396896d7d8c8094d9a79d0cb082c40e"
+            }
+          },
+          {
+            "id": "0025",
+            "spanish": "agua",
+            "english": "water",
+            "version": 1,
+            "teachingFingerprint": "57c8b121b3e598b702a64f0ad54c7ee53edd29717d6cde7c356efda73580d2f8",
+            "audio": {
+              "path": "assets/audio/pronunciation/0025.mp3",
+              "sha256": "fff309790275b11cfa4fca6f6fbc8118eda64c60ce432f829829d970d598d984"
+            }
+          },
+          {
+            "id": "0050",
+            "spanish": "leche",
+            "english": "milk",
+            "version": 1,
+            "teachingFingerprint": "a53b66b2710d44c91d8158b03d6c1ce5a299272bb0720d7c821d1c355ca63b0c",
+            "audio": {
+              "path": "assets/audio/pronunciation/0050.mp3",
+              "sha256": "a9696535e66634475583548279735e665a5a92c9dcc07f29ab017b8403705592"
+            }
+          },
+          {
+            "id": "0051",
+            "spanish": "huevo",
+            "english": "egg",
+            "version": 1,
+            "teachingFingerprint": "882674faabb5147bfb65ba224d62686087de87b27d87d2fc1bf88d94c48026b6",
+            "audio": {
+              "path": "assets/audio/pronunciation/0051.mp3",
+              "sha256": "c909fd11c84be42ef74ca5a6b60809d9724011927d15b0899d427637ea523793"
+            }
+          },
+          {
+            "id": "0058",
+            "spanish": "pescado",
+            "english": "fish",
+            "version": 1,
+            "teachingFingerprint": "ce0e3c7933f92041e1e800d2945f3af57ceeccd8cedfd4519a969ea83233efd0",
+            "audio": {
+              "path": "assets/audio/pronunciation/0058.mp3",
+              "sha256": "d39327ff0ec33f8ba6d0bfa5e18693510e7dfa94a65b2463cf378eaa0cb90dfd"
+            }
+          },
+          {
+            "id": "0222",
+            "spanish": "empanada",
+            "english": "empanada",
+            "version": 1,
+            "teachingFingerprint": "8af3ecd4df524bc59df02fb4b0c6be70db9fffd9ebf3a282fa4e09bdc8e799d2",
+            "audio": {
+              "path": "assets/audio/pronunciation/0222.mp3",
+              "sha256": "d0bcb3e3c1018ae27a39bd740ed74446260d8683def8c2fc3e696ccd0a096ad3"
+            }
+          },
+          {
+            "id": "0223",
+            "spanish": "chicharrón",
+            "english": "pork crackling",
+            "version": 1,
+            "teachingFingerprint": "3a2ad4fada5686a098c52c0a33df1600cb8e41c2da947fbbe9021eacacddf8da",
+            "audio": {
+              "path": "assets/audio/pronunciation/0223.mp3",
+              "sha256": "9f1b8f3b6caa174e2e8b9fd543e5ee5967a154618986e07c050539a54837ec61"
+            }
+          },
+          {
+            "id": "0224",
+            "spanish": "aguacate",
+            "english": "avocado",
+            "version": 1,
+            "teachingFingerprint": "4f358b4aca0bdd8088bb838680dc3f64c155043fbbe7f6c1909e122dc47bab00",
+            "audio": {
+              "path": "assets/audio/pronunciation/0224.mp3",
+              "sha256": "7be294a2e06c0e76256b7f8e67d3c4e1d94b74aad78ea74ca43c062396ec499e"
+            }
+          },
+          {
+            "id": "0225",
+            "spanish": "patacón",
+            "english": "fried plantain",
+            "version": 1,
+            "teachingFingerprint": "ecbbe1f49a3d0ca0ffbc115e0f863902b0f44f4a97c906cd6b54671caa2a1021",
+            "audio": {
+              "path": "assets/audio/pronunciation/0225.mp3",
+              "sha256": "7972d4a11701046e2b401cb0f4f94528bc2f92a5bb16d53772b0be10ef3dd85f"
+            }
+          },
+          {
+            "id": "0226",
+            "spanish": "hogao",
+            "english": "Colombian tomato sauce",
+            "version": 1,
+            "teachingFingerprint": "03a6a2ea7a24b62c6a5e984e4f4d9662353d19cd7fb7b720e6a09d5467f0162f",
+            "audio": {
+              "path": "assets/audio/pronunciation/0226.mp3",
+              "sha256": "b44c3e4aa7d6aa2489a008e164d97a06912cc4134db19af7886580d9e012e58f"
+            }
+          },
+          {
+            "id": "0227",
+            "spanish": "buñuelo",
+            "english": "cheese fritter",
+            "version": 1,
+            "teachingFingerprint": "6c3802f59adfbb2342439351a0ee3f5e2579ed4aeb93b8a52a71042d4573a0e7",
+            "audio": {
+              "path": "assets/audio/pronunciation/0227.mp3",
+              "sha256": "25122c561f00ab9fef547bac19008adffc7eccbdd7d41103ec7342835a18dc73"
+            }
+          },
+          {
+            "id": "0228",
+            "spanish": "pandebono",
+            "english": "cheese bread",
+            "version": 1,
+            "teachingFingerprint": "b78f82e37255c9a465df5a5b071e80e973f0536449b76902438389517b9e8e22",
+            "audio": {
+              "path": "assets/audio/pronunciation/0228.mp3",
+              "sha256": "5db6905c7fd7d907260abad019d63c172fd6576c2d9b566389cb949d6d5e6b96"
+            }
+          },
+          {
+            "id": "0229",
+            "spanish": "sancocho",
+            "english": "stew",
+            "version": 1,
+            "teachingFingerprint": "f717d67d9b01f4c769c050be53e312b3cd9b13626dc0d4861fe08043b778a534",
+            "audio": {
+              "path": "assets/audio/pronunciation/0229.mp3",
+              "sha256": "735a9f295ac9349b3891de666b0e4ca43fe4000d75ee3fe717d40bf7d8db05cf"
+            }
+          },
+          {
+            "id": "0230",
+            "spanish": "limonada",
+            "english": "lemonade",
+            "version": 1,
+            "teachingFingerprint": "1899a2be82621fa933e4f43e767c4c358a589197ef6811852b7d328bcb241c1e",
+            "audio": {
+              "path": "assets/audio/pronunciation/0230.mp3",
+              "sha256": "227d4baae6e3c12649efdcf06b128583df29d5ca27a698e0fb0f7b3974231b40"
+            }
+          },
+          {
+            "id": "0231",
+            "spanish": "natilla",
+            "english": "custard",
+            "version": 1,
+            "teachingFingerprint": "ce9b9c0b1df64af932ed367182f732e323935d451d161f80550139a258783115",
+            "audio": {
+              "path": "assets/audio/pronunciation/0231.mp3",
+              "sha256": "d328045775486f0a33617824806efbefcfeae4b330f7f21a5cedf1807eaeef87"
+            }
+          },
+          {
+            "id": "0269",
+            "spanish": "mango biche",
+            "english": "green mango",
+            "version": 1,
+            "teachingFingerprint": "6a6193b08c862f88755d9ae75e1a4d6b55234019db71ce70e9e44f2f3fd435f1",
+            "audio": {
+              "path": "assets/audio/pronunciation/0269.mp3",
+              "sha256": "a3fbf29851e5bffd0edc7efeeb8213f00578c6fcb7978357c658412f7355cef9"
+            }
+          },
+          {
+            "id": "0270",
+            "spanish": "mazamorra",
+            "english": "corn dessert",
+            "version": 1,
+            "teachingFingerprint": "af6bfe3a48a034dc111a2a776c09955dc66ed26c3e2a228593d83ccfe007c88a",
+            "audio": {
+              "path": "assets/audio/pronunciation/0270.mp3",
+              "sha256": "495ed84b3bbf0b1600202cd6a8b8edb4c6aa8003432abb469e288334f777a173"
+            }
+          },
+          {
+            "id": "0271",
+            "spanish": "bocadillo",
+            "english": "guava paste",
+            "version": 1,
+            "teachingFingerprint": "1a653b420a6cb9b4113f243c74b593155070967b96c4672d723976e987a4877d",
+            "audio": {
+              "path": "assets/audio/pronunciation/0271.mp3",
+              "sha256": "b2731e1fc9063011f3c2058a1231501ba76465995253d0a8d5689b7f072bd59e"
+            }
+          },
+          {
+            "id": "0272",
+            "spanish": "salchipapa",
+            "english": "fries with sausage",
+            "version": 1,
+            "teachingFingerprint": "7a9ce0d5a16e8cc5f8b9c84f0a5a1d0d611ee69a2cfc9fdc9bb8ea72933522e4",
+            "audio": {
+              "path": "assets/audio/pronunciation/0272.mp3",
+              "sha256": "d094e3c235361df34fb24f25a01dbf2a7bba48919c1c5798f1b655e5c003b8ce"
+            }
+          },
+          {
+            "id": "0273",
+            "spanish": "chorizo",
+            "english": "sausage",
+            "version": 1,
+            "teachingFingerprint": "1c2fcbeed299d8f25e4486e1e068a5b29916c4a8e7f62e9404e9a4290ade8816",
+            "audio": {
+              "path": "assets/audio/pronunciation/0273.mp3",
+              "sha256": "3730eb6bd4cb566efe2d46caeb4e3bd701e0736962dd15fd0a6882c91fe0cc24"
+            }
+          },
+          {
+            "id": "0555",
+            "spanish": "arequipe",
+            "english": "dulce de leche",
+            "version": 1,
+            "teachingFingerprint": "6bd19fd6a2d2384dce41c4716bf992afa52bca0150bb1cebf587e2577a373e71",
+            "audio": {
+              "path": "assets/audio/pronunciation/0555.mp3",
+              "sha256": "40bf0b6186f1c076117953c907874496a83d4859226d6fd1a3118f775b3f03bb"
+            }
+          },
+          {
+            "id": "0556",
+            "spanish": "coco",
+            "english": "coconut",
+            "version": 1,
+            "teachingFingerprint": "98b598757edfca81716238f7a8084fe115350b6094cdfd824fffe9a63b517885",
+            "audio": {
+              "path": "assets/audio/pronunciation/0556.mp3",
+              "sha256": "ca4fd2391d977c067dfd429d9d44a717d2d65b4cdfc9b681b0f19466bd01d7c4"
+            }
+          },
+          {
+            "id": "0557",
+            "spanish": "tamal",
+            "english": "tamale",
+            "version": 1,
+            "teachingFingerprint": "a43cb45afcf7581ce5f7e2ad3ad54247664784d9ae42942713b8b159077d0749",
+            "audio": {
+              "path": "assets/audio/pronunciation/0557.mp3",
+              "sha256": "479f7848d9cd9f54e90e2ae5f50380fbbf76789c9c83750e8e5827c8f993c2c0"
+            }
+          },
+          {
+            "id": "0558",
+            "spanish": "lechona",
+            "english": "stuffed pork",
+            "version": 1,
+            "teachingFingerprint": "af061c2b4c6bc36aba08b3d915f3d8ff20cfe3c7c076a0c3f3afd65d6fb7b27b",
+            "audio": {
+              "path": "assets/audio/pronunciation/0558.mp3",
+              "sha256": "dd5d8a2265947ba2bd4d37febe585ad927e53cb9884d818f08d780ca5c96af66"
+            }
+          },
+          {
+            "id": "0559",
+            "spanish": "arepa de choclo",
+            "english": "corn arepa",
+            "version": 1,
+            "teachingFingerprint": "24bd476e7b949febb726d07f482cae8cc63f461c2ca8fdcf132a4c74f3c6d42b",
+            "audio": {
+              "path": "assets/audio/pronunciation/0559.mp3",
+              "sha256": "9bafcbcbd7b5b3b1ca2c1c42511859c81e2676e8830e5ddab0620486c5294b82"
+            }
+          }
+        ]
+      },
+      {
+        "id": "deck-greetings",
+        "name": "Saludos",
+        "cards": [
+          {
+            "id": "0009",
+            "spanish": "hola",
+            "english": "hello",
+            "version": 1,
+            "teachingFingerprint": "62269cd325630fed3b934994a62148d07de4867fa8bc91cf907c338c241e1fd1",
+            "audio": {
+              "path": "assets/audio/pronunciation/0009.mp3",
+              "sha256": "77c2aaa766c82425def015d7eca1332fda6dd31f8ef4d5818905d9384dc7f4bf"
+            }
+          },
+          {
+            "id": "0010",
+            "spanish": "buenos días",
+            "english": "good morning",
+            "version": 1,
+            "teachingFingerprint": "affd15215c8a87bfd6e027a9c91393cfad6a58d1ec317d341cf6144022d8511d",
+            "audio": {
+              "path": "assets/audio/pronunciation/0010.mp3",
+              "sha256": "c5277570c4d6579e8f684ee336c88665862d9ddcec577dbe5396a6d3b8b8174e"
+            }
+          },
+          {
+            "id": "0011",
+            "spanish": "buenas tardes",
+            "english": "good afternoon",
+            "version": 1,
+            "teachingFingerprint": "5fb4284b8539cd6e1c2426b687632e70430c72179b57f6666b2f47da4683525d",
+            "audio": {
+              "path": "assets/audio/pronunciation/0011.mp3",
+              "sha256": "0103350323d322c398a51ef87691f635593b2695d85c3e8b83bae0f326b0e0c6"
+            }
+          },
+          {
+            "id": "0012",
+            "spanish": "buenas noches",
+            "english": "good evening / good night",
+            "version": 1,
+            "teachingFingerprint": "56aec195d230f8c73efffd3def5308472ba9e363ff51c4e84f934059fbe4ba58",
+            "audio": {
+              "path": "assets/audio/pronunciation/0012.mp3",
+              "sha256": "78e95ea70591b45aa20f281c5abfa23f7c225a95498d2925ba5003f420b30eaa"
+            }
+          },
+          {
+            "id": "0013",
+            "spanish": "¿cómo estás?",
+            "english": "how are you?",
+            "version": 1,
+            "teachingFingerprint": "c10d82a52f136ffdad7d7eeda52f97b50a5b249473aadf30c4c5618a7abaca09",
+            "audio": {
+              "path": "assets/audio/pronunciation/0013.mp3",
+              "sha256": "23e5d5777ab1b34baa0ad833c8482ded0b03d816756e2d3094623a6bbe7b1f74"
+            }
+          },
+          {
+            "id": "0014",
+            "spanish": "¿qué tal?",
+            "english": "how's it going?",
+            "version": 1,
+            "teachingFingerprint": "88307ba13fadc3054ef2baeec23df5e60e0af9479c7a4b7ba95ba251dbb6b472",
+            "audio": {
+              "path": "assets/audio/pronunciation/0014.mp3",
+              "sha256": "de8f8bf6f33910601011f51bd89cbd59fd3debf246d8ad3e8128ed9f043f575c"
+            }
+          },
+          {
+            "id": "0015",
+            "spanish": "mucho gusto",
+            "english": "nice to meet you",
+            "version": 1,
+            "teachingFingerprint": "c2adff7bf19b4439052d890cda04b8bd522c02c8626583657793e653a51f5fa5",
+            "audio": {
+              "path": "assets/audio/pronunciation/0015.mp3",
+              "sha256": "7fb3fc4db6380d049bccbc91f373e0c0603dba946eab104ad2e45b50c716a48e"
+            }
+          },
+          {
+            "id": "0016",
+            "spanish": "hasta luego",
+            "english": "see you later",
+            "version": 1,
+            "teachingFingerprint": "6cc17d9a272401a5e74fbd7aff4c68c1ca282a3ef29a37aa38f8d7a5ad635077",
+            "audio": {
+              "path": "assets/audio/pronunciation/0016.mp3",
+              "sha256": "531d2751960e059910f67b32df680f028ede7f0b149e7e94c15cbe015e73d99d"
+            }
+          },
+          {
+            "id": "0217",
+            "spanish": "¿qué más?",
+            "english": "what's up?",
+            "version": 1,
+            "teachingFingerprint": "9fb6111fe8a46f0e6ab3f965660c3ce7b3a049a1625d83e21a611de70fe51e74",
+            "audio": {
+              "path": "assets/audio/pronunciation/0217.mp3",
+              "sha256": "93d2628b0073fa930e8626f43509301bec386fad3345d738a1ba29cba3d503f5"
+            }
+          },
+          {
+            "id": "0218",
+            "spanish": "¿cómo vas?",
+            "english": "how's it going?",
+            "version": 1,
+            "teachingFingerprint": "cd2603f29c318b35018f31f0a088a45365a33190a55f4e396f5e6e91fec247ae",
+            "audio": {
+              "path": "assets/audio/pronunciation/0218.mp3",
+              "sha256": "d170055c8470059d83682488a2c27525a14ab14d62178764828ae346aecf5298"
+            }
+          },
+          {
+            "id": "0219",
+            "spanish": "bienvenido",
+            "english": "welcome",
+            "version": 1,
+            "teachingFingerprint": "d0a80d04c23da278a0f560be382a1aac858982d4e7b1af8b0c52b0d710eec659",
+            "audio": {
+              "path": "assets/audio/pronunciation/0219.mp3",
+              "sha256": "f2d9ce26dff443260eed830b43753db9b76dca45acf507994f5fd77620bacabe"
+            }
+          },
+          {
+            "id": "0220",
+            "spanish": "hasta pronto",
+            "english": "see you soon",
+            "version": 1,
+            "teachingFingerprint": "f61e7c15d924eb33ea5df62a3c93c39f6ffd52634391d73f815372e360fa930b",
+            "audio": {
+              "path": "assets/audio/pronunciation/0220.mp3",
+              "sha256": "949f8d691642f14786b3abfb3fb831259b6a0d989df985a7e9f127adec199cea"
+            }
+          },
+          {
+            "id": "0221",
+            "spanish": "nos vemos",
+            "english": "see you",
+            "version": 1,
+            "teachingFingerprint": "9bc128d23b3c34ff4e77f79307d4e867d6c9bd7f3220f55d826c74260151fd30",
+            "audio": {
+              "path": "assets/audio/pronunciation/0221.mp3",
+              "sha256": "72d9fd5bf92b467a9a116dc2d9a307d1c9bd203cd55501b9709c712fd87154bf"
+            }
+          }
+        ]
+      },
+      {
+        "id": "deck-travel",
+        "name": "Travel",
+        "cards": [
+          {
+            "id": "0038",
+            "spanish": "maleta",
+            "english": "suitcase",
+            "version": 1,
+            "teachingFingerprint": "09edcc98f60dfade14cffa44f9b9056a8ac244e49c1c49b0572e4b50d6c7cbc6",
+            "audio": {
+              "path": "assets/audio/pronunciation/0038.mp3",
+              "sha256": "d0737f6ad01bf0b3a9b54019e876ef63312bbf0e585f4a7d51823e6d0a73f1f4"
+            }
+          },
+          {
+            "id": "0039",
+            "spanish": "boleto",
+            "english": "ticket",
+            "version": 1,
+            "teachingFingerprint": "f38ee6ae025f128d2aab82c1f1fc6e6820b2f493902f75bc5b6b550c15b9fc8c",
+            "audio": {
+              "path": "assets/audio/pronunciation/0039.mp3",
+              "sha256": "4b592cd1ab5fca1f82502ce76c5f994c749b33009a759359651b1b7c997b53a9"
+            }
+          },
+          {
+            "id": "0045",
+            "spanish": "aeropuerto",
+            "english": "airport",
+            "version": 1,
+            "teachingFingerprint": "3cce110c4cd1315b04307d678e5ae259bc62ff488f821b058760cbaf5121caf3",
+            "audio": {
+              "path": "assets/audio/pronunciation/0045.mp3",
+              "sha256": "547bdc0ce7f056bcbf0b1befaaeb0328ad28041d9f833008d3bc8c5398f5e3b2"
+            }
+          },
+          {
+            "id": "0046",
+            "spanish": "hotel",
+            "english": "hotel",
+            "version": 1,
+            "teachingFingerprint": "c8d0787f6f12d023d61303bf6c34ce1445a06222eb2b8cbc46fb801bbcfc0f8d",
+            "audio": {
+              "path": "assets/audio/pronunciation/0046.mp3",
+              "sha256": "4735a32963a44d2c77ae97b53916b3d1b96ab3dc926e0e59ccc59135ae16f8b4"
+            }
+          },
+          {
+            "id": "0057",
+            "spanish": "avión",
+            "english": "airplane",
+            "version": 1,
+            "teachingFingerprint": "92720e033db7938a289e6c88eab4aa6984da7a8d3f664376814cbd75051a4424",
+            "audio": {
+              "path": "assets/audio/pronunciation/0057.mp3",
+              "sha256": "c2333d30ff8600851d4ad056285b1f2abd6adf36fce02246ce33c375104b5a1e"
+            }
+          },
+          {
+            "id": "0242",
+            "spanish": "guía",
+            "english": "guide",
+            "version": 1,
+            "teachingFingerprint": "973525290fc3ccb7ed67003f2bfdedf288d784e3f3829c9004189febd83a9d76",
+            "audio": {
+              "path": "assets/audio/pronunciation/0242.mp3",
+              "sha256": "f9a56946bd762a87136940da7e7b41962d6d9324f89d3cfb5015d2f6cc3e46b5"
+            }
+          },
+          {
+            "id": "0243",
+            "spanish": "turista",
+            "english": "tourist",
+            "version": 1,
+            "teachingFingerprint": "7637a7440a36c3bca060a883bf114ffaa3873bc298cf04631c294fbd22c45829",
+            "audio": {
+              "path": "assets/audio/pronunciation/0243.mp3",
+              "sha256": "3bf3ece27862647e2c7b154b73bbff1649fe4d6c16eb79fd8306bf55b3bcaedc"
+            }
+          },
+          {
+            "id": "0244",
+            "spanish": "pasaporte",
+            "english": "passport",
+            "version": 1,
+            "teachingFingerprint": "8539121713ece52ed4fc4046979da94a0701861eab13655ce56220920a7e5d3b",
+            "audio": {
+              "path": "assets/audio/pronunciation/0244.mp3",
+              "sha256": "4c8cc05b2bd80a5e29c11888c6645679f9b684748cb015c5d83b6cb68610f78a"
+            }
+          },
+          {
+            "id": "0245",
+            "spanish": "mapa",
+            "english": "map",
+            "version": 1,
+            "teachingFingerprint": "3c5b021f3da8afddf699226b17bf411e46cea3f3a6ae5b98e5524ac9b57f7c24",
+            "audio": {
+              "path": "assets/audio/pronunciation/0245.mp3",
+              "sha256": "e88db9277d107cb1e185eee536d74ef8ae5f227ded75e6e39703e93b0e74a874"
+            }
+          },
+          {
+            "id": "0246",
+            "spanish": "excursión",
+            "english": "excursion",
+            "version": 1,
+            "teachingFingerprint": "9db323e6067b992fc4b768aa2527e5ea64c8b95d44e8f8d9f8b1a411a0c17d56",
+            "audio": {
+              "path": "assets/audio/pronunciation/0246.mp3",
+              "sha256": "dd31af6a978d68e160aa814abad676712d4d552f34ea16ebffd9daa4c90d4cb3"
+            }
+          },
+          {
+            "id": "0247",
+            "spanish": "mochila",
+            "english": "backpack",
+            "version": 1,
+            "teachingFingerprint": "378522436e7a62042377f22a411b463c63bb695ac73f767ba3541fe06de2a285",
+            "audio": {
+              "path": "assets/audio/pronunciation/0247.mp3",
+              "sha256": "033fc3094d7f2ba2982f8834cd634f73724b8f11d72fc67949ee3675d477d579"
+            }
+          },
+          {
+            "id": "0274",
+            "spanish": "peaje",
+            "english": "toll",
+            "version": 1,
+            "teachingFingerprint": "3cbcc9bbdf1a6284dc2057a986938227c75001dd4c1e60f4eaee6fd18684c742",
+            "audio": {
+              "path": "assets/audio/pronunciation/0274.mp3",
+              "sha256": "8c600940d7b0c68c52dc73a923ad88332e6d083f3674d338470afe705ba465ae"
+            }
+          },
+          {
+            "id": "0275",
+            "spanish": "equipaje",
+            "english": "luggage",
+            "version": 1,
+            "teachingFingerprint": "a3bd535572cf892c3158f3480ece75b34ebac616c4ea5089675fb30c3c0346b5",
+            "audio": {
+              "path": "assets/audio/pronunciation/0275.mp3",
+              "sha256": "0648154939e02ada0512540f994880940533994a3865707c68e1d120bb5c5bac"
+            }
+          },
+          {
+            "id": "0276",
+            "spanish": "aduana",
+            "english": "customs",
+            "version": 1,
+            "teachingFingerprint": "fbab7f76e5111ead8d0fc2ea94802fcc34d2ea99f2bb0c7b2d48bc4ec9acb435",
+            "audio": {
+              "path": "assets/audio/pronunciation/0276.mp3",
+              "sha256": "a91ceddb4321e354c186a2b5b00fa00852a73455fc34c17f5e33a73792ab8918"
+            }
+          },
+          {
+            "id": "0277",
+            "spanish": "itinerario",
+            "english": "itinerary",
+            "version": 1,
+            "teachingFingerprint": "87284924bf347e2d987fa7381da02cb999f829cff76de1b8e3850029fc946ef7",
+            "audio": {
+              "path": "assets/audio/pronunciation/0277.mp3",
+              "sha256": "efa5905b3e197d697eab8f325fe7ff9b1ce0ab8f36f503b6c0f528ea9682ebcf"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "visits": [
+    {
+      "id": "first-morning-medellin",
+      "title": {
+        "en": "Breakfast at Ana’s café",
+        "es": "Desayuno en la cafetería de Ana"
+      },
+      "version": 2,
+      "entryNode": "welcome",
+      "prerequisiteIds": [],
+      "missionMediaIds": [],
+      "assessedNodesToCardIds": {
+        "greeting": "0010",
+        "request": "0024",
+        "unavailable": "0025",
+        "thanks": "1148"
+      },
+      "warmupCardIds": ["0010", "0024", "1148"],
+      "sourceCardIds": ["0010", "0024", "0025", "1148"],
+      "fingerprint": "0806e2ad36e61fa59a5fabb76141b033f65c0dc9eac44223f1ca4a843deee8c4",
+      "definitionFingerprint": "b0d06732199eec7e538d3ea5aca24fe8438f6246690cbd7784c57a07e96e27c2",
+      "editorialStatus": "pending human acceptance"
+    },
+    {
+      "id": "back-at-anas-cafe",
+      "title": {
+        "en": "Back at Ana’s café",
+        "es": "De vuelta en la cafetería de Ana"
+      },
+      "version": 1,
+      "entryNode": "return",
+      "prerequisiteIds": ["first-morning-medellin"],
+      "missionMediaIds": [],
+      "assessedNodesToCardIds": {
+        "greeting": "0010",
+        "water": "0025",
+        "confirm": "0025",
+        "thanks": "1148"
+      },
+      "warmupCardIds": ["0010", "0025", "1148"],
+      "sourceCardIds": ["0010", "0025", "1148"],
+      "fingerprint": "2f9beda2e5c0ea02b20ee09ddec80193565716bfd4b5e418f998820b1a123f90",
+      "definitionFingerprint": "fe6543af05d044f7a21d2779bface87bac6ea172d7419bc6b8c860a19149dfb9",
+      "editorialStatus": "pending human acceptance"
+    }
+  ],
+  "requiredFreeCardIds": ["0010", "0024", "0025", "1148"],
+  "deferredVisitIds": [
+    "the-bill-please",
+    "breakfast-to-go",
+    "at-the-fruit-stall",
+    "finding-the-plaza",
+    "a-taxi-across-town",
+    "lunch-with-nico"
+  ],
+  "packetComparison": {
+    "path": "docs/editorial/testflight-first-batch.json",
+    "cardCount": 88,
+    "currentTeachingFingerprintsMatch": true,
+    "freeCardsCarriedForward": 60,
+    "paidCardsOmittedFromOffer": 28,
+    "requiredCardsPresent": ["0010", "0024", "0025"],
+    "requiredCardsMissing": ["1148"]
+  },
+  "optionalPaidEditorialBatch": {
+    "id": "deck-daily_life",
+    "name": "Vida Diaria",
+    "cardCount": 28,
+    "cards": [
+      {
+        "id": "0030",
+        "spanish": "trabajo",
+        "english": "work/job",
+        "version": 1,
+        "teachingFingerprint": "0744294c713d375ec573d8dc2b9bf06165b924411759752ec2fe54322f6f508b",
+        "audio": {
+          "path": "assets/audio/pronunciation/0030.mp3",
+          "sha256": "d7bd54263f33d637ef154848989d4ff85540906ea96dea3b61fd695bcc999058"
+        }
+      },
+      {
+        "id": "0031",
+        "spanish": "escuela",
+        "english": "school",
+        "version": 1,
+        "teachingFingerprint": "6a7e4b0a47c11c15860a18f91df5197287191965e2700f74e47a9a94e43374c3",
+        "audio": {
+          "path": "assets/audio/pronunciation/0031.mp3",
+          "sha256": "6f7cbcdae5a85731c9b9598fcba04b0ca7aaa4fac83b85392332edaae68345a7"
+        }
+      },
+      {
+        "id": "0032",
+        "spanish": "casa",
+        "english": "house/home",
+        "version": 1,
+        "teachingFingerprint": "801bb1dce2e8f228dc1d2f5741d87bcf9d48b9b10ce10f4ecec98a5fd6710400",
+        "audio": {
+          "path": "assets/audio/pronunciation/0032.mp3",
+          "sha256": "26090f27388814a995dea213e6e7b4fae169996a1580a01b431318190db50891"
+        }
+      },
+      {
+        "id": "0033",
+        "spanish": "amigo",
+        "english": "friend",
+        "version": 1,
+        "teachingFingerprint": "5fd690ab39419ed1c5e8bcca33bb0d346ce481419b35cad966d04ecc53409e69",
+        "audio": {
+          "path": "assets/audio/pronunciation/0033.mp3",
+          "sha256": "1f37582d6ad693a0d20588dad3265f89abc1fa40bad2dabfa4cab5760286d618"
+        }
+      },
+      {
+        "id": "0034",
+        "spanish": "dinero",
+        "english": "money",
+        "version": 1,
+        "teachingFingerprint": "302bb69aa70909d9115bf780c914c815307edafbee4da35d3023927ad39cdb2e",
+        "audio": {
+          "path": "assets/audio/pronunciation/0034.mp3",
+          "sha256": "7ca490060322af2c16946cd9bf22fd9071cac72b6d82c3b4c5343b01efb2841b"
+        }
+      },
+      {
+        "id": "0035",
+        "spanish": "mercado",
+        "english": "market",
+        "version": 1,
+        "teachingFingerprint": "2d5f1377a3301677cb9204844f05d36cba3e23003191c7a1a0f798c95472c3bf",
+        "audio": {
+          "path": "assets/audio/pronunciation/0035.mp3",
+          "sha256": "58d9077d24c832c9d42d6e7af474f8a25fd850a81189e90bf2a295af963557da"
+        }
+      },
+      {
+        "id": "0036",
+        "spanish": "celular",
+        "english": "cell phone",
+        "version": 1,
+        "teachingFingerprint": "4e507e6c6ae479d4fc676d7915c9c55a9db12383d93c314e29df1c0aa1c3cabd",
+        "audio": {
+          "path": "assets/audio/pronunciation/0036.mp3",
+          "sha256": "a0d317fb3940b12f576f644ceacbbfbc07f904a6d15663c751196f11bd7e8684"
+        }
+      },
+      {
+        "id": "0037",
+        "spanish": "vecino",
+        "english": "neighbor",
+        "version": 1,
+        "teachingFingerprint": "3054650dfebdeabf1c2fea23b5738cf0b56f87760749855973b96cf74d33ca12",
+        "audio": {
+          "path": "assets/audio/pronunciation/0037.mp3",
+          "sha256": "2cee526812364dcfa527c536897a83b925fc6ea4a3d8a26a71fe04660d6a782a"
+        }
+      },
+      {
+        "id": "0047",
+        "spanish": "baño",
+        "english": "bathroom",
+        "version": 1,
+        "teachingFingerprint": "54dab686b1d14be115b4a341483c28661506332eabc935042382275dbea650d6",
+        "audio": {
+          "path": "assets/audio/pronunciation/0047.mp3",
+          "sha256": "2bf0ee032c53c6664d61b36ff2a3acc340f737ced515843fcb09ec00f14ee718"
+        }
+      },
+      {
+        "id": "0048",
+        "spanish": "puerta",
+        "english": "door",
+        "version": 1,
+        "teachingFingerprint": "73d671c76c2afa27d99b23972b671cff0cc9475c0a91f58c50ac4facc850ed32",
+        "audio": {
+          "path": "assets/audio/pronunciation/0048.mp3",
+          "sha256": "93b0a55403ec9ba1e83dc927c7f89ec89a487f1fd7c44cc8ba345d99b3e2d248"
+        }
+      },
+      {
+        "id": "0049",
+        "spanish": "ventana",
+        "english": "window",
+        "version": 1,
+        "teachingFingerprint": "6d7ab5eeb38f0f59f550af92a1e2f06c6cf83843e88b8af08d0cc74f437de886",
+        "audio": {
+          "path": "assets/audio/pronunciation/0049.mp3",
+          "sha256": "ce9c7328eb9bcf246ac65c567474df02b28207d652c10dac580f971394a756e9"
+        }
+      },
+      {
+        "id": "0059",
+        "spanish": "televisor",
+        "english": "television",
+        "version": 1,
+        "teachingFingerprint": "eb3596195196149ef5c900e7e0ac16e605e0ca79db1ac6b6331ee759880d312e",
+        "audio": {
+          "path": "assets/audio/pronunciation/0059.mp3",
+          "sha256": "15f5c1606164cf3c6ecde1428044de296f670644402c40604ea81ffd8c589459"
+        }
+      },
+      {
+        "id": "0238",
+        "spanish": "llave",
+        "english": "key",
+        "version": 1,
+        "teachingFingerprint": "1ecf1734c10aac7c6367b491ea52acc3db1e39b47f6370a78019a11dd581b7f4",
+        "audio": {
+          "path": "assets/audio/pronunciation/0238.mp3",
+          "sha256": "d526787fc62bda9d0a117e18a942e799c9890cfb1f592510c5a12531e198bb7e"
+        }
+      },
+      {
+        "id": "0239",
+        "spanish": "esquina",
+        "english": "corner",
+        "version": 1,
+        "teachingFingerprint": "5b5f15d2902f880915946d396ed5c8f416e192353e5b72e5f48b99deedad695d",
+        "audio": {
+          "path": "assets/audio/pronunciation/0239.mp3",
+          "sha256": "3895b906712e9e5e466f5ca79a85702fa0d1f2ec6168a6c59a421879560f7314"
+        }
+      },
+      {
+        "id": "0240",
+        "spanish": "cuadra",
+        "english": "block (street)",
+        "version": 1,
+        "teachingFingerprint": "66e13acf9ac4a93ccd3649e3d25170322c5aef9289e867cb9f3c26c67631f9ae",
+        "audio": {
+          "path": "assets/audio/pronunciation/0240.mp3",
+          "sha256": "a47f5d4dcca00c9897ee853893c071bcce434a6d88cb1bba7cbe1608fd217ef5"
+        }
+      },
+      {
+        "id": "0241",
+        "spanish": "regalo",
+        "english": "gift",
+        "version": 1,
+        "teachingFingerprint": "5f9f2200a9bd4b1ee12f5f7ac8e5685394b410f8054b18c8af70996a7d527775",
+        "audio": {
+          "path": "assets/audio/pronunciation/0241.mp3",
+          "sha256": "8b17deb6056bd4771cc1bbd237913a567a31893b99e280a0228e6300dbe3c28c"
+        }
+      },
+      {
+        "id": "0367",
+        "spanish": "escalera",
+        "english": "stairs",
+        "version": 1,
+        "teachingFingerprint": "617b478ac08376dd65624501ee0101ef954d4dcc9c03cf683f641d2d77b7c4d4",
+        "audio": {
+          "path": "assets/audio/pronunciation/0367.mp3",
+          "sha256": "c2f4f32dac32d52952ac8074f02cdcde84672fde32eef48d895a6925959e688d"
+        }
+      },
+      {
+        "id": "0368",
+        "spanish": "ascensor",
+        "english": "elevator",
+        "version": 1,
+        "teachingFingerprint": "91b65f51b03650497950a4ab8313342343cf9a511ea3aa8df70b95f25bde35b4",
+        "audio": {
+          "path": "assets/audio/pronunciation/0368.mp3",
+          "sha256": "53a35c24d4ecd8f230c371fe2addf07b7477c92d79418a59492bdfec18119347"
+        }
+      },
+      {
+        "id": "0369",
+        "spanish": "garaje",
+        "english": "garage",
+        "version": 1,
+        "teachingFingerprint": "66a317b69a0791c8a59148f50adb723a786fa18b1aa9ee522887992eeb5bafac",
+        "audio": {
+          "path": "assets/audio/pronunciation/0369.mp3",
+          "sha256": "0cbb6185a95240e687969884cb934255c2c2e7f2d5af2702794aeeb751a4ec7f"
+        }
+      },
+      {
+        "id": "0370",
+        "spanish": "patio",
+        "english": "yard",
+        "version": 1,
+        "teachingFingerprint": "25b85aae63f4ea4f318a478729647e44109b50a58f5d906ad224be1fa789f4fb",
+        "audio": {
+          "path": "assets/audio/pronunciation/0370.mp3",
+          "sha256": "2368ee12e38a56d61a9214efa44901f773d95ff0f078e76e3e9d668db22877ea"
+        }
+      },
+      {
+        "id": "0371",
+        "spanish": "recibo",
+        "english": "receipt",
+        "version": 1,
+        "teachingFingerprint": "fa667556ff4c57028e935bcc354cf73988fa9f1761b68096f82b9853ec498543",
+        "audio": {
+          "path": "assets/audio/pronunciation/0371.mp3",
+          "sha256": "0461e69cf2a24b0b5291ffba651c7b653cb570967b2acfbc026e5dcc88d6fb03"
+        }
+      },
+      {
+        "id": "0372",
+        "spanish": "mal genio",
+        "english": "bad mood",
+        "version": 1,
+        "teachingFingerprint": "eee614109119cebbfdf3535299051d1ed31182e8588e5a9d1acd71defdd50a84",
+        "audio": {
+          "path": "assets/audio/pronunciation/0372.mp3",
+          "sha256": "a83ac74cd273d0ddbb1335abd2e4e97a75826a7ac4c7256d65248542350e2813"
+        }
+      },
+      {
+        "id": "0373",
+        "spanish": "cumpleaños",
+        "english": "birthday",
+        "version": 1,
+        "teachingFingerprint": "fbe967d6f29fe199fa1c2d8f0797fbc8127845ea27cbf5562dfa4625e88f094e",
+        "audio": {
+          "path": "assets/audio/pronunciation/0373.mp3",
+          "sha256": "e97195d26f98bd7b26cfb8494c7436e85a29339b3b37169894f30013a226bfbc"
+        }
+      },
+      {
+        "id": "0374",
+        "spanish": "fiesta",
+        "english": "party",
+        "version": 1,
+        "teachingFingerprint": "770ecbd82c725c68027223cd80fdcf75fd870c26aeb39ede75b38ab89c1db3a4",
+        "audio": {
+          "path": "assets/audio/pronunciation/0374.mp3",
+          "sha256": "a2efb0249362ab228fcdca5a86e3c77d75006a0c069240e865330f14619ceb03"
+        }
+      },
+      {
+        "id": "0375",
+        "spanish": "foto",
+        "english": "photo",
+        "version": 1,
+        "teachingFingerprint": "bd4d2a482b1fce54a5b31b3732f5b6b67296ea9b3dc282323bf43df238b7b4df",
+        "audio": {
+          "path": "assets/audio/pronunciation/0375.mp3",
+          "sha256": "c73051eb6401e0beb6327c8067246f936b337b24a80215909dfcd3820af120f8"
+        }
+      },
+      {
+        "id": "0376",
+        "spanish": "reloj",
+        "english": "watch/clock",
+        "version": 1,
+        "teachingFingerprint": "f103c85914e083455aa53df9d0274fa46bef8b6a714e80be8018939cefb858fa",
+        "audio": {
+          "path": "assets/audio/pronunciation/0376.mp3",
+          "sha256": "6de8a935e699935d3ff8f4f078836330797aefb29cac0e0f657e91690443545c"
+        }
+      },
+      {
+        "id": "0560",
+        "spanish": "bolsillo",
+        "english": "pocket",
+        "version": 1,
+        "teachingFingerprint": "9709b7e66af5fc2c2e295f21ae6f5f3231cd44d731edd87085020f10b7e3e69c",
+        "audio": {
+          "path": "assets/audio/pronunciation/0560.mp3",
+          "sha256": "db7e1748435e6830c5514abcc85ea63ebafeb857a462bf70673c06293051d42f"
+        }
+      },
+      {
+        "id": "0561",
+        "spanish": "reloj despertador",
+        "english": "alarm clock",
+        "version": 1,
+        "teachingFingerprint": "bc4b73db6aee9c411127cb94221240e8bb30f0559d5112f25f555191e66abdb3",
+        "audio": {
+          "path": "assets/audio/pronunciation/0561.mp3",
+          "sha256": "21da6ef81730e9695bb02119085515bf0a815fd5ac69369349436dd100e278fd"
+        }
+      }
+    ],
+    "status": "complete collection available for review. Excluded from proposed Christmas offer.",
+    "reconsideration": "By December 4, require a materially credible named offer with completed or demonstrably on-track editorial and audio review, documented distribution rights, pilot evidence of understood value, and store/sandbox readiness. Adding a narrower paid offer requires separate owner approval of its name, scope, and price."
+  },
+  "audioAndRights": {
+    "provenance": "ElevenLabs-generated card-front pronunciation from scripts/generate-elevenlabs-audio.js.",
+    "clipScope": "61 candidate clips and 28 optional clips. File presence and checksums verified; human listening pending for every proposed clip.",
+    "editorialStatus": "pending per-clip approval for transcript match, pronunciation, stress, naturalness and audibility",
+    "rightsStatus": "pending owner documentation of distribution rights for the actual generated clips and voice at generation, including intended free or paid distribution as applicable",
+    "visitMedia": "Reading and typing with recognition choices. Both visit definitions declare empty media and the current warm-up self-check is text-only. No dialogue recording or listening assessment is in scope.",
+    "cafeArtProvenance": "Generated morning and evening variants documented in assets/cafe/README.md. Owner approval of the Home concept is recorded there; public distribution clearance remains to be documented.",
+    "cafeArt": [
+      {
+        "path": "assets/cafe/morning.jpg",
+        "sha256": "f4096870de1c955a6f153c20d4c3f2cbb59a16326ff5e0359f19a5035598e5ae",
+        "rightsStatus": "owner verification pending"
+      },
+      {
+        "path": "assets/cafe/evening.jpg",
+        "sha256": "2b422703812ffc51de7884d1e7f7d05aa131c0fe73d8afa0c1464a5a1da58869",
+        "rightsStatus": "owner verification pending"
+      }
+    ]
+  },
+  "priorData": {
+    "freeOrReturning": "Use the accepted subset and retain original card IDs, progress, schedules, favorites, notes, custom decks/cards and backups. Keep excluded stock content and its history out of active production study while preserving stored progress. Custom cards in excluded bundled decks remain accessible.",
+    "entitlementOrCourtesy": "Retain verified purchase and device-local courtesy independently of the new-sales switch. Restore genuine purchases and honor previously granted access to accepted content. Hold the build if the proposed bundle cannot honor existing access commitments. A backup never grants a purchase or portable courtesy.",
+    "previewHistory": "Preserve stored beta preview runs/stamps and legacy mission history. They do not earn accepted credit or unlock visit 2. Prior accepted outcomes stay mode-scoped and retain their historical identity."
+  }
+}

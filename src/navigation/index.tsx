@@ -1,4 +1,3 @@
-import { cafeColors } from '../styles/cafeTheme';
 import AdventuresScreen from '../screens/AdventuresScreen';
 import AdventureScreen from '../screens/AdventureScreen';
 import Pressable from '../components/ThemedPressable';
@@ -9,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { Image, Text, View, StyleSheet, useWindowDimensions } from 'react-native';
+import { Text, View, StyleSheet, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AudioPreferencesScreen from '../screens/AudioPreferencesScreen';
 import ThemeSettingsScreen from '../screens/ThemeSettingsScreen';
@@ -25,13 +24,14 @@ import ProgressScreen from '../screens/ProgressScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LearningPreferencesScreen from '../screens/LearningPreferencesScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
+import ReminderWordScreen from '../screens/ReminderWordScreen';
 import DailyGoalScreen from '../screens/DailyGoalScreen';
 import ManageDecksScreen from '../screens/ManageDecksScreen';
 import ReviewScreen from '../screens/ReviewScreen';
 import FlaggedScreen from '../screens/FlaggedScreen';
 import QuizScreen from '../screens/QuizScreen';
 import PhrasebookScreen from '../screens/PhrasebookScreen';
-import PhrasesScreen from '../screens/PhrasesScreen';
+import PhrasesScreen, { PhraseTopicScreen } from '../screens/PhrasesScreen';
 import AddCardScreen from '../screens/AddCardScreen';
 import ExploreScreen from '../screens/ExploreScreen';
 import DifficultWordsScreen from '../screens/DifficultWordsScreen';
@@ -40,7 +40,7 @@ import { useReducedMotion } from '../hooks/useReducedMotion';
 
 import { TranslationKey } from '../i18n/translations';
 import { useLanguage } from '../context/LanguageContext';
-import { getPrefs } from '../storage/prefs';
+import { readOnboardingLaunch } from '../storage/onboarding';
 import { SHOW_REVIEW_TOOLS } from '../config';
 
 const Tab = createBottomTabNavigator();
@@ -65,31 +65,13 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
   const { fontScale } = useWindowDimensions();
   const expandedText = fontScale >= 1.4;
   const { t } = useLanguage();
-  const cafeHome = state.routes[state.index]?.name === 'Home';
-  const cafeIcons = [
-    require('../../assets/theme-icons/home.png'),
-    require('../../assets/theme-icons/study.png'),
-    require('../../assets/theme-icons/progress.png'),
-    require('../../assets/theme-icons/settings.png'),
-  ];
 
   return (
-    <View
-      style={[
-        styles.tabBarOuter,
-        cafeHome && cafeTabs.outer,
-        { paddingBottom: Math.max(insets.bottom, 8) },
-      ]}
-    >
-      {/* Recreate native text measurements when Dynamic Type changes live. */}
-      <View
-        key={fontScale}
-        style={[styles.tabPill, expandedText && styles.tabPillExpanded, cafeHome && cafeTabs.bar]}
-      >
-        {state.routes.map((route: any, index: number) => {
+    <View style={[styles.tabBarOuter, { paddingBottom: Math.max(insets.bottom, 8) }]}>
+      <View key={fontScale} style={[styles.tabPill, expandedText && styles.tabPillExpanded]}>
+        {state.routes.map((route: { key: string; name: string }, index: number) => {
           const focused = state.index === index;
           const tab = TABS[index];
-
           return (
             <Pressable
               key={route.key}
@@ -100,42 +82,17 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
                 styles.tabItem,
                 expandedText && styles.tabItemExpanded,
                 focused && styles.tabItemActive,
-                cafeHome && cafeTabs.item,
               ]}
               onPress={() => navigation.navigate(route.name)}
               android_ripple={null}
             >
-              {cafeHome ? (
-                <Image
-                  source={cafeIcons[index]}
-                  accessible={false}
-                  style={{
-                    width: 22,
-                    height: 22,
-                    tintColor: focused ? cafeColors.yellow : cafeColors.secondary,
-                  }}
-                />
-              ) : (
-                <ThemeIcon
-                  name={tab.icon}
-                  size={18}
-                  color={focused ? colors.onBrand : colors.textSecondary}
-                />
-              )}
-              <Text
-                maxFontSizeMultiplier={cafeHome ? 1.8 : undefined}
-                style={[
-                  styles.tabLabel,
-                  focused && styles.tabLabelActive,
-                  cafeHome && {
-                    color: focused ? cafeColors.yellow : cafeColors.secondary,
-                    textTransform: 'none',
-                  },
-                ]}
-              >
-                {cafeHome
-                  ? t(tab.labelKey).charAt(0) + t(tab.labelKey).slice(1).toLowerCase()
-                  : t(tab.labelKey)}
+              <ThemeIcon
+                name={tab.icon}
+                size={18}
+                color={focused ? colors.onBrand : colors.textSecondary}
+              />
+              <Text style={[styles.tabLabel, focused && styles.tabLabelActive]}>
+                {t(tab.labelKey)}
               </Text>
             </Pressable>
           );
@@ -144,24 +101,6 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
     </View>
   );
 }
-
-const cafeTabs = StyleSheet.create({
-  outer: {
-    backgroundColor: cafeColors.evening,
-    paddingHorizontal: 12,
-    paddingTop: 6,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: cafeColors.tabBorder,
-  },
-  bar: {
-    backgroundColor: cafeColors.clear,
-    borderWidth: 0,
-    borderRadius: 0,
-    padding: 0,
-    minHeight: 58,
-  },
-  item: { backgroundColor: cafeColors.clear, borderRadius: 12, gap: 5 },
-});
 
 function Tabs() {
   return (
@@ -188,29 +127,61 @@ export default function RootNavigator() {
   };
   const { t } = useLanguage();
   const reducedMotion = useReducedMotion();
-  const [onboarded, setOnboarded] = useState<boolean | null>(null);
+  const [startup, setStartup] = useState<
+    Awaited<ReturnType<typeof readOnboardingLaunch>> | 'error'
+  >();
+  const [startupAttempt, setStartupAttempt] = useState(0);
 
   useEffect(() => {
-    getPrefs()
-      .then((p) => setOnboarded(p.onboardingDone))
-      .catch(() => setOnboarded(true));
-  }, []);
+    let active = true;
+    readOnboardingLaunch().then(
+      (value) => {
+        if (active) setStartup(value);
+      },
+      () => {
+        if (active) setStartup('error');
+      },
+    );
+    return () => {
+      active = false;
+    };
+  }, [startupAttempt]);
 
   // Hold rendering one frame until we know whether to show onboarding —
   // avoids flashing Home before redirecting first-run users.
-  if (onboarded === null) {
+  if (!startup) {
     return <View style={[styles.bootWrap, { backgroundColor: appTheme.colors.bg }]} />;
+  }
+  if (startup === 'error') {
+    return (
+      <View style={[styles.bootWrap, { justifyContent: 'center', padding: 24, gap: 16 }]}>
+        <Text accessibilityRole="alert" style={styles.tabLabel}>
+          {t('onboarding.practiceError')}
+        </Text>
+        <Pressable
+          accessibilityRole="button"
+          style={[styles.tabItem, styles.tabItemActive, { flex: 0 }]}
+          onPress={() => {
+            setStartup(undefined);
+            setStartupAttempt((count) => count + 1);
+          }}
+        >
+          <Text style={[styles.tabLabel, styles.tabLabelActive]}>{t('study.resume.retry')}</Text>
+        </Pressable>
+      </View>
+    );
   }
 
   return (
     <Stack.Navigator
       screenOptions={reducedMotion ? { animation: 'none' } : smoothStackTransition}
-      initialRouteName={onboarded ? 'Root' : 'Onboarding'}
+      initialRouteName={startup.onboarded && !startup.handoff ? 'Root' : 'Onboarding'}
     >
       <Stack.Screen
         name="Onboarding"
         component={OnboardingScreen}
         options={{ headerShown: false }}
+        initialParams={startup.handoff ? { handoff: startup.handoff } : undefined}
       />
       <Stack.Screen
         name="ThemeSettings"
@@ -228,6 +199,11 @@ export default function RootNavigator() {
         name="Adventure"
         component={AdventureScreen}
         options={{ headerShown: false, gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name="ReminderWord"
+        component={ReminderWordScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name="DailyPlan" component={DailyPlanScreen} options={{ headerShown: false }} />
       <Stack.Screen
@@ -300,6 +276,11 @@ export default function RootNavigator() {
         options={{ ...stackHeaderOpts, title: t('nav.phrases') }}
       />
       <Stack.Screen
+        name="PhraseTopic"
+        component={PhraseTopicScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="AddCard"
         component={AddCardScreen}
         options={{ ...stackHeaderOpts, title: t('nav.addCard') }}
@@ -351,9 +332,6 @@ const makeStyles = ({ colors }: AppTheme) =>
     tabItemActive: {
       backgroundColor: colors.brand,
     },
-    tabIcon: {
-      fontSize: 18,
-    },
     tabLabel: {
       textAlign: 'center',
       flexShrink: 1,
@@ -365,5 +343,6 @@ const makeStyles = ({ colors }: AppTheme) =>
     tabLabelActive: {
       color: colors.onBrand,
       fontWeight: '800',
+      textDecorationLine: 'underline',
     },
   });

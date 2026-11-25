@@ -19,6 +19,10 @@ jest.mock('../../src/context/LanguageContext', () => ({
 const originalWindow = Dimensions.get('window');
 const toggle = jest.fn();
 const active = jest.fn();
+const mockNavigate = jest.fn();
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ navigate: mockNavigate }),
+}));
 const decks: Deck[] = [
   {
     id: 'weather',
@@ -80,9 +84,22 @@ test('retains a tag search through live resizing and names the matching playback
   expect(screen.queryByText('Llueve')).toBeNull();
   expect(screen.queryByText('Unsaved card')).toBeNull();
   fireEvent.press(screen.getByRole('button', { name: 'Play Hace calor' }));
-  expect(active).toHaveBeenCalledWith('weather');
+  expect(active).not.toHaveBeenCalled();
   expect(mockSpeak).toHaveBeenCalledWith(decks[0].cards[0]);
   expect(toggle).not.toHaveBeenCalled();
+});
+
+test('offers to clear a search with no match and browse when there are no saved cards', () => {
+  const screen = render(<PhrasebookScreen />);
+  fireEvent.changeText(screen.getByPlaceholderText('Search (es/en/tags)…'), 'xyz');
+  expect(screen.getByText('No saved phrases match your search.')).toBeTruthy();
+  fireEvent.press(screen.getByRole('button', { name: 'Clear search' }));
+  expect(screen.getByText('Hace calor')).toBeTruthy();
+  (useDeck as jest.Mock).mockReturnValue({ ready: true, decks: [], toggleFavorite: toggle });
+  screen.rerender(<PhrasebookScreen />);
+  expect(screen.getByText('No saved phrases yet.')).toBeTruthy();
+  fireEvent.press(screen.getByRole('button', { name: 'Browse phrases' }));
+  expect(mockNavigate).toHaveBeenCalledWith('Phrases', undefined, { pop: true });
 });
 
 test('does not resubmit a pending removal on resize and retains the search when it completes', async () => {
@@ -98,7 +115,7 @@ test('does not resubmit a pending removal on resize and retains the search when 
   fireEvent.press(screen.getByRole('button', { name: 'Remove Hace calor', selected: true }));
   act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
   expect(toggle).toHaveBeenCalledTimes(1);
-  expect(toggle).toHaveBeenCalledWith('heat');
+  expect(toggle).toHaveBeenCalledWith('heat', 'weather');
   await act(async () => finish());
   (useDeck as jest.Mock).mockReturnValue({
     ready: true,

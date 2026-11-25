@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RootNavigator from '../../src/navigation';
 import { ThemeProvider, useThemeSelection } from '../../src/context/ThemeContext';
 const mockNavigate = jest.fn();
+let mockTabIndex = 0;
 jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
 }));
@@ -13,7 +14,7 @@ jest.mock('@react-navigation/bottom-tabs', () => ({
     Navigator: ({ tabBar }: any) =>
       tabBar({
         state: {
-          index: 0,
+          index: mockTabIndex,
           routes: ['Home', 'Study', 'Progress', 'Settings'].map((name) => ({ key: name, name })),
         },
         descriptors: {},
@@ -37,7 +38,10 @@ function Probe() {
   return <RootNavigator />;
 }
 const initial = Dimensions.get('window');
-afterEach(() => act(() => Dimensions.set({ window: initial })));
+afterEach(() => {
+  mockTabIndex = 0;
+  act(() => Dimensions.set({ window: initial }));
+});
 test('all four tab routes/selected semantics survive live theme and maximum-font changes', async () => {
   await AsyncStorage.clear();
   await AsyncStorage.setItem('SRS_PREFS_V1', JSON.stringify({ onboardingDone: true }));
@@ -47,7 +51,7 @@ test('all four tab routes/selected semantics survive live theme and maximum-font
     </ThemeProvider>,
   );
   await ui.findByRole('tab', { name: 'INICIO' });
-  expect(ui.UNSAFE_getAllByType(Image)).toHaveLength(4);
+  expect(ui.getByText('🏠')).toBeTruthy();
   act(() => current.applySelection({ themeId: 'barrio', appearanceMode: 'light' }));
   expect(ui.queryByText('🏠')).toBeNull();
   expect(ui.UNSAFE_getAllByType(Image)).toHaveLength(4);
@@ -58,6 +62,21 @@ test('all four tab routes/selected semantics survive live theme and maximum-font
   expect(ui.getByRole('tab', { name: 'INICIO' })).toHaveAccessibilityState({ selected: true });
   fireEvent.press(ui.getByRole('tab', { name: 'AJUSTES' }));
   expect(mockNavigate).toHaveBeenCalledWith('Settings');
+  for (const [index, label] of ['INICIO', 'ESTUDIAR', 'PROGRESO', 'AJUSTES'].entries()) {
+    mockTabIndex = index;
+    ui.rerender(
+      <ThemeProvider>
+        <Probe />
+      </ThemeProvider>,
+    );
+    expect(ui.getAllByRole('tab', { selected: true })).toHaveLength(1);
+    expect(ui.getByRole('tab', { name: label })).toHaveAccessibilityState({ selected: true });
+    expect(ui.getByText(label)).toHaveStyle({ textDecorationLine: 'underline' });
+    expect(ui.UNSAFE_getAllByType(Image).map((icon) => icon.props.style.width)).toEqual([
+      18, 18, 18, 18,
+    ]);
+  }
   act(() => current.applySelection({ themeId: 'classic', appearanceMode: 'light' }));
-  expect(ui.UNSAFE_getAllByType(Image)).toHaveLength(4);
+  expect(ui.getByText('🏠')).toBeTruthy();
+  expect(ui.getByRole('tab', { name: 'AJUSTES' })).toHaveAccessibilityState({ selected: true });
 });

@@ -61,6 +61,7 @@ test.each(['create', 'rename'] as const)(
       fireEvent.changeText(ui.getByPlaceholderText('¿Qué más pues?'), 'Tema de prueba');
       fireEvent.changeText(ui.getByPlaceholderText('What’s up?'), 'Theme test');
     } else {
+      fireEvent.press(ui.getByRole('button', { name: 'Deck actions for Alpha' }));
       fireEvent.press(ui.getByText('Rename'));
       fireEvent.changeText(ui.getByPlaceholderText('Deck name'), 'Theme test');
     }
@@ -82,7 +83,7 @@ test.each(['create', 'rename'] as const)(
       }
       return nativeWrite(key, value);
     });
-    fireEvent.press(ui.getByText(kind === 'create' ? 'Save card ✓' : 'Save'));
+    fireEvent.press(ui.getByText(kind === 'create' ? 'Save card' : 'Save'));
     await act(async () => {
       await started;
     });
@@ -92,7 +93,7 @@ test.each(['create', 'rename'] as const)(
     );
     act(() => current.applySelection({ themeId: 'barrio', appearanceMode: 'light' }));
     expect(ui.getByDisplayValue('Theme test')).toHaveStyle({ color: '#18352F' });
-    const saveLabel = kind === 'create' ? 'Save card ✓' : 'Save';
+    const saveLabel = kind === 'create' ? 'Save card' : 'Save';
     expect(ui.getByRole('button', { name: saveLabel })).toHaveStyle({
       backgroundColor: '#E8E5DD',
       opacity: 1,
@@ -102,7 +103,7 @@ test.each(['create', 'rename'] as const)(
     expect(JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!)).toEqual([
       { id: 'alpha', name: 'Alpha', cards: [] },
     ]);
-    fireEvent.press(ui.getByText(kind === 'create' ? 'Save card ✓' : 'Save'));
+    fireEvent.press(ui.getByText(kind === 'create' ? 'Save card' : 'Save'));
     expect(count).toBe(1);
     await act(async () => {
       releaseWrite!();

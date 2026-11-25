@@ -1,8 +1,10 @@
+import { revealStudyCard } from '../../testFixtures/revealStudyCard';
 import { ThemeProvider, useThemeSelection } from '../../src/context/ThemeContext';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StudyScreen from '../../src/screens/StudyScreen';
+import PhrasebookScreen from '../../src/screens/PhrasebookScreen';
 import { DeckProvider, useDeckContext } from '../../src/context/DeckContext';
 import { getDailyProgress, getLastStudySession, loadDecks } from '../../src/storage/storage';
 import { getLearningEvents } from '../../src/storage/learningEvents';
@@ -24,6 +26,7 @@ jest.mock('@react-navigation/native', () => ({
   useRoute: () => ({ params: mockParams }),
 }));
 jest.mock('../../src/data/decks', () => ({ ALL_DECKS: [] }));
+jest.mock('../../src/hooks/useReducedMotion', () => ({ useReducedMotion: () => true }));
 
 let current: ReturnType<typeof useDeckContext>;
 let currentTheme: ReturnType<typeof useThemeSelection>;
@@ -38,12 +41,12 @@ function Probe() {
   }, [context]);
   return null;
 }
-function App() {
+function App({ showSaved = false }: { showSaved?: boolean }) {
   return (
     <ThemeProvider>
       <DeckProvider>
         <Probe />
-        <StudyScreen />
+        {showSaved ? <PhrasebookScreen /> : <StudyScreen />}
       </DeckProvider>
     </ThemeProvider>
   );
@@ -65,6 +68,31 @@ beforeEach(async () => {
   await AsyncStorage.clear();
   mockParams = { autoStartDeckId: 'alpha' };
 });
+
+test('listening to a saved phrase from another deck preserves the active study queue', async () => {
+  await AsyncStorage.setItem(
+    'SRS_DECKS_V3',
+    JSON.stringify([
+      { id: 'alpha', name: 'Alpha', cards: [card('first'), card('second')] },
+      { id: 'beta', name: 'Beta', cards: [card('saved', { favorite: true })] },
+    ]),
+  );
+  const screen = render(<App />);
+  await screen.findByText('phrase first');
+  await revealStudyCard(screen);
+  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+  const session = await getLastStudySession();
+  expect(session?.queue?.cardIds).toEqual(['first', 'second']);
+  screen.rerender(<App showSaved />);
+  fireEvent.press(screen.getByRole('button', { name: 'Escuchar phrase saved' }));
+  expect(current.activeDeckId).toBe('alpha');
+  expect(await getLastStudySession()).toEqual(session);
+
+  screen.rerender(<App />);
+  fireEvent.press(await screen.findByText('Continuar'));
+  await screen.findByText('phrase first');
+  expect((await getLastStudySession())?.queue).toEqual(session?.queue);
+});
 afterEach(() => {
   releaseHeldWrite?.();
   releaseHeldWrite = undefined;
@@ -84,6 +112,7 @@ test.each([
     await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(decks));
     let screen = render(<App />);
     await screen.findByText('phrase first');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText(label)).not.toBeDisabled());
     const initial = await getLastStudySession();
     expect(initial?.queue?.cardIds).toEqual(['first', 'second']);
@@ -103,6 +132,7 @@ test.each([
     screen = render(<App />);
     fireEvent.press(await screen.findByText('Continuar'));
     await screen.findByText('phrase second');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     expect((await getLastStudySession())?.queue).toEqual({
       ...initial?.queue,
@@ -132,6 +162,7 @@ test('cross-deck new-card cap permits due reviews and later relearning without n
   await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(decks));
   const screen = render(<App />);
   await screen.findByText('phrase alpha-new');
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Otra vez')).not.toBeDisabled());
   const alphaSession = (await getLastStudySession())?.queue?.sessionId;
   await act(async () => fireEvent.press(screen.getByText('Otra vez')));
@@ -139,6 +170,7 @@ test('cross-deck new-card cap permits due reviews and later relearning without n
   expect(await getDailyProgress()).toMatchObject({ count: 1, newCount: 1 });
   await act(async () => current.setActiveDeckId('beta'));
   await screen.findByText('phrase beta-review');
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   const betaSession = await getLastStudySession();
   expect(betaSession?.queue?.sessionId).not.toBe(alphaSession);
@@ -152,6 +184,7 @@ test('cross-deck new-card cap permits due reviews and later relearning without n
   now += 15 * 60 * 1000;
   await act(async () => current.setActiveDeckId('alpha'));
   await screen.findByText('phrase alpha-new');
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   expect((await getLastStudySession())?.queue?.sessionId).not.toBe(alphaSession);
   expect((await getLastStudySession())?.queue?.cardIds).toEqual(['alpha-new']);
@@ -177,6 +210,7 @@ test('edits queued behind an in-flight grade preserve content and the frozen rem
   );
   let screen = render(<App />);
   await screen.findByText('phrase first');
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   const initial = await getLastStudySession();
   const write = AsyncStorage.setItem as jest.Mock;
@@ -223,6 +257,7 @@ test('edits queued behind an in-flight grade preserve content and the frozen rem
     await edits;
   });
   await screen.findByText('phrase second');
+  await revealStudyCard(screen);
   expect(screen.getByText('Bien')).toHaveStyle({ color: '#23624E' });
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   const stored = await loadDecks();
@@ -245,6 +280,7 @@ test('edits queued behind an in-flight grade preserve content and the frozen rem
   screen = render(<App />);
   fireEvent.press(await screen.findByText('Continuar'));
   await screen.findByText('phrase second');
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   expect((await getLastStudySession())?.queue).toEqual(remaining?.queue);
   expect(await loadDecks()).toEqual(stored);
@@ -258,6 +294,7 @@ test('an editor recovers an interrupted grade and UI retry acknowledges it witho
   );
   let screen = render(<App />);
   await screen.findByText('phrase first');
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   const initial = await getLastStudySession();
   const write = AsyncStorage.setItem as jest.Mock;
@@ -293,6 +330,7 @@ test('an editor recovers an interrupted grade and UI retry acknowledges it witho
   expect(screen.getByText('Intentar guardar de nuevo')).toHaveStyle({ color: '#A7D6B2' });
   await act(async () => fireEvent.press(screen.getByText('Intentar guardar de nuevo')));
   await screen.findByText('phrase second');
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   expect(current.decks).toEqual(recovered);
   expect(await loadDecks()).toEqual(recovered);
@@ -303,6 +341,7 @@ test('an editor recovers an interrupted grade and UI retry acknowledges it witho
   screen = render(<App />);
   fireEvent.press(await screen.findByText('Continuar'));
   await screen.findByText('phrase second');
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   expect((await getLastStudySession())?.queue).toEqual(remaining?.queue);
   expect(await loadDecks()).toEqual(recovered);
@@ -339,6 +378,7 @@ test.each([
     );
     let screen = render(<App />);
     await screen.findByText('phrase first');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     const initial = await getLastStudySession();
     const write = AsyncStorage.setItem as jest.Mock;
@@ -405,6 +445,7 @@ test.each([
       expect(await getDailyProgress()).toEqual(recoveredDaily);
     }
     await screen.findByText('phrase second');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     const stored = await loadDecks();
     expect(current.activeDeck?.id).toBe('alpha');
@@ -443,6 +484,7 @@ test.each([
     screen = render(<App />);
     fireEvent.press(await screen.findByText('Continuar'));
     await screen.findByText('phrase second');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     expect((await getLastStudySession())?.queue).toEqual(remaining?.queue);
     expect(await loadDecks()).toEqual(stored);
@@ -473,6 +515,7 @@ test.each([
     );
     let screen = render(<App />);
     await screen.findByText('phrase first');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     const alphaSession = (await getLastStudySession())?.queue?.sessionId;
     const write = AsyncStorage.setItem as jest.Mock;
@@ -529,12 +572,13 @@ test.each([
     }
     if (hasFallback) {
       await screen.findByText('phrase beta-first');
+      await revealStudyCard(screen);
       await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     } else {
       await screen.findByText('Selecciona un deck');
     }
-    expect(screen.queryByText('phrase first')).toBeNull();
-    expect(screen.queryByText('phrase second')).toBeNull();
+    expect(screen.queryByText('phrase first', { includeHiddenElements: true })).toBeNull();
+    expect(screen.queryByText('phrase second', { includeHiddenElements: true })).toBeNull();
     expect(screen.queryByText('Intentar guardar de nuevo')).toBeNull();
     const stored = await loadDecks();
     expect(stored).toEqual(hasFallback ? [beta] : []);
@@ -558,6 +602,7 @@ test.each([
     if (hasFallback) {
       fireEvent.press(await screen.findByText('Continuar'));
       await screen.findByText('phrase beta-first');
+      await revealStudyCard(screen);
       await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
       expect((await getLastStudySession())?.queue).toEqual(remaining?.queue);
     } else {
@@ -565,7 +610,7 @@ test.each([
       expect(screen.queryByText('Continuar')).toBeNull();
       expect(screen.queryByText('Bien')).toBeNull();
     }
-    expect(screen.queryByText('phrase first')).toBeNull();
+    expect(screen.queryByText('phrase first', { includeHiddenElements: true })).toBeNull();
     expect(screen.queryByText('Intentar guardar de nuevo')).toBeNull();
     expect(await loadDecks()).toEqual(stored);
     expect(await getLearningEvents()).toEqual(events);
@@ -592,6 +637,7 @@ test.each(['reset', 'replace', 'merge-new'] as const)(
     await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify([alpha, beta]));
     let screen = render(<App />);
     await screen.findByText('phrase first');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     const initial = await getLastStudySession();
     const write = AsyncStorage.setItem as jest.Mock;
@@ -659,9 +705,10 @@ test.each(['reset', 'replace', 'merge-new'] as const)(
     expect(remaining?.queue).toEqual({ ...initial?.queue, cardIds: ['second'] });
     await act(async () => fireEvent.press(screen.getByText('Intentar guardar de nuevo')));
     await screen.findByText('phrase second');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     expect(screen.getByText('1 restantes')).toBeTruthy();
-    expect(screen.queryByText('phrase imported-later')).toBeNull();
+    expect(screen.queryByText('phrase imported-later', { includeHiddenElements: true })).toBeNull();
     expect(current.decks).toEqual(recovered);
     expect(await loadDecks()).toEqual(recovered);
     expect(await getLearningEvents()).toEqual(events);
@@ -671,6 +718,7 @@ test.each(['reset', 'replace', 'merge-new'] as const)(
     screen = render(<App />);
     fireEvent.press(await screen.findByText('Continuar'));
     await screen.findByText('phrase second');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     expect(screen.getByText('1 restantes')).toBeTruthy();
     expect((await getLastStudySession())?.queue).toEqual(remaining?.queue);
@@ -701,6 +749,7 @@ test.each([
     await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(decks));
     let screen = render(<App />);
     await screen.findByText('phrase first');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     const backup = await captureBackupSnapshot();
     const replacement = card('first', {
@@ -849,10 +898,11 @@ test.each([
     screen = render(<App />);
     fireEvent.press(await screen.findByText('Continuar'));
     await screen.findByText('phrase restored-next');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     expect(screen.getByText('1 restantes')).toBeTruthy();
-    expect(screen.queryByText('phrase first')).toBeNull();
-    expect(screen.queryByText('phrase second')).toBeNull();
+    expect(screen.queryByText('phrase first', { includeHiddenElements: true })).toBeNull();
+    expect(screen.queryByText('phrase second', { includeHiddenElements: true })).toBeNull();
     await assertRestored(true);
     expect(await getLearningEvents()).toEqual(events);
   },
@@ -881,6 +931,7 @@ test.each([
     await AsyncStorage.setItem('SRS_DECKS_V3', JSON.stringify(originalDecks));
     let screen = render(<App />);
     await screen.findByText('phrase first');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     const backup = await captureBackupSnapshot();
     const replacement = card('first', {
@@ -957,8 +1008,8 @@ test.each([
       expect(JSON.parse((await AsyncStorage.getItem('SRS_DECKS_V3'))!)).toEqual(originalDecks);
     }
     expect(current.decks).toEqual(originalDecks);
-    expect(screen.getByText('phrase first')).toBeTruthy();
-    expect(screen.queryByText('restored prompt')).toBeNull();
+    expect(screen.getByText('answer first')).toBeTruthy();
+    expect(screen.queryByText('restored prompt', { includeHiddenElements: true })).toBeNull();
     await act(async () => {
       fireEvent.press(screen.getByText('Bien'));
       if (boundary === 'held') {
@@ -1036,7 +1087,9 @@ test.each([
           });
           await assertRestored();
           expect(screen.getByText('Recargar tarjetas')).not.toBeDisabled();
-          expect(screen.getByText('Bien')).toBeDisabled();
+          expect(
+            screen.queryByRole('button', { name: /^Bien(?:\s|$)/, disabled: false }),
+          ).toBeNull();
         } finally {
           read.mockImplementation(originalRead);
         }
@@ -1053,10 +1106,11 @@ test.each([
     screen = render(<App />);
     fireEvent.press(await screen.findByText('Continuar'));
     await screen.findByText('phrase restored-next');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     expect(screen.getByText('1 restantes')).toBeTruthy();
-    expect(screen.queryByText('phrase first')).toBeNull();
-    expect(screen.queryByText('phrase second')).toBeNull();
+    expect(screen.queryByText('phrase first', { includeHiddenElements: true })).toBeNull();
+    expect(screen.queryByText('phrase second', { includeHiddenElements: true })).toBeNull();
     await assertRestored(true);
   },
 );
@@ -1079,6 +1133,7 @@ test.each(['first-open', 'after-manual-study'] as const)(
       mockParams = { autoStartDeckId: 'beta' };
       const manual = render(<App />);
       await manual.findByText('phrase manual');
+      await revealStudyCard(manual);
       await waitFor(() => expect(manual.getByText('Bien')).not.toBeDisabled());
       expect((await getLastStudySession())?.deckId).toBe('beta');
       manual.unmount();
@@ -1086,6 +1141,7 @@ test.each(['first-open', 'after-manual-study'] as const)(
     mockParams = { dailyPlanId: plan.id };
     const screen = render(<App />);
     await screen.findByText(`phrase ${plan.review.session.cardId}`);
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     expect(
       screen.queryByText('La tarjeta o la sesión cambió. Recarga las tarjetas antes de continuar.'),

@@ -170,7 +170,10 @@ describe('Flashcard', () => {
 
     fireEvent.press(getByText('🔊'));
 
-    expect(mockSpeakCard).toHaveBeenCalledWith(card);
+    expect(mockSpeakCard).toHaveBeenCalledWith(
+      card,
+      expect.objectContaining({ onPlaybackEnd: expect.any(Function) }),
+    );
   });
 });
 
@@ -198,7 +201,10 @@ it('has an explicit localized audio action and grades with the latest callback a
   const card = makeCard();
   const ui = render(<Flashcard card={card} onGrade={first} />);
   fireEvent.press(ui.getByRole('button', { name: 'Escuchar: chimba' }));
-  expect(mockSpeakCard).toHaveBeenCalledWith(card);
+  expect(mockSpeakCard).toHaveBeenCalledWith(
+    card,
+    expect.objectContaining({ onPlaybackEnd: expect.any(Function) }),
+  );
   ui.rerender(<Flashcard card={card} onGrade={second} />);
   act(() => handlers.onPanResponderRelease(null, { dx: 100 }));
   expect(first).not.toHaveBeenCalled();

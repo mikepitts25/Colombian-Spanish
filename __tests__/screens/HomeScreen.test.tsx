@@ -5,6 +5,10 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { AccessibilityInfo, AppState, AppStateStatus, Dimensions } from 'react-native';
 import HomeScreen from '../../src/screens/HomeScreen';
 import { Deck, FlashCard } from '../../src/types';
+import * as adventureContent from '../../src/adventures/content';
+import { emptyAdventures } from '../../src/adventures/state';
+import * as adventureStorage from '../../src/storage/adventures';
+import * as dailyPlanStorage from '../../src/storage/dailyPlans';
 
 const mockNavigate = jest.fn();
 const mockReload = jest.fn().mockResolvedValue(undefined);
@@ -125,6 +129,58 @@ beforeEach(() => {
 
 afterEach(() => jest.restoreAllMocks());
 
+it('offers only an eligible accepted visit and ignores preview milestones', async () => {
+  const [first, second] = adventureContent.ADVENTURES;
+  const resolve = jest.spyOn(adventureContent, 'resolveAdventure');
+  resolve.mockImplementation((id, _decks, mode) => {
+    const found = [first, second].find(({ pack }) => pack.id === id);
+    return found && mode === 'accepted' ? { ...found, mode, fingerprint: id } : undefined;
+  });
+  const row = {
+    mode: 'preview' as const,
+    missionId: first.pack.id,
+    fingerprint: 'preview',
+    contentVersion: first.pack.contentVersion,
+    runId: 'previous-beta-run',
+    completedAt: NOW,
+  };
+  const storage = jest.spyOn(adventureStorage, 'readAdventures');
+  storage.mockResolvedValue({ ...emptyAdventures(), milestones: [row] });
+  const ui = render(<HomeScreen />);
+  await ui.findByText(first.pack.title.en);
+  expect(ui.queryByText(second.pack.title.en)).toBeNull();
+  expect(ui.queryByText('Review cards')).toBeNull();
+  fireEvent.press(ui.getByTestId('home-primary'));
+  await waitFor(() =>
+    expect(mockNavigate).toHaveBeenLastCalledWith('Adventure', {
+      id: first.pack.id,
+      mode: 'accepted',
+    }),
+  );
+  ui.unmount();
+
+  storage.mockResolvedValue({ ...emptyAdventures(), milestones: [{ ...row, mode: 'accepted' }] });
+  const returning = render(<HomeScreen />);
+  await returning.findByText(second.pack.title.en);
+  expect(returning.getAllByTestId('home-primary')).toHaveLength(1);
+  fireEvent.press(returning.getByTestId('home-primary'));
+  await waitFor(() =>
+    expect(mockNavigate).toHaveBeenLastCalledWith('Adventure', {
+      id: second.pack.id,
+      mode: 'accepted',
+    }),
+  );
+
+  const saved = { id: 'newly-saved', phase: 'review' } as Awaited<
+    ReturnType<typeof dailyPlanStorage.readDailyPlan>
+  >;
+  jest.spyOn(dailyPlanStorage, 'readDailyPlan').mockResolvedValue(saved);
+  fireEvent.press(returning.getByTestId('home-primary'));
+  await waitFor(() =>
+    expect(mockNavigate).toHaveBeenLastCalledWith('Study', { dailyPlanId: 'newly-saved' }),
+  );
+});
+
 it('uses measured active review pace for Home limits and labels it as an estimate', async () => {
   const events = Array.from({ length: 6 }, (_, i) => ({
     id: `e${i}`,
@@ -155,7 +211,7 @@ it('uses measured active review pace for Home limits and labels it as an estimat
   const ui = render(<HomeScreen />);
   await ui.findByText('Suggested: Greetings · up to 9 cards · about 3 min');
   expect(ui.getByText('Time estimate uses your recent active review pace.')).toBeTruthy();
-  fireEvent.press(ui.getByText('Let’s practice'));
+  fireEvent.press(ui.getByText('Review cards'));
   await waitFor(() =>
     expect(mockNavigate).toHaveBeenCalledWith(
       'Study',
@@ -214,13 +270,13 @@ describe('HomeScreen quick actions', () => {
   it('shows one primary study action for due cards', async () => {
     const { getByText } = render(<HomeScreen />);
 
-    await waitFor(() => expect(getByText('Let’s practice')).toBeTruthy());
+    await waitFor(() => expect(getByText('Review cards')).toBeTruthy());
   });
 
   it('does not render the standalone summary stats strip', async () => {
     const { getByText, queryByText } = render(<HomeScreen />);
 
-    await waitFor(() => expect(getByText('Let’s practice')).toBeTruthy());
+    await waitFor(() => expect(getByText('Review cards')).toBeTruthy());
 
     expect(queryByText('mastered')).toBeNull();
     expect(queryByText('decks')).toBeNull();
@@ -231,7 +287,7 @@ describe('HomeScreen quick actions', () => {
 
     const { getByText } = render(<HomeScreen />);
 
-    await waitFor(() => expect(getByText('Vamos a practicar')).toBeTruthy());
+    await waitFor(() => expect(getByText('Repasar tarjetas')).toBeTruthy());
     expect(getByText('Herramientas')).toBeTruthy();
     expect(getByText('Decks para repasar')).toBeTruthy();
     expect(getByText('Ver todos los temas')).toBeTruthy();
@@ -347,7 +403,7 @@ describe('Home workload honesty', () => {
     const screen = render(<HomeScreen />);
     expect(await screen.findByText('0 reviews due')).toBeTruthy();
     expect(screen.getByText('2 new in library')).toBeTruthy();
-    fireEvent.press(await screen.findByText('Let’s practice'));
+    fireEvent.press(await screen.findByText('Review cards'));
     await waitFor(() =>
       expect(mockNavigate).toHaveBeenCalledWith('Study', {
         autoStartDeckId: DECK.id,
@@ -360,7 +416,7 @@ describe('Home workload honesty', () => {
   it('starts due reviews directly instead of opening the Study landing', async () => {
     const setActive = useCards([makeCard('due', { reps: 1, interval: 1 })]);
     const screen = render(<HomeScreen />);
-    fireEvent.press(await screen.findByText('Let’s practice'));
+    fireEvent.press(await screen.findByText('Review cards'));
     await waitFor(() => expect(setActive).toHaveBeenCalledWith(DECK.id));
     await waitFor(() =>
       expect(mockNavigate).toHaveBeenCalledWith('Study', {
@@ -382,7 +438,7 @@ describe('Home workload honesty', () => {
     expect(await screen.findByText('New cards available today: 0')).toBeTruthy();
     fireEvent.press(screen.getByText('Choose a topic'));
     expect(mockNavigate).toHaveBeenCalledWith('Study', { topicBrowserRequest: expect.any(Number) });
-    expect(screen.queryByText('Let’s practice')).toBeNull();
+    expect(screen.queryByText('Review cards')).toBeNull();
   });
 
   it('keeps the empty-library route usable', async () => {
@@ -428,7 +484,7 @@ it('waits for a fresh provider budget before starting a session', async () => {
       }),
   );
   const screen = render(<HomeScreen />);
-  fireEvent.press(await screen.findByText('Let’s practice'));
+  fireEvent.press(await screen.findByText('Review cards'));
   expect(mockReload).toHaveBeenCalledTimes(1);
   expect(mockNavigate).not.toHaveBeenCalled();
   await act(async () => finish());
@@ -444,7 +500,7 @@ it('waits for a fresh provider budget before starting a session', async () => {
 it('shows a retryable preparation failure without navigating', async () => {
   mockReload.mockRejectedValueOnce(new Error('storage unavailable'));
   const screen = render(<HomeScreen />);
-  fireEvent.press(await screen.findByText('Let’s practice'));
+  fireEvent.press(await screen.findByText('Review cards'));
   expect(
     await screen.findByText('Could not open your practice. Try opening it again.'),
   ).toBeTruthy();
@@ -487,7 +543,7 @@ it('uses saved purpose/time and refreshes the recommendation after foreground pr
   });
   const ui = render(<HomeScreen />);
   await ui.findByText('Suggested: Business · up to 3 cards · about 2 min');
-  fireEvent.press(ui.getByText('Let’s practice'));
+  fireEvent.press(ui.getByText('Review cards'));
   await waitFor(() =>
     expect(mockNavigate).toHaveBeenCalledWith('Study', {
       autoStartDeckId: business.id,
@@ -507,7 +563,7 @@ it('uses saved purpose/time and refreshes the recommendation after foreground pr
     (AppState.addEventListener as jest.Mock).mock.calls.forEach(([, listener]) => listener(state));
   await act(async () => listener('active'));
   expect(ui.getByText('Suggested: Travel · up to 8 cards · about 5 min')).toBeTruthy();
-  fireEvent.press(ui.getByText('Let’s practice'));
+  fireEvent.press(ui.getByText('Review cards'));
   await waitFor(() =>
     expect(mockNavigate).toHaveBeenCalledWith('Study', {
       autoStartDeckId: travel.id,
@@ -551,8 +607,8 @@ it('resumes the persisted plan phase directly instead of replacing it with a new
     .spyOn(require('../../src/storage/recommendedPlan'), 'openRecommendedPlan')
     .mockResolvedValue(plan);
   const ui = render(<HomeScreen />);
-  await ui.findByText('Continue practicing');
-  fireEvent.press(ui.getByText('Continue practicing'));
+  await ui.findByText('Continue your review');
+  fireEvent.press(ui.getByText('Continue your review'));
   await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('Study', { dailyPlanId: plan.id }));
   expect(open).toHaveBeenCalledTimes(1);
   expect(ui.getByText('Manage plan')).toBeTruthy();
@@ -568,9 +624,9 @@ it('a failed initial plan read offers Retry without opening unlinked practice', 
     .mockResolvedValue(undefined);
   const ui = render(<HomeScreen />);
   fireEvent.press(await ui.findByText('Retry'));
-  await ui.findByText('Let’s practice');
+  await ui.findByText('Review cards');
   expect(mockNavigate).not.toHaveBeenCalled();
-  fireEvent.press(ui.getByText('Let’s practice'));
+  fireEvent.press(ui.getByText('Review cards'));
   await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
   read.mockRestore();
 });
@@ -635,7 +691,7 @@ it.each(['en', 'es'] as const)(
         language === 'en' ? 'New cards available today: 2' : 'Tarjetas nuevas disponibles hoy: 2',
       ),
     ).toBeTruthy();
-    fireEvent.press(ui.getByText(language === 'en' ? 'Let’s practice' : 'Vamos a practicar'));
+    fireEvent.press(ui.getByText(language === 'en' ? 'Review cards' : 'Repasar tarjetas'));
     await waitFor(() =>
       expect(mockNavigate).toHaveBeenCalledWith(
         'Study',
@@ -655,14 +711,14 @@ it('refreshes the catch-up boundary when Start crosses midnight after Home loads
     ],
   });
   const ui = render(<HomeScreen />);
-  await ui.findByText('Let’s practice');
+  await ui.findByText('Review cards');
   expect(
     ui.queryByText(
       'Ease back into reviews. This plan uses familiar cards; new cards remain available separately.',
     ),
   ).toBeNull();
   clock.mockReturnValue(new Date(2026, 2, 29, 0, 1).getTime());
-  fireEvent.press(ui.getByText('Let’s practice'));
+  fireEvent.press(ui.getByText('Review cards'));
   await waitFor(() =>
     expect(mockNavigate).toHaveBeenCalledWith(
       'Study',
@@ -673,17 +729,17 @@ it('refreshes the catch-up boundary when Start crosses midnight after Home loads
 
 it('theme identity changes Home composition while preserving recommendation routes and Classic return', async () => {
   const ui = renderWithTheme(<HomeScreen />);
-  await ui.findByText('Let’s practice');
+  await ui.findByText('Review cards');
   ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
-  expect(ui.getByRole('button', { name: 'Let’s practice' })).toBeTruthy();
-  const primary = ui.getByRole('button', { name: 'Let’s practice' });
-  expect(ui.getByText('Let’s practice')).toHaveStyle({ color: '#182B32' });
+  expect(ui.getByRole('button', { name: 'Review cards' })).toBeTruthy();
+  const primary = ui.getByRole('button', { name: 'Review cards' });
+  expect(ui.getByText('Review cards')).toHaveStyle({ color: '#182B32' });
   await act(async () => fireEvent.press(primary));
   await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
   const barrioRoute = mockNavigate.mock.calls[0];
   mockNavigate.mockClear();
   ui.applyTheme({ themeId: 'classic', appearanceMode: 'dark' });
-  const classic = ui.getByText('Let’s practice');
+  const classic = ui.getByText('Review cards');
   expect(classic).toHaveStyle({ color: '#182B32' });
   await act(async () => fireEvent.press(classic));
   await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(...barrioRoute));
@@ -691,13 +747,15 @@ it('theme identity changes Home composition while preserving recommendation rout
 
 test('Barrio audio entry uses the common decorative icon while Classic retains its glyph', async () => {
   const screen = renderWithTheme(<HomeScreen />);
-  await screen.findByText('Let’s practice');
+  await screen.findByText('Review cards');
   screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
   expect(screen.UNSAFE_getAllByType(ThemeIcon).some((icon) => icon.props.name === 'audio')).toBe(
     true,
   );
   expect(screen.queryAllByText('🔊')).toHaveLength(0);
-  fireEvent.press(screen.getByLabelText(/^Listen: /));
+  const listen = screen.getByRole('button', { name: /^Listen: / });
+  expect(listen).toHaveStyle({ width: 48, height: 48 });
+  fireEvent.press(listen);
   expect(mockSpeakCard).toHaveBeenCalledTimes(1);
   screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
   expect(screen.getAllByText('🔊').length).toBeGreaterThan(0);
@@ -717,9 +775,9 @@ it('Barrio keeps one held production start through theme, language and live text
       }),
   );
   const ui = renderWithTheme(<HomeScreen />);
-  await ui.findByText('Let’s practice');
+  await ui.findByText('Review cards');
   ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
-  const startButton = ui.getByRole('button', { name: 'Let’s practice' });
+  const startButton = ui.getByRole('button', { name: 'Review cards' });
   act(() => {
     fireEvent.press(startButton);
     fireEvent.press(startButton);
@@ -759,9 +817,9 @@ it('Barrio keeps one held production start through theme, language and live text
 it('Barrio retries a rejected start while its original controller remains mounted', async () => {
   mockReload.mockRejectedValueOnce(new Error('budget failure'));
   const ui = renderWithTheme(<HomeScreen />);
-  await ui.findByText('Let’s practice');
+  await ui.findByText('Review cards');
   ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
-  fireEvent.press(ui.getByRole('button', { name: 'Let’s practice' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Review cards' }));
   await ui.findByText('Could not open your practice. Try opening it again.');
   expect(mockNavigate).not.toHaveBeenCalled();
   ui.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
@@ -781,9 +839,9 @@ it('Barrio read failure overrides a pending presentation snapshot', async () => 
       }),
   );
   const ui = renderWithTheme(<HomeScreen />);
-  await ui.findByText('Let’s practice');
+  await ui.findByText('Review cards');
   ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
-  fireEvent.press(ui.getByRole('button', { name: 'Let’s practice' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Review cards' }));
   require('../../src/storage/storage').getDailyProgress.mockRejectedValueOnce(
     new Error('read failed'),
   );
@@ -818,7 +876,7 @@ it('Barrio Retry repeats the selected direct deck start', async () => {
   });
   mockReload.mockRejectedValueOnce(new Error('read failed'));
   const ui = renderWithTheme(<HomeScreen />);
-  await ui.findByText('Let’s practice');
+  await ui.findByText('Review cards');
   ui.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
   fireEvent.press(ui.getByRole('button', { name: /Other deck/ }));
   await ui.findByText('Could not open your practice. Try opening it again.');
@@ -859,7 +917,7 @@ it.each(['classic', 'barrio'] as const)(
     const ui = renderWithTheme(<HomeScreen />);
     ui.applyTheme({ themeId, appearanceMode: 'dark' });
     expect(await ui.findByText('A little Spanish, over coffee')).toBeTruthy();
-    const practice = await ui.findByRole('button', { name: 'Let’s practice' });
+    const practice = await ui.findByRole('button', { name: 'Review cards' });
     fireEvent.press(practice);
     await waitFor(() =>
       expect(mockNavigate).toHaveBeenCalledWith(
@@ -873,12 +931,43 @@ it.each(['classic', 'barrio'] as const)(
 
 it('keeps favorites and card exploration available from the café in both themes', async () => {
   const ui = renderWithTheme(<HomeScreen />);
-  await ui.findByRole('button', { name: 'Let’s practice' });
+  await ui.findByRole('button', { name: 'Review cards' });
   for (const themeId of ['classic', 'barrio'] as const) {
     ui.applyTheme({ themeId, appearanceMode: 'light' });
-    fireEvent.press(ui.getByRole('button', { name: 'Favorites' }));
+    fireEvent.press(ui.getByRole('button', { name: 'Saved phrases' }));
     expect(mockNavigate).toHaveBeenLastCalledWith('Phrasebook');
     fireEvent.press(ui.getByRole('button', { name: 'Explore · decks and your cards' }));
     expect(mockNavigate).toHaveBeenLastCalledWith('Explore');
   }
+});
+
+it('offers an optional reminder after saved correct practice without replacing Home’s primary action', async () => {
+  const notifications =
+    require('../../src/services/notifications') as typeof import('../../src/services/notifications');
+  const offer = jest.spyOn(notifications, 'canOfferReminders').mockResolvedValue(true);
+  const storage = require('../../src/storage/learningEvents');
+  const result = {
+    schemaVersion: 1,
+    id: 'finished-first-card',
+    cardId: DECK.cards[0].id,
+    deckId: DECK.id,
+    sessionId: 'first-session',
+    modality: 'recall',
+    evidence: 'self-rated',
+    occurredAt: NOW,
+    hintsUsed: null,
+    durationMs: null,
+  };
+  storage.getLearningEvents.mockResolvedValue([{ ...result, outcome: 'incorrect', quality: 1 }]);
+  const before = render(<HomeScreen />);
+  await before.findByTestId('home-primary');
+  expect(before.queryByRole('button', { name: 'Remind me' })).toBeNull();
+  expect(offer).not.toHaveBeenCalled();
+  before.unmount();
+
+  storage.getLearningEvents.mockResolvedValue([{ ...result, outcome: 'correct', quality: 4 }]);
+  const after = render(<HomeScreen />);
+  await after.findByRole('button', { name: 'Remind me' });
+  expect(after.getByRole('button', { name: 'Maybe later' })).toBeTruthy();
+  expect(after.getAllByTestId('home-primary')).toHaveLength(1);
 });

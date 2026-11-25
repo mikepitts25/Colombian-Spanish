@@ -10,6 +10,7 @@ import React, {
 import { AppState } from 'react-native';
 import type { PurchasesStoreProduct } from 'react-native-purchases';
 import { BillingClient, getBillingClient } from '../billing/service';
+import { isFreeOnlyRelease } from '../billing/catalog';
 
 export type PurchaseMessage =
   | 'unavailable'
@@ -81,7 +82,8 @@ export function PurchaseProvider({
         setReady(true);
       }
     });
-    const [customer, item] = await Promise.allSettled([customerRead, billing.product()]);
+    const productRead = isFreeOnlyRelease ? Promise.resolve(null) : billing.product();
+    const [customer, item] = await Promise.allSettled([customerRead, productRead]);
     if (!mounted.current || request !== refreshSequence.current) return;
     setProduct(item.status === 'fulfilled' ? item.value : null);
     setMessage(customer.status === 'rejected' || item.status === 'rejected' ? 'error' : null);
@@ -114,7 +116,7 @@ export function PurchaseProvider({
 
   async function transact(kind: 'purchase' | 'restore') {
     if (writing.current) return;
-    if (!billing || (kind === 'purchase' && !product)) {
+    if (!billing || (kind === 'purchase' && (isFreeOnlyRelease || !product))) {
       setMessage('unavailable');
       return;
     }

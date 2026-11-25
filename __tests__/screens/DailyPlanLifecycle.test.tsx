@@ -1,18 +1,20 @@
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
-import { Dimensions, ScrollView } from 'react-native';
+import { Alert, Dimensions, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DailyPlanScreen from '../../src/screens/DailyPlanScreen';
 import { startDailyPlan, readDailyPlan } from '../../src/storage/dailyPlans';
 import * as missions from '../../src/storage/missions';
+import { getLearningEvents } from '../../src/storage/learningEvents';
 import { DAILY_RESPONSE } from '../../src/missions/dailyResponse';
 const mockNavigate = jest.fn();
+const mockGoBack = jest.fn();
 const windowMetrics = Dimensions.get('window'),
   screenMetrics = Dimensions.get('screen');
 afterEach(() => act(() => Dimensions.set({ window: windowMetrics, screen: screenMetrics })));
 jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({ navigate: mockNavigate, goBack: jest.fn() }),
+  useNavigation: () => ({ navigate: mockNavigate, goBack: mockGoBack }),
   useRoute: () => ({ params: { planId: 'plan' } }),
   useFocusEffect: (cb: () => void) => require('react').useEffect(cb, [cb]),
 }));
@@ -23,7 +25,8 @@ jest.mock('../../src/hooks/useDeck', () => ({
 jest.mock('../../src/context/LanguageContext', () => ({
   useLanguage: () => ({
     language: 'en',
-    t: (key: any) => require('../../src/i18n/translations').translate('en', key),
+    t: (key: any, values: Record<string, string | number>) =>
+      require('../../src/i18n/translations').translate('en', key, values),
   }),
 }));
 beforeEach(async () => {
@@ -61,13 +64,13 @@ test('cannot end the parent plan while the assigned response answer is being com
       screen: { ...screenMetrics, fontScale: 3 },
     }),
   );
-  expect(ui.getByText('End plan (keep learning progress)')).toBeDisabled();
-  fireEvent.press(ui.getByText('End plan (keep learning progress)'));
+  expect(ui.getByText('End plan')).toBeDisabled();
+  fireEvent.press(ui.getByText('End plan'));
   expect(mockNavigate).not.toHaveBeenCalled();
   await act(async () => release());
   await ui.findByText('Correct');
   expect((await readDailyPlan())?.phase).toBe('applied');
-  expect(ui.getByText('End plan (keep learning progress)')).not.toBeDisabled();
+  expect(ui.getByText('End plan')).not.toBeDisabled();
 });
 
 test('live text-size reflow keeps the entered answer and exact applied identity without extra writes', async () => {
@@ -98,10 +101,10 @@ test('plan recovery action shares the response scroll area instead of consuming 
     return undefined;
   };
   expect(scrollParent(input)).toBeDefined();
-  expect(scrollParent(ui.getByText('End plan (keep learning progress)'))).toBe(scrollParent(input));
+  expect(scrollParent(ui.getByText('End plan'))).toBe(scrollParent(input));
 });
 
-test('an unavailable saved content version keeps explicit End/Home recovery without creating a run', async () => {
+test('an unavailable saved content version keeps explicit End and Back recovery without creating a run', async () => {
   await AsyncStorage.clear();
   await startDailyPlan({
     id: 'plan',
@@ -112,16 +115,66 @@ test('an unavailable saved content version keeps explicit End/Home recovery with
     applied: { missionId: DAILY_RESPONSE.id, contentVersion: 99, runId: 'retained-run' },
   });
   const ui = render(<DailyPlanScreen />);
-  await ui.findByText(
-    'This activity is unavailable in this build. You can end the plan and keep your learning progress.',
-  );
+  await ui.findByText('The activity in this plan is unavailable.');
   expect(ui.queryByText('Start draft reply')).toBeNull();
   expect((await readDailyPlan())?.applied?.runId).toBe('retained-run');
-  fireEvent.press(ui.getByText('Return Home'));
-  expect(mockNavigate).toHaveBeenCalledWith('Root', { screen: 'Home' }, { pop: true });
+  fireEvent.press(ui.getByRole('button', { name: 'Back' }));
+  expect(mockGoBack).toHaveBeenCalledTimes(1);
   expect(await readDailyPlan()).toBeDefined();
-  fireEvent.press(ui.getByText('End plan (keep learning progress)'));
+  fireEvent.press(ui.getByText('End plan'));
+  expect((await readDailyPlan())?.applied?.runId).toBe('retained-run');
+  await act(async () => {
+    (Alert.alert as jest.Mock).mock.calls
+      .at(-1)![2]
+      .find((button: { style?: string }) => button.style === 'destructive')
+      .onPress();
+  });
   await waitFor(async () => expect(await readDailyPlan()).toBeUndefined());
   expect(await AsyncStorage.getItem('SRS_MISSIONS_V1')).toBeNull();
   expect(await AsyncStorage.getItem('SRS_LEARNING_EVENTS_V1')).toBeNull();
+});
+
+test('Back during an applied activity leaves its durable checkpoint ready to resume', async () => {
+  const ui = render(<DailyPlanScreen />);
+  fireEvent.press(await ui.findByText('Start draft reply'));
+  await ui.findByLabelText('Your response');
+  const before = await AsyncStorage.getItem('SRS_MISSIONS_V1');
+  fireEvent.press(ui.getByRole('button', { name: 'Back' }));
+  expect(mockGoBack).toHaveBeenCalledTimes(1);
+  expect(await AsyncStorage.getItem('SRS_MISSIONS_V1')).toBe(before);
+  expect((await readDailyPlan())?.applied?.runId).toBe('run');
+  await expect(
+    startDailyPlan({
+      id: 'next-day',
+      day: '2026-10-18',
+      minutes: 3,
+      createdAt: 2000,
+      phase: 'applied',
+      applied: { missionId: DAILY_RESPONSE.id, contentVersion: 1, runId: 'other' },
+    }),
+  ).rejects.toThrow('Unfinished daily plan');
+});
+
+test('finishing one written reply keeps its single credit when the summary is reopened', async () => {
+  const ui = render(<DailyPlanScreen />);
+  fireEvent.press(await ui.findByText('Start draft reply'));
+  fireEvent.changeText(await ui.findByLabelText('Your response'), 'Buenos días');
+  fireEvent.press(ui.getByRole('button', { name: 'Check answer' }));
+  const continueButton = await ui.findByRole('button', { name: 'Continue' });
+  fireEvent.press(continueButton);
+  fireEvent.press(continueButton);
+
+  await ui.findByText('You practiced writing a morning greeting.');
+  const finish = ui.getByRole('button', { name: 'Finish for today' });
+  const earned = await getLearningEvents();
+  expect(earned).toHaveLength(1);
+  expect((await readDailyPlan())?.phase).toBe('complete');
+  fireEvent.press(finish);
+  expect(mockNavigate).toHaveBeenCalledWith('Root', { screen: 'Home' }, { pop: true });
+  ui.unmount();
+
+  const reopened = render(<DailyPlanScreen />);
+  await reopened.findByText('You practiced writing a morning greeting.');
+  expect(await getLearningEvents()).toEqual(earned);
+  expect((await readDailyPlan())?.applied?.runId).toBe('run');
 });

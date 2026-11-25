@@ -33,16 +33,16 @@ beforeEach(async () => {
 test('loads existing speed, previews selected unsaved speed and explicitly saves only that preference', async () => {
   await prefs.setPrefs({ speechRate: 1.25, learningReason: 'travel' });
   const ui = render(<AudioPreferencesScreen />);
-  await ui.findByText('Save audio preferences');
+  await ui.findByText('Save audio settings');
   fireEvent.press(ui.getByText('0.75×'));
   fireEvent.press(ui.getByText('Preview pronunciation'));
   await ui.findByText('Source: generated clip');
   expect(speakCard).toHaveBeenCalledWith(
     { id: '0010', front: 'buenos días' },
-    { rate: 0.75, loop: false },
+    expect.objectContaining({ rate: 0.75, loop: false }),
   );
   expect((await prefs.getPrefs()).speechRate).toBe(1.25);
-  fireEvent.press(ui.getByText('Save audio preferences'));
+  fireEvent.press(ui.getByText('Save audio settings'));
   await ui.findByText('Audio preferences saved.');
   expect(await prefs.getPrefs()).toMatchObject({ speechRate: 0.75, learningReason: 'travel' });
   ui.unmount();
@@ -57,7 +57,7 @@ test('explicit repeat is labeled and stop cancels a pending preview without stal
       }),
   );
   const ui = render(<AudioPreferencesScreen />);
-  await ui.findByText('Save audio preferences');
+  await ui.findByText('Save audio settings');
   fireEvent.press(ui.getByRole('switch', { name: 'Repeat clip' }));
   fireEvent.press(ui.getByText('Preview pronunciation'));
   expect(speakCard).toHaveBeenCalledWith(
@@ -73,21 +73,21 @@ test('load failure offers retry without editable defaults or writes; save failur
   jest.spyOn(prefs, 'getPrefs').mockRejectedValueOnce(new Error('read'));
   const ui = render(<AudioPreferencesScreen />);
   await ui.findByText('Could not load audio preferences.');
-  expect(ui.queryByText('Save audio preferences')).toBeNull();
+  expect(ui.queryByText('Save audio settings')).toBeNull();
   fireEvent.press(ui.getByText('Retry'));
-  await ui.findByText('Save audio preferences');
+  await ui.findByText('Save audio settings');
   fireEvent.press(ui.getByText('1.25×'));
   jest.spyOn(prefs, 'setPrefs').mockRejectedValueOnce(new Error('full'));
-  fireEvent.press(ui.getByText('Save audio preferences'));
+  fireEvent.press(ui.getByText('Save audio settings'));
   await ui.findByText('Could not save. Your selection is still here.');
-  fireEvent.press(ui.getByText('Save audio preferences'));
+  fireEvent.press(ui.getByText('Save audio settings'));
   await ui.findByText('Audio preferences saved.');
   expect((await prefs.getPrefs()).speechRate).toBe(1.25);
 });
 test('reports device fallback and its single-play limit honestly', async () => {
   (speakCard as jest.Mock).mockResolvedValueOnce({ source: 'device', loop: false });
   const ui = render(<AudioPreferencesScreen />);
-  await ui.findByText('Save audio preferences');
+  await ui.findByText('Save audio settings');
   fireEvent.press(ui.getByRole('switch', { name: 'Repeat clip' }));
   fireEvent.press(ui.getByText('Preview pronunciation'));
   await ui.findByText('Source: device speech · plays once');
@@ -100,7 +100,7 @@ test('automatic speech is opt-in, saved with speed, and does not play on enablin
   expect(toggle).toHaveAccessibilityState({ checked: false });
   fireEvent.press(toggle);
   expect((await prefs.getPrefs()).autoSpeak).toBe(false);
-  fireEvent.press(ui.getByText('Save audio preferences'));
+  fireEvent.press(ui.getByText('Save audio settings'));
   await ui.findByText('Audio preferences saved.');
   expect(await prefs.getPrefs()).toMatchObject({
     autoSpeak: true,
@@ -128,12 +128,12 @@ test('retains unsaved speed, automatic speech and one pending save across live f
     return originalSave(patch);
   });
   const ui = render(<AudioPreferencesScreen />);
-  await ui.findByText('Save audio preferences');
+  await ui.findByText('Save audio settings');
   fireEvent.press(ui.getByRole('radio', { name: '0.75×' }));
   fireEvent.press(ui.getByRole('switch', { name: 'Speak after revealing a flashcard' }));
   act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
   expect(ui.getByRole('radio', { name: '0.75×', checked: true })).toBeTruthy();
-  fireEvent.press(ui.getByRole('button', { name: 'Save audio preferences' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save audio settings' }));
   act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 1.8 } }));
   expect(ui.getByRole('radio', { name: '0.75×', checked: true, disabled: true })).toBeTruthy();
   expect(
@@ -143,7 +143,7 @@ test('retains unsaved speed, automatic speech and one pending save across live f
       disabled: true,
     }),
   ).toBeTruthy();
-  fireEvent.press(ui.getByRole('button', { name: 'Save audio preferences' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save audio settings' }));
   expect(saving).toHaveBeenCalledTimes(1);
   await act(async () => release());
   await ui.findByText('Audio preferences saved.');
@@ -164,7 +164,7 @@ test('does not restart or cancel preview merely on resize and keeps Stop authori
       }),
   );
   const ui = render(<AudioPreferencesScreen />);
-  await ui.findByText('Save audio preferences');
+  await ui.findByText('Save audio settings');
   fireEvent.press(ui.getByRole('radio', { name: '1.25×' }));
   fireEvent.press(ui.getByRole('switch', { name: 'Repeat clip' }));
   fireEvent.press(ui.getByRole('button', { name: 'Preview pronunciation' }));
@@ -176,18 +176,21 @@ test('does not restart or cancel preview merely on resize and keeps Stop authori
   fireEvent.press(ui.getByRole('button', { name: 'Stop audio' }));
   await act(async () => release({ source: 'generated', loop: true }));
   expect(ui.queryByText('Source: generated clip')).toBeNull();
-  expect(speakCard).toHaveBeenCalledWith(expect.anything(), { rate: 1.25, loop: true });
+  expect(speakCard).toHaveBeenCalledWith(
+    expect.anything(),
+    expect.objectContaining({ rate: 1.25, loop: true }),
+  );
 });
 
 test('keeps a valid loaded custom rate selectable and allows restoring the supported default rate', async () => {
   await prefs.setPrefs({ speechRate: 0.9, autoSpeak: false });
   const ui = render(<AudioPreferencesScreen />);
-  await ui.findByText('Save audio preferences');
+  await ui.findByText('Save audio settings');
   expect(ui.getByRole('radio', { name: '0.9×', checked: true })).toBeTruthy();
   fireEvent.press(ui.getByRole('radio', { name: '0.75×' }));
   expect(ui.getByRole('radio', { name: '0.9×', checked: false })).toBeTruthy();
   fireEvent.press(ui.getByRole('radio', { name: '0.98×' }));
-  fireEvent.press(ui.getByRole('button', { name: 'Save audio preferences' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save audio settings' }));
   await ui.findByText('Audio preferences saved.');
   expect(await prefs.getPrefs()).toMatchObject({ speechRate: 0.98, autoSpeak: false });
 });
@@ -202,17 +205,29 @@ test('finishes a pending save while blurred so returning does not leave audio se
     return originalSave(patch);
   });
   const ui = render(<AudioPreferencesScreen />);
-  await ui.findByText('Save audio preferences');
+  await ui.findByText('Save audio settings');
   fireEvent.press(ui.getByRole('radio', { name: '0.75×' }));
-  fireEvent.press(ui.getByRole('button', { name: 'Save audio preferences' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save audio settings' }));
   mockFocused = false;
   ui.rerender(<AudioPreferencesScreen />);
   await act(async () => finish());
   mockFocused = true;
   ui.rerender(<AudioPreferencesScreen />);
   expect(
-    ui.getByRole('button', { name: 'Save audio preferences' }).props.accessibilityState.disabled,
+    ui.getByRole('button', { name: 'Save audio settings' }).props.accessibilityState.disabled,
   ).toBe(false);
   expect(ui.getByText('Audio preferences saved.')).toBeTruthy();
   expect((await prefs.getPrefs()).speechRate).toBe(0.75);
+});
+
+test('offers Stop only after starting the pronunciation preview', async () => {
+  const ui = render(<AudioPreferencesScreen />);
+  await ui.findByRole('button', { name: 'Preview pronunciation' });
+  expect(ui.queryByRole('button', { name: 'Stop audio' })).toBeNull();
+  fireEvent.press(ui.getByRole('button', { name: 'Preview pronunciation' }));
+  await ui.findByText('Source: generated clip');
+  expect(ui.getByRole('button', { name: 'Stop audio' })).toBeTruthy();
+  act(() => (speakCard as jest.Mock).mock.calls[0][1].onPlaybackEnd());
+  expect(ui.queryByRole('button', { name: 'Stop audio' })).toBeNull();
+  expect(ui.getByRole('button', { name: 'Preview pronunciation' })).toBeTruthy();
 });

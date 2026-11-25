@@ -422,6 +422,24 @@ test('reveals the measured focused response when the software keyboard opens wit
   expect(scroll.scrollTo).not.toHaveBeenCalled();
 });
 
+test('scrolls the saved typed feedback above the keyboard using current turn geometry', async () => {
+  const ui = await begin();
+  const scroll = ui.UNSAFE_getAllByType(ScrollView)[0].instance;
+  fireEvent.changeText(ui.getByLabelText('Your response'), 'Buenos dias');
+  fireEvent.press(ui.getByText('Check answer'));
+  await ui.findByText('Correct');
+  scroll.scrollTo.mockClear();
+  fireEvent(ui.getByTestId('mission-node'), 'layout', {
+    nativeEvent: { layout: { x: 20, y: 800, width: 335, height: 400 } },
+  });
+  expect(scroll.scrollTo).not.toHaveBeenCalled();
+  fireEvent(ui.getByTestId('mission-feedback'), 'layout', {
+    nativeEvent: { layout: { x: 20, y: 185, width: 295, height: 180 } },
+  });
+  expect(scroll.scrollTo).toHaveBeenLastCalledWith({ y: 969, animated: false });
+  expect(await getLearningEvents()).toHaveLength(1);
+});
+
 test('waits for current response geometry after rotation and live text changes, retaining the ungraded draft', async () => {
   const originalWindow = Dimensions.get('window');
   const originalScreen = Dimensions.get('screen');

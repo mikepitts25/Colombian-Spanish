@@ -2,7 +2,7 @@ import ThemeIcon from '../components/ThemeIcon';
 import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { FlatList, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -15,15 +15,12 @@ import { radius, spacing } from '../styles/theme';
 
 export default function PhrasesScreen() {
   const styles = useThemedStyles(makeStyles);
-  const { ready, decks, toggleFavorite } = useDeck();
+  const { ready, decks } = useDeck();
   const { t } = useLanguage();
   const nav = useNavigation<any>();
   const { fontScale } = useWindowDimensions();
-  const expanded = fontScale >= 1.4;
-  const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>();
 
   const topics = useMemo(() => getAvailablePhraseTopics(decks || []), [decks]);
-  const selectedTopic = topics.find((topic) => topic.id === selectedTopicId);
 
   if (!ready) {
     return (
@@ -35,30 +32,107 @@ export default function PhrasesScreen() {
 
   const openFavorites = () => nav.navigate('Phrasebook');
 
-  if (selectedTopic) {
-    return (
-      <SafeAreaView key={fontScale} style={styles.wrap}>
-        <View style={styles.topicHeader}>
+  return (
+    <SafeAreaView key={fontScale} style={styles.wrap}>
+      <FlatList
+        ListHeaderComponent={
+          <View style={styles.header}>
+            <View style={styles.headerCopy}>
+              <Text style={styles.title}>{t('phrases.title')}</Text>
+              <Text style={styles.sub}>{t('phrases.sub')}</Text>
+            </View>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={t('phrases.openFavorites')}
+              style={styles.favoritesButton}
+              onPress={openFavorites}
+            >
+              <Text allowFontScaling={false} style={styles.favoritesIcon}>
+                ★
+              </Text>
+            </Pressable>
+          </View>
+        }
+        data={topics}
+        keyExtractor={(topic) => topic.id}
+        contentContainerStyle={styles.topicList}
+        renderItem={({ item: topic }) => (
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={t('phrases.back')}
-            style={styles.backButton}
-            onPress={() => setSelectedTopicId(undefined)}
+            style={({ pressed }) => [styles.topicCard, pressed && styles.topicCardPressed]}
+            onPress={() => nav.navigate('PhraseTopic', { topicId: topic.id })}
           >
-            <Text style={styles.backText}>← {t('phrases.back')}</Text>
-          </Pressable>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={t('phrases.openFavorites')}
-            style={styles.favoritesButton}
-            onPress={openFavorites}
-          >
-            <Text allowFontScaling={false} style={styles.favoritesIcon}>
-              ★
+            <View style={styles.topicEmojiWrap}>
+              <Text allowFontScaling={false} style={styles.topicEmoji}>
+                {topic.emoji}
+              </Text>
+            </View>
+            <View style={styles.topicCopy}>
+              <Text style={styles.topicTitle}>{t(topic.titleKey as TranslationKey)}</Text>
+              <Text style={styles.topicSub}>{t(topic.descriptionKey as TranslationKey)}</Text>
+              <Text style={styles.topicCount}>
+                {t('phrases.cardCount', { count: topic.cards.length })}
+              </Text>
+            </View>
+            <Text allowFontScaling={false} style={styles.chevron}>
+              ›
             </Text>
           </Pressable>
-        </View>
+        )}
+        ListEmptyComponent={
+          <View>
+            <Text style={styles.empty}>{t('phrases.empty')}</Text>
+            <Pressable
+              accessibilityRole="button"
+              style={styles.backButton}
+              onPress={() => nav.navigate('Root', { screen: 'Study' }, { pop: true })}
+            >
+              <Text style={styles.backText}>{t('phrases.openStudy')}</Text>
+            </Pressable>
+          </View>
+        }
+      />
+    </SafeAreaView>
+  );
+}
 
+export function PhraseTopicScreen({ route }: { route: { params?: { topicId?: string } } }) {
+  const styles = useThemedStyles(makeStyles);
+  const { ready, decks, toggleFavorite } = useDeck();
+  const { t } = useLanguage();
+  const nav = useNavigation<any>();
+  const { fontScale } = useWindowDimensions();
+  const expanded = fontScale >= 1.4;
+  const topics = useMemo(() => getAvailablePhraseTopics(decks || []), [decks]);
+  const selectedTopic = ready
+    ? topics.find((topic) => topic.id === route.params?.topicId)
+    : undefined;
+  const openFavorites = () => nav.navigate('Phrasebook');
+
+  return (
+    <SafeAreaView key={fontScale} style={styles.wrap}>
+      <View style={styles.topicHeader}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('phrases.back')}
+          style={styles.backButton}
+          onPress={() => nav.goBack()}
+        >
+          <Text style={styles.backText}>← {t('phrases.back')}</Text>
+        </Pressable>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('phrases.openFavorites')}
+          style={styles.favoritesButton}
+          onPress={openFavorites}
+        >
+          <Text allowFontScaling={false} style={styles.favoritesIcon}>
+            ★
+          </Text>
+        </Pressable>
+      </View>
+
+      {selectedTopic ? (
         <FlatList
           data={selectedTopic.cards}
           keyExtractor={(card) => card.id}
@@ -91,63 +165,13 @@ export default function PhrasesScreen() {
               saveLabel={t('phrases.saveLabel', { phrase: card.front })}
               removeLabel={t('phrases.removeLabel', { phrase: card.front })}
               onPlay={() => void speakCard(card)}
-              onToggleFavorite={() => toggleFavorite(card.id)}
+              onToggleFavorite={() => toggleFavorite(card.id, selectedTopic.deck.id)}
             />
           )}
         />
-      </SafeAreaView>
-    );
-  }
-
-  return (
-    <SafeAreaView key={fontScale} style={styles.wrap}>
-      <FlatList
-        ListHeaderComponent={
-          <View style={styles.header}>
-            <View style={styles.headerCopy}>
-              <Text style={styles.title}>{t('phrases.title')}</Text>
-              <Text style={styles.sub}>{t('phrases.sub')}</Text>
-            </View>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={t('phrases.openFavorites')}
-              style={styles.favoritesButton}
-              onPress={openFavorites}
-            >
-              <Text allowFontScaling={false} style={styles.favoritesIcon}>
-                ★
-              </Text>
-            </Pressable>
-          </View>
-        }
-        data={topics}
-        keyExtractor={(topic) => topic.id}
-        contentContainerStyle={styles.topicList}
-        renderItem={({ item: topic }) => (
-          <Pressable
-            accessibilityRole="button"
-            style={({ pressed }) => [styles.topicCard, pressed && styles.topicCardPressed]}
-            onPress={() => setSelectedTopicId(topic.id)}
-          >
-            <View style={styles.topicEmojiWrap}>
-              <Text allowFontScaling={false} style={styles.topicEmoji}>
-                {topic.emoji}
-              </Text>
-            </View>
-            <View style={styles.topicCopy}>
-              <Text style={styles.topicTitle}>{t(topic.titleKey as TranslationKey)}</Text>
-              <Text style={styles.topicSub}>{t(topic.descriptionKey as TranslationKey)}</Text>
-              <Text style={styles.topicCount}>
-                {t('phrases.cardCount', { count: topic.cards.length })}
-              </Text>
-            </View>
-            <Text allowFontScaling={false} style={styles.chevron}>
-              ›
-            </Text>
-          </Pressable>
-        )}
-        ListEmptyComponent={<Text style={styles.empty}>{t('phrases.empty')}</Text>}
-      />
+      ) : (
+        <Text style={styles.empty}>{t(ready ? 'phrases.empty' : 'common.loading')}</Text>
+      )}
     </SafeAreaView>
   );
 }

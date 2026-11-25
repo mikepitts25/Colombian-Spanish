@@ -25,6 +25,7 @@ interface Props {
   /** Parent must provide vertical scrolling for the content-sized face. */
   expandForLargeText?: boolean;
   onGrade: (q: 1 | 2 | 3 | 4 | 5) => void;
+  onReveal?: () => void;
 }
 
 const REGISTER_COLORS: Record<CardRegister, { bg: string; border: string; text: string }> = {
@@ -34,7 +35,7 @@ const REGISTER_COLORS: Record<CardRegister, { bg: string; border: string; text: 
   flirty: { bg: 'rgba(244,114,182,0.15)', border: 'rgba(244,114,182,0.5)', text: '#f9a8d4' },
 };
 
-export default function Flashcard({ card, onGrade, expandForLargeText = false }: Props) {
+export default function Flashcard({ card, onGrade, onReveal, expandForLargeText = false }: Props) {
   const styles = useThemedStyles(makeStyles);
   const theme = useAppTheme();
   const { colors } = theme;
@@ -53,7 +54,7 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
   const largeText = expandForLargeText && fontScale >= 1.4;
   const instantMotion = reducedMotion || largeText;
   const [isFront, setIsFront] = useState(true);
-  const { say, cancel: stopAudio, prepareReveal } = useCardAudio(card);
+  const { say, cancel: stopAudio, prepareReveal, audioRequested } = useCardAudio(card);
   const exampleText = splitExampleText(card.example);
   const register = getCardRegister(card);
 
@@ -90,10 +91,18 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
     version = useRef(0),
     gestureBusy = useRef(false);
   const animation = useRef<Animated.CompositeAnimation | null>(null);
-  const latest = useRef({ onGrade, reducedMotion: instantMotion, cardId: card.id });
+  const hasRevealed = useRef(false);
+  const latest = useRef({ onGrade, onReveal, reducedMotion: instantMotion, cardId: card.id });
   useLayoutEffect(() => {
-    latest.current = { onGrade, reducedMotion: instantMotion, cardId: card.id };
-  }, [onGrade, instantMotion, card.id]);
+    latest.current = { onGrade, onReveal, reducedMotion: instantMotion, cardId: card.id };
+  }, [onGrade, onReveal, instantMotion, card.id]);
+  const showFace = useCallback((front: boolean) => {
+    setIsFront(front);
+    if (!front && !hasRevealed.current) {
+      hasRevealed.current = true;
+      latest.current.onReveal?.();
+    }
+  }, []);
   const cancelMotion = useCallback(() => {
     version.current++;
     animation.current?.stop();
@@ -111,7 +120,7 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
     const target = to === 'front' ? 0 : 180;
     if (instantMotion) {
       rot.setValue(target);
-      setIsFront(to === 'front');
+      showFace(to === 'front');
       reveal?.();
       return;
     }
@@ -124,7 +133,7 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
     });
     animation.current.start(({ finished }) => {
       if (finished && version.current === request) {
-        setIsFront(to === 'front');
+        showFace(to === 'front');
         reveal?.();
       }
     });
@@ -132,6 +141,7 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
   useEffect(() => {
     cancelMotion();
     intendedFront.current = true;
+    hasRevealed.current = false;
     rot.setValue(0);
     // Card identity changes must reset the native animation and its accessible face together.
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -141,9 +151,10 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
     if (instantMotion) {
       cancelMotion();
       rot.setValue(intendedFront.current ? 0 : 180);
-      setIsFront(intendedFront.current);
+      showFace(intendedFront.current);
+      stopAudio();
     }
-  }, [instantMotion, cancelMotion, rot]);
+  }, [instantMotion, cancelMotion, rot, showFace, stopAudio]);
   useEffect(() => () => cancelMotion(), [cancelMotion]);
 
   const panResponder = useMemo(
@@ -163,8 +174,9 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
         },
         onPanResponderTerminate: () => {
           cancelMotion();
+          stopAudio();
           rot.setValue(intendedFront.current ? 0 : 180);
-          setIsFront(intendedFront.current);
+          showFace(intendedFront.current);
         },
         onPanResponderRelease: (_e, gs) => {
           if (gestureBusy.current) return;
@@ -209,7 +221,7 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
           });
         },
       }),
-    [cancelMotion, rot, translateX],
+    [cancelMotion, rot, showFace, stopAudio, translateX],
   );
 
   if (largeText) {
@@ -218,6 +230,7 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
       <View>
         <View key={fontScale} style={styles.expandedCard} {...panResponder.panHandlers}>
           <Pressable
+            testID={isFront && onReveal ? 'study-reveal' : undefined}
             accessibilityRole="button"
             accessibilityLabel={
               isFront
@@ -237,6 +250,9 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
                 {isFront ? exampleText?.spanish : exampleText?.english}
               </Text>
             ) : null}
+            {isFront && onReveal && (
+              <Text style={styles.revealLabel}>{t('study.showMeaning')}</Text>
+            )}
           </Pressable>
           {isFront && (
             <Pressable
@@ -255,16 +271,18 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
             </Pressable>
           )}
         </View>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={t('audio.stop')}
-          style={styles.stopAudio}
-          onPress={stopAudio}
-        >
-          <Text key={fontScale} style={styles.stopAudioText}>
-            {t('audio.stop')}
-          </Text>
-        </Pressable>
+        {audioRequested && (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t('audio.stop')}
+            style={styles.stopAudio}
+            onPress={stopAudio}
+          >
+            <Text key={fontScale} style={styles.stopAudioText}>
+              {t('audio.stop')}
+            </Text>
+          </Pressable>
+        )}
       </View>
     );
   }
@@ -288,6 +306,7 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
         >
           <View style={styles.face}>
             <Pressable
+              testID={onReveal ? 'study-reveal' : undefined}
               accessibilityRole="button"
               accessibilityLabel={`${t('common.flipCard')}: ${card.front}. ${exampleText?.spanish ?? ''} ${register ? t(REGISTER_LABEL_KEYS[register]) : ''}`}
               style={styles.flipTarget}
@@ -301,6 +320,7 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
                   "{exampleText.spanish}"
                 </Text>
               ) : null}
+              {onReveal && <Text style={styles.revealLabel}>{t('study.showMeaning')}</Text>}
             </Pressable>
             <Pressable
               accessibilityRole="button"
@@ -344,14 +364,16 @@ export default function Flashcard({ card, onGrade, expandForLargeText = false }:
           </Pressable>
         </Animated.View>
       </Animated.View>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={t('audio.stop')}
-        style={styles.stopAudio}
-        onPress={stopAudio}
-      >
-        <Text style={styles.stopAudioText}>{t('audio.stop')}</Text>
-      </Pressable>
+      {audioRequested && (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('audio.stop')}
+          style={styles.stopAudio}
+          onPress={stopAudio}
+        >
+          <Text style={styles.stopAudioText}>{t('audio.stop')}</Text>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -381,6 +403,7 @@ const makeStyles = ({ colors }: AppTheme) =>
     cardWrap: { height: 278 },
     stopAudio: { minHeight: 48, marginTop: 8, alignItems: 'center', justifyContent: 'center' },
     stopAudioText: { color: colors.textSecondary, fontSize: 16 },
+    revealLabel: { color: colors.brand, textAlign: 'center', fontSize: 16, fontWeight: '800' },
 
     card: {
       ...StyleSheet.absoluteFill,

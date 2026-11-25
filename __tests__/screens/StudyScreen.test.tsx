@@ -1,9 +1,10 @@
+import { revealStudyCard } from '../../testFixtures/revealStudyCard';
 import { renderWithTheme } from '../../testFixtures/renderWithTheme';
 import ThemeIcon from '../../src/components/ThemeIcon';
 import '@testing-library/jest-native/extend-expect';
 import React from 'react';
 import { Dimensions, ScrollView } from 'react-native';
-import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
+import { render, fireEvent, waitFor, act, within } from '@testing-library/react-native';
 import StudyScreen from '../../src/screens/StudyScreen';
 import { FlashCard, Deck } from '../../src/types';
 
@@ -40,8 +41,10 @@ jest.mock('../../src/services/tts', () => ({
   speakCard: jest.fn(),
   stop: jest.fn(),
 }));
+jest.mock('../../src/hooks/useReducedMotion', () => ({ useReducedMotion: () => true }));
 
 import { useDeck } from '../../src/hooks/useDeck';
+import { speakCard } from '../../src/services/tts';
 import {
   getDailyProgress,
   getLastStudySession,
@@ -153,7 +156,10 @@ function renderStudyScreen(ctxOverrides: Record<string, any> = {}) {
 async function openCommunicationSession(screen: ReturnType<typeof renderStudyScreen>) {
   fireEvent.press(await screen.findByText('Comunicación'));
   await waitFor(() => expect(screen.getByText('hola')).toBeTruthy());
-  await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+}
+
+function openRegionFilters(ui: ReturnType<typeof renderStudyScreen>) {
+  if (!ui.queryByTestId('region-filters')) fireEvent.press(ui.getByTestId('study-region-filter'));
 }
 
 beforeEach(() => {
@@ -253,6 +259,26 @@ describe('StudyScreen landing', () => {
     expect(scroll.props.scrollEnabled).not.toBe(false);
   });
 
+  it('exposes study and playback as independent search-result buttons', async () => {
+    const screen = renderStudyScreen();
+    fireEvent.changeText(
+      screen.getByPlaceholderText('Busca palabras, frases o temas...'),
+      'celular',
+    );
+
+    const playback = await screen.findByRole('button', { name: 'Escuchar: celular' });
+    const study = screen.getByRole('button', { name: 'Estudiar celular. cell phone' });
+    expect(within(study).queryByRole('button', { name: 'Escuchar: celular' })).toBeNull();
+
+    fireEvent.press(playback);
+    expect(speakCard).toHaveBeenCalledWith(TECH_DECK.cards[0]);
+    expect(screen.setActiveDeckId).not.toHaveBeenCalled();
+    expect(mockSaveLastStudySession).not.toHaveBeenCalled();
+
+    fireEvent.press(study);
+    await waitFor(() => expect(screen.setActiveDeckId).toHaveBeenCalledWith(TECH_DECK.id));
+  });
+
   it('starts a session from a search result and activates the result deck', async () => {
     const screen = renderStudyScreen();
 
@@ -336,7 +362,7 @@ describe('StudyScreen session', () => {
 
     await openCommunicationSession(screen);
 
-    expect(screen.getByText('Greetings')).toBeTruthy();
+    expect(screen.getByText(GREETINGS_DECK.name)).toBeTruthy();
   });
 
   it('renders remaining card count for a 3-card batch', async () => {
@@ -355,7 +381,10 @@ describe('StudyScreen session', () => {
 
     fireEvent.press(await screen.findByText('Comunicación'));
     await waitFor(() => expect(screen.getByText('general-card')).toBeTruthy());
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    fireEvent.press(screen.getByText('Filtrar por región'));
+    openRegionFilters(screen);
     fireEvent.press(screen.getByText('Paisa'));
 
     await waitFor(() => expect(screen.getByText('que hubo')).toBeTruthy());
@@ -367,6 +396,8 @@ describe('StudyScreen session', () => {
 
     await openCommunicationSession(screen);
 
+    expect(screen.queryByTestId('region-filters')).toBeNull();
+    fireEvent.press(screen.getByText('Filtrar por región'));
     expect(screen.getByTestId('region-filters')).toBeTruthy();
     expect(screen.queryByTestId('region-filter-scroll')).toBeNull();
     expect(screen.getByText('Todo')).toBeTruthy();
@@ -380,7 +411,7 @@ describe('StudyScreen session', () => {
 
     await openCommunicationSession(screen);
 
-    expect(screen.getByText('Toca para ver respuesta')).toBeTruthy();
+    expect(screen.getByText('Mostrar significado')).toBeTruthy();
   });
 
   it('renders the flip-card touch target', async () => {
@@ -396,7 +427,10 @@ describe('StudyScreen session', () => {
 
     await openCommunicationSession(screen);
 
-    expect(screen.getByText('Otra vez')).toBeTruthy();
+    expect(screen.queryByText('Otra vez')).toBeNull();
+    await revealStudyCard(screen);
+    const again = screen.getByRole('button', { name: /^Otra vez/ });
+    expect(within(again).getByText('15m')).toHaveStyle({ color: '#f87171' });
     expect(screen.getByText('Bien')).toBeTruthy();
     expect(screen.getByText('Fácil')).toBeTruthy();
   });
@@ -415,6 +449,7 @@ describe('StudyScreen session', () => {
     const screen = renderStudyScreen();
 
     await openCommunicationSession(screen);
+    await revealStudyCard(screen);
     await act(async () => {
       fireEvent.press(screen.getByText('Otra vez'));
     });
@@ -430,6 +465,7 @@ describe('StudyScreen session', () => {
     const screen = renderStudyScreen();
 
     await openCommunicationSession(screen);
+    await revealStudyCard(screen);
     await act(async () => {
       fireEvent.press(screen.getByText('Bien'));
     });
@@ -445,6 +481,7 @@ describe('StudyScreen session', () => {
     const screen = renderStudyScreen();
 
     await openCommunicationSession(screen);
+    await revealStudyCard(screen);
     await act(async () => {
       fireEvent.press(screen.getByText('Fácil'));
     });
@@ -460,6 +497,7 @@ describe('StudyScreen session', () => {
     const screen = renderStudyScreen();
 
     await openCommunicationSession(screen);
+    await revealStudyCard(screen);
     await act(async () => {
       fireEvent.press(screen.getByText('Bien'));
     });
@@ -478,6 +516,7 @@ describe('StudyScreen session', () => {
     const screen = renderStudyScreen();
 
     await openCommunicationSession(screen);
+    await revealStudyCard(screen);
     await act(async () => {
       fireEvent.press(screen.getByText('Bien'));
     });
@@ -522,6 +561,7 @@ describe('StudyScreen queue stability', () => {
     };
     const screen = renderStudyScreen(context);
     await openCommunicationSession(screen);
+    await revealStudyCard(screen);
     await act(async () => {
       fireEvent.press(screen.getByText('Bien'));
     });
@@ -546,6 +586,7 @@ describe('StudyScreen queue stability', () => {
     );
     const screen = renderStudyScreen({ recordAnswer });
     await openCommunicationSession(screen);
+    await revealStudyCard(screen);
     fireEvent.press(screen.getByText('Bien'));
     fireEvent.press(screen.getByText('Fácil'));
     expect(recordAnswer).toHaveBeenCalledTimes(1);
@@ -567,6 +608,7 @@ describe('StudyScreen queue stability', () => {
     };
     const screen = renderStudyScreen(context);
     await openCommunicationSession(screen);
+    await revealStudyCard(screen);
     await act(async () => {
       fireEvent.press(screen.getByText('Bien'));
     });
@@ -584,10 +626,12 @@ describe('StudyScreen queue stability', () => {
 it('keeps the next card when the already selected region is tapped', async () => {
   const screen = renderStudyScreen();
   await openCommunicationSession(screen);
+  await revealStudyCard(screen);
   await act(async () => {
     fireEvent.press(screen.getByText('Bien'));
   });
   await waitFor(() => expect(screen.getByText('adios')).toBeTruthy());
+  openRegionFilters(screen);
   fireEvent.press(screen.getByText('Todo'));
   expect(screen.getByText('adios')).toBeTruthy();
   expect(screen.getByText('2 restantes')).toBeTruthy();
@@ -618,9 +662,10 @@ it('retries a failed grade with the same attempt identity and original quality',
       .mockResolvedValue(undefined);
     const screen = renderStudyScreen({ recordAnswer });
     await openCommunicationSession(screen);
+    await revealStudyCard(screen);
     await act(async () => fireEvent.press(screen.getByText('Bien')));
     const retry = await screen.findByText('Intentar guardar de nuevo');
-    expect(screen.getByText('hola')).toBeTruthy();
+    expect(screen.getByText('hello')).toBeTruthy();
     const original = recordAnswer.mock.calls[0];
     expect(original[2]).toEqual(
       expect.objectContaining({
@@ -649,10 +694,13 @@ it('keeps the current session and region while a grade is unresolved', async () 
   );
   const screen = renderStudyScreen({ recordAnswer });
   await openCommunicationSession(screen);
+  await revealStudyCard(screen);
   fireEvent.press(screen.getByText('Bien'));
+  fireEvent.press(screen.getByText('Filtrar por región'));
+  openRegionFilters(screen);
   fireEvent.press(screen.getByText('Paisa'));
   fireEvent.press(screen.getByText('Cambiar tema'));
-  expect(screen.getByText('hola')).toBeTruthy();
+  expect(screen.getByText('hello')).toBeTruthy();
   await act(async () => finish());
   expect(await screen.findByText('adios')).toBeTruthy();
   expect(recordAnswer).toHaveBeenCalledTimes(1);
@@ -668,6 +716,7 @@ it('resumes only the saved ordered queue and learning-session identity', async (
   const screen = renderStudyScreen();
   fireEvent.press(await screen.findByText('Continuar'));
   await waitFor(() => expect(screen.getByText('como vas')).toBeTruthy());
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   expect(saveResumedStudySession).toHaveBeenCalledWith(
     expect.objectContaining({ deckId: 'deck-greetings' }),
@@ -690,6 +739,7 @@ it('does not skip the current card when a previously graded card is deleted', as
   const context = { activeDeck: GREETINGS_DECK };
   const screen = renderStudyScreen(context);
   await openCommunicationSession(screen);
+  await revealStudyCard(screen);
   await act(async () => fireEvent.press(screen.getByText('Bien')));
   expect(screen.getByText('adios')).toBeTruthy();
   context.activeDeck = { ...GREETINGS_DECK, cards: GREETING_CARDS.slice(1) };
@@ -701,6 +751,7 @@ it('requires the initial queue checkpoint to save and offers a retry before grad
   const screen = renderStudyScreen();
   fireEvent.press(await screen.findByText('Comunicación'));
   await screen.findByText('No se pudo guardar esta sesión. Reintenta antes de responder.');
+  await revealStudyCard(screen);
   fireEvent.press(screen.getByText('Bien'));
   expect(screen.recordAnswer).not.toHaveBeenCalled();
   await act(async () => fireEvent.press(screen.getByText('Intentar guardar de nuevo')));
@@ -710,6 +761,7 @@ it('requires the initial queue checkpoint to save and offers a retry before grad
 it('ends the bounded batch instead of silently starting another batch', async () => {
   const screen = renderStudyScreen({ getStudyBatch: () => [GREETING_CARDS[0]] });
   await openCommunicationSession(screen);
+  await revealStudyCard(screen);
   await act(async () => fireEvent.press(screen.getByText('Bien')));
   expect(await screen.findByText('Sesión terminada')).toBeTruthy();
   expect(screen.queryByText('hola')).toBeNull();
@@ -734,6 +786,7 @@ it('drops missing and no-longer-eligible saved cards without filling the queue',
   fireEvent.press(await screen.findByText('Continuar'));
   expect(await screen.findByText('adios')).toBeTruthy();
   expect(screen.getByText('1 restantes')).toBeTruthy();
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   expect(mockSaveLastStudySession).toHaveBeenCalledWith(
     expect.objectContaining({
@@ -755,6 +808,7 @@ it('restores the saved regional filter along with queue identity', async () => {
   });
   fireEvent.press(await screen.findByText('Continuar'));
   expect(await screen.findByText('que hubo')).toBeTruthy();
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   expect(mockSaveLastStudySession).toHaveBeenCalledWith(
     expect.objectContaining({
@@ -774,6 +828,7 @@ it('blocks grading until the initial checkpoint finishes', async () => {
   const screen = renderStudyScreen();
   fireEvent.press(await screen.findByText('Comunicación'));
   await screen.findByText('hola');
+  await revealStudyCard(screen);
   fireEvent.press(screen.getByText('Bien'));
   expect(screen.recordAnswer).not.toHaveBeenCalled();
   await act(async () => finish());
@@ -888,7 +943,9 @@ test('resumed bounded review retains its limits when explicitly changing regions
   const ui = renderStudyScreen({ decks: [{ ...GREETINGS_DECK, cards }] });
   await ui.findByText('Continuar');
   fireEvent.press(ui.getByText('Continuar'));
+  await revealStudyCard(ui);
   await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
+  openRegionFilters(ui);
   fireEvent.press(ui.getByText('Paisa'));
   await waitFor(() =>
     expect(mockSaveLastStudySession).toHaveBeenLastCalledWith(
@@ -918,6 +975,7 @@ test('an external deck switch keeps the new queue when an earlier grade finishes
   };
   const screen = renderStudyScreen(context);
   await openCommunicationSession(screen);
+  await revealStudyCard(screen);
   fireEvent.press(screen.getByText('Bien'));
   context.activeDeckId = TECH_DECK.id;
   context.activeDeck = TECH_DECK;
@@ -947,14 +1005,17 @@ test('a new deck checkpoint waits for an earlier grade before becoming resumable
   const screen = renderStudyScreen(context);
   await openCommunicationSession(screen);
   const original = mockSaveLastStudySession.mock.calls[0][0];
+  await revealStudyCard(screen);
   fireEvent.press(screen.getByText('Bien'));
   context.activeDeckId = TECH_DECK.id;
   context.activeDeck = TECH_DECK;
   screen.rerender(<StudyScreen />);
   await screen.findByText('celular');
   expect(mockSaveLastStudySession).toHaveBeenCalledTimes(1);
+  await revealStudyCard(screen);
   expect(screen.getByText('Bien')).toBeDisabled();
   await act(async () => finish());
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   const latest = mockSaveLastStudySession.mock.calls.at(-1)[0];
   expect(latest.deckId).toBe(TECH_DECK.id);
@@ -977,6 +1038,7 @@ test('leaving a waiting deck boundary cannot overwrite a later screen checkpoint
   };
   const screen = renderStudyScreen(context);
   await openCommunicationSession(screen);
+  await revealStudyCard(screen);
   fireEvent.press(screen.getByText('Bien'));
   context.activeDeckId = TECH_DECK.id;
   context.activeDeck = TECH_DECK;
@@ -1018,12 +1080,14 @@ test('a failed earlier grade cannot block or retry into a new deck', async () =>
   };
   const screen = renderStudyScreen(context);
   await openCommunicationSession(screen);
+  await revealStudyCard(screen);
   fireEvent.press(screen.getByText('Bien'));
   context.activeDeckId = TECH_DECK.id;
   context.activeDeck = TECH_DECK;
   screen.rerender(<StudyScreen />);
   await screen.findByText('celular');
   await act(async () => fail(new Error('old write failed')));
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   expect(screen.queryByText('Intentar guardar de nuevo')).toBeNull();
   await act(async () => fireEvent.press(screen.getByText('Bien')));
@@ -1047,6 +1111,7 @@ test('only the latest external deck checkpoint is written after a pending grade'
   };
   const screen = renderStudyScreen(context);
   await openCommunicationSession(screen);
+  await revealStudyCard(screen);
   fireEvent.press(screen.getByText('Bien'));
   context.activeDeckId = TECH_DECK.id;
   context.activeDeck = TECH_DECK;
@@ -1058,12 +1123,13 @@ test('only the latest external deck checkpoint is written after a pending grade'
   await screen.findByText('arepa');
   expect(mockSaveLastStudySession).toHaveBeenCalledTimes(1);
   await act(async () => finish());
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   expect(mockSaveLastStudySession).toHaveBeenCalledTimes(2);
   expect(mockSaveLastStudySession).toHaveBeenLastCalledWith(
     expect.objectContaining({ deckId: FOOD_DECK.id, cardId: 'food-1' }),
   );
-  expect(screen.getByText('arepa')).toBeTruthy();
+  expect(screen.getByText('corn cake')).toBeTruthy();
 });
 
 test('an external deck change does not inherit a bounded queue or learning identity', async () => {
@@ -1086,11 +1152,13 @@ test('an external deck change does not inherit a bounded queue or learning ident
   };
   const screen = renderStudyScreen(context);
   fireEvent.press(await screen.findByText('Continuar'));
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   context.activeDeckId = TECH_DECK.id;
   context.activeDeck = TECH_DECK;
   screen.rerender(<StudyScreen />);
   await screen.findByText('celular');
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   const latest = mockSaveLastStudySession.mock.calls.at(-1)[0];
   expect(latest.deckId).toBe(TECH_DECK.id);
@@ -1134,10 +1202,12 @@ test('region controls expose their selected state through a live text-size chang
         screen: { ...screenMetrics, fontScale: 3 },
       }),
     );
+    openRegionFilters(screen);
     expect(screen.getByRole('button', { name: 'Todo' })).toHaveAccessibilityState({
       selected: true,
       disabled: false,
     });
+    openRegionFilters(screen);
     expect(screen.getByRole('button', { name: 'Paisa' })).toHaveAccessibilityState({
       selected: false,
       disabled: false,
@@ -1163,6 +1233,7 @@ test('live session resizing preserves a pending grade and prevents duplicate sub
   );
   const screen = renderStudyScreen({ recordAnswer });
   await openCommunicationSession(screen);
+  await revealStudyCard(screen);
   fireEvent.press(screen.getByText('Bien'));
   try {
     await act(async () =>
@@ -1174,7 +1245,7 @@ test('live session resizing preserves a pending grade and prevents duplicate sub
     expect(screen.getByText('Bien')).toBeDisabled();
     fireEvent.press(screen.getByText('Bien'));
     expect(recordAnswer).toHaveBeenCalledTimes(1);
-    expect(screen.getByText('hola')).toBeTruthy();
+    expect(screen.getByText('hello')).toBeTruthy();
     await act(async () => finish());
     expect(await screen.findByText('adios')).toBeTruthy();
     expect(recordAnswer).toHaveBeenCalledTimes(1);
@@ -1200,6 +1271,7 @@ test('advancing after a saved grade returns the viewport to the next card only a
       nativeEvent: { layout: { y: 620 } },
     });
     scrollTo.mockClear();
+    await revealStudyCard(screen);
     fireEvent.press(screen.getByText('Bien'));
     expect(scrollTo).not.toHaveBeenCalled();
     await act(async () => finish());
@@ -1225,6 +1297,7 @@ test('passes the Home regional preference to initial selection and clears it for
     await waitFor(() =>
       expect(getStudyBatch).toHaveBeenCalledWith(15, { preferredRegion: 'paisa' }),
     );
+    openRegionFilters(screen);
     fireEvent.press(screen.getByRole('button', { name: 'General' }));
     await waitFor(() => expect(getStudyBatch).toHaveBeenLastCalledWith(100));
     expect(screen.recordAnswer).not.toHaveBeenCalled();
@@ -1288,7 +1361,9 @@ test('explicit All clears a Home new-card preference even when All is already se
     await waitFor(() =>
       expect(getStudyBatch).toHaveBeenCalledWith(15, { preferredRegion: 'paisa' }),
     );
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
+    openRegionFilters(screen);
     fireEvent.press(screen.getByRole('button', { name: 'Todo', selected: true }));
     await waitFor(() => expect(getStudyBatch).toHaveBeenLastCalledWith(15));
     expect(screen.recordAnswer).not.toHaveBeenCalled();
@@ -1331,6 +1406,7 @@ test('opens a saved daily plan exactly, links grades and offers the next phase',
       ],
     });
     await waitFor(() => expect(ui.getByText('1 restantes')).toBeTruthy());
+    await revealStudyCard(ui);
     await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
     await act(async () => fireEvent.press(ui.getByText('Bien')));
     expect(ui.recordAnswer).toHaveBeenCalledWith(
@@ -1368,13 +1444,17 @@ test('detached manual checkpoints clear their old plan linkage before ordinary r
   try {
     mockRouteParams = { dailyPlanId: 'plan' };
     const ui = renderStudyScreen();
+    await revealStudyCard(ui);
     await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
     await act(async () => fireEvent.press(ui.getByText('Bien')));
     expect(ui.recordAnswer.mock.calls[0][2].planId).toBe('plan');
+    openRegionFilters(ui);
     fireEvent.press(ui.getByText('General'));
+    await revealStudyCard(ui);
     await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
     fireEvent.press(ui.getByText('Cambiar tema'));
     fireEvent.press(await ui.findByText('Seguir estudiando'));
+    await revealStudyCard(ui);
     await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
     await act(async () => fireEvent.press(ui.getByText('Bien')));
     expect(ui.recordAnswer.mock.calls[1][2].planId).toBeUndefined();
@@ -1406,13 +1486,14 @@ test('a plan handoff retains a failed manual grade until its original retry sett
       .mockResolvedValue(undefined);
     const ui = renderStudyScreen({ recordAnswer });
     await openCommunicationSession(ui);
+    await revealStudyCard(ui);
     await act(async () => fireEvent.press(ui.getByText('Bien')));
     await ui.findByText('Intentar guardar de nuevo');
     const original = recordAnswer.mock.calls[0];
     mockRouteParams = { dailyPlanId: 'food-plan' };
     await act(async () => ui.rerender(<StudyScreen />));
     await ui.findByText('No se pudo abrir el plan guardado. Reintenta o gestiona el plan.');
-    expect(ui.getByText('hola')).toBeTruthy();
+    expect(ui.getByText('hello')).toBeTruthy();
     await act(async () => fireEvent.press(ui.getByText('Intentar guardar de nuevo')));
     expect(recordAnswer.mock.calls[1]).toEqual(original);
     expect(ui.setActiveDeckId).not.toHaveBeenCalledWith(FOOD_DECK.id);
@@ -1434,7 +1515,9 @@ test('Barrio audio entry uses the common decorative icon while Classic retains i
     true,
   );
   expect(screen.queryAllByText('🔊')).toHaveLength(0);
-  fireEvent.press(screen.getAllByLabelText(/^Escuchar: /)[0]);
+  const listen = screen.getAllByRole('button', { name: /^Escuchar: / })[0];
+  expect(listen).toHaveStyle({ width: 48, height: 48 });
+  fireEvent.press(listen);
   expect(require('../../src/services/tts').speakCard).toHaveBeenCalledTimes(1);
   screen.applyTheme({ themeId: 'classic', appearanceMode: 'system' });
   expect(screen.getAllByText('🔊').length).toBeGreaterThan(0);
@@ -1452,12 +1535,13 @@ describe('explicit topic navigation', () => {
   it('preserves the remaining queue and session identity across browsing', async () => {
     const ui = renderStudyScreen();
     await openCommunicationSession(ui);
+    await revealStudyCard(ui);
     await act(async () => fireEvent.press(ui.getByText('Bien')));
     expect(ui.getByText('adios')).toBeTruthy();
     const batchCalls = ui.getStudyBatch.mock.calls.length;
     const checkpointCalls = mockSaveLastStudySession.mock.calls.length;
     fireEvent.press(ui.getByText('Cambiar tema'));
-    expect(ui.getByText('Tema actual: Greetings')).toBeTruthy();
+    expect(ui.getByText('Tema actual: Saludos')).toBeTruthy();
     expect(ui.getByRole('button', { name: 'Comunicación' })).toHaveAccessibilityState({
       selected: true,
     });
@@ -1465,6 +1549,7 @@ describe('explicit topic navigation', () => {
     expect(ui.getByText('adios')).toBeTruthy();
     expect(ui.getStudyBatch).toHaveBeenCalledTimes(batchCalls);
     expect(mockSaveLastStudySession).toHaveBeenCalledTimes(checkpointCalls);
+    await revealStudyCard(ui);
     await act(async () => fireEvent.press(ui.getByText('Bien')));
     expect(ui.recordAnswer.mock.calls[1][2].sessionId).toBe(
       ui.recordAnswer.mock.calls[0][2].sessionId,
@@ -1496,6 +1581,7 @@ describe('explicit topic navigation', () => {
   it('keeps grade recovery visible when Home requests a chooser during a failed save', async () => {
     const ui = renderStudyScreen({ recordAnswer: jest.fn().mockRejectedValue(new Error('disk')) });
     await openCommunicationSession(ui);
+    await revealStudyCard(ui);
     await act(async () => fireEvent.press(ui.getByText('Bien')));
     expect(ui.getByText('Cambiar tema')).toBeDisabled();
     expect(ui.getByText('INICIO')).toBeDisabled();
@@ -1514,16 +1600,21 @@ it('keeps the selected region and pauses active timing without changing card ide
   try {
     const ui = renderStudyScreen({ decks: [{ ...GREETINGS_DECK, cards: MIXED_REGION_CARDS }] });
     fireEvent.press(await ui.findByText('Comunicación'));
+    await revealStudyCard(ui);
     await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
+    openRegionFilters(ui);
     fireEvent.press(ui.getByText('Paisa'));
+    expect(await ui.findByText('que hubo')).toBeTruthy();
+    await revealStudyCard(ui);
     await waitFor(() => expect(ui.getByText('Bien')).not.toBeDisabled());
-    expect(ui.getByText('que hubo')).toBeTruthy();
+    expect(ui.getByText('back-paisa')).toBeTruthy();
     const before = timing.mock.calls[timing.mock.calls.length - 1];
     expect(before[1]).toBe(true);
     fireEvent.press(ui.getByText('Cambiar tema'));
     expect(timing).toHaveBeenLastCalledWith(before[0], false);
     await act(async () => fireEvent.press(ui.getByText('Seguir estudiando')));
     expect(ui.getByText('que hubo')).toBeTruthy();
+    openRegionFilters(ui);
     expect(ui.getByRole('button', { name: 'Paisa' })).toHaveAccessibilityState({ selected: true });
     expect(timing).toHaveBeenLastCalledWith(before[0], true);
   } finally {

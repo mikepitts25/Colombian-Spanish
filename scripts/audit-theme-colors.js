@@ -181,6 +181,15 @@ function contrast(foreground, background, canvas) {
 }
 function contrastPairs() {
   const pairs = [];
+  const reminderUses = {
+    'textPrimary/surface': 'Route ink including the reminder offer heading',
+    'textSecondary/surface':
+      'Route ink including reminder offer instructions and the reminder word Listen label',
+    'brand/surface': 'Route ink including reminder offer action labels',
+    'textPrimary/bg': 'Route ink including reminder word headings',
+    'textSecondary/bg': 'Route ink including reminder word translation and availability',
+    'onBrand/brand': 'Control labels including the reminder word Today’s practice action',
+  };
   const textRoles = [
     'textPrimary',
     'textSecondary',
@@ -215,7 +224,7 @@ function contrastPairs() {
         foreground: fg,
         background: bg,
         minimum: 4.5,
-        purpose: 'text/icon ink on route surfaces',
+        purpose: reminderUses[`${fg}/${bg}`] ?? 'text/icon ink on route surfaces',
       });
   for (const [fg, bg] of [
     ['audioText', 'audioSurface'],
@@ -238,7 +247,7 @@ function contrastPairs() {
       foreground: fg,
       background: bg,
       minimum: 4.5,
-      purpose: 'actual control/status pair',
+      purpose: reminderUses[`${fg}/${bg}`] ?? 'actual control/status pair',
     });
   for (const fg of [
     'border',
@@ -280,6 +289,53 @@ function contrastPairs() {
       minimum: 4.5,
       purpose: 'Preserved Classic Difficult source-deck badge',
       themeId: 'classic',
+    },
+    {
+      foreground: 'brand',
+      background: 'cardSurface',
+      minimum: 4.5,
+      purpose: 'Study Show meaning action inside Flashcard',
+    },
+    {
+      foreground: 'brand',
+      background: 'highlightWash',
+      minimum: 4.5,
+      purpose: 'Difficult Words review counter',
+    },
+    {
+      foreground: 'textInverse',
+      background: 'brandPressed',
+      minimum: 4.5,
+      purpose: 'Difficult Words pressed Back to practice action',
+      themeId: 'barrio',
+    },
+    {
+      foreground: 'textPrimary',
+      background: 'selectedWash',
+      canvas: 'surfaceElevated',
+      minimum: 4.5,
+      purpose: 'Manage Decks selected name and status',
+    },
+    {
+      foreground: 'textSecondary',
+      background: 'selectedWash',
+      canvas: 'surfaceElevated',
+      minimum: 4.5,
+      purpose: 'Manage Decks selected card count',
+    },
+    {
+      foreground: 'textPrimary',
+      background: 'surfacePressed',
+      minimum: 4.5,
+      purpose: 'Pressed Daily Plan, Adventure and Mission secondary actions',
+      themeId: 'barrio',
+    },
+    {
+      foreground: 'danger',
+      background: 'surfacePressed',
+      minimum: 4.5,
+      purpose: 'Pressed Daily Plan End plan action',
+      themeId: 'barrio',
     },
   );
   return pairs;
@@ -323,7 +379,7 @@ function auditSources(root, overrides = {}) {
         const actual = contrast(
           theme.colors[pair.foreground],
           theme.colors[pair.background],
-          theme.colors.bg,
+          theme.colors[pair.canvas ?? 'bg'],
         );
         const pass = actual >= pair.minimum;
         const row = {

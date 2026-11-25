@@ -208,7 +208,7 @@ describe('recognition evidence', () => {
     });
     expect(await screen.findByText('Next question')).toBeTruthy();
     fireEvent.press(screen.getByText('Next question'));
-    expect(screen.getByText('2 / 10')).toBeTruthy();
+    expect(screen.getByText('2 / 5')).toBeTruthy();
   });
 
   it('records incorrect recognition as incorrect instead of a failed flashcard review', async () => {
@@ -279,10 +279,12 @@ it('shows unique answer meanings even when many cards share one translation', as
 it('does not score a quiz with only one distinct answer meaning', async () => {
   const cards = CARDS.map((card) => ({ ...card, back: 'same meaning' }));
   const screen = renderQuiz({ decks: [{ ...DECK, cards }] });
-  fireEvent.press(await screen.findByText('Start Quiz'));
   expect(
     await screen.findByText('Add more words with different meanings to start a quiz.'),
   ).toBeTruthy();
+  expect(screen.queryByText('Start Quiz')).toBeNull();
+  fireEvent.press(screen.getByRole('button', { name: 'Add a word' }));
+  expect(mockNavigate).toHaveBeenCalledWith('AddCard');
   expect(await getLearningEvents()).toEqual([]);
 });
 
@@ -303,6 +305,7 @@ describe('early quiz practice', () => {
     expect(within(scroll).queryByText('See results')).toBeNull();
     fireEvent.press(screen.getByRole('button', { name: 'See results' }));
     expect(await screen.findByText('Quiz Complete')).toBeTruthy();
+    expect(screen.getByRole('alert')).toHaveTextContent('Quiz Complete');
     expect(screen.getByText('Nice work recognizing these words.')).toBeTruthy();
     expect(recordQuizResult).toHaveBeenLastCalledWith(
       expect.objectContaining({ score: 1, total: 1, missedCardIds: [] }),
@@ -316,6 +319,9 @@ describe('early quiz practice', () => {
       }),
     ]);
     expect(recordAnswer).not.toHaveBeenCalled();
+    expect(screen.queryByText('Review missed cards')).toBeNull();
+    fireEvent.press(screen.getByRole('button', { name: 'Finish' }));
+    expect(mockNavigate).toHaveBeenCalledWith('Root', { screen: 'Study' }, { pop: true });
   });
 
   it('builds a short round from only studied words, without repeating duplicate history IDs', async () => {
@@ -337,13 +343,45 @@ describe('early quiz practice', () => {
     expect(['front-c0', 'front-c1']).toContain(second);
   });
 
+  it('reviews only the words missed in the finished round', async () => {
+    mockGetSeenWords.mockResolvedValue(CARDS.slice(0, 2).map(makeSeenWord));
+    (recordQuizResult as jest.Mock).mockResolvedValue([
+      { id: 'other', score: 0, total: 1, createdAt: NOW, missedCardIds: ['c9'], region: 'all' },
+    ]);
+    const screen = renderQuiz();
+    fireEvent.press(await screen.findByRole('button', { name: 'Start Quiz' }));
+    const first = screen.getByText(/^front-c/).props.children as string;
+    fireEvent.press(screen.getByRole('button', { name: first.replace('front-', 'back-') }));
+    fireEvent.press(await screen.findByRole('button', { name: 'Next question' }));
+    const second = screen.getByText(/^front-c/).props.children as string;
+    const answer = second.replace('front-', 'back-');
+    const incorrect = screen
+      .getAllByText(/^back-c/)
+      .find((node) => node.props.children !== answer)!;
+    fireEvent.press(incorrect);
+    expect(await screen.findByText(`Incorrect. The answer is ${answer}.`)).toBeTruthy();
+    fireEvent.press(await screen.findByRole('button', { name: 'See results' }));
+    expect(await screen.findByRole('button', { name: 'Finish' })).toBeTruthy();
+    fireEvent.press(screen.getByRole('button', { name: 'Review missed cards' }));
+
+    expect(screen.getByText(second)).toBeTruthy();
+    expect(screen.getByText('1 / 1')).toBeTruthy();
+    expect(screen.queryByText(first)).toBeNull();
+    expect(screen.queryByText('front-c9')).toBeNull();
+  });
+
   it('supports a single studied word in a region and an empty-region fallback', async () => {
     const cards = [makeCard(0, { tags: ['paisa'] }), makeCard(1)];
     mockGetSeenWords.mockResolvedValue(cards.map(makeSeenWord));
     const screen = renderQuiz({ decks: [{ ...DECK, cards }] });
     await screen.findByText('Start Quiz');
+    expect(screen.queryByRole('button', { name: 'Rolo' })).toBeNull();
+    fireEvent.press(screen.getByRole('button', { name: 'Round options' }));
     fireEvent.press(screen.getByText('Rolo'));
+    expect(await screen.findByText('No studied words are available in this region.')).toBeTruthy();
     expect(await screen.findByText('Study now')).toBeTruthy();
+    fireEvent.press(screen.getByRole('button', { name: 'Use all regions' }));
+    expect(await screen.findByText('Start Quiz')).toBeTruthy();
     fireEvent.press(screen.getByText('Paisa'));
     fireEvent.press(await screen.findByText('Start Quiz'));
     expect(screen.getByText('front-c0')).toBeTruthy();
@@ -351,10 +389,13 @@ describe('early quiz practice', () => {
     expect(screen.getAllByText(/^back-c/)).toHaveLength(2);
   });
 
-  it('still caps a larger studied pool at ten questions', async () => {
+  it('offers a longer ten-question round through round options', async () => {
     const cards = Array.from({ length: 12 }, (_, i) => makeCard(i));
     mockGetSeenWords.mockResolvedValue(cards.map(makeSeenWord));
     const screen = renderQuiz({ decks: [{ ...DECK, cards }] });
+    expect(await screen.findByText('Up to 5 questions in this round.')).toBeTruthy();
+    fireEvent.press(screen.getByRole('button', { name: 'Round options' }));
+    fireEvent.press(screen.getByRole('button', { name: '10 questions' }));
     fireEvent.press(await screen.findByText('Start Quiz'));
     expect(screen.getByText('1 / 10')).toBeTruthy();
   });
@@ -366,6 +407,7 @@ it('exposes selected region controls and keeps their filter through live text ch
   const screen = renderQuiz();
   try {
     await screen.findByText('Start Quiz');
+    fireEvent.press(screen.getByRole('button', { name: 'Round options' }));
     expect(screen.getByRole('button', { name: 'All', selected: true })).toBeTruthy();
     fireEvent.press(screen.getByRole('button', { name: 'Rolo' }));
     act(() =>
@@ -486,4 +528,6 @@ test('stops an active quiz when learning access changes, including cached distra
     ui.getByText('Your available library changed. Start a new quiz with your accessible cards.'),
   ).toBeTruthy();
   expect(await getLearningEvents()).toEqual([]);
+  fireEvent.press(ui.getByRole('button', { name: 'Return to quiz setup' }));
+  expect(ui.getByRole('button', { name: 'Add a word' })).toBeTruthy();
 });

@@ -47,6 +47,7 @@ afterEach(() => jest.restoreAllMocks());
 test('default reveal is silent; opt-in plays once per explicit reveal without grading', async () => {
   const onGrade = jest.fn(),
     ui = render(<Flashcard card={card} onGrade={onGrade} />);
+  expect(ui.queryByRole('button', { name: 'Stop audio' })).toBeNull();
   expect(speakCard).not.toHaveBeenCalled();
   fireEvent.press(ui.getByRole('button', { name: /Flip card: hola/ }));
   await act(async () => {});
@@ -58,6 +59,15 @@ test('default reveal is silent; opt-in plays once per explicit reveal without gr
   ui.rerender(<Flashcard card={{ ...card, favorite: true }} onGrade={onGrade} />);
   expect(speakCard).toHaveBeenCalledTimes(1);
   expect(onGrade).not.toHaveBeenCalled();
+});
+
+test('exposes Stop only for a pronunciation request and hides it when playback finishes', async () => {
+  const ui = render(<Flashcard card={card} onGrade={jest.fn()} />);
+  fireEvent.press(ui.getByRole('button', { name: 'Listen: hola' }));
+  expect(ui.getByRole('button', { name: 'Stop audio' })).toBeTruthy();
+  const playback = (speakCard as jest.Mock).mock.calls[0][1];
+  await act(async () => playback.onPlaybackEnd());
+  expect(ui.queryByRole('button', { name: 'Stop audio' })).toBeNull();
 });
 test.each(['stop', 'flip', 'blur', 'unmount'])(
   '%s cancels an unresolved opt-in read',
@@ -116,6 +126,32 @@ test('Stop during an animated reveal prevents speech when that animation complet
   fireEvent.press(ui.getByRole('button', { name: 'Stop audio' }));
   await act(async () => finish({ finished: true }));
   expect(ui.getByText('hello')).toBeTruthy();
+  expect(speakCard).not.toHaveBeenCalled();
+});
+
+test('settles a reveal once when Reduce Motion interrupts the flip', async () => {
+  mockReducedMotion = false;
+  let finish!: (result: { finished: boolean }) => void;
+  jest.spyOn(Animated, 'timing').mockReturnValue({
+    start: (callback: typeof finish) => {
+      finish = callback;
+    },
+    stop: jest.fn(),
+    reset: jest.fn(),
+  } as any);
+  await prefs.setPrefs({ autoSpeak: true });
+  const onReveal = jest.fn();
+  const onGrade = jest.fn();
+  const ui = render(<Flashcard card={card} onGrade={onGrade} onReveal={onReveal} />);
+  fireEvent.press(ui.getByTestId('study-reveal'));
+  expect(onReveal).not.toHaveBeenCalled();
+
+  mockReducedMotion = true;
+  ui.rerender(<Flashcard card={card} onGrade={onGrade} onReveal={onReveal} />);
+  expect(ui.getByText('hello')).toBeTruthy();
+  expect(ui.queryByRole('button', { name: 'Stop audio' })).toBeNull();
+  await act(async () => finish({ finished: true }));
+  expect(onReveal).toHaveBeenCalledTimes(1);
   expect(speakCard).not.toHaveBeenCalled();
 });
 test('flipping back cancels a pending preference read before its animation completes', async () => {

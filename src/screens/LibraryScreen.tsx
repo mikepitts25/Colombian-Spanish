@@ -8,21 +8,21 @@ import { useLanguage } from '../context/LanguageContext';
 import { usePurchases } from '../context/PurchaseContext';
 import { useDeck } from '../hooks/useDeck';
 import { ALL_DECKS } from '../data/decks';
-import { FREE_DECK_IDS } from '../billing/catalog';
+import { FREE_DECK_IDS, isFreeOnlyRelease } from '../billing/catalog';
 import { AppTheme } from '../styles/appTheme';
 import { getDeckDisplayName } from '../utils/deckCategories';
 
 export default function LibraryScreen() {
   const styles = useThemedStyles(makeStyles);
   const nav = useNavigation<any>();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { fontScale } = useWindowDimensions();
   const billing = usePurchases();
   const { ready, hasFullLibrary, legacyLibrary } = useDeck();
   const [sampleId, setSampleId] = useState<string | null>(null);
   const free = ALL_DECKS.filter((deck) => FREE_DECK_IDS.has(deck.id));
-  const paid = ALL_DECKS.filter((deck) => !FREE_DECK_IDS.has(deck.id));
-  const sample = paid.find((deck) => deck.id === sampleId)?.cards[0];
+  const paid = isFreeOnlyRelease ? [] : ALL_DECKS.filter((deck) => !FREE_DECK_IDS.has(deck.id));
+  const previewable = isFreeOnlyRelease ? free : paid;
   const blocked = billing.busy || !ready;
   function button(label: string, action: () => void, disabled = false, primary = false) {
     return (
@@ -38,16 +38,72 @@ export default function LibraryScreen() {
       </Pressable>
     );
   }
+  const storeControls = (
+    <>
+      {billing.message && (
+        <Text accessibilityRole="alert" accessibilityLiveRegion="polite" style={styles.body}>
+          {t(`library.status.${billing.message}`)}
+        </Text>
+      )}
+      {billing.busy && (
+        <Text accessibilityLiveRegion="polite" style={styles.body}>
+          {t('library.working')}
+        </Text>
+      )}
+      {button(
+        t('library.restore'),
+        () => {
+          void billing.restore();
+        },
+        blocked || !billing.available,
+      )}
+      {button(
+        t('library.retry'),
+        () => {
+          void billing.refresh();
+        },
+        blocked || billing.refreshing || !billing.available,
+      )}
+      <Text style={styles.note}>{t('library.restoreNote')}</Text>
+    </>
+  );
+  const collections = previewable.map((deck) => {
+    const name = getDeckDisplayName(deck, language);
+    const sample = deck.cards[0];
+    return (
+      <View style={styles.card} key={deck.id}>
+        <Text accessibilityRole="header" style={styles.heading}>
+          {name}
+        </Text>
+        <Text style={styles.body}>{t('library.cardCount', { count: deck.cards.length })}</Text>
+        {sample &&
+          button(t('library.preview', { name }), () =>
+            setSampleId(sampleId === deck.id ? null : deck.id),
+          )}
+        {sampleId === deck.id && sample && (
+          <View style={styles.sample}>
+            <Text style={styles.heading}>{t('library.sample')}</Text>
+            <Text style={styles.body}>{sample.front}</Text>
+            <Text style={styles.body}>{sample.back}</Text>
+            {!!sample.example && <Text style={styles.body}>{sample.example}</Text>}
+          </View>
+        )}
+      </View>
+    );
+  });
   return (
     <SafeAreaView style={styles.wrap}>
       <ScrollView key={fontScale} contentContainerStyle={styles.content}>
-        {button(t(hasFullLibrary ? 'library.continue' : 'library.continueFree'), () =>
-          nav.goBack(),
+        {button(
+          t(hasFullLibrary && !isFreeOnlyRelease ? 'library.continue' : 'library.continueFree'),
+          () => nav.goBack(),
         )}
         <Text accessibilityRole="header" style={styles.title}>
           {t('library.title')}
         </Text>
-        <Text style={styles.body}>{t('library.intro')}</Text>
+        <Text style={styles.body}>
+          {t(isFreeOnlyRelease ? 'library.freeOnlyIntro' : 'library.intro')}
+        </Text>
         <View style={styles.card}>
           <Text accessibilityRole="header" style={styles.heading}>
             {t('library.freeTitle')}
@@ -59,95 +115,77 @@ export default function LibraryScreen() {
             })}
           </Text>
           <Text style={styles.body}>{t('library.freeTools')}</Text>
-          {free.map((deck) => (
-            <Text key={deck.id} style={styles.body}>
-              {getDeckDisplayName(deck)}
-            </Text>
-          ))}
-        </View>
-        <View style={styles.card}>
-          <Text accessibilityRole="header" style={styles.heading}>
-            {t('library.fullTitle')}
-          </Text>
-          <Text style={styles.body}>
-            {t('library.paidCount', {
-              decks: paid.length,
-              cards: paid.reduce((n, deck) => n + deck.cards.length, 0),
-            })}
-          </Text>
-          <Text style={styles.body}>{t('library.scope')}</Text>
-          {hasFullLibrary ? (
-            <>
-              <Text accessibilityRole="alert" style={styles.heading}>
-                {t('library.unlocked')}
+          {!isFreeOnlyRelease &&
+            free.map((deck) => (
+              <Text key={deck.id} style={styles.body}>
+                {getDeckDisplayName(deck, language)}
               </Text>
-              {legacyLibrary && <Text style={styles.body}>{t('library.legacy')}</Text>}
-            </>
-          ) : (
-            <>
-              <Text style={styles.heading}>{t('library.oneTime')}</Text>
-              {billing.ready && billing.product ? (
-                button(
-                  t('library.buy', { price: billing.product.priceString }),
-                  () => {
-                    void billing.purchase();
-                  },
-                  blocked || billing.refreshing,
-                  true,
-                )
-              ) : (
-                <Text style={styles.body}>
-                  {t(billing.ready ? 'library.unavailable' : 'common.loading')}
-                </Text>
-              )}
-            </>
-          )}
-          {billing.message && (
-            <Text accessibilityRole="alert" accessibilityLiveRegion="polite" style={styles.body}>
-              {t(`library.status.${billing.message}`)}
-            </Text>
-          )}
-          {billing.busy && (
-            <Text accessibilityLiveRegion="polite" style={styles.body}>
-              {t('library.working')}
-            </Text>
-          )}
-          {button(
-            t('library.restore'),
-            () => {
-              void billing.restore();
-            },
-            blocked || !billing.available,
-          )}
-          {button(
-            t('library.retry'),
-            () => {
-              void billing.refresh();
-            },
-            blocked || billing.refreshing || !billing.available,
-          )}
-          <Text style={styles.note}>{t('library.restoreNote')}</Text>
+            ))}
         </View>
-        <Text accessibilityRole="header" style={styles.heading}>
-          {t('library.collections')}
-        </Text>
-        {paid.map((deck) => (
-          <View style={styles.card} key={deck.id}>
-            <Text style={styles.heading}>{getDeckDisplayName(deck)}</Text>
-            <Text style={styles.body}>{t('library.cardCount', { count: deck.cards.length })}</Text>
-            {button(t('library.preview', { name: getDeckDisplayName(deck) }), () =>
-              setSampleId(sampleId === deck.id ? null : deck.id),
-            )}
-            {sampleId === deck.id && sample && (
-              <View style={styles.sample}>
-                <Text style={styles.heading}>{t('library.sample')}</Text>
-                <Text style={styles.body}>{sample.front}</Text>
-                <Text style={styles.body}>{sample.back}</Text>
-                {!!sample.example && <Text style={styles.body}>{sample.example}</Text>}
-              </View>
-            )}
-          </View>
-        ))}
+        {isFreeOnlyRelease ? (
+          <>
+            {collections}
+            <View style={styles.card}>
+              <Text accessibilityRole="header" style={styles.heading}>
+                {t('library.priorPurchases')}
+              </Text>
+              {billing.fullLibrary && billing.message !== 'restored' && (
+                <Text style={styles.body}>{t('library.priorPurchaseVerified')}</Text>
+              )}
+              {legacyLibrary && <Text style={styles.body}>{t('library.freeOnlyLegacy')}</Text>}
+              {!billing.available && (
+                <Text style={styles.body}>{t('library.restoreUnavailable')}</Text>
+              )}
+              {storeControls}
+            </View>
+          </>
+        ) : (
+          <>
+            <View style={styles.card}>
+              <Text accessibilityRole="header" style={styles.heading}>
+                {t('library.fullTitle')}
+              </Text>
+              <Text style={styles.body}>
+                {t('library.paidCount', {
+                  decks: paid.length,
+                  cards: paid.reduce((n, deck) => n + deck.cards.length, 0),
+                })}
+              </Text>
+              <Text style={styles.body}>{t('library.scope')}</Text>
+              {hasFullLibrary ? (
+                <>
+                  <Text accessibilityRole="alert" style={styles.heading}>
+                    {t('library.unlocked')}
+                  </Text>
+                  {legacyLibrary && <Text style={styles.body}>{t('library.legacy')}</Text>}
+                </>
+              ) : (
+                <>
+                  <Text style={styles.heading}>{t('library.oneTime')}</Text>
+                  {billing.ready && billing.product ? (
+                    button(
+                      t('library.buy', { price: billing.product.priceString }),
+                      () => {
+                        void billing.purchase();
+                      },
+                      blocked || billing.refreshing,
+                      true,
+                    )
+                  ) : (
+                    <Text style={styles.body}>
+                      {t(billing.ready ? 'library.unavailable' : 'common.loading')}
+                    </Text>
+                  )}
+                </>
+              )}
+              {storeControls}
+            </View>
+            <Text accessibilityRole="header" style={styles.heading}>
+              {t('library.collections')}
+            </Text>
+            {collections}
+          </>
+        )}
         <Text style={styles.note}>{t('library.audio')}</Text>
       </ScrollView>
     </SafeAreaView>

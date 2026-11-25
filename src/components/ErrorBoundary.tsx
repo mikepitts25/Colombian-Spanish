@@ -1,6 +1,6 @@
 import Pressable from './ThemedPressable';
 import React, { Component, ReactNode } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import { AppTheme, resolveAppTheme } from '../styles/appTheme';
 import { useAppTheme } from '../context/ThemeContext';
 import { reportError } from '../services/crashReporting';
@@ -39,27 +39,31 @@ export class CrashBoundary extends Component<Props, State> {
       this.props.theme ?? resolveAppTheme({ themeId: 'classic', appearanceMode: 'system' }, null),
     );
     return (
-      <View style={styles.wrap}>
-        <Text style={styles.emoji}>🇨🇴</Text>
-        <Text style={styles.title}>Algo salió mal</Text>
+      <ScrollView style={styles.wrap} contentContainerStyle={styles.content}>
+        <Text style={styles.emoji} accessible={false}>
+          🇨🇴
+        </Text>
+        <Text accessibilityRole="header" style={styles.title}>
+          Algo salió mal
+        </Text>
         <Text style={styles.subtitle}>Something went wrong</Text>
         <Text style={styles.body}>
-          Tu progreso está guardado. Intenta de nuevo.{'\n'}
-          Your progress is saved. Try again.
+          Es posible que algunos cambios recientes estén sin guardar.{'\n'}
+          Recent changes may still be unsaved.
         </Text>
-        <Pressable style={styles.button} onPress={this.handleRetry}>
+        <Pressable accessibilityRole="button" style={styles.button} onPress={this.handleRetry}>
           <Text style={styles.buttonText}>Reintentar / Try again</Text>
         </Pressable>
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const makeStyles = ({ colors }: AppTheme) =>
   StyleSheet.create({
-    wrap: {
-      flex: 1,
-      backgroundColor: colors.bg,
+    wrap: { flex: 1, backgroundColor: colors.bg },
+    content: {
+      flexGrow: 1,
       alignItems: 'center',
       justifyContent: 'center',
       padding: 32,
@@ -84,7 +88,7 @@ const makeStyles = ({ colors }: AppTheme) =>
       alignItems: 'center',
       justifyContent: 'center',
     },
-    buttonText: { color: colors.textInverse, fontSize: 15, fontWeight: '800' },
+    buttonText: { color: colors.textInverse, fontSize: 15, fontWeight: '800', textAlign: 'center' },
   });
 
 /** The crash state lives in the class and survives changes to its palette prop. */

@@ -120,7 +120,7 @@ test('all practice/discovery and full-name deck callbacks retain their precise m
   for (const [label, route] of [
     ['Quiz', 'Quiz'],
     ['Difficult Words', 'DifficultWords'],
-    ['Favorites', 'Phrasebook'],
+    ['Saved phrases', 'Phrasebook'],
     ['Phrases', 'Phrases'],
     ['Explore · decks and your cards', 'Explore'],
   ]) {
@@ -200,7 +200,7 @@ test('pending blocks primary, manage and deck starts without swallowing harmless
   fireEvent.press(deck);
   expect(value.onPrimary).not.toHaveBeenCalled();
   expect(value.onDeckPress).not.toHaveBeenCalled();
-  fireEvent.press(ui.getByRole('button', { name: 'Favorites' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Saved phrases' }));
   expect(value.onTool).toHaveBeenCalledWith('Phrasebook');
 });
 

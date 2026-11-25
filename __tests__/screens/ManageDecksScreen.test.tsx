@@ -38,12 +38,9 @@ beforeEach(() => {
 });
 
 describe('ManageDecksScreen navigation', () => {
-  it('navigates directly to the Home tab', () => {
-    const { getByText } = render(<ManageDecksScreen />);
-
-    fireEvent.press(getByText('Inicio'));
-
-    expect(mockNavigate).toHaveBeenCalledWith('Root', { screen: 'Home' }, { pop: true });
+  it('leaves returning to the calling screen to native navigation', () => {
+    const { queryByRole } = render(<ManageDecksScreen />);
+    expect(queryByRole('button', { name: 'Inicio' })).toBeNull();
   });
 
   it('opens the translation review screen', () => {
@@ -70,6 +67,7 @@ test('keeps one rename and its draft across pending writes and live font changes
   const rename = jest.fn(() => pending);
   mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [oneDeck], renameDeck: rename });
   const ui = render(<ManageDecksScreen />);
+  fireEvent.press(ui.getByRole('button', { name: 'Acciones del deck Prueba' }));
   fireEvent.press(ui.getByText('Renombrar'));
   fireEvent.changeText(ui.getByPlaceholderText('Nombre del deck'), 'Nombre nuevo');
   fireEvent.press(ui.getByText('Guardar'));
@@ -103,6 +101,7 @@ test('retains rejected rename text for exact retry and preserves the list query'
   mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [oneDeck], renameDeck: rename });
   const ui = render(<ManageDecksScreen />);
   fireEvent.changeText(ui.getByPlaceholderText('Buscar decks...'), 'Prueba');
+  fireEvent.press(ui.getByRole('button', { name: 'Acciones del deck Prueba' }));
   fireEvent.press(ui.getByText('Renombrar'));
   fireEvent.changeText(ui.getByPlaceholderText('Nombre del deck'), 'Nombre nuevo');
   fireEvent.press(ui.getByText('Guardar'));
@@ -127,14 +126,15 @@ test('retains rejected rename text for exact retry and preserves the list query'
 });
 
 test.each([
-  ['Eliminar', 'deleteDeck'],
-  ['Reiniciar', 'resetDeckProgress'],
+  ['Eliminar deck', 'deleteDeck'],
+  ['Reiniciar progreso', 'resetDeckProgress'],
 ])(
   'handles failed confirmed %s and ignores duplicate confirmation callbacks',
   async (label, method) => {
     const operation = jest.fn().mockRejectedValue(new Error('disk full'));
     mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [oneDeck], [method]: operation });
     const ui = render(<ManageDecksScreen />);
+    fireEvent.press(ui.getByRole('button', { name: 'Acciones del deck Prueba' }));
     fireEvent.press(ui.getByText(label));
     const buttons = (Alert.alert as jest.Mock).mock.calls.at(-1)![2];
     const confirm = buttons.find((button: any) => button.style === 'destructive').onPress;
@@ -145,7 +145,9 @@ test.each([
     await ui.findByText(
       'No se pudo confirmar el cambio. Revisa el deck antes de intentarlo otra vez.',
     );
-    expect(ui.getByRole('button', { name: 'Inicio', disabled: false })).toBeTruthy();
+    expect(
+      ui.getByRole('button', { name: 'Seleccionar deck Prueba', disabled: false }),
+    ).toBeTruthy();
   },
 );
 
@@ -153,6 +155,7 @@ test('Android Rename retains an unsaved name within the keyboard-reduced dialog'
   jest.replaceProperty(Platform, 'OS', 'android');
   mockUseDeck.mockReturnValue({ ...mockUseDeck(), decks: [oneDeck] });
   const ui = render(<ManageDecksScreen />);
+  fireEvent.press(ui.getByRole('button', { name: 'Acciones del deck Prueba' }));
   fireEvent.press(ui.getByText('Renombrar'));
   fireEvent.changeText(ui.getByPlaceholderText('Nombre del deck'), 'Prueba q');
   const avoiding = ui.UNSAFE_getByType(KeyboardAvoidingView);
@@ -170,4 +173,25 @@ test('Android Rename retains an unsaved name within the keyboard-reduced dialog'
   expect(ui.getByDisplayValue('Prueba q')).toBeTruthy();
   fireEvent.press(ui.getByText('Cancelar'));
   expect(mockUseDeck().renameDeck).not.toHaveBeenCalled();
+});
+
+test('selects a deck explicitly and expands actions for only the named deck', () => {
+  mockUseDeck.mockReturnValue({
+    ...mockUseDeck(),
+    decks: [oneDeck, { id: 'd2', name: 'Viajes', cards: [] }],
+    activeDeckId: 'd2',
+  });
+  const ui = render(<ManageDecksScreen />);
+  expect(ui.getByRole('button', { name: 'Deck seleccionado Viajes', selected: true })).toBeTruthy();
+  expect(ui.queryByText('Reiniciar progreso')).toBeNull();
+
+  fireEvent.press(ui.getByRole('button', { name: 'Seleccionar deck Prueba' }));
+  expect(mockUseDeck().setActiveDeckId).toHaveBeenCalledWith('d1');
+  fireEvent.press(ui.getByRole('button', { name: 'Acciones del deck Prueba', expanded: false }));
+  expect(ui.getByRole('button', { name: 'Acciones del deck Prueba', expanded: true })).toBeTruthy();
+  expect(ui.getByRole('button', { name: 'Reiniciar progreso: Prueba' })).toBeTruthy();
+  expect(ui.queryByRole('button', { name: 'Reiniciar progreso: Viajes' })).toBeNull();
+  fireEvent.press(ui.getByRole('button', { name: 'Acciones del deck Viajes' }));
+  expect(ui.queryByRole('button', { name: 'Reiniciar progreso: Prueba' })).toBeNull();
+  expect(ui.getByRole('button', { name: 'Reiniciar progreso: Viajes' })).toBeTruthy();
 });

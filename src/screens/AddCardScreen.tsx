@@ -10,6 +10,7 @@ import {
   Modal,
   StyleSheet,
   Text,
+  TextInput,
   View,
   FlatList,
   ScrollView,
@@ -69,8 +70,11 @@ export default function AddCardScreen() {
   const [back, setBack] = useState('');
   const [example, setExample] = useState('');
   const [tags, setTags] = useState('');
-  const [pickerOpen, setPickerOpen] = useState(false);
-  const [newDeckOpen, setNewDeckOpen] = useState(false);
+  const [optionalOpen, setOptionalOpen] = useState(false);
+  const [dialog, setDialog] = useState<'picker' | 'newDeck' | null>(null);
+  const [missingField, setMissingField] = useState<'front' | 'back' | null>(null);
+  const frontInput = useRef<TextInput>(null);
+  const backInput = useRef<TextInput>(null);
   const [newDeckName, setNewDeckName] = useState('');
   const [selectedDeckId, setSelectedDeckId] = useState<string | undefined>(activeDeckId);
   const [pendingSave, setPendingSave] = useState<CreateIntent | null>(null);
@@ -136,6 +140,7 @@ export default function AddCardScreen() {
         setBack('');
         setExample('');
         setTags('');
+        setOptionalOpen(false);
         Alert.alert(
           t('addCard.alert.added.title'),
           t('addCard.alert.added.message', { deck: intent.deckName }),
@@ -146,7 +151,7 @@ export default function AddCardScreen() {
         if (!mounted.current) return;
         setSelectedDeckId(deck.id);
         setNewDeckName('');
-        setNewDeckOpen(false);
+        setDialog(null);
       }
       pending.current = null;
       setPendingSave(null);
@@ -166,12 +171,29 @@ export default function AddCardScreen() {
     setPendingSave(intent);
     void persist(intent);
   }
+  function openPicker() {
+    if (pending.current) return;
+    Keyboard.dismiss();
+    setDialog('picker');
+  }
   function save() {
     if (pending.current || !ready) return;
-    if (!front.trim() || !back.trim())
-      return Alert.alert(t('addCard.alert.missing.title'), t('addCard.alert.missing.message'));
-    if (!selectedDeck)
-      return Alert.alert(t('addCard.alert.pickDeck.title'), t('addCard.alert.pickDeck.message'));
+    if (!selectedDeck) {
+      openPicker();
+      return;
+    }
+    if (!front.trim()) {
+      setMissingField('front');
+      frontInput.current?.focus();
+      return;
+    }
+    if (!back.trim()) {
+      setMissingField('back');
+      backInput.current?.focus();
+      return;
+    }
+    setMissingField(null);
+    Keyboard.dismiss();
     begin({
       kind: 'card',
       deckId: selectedDeck.id,
@@ -226,24 +248,30 @@ export default function AddCardScreen() {
   const fields = [
     {
       label: t('addCard.front'),
+      input: frontInput,
+      key: 'front',
       placeholder: t('addCard.frontPlaceholder'),
       value: front,
       setter: setFront,
     },
     {
       label: t('addCard.back'),
+      input: backInput,
+      key: 'back',
       placeholder: t('addCard.backPlaceholder'),
       value: back,
       setter: setBack,
     },
     {
       label: t('addCard.example'),
+      key: 'example',
       placeholder: t('addCard.examplePlaceholder'),
       value: example,
       setter: setExample,
     },
     {
       label: t('addCard.tags'),
+      key: 'tags',
       placeholder: t('addCard.tagsPlaceholder'),
       value: tags,
       setter: setTags,
@@ -272,7 +300,7 @@ export default function AddCardScreen() {
             {t('addCard.title')}
           </Text>
           {!ready && <Text style={styles.body}>{t('common.loading')}</Text>}
-          {!newDeckOpen && status}
+          {dialog !== 'newDeck' && status}
           <Text style={styles.label}>{t('addCard.deck')}</Text>
           <Pressable
             accessibilityRole="button"
@@ -281,164 +309,200 @@ export default function AddCardScreen() {
             accessibilityState={{ disabled: blocked || !ready }}
             disabled={blocked || !ready}
             style={styles.select}
-            onPress={() => {
-              if (!pending.current) setPickerOpen(true);
-            }}
+            onPress={openPicker}
           >
             <Text style={styles.body}>{selectedDeck?.name ?? t('addCard.selectDeck')}</Text>
           </Pressable>
           {fields.map((field, index) => (
-            <View
-              key={field.label}
-              testID={`add-card-field-${index}`}
-              style={styles.field}
-              onLayout={(event) => recordFieldLayout(index, 'fieldY', event.nativeEvent.layout.y)}
-            >
-              <Text style={styles.label}>{field.label}</Text>
-              <ThemedTextInput
-                accessibilityLabel={field.label}
-                onLayout={(event) => recordFieldLayout(index, 'inputY', event.nativeEvent.layout.y)}
-                onFocus={() => {
-                  focusedField.current = { index, fontScale };
-                  revealFocusedInput();
-                }}
-                onBlur={() => {
-                  if (
-                    focusedField.current?.index === index &&
-                    focusedField.current.fontScale === fontScale
-                  )
-                    focusedField.current = null;
-                }}
-                value={field.value}
-                editable={!blocked && ready}
-                onChangeText={(value) => {
-                  if (!pending.current) field.setter(value);
-                }}
-                placeholder={field.placeholder}
-                placeholderTextColor={colors.textSecondary}
-                style={styles.input}
-                multiline
-              />
-            </View>
+            <React.Fragment key={field.key}>
+              {index === 2 && (
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={t('addCard.optionalDetails')}
+                  accessibilityState={{ expanded: optionalOpen, disabled: blocked || !ready }}
+                  disabled={blocked || !ready}
+                  style={[styles.select, styles.disclosure]}
+                  onPress={() => {
+                    if (pending.current) return;
+                    if (optionalOpen) {
+                      if (focusedField.current && focusedField.current.index >= 2) {
+                        focusedField.current = null;
+                        Keyboard.dismiss();
+                      }
+                      delete fieldLayouts.current[2];
+                      delete fieldLayouts.current[3];
+                    }
+                    setOptionalOpen(!optionalOpen);
+                  }}
+                >
+                  <Text style={[styles.label, styles.flex]}>{t('addCard.optionalDetails')}</Text>
+                  <Text accessible={false} importantForAccessibility="no" style={styles.body}>
+                    {optionalOpen ? '−' : '+'}
+                  </Text>
+                </Pressable>
+              )}
+              {(index < 2 || optionalOpen) && (
+                <View
+                  testID={`add-card-field-${index}`}
+                  style={styles.field}
+                  onLayout={(event) =>
+                    recordFieldLayout(index, 'fieldY', event.nativeEvent.layout.y)
+                  }
+                >
+                  <Text style={styles.label}>{field.label}</Text>
+                  {missingField === field.key && (
+                    <Text accessibilityRole="alert" style={styles.body}>
+                      {t(field.key === 'front' ? 'addCard.missingFront' : 'addCard.missingBack')}
+                    </Text>
+                  )}
+                  <ThemedTextInput
+                    ref={field.input}
+                    accessibilityLabel={field.label}
+                    onLayout={(event) =>
+                      recordFieldLayout(index, 'inputY', event.nativeEvent.layout.y)
+                    }
+                    onFocus={() => {
+                      focusedField.current = { index, fontScale };
+                      revealFocusedInput();
+                    }}
+                    onBlur={() => {
+                      if (
+                        focusedField.current?.index === index &&
+                        focusedField.current.fontScale === fontScale
+                      )
+                        focusedField.current = null;
+                    }}
+                    value={field.value}
+                    editable={!blocked && ready}
+                    onChangeText={(value) => {
+                      if (pending.current) return;
+                      field.setter(value);
+                      if (missingField === field.key && value.trim()) setMissingField(null);
+                    }}
+                    placeholder={field.placeholder}
+                    placeholderTextColor={colors.textSecondary}
+                    style={styles.input}
+                    multiline
+                  />
+                </View>
+              )}
+            </React.Fragment>
           ))}
           <Action label={t('addCard.save')} onPress={save} disabled={blocked || !ready} />
         </ScrollView>
       </KeyboardAvoidingView>
       <Modal
-        visible={pickerOpen}
+        visible={dialog !== null}
         transparent
         animationType="fade"
         onRequestClose={() => {
-          if (!pending.current) setPickerOpen(false);
+          if (!pending.current) setDialog(null);
         }}
       >
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalBody}>
-            <FlatList
-              data={decks}
-              keyExtractor={(deck) => deck.id}
-              keyboardShouldPersistTaps="handled"
-              ListHeaderComponent={
-                <>
-                  <Text accessibilityRole="header" style={styles.modalTitle}>
-                    {t('addCard.chooseDeck')}
-                  </Text>
-                  <Action
-                    label={t('addCard.newDeck')}
+        {dialog === 'picker' ? (
+          <View style={styles.modalBackdrop}>
+            <View style={styles.modalBody}>
+              <FlatList
+                data={decks}
+                keyExtractor={(deck) => deck.id}
+                keyboardShouldPersistTaps="handled"
+                ListHeaderComponent={
+                  <>
+                    <Text accessibilityRole="header" style={styles.modalTitle}>
+                      {t('addCard.chooseDeck')}
+                    </Text>
+                    <Action
+                      label={t('addCard.newDeck')}
+                      disabled={blocked}
+                      onPress={() => {
+                        if (pending.current) return;
+                        setDialog('newDeck');
+                      }}
+                    />
+                    <Text style={styles.body}>{t('addCard.newDeckSub')}</Text>
+                    <Action
+                      label={t('common.close')}
+                      disabled={blocked}
+                      onPress={() => {
+                        if (!pending.current) setDialog(null);
+                      }}
+                    />
+                  </>
+                }
+                renderItem={({ item }) => (
+                  <Pressable
+                    accessibilityRole="radio"
+                    accessibilityLabel={item.name}
+                    accessibilityState={{
+                      checked: item.id === selectedDeck?.id,
+                      disabled: blocked,
+                    }}
                     disabled={blocked}
+                    style={styles.modalRow}
                     onPress={() => {
                       if (pending.current) return;
-                      setPickerOpen(false);
-                      setNewDeckOpen(true);
+                      setSelectedDeckId(item.id);
+                      setDialog(null);
                     }}
-                  />
-                  <Text style={styles.body}>{t('addCard.newDeckSub')}</Text>
-                  <Action
-                    label={t('common.close')}
-                    disabled={blocked}
-                    onPress={() => {
-                      if (!pending.current) setPickerOpen(false);
-                    }}
-                  />
-                </>
-              }
-              renderItem={({ item }) => (
-                <Pressable
-                  accessibilityRole="radio"
-                  accessibilityLabel={item.name}
-                  accessibilityState={{ checked: item.id === selectedDeck?.id, disabled: blocked }}
-                  disabled={blocked}
-                  style={styles.modalRow}
-                  onPress={() => {
-                    if (pending.current) return;
-                    setSelectedDeckId(item.id);
-                    setPickerOpen(false);
+                  >
+                    <Text style={styles.label}>{item.name}</Text>
+                    <Text style={styles.body}>
+                      {t('addCard.cardCount', {
+                        count: item.cards.length,
+                        plural: item.cards.length === 1 ? '' : 's',
+                      })}
+                    </Text>
+                  </Pressable>
+                )}
+              />
+            </View>
+          </View>
+        ) : dialog === 'newDeck' ? (
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.modalBackdrop}
+          >
+            <View style={styles.modalBody}>
+              <ScrollView
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={styles.modalContent}
+              >
+                <Text accessibilityRole="header" style={styles.modalTitle}>
+                  {t('addCard.newDeckTitle')}
+                </Text>
+                {status}
+                <ThemedTextInput
+                  accessibilityLabel={t('addCard.newDeckPlaceholder')}
+                  placeholder={t('addCard.newDeckPlaceholder')}
+                  placeholderTextColor={colors.textSecondary}
+                  value={newDeckName}
+                  editable={!blocked}
+                  onChangeText={(value) => {
+                    if (!pending.current) setNewDeckName(value);
                   }}
-                >
-                  <Text style={styles.label}>{item.name}</Text>
-                  <Text style={styles.body}>
-                    {t('addCard.cardCount', {
-                      count: item.cards.length,
-                      plural: item.cards.length === 1 ? '' : 's',
-                    })}
-                  </Text>
-                </Pressable>
-              )}
-            />
-          </View>
-        </View>
-      </Modal>
-      <Modal
-        visible={newDeckOpen}
-        transparent
-        animationType="fade"
-        onRequestClose={() => {
-          if (!pending.current) setNewDeckOpen(false);
-        }}
-      >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.modalBackdrop}
-        >
-          <View style={styles.modalBody}>
-            <ScrollView
-              keyboardShouldPersistTaps="handled"
-              contentContainerStyle={styles.modalContent}
-            >
-              <Text accessibilityRole="header" style={styles.modalTitle}>
-                {t('addCard.newDeckTitle')}
-              </Text>
-              {newDeckOpen && status}
-              <ThemedTextInput
-                accessibilityLabel={t('addCard.newDeckPlaceholder')}
-                placeholder={t('addCard.newDeckPlaceholder')}
-                placeholderTextColor={colors.textSecondary}
-                value={newDeckName}
-                editable={!blocked}
-                onChangeText={(value) => {
-                  if (!pending.current) setNewDeckName(value);
-                }}
-                style={styles.input}
-                multiline
-              />
-              <Action
-                label={t('common.cancel')}
-                disabled={blocked}
-                onPress={() => {
-                  if (!pending.current) setNewDeckOpen(false);
-                }}
-              />
-              <Action
-                label={t('common.create')}
-                disabled={blocked || !newDeckName.trim()}
-                onPress={() => {
-                  if (newDeckName.trim())
+                  style={styles.input}
+                  multiline
+                />
+                <Action
+                  label={t('common.cancel')}
+                  disabled={blocked}
+                  onPress={() => {
+                    if (!pending.current) setDialog(null);
+                  }}
+                />
+                <Action
+                  label={t('common.create')}
+                  disabled={blocked || !newDeckName.trim()}
+                  onPress={() => {
+                    if (!newDeckName.trim()) return;
+                    Keyboard.dismiss();
                     begin({ kind: 'deck', name: newDeckName.trim(), id: createLocalId('deck') });
-                }}
-              />
-            </ScrollView>
-          </View>
-        </KeyboardAvoidingView>
+                  }}
+                />
+              </ScrollView>
+            </View>
+          </KeyboardAvoidingView>
+        ) : null}
       </Modal>
     </SafeAreaView>
   );
@@ -479,6 +543,12 @@ const makeStyles = ({ colors }: AppTheme) =>
       padding: 14,
       borderWidth: 1,
       borderColor: colors.border,
+    },
+    disclosure: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      gap: 12,
     },
     modalBackdrop: {
       flex: 1,

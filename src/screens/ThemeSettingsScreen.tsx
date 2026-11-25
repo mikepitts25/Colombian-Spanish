@@ -7,7 +7,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useThemeSelection, useThemedStyles } from '../context/ThemeContext';
 import { getPrefs, setPrefs } from '../storage/prefs';
 import { normalizeThemeSelection, ThemeSelection } from '../utils/themePreference';
-import { AppTheme } from '../styles/appTheme';
+import { AppTheme, resolveAppTheme } from '../styles/appTheme';
 
 export default function ThemeSettingsScreen() {
   const { t } = useLanguage();
@@ -25,8 +25,19 @@ export default function ThemeSettingsScreen() {
     busy = useRef(false),
     request = useRef(0);
   const pending = useRef<ThemeSelection | undefined>(undefined);
+  const closeAfterRecovery = useRef(false);
   const locked = saving || saveError;
+  const previewAppearances =
+    draft.themeId === 'barrio' && draft.appearanceMode === 'system'
+      ? (['light', 'dark'] as const)
+      : ([null] as const);
   usePreventRemove(locked, () => {});
+  useEffect(() => {
+    if (!locked && closeAfterRecovery.current) {
+      closeAfterRecovery.current = false;
+      nav.goBack();
+    }
+  }, [locked, nav]);
   const load = useCallback(async () => {
     const id = ++request.current;
     try {
@@ -53,23 +64,27 @@ export default function ThemeSettingsScreen() {
     setDraft((current) => ({ ...current, ...patch }));
     setSaved(false);
   };
-  const save = async () => {
+  const resolveSelection = async (action: 'save' | 'close') => {
     if (busy.current || loading || loadError) return;
-    const intent = pending.current ?? { ...draft };
-    pending.current = intent;
     busy.current = true;
     setSaving(true);
-    setSaveError(false);
     setSaved(false);
     try {
-      await setPrefs(intent);
+      if (action === 'save') {
+        const intent = pending.current ?? { ...draft };
+        pending.current = intent;
+        await setPrefs(intent);
+      }
+      // Reads recover an interrupted durable write, without retrying an intent that never landed.
       const authoritative = await getPrefs();
       if (mounted.current) {
         const next = normalizeThemeSelection(authoritative);
         applySelection(next);
         setDraft(next);
         pending.current = undefined;
-        setSaved(true);
+        closeAfterRecovery.current = action === 'close';
+        setSaveError(false);
+        setSaved(action === 'save');
       }
     } catch {
       if (mounted.current) setSaveError(true);
@@ -159,33 +174,76 @@ export default function ThemeSettingsScreen() {
                 </View>
               </>
             )}
+            <Text accessibilityRole="header" style={styles.heading}>
+              {t('theme.preview')}
+            </Text>
+            <View style={[styles.previewGrid, fontScale >= 1.4 && styles.previewStack]}>
+              {previewAppearances.map((appearance) => {
+                const preview = resolveAppTheme(draft, appearance).colors;
+                return (
+                  <View
+                    key={appearance ?? 'fixed'}
+                    testID={appearance ? `appearance-preview-${appearance}` : 'appearance-preview'}
+                    style={[
+                      styles.preview,
+                      fontScale >= 1.4 && styles.stackPreview,
+                      { backgroundColor: preview.bg, borderColor: preview.border },
+                    ]}
+                  >
+                    {appearance && (
+                      <Text style={[styles.sampleLabel, { color: preview.textPrimary }]}>
+                        {t(`theme.${appearance}`)}
+                      </Text>
+                    )}
+                    <View
+                      style={[
+                        styles.previewCard,
+                        { backgroundColor: preview.surface, borderColor: preview.border },
+                      ]}
+                    >
+                      <Text style={[styles.sampleLabel, { color: preview.textSecondary }]}>
+                        {t('theme.previewCard')}
+                      </Text>
+                      <Text style={[styles.heading, { color: preview.textPrimary }]}>
+                        Buenos días
+                      </Text>
+                      <View style={[styles.sampleControl, { backgroundColor: preview.brand }]}>
+                        <Text style={[styles.buttonText, { color: preview.onBrand }]}>
+                          {t('theme.previewControl')}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                );
+              })}
+            </View>
             <Text style={styles.body}>{t('theme.applyNote')}</Text>
             {saveError && (
-              <>
-                <Text accessibilityRole="alert" style={styles.body}>
-                  {t('theme.saveError')}
-                </Text>
-                <ThemeAction
-                  label={t('theme.retry')}
-                  onPress={() => void save()}
-                  disabled={saving}
-                />
-              </>
+              <Text accessibilityRole="alert" style={styles.body}>
+                {t('theme.saveError')}
+              </Text>
             )}
             {saved && (
               <Text accessibilityLiveRegion="polite" style={styles.body}>
                 {t('theme.saved')}
               </Text>
             )}
-            <ThemeAction label={t('theme.save')} onPress={() => void save()} disabled={locked} />
+            <ThemeAction
+              label={t(saveError ? 'theme.retry' : 'theme.save')}
+              onPress={() => void resolveSelection('save')}
+              disabled={saving}
+            />
           </>
         )}
         <ThemeAction
-          label={t('theme.cancel')}
+          label={t(saveError ? 'common.close' : 'theme.cancel')}
           onPress={() => {
-            if (!busy.current && !pending.current) nav.goBack();
+            if (busy.current) return;
+            if (saveError) void resolveSelection('close');
+            else nav.goBack();
           }}
-          disabled={locked}
+          disabled={saving}
+          secondary
         />
       </ScrollView>
     </SafeAreaView>
@@ -195,10 +253,12 @@ function ThemeAction({
   label,
   onPress,
   disabled = false,
+  secondary = false,
 }: {
   label: string;
   onPress: () => void;
   disabled?: boolean;
+  secondary?: boolean;
 }) {
   const styles = useThemedStyles(makeStyles);
   return (
@@ -209,11 +269,20 @@ function ThemeAction({
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
-        pressed && styles.pressed,
+        secondary && styles.secondary,
+        pressed && !secondary && styles.pressed,
         disabled && styles.disabled,
       ]}
     >
-      <Text style={[styles.buttonText, disabled && styles.disabledText]}>{label}</Text>
+      <Text
+        style={[
+          styles.buttonText,
+          secondary && styles.secondaryText,
+          disabled && styles.disabledText,
+        ]}
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 }
@@ -226,6 +295,13 @@ const makeStyles = ({ colors }: AppTheme) =>
     heading: { color: colors.textPrimary, fontSize: 20, fontWeight: '700' },
     body: { color: colors.textPrimary, fontSize: 17 },
     options: { gap: 12 },
+    previewGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+    previewStack: { flexDirection: 'column' },
+    preview: { flexGrow: 1, flexBasis: 150, gap: 6, borderWidth: 1, borderRadius: 20, padding: 12 },
+    stackPreview: { flexBasis: 'auto' },
+    previewCard: { borderWidth: 1, borderRadius: 12, padding: 14, gap: 10 },
+    sampleLabel: { fontSize: 14, fontWeight: '600' },
+    sampleControl: { padding: 12, borderRadius: 12 },
     option: {
       minHeight: 48,
       padding: 16,
@@ -243,6 +319,8 @@ const makeStyles = ({ colors }: AppTheme) =>
       justifyContent: 'center',
     },
     buttonText: { color: colors.onBrand, fontSize: 17, fontWeight: '700', textAlign: 'center' },
+    secondary: { backgroundColor: colors.surface },
+    secondaryText: { color: colors.textPrimary },
     pressed: { backgroundColor: colors.brandPressed },
     disabled: { backgroundColor: colors.disabledBg },
     disabledText: { color: colors.disabledText },

@@ -15,6 +15,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useLanguage } from '../context/LanguageContext';
+import { useDeck } from '../hooks/useDeck';
+import { getDailyProgress, getLastStudyDay } from '../storage/storage';
+import { recommendDailyReview } from '../utils/dailyReview';
+import { getDeckDisplayName } from '../utils/deckCategories';
 
 import { getPrefs, HOME_REGIONS, LEARNING_REASONS } from '../storage/prefs';
 import { isTripDate, LearningProfile, saveLearningProfile } from '../storage/learningProfile';
@@ -25,7 +29,13 @@ export default function LearningPreferencesScreen() {
   const { colors } = useAppTheme();
   const nav = useNavigation<any>();
   const { fontScale } = useWindowDimensions();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { ready, decks, activeDeckId } = useDeck();
+  const [reviewContext, setReviewContext] = useState<{
+    remainingNew: number;
+    now: number;
+    lastStudyDay?: string;
+  }>();
   const [profile, setProfile] = useState<LearningProfile | null>(null);
   const [trip, setTrip] = useState('');
   const [loading, setLoading] = useState(true);
@@ -39,7 +49,10 @@ export default function LearningPreferencesScreen() {
   const load = useCallback(async () => {
     const request = ++reading.current;
     try {
-      const prefs = await getPrefs();
+      const [prefs, activity] = await Promise.all([
+        getPrefs(),
+        Promise.all([getDailyProgress(), getLastStudyDay()]).catch(() => undefined),
+      ]);
       if (!mounted.current || request !== reading.current) return;
       setProfile({
         learningReason: prefs.learningReason ?? 'general',
@@ -49,6 +62,14 @@ export default function LearningPreferencesScreen() {
         tripDate: prefs.tripDate,
       });
       setTrip(prefs.tripDate ?? '');
+      if (activity) {
+        const [daily, lastStudyDay] = activity;
+        setReviewContext({
+          remainingNew: Math.max(0, prefs.newCardsPerDay - (daily.newCount ?? 0)),
+          now: Date.now(),
+          lastStudyDay,
+        });
+      }
     } catch {
       if (mounted.current && request === reading.current) setLoadError(true);
     } finally {
@@ -64,6 +85,20 @@ export default function LearningPreferencesScreen() {
       mounted.current = false;
     };
   }, [load]);
+  const recommendation =
+    ready && profile && reviewContext
+      ? recommendDailyReview(
+          decks,
+          profile,
+          reviewContext.remainingNew,
+          reviewContext.now,
+          activeDeckId,
+          undefined,
+          0,
+          reviewContext.lastStudyDay,
+        )
+      : undefined;
+  const recommendedDeck = decks.find((deck) => deck.id === recommendation?.deckId);
   const validDate = trip.trim() === '' || isTripDate(trip.trim());
   function edit(patch: Partial<LearningProfile>) {
     if (submitting.current) return;
@@ -132,47 +167,54 @@ export default function LearningPreferencesScreen() {
             </View>
           ) : profile ? (
             <>
-              {
-                <Choices
-                  title={t('onboarding.reason.title')}
-                  values={LEARNING_REASONS}
-                  selected={profile.learningReason}
-                  label={(id) => t(`onboarding.reason.${id}`)}
-                  onChoose={(id) => edit({ learningReason: id })}
-                  saving={saving}
-                />
-              }
-              {
-                <Choices
-                  title={t('onboarding.region.title')}
-                  values={HOME_REGIONS}
-                  selected={profile.homeRegion}
-                  label={(id) => t(`onboarding.region.${id}`)}
-                  onChoose={(id) => edit({ homeRegion: id })}
-                  saving={saving}
-                />
-              }
-              {
-                <Choices
-                  title={t('profile.level')}
-                  values={LEARNING_LEVELS}
-                  selected={profile.learningLevel}
-                  label={(id) => t(`profile.level.${id}`)}
-                  onChoose={(id) => edit({ learningLevel: id })}
-                  saving={saving}
-                />
-              }
+              {ready && reviewContext && (
+                <View style={styles.suggestion}>
+                  <Text accessibilityRole="header" style={styles.heading}>
+                    {t('profile.recommendationTitle')}
+                  </Text>
+                  <Text style={styles.body}>
+                    {recommendation && recommendedDeck
+                      ? t('profile.recommendation', {
+                          deck: getDeckDisplayName(recommendedDeck, language),
+                          minutes: recommendation.estimatedMinutes,
+                        })
+                      : t('profile.noRecommendation')}
+                  </Text>
+                </View>
+              )}
+              <Choices
+                title={t('onboarding.reason.title')}
+                values={LEARNING_REASONS}
+                selected={profile.learningReason}
+                label={(id) => t(`onboarding.reason.${id}`)}
+                onChoose={(id) => edit({ learningReason: id })}
+                saving={saving}
+              />
+              <Choices
+                title={t('onboarding.region.title')}
+                values={HOME_REGIONS}
+                selected={profile.homeRegion}
+                label={(id) => t(`onboarding.region.${id}`)}
+                onChoose={(id) => edit({ homeRegion: id })}
+                saving={saving}
+              />
+              <Choices
+                title={t('profile.level')}
+                values={LEARNING_LEVELS}
+                selected={profile.learningLevel}
+                label={(id) => t(`profile.level.${id}`)}
+                onChoose={(id) => edit({ learningLevel: id })}
+                saving={saving}
+              />
               <Text style={styles.body}>{t('profile.levelNote')}</Text>
-              {
-                <Choices
-                  title={t('profile.time')}
-                  values={STUDY_MINUTES}
-                  selected={profile.studyMinutes}
-                  label={(minutes) => t('profile.minutes', { count: minutes })}
-                  onChoose={(minutes) => edit({ studyMinutes: minutes })}
-                  saving={saving}
-                />
-              }
+              <Choices
+                title={t('profile.time')}
+                values={STUDY_MINUTES}
+                selected={profile.studyMinutes}
+                label={(minutes) => t('profile.minutes', { count: minutes })}
+                onChoose={(minutes) => edit({ studyMinutes: minutes })}
+                saving={saving}
+              />
               <Text accessibilityRole="header" style={styles.heading}>
                 {t('profile.trip')}
               </Text>
@@ -215,7 +257,7 @@ export default function LearningPreferencesScreen() {
                 onPress={() => void save()}
                 style={[styles.action, (saving || !validDate) && styles.disabled]}
               >
-                <Text style={styles.buttonText}>{t('common.save')}</Text>
+                <Text style={styles.buttonText}>{t('profile.save')}</Text>
               </Pressable>
             </>
           ) : null}
@@ -237,6 +279,7 @@ const makeStyles = ({ colors }: AppTheme) =>
     title: { color: colors.textPrimary, fontSize: 26, fontWeight: '800' },
     body: { color: colors.textSecondary, fontSize: 16, lineHeight: 23 },
     section: { gap: 8, marginTop: 12 },
+    suggestion: { gap: 6, padding: 16, borderRadius: 12, backgroundColor: colors.surface },
     heading: { color: colors.textPrimary, fontSize: 19, fontWeight: '700' },
     choice: {
       minHeight: 48,
@@ -287,7 +330,7 @@ function Choices<T extends string | number>({
 }) {
   const styles = useThemedStyles(makeStyles);
   return (
-    <View style={styles.section}>
+    <View accessibilityRole="radiogroup" accessibilityLabel={title} style={styles.section}>
       <Text accessibilityRole="header" style={styles.heading}>
         {title}
       </Text>

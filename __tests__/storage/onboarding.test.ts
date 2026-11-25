@@ -1,11 +1,44 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { completeOnboarding } from '../../src/storage/onboarding';
+import {
+  acknowledgeOnboardingHandoff,
+  completeOnboarding,
+  readOnboardingLaunch,
+} from '../../src/storage/onboarding';
 import { getPrefs } from '../../src/storage/prefs';
-import { getDailyProgress } from '../../src/storage/storage';
+import { getDailyProgress, saveLastStudySession } from '../../src/storage/storage';
 import { localDayKey } from '../../src/utils/calendarDay';
 
 beforeEach(async () => {
   await AsyncStorage.clear();
+});
+const intent = { reason: 'travel', region: 'all', target: 10 } as const;
+const handoff = {
+  id: 'starting-practice',
+  savedAt: 100,
+  intent,
+  destination: { kind: 'study', id: 'deck-travel' },
+} as const;
+
+test('a partial completion preserves the exact pending practice until delivery', async () => {
+  const setItem = AsyncStorage.setItem as jest.Mock;
+  const actual = setItem.getMockImplementation()!;
+  setItem
+    .mockImplementationOnce(actual)
+    .mockImplementationOnce(actual)
+    .mockRejectedValueOnce(new Error('partial save'));
+  await expect(completeOnboarding(intent, handoff)).rejects.toThrow('partial save');
+  expect(await readOnboardingLaunch()).toEqual({ onboarded: true, handoff });
+  await completeOnboarding(intent, handoff);
+  await acknowledgeOnboardingHandoff('different-delivery');
+  expect(await readOnboardingLaunch()).toEqual({ onboarded: true, handoff });
+  await acknowledgeOnboardingHandoff(handoff.id);
+  expect(await readOnboardingLaunch()).toEqual({ onboarded: true });
+});
+
+test('an already-started review takes precedence over uncleared onboarding recovery', async () => {
+  await completeOnboarding(intent, handoff);
+  await saveLastStudySession({ deckId: 'different-deck', cardId: 'card' });
+  expect(await readOnboardingLaunch()).toEqual({ onboarded: true });
 });
 test('saves one intent preserving counters and unrelated preferences', async () => {
   await AsyncStorage.setItem(

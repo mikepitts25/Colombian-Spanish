@@ -24,17 +24,21 @@ export default function AudioPreferencesScreen() {
     [saveStatus, setSaveStatus] = useState<'saved' | 'error'>(),
     [loop, setLoop] = useState(false),
     [source, setSource] = useState<PlaybackResult['source']>(),
-    [previewError, setPreviewError] = useState(false);
+    [previewError, setPreviewError] = useState(false),
+    [previewActive, setPreviewActive] = useState(false);
   const mounted = useRef(true),
     saveBusy = useRef(false),
     previewId = useRef(0),
     loadId = useRef(0);
-  const cancel = () => {
+  const cancel = useCallback(() => {
     previewId.current++;
     stop();
-    setSource(undefined);
-    setPreviewError(false);
-  };
+    if (mounted.current) {
+      setSource(undefined);
+      setPreviewError(false);
+      setPreviewActive(false);
+    }
+  }, []);
   const load = useCallback(async () => {
     const request = ++loadId.current;
     try {
@@ -59,14 +63,7 @@ export default function AudioPreferencesScreen() {
       mounted.current = false;
     };
   }, [load]);
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        previewId.current++;
-        stop();
-      };
-    }, []),
-  );
+  useFocusEffect(useCallback(() => cancel, [cancel]));
   const save = async () => {
     if (saveBusy.current) return;
     saveBusy.current = true;
@@ -89,30 +86,39 @@ export default function AudioPreferencesScreen() {
     const request = ++previewId.current;
     setSource(undefined);
     setPreviewError(false);
+    setPreviewActive(true);
+    const isCurrent = () => mounted.current && request === previewId.current;
+    const onPlaybackEnd = (error?: Error) => {
+      if (!isCurrent()) return;
+      setPreviewActive(false);
+      if (error) setPreviewError(true);
+    };
     try {
-      const result = await speakCard({ id: '0010', front: 'buenos días' }, { rate, loop });
-      if (mounted.current && request === previewId.current && result.source !== 'cancelled')
-        setSource(result.source);
+      const result = await speakCard(
+        { id: '0010', front: 'buenos días' },
+        { rate, loop, onPlaybackEnd },
+      );
+      if (!isCurrent()) return;
+      if (result.source === 'cancelled') setPreviewActive(false);
+      else setSource(result.source);
     } catch {
-      if (mounted.current && request === previewId.current) setPreviewError(true);
+      if (!isCurrent()) return;
+      setPreviewActive(false);
+      setPreviewError(true);
     }
   };
 
   return (
     <SafeAreaView key={fontScale} style={styles.wrap}>
       <ScrollView contentContainerStyle={styles.content}>
-        {
-          <ActionButton
-            label={t('audio.back')}
-            action={() => {
-              if (!saveBusy.current) {
-                cancel();
-                nav.goBack();
-              }
-            }}
-            off={saving}
-          />
-        }
+        <ActionButton
+          label={t('audio.back')}
+          action={() => {
+            if (!saveBusy.current) nav.goBack();
+          }}
+          off={saving}
+          secondary
+        />
         <Text accessibilityRole="header" style={styles.title}>
           {t('audio.title')}
         </Text>
@@ -164,26 +170,21 @@ export default function AudioPreferencesScreen() {
               accessibilityLabel={t('audio.autoSpeak')}
               accessibilityState={{ checked: autoSpeak, disabled: saving }}
               disabled={saving}
-              style={styles.button}
+              style={[styles.button, styles.secondary]}
               onPress={() => {
-                cancel();
                 setAutoSpeak(!autoSpeak);
                 setSaveStatus(undefined);
               }}
             >
-              <Text style={styles.buttonText}>
+              <Text style={[styles.buttonText, styles.secondaryText]}>
                 {t('audio.autoSpeak')} · {t(autoSpeak ? 'audio.on' : 'audio.off')}
               </Text>
             </Pressable>
             <Text style={styles.body}>{t('audio.autoSpeakNote')}</Text>
-            {<ActionButton label={t('audio.save')} action={() => void save()} off={saving} />}
-            {saveStatus && (
-              <Text accessibilityLiveRegion="polite" style={styles.body}>
-                {t(saveStatus === 'saved' ? 'audio.saved' : 'audio.saveError')}
-              </Text>
-            )}
             <View style={styles.card}>
-              <Text style={styles.heading}>{t('audio.previewTitle')}</Text>
+              <Text accessibilityRole="header" style={styles.heading}>
+                {t('audio.previewTitle')}
+              </Text>
               <Text style={styles.body}>{t('audio.previewNote')}</Text>
               <Pressable
                 accessibilityRole="switch"
@@ -193,20 +194,18 @@ export default function AudioPreferencesScreen() {
                   cancel();
                   setLoop(!loop);
                 }}
-                style={styles.button}
+                style={[styles.button, styles.secondary]}
               >
-                <Text style={styles.buttonText}>
+                <Text style={[styles.buttonText, styles.secondaryText]}>
                   {t('audio.repeat')} · {t(loop ? 'audio.on' : 'audio.off')}
                 </Text>
               </Pressable>
-              {
-                <ActionButton
-                  label={t('audio.preview')}
-                  action={() => void preview()}
-                  off={false}
-                />
-              }
-              {<ActionButton label={t('audio.stop')} action={cancel} off={false} />}
+              <ActionButton
+                label={t(previewActive ? 'audio.stop' : 'audio.preview')}
+                action={previewActive ? cancel : () => void preview()}
+                off={false}
+                secondary
+              />
               {source && (
                 <Text accessibilityLiveRegion="polite" style={styles.body}>
                   {t(source === 'generated' ? 'audio.generated' : 'audio.device')}
@@ -218,6 +217,12 @@ export default function AudioPreferencesScreen() {
                 </Text>
               )}
             </View>
+            <ActionButton label={t('audio.save')} action={() => void save()} off={saving} />
+            {saveStatus && (
+              <Text accessibilityLiveRegion="polite" style={styles.body}>
+                {t(saveStatus === 'saved' ? 'audio.saved' : 'audio.saveError')}
+              </Text>
+            )}
           </>
         )}
       </ScrollView>
@@ -239,6 +244,12 @@ const makeStyles = ({ colors }: AppTheme) =>
       justifyContent: 'center',
     },
     buttonText: { fontSize: 16, fontWeight: '700', color: colors.textInverse, textAlign: 'center' },
+    secondary: {
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    secondaryText: { color: colors.textPrimary },
     disabled: { opacity: 0.5 },
     options: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
     option: {
@@ -254,12 +265,21 @@ const makeStyles = ({ colors }: AppTheme) =>
     card: { padding: 20, gap: 16, backgroundColor: colors.surface, borderRadius: 20 },
   });
 
-function ActionButton({ label, action, off }: { label: string; action: () => void; off: boolean }) {
+function ActionButton({
+  label,
+  action,
+  off,
+  secondary = false,
+}: {
+  label: string;
+  action: () => void;
+  off: boolean;
+  secondary?: boolean;
+}) {
   const styles = useThemedStyles(makeStyles);
   const theme = useAppTheme();
   return (
     <Pressable
-      key={label}
       accessibilityRole="button"
       accessibilityState={{ disabled: off }}
       disabled={off}
@@ -267,10 +287,12 @@ function ActionButton({ label, action, off }: { label: string; action: () => voi
       style={({ pressed }) => [
         styles.button,
         off && styles.disabled,
-        controlSurface(theme, pressed, off),
+        secondary ? styles.secondary : controlSurface(theme, pressed, off),
       ]}
     >
-      <Text style={[styles.buttonText, controlText(theme, off)]}>{label}</Text>
+      <Text style={[styles.buttonText, secondary ? styles.secondaryText : controlText(theme, off)]}>
+        {label}
+      </Text>
     </Pressable>
   );
 }

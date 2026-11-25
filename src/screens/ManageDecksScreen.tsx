@@ -31,12 +31,14 @@ function Action({
   onPress,
   disabled,
   danger,
+  expanded,
 }: {
   label: string;
   accessibilityLabel?: string;
   onPress: () => void;
   disabled: boolean;
   danger?: boolean;
+  expanded?: boolean;
 }) {
   const styles = useThemedStyles(makeStyles);
   const theme = useAppTheme();
@@ -44,7 +46,7 @@ function Action({
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? label}
-      accessibilityState={{ disabled }}
+      accessibilityState={{ disabled, expanded }}
       disabled={disabled}
       style={({ pressed }) => [
         styles.button,
@@ -66,6 +68,7 @@ export default function ManageDecksScreen() {
   const nav = useNavigation<any>();
   const { t } = useLanguage();
   const { fontScale } = useWindowDimensions();
+  const [actionsDeckId, setActionsDeckId] = useState<string | null>(null);
   const [q, setQ] = useState('');
   const [renameOpen, setRenameOpen] = useState(false);
   const [renameDeckId, setRenameDeckId] = useState<string | null>(null);
@@ -173,18 +176,9 @@ export default function ManageDecksScreen() {
   }
   const header = (
     <View style={styles.header}>
-      <Action
-        label={t('manage.home')}
-        disabled={blocked}
-        onPress={() => {
-          if (!writing.current && !pending.current)
-            nav.navigate('Root', { screen: 'Home' }, { pop: true });
-        }}
-      />
       <Text accessibilityRole="header" style={styles.h1}>
         {t('manage.title')}
       </Text>
-      <Text style={styles.body}>{t('manage.sub')}</Text>
       {busy && (
         <Text accessibilityLiveRegion="polite" style={styles.body}>
           {t('editing.saving')}
@@ -231,50 +225,71 @@ export default function ManageDecksScreen() {
           keyboardShouldPersistTaps="handled"
           ListHeaderComponent={header}
           ListEmptyComponent={<Text style={styles.body}>{t('manage.empty')}</Text>}
-          renderItem={({ item }) => (
-            <View style={styles.row}>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel={item.name}
-                accessibilityState={{ selected: activeDeckId === item.id, disabled: blocked }}
-                disabled={blocked}
-                style={styles.select}
-                onPress={() => {
-                  if (!writing.current && !pending.current) setActiveDeckId(item.id);
-                }}
-              >
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.body}>
-                  {t('manage.cardCount', {
-                    count: item.cards.length,
-                    plural: item.cards.length === 1 ? '' : 's',
-                  })}
-                </Text>
-              </Pressable>
-              <View style={[styles.actions, fontScale > 1.3 && styles.stacked]}>
-                <Action
-                  label={t('manage.rename')}
-                  accessibilityLabel={`${t('manage.rename')}: ${item.name}`}
+          renderItem={({ item }) => {
+            const selected = activeDeckId === item.id;
+            const expanded = actionsDeckId === item.id;
+            const cardCount = t('manage.cardCount', {
+              count: item.cards.length,
+              plural: item.cards.length === 1 ? '' : 's',
+            });
+            return (
+              <View style={styles.row}>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={t(
+                    selected ? 'manage.selectedDeckNamed' : 'manage.selectDeckNamed',
+                    {
+                      deck: item.name,
+                    },
+                  )}
+                  accessibilityValue={{ text: cardCount }}
+                  accessibilityState={{ selected, disabled: blocked }}
                   disabled={blocked}
-                  onPress={() => openRename(item)}
-                />
+                  style={[styles.select, selected && styles.selected]}
+                  onPress={() => {
+                    if (!writing.current && !pending.current) setActiveDeckId(item.id);
+                  }}
+                >
+                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.body}>{cardCount}</Text>
+                  <Text style={styles.buttonText}>
+                    {t(selected ? 'manage.selectedDeck' : 'manage.selectDeck')}
+                  </Text>
+                </Pressable>
                 <Action
-                  label={t('manage.reset')}
-                  accessibilityLabel={`${t('manage.reset')}: ${item.name}`}
+                  label={t('manage.deckActions')}
+                  accessibilityLabel={t('manage.deckActionsNamed', { deck: item.name })}
                   disabled={blocked}
-                  onPress={() => confirm(item, 'reset')}
-                  danger
+                  expanded={expanded}
+                  onPress={() => setActionsDeckId(expanded ? null : item.id)}
                 />
-                <Action
-                  label={t('manage.delete')}
-                  accessibilityLabel={`${t('manage.delete')}: ${item.name}`}
-                  disabled={blocked}
-                  onPress={() => confirm(item, 'delete')}
-                  danger
-                />
+                {expanded && (
+                  <View style={[styles.actions, fontScale > 1.3 && styles.stacked]}>
+                    <Action
+                      label={t('manage.rename')}
+                      accessibilityLabel={`${t('manage.rename')}: ${item.name}`}
+                      disabled={blocked}
+                      onPress={() => openRename(item)}
+                    />
+                    <Action
+                      label={t('manage.reset')}
+                      accessibilityLabel={`${t('manage.reset')}: ${item.name}`}
+                      disabled={blocked}
+                      onPress={() => confirm(item, 'reset')}
+                      danger
+                    />
+                    <Action
+                      label={t('manage.delete')}
+                      accessibilityLabel={`${t('manage.delete')}: ${item.name}`}
+                      disabled={blocked}
+                      onPress={() => confirm(item, 'delete')}
+                      danger
+                    />
+                  </View>
+                )}
               </View>
-            </View>
-          )}
+            );
+          }}
         />
       )}
       <Modal visible={renameOpen} transparent animationType="fade" onRequestClose={closeRename}>
@@ -357,7 +372,8 @@ const makeStyles = ({ colors }: AppTheme) =>
       gap: 12,
     },
     name: { color: colors.textPrimary, fontWeight: '800', fontSize: 18 },
-    select: { minHeight: 48, justifyContent: 'center' },
+    select: { minHeight: 48, justifyContent: 'center', borderRadius: 8, padding: 8, gap: 4 },
+    selected: { backgroundColor: colors.selectedWash },
     actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
     stacked: { flexDirection: 'column', alignItems: 'stretch' },
     button: {

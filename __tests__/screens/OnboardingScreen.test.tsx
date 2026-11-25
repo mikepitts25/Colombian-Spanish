@@ -1,54 +1,118 @@
-import { recommendDeckId } from '../../src/screens/OnboardingScreen';
-import { Deck } from '../../src/types';
+import React from 'react';
+import { fireEvent, render } from '@testing-library/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import OnboardingScreen, { chooseOnboardingPractice } from '../../src/screens/OnboardingScreen';
+import { Deck, FlashCard } from '../../src/types';
+import { ALL_DECKS } from '../../src/data/decks';
+import { LanguageProvider } from '../../src/context/LanguageContext';
+import { getPrefs } from '../../src/storage/prefs';
 
-function deck(id: string): Deck {
-  return { id, name: id, cards: [] };
-}
+jest.mock('../../src/hooks/useDeck', () => ({ useDeck: () => ({ ready: false, decks: [] }) }));
+jest.mock('@react-navigation/native', () => ({ useNavigation: () => ({}) }));
+jest.mock('../../src/services/notifications', () => ({
+  refreshScheduledNotifications: jest.fn(),
+}));
 
-const ALL = [
-  deck('deck-travel'),
-  deck('deck-useful-phrases'),
-  deck('deck-dating'),
-  deck('deck-business'),
-  deck('deck-culture'),
-  deck('deck-greetings'),
-  deck('deck-paisa'),
-  deck('deck-rolo'),
-  deck('deck-costeno'),
-  deck('deck-valluno'),
-  deck('deck-slang'),
-];
+beforeEach(async () => AsyncStorage.clear());
 
-describe('recommendDeckId', () => {
-  it('prioritizes the concrete need for dating/work/travel reasons', () => {
-    expect(recommendDeckId('love', 'paisa', ALL)).toBe('deck-dating');
-    expect(recommendDeckId('work', 'rolo', ALL)).toBe('deck-business');
-    expect(recommendDeckId('travel', 'costeno', ALL)).toBe('deck-travel');
+const now = Date.UTC(2026, 10, 25);
+const budget = { now, remainingNew: 3 };
+const card = (id: string, fields: Partial<FlashCard> = {}): FlashCard => ({
+  id,
+  front: id,
+  back: 'answer',
+  createdAt: 0,
+  due: 0,
+  interval: 0,
+  reps: 0,
+  ease: 2.5,
+  ...fields,
+});
+const deck = (id: string, cards: FlashCard[]): Deck => ({ id, name: id, cards });
+
+test('shows the two interface languages before asking any learning question', async () => {
+  const ui = render(<OnboardingScreen />);
+  expect(await ui.findByRole('button', { name: 'English' })).toBeTruthy();
+  expect(ui.getByRole('button', { name: 'Español' })).toBeTruthy();
+  expect(ui.queryByText('¿Por qué aprendes español colombiano?')).toBeNull();
+});
+
+test('filters owned paid decks before choosing a bounded named practice', () => {
+  const greetings = deck('deck-greetings', [card('hello')]);
+  const decks = [
+    deck('deck-dating', [card('date')]),
+    deck('deck-paisa', [card('parce')]),
+    greetings,
+  ];
+  expect(chooseOnboardingPractice(decks, 'love', 'paisa', budget)).toMatchObject({
+    kind: 'study',
+    deck: greetings,
+    cardLimit: 4,
+    newLimit: 3,
+    minutes: 1,
+    region: 'all',
+    regionalFallback: true,
   });
+});
 
-  it('prioritizes regional slang for move/culture/general reasons', () => {
-    expect(recommendDeckId('move', 'paisa', ALL)).toBe('deck-paisa');
-    expect(recommendDeckId('culture', 'valluno', ALL)).toBe('deck-valluno');
-    expect(recommendDeckId('general', 'rolo', ALL)).toBe('deck-rolo');
+test('chooses a free regional match when one can enter the first queue', () => {
+  const greetings = deck('deck-greetings', [card('hello')]);
+  const travel = deck('deck-travel', [card('medellin', { regions: ['paisa'] })]);
+  expect(chooseOnboardingPractice([greetings, travel], 'general', 'paisa', budget)).toMatchObject({
+    kind: 'study',
+    deck: travel,
+    region: 'paisa',
+    regionalFallback: false,
   });
+});
 
-  it('uses the general slang deck when no region is chosen', () => {
-    expect(recommendDeckId('move', 'all', ALL)).toBe('deck-slang');
+test('skips empty and unavailable decks while observing the remaining new-card cap', () => {
+  const later = card('scheduled', { reps: 1, due: now + 60_000 });
+  const shown = [
+    deck('deck-travel', []),
+    deck('deck-greetings', [later]),
+    deck('deck-food', [card('tinto')]),
+  ];
+  expect(chooseOnboardingPractice(shown, 'travel', 'all', budget)).toMatchObject({
+    kind: 'study',
+    deck: { id: 'deck-food' },
   });
-
-  it('falls back through the candidate chain when decks are missing', () => {
-    const noDating = ALL.filter((d) => d.id !== 'deck-dating');
-    expect(recommendDeckId('love', 'paisa', noDating)).toBe('deck-paisa');
-
-    const onlyGreetings = [deck('deck-greetings')];
-    expect(recommendDeckId('love', 'paisa', onlyGreetings)).toBe('deck-greetings');
+  expect(chooseOnboardingPractice(shown, 'travel', 'all', { now, remainingNew: 0 })).toEqual({
+    kind: 'home',
   });
+});
 
-  it('falls back to the first available deck as a last resort', () => {
-    expect(recommendDeckId('general', 'all', [deck('custom-1')])).toBe('custom-1');
+test('allows due reviews with no remaining new-card budget', () => {
+  const greetings = deck('deck-greetings', [card('hello', { reps: 1, due: now })]);
+  expect(
+    chooseOnboardingPractice([greetings], 'general', 'all', { now, remainingNew: 0 }),
+  ).toMatchObject({
+    kind: 'study',
+    deck: greetings,
+    newLimit: 0,
   });
+});
 
-  it('returns undefined with no decks at all', () => {
-    expect(recommendDeckId('general', 'all', [])).toBeUndefined();
-  });
+test('never hands a free-deck route to Study if its stored queue could expose a bundled paid card', () => {
+  const paid = ALL_DECKS.find(({ id }) => id === 'deck-dating')!.cards[0];
+  expect(
+    chooseOnboardingPractice(
+      [deck('deck-travel', [card('trip'), paid]), deck('deck-greetings', [card('hello')])],
+      'travel',
+      'all',
+      budget,
+    ),
+  ).toMatchObject({ kind: 'study', deck: { id: 'deck-greetings' } });
+});
+
+test('saves the explicit language in durable preferences before showing the next screen', async () => {
+  const ui = render(
+    <LanguageProvider>
+      <OnboardingScreen />
+    </LanguageProvider>,
+  );
+  fireEvent.press(ui.getByRole('button', { name: 'English' }));
+  await ui.findByRole('header', { name: 'Hi, I’m Ana' });
+  ui.unmount();
+  expect(await getPrefs()).toMatchObject({ uiLanguage: 'en', onboardingDone: false });
 });

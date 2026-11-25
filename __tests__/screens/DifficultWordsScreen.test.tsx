@@ -6,6 +6,13 @@ import { act, fireEvent, render, waitFor, within } from '@testing-library/react-
 import DifficultWordsScreen from '../../src/screens/DifficultWordsScreen';
 import { Deck, FlashCard } from '../../src/types';
 
+const mockNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ navigate: mockNavigate }),
+  useFocusEffect: (callback: () => void) => require('react').useEffect(callback, [callback]),
+}));
+
 jest.mock('../../src/hooks/useDeck', () => ({
   useDeck: jest.fn(),
 }));
@@ -60,6 +67,14 @@ afterEach(() => {
 });
 
 describe('DifficultWordsScreen', () => {
+  it('returns to practice when the difficult queue is empty', () => {
+    mockUseDeck.mockReturnValue({ ready: true, decks: [], recordAnswer: jest.fn() });
+    const screen = render(<DifficultWordsScreen />);
+
+    fireEvent.press(screen.getByRole('button', { name: 'Volver a practicar' }));
+    expect(mockNavigate).toHaveBeenCalledWith('Root', { screen: 'Study' }, { pop: true });
+  });
+
   it('renders difficult cards and excludes untouched cards', async () => {
     const { getByText, queryByText } = render(<DifficultWordsScreen />);
 
@@ -133,6 +148,26 @@ it('does not skip the next difficult card when grading changes eligibility', asy
   expect(await screen.findByText('second')).toBeTruthy();
 });
 
+it('does not skip the next difficult card when the previous card leaves the accessible library', async () => {
+  const second = makeCard('second', { ease: 2.0, reps: 1, due: NOW + 2000 });
+  const startingDeck = { ...DECK, cards: [DECK.cards[0], second] };
+  const recordAnswer = jest.fn().mockResolvedValue(undefined);
+  mockUseDeck.mockReturnValue({ ready: true, decks: [startingDeck], recordAnswer });
+  const screen = render(<DifficultWordsScreen />);
+  fireEvent.press(await screen.findByText('Bien'));
+  await screen.findByText('second');
+
+  mockUseDeck.mockReturnValue({
+    ready: true,
+    decks: [{ ...DECK, cards: [second] }],
+    recordAnswer,
+  });
+  screen.rerender(<DifficultWordsScreen />);
+
+  expect(screen.getByText('second')).toBeTruthy();
+  expect(screen.queryByText('No hay palabras difíciles')).toBeNull();
+});
+
 it('keeps the current card and disables grading during a save across live resizing', async () => {
   const window = Dimensions.get('window'),
     metrics = Dimensions.get('screen');
@@ -155,7 +190,8 @@ it('keeps the current card and disables grading during a save across live resizi
     expect(recordAnswer).toHaveBeenCalledTimes(1);
     expect(screen.getByText('parce')).toBeTruthy();
     await act(async () => finish());
-    expect(await screen.findByText('No hay palabras difíciles')).toBeTruthy();
+    expect(await screen.findByText('Repaso completo')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Volver a practicar' })).toBeTruthy();
   } finally {
     screen.unmount();
     act(() => Dimensions.set({ window, screen: metrics }));
@@ -200,7 +236,9 @@ it('shows scheduler intervals for the current difficult card rather than fixed e
   try {
     await screen.findByText('parce');
     expect(within(screen.getByRole('button', { name: /Otra vez/ })).getByText('15m')).toBeTruthy();
-    expect(within(screen.getByRole('button', { name: /Difícil/ })).getByText('12h')).toBeTruthy();
+    expect(within(screen.getByRole('button', { name: /Difícil/ })).getByText('12h')).toHaveStyle({
+      color: '#fb923c',
+    });
     expect(within(screen.getByRole('button', { name: /Bien/ })).getByText('2d')).toBeTruthy();
     expect(within(screen.getByRole('button', { name: /Fácil/ })).getByText('2d')).toBeTruthy();
   } finally {

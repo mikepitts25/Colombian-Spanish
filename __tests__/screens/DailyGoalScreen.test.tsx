@@ -60,19 +60,19 @@ test('retains one selected save intent and pending controls through live text re
     await held;
     return implementation(...args);
   });
-  fireEvent.press(screen.getByRole('button', { name: 'Save' }));
+  fireEvent.press(screen.getByRole('button', { name: 'Save limits' }));
   act(() => Dimensions.set({ window: { ...originalWindow, fontScale: 3.2 } }));
-  expect(screen.getByRole('button', { name: 'Save', disabled: true })).toBeTruthy();
+  expect(screen.getByRole('button', { name: 'Save limits', disabled: true })).toBeTruthy();
   expect(
     screen.getByRole('button', { name: '20 cards per day', selected: true, disabled: true }),
   ).toBeTruthy();
   expect(
     screen.getByRole('button', { name: 'Increase daily new-card limit', disabled: true }),
   ).toBeTruthy();
-  fireEvent.press(screen.getByRole('button', { name: 'Save' }));
+  fireEvent.press(screen.getByRole('button', { name: 'Save limits' }));
   expect(mockBack).not.toHaveBeenCalled();
   await act(async () => release());
-  await waitFor(() => expect(mockBack).toHaveBeenCalledTimes(1));
+  await screen.findByText('Limits saved.');
   expect(mockReload).toHaveBeenCalledTimes(1);
   expect(mockReload).toHaveBeenCalledWith({ requireFreshBudget: true });
   expect(await getDailyProgress()).toMatchObject({ target: 20, count: 3, newCount: 2 });
@@ -91,14 +91,14 @@ test('keeps the failed intent and retries without claiming success or changing i
   await waitFor(() => screen.getByRole('button', { name: '5 cards per day', selected: true }));
   fireEvent.press(screen.getByRole('button', { name: '10 cards per day' }));
   write.mockRejectedValueOnce(new Error('disk full'));
-  fireEvent.press(screen.getByRole('button', { name: 'Save' }));
+  fireEvent.press(screen.getByRole('button', { name: 'Save limits' }));
   await screen.findByRole('alert');
   expect(mockBack).not.toHaveBeenCalled();
   expect(Alert.alert).not.toHaveBeenCalled();
   expect(await getDailyProgress()).toMatchObject({ target: 5, count: 3, newCount: 2 });
   expect(screen.getByRole('button', { name: '20 cards per day', disabled: true })).toBeTruthy();
   fireEvent.press(screen.getByRole('button', { name: 'Retry save' }));
-  await waitFor(() => expect(mockBack).toHaveBeenCalledTimes(1));
+  await screen.findByText('Limits saved.');
   expect(await getDailyProgress()).toMatchObject({ target: 10, count: 3, newCount: 2 });
 });
 
@@ -107,7 +107,7 @@ test('does not allow a failed load to overwrite existing settings with defaults'
   read.mockRejectedValueOnce(new Error('read failed'));
   const screen = render(<DailyGoalScreen />);
   await screen.findByRole('alert');
-  expect(screen.queryByRole('button', { name: 'Save' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Save limits' })).toBeNull();
   fireEvent.press(screen.getByRole('button', { name: 'Retry' }));
   await waitFor(() => screen.getByRole('button', { name: '5 cards per day', selected: true }));
   expect(mockBack).not.toHaveBeenCalled();
@@ -119,7 +119,7 @@ test('retries a committed save after provider refresh failure while preserving a
   await waitFor(() => screen.getByRole('button', { name: '5 cards per day', selected: true }));
   fireEvent.press(screen.getByRole('button', { name: '20 cards per day' }));
   mockReload.mockRejectedValueOnce(new Error('refresh failed'));
-  fireEvent.press(screen.getByRole('button', { name: 'Save' }));
+  fireEvent.press(screen.getByRole('button', { name: 'Save limits' }));
   await screen.findByRole('alert');
   expect(await getDailyProgress()).toMatchObject({ target: 20, count: 3 });
   expect(mockBack).not.toHaveBeenCalled();
@@ -129,6 +129,15 @@ test('retries a committed save after provider refresh failure while preserving a
     screen.getByRole('button', { name: '20 cards per day', selected: true, disabled: true }),
   ).toBeTruthy();
   fireEvent.press(screen.getByRole('button', { name: 'Retry save' }));
-  await waitFor(() => expect(mockBack).toHaveBeenCalledTimes(1));
+  await screen.findByText('Limits saved.');
   expect(await getDailyProgress()).toMatchObject({ target: 20, count: 4, newCount: 2 });
+});
+
+test('distinguishes the limits and confirms a successful save inline', async () => {
+  const screen = render(<DailyGoalScreen />);
+  await screen.findByRole('header', { name: 'Daily review goal' });
+  expect(screen.getByRole('header', { name: 'Maximum new cards per day' })).toBeTruthy();
+  fireEvent.press(screen.getByRole('button', { name: 'Save limits' }));
+  await screen.findByText('Limits saved.');
+  expect(Alert.alert).not.toHaveBeenCalled();
 });

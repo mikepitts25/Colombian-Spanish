@@ -56,6 +56,7 @@ test('draft Barrio/Light and Cancel change neither stored Classic nor applied ap
   fireEvent.press(ui.getByRole('radio', { name: 'Barrio' }));
   fireEvent.press(ui.getByRole('radio', { name: 'Light' }));
   expect(ui.getByText('classic:dark')).toHaveStyle({ backgroundColor: '#020617' });
+  expect(ui.getByTestId('appearance-preview')).toHaveStyle({ backgroundColor: '#F7F3EA' });
   expect(await AsyncStorage.getItem('SRS_PREFS_V1')).toBe(original);
   fireEvent.press(ui.getByRole('button', { name: 'Cancel' }));
   expect(mockBack).toHaveBeenCalledTimes(1);
@@ -82,7 +83,7 @@ test('one held pair save blocks conflicting actions and merges an unrelated pref
   await ui.findByRole('radio', { name: 'Classic (original theme)' });
   fireEvent.press(ui.getByRole('radio', { name: 'Barrio' }));
   fireEvent.press(ui.getByRole('radio', { name: 'Light' }));
-  fireEvent.press(ui.getByRole('button', { name: 'Save theme' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save appearance' }));
   await act(async () => {
     await started;
   });
@@ -90,7 +91,7 @@ test('one held pair save blocks conflicting actions and merges an unrelated pref
   expect(ui.getByRole('button', { name: 'Cancel', disabled: true })).toBeTruthy();
   expect(mockPrevent).toHaveBeenLastCalledWith(true, expect.any(Function));
   fireEvent.press(ui.getByRole('radio', { name: 'Dark' }));
-  fireEvent.press(ui.getByRole('button', { name: 'Save theme' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save appearance' }));
   fireEvent.press(ui.getByRole('button', { name: 'Cancel' }));
   expect(ui.getByText('classic:dark')).toBeTruthy();
   expect(mockBack).not.toHaveBeenCalled();
@@ -109,7 +110,7 @@ test('one held pair save blocks conflicting actions and merges an unrelated pref
     speechRate: 0.85,
   });
   fireEvent.press(ui.getByRole('radio', { name: 'Classic (original theme)' }));
-  fireEvent.press(ui.getByRole('button', { name: 'Save theme' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save appearance' }));
   await waitFor(() => expect(ui.getByText('classic:dark')).toBeTruthy());
   expect(await getPrefs()).toMatchObject({ themeId: 'classic', appearanceMode: 'light' });
 });
@@ -127,7 +128,7 @@ test('interrupted durable save retains the exact request and old paint until suc
   await ui.findByRole('radio', { name: 'Classic (original theme)' });
   fireEvent.press(ui.getByRole('radio', { name: 'Barrio' }));
   fireEvent.press(ui.getByRole('radio', { name: 'Light' }));
-  fireEvent.press(ui.getByRole('button', { name: 'Save theme' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save appearance' }));
   await ui.findByText('Could not save. Your selection is retained. Retry the same selection.');
   expect(ui.getByText('classic:dark')).toBeTruthy();
   expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).not.toBeNull();
@@ -162,7 +163,7 @@ test('failed load exposes Retry instead of editable defaults and preserves exist
   });
   const ui = render(<App />);
   await ui.findByText('Could not load theme settings. Retry without resetting the app.');
-  expect(ui.queryByRole('button', { name: 'Save theme' })).toBeNull();
+  expect(ui.queryByRole('button', { name: 'Save appearance' })).toBeNull();
   expect(ui.queryByRole('radio')).toBeNull();
   expect(await nativeRead('SRS_PREFS_V1')).toBe(raw);
   fireEvent.press(ui.getByRole('button', { name: 'Retry' }));
@@ -194,7 +195,7 @@ test('a pending Barrio/System save uses the latest OS appearance after acknowled
   await ui.findByRole('radio', { name: 'Classic (original theme)' });
   fireEvent.press(ui.getByRole('radio', { name: 'Barrio' }));
   expect(ui.getByRole('radio', { name: 'Follow system', checked: true })).toBeTruthy();
-  fireEvent.press(ui.getByRole('button', { name: 'Save theme' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save appearance' }));
   await act(async () => started);
   scheme.mockReturnValue('dark');
   ui.rerender(<App />);
@@ -208,4 +209,49 @@ test('a pending Barrio/System save uses the latest OS appearance after acknowled
   scheme.mockReturnValue('light');
   ui.rerender(<App />);
   expect(ui.getByText('barrio:light')).toBeTruthy();
+});
+
+test('shows both possible System looks without overriding the applied app appearance', async () => {
+  await setPrefs({ themeId: 'classic', appearanceMode: 'system' });
+  const ui = render(<App />);
+  fireEvent.press(await ui.findByRole('radio', { name: 'Barrio' }));
+  expect(ui.getByTestId('appearance-preview-light')).toHaveStyle({ backgroundColor: '#F7F3EA' });
+  const dark = ui.getByTestId('appearance-preview-dark');
+  expect(dark).not.toHaveStyle({ backgroundColor: '#F7F3EA' });
+  expect(ui.getByText('classic:dark')).toBeTruthy();
+});
+
+test.each([
+  ['before the journal', 'SRS_WRITE_JOURNAL_V1', 'classic:dark'],
+  ['after the journal', 'SRS_PREFS_V1', 'barrio:light'],
+])('Close reconciles durable appearance when saving fails %s', async (_case, failKey, paint) => {
+  await setPrefs({ speechRate: 0.8 });
+  let attempted = false;
+  const write = AsyncStorage.setItem as jest.Mock;
+  write.mockImplementation(async (key: string, value: string) => {
+    if (key === failKey && (!attempted || key === 'SRS_WRITE_JOURNAL_V1')) {
+      attempted = true;
+      throw new Error('appearance save interrupted');
+    }
+    return nativeWrite(key, value);
+  });
+  mockBack.mockImplementationOnce(() => {
+    expect(mockPrevent).toHaveBeenLastCalledWith(false, expect.any(Function));
+  });
+
+  const ui = render(<App />);
+  await ui.findByRole('radio', { name: 'Classic (original theme)' });
+  fireEvent.press(ui.getByRole('radio', { name: 'Barrio' }));
+  fireEvent.press(ui.getByRole('radio', { name: 'Light' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Save appearance' }));
+  const close = await ui.findByRole('button', { name: 'Close' });
+  expect(ui.getByText('classic:dark')).toBeTruthy();
+
+  write.mockClear();
+  fireEvent.press(close);
+  await waitFor(() => expect(mockBack).toHaveBeenCalledTimes(1));
+  expect(ui.getByText(paint)).toBeTruthy();
+  expect(await getPrefs()).toMatchObject({ themeId: paint.split(':')[0], speechRate: 0.8 });
+  expect(await AsyncStorage.getItem('SRS_WRITE_JOURNAL_V1')).toBeNull();
+  expect(write.mock.calls.some(([key]) => key === 'SRS_WRITE_JOURNAL_V1')).toBe(false);
 });

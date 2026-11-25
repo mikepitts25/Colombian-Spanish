@@ -1,10 +1,14 @@
+const { isSubsetBuild } = require('./scripts/lib/subset-build-profile');
+
 // Recording is a development preview. Normal/preview/production binaries do not
 // request microphone access, including permissions inherited from audio modules.
 module.exports = ({ config }) => {
+  const subset = isSubsetBuild();
   const recordingPreview = process.env.EAS_BUILD_PROFILE === 'development';
   const blocked = config.android?.blockedPermissions ?? [];
   return {
     ...config,
+    ...(subset ? { platforms: ['ios'], updates: { ...config.updates, enabled: false } } : {}),
     extra: {
       ...config.extra,
       cafeEditorialPreview: process.env.EAS_BUILD_PROFILE === 'editorial-beta',

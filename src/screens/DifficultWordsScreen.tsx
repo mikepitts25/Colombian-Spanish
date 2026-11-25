@@ -1,9 +1,11 @@
 import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
+import { controlSurface } from '../styles/controlStates';
 import React, { useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 
 import Flashcard from '../components/Flashcard';
 import { useDeck } from '../hooks/useDeck';
@@ -73,8 +75,9 @@ export default function DifficultWordsScreen() {
   const cardTop = useRef(0);
   const [gradeSaving, setGradeSaving] = useState(false);
   const { ready, decks, recordAnswer, reload } = useDeck();
+  const nav = useNavigation<any>();
   const { t } = useLanguage();
-  const [idx, setIdx] = useState(0);
+  const [reviewedCount, setReviewedCount] = useState(0);
   const [queueIds, setQueueIds] = useState<string[] | null>(null);
   const grading = useRef(false);
   const pendingGrade = useRef<AnswerAttempt | undefined>(undefined);
@@ -103,36 +106,33 @@ export default function DifficultWordsScreen() {
       deck.cards.map((card) => [card.id, { card, deckId: deck.id, deckName: deck.name }] as const),
     ),
   );
-  const difficultRows =
-    queueIds === null
-      ? eligibleRows
-      : queueIds.flatMap((id) => {
-          const row = byId.get(id);
-          return row ? [row] : [];
-        });
-  const current = difficultRows[idx] ?? null;
-  const count = difficultRows.length;
+  const remainingIds = (queueIds ?? []).filter((id) => byId.has(id));
+  const current = byId.get(remainingIds[0]);
+  const count = reviewedCount + remainingIds.length;
 
   useLayoutEffect(() => {
-    if (idx > 0) scroll.current?.scrollTo({ y: cardTop.current, animated: false });
-  }, [idx]);
+    if (reviewedCount > 0) scroll.current?.scrollTo({ y: cardTop.current, animated: false });
+  }, [reviewedCount]);
 
   async function grade(q: 0 | 1 | 2 | 3 | 4 | 5) {
-    if (!current || grading.current || gradeError === 'stale') return;
+    if (grading.current || gradeError === 'stale') return;
+    const attempt =
+      pendingGrade.current ??
+      (current && {
+        attemptId: createLearningSessionId(),
+        sessionId: sessionId.current,
+        cardId: current.card.id,
+        quality: q,
+        context: {
+          deckId: current.deckId,
+          front: current.card.front,
+          back: current.card.back,
+          example: current.card.example,
+        },
+      });
+    if (!attempt || !queueIds) return;
     grading.current = true;
     setGradeSaving(true);
-    const attempt = pendingGrade.current ?? {
-      attemptId: createLearningSessionId(),
-      sessionId: sessionId.current,
-      cardId: current.card.id,
-      quality: q,
-      context: {
-        deckId: current.deckId,
-        front: current.card.front,
-        back: current.card.back,
-        example: current.card.example,
-      },
-    };
     pendingGrade.current = attempt;
     try {
       await recordAnswer(attempt.cardId, attempt.quality, {
@@ -142,7 +142,8 @@ export default function DifficultWordsScreen() {
       });
       pendingGrade.current = undefined;
       setGradeError(null);
-      setIdx((value) => value + 1);
+      setQueueIds((ids) => ids?.filter((id) => id !== attempt.cardId) ?? null);
+      setReviewedCount((count) => count + 1);
     } catch (error) {
       if (error instanceof StaleGradeError) pendingGrade.current = undefined;
       setGradeError(error instanceof StaleGradeError ? 'stale' : 'save');
@@ -159,7 +160,7 @@ export default function DifficultWordsScreen() {
     try {
       await reload({ requireFreshBudget: true });
       setQueueIds(null);
-      setIdx(0);
+      setReviewedCount(0);
       sessionId.current = createLearningSessionId();
       setGradeError(null);
     } catch {
@@ -209,13 +210,25 @@ export default function DifficultWordsScreen() {
       <SafeAreaView style={styles.wrap}>
         <ScrollView contentContainerStyle={styles.center}>
           <View key={fontScale} style={styles.emptyContent}>
-            {gradeError === 'stale' ? (
+            {gradeError ? (
               gradeStatus
+            ) : gradeSaving ? (
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             ) : (
               <>
-                <Text style={styles.emptyEmoji}>🎉</Text>
-                <Text style={styles.emptyTitle}>{t('difficult.emptyTitle')}</Text>
-                <Text style={styles.emptySub}>{t('difficult.emptySub')}</Text>
+                <Text accessibilityRole="header" style={styles.emptyTitle}>
+                  {t(reviewedCount ? 'difficult.reviewComplete' : 'difficult.emptyTitle')}
+                </Text>
+                <Text style={styles.emptySub}>
+                  {t(reviewedCount ? 'difficult.reviewCompleteSub' : 'difficult.emptySub')}
+                </Text>
+                <Pressable
+                  accessibilityRole="button"
+                  style={({ pressed }) => [styles.practiceButton, controlSurface(theme, pressed)]}
+                  onPress={() => nav.navigate('Root', { screen: 'Study' }, { pop: true })}
+                >
+                  <Text style={styles.practiceButtonText}>{t('difficult.backToPractice')}</Text>
+                </Pressable>
               </>
             )}
           </View>
@@ -240,7 +253,7 @@ export default function DifficultWordsScreen() {
           </View>
           <View style={styles.counterPill}>
             <Text style={styles.counterText}>
-              {idx + 1}/{count}
+              {reviewedCount + 1}/{count}
             </Text>
           </View>
         </View>
@@ -249,6 +262,7 @@ export default function DifficultWordsScreen() {
           <Text style={styles.deckPillText}>{current.deckName}</Text>
         </View>
 
+        <Text style={styles.reviewPrompt}>{t('difficult.reviewPrompt')}</Text>
         <View
           testID="difficult-card-area"
           style={styles.cardArea}
@@ -261,7 +275,6 @@ export default function DifficultWordsScreen() {
 
         {gradeStatus}
         <View key={`grades-${fontScale}`} style={styles.gradeBar}>
-          <Text style={styles.gradeLabel}>{t('difficult.reviewPrompt')}</Text>
           <View style={[styles.gradeButtons, largeText && styles.stacked]}>
             {grades.map((g) => (
               <Pressable
@@ -277,12 +290,7 @@ export default function DifficultWordsScreen() {
                 onPress={() => grade(g.q)}
               >
                 <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
-                <Text
-                  style={[
-                    styles.gradeBtnInterval,
-                    { color: theme.id === 'classic' ? g.color + 'b3' : g.color },
-                  ]}
-                >
+                <Text style={[styles.gradeBtnInterval, { color: g.color }]}>
                   {formatIntervalShort(previewInterval(current.card, g.q))}
                 </Text>
               </Pressable>
@@ -303,9 +311,18 @@ const makeStyles = ({ colors, id }: AppTheme) =>
     emptyContent: { alignItems: 'center', gap: 10 },
     center: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 24 },
     loadingText: { color: colors.textSecondary, fontSize: 16 },
-    emptyEmoji: { fontSize: 48 },
-    emptyTitle: { color: colors.textPrimary, fontSize: 22, fontWeight: '900' },
+    emptyTitle: { color: colors.textPrimary, fontSize: 22, fontWeight: '900', textAlign: 'center' },
     emptySub: { color: colors.textSecondary, fontSize: 14, textAlign: 'center' },
+    practiceButton: {
+      minHeight: 48,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      backgroundColor: colors.brand,
+      borderRadius: 16,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    practiceButtonText: { color: colors.textInverse, fontSize: 16, fontWeight: '800' },
 
     header: {
       flexDirection: 'row',
@@ -340,6 +357,13 @@ const makeStyles = ({ colors, id }: AppTheme) =>
       fontSize: 12,
       fontWeight: '800',
     },
+    reviewPrompt: {
+      color: colors.textSecondary,
+      fontSize: 14,
+      textAlign: 'center',
+      paddingHorizontal: 20,
+      paddingBottom: 8,
+    },
     cardArea: { flexGrow: 1, flexShrink: 0, paddingHorizontal: 20, justifyContent: 'center' },
 
     gradeBar: {
@@ -350,12 +374,6 @@ const makeStyles = ({ colors, id }: AppTheme) =>
       paddingTop: 12,
       paddingBottom: 16,
       gap: 10,
-    },
-    gradeLabel: {
-      color: colors.textTertiary,
-      fontSize: 12,
-      fontWeight: '600',
-      textAlign: 'center',
     },
     gradeButtons: { flexDirection: 'row', gap: 8 },
     gradeBtn: {

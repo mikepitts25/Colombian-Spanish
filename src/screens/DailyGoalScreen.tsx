@@ -2,7 +2,14 @@ import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Alert, useWindowDimensions } from 'react-native';
+import {
+  AccessibilityInfo,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
@@ -34,6 +41,7 @@ export default function DailyGoalScreen() {
   const [loadError, setLoadError] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
+  const [saved, setSaved] = useState(false);
   const mounted = useRef(true);
   const submitting = useRef(false);
   const intent = useRef<DailyGoalSettings | null>(null);
@@ -59,6 +67,7 @@ export default function DailyGoalScreen() {
   const locked = saving || saveError;
   function edit(patch: Partial<DailyGoalSettings>) {
     if (submitting.current || intent.current) return;
+    setSaved(false);
     setValues((current) => (current ? { ...current, ...patch } : null));
   }
   async function save() {
@@ -68,16 +77,14 @@ export default function DailyGoalScreen() {
     submitting.current = true;
     setSaving(true);
     setSaveError(false);
+    setSaved(false);
     try {
       await saveDailyGoalSettings(snapshot);
       await reload({ requireFreshBudget: true });
       if (mounted.current) {
         intent.current = null;
-        Alert.alert(
-          t('dailyGoal.saved.title'),
-          t('dailyGoal.saved.message', { count: snapshot.target }),
-        );
-        nav.goBack();
+        setSaved(true);
+        AccessibilityInfo.announceForAccessibility(t('dailyGoal.savedInline'));
       }
     } catch {
       if (mounted.current) setSaveError(true);
@@ -108,18 +115,6 @@ export default function DailyGoalScreen() {
           <Text accessibilityRole="header" style={styles.navTitle}>
             {t('dailyGoal.title')}
           </Text>
-          {values && !loading && !loadError && !saveError ? (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={t('common.save')}
-              accessibilityState={{ disabled: saving, busy: saving }}
-              disabled={saving}
-              style={styles.saveBtn}
-              onPress={() => void save()}
-            >
-              <Text style={styles.saveBtnText}>{t('common.save')}</Text>
-            </Pressable>
-          ) : null}
         </View>
         {loading ? (
           <Text style={styles.stepperTitle}>{t('common.loading')}</Text>
@@ -156,6 +151,9 @@ export default function DailyGoalScreen() {
                 </Pressable>
               </View>
             ) : null}
+            <Text accessibilityRole="header" style={styles.stepperTitle}>
+              {t('dailyGoal.reviewTitle')}
+            </Text>
             <View style={styles.goalHero}>
               <Text allowFontScaling={false} style={styles.goalEmoji}>
                 🎯
@@ -200,11 +198,12 @@ export default function DailyGoalScreen() {
                 </Pressable>
               ))}
             </View>
-            <Text style={styles.groupLabel}>{t('dailyGoal.newPerDay')}</Text>
+            <Text accessibilityRole="header" style={styles.stepperTitle}>
+              {t('dailyGoal.newPerSession')}
+            </Text>
             <View style={styles.groupCard}>
               <View style={[styles.stepperRow, expanded && styles.stacked]}>
                 <View style={[styles.stepperInfo, expanded && styles.unflexed]}>
-                  <Text style={styles.stepperTitle}>{t('dailyGoal.newPerSession')}</Text>
                   <Text style={styles.stepperSub}>{t('dailyGoal.newPerSessionSub')}</Text>
                 </View>
                 <View style={styles.stepper}>
@@ -250,17 +249,18 @@ export default function DailyGoalScreen() {
                 <Text style={styles.stepperSub}>{t('dailyGoal.orderDescription')}</Text>
               </View>
             </View>
-            <View style={styles.motivationCard}>
-              <Text allowFontScaling={false} style={styles.motivIcon}>
-                💪
-              </Text>
-              <View style={styles.motivInfo}>
-                <Text style={styles.motivTitle}>{t('dailyGoal.motivation')}</Text>
-                <Text style={styles.motivText}>
-                  {t('dailyGoal.motivationText', { count: values.target })}
-                </Text>
-              </View>
-            </View>
+            {saved && <Text style={styles.stepperTitle}>{t('dailyGoal.savedInline')}</Text>}
+            {!saveError && (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityState={{ disabled: saving || saved, busy: saving }}
+                disabled={saving || saved}
+                style={[styles.saveBtn, (saving || saved) && styles.disabled]}
+                onPress={() => void save()}
+              >
+                <Text style={styles.saveBtnText}>{t('dailyGoal.saveLimits')}</Text>
+              </Pressable>
+            )}
           </>
         ) : null}
       </ScrollView>
@@ -272,13 +272,7 @@ const makeStyles = ({ colors }: AppTheme) =>
   StyleSheet.create({
     wrap: { flex: 1, backgroundColor: colors.bg },
 
-    navBar: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingHorizontal: 16,
-      paddingVertical: 10,
-    },
+    navBar: { gap: 12, marginBottom: 16 },
     backBtn: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -301,6 +295,7 @@ const makeStyles = ({ colors }: AppTheme) =>
       borderRadius: 20,
       backgroundColor: colors.brand,
     },
+    disabled: { opacity: 0.5 },
     saveBtnText: { color: colors.textInverse, fontSize: 14, fontWeight: '800' },
 
     scroll: { padding: 16, paddingBottom: 40 },
@@ -313,6 +308,7 @@ const makeStyles = ({ colors }: AppTheme) =>
       borderColor: colors.tabBorder,
       borderRadius: 24,
       paddingVertical: 28,
+      marginTop: 8,
       marginBottom: 16,
     },
     goalEmoji: { fontSize: 36 },
@@ -341,19 +337,12 @@ const makeStyles = ({ colors }: AppTheme) =>
     presetLabel: { color: colors.textSecondary, fontSize: 10, fontWeight: '600' },
     presetLabelActive: { color: colors.textInverse, fontWeight: '800' },
 
-    groupLabel: {
-      color: colors.textTertiary,
-      fontSize: 11,
-      fontWeight: '700',
-      letterSpacing: 1,
-      marginBottom: 6,
-      marginLeft: 4,
-    },
     groupCard: {
       backgroundColor: colors.surface,
       borderWidth: 1,
       borderColor: colors.border,
       borderRadius: 16,
+      marginTop: 8,
       marginBottom: 20,
       overflow: 'hidden',
     },
@@ -393,18 +382,4 @@ const makeStyles = ({ colors }: AppTheme) =>
       paddingVertical: 14,
       paddingHorizontal: 16,
     },
-    motivationCard: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 12,
-      backgroundColor: colors.brandWash,
-      borderWidth: 1,
-      borderColor: colors.softBrandBorder,
-      borderRadius: 16,
-      padding: 16,
-    },
-    motivIcon: { fontSize: 24 },
-    motivInfo: { flex: 1, gap: 3 },
-    motivTitle: { color: colors.brand, fontSize: 13, fontWeight: '800' },
-    motivText: { color: colors.textSecondary, fontSize: 12, lineHeight: 17 },
   });

@@ -1,6 +1,13 @@
-import React, { ReactNode, useEffect, useMemo } from 'react';
-import { View } from 'react-native';
-import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import React, { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
+import { AppState, View } from 'react-native';
+import {
+  CommonActions,
+  createNavigationContainerRef,
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+  StackActions,
+} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import RootNavigator from './src/navigation';
@@ -11,7 +18,10 @@ import { DeckProvider } from './src/hooks/useDeck';
 import ErrorBoundary, { CrashBoundary } from './src/components/ErrorBoundary';
 import StorageGate from './src/components/StorageGate';
 import ThemeBootstrap from './src/components/ThemeBootstrap';
-import { refreshScheduledNotifications } from './src/services/notifications';
+import {
+  refreshScheduledNotifications,
+  watchReminderResponses,
+} from './src/services/notifications';
 import { initCrashReporting } from './src/services/crashReporting';
 
 initCrashReporting();
@@ -42,8 +52,37 @@ function ReadyApp() {
     }),
     [theme],
   );
+  const navigation = useMemo(() => createNavigationContainerRef(), []);
+  const responses = useRef<ReturnType<typeof watchReminderResponses> | null>(null);
+  const flush = useCallback(() => responses.current?.flush(), []);
+
+  useEffect(() => {
+    const watcher = watchReminderResponses((intent) => {
+      if (!navigation.isReady() || navigation.getRootState()?.routes[0]?.name !== 'Root')
+        return false;
+      if (intent.kind === 'word' || intent.kind === 'wordUnavailable') {
+        navigation.dispatch(CommonActions.navigate('ReminderWord', intent));
+      } else {
+        // Home resolves a saved plan before any new activity.
+        navigation.dispatch(StackActions.popTo('Root', { screen: 'Home' }));
+      }
+      return true;
+    });
+    responses.current = watcher;
+    watcher.flush();
+    return () => {
+      watcher.remove();
+      responses.current = null;
+    };
+  }, [navigation]);
+
   return (
-    <NavigationContainer theme={navigationTheme}>
+    <NavigationContainer
+      ref={navigation}
+      theme={navigationTheme}
+      onReady={flush}
+      onStateChange={flush}
+    >
       <PurchaseProvider>
         <DeckProvider>
           <LanguageProvider>
@@ -57,8 +96,13 @@ function ReadyApp() {
 
 export default function App() {
   useEffect(() => {
-    // Keep the rolling word-of-day reminder window fresh on every launch.
-    refreshScheduledNotifications().catch(() => {});
+    const refresh = () => void refreshScheduledNotifications().catch(() => {});
+    refresh();
+    // Returning to the app also refreshes the rolling window in the current local timezone.
+    const state = AppState.addEventListener('change', (next) => {
+      if (next === 'active') refresh();
+    });
+    return () => state.remove();
   }, []);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

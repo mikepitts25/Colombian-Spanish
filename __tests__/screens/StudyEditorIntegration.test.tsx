@@ -1,8 +1,12 @@
+import { revealStudyCard } from '../../testFixtures/revealStudyCard';
 import React from 'react';
+import { Alert } from 'react-native';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StudyScreen from '../../src/screens/StudyScreen';
 import ReviewScreen from '../../src/screens/ReviewScreen';
+import AddCardScreen from '../../src/screens/AddCardScreen';
+import ManageDecksScreen from '../../src/screens/ManageDecksScreen';
 import { DeckProvider, useDeckContext } from '../../src/context/DeckContext';
 import { getDailyProgress, getLastStudySession, loadDecks } from '../../src/storage/storage';
 import { getLearningEvents } from '../../src/storage/learningEvents';
@@ -19,6 +23,7 @@ jest.mock('@react-navigation/native', () => ({
   useRoute: () => ({ params: mockParams }),
 }));
 jest.mock('../../src/data/decks', () => ({ ALL_DECKS: [] }));
+jest.mock('../../src/hooks/useReducedMotion', () => ({ useReducedMotion: () => true }));
 
 // Keep the real screen/provider/storage boundary: a mock provider would hide
 // membership changes caused by editor writes and new-card insertion.
@@ -30,11 +35,12 @@ function Probe() {
   }, [context]);
   return null;
 }
-function App() {
+function App({ screen = 'study' }: { screen?: 'study' | 'add' | 'manage' } = {}) {
+  const Screen = { study: StudyScreen, add: AddCardScreen, manage: ManageDecksScreen }[screen];
   return (
     <DeckProvider>
       <Probe />
-      <StudyScreen />
+      <Screen />
     </DeckProvider>
   );
 }
@@ -57,6 +63,8 @@ test.each(['grade-first', 'editor-first'])(
   async (order) => {
     let screen = render(<App />);
     await screen.findByText('saludo uno');
+    expect(screen.queryByText('Bien')).toBeNull();
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     const initial = await getLastStudySession();
     expect(initial?.queue?.cardIds).toEqual(['one', 'two']);
@@ -97,6 +105,7 @@ test.each(['grade-first', 'editor-first'])(
     });
     fireEvent.press(await screen.findByText('Continuar'));
     await screen.findByText('saludo uno');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     expect(current.activeDeck?.cards[0].back).toBe('corrected first answer');
     await act(async () => {
@@ -130,6 +139,7 @@ test.each(['grade-first', 'editor-first'])(
     screen = render(<App />);
     fireEvent.press(await screen.findByText('Continuar'));
     await screen.findByText('saludo dos');
+    await revealStudyCard(screen);
     await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
     expect(screen.getByText('1 restantes')).toBeTruthy();
     expect((await getLastStudySession())?.queue?.cardIds).toEqual(['two']);
@@ -145,6 +155,7 @@ test.each(['grade-first', 'editor-first'])(
 test('editor recovery of a partial grade keeps the pending retry exactly once', async () => {
   const screen = render(<App />);
   await screen.findByText('saludo uno');
+  await revealStudyCard(screen);
   await waitFor(() => expect(screen.getByText('Bien')).not.toBeDisabled());
   const write = AsyncStorage.setItem as jest.Mock;
   const original = write.getMockImplementation()!;
@@ -295,4 +306,46 @@ test('failed filtered editor save retains its row and draft after another transa
   } finally {
     remove.mockImplementation(original);
   }
+});
+
+test('reopens the card after creating and renaming its deck and canceling a reset', async () => {
+  const ui = render(<App screen="add" />);
+  fireEvent.changeText(await ui.findByLabelText('Frente (español colombiano)'), 'Un cafecito');
+  fireEvent.changeText(ui.getByLabelText('Reverso (inglés)'), 'A little coffee');
+  fireEvent.press(ui.getByRole('button', { name: 'Elegir deck' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Crear deck' }));
+  fireEvent.changeText(ui.getByPlaceholderText('Nombre (ej., Colombianismos)'), 'Café');
+  fireEvent.press(ui.getByRole('button', { name: 'Crear' }));
+  await ui.findByText('Café');
+  fireEvent.press(ui.getByRole('button', { name: 'Guardar tarjeta' }));
+
+  await waitFor(() =>
+    expect(Alert.alert).toHaveBeenCalledWith('Agregada', 'Tarjeta agregada a Café'),
+  );
+  const saved = (await loadDecks()).find((deck) => deck.name === 'Café')!;
+  expect(saved.cards).toEqual([
+    expect.objectContaining({ front: 'Un cafecito', back: 'A little coffee' }),
+  ]);
+
+  ui.rerender(<App screen="manage" />);
+  fireEvent.press(ui.getByRole('button', { name: 'Acciones del deck Café' }));
+  fireEvent.press(ui.getByRole('button', { name: 'Renombrar: Café' }));
+  fireEvent.changeText(ui.getByPlaceholderText('Nombre del deck'), 'Pedidos de café');
+  fireEvent.press(ui.getByRole('button', { name: 'Guardar' }));
+  fireEvent.press(await ui.findByRole('button', { name: 'Reiniciar progreso: Pedidos de café' }));
+  const [title, message, buttons] = (Alert.alert as jest.Mock).mock.calls.at(-1)!;
+  expect(title).toBe('¿Reiniciar progreso?');
+  expect(message).toContain('Pedidos de café');
+  const cancel = buttons.find((button: { style?: string }) => button.style === 'cancel');
+  expect(cancel.text).toBe('Cancelar');
+  cancel.onPress?.();
+  expect((await loadDecks()).find((deck) => deck.id === saved.id)).toEqual({
+    ...saved,
+    name: 'Pedidos de café',
+  });
+
+  mockParams = { autoStartDeckId: saved.id };
+  ui.rerender(<App />);
+  await ui.findByText('Un cafecito');
+  expect(current.activeDeck?.id).toBe(saved.id);
 });

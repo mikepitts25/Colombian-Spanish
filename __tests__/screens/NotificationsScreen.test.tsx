@@ -18,6 +18,7 @@ jest.mock('../../src/context/LanguageContext', () => ({
   }),
 }));
 jest.mock('expo-notifications', () => ({
+  getAllScheduledNotificationsAsync: jest.fn(),
   SchedulableTriggerInputTypes: { DAILY: 'daily', DATE: 'date' },
   getPermissionsAsync: jest.fn().mockResolvedValue({ status: 'granted', canAskAgain: true }),
   requestPermissionsAsync: jest.fn().mockResolvedValue({ status: 'granted', canAskAgain: true }),
@@ -32,6 +33,9 @@ beforeEach(async () => {
     status: 'granted',
     canAskAgain: true,
   });
+  (Notifications.getAllScheduledNotificationsAsync as jest.Mock).mockResolvedValue([
+    { content: { data: { reminder: 'practice' } } },
+  ]);
 });
 afterEach(() => act(() => Dimensions.set({ window: originalWindow })));
 
@@ -126,7 +130,9 @@ it('shows denied permission as distinct from an unsaved preference and does not 
   });
   const ui = render(<NotificationsScreen />);
   await ui.findByRole('switch', { name: 'Notifications', disabled: false });
-  expect(Notifications.getPermissionsAsync).not.toHaveBeenCalled();
+  expect(Notifications.getPermissionsAsync).toHaveBeenCalled();
+  expect(ui.getByRole('switch', { name: 'Notifications', checked: false })).toBeTruthy();
+  expect(Notifications.requestPermissionsAsync).not.toHaveBeenCalled();
   fireEvent(ui.getByTestId('notification-night-toggle'), 'valueChange', true);
   await ui.findByText(
     'Preferences saved. Allow notifications in system settings to receive reminders.',
@@ -182,4 +188,17 @@ it('keeps recovery available if the system settings link fails', async () => {
   await ui.findByText(/Could not open system settings/);
   expect(ui.getByRole('button', { name: 'Retry' })).toBeEnabled();
   expect((await getNotificationPreferences()).nightOn).toBe(true);
+});
+
+it('reports a granted permission with no matching schedule as inactive', async () => {
+  (Notifications.getAllScheduledNotificationsAsync as jest.Mock).mockResolvedValue([]);
+  const ui = render(<NotificationsScreen />);
+  await ui.findByText('Some selected reminders are missing. Retry to schedule them.');
+  expect(ui.getByRole('switch', { name: 'Notifications', checked: false })).toBeTruthy();
+  expect(Notifications.requestPermissionsAsync).not.toHaveBeenCalled();
+
+  fireEvent.press(ui.getByRole('button', { name: 'Turn off reminders' }));
+  await ui.findByText('Preferences saved. No reminders requested.');
+  expect(await getNotificationPreferences()).toMatchObject({ masterOn: false });
+  expect(Notifications.scheduleNotificationAsync).not.toHaveBeenCalled();
 });

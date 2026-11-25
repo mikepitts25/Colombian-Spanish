@@ -59,7 +59,13 @@ export default function AdventureEntry({
             {t(progress?.error ? 'adventure.loadError' : 'home.cafe.conversation')}
           </Text>
           <Text style={compactStyles.body}>
-            {t(progress?.error ? 'mission.retry' : 'adventure.title')}
+            {t(
+              progress?.error
+                ? 'mission.retry'
+                : returning
+                  ? 'adventure.welcomeBack'
+                  : 'adventure.title',
+            )}
           </Text>
         </View>
         <Text accessible={false} style={compactStyles.arrow}>

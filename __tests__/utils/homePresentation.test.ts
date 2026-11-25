@@ -135,6 +135,21 @@ test('completion is based on injected local day; yesterday permits a fresh recom
   );
 });
 
+test('an eligible visit follows any unfinished daily plan and can follow today’s completion', () => {
+  const nextVisit = { id: 'back-at-anas-cafe', title: 'Back at Ana’s café', resume: false };
+  const input = { ...base, nextVisit };
+  expect(deriveHomePresentation({ ...input, plan: plan() }).kind).toBe('reviewResume');
+  expect(deriveHomePresentation({ ...input, readError: true }).kind).toBe('readError');
+  expect(deriveHomePresentation(input)).toMatchObject({
+    kind: 'visit',
+    action: 'openVisit',
+    visit: nextVisit,
+  });
+  expect(
+    deriveHomePresentation({ ...input, plan: { ...plan('complete'), day: '2032-01-08' } }).kind,
+  ).toBe('visit');
+});
+
 test.each([
   [{ totalCards: 0, totalNew: 0, newAvailableToday: 0 }, 'empty'],
   [{ totalCards: 10, totalNew: 10, newAvailableToday: 0 }, 'cap'],

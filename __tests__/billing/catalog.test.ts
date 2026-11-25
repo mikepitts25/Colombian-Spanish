@@ -23,3 +23,14 @@ it('preserves custom decks and custom cards inside locked bundled decks', () => 
   expect(free[1]).toEqual(custom);
   expect(input[0].cards.length).toBe(paid.cards.length + 1);
 });
+
+it('keeps a restored paid card locked when it appears in a free or user-created deck', () => {
+  const paid = ALL_DECKS.find((d) => d.id === 'deck-business')!.cards[0];
+  const free = ALL_DECKS.find((d) => d.id === 'deck-greetings')!;
+  const restored = [
+    { ...free, cards: [...free.cards, paid] },
+    { id: 'user-deck', name: 'Mine', cards: [paid] },
+  ];
+  expect(accessibleDecks(restored, true)).toEqual(restored);
+  expect(accessibleDecks(restored, false)).toEqual([free, { ...restored[1], cards: [] }]);
+});

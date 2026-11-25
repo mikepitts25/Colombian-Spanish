@@ -3,15 +3,17 @@ import ThemeIcon from '../../src/components/ThemeIcon';
 import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react-native';
 import { Dimensions } from 'react-native';
-import PhrasesScreen from '../../src/screens/PhrasesScreen';
+import PhrasesScreen, { PhraseTopicScreen } from '../../src/screens/PhrasesScreen';
 import { Deck, FlashCard } from '../../src/types';
 
 const mockNavigate = jest.fn();
+const mockGoBack = jest.fn();
+const weatherRoute = { params: { topicId: 'weather' } };
 const mockToggleFavorite = jest.fn();
 const mockSpeakCard = jest.fn();
 
 jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({ navigate: mockNavigate }),
+  useNavigation: () => ({ navigate: mockNavigate, goBack: mockGoBack }),
 }));
 
 jest.mock('../../src/hooks/useDeck', () => ({
@@ -95,31 +97,31 @@ beforeEach(() => {
 
 describe('PhrasesScreen', () => {
   it('browses requested Weather phrases by topic', () => {
-    const { getByText, queryByText } = render(<PhrasesScreen />);
+    const { getByText, queryByText, unmount } = render(<PhrasesScreen />);
 
     expect(getByText('Everyday conversation')).toBeTruthy();
     expect(getByText('Weather today')).toBeTruthy();
     expect(queryByText('Hace mucho calor hoy')).toBeNull();
 
     fireEvent.press(getByText('Weather today'));
-
-    expect(getByText('Hace mucho calor hoy')).toBeTruthy();
-    expect(getByText('Estoy sudando')).toBeTruthy();
-    expect(getByText('Está lloviendo afuera')).toBeTruthy();
-    expect(queryByText('nublado')).toBeNull();
+    expect(mockNavigate).toHaveBeenCalledWith('PhraseTopic', { topicId: 'weather' });
+    unmount();
+    const detail = render(<PhraseTopicScreen route={weatherRoute} />);
+    expect(detail.getByText('Hace mucho calor hoy')).toBeTruthy();
+    expect(detail.getByText('Estoy sudando')).toBeTruthy();
+    expect(detail.getByText('Está lloviendo afuera')).toBeTruthy();
+    expect(detail.queryByText('nublado')).toBeNull();
   });
 
   it('plays, saves, studies, and opens Favorites from a selected topic', () => {
-    const { getByLabelText, getByText } = render(<PhrasesScreen />);
-
-    fireEvent.press(getByText('Weather today'));
+    const { getByLabelText, getByText } = render(<PhraseTopicScreen route={weatherRoute} />);
     fireEvent.press(getByLabelText('Play Hace mucho calor hoy'));
     fireEvent.press(getByLabelText('Save Hace mucho calor hoy'));
     fireEvent.press(getByText('Study weather'));
-    fireEvent.press(getByLabelText('Open Favorites'));
+    fireEvent.press(getByLabelText('Saved phrases'));
 
     expect(mockSpeakCard).toHaveBeenCalledWith(expect.objectContaining({ id: 'weather-heat' }));
-    expect(mockToggleFavorite).toHaveBeenCalledWith('weather-heat');
+    expect(mockToggleFavorite).toHaveBeenCalledWith('weather-heat', 'deck-weather');
     expect(mockNavigate).toHaveBeenCalledWith(
       'Root',
       {
@@ -133,8 +135,7 @@ describe('PhrasesScreen', () => {
 });
 
 test('keeps the selected topic and action destinations through live text resizing', () => {
-  const screen = render(<PhrasesScreen />);
-  fireEvent.press(screen.getByText('Weather today'));
+  const screen = render(<PhraseTopicScreen route={weatherRoute} />);
   act(() => Dimensions.set({ window: { ...Dimensions.get('window'), fontScale: 3.2 } }));
   expect(screen.getByText('Hace mucho calor hoy')).toBeTruthy();
   fireEvent.press(screen.getByRole('button', { name: 'Study weather' }));
@@ -144,7 +145,7 @@ test('keeps the selected topic and action destinations through live text resizin
     { pop: true },
   );
   fireEvent.press(screen.getByRole('button', { name: 'All topics' }));
-  expect(screen.getByText('Everyday conversation')).toBeTruthy();
+  expect(mockGoBack).toHaveBeenCalledTimes(1);
   expect(mockToggleFavorite).not.toHaveBeenCalled();
   expect(mockSpeakCard).not.toHaveBeenCalled();
 });
@@ -157,8 +158,7 @@ test('keeps one favorite request through live resizing and reflects the saved ca
         finish = resolve;
       }),
   );
-  const screen = render(<PhrasesScreen />);
-  fireEvent.press(screen.getByText('Weather today'));
+  const screen = render(<PhraseTopicScreen route={weatherRoute} />);
   const save = screen.getByRole('button', { name: 'Save Hace mucho calor hoy' });
   expect(save.props.accessibilityState).toEqual(expect.objectContaining({ selected: false }));
   fireEvent.press(save);
@@ -180,18 +180,17 @@ test('keeps one favorite request through live resizing and reflects the saved ca
     ],
     toggleFavorite: mockToggleFavorite,
   });
-  screen.rerender(<PhrasesScreen />);
+  screen.rerender(<PhraseTopicScreen route={weatherRoute} />);
   expect(
     screen.getByRole('button', { name: 'Remove Hace mucho calor hoy' }).props.accessibilityState,
   ).toEqual(expect.objectContaining({ selected: true }));
-  fireEvent.press(screen.getByRole('button', { name: 'Open Favorites' }));
+  fireEvent.press(screen.getByRole('button', { name: 'Saved phrases' }));
   expect(mockNavigate).toHaveBeenCalledWith('Phrasebook');
   expect(mockToggleFavorite).toHaveBeenCalledTimes(1);
 });
 
 test('Barrio audio entry uses the common decorative icon while Classic retains its glyph', async () => {
-  const screen = renderWithTheme(<PhrasesScreen />);
-  fireEvent.press(screen.getByText('Weather today'));
+  const screen = renderWithTheme(<PhraseTopicScreen route={weatherRoute} />);
   screen.applyTheme({ themeId: 'barrio', appearanceMode: 'light' });
   expect(screen.UNSAFE_getAllByType(ThemeIcon).some((icon) => icon.props.name === 'audio')).toBe(
     true,

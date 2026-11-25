@@ -5,6 +5,7 @@ import { setPrefs } from '../../src/storage/prefs';
 import { getDailyProgress } from '../../src/storage/storage';
 import { DAILY_RESPONSE, availableDailyResponse } from '../../src/missions/dailyResponse';
 import { ALL_DECKS } from '../../src/data/decks';
+import { FREE_DECK_IDS } from '../../src/billing/catalog';
 
 beforeEach(async () => {
   await AsyncStorage.clear();
@@ -16,11 +17,22 @@ test('draft response requires its real registry and development gate', () => {
   expect(availableDailyResponse([], true)).toBeUndefined();
   expect(DAILY_RESPONSE.nodes).toHaveLength(2);
 });
+
+test('a fresh plan uses library access when it builds its queue from durable storage', async () => {
+  await setPrefs({ learningReason: 'work' });
+  const stored = await AsyncStorage.getItem('SRS_DECKS_V3');
+  const free = await openRecommendedPlan(false, false);
+  expect(FREE_DECK_IDS.has(free!.review!.session.deckId)).toBe(true);
+  await abandonDailyPlan(free!.id);
+  const entitled = await openRecommendedPlan(false, true);
+  expect(entitled?.review?.session.deckId).toBe('deck-business');
+  expect(await AsyncStorage.getItem('SRS_DECKS_V3')).toBe(stored);
+});
 test.each([3, 5, 10] as const)(
   'builds one bounded %s-minute plan with fresh budget, review and applied identity',
   async (studyMinutes) => {
     await setPrefs({ studyMinutes, learningReason: 'work', homeRegion: 'paisa' });
-    const p = await openRecommendedPlan(true);
+    const p = await openRecommendedPlan(true, true);
     expect(p?.minutes).toBe(studyMinutes);
     expect(p?.review?.session.deckId).toBe('deck-business');
     expect(p?.applied).toMatchObject({
@@ -73,7 +85,7 @@ test('catch-up start uses fresh last-review state and freezes a familiar-only ex
     );
     await setPrefs({ studyMinutes: 3, learningReason: 'work' });
     const before = await AsyncStorage.getItem('SRS_DECKS_V3');
-    const plan = await openRecommendedPlan(false);
+    const plan = await openRecommendedPlan(false, true);
     expect(plan?.review?.initialCardIds).toEqual([source.cards[0].id]);
     expect(plan?.review?.session.queue?.limits).toEqual({ cardLimit: 4, newLimit: 0 });
     expect(await AsyncStorage.getItem('SRS_DECKS_V3')).toBe(before);
@@ -112,7 +124,7 @@ test.each([
       );
       await AsyncStorage.setItem(key, JSON.stringify(history));
       await setPrefs({ studyMinutes: 3, learningReason: 'work' });
-      expect((await openRecommendedPlan(false))?.review?.initialCardIds).toHaveLength(count);
+      expect((await openRecommendedPlan(false, true))?.review?.initialCardIds).toHaveLength(count);
     } finally {
       jest.useRealTimers();
     }

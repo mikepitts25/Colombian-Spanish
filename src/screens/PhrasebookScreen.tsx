@@ -5,6 +5,7 @@ import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import { spacing } from '../styles/theme';
 import { useDeck } from '../hooks/useDeck';
 import { useLanguage } from '../context/LanguageContext';
@@ -13,27 +14,34 @@ import { speakCard } from '../services/tts';
 export default function PhrasebookScreen() {
   const styles = useThemedStyles(makeStyles);
   const { colors } = useAppTheme();
-  const { ready, decks, setActiveDeckId, toggleFavorite } = useDeck();
+  const { ready, decks, toggleFavorite } = useDeck();
+  const nav = useNavigation<any>();
   const { t } = useLanguage();
   const [q, setQ] = useState('');
   const { fontScale } = useWindowDimensions();
   const expanded = fontScale >= 1.4;
 
+  const saved = useMemo(
+    () =>
+      (decks || []).flatMap((deck) =>
+        (deck.cards || [])
+          .filter((card) => card.favorite)
+          .map((card) => ({ deckId: deck.id, deckName: deck.name, card })),
+      ),
+    [decks],
+  );
+  const query = q.trim().toLowerCase();
   const items = useMemo(() => {
-    const query = q.trim().toLowerCase();
-    const all = (decks || []).flatMap((d) =>
-      (d.cards || []).map((c) => ({ deckId: d.id, deckName: d.name, card: c })),
-    );
-    const favs = all.filter((x) => !!x.card.favorite);
-    if (!query) return favs;
-    return favs.filter((x) => {
+    if (!query) return saved;
+    return saved.filter((x) => {
       const hay = [x.card.front, x.card.back, x.card.example, (x.card.tags || []).join(' ')]
         .filter(Boolean)
         .join(' ')
         .toLowerCase();
       return hay.includes(query);
     });
-  }, [decks, q]);
+  }, [saved, query]);
+  const hasSaved = saved.length > 0;
 
   if (!ready)
     return (
@@ -51,20 +59,22 @@ export default function PhrasebookScreen() {
             <Text style={styles.h1}>{t('phrasebook.title')}</Text>
             <Text style={styles.sub}>{t('phrasebook.sub')}</Text>
 
-            <ThemedTextInput
-              value={q}
-              onChangeText={setQ}
-              placeholder={t('phrasebook.searchPlaceholder')}
-              accessibilityLabel={t('phrasebook.searchPlaceholder')}
-              placeholderTextColor={colors.textSecondary}
-              style={styles.search}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
+            {hasSaved && (
+              <ThemedTextInput
+                value={q}
+                onChangeText={setQ}
+                placeholder={t('phrasebook.searchPlaceholder')}
+                accessibilityLabel={t('phrasebook.searchPlaceholder')}
+                placeholderTextColor={colors.textSecondary}
+                style={styles.search}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            )}
           </>
         }
         data={items}
-        keyExtractor={(x) => x.card.id}
+        keyExtractor={(x) => JSON.stringify([x.deckId, x.card.id])}
         contentContainerStyle={{ paddingBottom: spacing(3) }}
         renderItem={({ item }) => (
           <View style={[styles.row, expanded && styles.stacked]}>
@@ -83,10 +93,7 @@ export default function PhrasebookScreen() {
                 accessibilityRole="button"
                 accessibilityLabel={t('phrases.playLabel', { phrase: item.card.front })}
                 style={styles.actionBtn}
-                onPress={() => {
-                  setActiveDeckId(item.deckId);
-                  void speakCard(item.card);
-                }}
+                onPress={() => void speakCard(item.card)}
               >
                 <Text allowFontScaling={false} style={styles.actionText}>
                   🔊
@@ -97,7 +104,7 @@ export default function PhrasebookScreen() {
                 accessibilityLabel={t('phrases.removeLabel', { phrase: item.card.front })}
                 accessibilityState={{ selected: true }}
                 style={styles.actionBtn}
-                onPress={() => toggleFavorite(item.card.id)}
+                onPress={() => toggleFavorite(item.card.id, item.deckId)}
               >
                 <Text allowFontScaling={false} style={styles.actionText}>
                   ★
@@ -108,8 +115,21 @@ export default function PhrasebookScreen() {
         )}
         ListEmptyComponent={
           <View style={{ marginTop: spacing(2) }}>
-            <Text style={styles.empty}>{t('phrasebook.empty')}</Text>
-            <Text style={styles.sub}>{t('phrasebook.emptySub')}</Text>
+            <Text style={styles.empty}>
+              {t(hasSaved ? 'phrasebook.noMatch' : 'phrasebook.empty')}
+            </Text>
+            {!hasSaved && <Text style={styles.sub}>{t('phrasebook.emptySub')}</Text>}
+            <Pressable
+              accessibilityRole="button"
+              style={styles.emptyAction}
+              onPress={
+                hasSaved ? () => setQ('') : () => nav.navigate('Phrases', undefined, { pop: true })
+              }
+            >
+              <Text style={styles.actionText}>
+                {t(hasSaved ? 'phrasebook.clearSearch' : 'phrasebook.browse')}
+              </Text>
+            </Pressable>
           </View>
         }
       />
@@ -160,4 +180,5 @@ const makeStyles = ({ colors }: AppTheme) =>
     },
     actionText: { color: colors.textPrimary, fontWeight: '900' },
     empty: { color: colors.textPrimary, fontWeight: '900', fontSize: 16 },
+    emptyAction: { minHeight: 48, justifyContent: 'center', alignSelf: 'flex-start' },
   });

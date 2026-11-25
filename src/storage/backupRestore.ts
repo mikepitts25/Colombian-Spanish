@@ -2,6 +2,8 @@ import { Deck } from '../types';
 import { PortableState, validatePortableState, writePortableState } from './portableState';
 import { validateBackupDecks } from './backupValidation';
 import { withStorageTransaction } from './durableStorage';
+import { initializeLibraryCohort } from './libraryCohort';
+import { addMissingReleaseSeeds } from './releaseSeeds';
 import {
   mergeEventHistory,
   serializeLearningHistoryWrite,
@@ -38,12 +40,12 @@ export async function restoreBackup(
           events: mergeEventHistory(current, incoming),
         });
       }
-      let restoredJSON = deckJSON;
+      const incomingDecks = JSON.parse(deckJSON) as Deck[];
+      let restored = incomingDecks;
       if (mode === 'merge-new') {
         const raw = await tx.getItem('SRS_DECKS_V3');
         const current = raw === null ? [] : JSON.parse(raw);
         validateBackupDecks(current);
-        const incomingDecks = JSON.parse(deckJSON) as Deck[];
         const ids = new Set(current.flatMap((deck) => deck.cards.map((card) => card.id)));
         for (const incomingDeck of incomingDecks) {
           const newCards = incomingDeck.cards.filter((card) => !ids.has(card.id));
@@ -52,9 +54,11 @@ export async function restoreBackup(
           if (existing) existing.cards.push(...newCards);
           else current.push({ ...incomingDeck, cards: newCards });
         }
-        restoredJSON = JSON.stringify(current);
+        restored = current;
       }
-      await tx.setItem('SRS_DECKS_V3', restoredJSON);
+      // Identify the local install before any imported decks can be mistaken for its history.
+      await initializeLibraryCohort(tx);
+      await tx.setItem('SRS_DECKS_V3', JSON.stringify(addMissingReleaseSeeds(restored)));
       if (stateJSON !== undefined) await writePortableState(tx, JSON.parse(stateJSON));
       if (historyJSON !== undefined) await tx.setItem('SRS_LEARNING_EVENTS_V1', historyJSON);
     }),

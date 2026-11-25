@@ -12,17 +12,23 @@ import { calibratedReviewSeconds } from '../utils/reviewPace';
 import { buildSessionQueue } from '../utils/srs';
 import { recommendDailyReview } from '../utils/dailyReview';
 import { availableDailyResponse } from '../missions/dailyResponse';
+import { accessibleDecks } from '../billing/catalog';
 
 /** Linearized fresh recommendation and start; no caller/provider snapshot can overwrite it. */
-export function openRecommendedPlan(allowDraft: boolean): Promise<DailyPlan | undefined> {
+export function openRecommendedPlan(
+  allowDraft: boolean,
+  hasFullLibrary = false,
+  activeDeckId?: string,
+): Promise<DailyPlan | undefined> {
   return withStorageTransaction(async (tx) => {
     const current = await readDailyPlan(tx);
     const now = Date.now(),
       day = localDayKey(new Date(now));
     if (current && (current.phase !== 'complete' || current.day === day)) return current;
     const raw = await tx.getItem('SRS_DECKS_V3');
-    const decks: unknown = raw === null ? [] : JSON.parse(raw);
-    validateBackupDecks(decks);
+    const stored: unknown = raw === null ? [] : JSON.parse(raw);
+    validateBackupDecks(stored);
+    const decks = accessibleDecks(stored, hasFullLibrary);
     const profile = await getPrefs(tx),
       daily = await getDailyProgress(tx);
     const response = availableDailyResponse(decks, allowDraft);
@@ -32,7 +38,7 @@ export function openRecommendedPlan(allowDraft: boolean): Promise<DailyPlan | un
       profile,
       Math.max(0, profile.newCardsPerDay - daily.newCount),
       now,
-      undefined,
+      activeDeckId,
       pace,
       response
         ? (calibratedActivitySeconds(await readActivityTimings(tx), response, now) ?? 60)

@@ -3,6 +3,7 @@ import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  AppState,
   Linking,
   StyleSheet,
   Text,
@@ -19,6 +20,7 @@ import {
   NotificationPreferences,
   NotificationScheduleResult,
   getNotificationPreferences,
+  getNotificationScheduleStatus,
   saveAndScheduleNotificationPreferences,
 } from '../services/notifications';
 import { useLanguage } from '../context/LanguageContext';
@@ -75,7 +77,9 @@ export default function NotificationsScreen() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [status, setStatus] = useState<NotificationScheduleResult | 'save-error'>();
+  const [status, setStatus] = useState<NotificationScheduleResult>();
+  const [saveError, setSaveError] = useState(false);
+  const [edited, setEdited] = useState(false);
   const [settingsError, setSettingsError] = useState(false);
   const mounted = useRef(false);
   const reading = useRef(false);
@@ -86,7 +90,14 @@ export default function NotificationsScreen() {
     reading.current = true;
     try {
       const saved = await getNotificationPreferences();
-      if (mounted.current) setPrefs(saved);
+      const nativeStatus = await getNotificationScheduleStatus(saved);
+      if (mounted.current) {
+        setPrefs(saved);
+        setStatus(nativeStatus);
+        setLoadError(false);
+        setSaveError(false);
+        setEdited(false);
+      }
     } catch {
       if (mounted.current) setLoadError(true);
     } finally {
@@ -100,26 +111,33 @@ export default function NotificationsScreen() {
     // Read persisted external state; all state updates follow the async read.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void load();
+    const state = AppState.addEventListener('change', (next) => {
+      if (next === 'active') void load();
+    });
     return () => {
       mounted.current = false;
+      state.remove();
     };
   }, [load]);
 
-  async function save(next: NotificationPreferences) {
+  async function save(next: NotificationPreferences, requestPermission = true) {
     if (reading.current || submitting.current || loading || loadError) return;
     submitting.current = true;
     setSaving(true);
-    setStatus(undefined);
+    setSaveError(false);
     setSettingsError(false);
     const previous = prefs;
     setPrefs(next);
     try {
-      const result = await saveAndScheduleNotificationPreferences(next);
-      if (mounted.current) setStatus(result);
+      const result = await saveAndScheduleNotificationPreferences(next, { requestPermission });
+      if (mounted.current) {
+        setStatus(result);
+        setEdited(true);
+      }
     } catch {
       if (mounted.current) {
         setPrefs(previous);
-        setStatus('save-error');
+        setSaveError(true);
       }
     } finally {
       submitting.current = false;
@@ -129,22 +147,23 @@ export default function NotificationsScreen() {
 
   function update(key: 'masterOn' | 'morningOn' | 'nightOn', value: boolean) {
     if (key !== 'masterOn' && !prefs.masterOn) return;
-    void save({ ...prefs, [key]: value });
+    void save({ ...prefs, [key]: value }, value);
   }
 
   const locked = loading || loadError || saving;
   const expanded = fontScale > 1.3;
-  const statusText =
-    status === 'save-error'
-      ? t('notifications.saveError')
-      : status === 'scheduled'
-        ? t('notifications.scheduled')
-        : status === 'off'
-          ? t('notifications.off')
-          : status === 'denied'
-            ? t('notifications.denied')
-            : status === 'error'
-              ? t('notifications.scheduleError')
+  const statusText = saveError
+    ? t('notifications.saveError')
+    : status === 'scheduled'
+      ? t(edited ? 'notifications.scheduled' : 'notifications.active')
+      : status === 'off'
+        ? t(edited ? 'notifications.off' : 'notifications.inactive')
+        : status === 'denied'
+          ? t(edited ? 'notifications.denied' : 'notifications.permissionMissing')
+          : status === 'error'
+            ? t(edited ? 'notifications.scheduleError' : 'notifications.statusUnavailable')
+            : status === 'unscheduled'
+              ? t('notifications.unscheduled')
               : undefined;
 
   return (
@@ -204,7 +223,7 @@ export default function NotificationsScreen() {
             <Text style={styles.backText}>{t('notifications.openSettings')}</Text>
           </Pressable>
         )}
-        {(loadError || status === 'error' || status === 'denied') && (
+        {(loadError || status === 'error' || status === 'denied' || status === 'unscheduled') && (
           <Pressable
             accessibilityRole="button"
             accessibilityState={{ disabled: saving || loading }}
@@ -221,11 +240,21 @@ export default function NotificationsScreen() {
             <Text style={styles.backText}>{t('notifications.retry')}</Text>
           </Pressable>
         )}
+        {prefs.masterOn && status && status !== 'scheduled' && status !== 'off' && (
+          <Pressable
+            accessibilityRole="button"
+            disabled={locked}
+            onPress={() => void save({ ...prefs, masterOn: false }, false)}
+            style={styles.back}
+          >
+            <Text style={styles.backText}>{t('notifications.disable')}</Text>
+          </Pressable>
+        )}
         <View style={styles.card}>
           <ReminderSwitch
             title={t('notifications.masterTitle')}
             subtitle={t('notifications.masterSub')}
-            value={prefs.masterOn}
+            value={prefs.masterOn && status === 'scheduled'}
             disabled={locked}
             onChange={(value) => update('masterOn', value)}
             testID="notification-master-toggle"

@@ -6,12 +6,13 @@ import {
   resetDeckProgressById,
   getDailyProgress,
 } from '../storage/storage';
-import { accessibleDecks, isPaidBundledCard } from '../billing/catalog';
+import { accessibleDecks, canStudyCard, isFreeOnlyRelease } from '../billing/catalog';
 import { usePurchases } from './PurchaseContext';
 import { initializeLibraryCohort } from '../storage/libraryCohort';
 import { withStorageTransaction } from '../storage/durableStorage';
 import { saveDecks } from '../storage/storage';
 import { validateBackupDecks } from '../storage/backupValidation';
+import { addMissingReleaseSeeds } from '../storage/releaseSeeds';
 import { getPrefs } from '../storage/prefs';
 import { commitFlashcardAnswer, AnswerOptions } from '../storage/flashcardAnswer';
 import { createLearningSessionId } from '../storage/learningEvents';
@@ -46,7 +47,7 @@ type Ctx = {
     quality: 0 | 1 | 2 | 3 | 4 | 5,
     options?: AnswerOptions,
   ) => Promise<void>;
-  toggleFavorite: (cardId: string) => Promise<void>;
+  toggleFavorite: (cardId: string, deckId?: string) => Promise<void>;
   flagCard: (cardId: string, flagged: boolean) => Promise<void>;
   updateCardReview: (
     cardId: string,
@@ -126,6 +127,11 @@ export function DeckProvider({ children }: { children: ReactNode }) {
       const stored: Deck[] = raw === null ? [] : JSON.parse(raw);
       validateBackupDecks(stored);
       legacy = await initializeLibraryCohort(tx, stored.length > 0);
+      if (isFreeOnlyRelease) {
+        const seeded = addMissingReleaseSeeds(stored);
+        if (seeded !== stored) await saveDecks(seeded, tx);
+        return seeded;
+      }
       if (!stored.length) {
         const seeded = JSON.parse(JSON.stringify(SEED_DECKS)) as Deck[];
         await saveDecks(seeded, tx);
@@ -191,7 +197,7 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     quality: 0 | 1 | 2 | 3 | 4 | 5,
     options?: AnswerOptions,
   ) {
-    if (!hasFullLibrary && isPaidBundledCard(cardId)) {
+    if (!canStudyCard(cardId, hasFullLibrary)) {
       throw new Error('Library access required');
     }
     const identity = options ?? {
@@ -225,14 +231,18 @@ export function DeckProvider({ children }: { children: ReactNode }) {
     setDecks(next);
   }
 
-  async function toggleFavorite(cardId: string) {
+  async function toggleFavorite(cardId: string, deckId?: string) {
     const next = await mutateDecks((stored) =>
-      stored.map((deck) => ({
-        ...deck,
-        cards: deck.cards.map((card) =>
-          card.id === cardId ? { ...card, favorite: !card.favorite } : card,
-        ),
-      })),
+      stored.map((deck) =>
+        deckId !== undefined && deck.id !== deckId
+          ? deck
+          : {
+              ...deck,
+              cards: deck.cards.map((card) =>
+                card.id === cardId ? { ...card, favorite: !card.favorite } : card,
+              ),
+            },
+      ),
     );
     setDecks(next);
   }

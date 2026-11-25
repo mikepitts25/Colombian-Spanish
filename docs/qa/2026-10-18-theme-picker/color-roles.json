@@ -1714,36 +1714,6 @@
       "disposition": "modal-scrim"
     },
     {
-      "key": "src/screens/OnboardingScreen.tsx|render|backgroundColor|#FFDA00|1",
-      "base": "src/screens/OnboardingScreen.tsx|render|backgroundColor|#FFDA00",
-      "path": "src/screens/OnboardingScreen.tsx",
-      "declaration": "render",
-      "property": "backgroundColor",
-      "value": "#FFDA00",
-      "line": 170,
-      "disposition": "meaningful-flag-art"
-    },
-    {
-      "key": "src/screens/OnboardingScreen.tsx|render|backgroundColor|#003893|1",
-      "base": "src/screens/OnboardingScreen.tsx|render|backgroundColor|#003893",
-      "path": "src/screens/OnboardingScreen.tsx",
-      "declaration": "render",
-      "property": "backgroundColor",
-      "value": "#003893",
-      "line": 171,
-      "disposition": "meaningful-flag-art"
-    },
-    {
-      "key": "src/screens/OnboardingScreen.tsx|render|backgroundColor|#CE1126|1",
-      "base": "src/screens/OnboardingScreen.tsx|render|backgroundColor|#CE1126",
-      "path": "src/screens/OnboardingScreen.tsx",
-      "declaration": "render",
-      "property": "backgroundColor",
-      "value": "#CE1126",
-      "line": 172,
-      "disposition": "meaningful-flag-art"
-    },
-    {
       "key": "src/screens/ProgressScreen.tsx|makeStyles|shadowColor|#FFDA00|1",
       "base": "src/screens/ProgressScreen.tsx|makeStyles|shadowColor|#FFDA00",
       "path": "src/screens/ProgressScreen.tsx",
@@ -3881,14 +3851,14 @@
       "base": "src/components/AdventureUI.tsx|textPrimary",
       "path": "src/components/AdventureUI.tsx",
       "role": "textPrimary",
-      "line": 64
+      "line": 108
     },
     {
       "key": "src/components/AdventureUI.tsx|textPrimary|2",
       "base": "src/components/AdventureUI.tsx|textPrimary",
       "path": "src/components/AdventureUI.tsx",
       "role": "textPrimary",
-      "line": 65
+      "line": 109
     },
     {
       "key": "src/components/AdventureUI.tsx|textSecondary|1",
@@ -3917,6 +3887,27 @@
       "path": "src/components/AdventureUI.tsx",
       "role": "onBrand",
       "line": 75
+    },
+    {
+      "key": "src/components/AdventureUI.tsx|surfaceElevated|1",
+      "base": "src/components/AdventureUI.tsx|surfaceElevated",
+      "path": "src/components/AdventureUI.tsx",
+      "role": "surfaceElevated",
+      "line": 121
+    },
+    {
+      "key": "src/components/AdventureUI.tsx|border|1",
+      "base": "src/components/AdventureUI.tsx|border",
+      "path": "src/components/AdventureUI.tsx",
+      "role": "border",
+      "line": 123
+    },
+    {
+      "key": "src/components/AdventureUI.tsx|textPrimary|3",
+      "base": "src/components/AdventureUI.tsx|textPrimary",
+      "path": "src/components/AdventureUI.tsx",
+      "role": "textPrimary",
+      "line": 125
     },
     {
       "key": "src/components/AdventureUI.tsx|brand|3",
@@ -4560,14 +4551,14 @@
       "base": "src/components/Flashcard.tsx|brand",
       "path": "src/components/Flashcard.tsx",
       "role": "brand",
-      "line": 253
+      "line": 269
     },
     {
       "key": "src/components/Flashcard.tsx|brand|2",
       "base": "src/components/Flashcard.tsx|brand",
       "path": "src/components/Flashcard.tsx",
       "role": "brand",
-      "line": 314
+      "line": 334
     },
     {
       "key": "src/components/Flashcard.tsx|cardSurface|1",
@@ -4588,7 +4579,7 @@
       "base": "src/components/Flashcard.tsx|brand",
       "path": "src/components/Flashcard.tsx",
       "role": "brand",
-      "line": 368
+      "line": 390
     },
     {
       "key": "src/components/Flashcard.tsx|surfaceElevated|2",
@@ -4605,6 +4596,13 @@
       "line": 383
     },
     {
+      "key": "src/components/Flashcard.tsx|brand|4",
+      "base": "src/components/Flashcard.tsx|brand",
+      "path": "src/components/Flashcard.tsx",
+      "role": "brand",
+      "line": 406
+    },
+    {
       "key": "src/components/Flashcard.tsx|cardSurface|2",
       "base": "src/components/Flashcard.tsx|cardSurface",
       "path": "src/components/Flashcard.tsx",
@@ -4619,11 +4617,11 @@
       "line": 390
     },
     {
-      "key": "src/components/Flashcard.tsx|brand|4",
+      "key": "src/components/Flashcard.tsx|brand|5",
       "base": "src/components/Flashcard.tsx|brand",
       "path": "src/components/Flashcard.tsx",
       "role": "brand",
-      "line": 402
+      "line": 425
     },
     {
       "key": "src/components/Flashcard.tsx|cardGlow|1",
@@ -4904,6 +4902,34 @@
       "path": "src/components/ProgressBar.tsx",
       "role": "progressTrack",
       "line": 51
+    },
+    {
+      "key": "src/components/ReminderOffer.tsx|surface|1",
+      "base": "src/components/ReminderOffer.tsx|surface",
+      "path": "src/components/ReminderOffer.tsx",
+      "role": "surface",
+      "line": 119
+    },
+    {
+      "key": "src/components/ReminderOffer.tsx|textPrimary|1",
+      "base": "src/components/ReminderOffer.tsx|textPrimary",
+      "path": "src/components/ReminderOffer.tsx",
+      "role": "textPrimary",
+      "line": 120
+    },
+    {
+      "key": "src/components/ReminderOffer.tsx|textSecondary|1",
+      "base": "src/components/ReminderOffer.tsx|textSecondary",
+      "path": "src/components/ReminderOffer.tsx",
+      "role": "textSecondary",
+      "line": 121
+    },
+    {
+      "key": "src/components/ReminderOffer.tsx|brand|1",
+      "base": "src/components/ReminderOffer.tsx|brand",
+      "path": "src/components/ReminderOffer.tsx",
+      "role": "brand",
+      "line": 128
     },
     {
       "key": "src/components/StorageGate.tsx|bg|1",
@@ -5190,14 +5216,14 @@
       "base": "src/screens/AudioPreferencesScreen.tsx|textPrimary",
       "path": "src/screens/AudioPreferencesScreen.tsx",
       "role": "textPrimary",
-      "line": 229
+      "line": 236
     },
     {
       "key": "src/screens/AudioPreferencesScreen.tsx|textPrimary|2",
       "base": "src/screens/AudioPreferencesScreen.tsx|textPrimary",
       "path": "src/screens/AudioPreferencesScreen.tsx",
       "role": "textPrimary",
-      "line": 230
+      "line": 237
     },
     {
       "key": "src/screens/AudioPreferencesScreen.tsx|textSecondary|1",
@@ -5221,6 +5247,27 @@
       "line": 239
     },
     {
+      "key": "src/screens/AudioPreferencesScreen.tsx|surfaceElevated|1",
+      "base": "src/screens/AudioPreferencesScreen.tsx|surfaceElevated",
+      "path": "src/screens/AudioPreferencesScreen.tsx",
+      "role": "surfaceElevated",
+      "line": 248
+    },
+    {
+      "key": "src/screens/AudioPreferencesScreen.tsx|border|1",
+      "base": "src/screens/AudioPreferencesScreen.tsx|border",
+      "path": "src/screens/AudioPreferencesScreen.tsx",
+      "role": "border",
+      "line": 250
+    },
+    {
+      "key": "src/screens/AudioPreferencesScreen.tsx|textPrimary|3",
+      "base": "src/screens/AudioPreferencesScreen.tsx|textPrimary",
+      "path": "src/screens/AudioPreferencesScreen.tsx",
+      "role": "textPrimary",
+      "line": 252
+    },
+    {
       "key": "src/screens/AudioPreferencesScreen.tsx|borderActive|1",
       "base": "src/screens/AudioPreferencesScreen.tsx|borderActive",
       "path": "src/screens/AudioPreferencesScreen.tsx",
@@ -5242,11 +5289,11 @@
       "line": 250
     },
     {
-      "key": "src/screens/AudioPreferencesScreen.tsx|textPrimary|3",
+      "key": "src/screens/AudioPreferencesScreen.tsx|textPrimary|4",
       "base": "src/screens/AudioPreferencesScreen.tsx|textPrimary",
       "path": "src/screens/AudioPreferencesScreen.tsx",
       "role": "textPrimary",
-      "line": 251
+      "line": 264
     },
     {
       "key": "src/screens/AudioPreferencesScreen.tsx|surface|1",
@@ -5281,14 +5328,14 @@
       "base": "src/screens/DailyGoalScreen.tsx|brand",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "brand",
-      "line": 293
+      "line": 287
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|brand|2",
       "base": "src/screens/DailyGoalScreen.tsx|brand",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "brand",
-      "line": 294
+      "line": 288
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|textPrimary|1",
@@ -5302,7 +5349,7 @@
       "base": "src/screens/DailyGoalScreen.tsx|brand",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "brand",
-      "line": 302
+      "line": 296
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|textInverse|2",
@@ -5316,7 +5363,7 @@
       "base": "src/screens/DailyGoalScreen.tsx|brandWash",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "brandWash",
-      "line": 311
+      "line": 306
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|tabBorder|1",
@@ -5330,14 +5377,14 @@
       "base": "src/screens/DailyGoalScreen.tsx|brand",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "brand",
-      "line": 319
+      "line": 315
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|textSecondary|1",
       "base": "src/screens/DailyGoalScreen.tsx|textSecondary",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "textSecondary",
-      "line": 320
+      "line": 316
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|surface|2",
@@ -5358,21 +5405,21 @@
       "base": "src/screens/DailyGoalScreen.tsx|brand",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "brand",
-      "line": 338
+      "line": 334
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|brand|6",
       "base": "src/screens/DailyGoalScreen.tsx|brand",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "brand",
-      "line": 338
+      "line": 334
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|textSecondary|2",
       "base": "src/screens/DailyGoalScreen.tsx|textSecondary",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "textSecondary",
-      "line": 339
+      "line": 335
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|textInverse|3",
@@ -5386,7 +5433,7 @@
       "base": "src/screens/DailyGoalScreen.tsx|textSecondary",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "textSecondary",
-      "line": 341
+      "line": 337
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|textInverse|4",
@@ -5394,13 +5441,6 @@
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "textInverse",
       "line": 342
-    },
-    {
-      "key": "src/screens/DailyGoalScreen.tsx|textTertiary|1",
-      "base": "src/screens/DailyGoalScreen.tsx|textTertiary",
-      "path": "src/screens/DailyGoalScreen.tsx",
-      "role": "textTertiary",
-      "line": 345
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|surface|3",
@@ -5428,7 +5468,7 @@
       "base": "src/screens/DailyGoalScreen.tsx|textSecondary",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "textSecondary",
-      "line": 369
+      "line": 358
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|surfaceElevated|1",
@@ -5442,7 +5482,7 @@
       "base": "src/screens/DailyGoalScreen.tsx|brand",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "brand",
-      "line": 379
+      "line": 368
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|textPrimary|3",
@@ -5456,7 +5496,7 @@
       "base": "src/screens/DailyGoalScreen.tsx|brand",
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "brand",
-      "line": 382
+      "line": 371
     },
     {
       "key": "src/screens/DailyGoalScreen.tsx|border|3",
@@ -5464,34 +5504,6 @@
       "path": "src/screens/DailyGoalScreen.tsx",
       "role": "border",
       "line": 388
-    },
-    {
-      "key": "src/screens/DailyGoalScreen.tsx|brandWash|2",
-      "base": "src/screens/DailyGoalScreen.tsx|brandWash",
-      "path": "src/screens/DailyGoalScreen.tsx",
-      "role": "brandWash",
-      "line": 400
-    },
-    {
-      "key": "src/screens/DailyGoalScreen.tsx|softBrandBorder|1",
-      "base": "src/screens/DailyGoalScreen.tsx|softBrandBorder",
-      "path": "src/screens/DailyGoalScreen.tsx",
-      "role": "softBrandBorder",
-      "line": 402
-    },
-    {
-      "key": "src/screens/DailyGoalScreen.tsx|brand|9",
-      "base": "src/screens/DailyGoalScreen.tsx|brand",
-      "path": "src/screens/DailyGoalScreen.tsx",
-      "role": "brand",
-      "line": 408
-    },
-    {
-      "key": "src/screens/DailyGoalScreen.tsx|textSecondary|5",
-      "base": "src/screens/DailyGoalScreen.tsx|textSecondary",
-      "path": "src/screens/DailyGoalScreen.tsx",
-      "role": "textSecondary",
-      "line": 409
     },
     {
       "key": "src/screens/DailyPlanScreen.tsx|bg|1",
@@ -5505,14 +5517,14 @@
       "base": "src/screens/DailyPlanScreen.tsx|textPrimary",
       "path": "src/screens/DailyPlanScreen.tsx",
       "role": "textPrimary",
-      "line": 175
+      "line": 236
     },
     {
       "key": "src/screens/DailyPlanScreen.tsx|textPrimary|2",
       "base": "src/screens/DailyPlanScreen.tsx|textPrimary",
       "path": "src/screens/DailyPlanScreen.tsx",
       "role": "textPrimary",
-      "line": 176
+      "line": 237
     },
     {
       "key": "src/screens/DailyPlanScreen.tsx|surface|1",
@@ -5522,11 +5534,53 @@
       "line": 181
     },
     {
+      "key": "src/screens/DailyPlanScreen.tsx|border|1",
+      "base": "src/screens/DailyPlanScreen.tsx|border",
+      "path": "src/screens/DailyPlanScreen.tsx",
+      "role": "border",
+      "line": 243
+    },
+    {
       "key": "src/screens/DailyPlanScreen.tsx|brand|1",
       "base": "src/screens/DailyPlanScreen.tsx|brand",
       "path": "src/screens/DailyPlanScreen.tsx",
       "role": "brand",
       "line": 185
+    },
+    {
+      "key": "src/screens/DailyPlanScreen.tsx|danger|1",
+      "base": "src/screens/DailyPlanScreen.tsx|danger",
+      "path": "src/screens/DailyPlanScreen.tsx",
+      "role": "danger",
+      "line": 248
+    },
+    {
+      "key": "src/screens/DailyPlanScreen.tsx|textPrimary|3",
+      "base": "src/screens/DailyPlanScreen.tsx|textPrimary",
+      "path": "src/screens/DailyPlanScreen.tsx",
+      "role": "textPrimary",
+      "line": 249
+    },
+    {
+      "key": "src/screens/DailyPlanScreen.tsx|onBrand|1",
+      "base": "src/screens/DailyPlanScreen.tsx|onBrand",
+      "path": "src/screens/DailyPlanScreen.tsx",
+      "role": "onBrand",
+      "line": 250
+    },
+    {
+      "key": "src/screens/DailyPlanScreen.tsx|restoreDanger|1",
+      "base": "src/screens/DailyPlanScreen.tsx|restoreDanger",
+      "path": "src/screens/DailyPlanScreen.tsx",
+      "role": "restoreDanger",
+      "line": 251
+    },
+    {
+      "key": "src/screens/DailyPlanScreen.tsx|danger|2",
+      "base": "src/screens/DailyPlanScreen.tsx|danger",
+      "path": "src/screens/DailyPlanScreen.tsx",
+      "role": "danger",
+      "line": 251
     },
     {
       "key": "src/screens/DifficultWordsScreen.tsx|danger|1",
@@ -5596,7 +5650,7 @@
       "base": "src/screens/DifficultWordsScreen.tsx|brand",
       "path": "src/screens/DifficultWordsScreen.tsx",
       "role": "brand",
-      "line": 188
+      "line": 189
     },
     {
       "key": "src/screens/DifficultWordsScreen.tsx|bg|1",
@@ -5610,7 +5664,7 @@
       "base": "src/screens/DifficultWordsScreen.tsx|textSecondary",
       "path": "src/screens/DifficultWordsScreen.tsx",
       "role": "textSecondary",
-      "line": 305
+      "line": 318
     },
     {
       "key": "src/screens/DifficultWordsScreen.tsx|textPrimary|2",
@@ -5624,7 +5678,21 @@
       "base": "src/screens/DifficultWordsScreen.tsx|textSecondary",
       "path": "src/screens/DifficultWordsScreen.tsx",
       "role": "textSecondary",
-      "line": 308
+      "line": 320
+    },
+    {
+      "key": "src/screens/DifficultWordsScreen.tsx|brand|2",
+      "base": "src/screens/DifficultWordsScreen.tsx|brand",
+      "path": "src/screens/DifficultWordsScreen.tsx",
+      "role": "brand",
+      "line": 325
+    },
+    {
+      "key": "src/screens/DifficultWordsScreen.tsx|textInverse|1",
+      "base": "src/screens/DifficultWordsScreen.tsx|textInverse",
+      "path": "src/screens/DifficultWordsScreen.tsx",
+      "role": "textInverse",
+      "line": 330
     },
     {
       "key": "src/screens/DifficultWordsScreen.tsx|textPrimary|3",
@@ -5638,7 +5706,7 @@
       "base": "src/screens/DifficultWordsScreen.tsx|textSecondary",
       "path": "src/screens/DifficultWordsScreen.tsx",
       "role": "textSecondary",
-      "line": 319
+      "line": 341
     },
     {
       "key": "src/screens/DifficultWordsScreen.tsx|highlightWash|1",
@@ -5655,11 +5723,11 @@
       "line": 326
     },
     {
-      "key": "src/screens/DifficultWordsScreen.tsx|brand|2",
+      "key": "src/screens/DifficultWordsScreen.tsx|brand|3",
       "base": "src/screens/DifficultWordsScreen.tsx|brand",
       "path": "src/screens/DifficultWordsScreen.tsx",
       "role": "brand",
-      "line": 328
+      "line": 350
     },
     {
       "key": "src/screens/DifficultWordsScreen.tsx|accentBlue|1",
@@ -5690,6 +5758,13 @@
       "line": 339
     },
     {
+      "key": "src/screens/DifficultWordsScreen.tsx|textSecondary|4",
+      "base": "src/screens/DifficultWordsScreen.tsx|textSecondary",
+      "path": "src/screens/DifficultWordsScreen.tsx",
+      "role": "textSecondary",
+      "line": 366
+    },
+    {
       "key": "src/screens/DifficultWordsScreen.tsx|deepSurface|1",
       "base": "src/screens/DifficultWordsScreen.tsx|deepSurface",
       "path": "src/screens/DifficultWordsScreen.tsx",
@@ -5702,13 +5777,6 @@
       "path": "src/screens/DifficultWordsScreen.tsx",
       "role": "highlightWash",
       "line": 348
-    },
-    {
-      "key": "src/screens/DifficultWordsScreen.tsx|textTertiary|1",
-      "base": "src/screens/DifficultWordsScreen.tsx|textTertiary",
-      "path": "src/screens/DifficultWordsScreen.tsx",
-      "role": "textTertiary",
-      "line": 355
     },
     {
       "key": "src/screens/ExploreScreen.tsx|bg|1",
@@ -6306,6 +6374,13 @@
       "line": 238
     },
     {
+      "key": "src/screens/LearningPreferencesScreen.tsx|surface|1",
+      "base": "src/screens/LearningPreferencesScreen.tsx|surface",
+      "path": "src/screens/LearningPreferencesScreen.tsx",
+      "role": "surface",
+      "line": 282
+    },
+    {
       "key": "src/screens/LearningPreferencesScreen.tsx|textPrimary|2",
       "base": "src/screens/LearningPreferencesScreen.tsx|textPrimary",
       "path": "src/screens/LearningPreferencesScreen.tsx",
@@ -6320,11 +6395,11 @@
       "line": 246
     },
     {
-      "key": "src/screens/LearningPreferencesScreen.tsx|surface|1",
+      "key": "src/screens/LearningPreferencesScreen.tsx|surface|2",
       "base": "src/screens/LearningPreferencesScreen.tsx|surface",
       "path": "src/screens/LearningPreferencesScreen.tsx",
       "role": "surface",
-      "line": 247
+      "line": 290
     },
     {
       "key": "src/screens/LearningPreferencesScreen.tsx|brand|1",
@@ -6544,6 +6619,13 @@
       "line": 359
     },
     {
+      "key": "src/screens/ManageDecksScreen.tsx|selectedWash|1",
+      "base": "src/screens/ManageDecksScreen.tsx|selectedWash",
+      "path": "src/screens/ManageDecksScreen.tsx",
+      "role": "selectedWash",
+      "line": 376
+    },
+    {
       "key": "src/screens/ManageDecksScreen.tsx|surface|2",
       "base": "src/screens/ManageDecksScreen.tsx|surface",
       "path": "src/screens/ManageDecksScreen.tsx",
@@ -6590,7 +6672,7 @@
       "base": "src/screens/MissionScreen.tsx|textPrimary",
       "path": "src/screens/MissionScreen.tsx",
       "role": "textPrimary",
-      "line": 650
+      "line": 692
     },
     {
       "key": "src/screens/MissionScreen.tsx|brand|1",
@@ -6604,7 +6686,7 @@
       "base": "src/screens/MissionScreen.tsx|textPrimary",
       "path": "src/screens/MissionScreen.tsx",
       "role": "textPrimary",
-      "line": 652
+      "line": 694
     },
     {
       "key": "src/screens/MissionScreen.tsx|textSecondary|1",
@@ -6618,7 +6700,7 @@
       "base": "src/screens/MissionScreen.tsx|textPrimary",
       "path": "src/screens/MissionScreen.tsx",
       "role": "textPrimary",
-      "line": 654
+      "line": 696
     },
     {
       "key": "src/screens/MissionScreen.tsx|surface|1",
@@ -6649,6 +6731,27 @@
       "line": 671
     },
     {
+      "key": "src/screens/MissionScreen.tsx|surfaceElevated|1",
+      "base": "src/screens/MissionScreen.tsx|surfaceElevated",
+      "path": "src/screens/MissionScreen.tsx",
+      "role": "surfaceElevated",
+      "line": 715
+    },
+    {
+      "key": "src/screens/MissionScreen.tsx|border|1",
+      "base": "src/screens/MissionScreen.tsx|border",
+      "path": "src/screens/MissionScreen.tsx",
+      "role": "border",
+      "line": 716
+    },
+    {
+      "key": "src/screens/MissionScreen.tsx|textPrimary|4",
+      "base": "src/screens/MissionScreen.tsx|textPrimary",
+      "path": "src/screens/MissionScreen.tsx",
+      "role": "textPrimary",
+      "line": 719
+    },
+    {
       "key": "src/screens/MissionScreen.tsx|borderActive|1",
       "base": "src/screens/MissionScreen.tsx|borderActive",
       "path": "src/screens/MissionScreen.tsx",
@@ -6656,11 +6759,11 @@
       "line": 676
     },
     {
-      "key": "src/screens/MissionScreen.tsx|textPrimary|4",
+      "key": "src/screens/MissionScreen.tsx|textPrimary|5",
       "base": "src/screens/MissionScreen.tsx|textPrimary",
       "path": "src/screens/MissionScreen.tsx",
       "role": "textPrimary",
-      "line": 679
+      "line": 727
     },
     {
       "key": "src/screens/MissionScreen.tsx|brand|3",
@@ -7692,32 +7795,11 @@
       "line": 692
     },
     {
-      "key": "src/screens/QuizScreen.tsx|surface|1",
-      "base": "src/screens/QuizScreen.tsx|surface",
-      "path": "src/screens/QuizScreen.tsx",
-      "role": "surface",
-      "line": 708
-    },
-    {
-      "key": "src/screens/QuizScreen.tsx|border|1",
-      "base": "src/screens/QuizScreen.tsx|border",
-      "path": "src/screens/QuizScreen.tsx",
-      "role": "border",
-      "line": 711
-    },
-    {
       "key": "src/screens/QuizScreen.tsx|textPrimary|1",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 720
-    },
-    {
-      "key": "src/screens/QuizScreen.tsx|brand|1",
-      "base": "src/screens/QuizScreen.tsx|brand",
-      "path": "src/screens/QuizScreen.tsx",
-      "role": "brand",
-      "line": 726
+      "line": 792
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|2",
@@ -7725,20 +7807,6 @@
       "path": "src/screens/QuizScreen.tsx",
       "role": "textSecondary",
       "line": 731
-    },
-    {
-      "key": "src/screens/QuizScreen.tsx|border|2",
-      "base": "src/screens/QuizScreen.tsx|border",
-      "path": "src/screens/QuizScreen.tsx",
-      "role": "border",
-      "line": 739
-    },
-    {
-      "key": "src/screens/QuizScreen.tsx|brand|2",
-      "base": "src/screens/QuizScreen.tsx|brand",
-      "path": "src/screens/QuizScreen.tsx",
-      "role": "brand",
-      "line": 743
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|3",
@@ -7752,7 +7820,7 @@
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 748
+      "line": 807
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|4",
@@ -7769,18 +7837,18 @@
       "line": 758
     },
     {
-      "key": "src/screens/QuizScreen.tsx|surface|2",
+      "key": "src/screens/QuizScreen.tsx|surface|1",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 774
+      "line": 834
     },
     {
-      "key": "src/screens/QuizScreen.tsx|border|3",
+      "key": "src/screens/QuizScreen.tsx|border|1",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 776
+      "line": 836
     },
     {
       "key": "src/screens/QuizScreen.tsx|regionFill|1",
@@ -7811,25 +7879,18 @@
       "line": 782
     },
     {
-      "key": "src/screens/QuizScreen.tsx|surface|3",
+      "key": "src/screens/QuizScreen.tsx|surface|2",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 785
+      "line": 845
     },
     {
-      "key": "src/screens/QuizScreen.tsx|border|4",
+      "key": "src/screens/QuizScreen.tsx|border|2",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 788
-    },
-    {
-      "key": "src/screens/QuizScreen.tsx|textPrimary|3",
-      "base": "src/screens/QuizScreen.tsx|textPrimary",
-      "path": "src/screens/QuizScreen.tsx",
-      "role": "textPrimary",
-      "line": 795
+      "line": 848
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|6",
@@ -7839,11 +7900,11 @@
       "line": 799
     },
     {
-      "key": "src/screens/QuizScreen.tsx|brand|3",
+      "key": "src/screens/QuizScreen.tsx|brand|1",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 803
+      "line": 858
     },
     {
       "key": "src/screens/QuizScreen.tsx|textInverse|1",
@@ -7867,39 +7928,39 @@
       "line": 820
     },
     {
-      "key": "src/screens/QuizScreen.tsx|brand|4",
+      "key": "src/screens/QuizScreen.tsx|brand|2",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 829
+      "line": 884
     },
     {
-      "key": "src/screens/QuizScreen.tsx|surface|4",
+      "key": "src/screens/QuizScreen.tsx|surface|3",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 835
+      "line": 890
     },
     {
-      "key": "src/screens/QuizScreen.tsx|border|5",
+      "key": "src/screens/QuizScreen.tsx|border|3",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 838
+      "line": 893
     },
     {
-      "key": "src/screens/QuizScreen.tsx|textPrimary|4",
+      "key": "src/screens/QuizScreen.tsx|textPrimary|3",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 843
+      "line": 898
     },
     {
-      "key": "src/screens/QuizScreen.tsx|brand|5",
+      "key": "src/screens/QuizScreen.tsx|brand|3",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 855
+      "line": 911
     },
     {
       "key": "src/screens/QuizScreen.tsx|textTertiary|2",
@@ -7930,18 +7991,18 @@
       "line": 871
     },
     {
-      "key": "src/screens/QuizScreen.tsx|surface|5",
+      "key": "src/screens/QuizScreen.tsx|surface|4",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 874
+      "line": 938
     },
     {
-      "key": "src/screens/QuizScreen.tsx|border|6",
+      "key": "src/screens/QuizScreen.tsx|border|4",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 878
+      "line": 942
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|8",
@@ -7951,11 +8012,11 @@
       "line": 884
     },
     {
-      "key": "src/screens/QuizScreen.tsx|textPrimary|5",
+      "key": "src/screens/QuizScreen.tsx|textPrimary|4",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 891
+      "line": 955
     },
     {
       "key": "src/screens/QuizScreen.tsx|quizFeedbackInk|1",
@@ -7972,11 +8033,11 @@
       "line": 905
     },
     {
-      "key": "src/screens/QuizScreen.tsx|border|7",
+      "key": "src/screens/QuizScreen.tsx|border|5",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 912
+      "line": 976
     },
     {
       "key": "src/screens/QuizScreen.tsx|success|1",
@@ -8007,11 +8068,11 @@
       "line": 915
     },
     {
-      "key": "src/screens/QuizScreen.tsx|textPrimary|6",
+      "key": "src/screens/QuizScreen.tsx|textPrimary|5",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 917
+      "line": 981
     },
     {
       "key": "src/screens/QuizScreen.tsx|successMuted|2",
@@ -8042,18 +8103,18 @@
       "line": 935
     },
     {
+      "key": "src/screens/QuizScreen.tsx|textPrimary|6",
+      "base": "src/screens/QuizScreen.tsx|textPrimary",
+      "path": "src/screens/QuizScreen.tsx",
+      "role": "textPrimary",
+      "line": 1002
+    },
+    {
       "key": "src/screens/QuizScreen.tsx|textPrimary|7",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 938
-    },
-    {
-      "key": "src/screens/QuizScreen.tsx|textPrimary|8",
-      "base": "src/screens/QuizScreen.tsx|textPrimary",
-      "path": "src/screens/QuizScreen.tsx",
-      "role": "textPrimary",
-      "line": 951
+      "line": 1015
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|9",
@@ -8063,18 +8124,18 @@
       "line": 956
     },
     {
-      "key": "src/screens/QuizScreen.tsx|surface|6",
+      "key": "src/screens/QuizScreen.tsx|surface|5",
       "base": "src/screens/QuizScreen.tsx|surface",
       "path": "src/screens/QuizScreen.tsx",
       "role": "surface",
-      "line": 962
+      "line": 1026
     },
     {
-      "key": "src/screens/QuizScreen.tsx|brand|6",
+      "key": "src/screens/QuizScreen.tsx|brand|4",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 967
+      "line": 1031
     },
     {
       "key": "src/screens/QuizScreen.tsx|textSecondary|10",
@@ -8084,18 +8145,18 @@
       "line": 971
     },
     {
-      "key": "src/screens/QuizScreen.tsx|textPrimary|9",
+      "key": "src/screens/QuizScreen.tsx|textPrimary|8",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 976
+      "line": 1040
     },
     {
-      "key": "src/screens/QuizScreen.tsx|brand|7",
+      "key": "src/screens/QuizScreen.tsx|brand|5",
       "base": "src/screens/QuizScreen.tsx|brand",
       "path": "src/screens/QuizScreen.tsx",
       "role": "brand",
-      "line": 981
+      "line": 1045
     },
     {
       "key": "src/screens/QuizScreen.tsx|surfaceElevated|3",
@@ -8105,11 +8166,11 @@
       "line": 987
     },
     {
-      "key": "src/screens/QuizScreen.tsx|textPrimary|10",
+      "key": "src/screens/QuizScreen.tsx|textPrimary|9",
       "base": "src/screens/QuizScreen.tsx|textPrimary",
       "path": "src/screens/QuizScreen.tsx",
       "role": "textPrimary",
-      "line": 996
+      "line": 1060
     },
     {
       "key": "src/screens/QuizScreen.tsx|textTertiary|3",
@@ -8119,11 +8180,53 @@
       "line": 1001
     },
     {
-      "key": "src/screens/QuizScreen.tsx|border|8",
+      "key": "src/screens/QuizScreen.tsx|border|6",
       "base": "src/screens/QuizScreen.tsx|border",
       "path": "src/screens/QuizScreen.tsx",
       "role": "border",
-      "line": 1006
+      "line": 1070
+    },
+    {
+      "key": "src/screens/ReminderWordScreen.tsx|bg|1",
+      "base": "src/screens/ReminderWordScreen.tsx|bg",
+      "path": "src/screens/ReminderWordScreen.tsx",
+      "role": "bg",
+      "line": 74
+    },
+    {
+      "key": "src/screens/ReminderWordScreen.tsx|textPrimary|1",
+      "base": "src/screens/ReminderWordScreen.tsx|textPrimary",
+      "path": "src/screens/ReminderWordScreen.tsx",
+      "role": "textPrimary",
+      "line": 76
+    },
+    {
+      "key": "src/screens/ReminderWordScreen.tsx|textSecondary|1",
+      "base": "src/screens/ReminderWordScreen.tsx|textSecondary",
+      "path": "src/screens/ReminderWordScreen.tsx",
+      "role": "textSecondary",
+      "line": 77
+    },
+    {
+      "key": "src/screens/ReminderWordScreen.tsx|brand|1",
+      "base": "src/screens/ReminderWordScreen.tsx|brand",
+      "path": "src/screens/ReminderWordScreen.tsx",
+      "role": "brand",
+      "line": 84
+    },
+    {
+      "key": "src/screens/ReminderWordScreen.tsx|onBrand|1",
+      "base": "src/screens/ReminderWordScreen.tsx|onBrand",
+      "path": "src/screens/ReminderWordScreen.tsx",
+      "role": "onBrand",
+      "line": 86
+    },
+    {
+      "key": "src/screens/ReminderWordScreen.tsx|surface|1",
+      "base": "src/screens/ReminderWordScreen.tsx|surface",
+      "path": "src/screens/ReminderWordScreen.tsx",
+      "role": "surface",
+      "line": 93
     },
     {
       "key": "src/screens/ReviewScreen.tsx|mutedInk|1",
@@ -9222,21 +9325,21 @@
       "base": "src/screens/ThemeSettingsScreen.tsx|textPrimary",
       "path": "src/screens/ThemeSettingsScreen.tsx",
       "role": "textPrimary",
-      "line": 225
+      "line": 281
     },
     {
       "key": "src/screens/ThemeSettingsScreen.tsx|textPrimary|2",
       "base": "src/screens/ThemeSettingsScreen.tsx|textPrimary",
       "path": "src/screens/ThemeSettingsScreen.tsx",
       "role": "textPrimary",
-      "line": 226
+      "line": 282
     },
     {
       "key": "src/screens/ThemeSettingsScreen.tsx|textPrimary|3",
       "base": "src/screens/ThemeSettingsScreen.tsx|textPrimary",
       "path": "src/screens/ThemeSettingsScreen.tsx",
       "role": "textPrimary",
-      "line": 227
+      "line": 283
     },
     {
       "key": "src/screens/ThemeSettingsScreen.tsx|border|1",
@@ -9272,6 +9375,20 @@
       "path": "src/screens/ThemeSettingsScreen.tsx",
       "role": "onBrand",
       "line": 245
+    },
+    {
+      "key": "src/screens/ThemeSettingsScreen.tsx|surface|1",
+      "base": "src/screens/ThemeSettingsScreen.tsx|surface",
+      "path": "src/screens/ThemeSettingsScreen.tsx",
+      "role": "surface",
+      "line": 309
+    },
+    {
+      "key": "src/screens/ThemeSettingsScreen.tsx|textPrimary|4",
+      "base": "src/screens/ThemeSettingsScreen.tsx|textPrimary",
+      "path": "src/screens/ThemeSettingsScreen.tsx",
+      "role": "textPrimary",
+      "line": 310
     },
     {
       "key": "src/screens/ThemeSettingsScreen.tsx|brandPressed|1",
@@ -9398,13 +9515,13 @@
       "foreground": "textPrimary",
       "background": "bg",
       "minimum": 4.5,
-      "purpose": "text/icon ink on route surfaces"
+      "purpose": "Route ink including reminder word headings"
     },
     {
       "foreground": "textPrimary",
       "background": "surface",
       "minimum": 4.5,
-      "purpose": "text/icon ink on route surfaces"
+      "purpose": "Route ink including the reminder offer heading"
     },
     {
       "foreground": "textPrimary",
@@ -9416,13 +9533,13 @@
       "foreground": "textSecondary",
       "background": "bg",
       "minimum": 4.5,
-      "purpose": "text/icon ink on route surfaces"
+      "purpose": "Route ink including reminder word translation and availability"
     },
     {
       "foreground": "textSecondary",
       "background": "surface",
       "minimum": 4.5,
-      "purpose": "text/icon ink on route surfaces"
+      "purpose": "Route ink including reminder offer instructions and the reminder word Listen label"
     },
     {
       "foreground": "textSecondary",
@@ -9458,7 +9575,7 @@
       "foreground": "brand",
       "background": "surface",
       "minimum": 4.5,
-      "purpose": "text/icon ink on route surfaces"
+      "purpose": "Route ink including reminder offer action labels"
     },
     {
       "foreground": "brand",
@@ -9884,7 +10001,7 @@
       "foreground": "onBrand",
       "background": "brand",
       "minimum": 4.5,
-      "purpose": "actual control/status pair"
+      "purpose": "Control labels including the reminder word Today’s practice action"
     },
     {
       "foreground": "onBrand",
@@ -10242,6 +10359,53 @@
       "minimum": 4.5,
       "purpose": "Preserved Classic Difficult source-deck badge",
       "themeId": "classic"
+    },
+    {
+      "foreground": "brand",
+      "background": "cardSurface",
+      "minimum": 4.5,
+      "purpose": "Study Show meaning action inside Flashcard"
+    },
+    {
+      "foreground": "brand",
+      "background": "highlightWash",
+      "minimum": 4.5,
+      "purpose": "Difficult Words review counter"
+    },
+    {
+      "foreground": "textInverse",
+      "background": "brandPressed",
+      "minimum": 4.5,
+      "purpose": "Difficult Words pressed Back to practice action",
+      "themeId": "barrio"
+    },
+    {
+      "foreground": "textPrimary",
+      "background": "selectedWash",
+      "canvas": "surfaceElevated",
+      "minimum": 4.5,
+      "purpose": "Manage Decks selected name and status"
+    },
+    {
+      "foreground": "textSecondary",
+      "background": "selectedWash",
+      "canvas": "surfaceElevated",
+      "minimum": 4.5,
+      "purpose": "Manage Decks selected card count"
+    },
+    {
+      "foreground": "textPrimary",
+      "background": "surfacePressed",
+      "minimum": 4.5,
+      "purpose": "Pressed Daily Plan, Adventure and Mission secondary actions",
+      "themeId": "barrio"
+    },
+    {
+      "foreground": "danger",
+      "background": "surfacePressed",
+      "minimum": 4.5,
+      "purpose": "Pressed Daily Plan End plan action",
+      "themeId": "barrio"
     }
   ]
 }

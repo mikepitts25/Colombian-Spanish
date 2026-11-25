@@ -46,17 +46,35 @@ async function playbackRate(override?: number) {
     return DEFAULT_RATE;
   }
 }
-function fallback(text: string, rate: number, lang = DEFAULT_LANGUAGE): PlaybackResult {
-  Speech.speak(text, { language: lang, pitch: DEFAULT_PITCH, rate });
+function fallback(
+  text: string,
+  rate: number,
+  lang = DEFAULT_LANGUAGE,
+  onPlaybackEnd?: (error?: Error) => void,
+): PlaybackResult {
+  Speech.speak(text, {
+    language: lang,
+    pitch: DEFAULT_PITCH,
+    rate,
+    ...(onPlaybackEnd && {
+      onDone: () => onPlaybackEnd(),
+      onError: onPlaybackEnd,
+    }),
+  });
   return { source: 'device', loop: false };
 }
 const cancelled = (): PlaybackResult => ({ source: 'cancelled', loop: false });
 export async function speakCard(
   card: PronunciationCard,
-  options: { rate?: number; loop?: boolean; requireBundled?: boolean } = {},
+  options: {
+    rate?: number;
+    loop?: boolean;
+    requireBundled?: boolean;
+    onPlaybackEnd?: (error?: Error) => void;
+  } = {},
 ): Promise<PlaybackResult> {
   const { id, front } = card;
-  const { rate: override, loop = false, requireBundled = false } = options;
+  const { rate: override, loop = false, requireBundled = false, onPlaybackEnd } = options;
   if (
     typeof requireBundled !== 'boolean' ||
     typeof loop !== 'boolean' ||
@@ -67,6 +85,14 @@ export async function speakCard(
   const requestId = activeRequestId;
   const rate = await playbackRate(override);
   if (requestId !== activeRequestId) return cancelled();
+  let finished = false;
+  const finish =
+    onPlaybackEnd &&
+    ((error?: Error) => {
+      if (finished || requestId !== activeRequestId) return;
+      finished = true;
+      onPlaybackEnd(error);
+    });
   const spokenText = pronunciationText(front);
   // Legacy recordings contain literal slash notation. Use them only after they
   // have been regenerated with a matching expanded transcript.
@@ -83,17 +109,25 @@ export async function speakCard(
       player.loop = loop;
       await player.seekTo(0);
       if (requestId !== activeRequestId || currentPlayer !== player) return cancelled();
+      if (finish && !loop) {
+        player.addListener('playbackStatusUpdate', (status) => {
+          if (status.didJustFinish && currentPlayer === player) {
+            releasePlayer(player);
+            finish();
+          }
+        });
+      }
       player.play();
       return { source: 'generated', loop };
     } catch {
       if (requestId !== activeRequestId) return cancelled();
       releasePlayer(currentPlayer);
       if (requireBundled) throw new Error('Required bundled audio is unavailable');
-      return fallback(spokenText, rate);
+      return fallback(spokenText, rate, DEFAULT_LANGUAGE, finish);
     }
   }
   if (requireBundled) throw new Error('Required bundled audio is unavailable');
-  return fallback(spokenText, rate);
+  return fallback(spokenText, rate, DEFAULT_LANGUAGE, finish);
 }
 export async function speak(text: string, lang = DEFAULT_LANGUAGE): Promise<PlaybackResult> {
   interruptPlayback();

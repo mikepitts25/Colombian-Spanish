@@ -4,7 +4,14 @@ import ThemedTextInput from '../components/ThemedTextInput';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
 import React, { useMemo, useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
+import {
+  AccessibilityInfo,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -26,6 +33,7 @@ import {
   RegionFilterId,
 } from '../utils/regions';
 import { useLanguage } from '../context/LanguageContext';
+import { isFreeOnlyRelease } from '../billing/catalog';
 import {
   CATEGORY_DISPLAY,
   getDeckDisplayName,
@@ -113,7 +121,7 @@ export default function StudyScreen() {
   } = useDeck();
   const nav = useNavigation<any>();
   const route = useRoute<any>();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [mode, setMode] = useState<StudyMode>('landing');
   const [topicBrowserOpen, setTopicBrowserOpen] = useState(false);
   const dailyPlan = useRef<string | undefined>(undefined);
@@ -130,6 +138,10 @@ export default function StudyScreen() {
   const [startCardId, setStartCardId] = useState<string | undefined>(undefined);
   const [seed, setSeed] = useState(0);
   const [activeRegion, setActiveRegion] = useState<RegionFilterId>('all');
+  const [regionFiltersOpen, setRegionFiltersOpen] = useState(false);
+  const [revealedCardKey, setRevealedCardKey] = useState<string>();
+  const firstGrade = useRef<View>(null);
+  const focusedGradeCard = useRef<string | undefined>(undefined);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [checkpointBusy, setCheckpointBusy] = useState(false);
   const [checkpointFailed, setCheckpointFailed] = useState(false);
@@ -169,11 +181,11 @@ export default function StudyScreen() {
       (decks || []).flatMap((deck) =>
         (deck.cards || []).map((card) => ({
           deckId: deck.id,
-          deckName: getDeckDisplayName(deck),
+          deckName: getDeckDisplayName(deck, language),
           card,
         })),
       ),
-    [decks],
+    [decks, language],
   );
 
   const visibleCategories = useMemo(
@@ -344,7 +356,9 @@ export default function StudyScreen() {
     }
     return labels;
   }, [card]);
-  const deckTitle = activeDeck ? getDeckDisplayName(activeDeck) : '';
+  const deckTitle = activeDeck ? getDeckDisplayName(activeDeck, language) : '';
+  const cardKey = card ? JSON.stringify([activeDeckId, seed, card.id]) : undefined;
+  const canShowGrades = cardKey !== undefined && revealedCardKey === cardKey;
   const showResults = searching && q.trim().length > 0;
   const navigationBlocked =
     gradeSaving ||
@@ -836,15 +850,6 @@ export default function StudyScreen() {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          <Pressable
-            accessibilityRole="button"
-            style={{ minHeight: 48, justifyContent: 'center', paddingVertical: 12 }}
-            onPress={() => nav.navigate('Library')}
-          >
-            <Text style={{ color: colors.brand, fontSize: 16, fontWeight: '700' }}>
-              {t('library.link')}
-            </Text>
-          </Pressable>
           <View style={styles.landingHeader}>
             <Text style={styles.landingTitle}>{t('study.topics.title')}</Text>
           </View>
@@ -916,12 +921,16 @@ export default function StudyScreen() {
                 </View>
               ) : (
                 searchResults.map((item) => (
-                  <Pressable
-                    key={`${item.deckId}-${item.card.id}`}
-                    style={styles.resultRow}
-                    onPress={() => startSession(item.deckId, item.card.id)}
-                  >
-                    <View style={styles.resultLeft}>
+                  <View key={`${item.deckId}-${item.card.id}`} style={styles.resultRow}>
+                    <Pressable
+                      style={styles.resultStudyButton}
+                      accessibilityRole="button"
+                      accessibilityLabel={t('browse.studyResult', {
+                        front: item.card.front,
+                        back: item.card.back,
+                      })}
+                      onPress={() => startSession(item.deckId, item.card.id)}
+                    >
                       <Text style={styles.resultFront}>{item.card.front}</Text>
                       <Text style={styles.resultBack}>{item.card.back}</Text>
                       {item.card.example ? (
@@ -933,7 +942,7 @@ export default function StudyScreen() {
                           ? ` • ${item.card.tags.slice(0, 2).join(', ')}`
                           : ''}
                       </Text>
-                    </View>
+                    </Pressable>
                     <Pressable
                       style={[
                         styles.speakBtn,
@@ -949,7 +958,7 @@ export default function StudyScreen() {
                         <ThemeIcon name="audio" size={16} color={colors.audioText} />
                       )}
                     </Pressable>
-                  </Pressable>
+                  </View>
                 ))
               )}
             </>
@@ -1026,7 +1035,9 @@ export default function StudyScreen() {
                       }
                     >
                       <View style={[styles.resumeTextBlock, largeText && styles.noFlex]}>
-                        <Text style={styles.resumeDeckName}>{getDeckDisplayName(resumeDeck)}</Text>
+                        <Text style={styles.resumeDeckName}>
+                          {getDeckDisplayName(resumeDeck, language)}
+                        </Text>
                         <Text style={styles.resumeDeckMeta}>
                           {resumeDeck.cards.length} {t('common.cards')}
                         </Text>
@@ -1042,6 +1053,15 @@ export default function StudyScreen() {
               )}
             </>
           )}
+          <Pressable
+            accessibilityRole="button"
+            style={{ minHeight: 48, justifyContent: 'center', paddingVertical: 12 }}
+            onPress={() => nav.navigate('Library')}
+          >
+            <Text style={{ color: colors.brand, fontSize: 16, fontWeight: '700' }}>
+              {t(isFreeOnlyRelease ? 'library.freeOnlyLink' : 'library.link')}
+            </Text>
+          </Pressable>
         </ScrollView>
       </SafeAreaView>
     );
@@ -1112,57 +1132,69 @@ export default function StudyScreen() {
           >
             <Text style={styles.sessionBackText}>{t('study.topics.change')}</Text>
           </Pressable>
+          <Pressable
+            testID="study-region-filter"
+            accessibilityRole="button"
+            accessibilityState={{ expanded: regionFiltersOpen }}
+            style={styles.sessionBackBtn}
+            onPress={() => setRegionFiltersOpen((open) => !open)}
+          >
+            <Text style={styles.sessionBackText}>
+              {activeRegion === 'all'
+                ? t('study.regionFilter')
+                : t('study.regionFilterSelected', { region: t(REGION_LABEL_KEYS[activeRegion]) })}
+            </Text>
+          </Pressable>
         </View>
 
         <View style={styles.progressTrack}>
           <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
         </View>
 
-        <View testID="region-filters" style={styles.regionRow}>
-          {REGION_FILTERS.map((region) => (
-            <Pressable
-              key={region.id}
-              accessibilityRole="button"
-              accessibilityState={{
-                selected: activeRegion === region.id,
-                disabled:
+        {regionFiltersOpen && (
+          <View testID="region-filters" style={styles.regionRow}>
+            {REGION_FILTERS.map((region) => (
+              <Pressable
+                key={region.id}
+                accessibilityRole="button"
+                accessibilityState={{
+                  selected: activeRegion === region.id,
+                  disabled:
+                    gradeSaving ||
+                    gradeError === 'save' ||
+                    gradeError === 'stale' ||
+                    checkpointBusy ||
+                    checkpointFailed ||
+                    planOpening ||
+                    planOpenError,
+                }}
+                disabled={
                   gradeSaving ||
                   gradeError === 'save' ||
                   gradeError === 'stale' ||
                   checkpointBusy ||
                   checkpointFailed ||
                   planOpening ||
-                  planOpenError,
-              }}
-              disabled={
-                gradeSaving ||
-                gradeError === 'save' ||
-                gradeError === 'stale' ||
-                checkpointBusy ||
-                checkpointFailed ||
-                planOpening ||
-                planOpenError
-              }
-              style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
-              onPress={() => changeRegion(region.id)}
-            >
-              <Text
-                style={[
-                  styles.regionChipText,
-                  activeRegion === region.id && styles.regionChipTextActive,
-                ]}
+                  planOpenError
+                }
+                style={[styles.regionChip, activeRegion === region.id && styles.regionChipActive]}
+                onPress={() => {
+                  changeRegion(region.id);
+                  setRegionFiltersOpen(false);
+                }}
               >
-                {t(REGION_LABEL_KEYS[region.id])}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
-
-        <View key={`hints-${fontScale}`} style={styles.swipeHints}>
-          <Text style={styles.swipeTap}>{t('study.hint.flip')}</Text>
-          <Text style={styles.swipeHard}>{t('study.hint.hard')}</Text>
-          <Text style={styles.swipeEasy}>{t('study.hint.easy')}</Text>
-        </View>
+                <Text
+                  style={[
+                    styles.regionChipText,
+                    activeRegion === region.id && styles.regionChipTextActive,
+                  ]}
+                >
+                  {t(REGION_LABEL_KEYS[region.id])}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        )}
 
         {card ? (
           <View
@@ -1172,8 +1204,13 @@ export default function StudyScreen() {
               cardTop.current = event.nativeEvent.layout.y;
             }}
           >
-            <Flashcard key={card.id} card={card} onGrade={grade} expandForLargeText />
-            {isVerb(card) && <ConjugationPanel infinitive={card.front} />}
+            <Flashcard
+              key={cardKey}
+              card={card}
+              onGrade={grade}
+              onReveal={() => setRevealedCardKey(cardKey)}
+              expandForLargeText
+            />
           </View>
         ) : (
           <View style={[styles.cardArea, styles.center]}>
@@ -1247,41 +1284,68 @@ export default function StudyScreen() {
             )}
           </View>
         )}
-        <View key={`grades-${fontScale}`} style={styles.gradeBar}>
-          <Text style={styles.gradeLabel}>{t('study.gradePrompt')}</Text>
-          <View style={[styles.gradeButtons, largeText && styles.stacked]}>
-            {grades.map((g) => (
-              <Pressable
-                key={g.labelKey}
-                style={[
-                  styles.gradeBtn,
-                  largeText && styles.noFlex,
-                  { backgroundColor: g.bg, borderColor: g.border },
-                ]}
-                onPress={() => grade(g.q)}
-                disabled={
-                  !card ||
-                  gradeSaving ||
-                  !!gradeError ||
-                  checkpointBusy ||
-                  checkpointFailed ||
-                  planOpening ||
-                  planOpenError
-                }
-              >
-                <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
-                <Text
+        {canShowGrades && (
+          <View
+            testID="study-grades"
+            key={`grades-${fontScale}`}
+            style={styles.gradeBar}
+            onLayout={() => {
+              const target = firstGrade.current;
+              if (largeText && target && focusedGradeCard.current !== cardKey) {
+                focusedGradeCard.current = cardKey;
+                AccessibilityInfo.sendAccessibilityEvent(target, 'focus');
+              }
+            }}
+          >
+            <Text style={styles.gradeLabel}>{t('study.gradePrompt')}</Text>
+            <View style={[styles.gradeButtons, largeText && styles.stacked]}>
+              {grades.map((g) => (
+                <Pressable
+                  ref={g.q === 1 ? firstGrade : undefined}
+                  accessibilityRole="button"
+                  accessibilityLabel={
+                    largeText && g.q === 1 && card
+                      ? t('study.firstGradeAfterReveal', {
+                          meaning: card.back,
+                          grade: t(g.labelKey),
+                        })
+                      : undefined
+                  }
+                  key={g.labelKey}
                   style={[
-                    styles.gradeBtnInterval,
-                    { color: theme.id === 'classic' ? g.color + 'b3' : g.color },
+                    styles.gradeBtn,
+                    largeText && styles.noFlex,
+                    { backgroundColor: g.bg, borderColor: g.border },
                   ]}
+                  onPress={() => grade(g.q)}
+                  disabled={
+                    !card ||
+                    gradeSaving ||
+                    !!gradeError ||
+                    checkpointBusy ||
+                    checkpointFailed ||
+                    planOpening ||
+                    planOpenError
+                  }
                 >
-                  {gradeIntervals[g.q] ?? ''}
-                </Text>
-              </Pressable>
-            ))}
+                  <Text style={[styles.gradeBtnLabel, { color: g.color }]}>{t(g.labelKey)}</Text>
+                  <Text style={[styles.gradeBtnInterval, { color: g.color }]}>
+                    {gradeIntervals[g.q] ?? ''}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
           </View>
-        </View>
+        )}
+        {card && (
+          <>
+            <View key={`hints-${fontScale}`} style={styles.swipeHints}>
+              <Text style={styles.swipeHard}>{t('study.hint.hard')}</Text>
+              <Text style={styles.swipeEasy}>{t('study.hint.easy')}</Text>
+            </View>
+            {isVerb(card) && <ConjugationPanel infinitive={card.front} />}
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -1377,15 +1441,23 @@ const makeStyles = ({ colors }: AppTheme) =>
     resultRow: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: 12,
       backgroundColor: colors.surface,
       borderWidth: 1,
       borderColor: colors.border,
       borderRadius: 14,
-      padding: 14,
+      paddingRight: 14,
       marginBottom: 8,
     },
-    resultLeft: { flex: 1, gap: 2 },
+    resultStudyButton: {
+      flex: 1,
+      minWidth: 0,
+      minHeight: 48,
+      alignSelf: 'stretch',
+      justifyContent: 'center',
+      padding: 14,
+      paddingRight: 12,
+      gap: 2,
+    },
     resultFront: { color: colors.textPrimary, fontWeight: '800', fontSize: 16 },
     resultBack: { color: colors.textSecondary, fontSize: 13 },
     resultExample: {
@@ -1396,9 +1468,9 @@ const makeStyles = ({ colors }: AppTheme) =>
     },
     resultMeta: { color: colors.textTertiary, fontSize: 11, marginTop: 4 },
     speakBtn: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
+      width: 48,
+      height: 48,
+      borderRadius: 24,
       backgroundColor: colors.accentBlue,
       alignItems: 'center',
       justifyContent: 'center',

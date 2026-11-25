@@ -14,22 +14,20 @@ import Pressable from './ThemedPressable';
 
 export default function CafeHomeContent({
   presentation: model,
-  activity,
+  recommendedDeckName,
   adventure,
   children,
   onPrimary,
   onBrowse,
   onManage,
-  onSettings,
 }: {
   presentation: HomePresentation;
-  activity?: { count: number; target: number };
+  recommendedDeckName?: string;
   adventure: ReactNode;
   children: ReactNode;
   onPrimary: () => void;
   onBrowse: () => void;
   onManage: (id: string) => void;
-  onSettings: () => void;
 }) {
   const { t } = useLanguage();
   const theme = useAppTheme();
@@ -55,10 +53,20 @@ export default function CafeHomeContent({
       action = 'mission.retry';
       break;
     case 'reviewResume':
+      heading = 'home.cafe.seatSaved';
+      body = model.remainingCards === 1 ? 'home.barrio.remainingOne' : 'home.barrio.remainingMany';
+      action = 'home.cafe.continueReview';
+      break;
     case 'appliedResume':
       heading = 'home.cafe.seatSaved';
       body = 'home.cafe.resumeBody';
-      action = 'home.cafe.continue';
+      action = 'home.cafe.continueReply';
+      break;
+    case 'appliedOnly':
+      action = 'home.cafe.startReply';
+      break;
+    case 'visit':
+      action = model.visit.resume ? 'adventure.resume' : 'adventure.start';
       break;
     case 'completedToday':
       heading = 'home.cafe.complete';
@@ -80,15 +88,24 @@ export default function CafeHomeContent({
       action = 'home.chooseTopic';
       break;
     case 'recommendation':
-      body =
-        model.suggestion.dueCount > 0 && model.suggestion.newCount === 0
-          ? 'home.cafe.familiar'
-          : 'home.cafe.newWords';
+      action = 'home.cafe.reviewCards';
+      body = 'home.reviewEstimate';
       break;
   }
   if (model.startError) action = 'mission.retry';
   if (model.pending) action = 'common.loading';
   const disabled = model.pending || model.action === 'none';
+  const primaryLabel = t(action);
+  const bodyText = t(body, {
+    deck: recommendedDeckName ?? '',
+    minutes: model.kind === 'recommendation' ? model.suggestion.estimatedMinutes : '',
+    count:
+      model.kind === 'recommendation'
+        ? model.suggestion.cardCount
+        : model.kind === 'reviewResume'
+          ? model.remainingCards
+          : '',
+  });
   return (
     <SafeAreaView
       edges={['top', 'left', 'right']}
@@ -114,15 +131,6 @@ export default function CafeHomeContent({
               </Text>
               {!largeText && <Text style={styles.welcome}>{t('home.cafe.welcome')}</Text>}
             </View>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={t('tabs.settings')}
-              onPress={onSettings}
-              style={({ pressed }) => [styles.profile, pressed && styles.pressed]}
-            >
-              <View accessible={false} style={styles.profileHead} />
-              <View accessible={false} style={styles.profileShoulders} />
-            </Pressable>
           </View>
           {fontScale < 2 && (
             <CafeScene
@@ -133,31 +141,18 @@ export default function CafeHomeContent({
             />
           )}
           <View style={styles.invitation}>
-            {activity && model.kind !== 'readError' && model.kind !== 'loading' && (
-              <Text
-                style={styles.progress}
-                accessibilityLabel={t('home.cafe.dailyProgress', {
-                  count: activity.count,
-                  target: activity.target,
-                })}
-              >
-                {t('home.today')} · {activity.count}/{activity.target}
-              </Text>
-            )}
             <Text
               maxFontSizeMultiplier={1.6}
               accessibilityRole="header"
               style={[styles.title, largeText && { fontSize: 25, lineHeight: 33 }]}
             >
-              {t(heading)}
+              {model.kind === 'visit' ? model.visit.title : t(heading)}
             </Text>
             <Text
               accessibilityRole={model.kind === 'readError' ? 'alert' : undefined}
               style={styles.body}
             >
-              {t(body, {
-                minutes: model.kind === 'recommendation' ? model.suggestion.estimatedMinutes : '',
-              })}
+              {bodyText}
             </Text>
             {model.startError && (
               <Text accessibilityRole="alert" style={styles.body}>
@@ -165,8 +160,13 @@ export default function CafeHomeContent({
               </Text>
             )}
             <Pressable
+              testID="home-primary"
               accessibilityRole="button"
-              accessibilityLabel={t(action)}
+              accessibilityLabel={
+                model.kind === 'visit' && !model.startError && !model.pending
+                  ? `${primaryLabel}: ${model.visit.title}`
+                  : primaryLabel
+              }
               accessibilityState={{ disabled, busy: model.pending }}
               disabled={disabled}
               onPress={onPrimary}
@@ -176,14 +176,14 @@ export default function CafeHomeContent({
                 disabled && styles.disabled,
               ]}
             >
-              <Text style={styles.primaryText}>{t(action)}</Text>
+              <Text style={styles.primaryText}>{primaryLabel}</Text>
               {!disabled && (
                 <Text accessible={false} style={styles.primaryText}>
                   →
                 </Text>
               )}
             </Pressable>
-            {model.kind !== 'browse' && (
+            {model.kind !== 'browse' && model.kind !== 'loading' && model.kind !== 'readError' && (
               <Pressable
                 accessibilityRole="button"
                 disabled={model.pending}
@@ -239,26 +239,7 @@ const styles = StyleSheet.create({
   },
   greeting: { color: cafeColors.cream, fontFamily: serif, fontSize: 36 },
   welcome: { color: cafeColors.secondary, fontSize: 15, marginTop: 5, lineHeight: 22 },
-  profile: {
-    width: 46,
-    height: 46,
-    borderRadius: 23,
-    borderWidth: 1.5,
-    borderColor: cafeColors.secondary,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 3,
-  },
-  profileHead: { width: 10, height: 10, borderRadius: 5, backgroundColor: cafeColors.cream },
-  profileShoulders: {
-    width: 22,
-    height: 11,
-    borderTopLeftRadius: 14,
-    borderTopRightRadius: 14,
-    backgroundColor: cafeColors.cream,
-  },
   invitation: { paddingHorizontal: 24, gap: 11, marginTop: -8 },
-  progress: { color: cafeColors.secondary, fontSize: 12, alignSelf: 'flex-start', marginBottom: 1 },
   title: { color: cafeColors.cream, fontFamily: serif, fontSize: 31, lineHeight: 38 },
   body: { color: cafeColors.secondary, fontSize: 15, lineHeight: 23 },
   primary: {

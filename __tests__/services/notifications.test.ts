@@ -3,11 +3,20 @@ import * as Notifications from 'expo-notifications';
 import {
   DEFAULT_NOTIFICATION_PREFS,
   getNotificationPreferences,
+  watchReminderResponses,
+  getNotificationScheduleStatus,
+  canOfferReminders,
+  dismissReminderOffer,
   refreshScheduledNotifications,
   saveAndScheduleNotificationPreferences,
 } from '../../src/services/notifications';
 
 jest.mock('expo-notifications', () => ({
+  DEFAULT_ACTION_IDENTIFIER: 'tap',
+  getLastNotificationResponse: jest.fn().mockReturnValue(null),
+  clearLastNotificationResponse: jest.fn(),
+  addNotificationResponseReceivedListener: jest.fn().mockReturnValue({ remove: jest.fn() }),
+  getAllScheduledNotificationsAsync: jest.fn().mockResolvedValue([]),
   SchedulableTriggerInputTypes: {
     DAILY: 'daily',
     DATE: 'date',
@@ -265,4 +274,74 @@ test('scheduled words always come from free starter collections', async () => {
   for (const [arg] of morningCalls()) {
     expect(phrases.some((phrase: string) => arg.content.title.includes(phrase))).toBe(true);
   }
+});
+
+test('each morning request binds the exact shown word to its local scheduled day', async () => {
+  const { ALL_DECKS } = require('../../src/data/decks');
+  const { localDayKey } = require('../../src/utils/calendarDay');
+  await saveAndScheduleNotificationPreferences({ ...DEFAULT_NOTIFICATION_PREFS, nightOn: true });
+  for (const [arg] of morningCalls()) {
+    const data = arg.content.data;
+    const deck = ALL_DECKS.find((entry: { id: string }) => entry.id === data.deckId);
+    const card = deck.cards.find((entry: { id: string }) => entry.id === data.cardId);
+    expect(data).toEqual({
+      reminder: 'word',
+      day: localDayKey(arg.trigger.date),
+      deckId: deck.id,
+      cardId: card.id,
+      front: card.front,
+    });
+    expect(arg.content.title).toContain(card.front);
+  }
+  expect(nightCalls()[0][0].content.data).toEqual({ reminder: 'evening' });
+});
+
+test('waits for navigation readiness and handles one cold/warm duplicate without losing the next evening delivery', () => {
+  const getLast = Notifications.getLastNotificationResponse as jest.Mock;
+  const register = Notifications.addNotificationResponseReceivedListener as jest.Mock;
+  const event = (date: number) => ({
+    actionIdentifier: 'tap',
+    notification: {
+      date,
+      request: { identifier: 'recurring-evening', content: { data: { reminder: 'evening' } } },
+    },
+  });
+  getLast.mockReturnValue(event(1));
+  let ready = false;
+  const open = jest.fn(() => ready);
+  const watcher = watchReminderResponses(open);
+  const receive = register.mock.calls[0][0];
+  receive(event(1));
+  expect(Notifications.clearLastNotificationResponse).not.toHaveBeenCalled();
+  ready = true;
+  open.mockClear();
+  watcher.flush();
+  expect(open.mock.calls).toEqual([[{ kind: 'evening' }]]);
+  expect(Notifications.clearLastNotificationResponse).toHaveBeenCalledTimes(1);
+  receive(event(1));
+  receive(event(2));
+  expect(open).toHaveBeenCalledTimes(2);
+  watcher.remove();
+  receive(event(3));
+  expect(open).toHaveBeenCalledTimes(2);
+  getLast.mockReturnValue(null);
+});
+
+test('a denied or empty native schedule does not read back as On and does not prompt', async () => {
+  mockGetPermissions.mockResolvedValueOnce({ status: 'denied' });
+  await expect(getNotificationScheduleStatus(DEFAULT_NOTIFICATION_PREFS)).resolves.toBe('denied');
+  await expect(getNotificationScheduleStatus(DEFAULT_NOTIFICATION_PREFS)).resolves.toBe(
+    'unscheduled',
+  );
+  expect(mockRequestPermissions).not.toHaveBeenCalled();
+});
+
+test('Maybe later is remembered without enabling, saving or prompting for reminders', async () => {
+  mockGetPermissions.mockResolvedValue({ status: 'undetermined' });
+  await expect(canOfferReminders()).resolves.toBe(true);
+  await dismissReminderOffer();
+  await expect(canOfferReminders()).resolves.toBe(false);
+  expect(await AsyncStorage.getItem('SRS_NOTIFICATION_PREFS_V1')).toBeNull();
+  expect(mockRequestPermissions).not.toHaveBeenCalled();
+  expect(mockSchedule).not.toHaveBeenCalled();
 });

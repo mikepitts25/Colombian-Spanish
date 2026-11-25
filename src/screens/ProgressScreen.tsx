@@ -2,7 +2,7 @@ import PracticePassport from '../components/PracticePassport';
 import Pressable from '../components/ThemedPressable';
 import { useAppTheme, useThemedStyles } from '../context/ThemeContext';
 import { AppTheme } from '../styles/appTheme';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { radius } from '../styles/theme';
@@ -13,17 +13,38 @@ import { useLanguage } from '../context/LanguageContext';
 import { getLearningEvents } from '../storage/learningEvents';
 import { useFocusedAsync } from '../hooks/useFocusedAsync';
 import { summarizePracticeEvidence } from '../utils/practiceEvidence';
-import { isNewCard } from '../utils/srs';
+import { buildSessionQueue, isNewCard } from '../utils/srs';
+import { getPrefs } from '../storage/prefs';
+import { localDayKey } from '../utils/calendarDay';
+import { readAdventures } from '../storage/adventures';
+import { resolveAdventure } from '../adventures/content';
+import { FREE_DECK_IDS, isPaidBundledCard } from '../billing/catalog';
+import { getDeckDisplayName } from '../utils/deckCategories';
+import { emptyAdventures } from '../adventures/state';
+
+const STARTER_REVIEW_LIMIT = 5;
 
 async function loadProgress() {
-  const [daily, streak, history] = await Promise.all([
+  const [daily, streak, history, prefs, passport] = await Promise.all([
     getDailyProgress(),
     getStudyStreak(),
     getLearningEvents()
       .then((events) => ({ events, unavailable: false }))
       .catch(() => ({ events: [], unavailable: true })),
+    getPrefs(),
+    readAdventures()
+      .then((state) => ({ state, unavailable: false }))
+      .catch(() => ({ state: emptyAdventures(), unavailable: true })),
   ]);
-  return { daily: { count: daily.count, target: daily.target }, streak, history, now: Date.now() };
+  return {
+    daily: { count: daily.count, target: daily.target },
+    streak,
+    history,
+    passport,
+    newRemaining: Math.max(0, prefs.newCardsPerDay - daily.newCount),
+    loaded: true,
+    now: Date.now(),
+  };
 }
 
 function DonutRing({ pct, size = 90 }: { pct: number; size?: number }) {
@@ -55,16 +76,27 @@ function DonutRing({ pct, size = 90 }: { pct: number; size?: number }) {
 export default function ProgressScreen() {
   const { colors } = useAppTheme();
   const styles = useThemedStyles(makeStyles);
-  const { decks, ready } = useDeck();
+  const { decks, ready, reload } = useDeck();
   const nav = useNavigation<any>();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale >= 1.4;
   const [initialNow] = useState(() => Date.now());
-  const { value: snapshot, error } = useFocusedAsync(loadProgress, {
+  const [attempt, setAttempt] = useState(0);
+  const [openingPractice, setOpeningPractice] = useState(false);
+  const [practiceError, setPracticeError] = useState(false);
+  const opening = useRef(false);
+  const load = useCallback(() => {
+    void attempt;
+    return loadProgress();
+  }, [attempt]);
+  const { value: snapshot, error } = useFocusedAsync(load, {
     daily: { count: 0, target: 10 },
     streak: 0,
     history: { events: [], unavailable: false },
+    passport: { state: emptyAdventures(), unavailable: false },
+    newRemaining: 0,
+    loaded: false,
     now: initialNow,
   });
   const dailyStats = snapshot.daily;
@@ -78,6 +110,89 @@ export default function ProgressScreen() {
     [snapshot.history.events],
   );
   const recognitionCorrect = recognition.filter((event) => event.outcome === 'correct').length;
+  const today = localDayKey(new Date(snapshot.now));
+  const isToday = (time: number) => time <= snapshot.now && localDayKey(new Date(time)) === today;
+  const stampToday = snapshot.passport.state.outcomes
+    .filter((outcome) => outcome.mode === 'accepted' && isToday(outcome.earnedAt))
+    .sort((a, b) => b.earnedAt - a.earnedAt)[0];
+  const replayToday = snapshot.passport.state.runs
+    .filter(
+      ({ mode, mission }) => mode === 'accepted' && mission.completed && isToday(mission.updatedAt),
+    )
+    .sort((a, b) => b.mission.updatedAt - a.mission.updatedAt)[0];
+  const lastVisit =
+    stampToday ?? (replayToday && { ...replayToday.mission, fingerprint: replayToday.fingerprint });
+  const currentVisit = lastVisit && resolveAdventure(lastVisit.missionId, decks || [], 'accepted');
+  const visitTitle =
+    lastVisit &&
+    currentVisit?.fingerprint === lastVisit.fingerprint &&
+    currentVisit.pack.contentVersion === lastVisit.contentVersion
+      ? currentVisit.pack.title[language]
+      : t('progress.story.previousVisit');
+  const reviewedToday =
+    dailyStats.count > 0 ||
+    snapshot.history.events.some(
+      (event) =>
+        event.modality === 'recall' &&
+        event.evidence === 'self-rated' &&
+        !event.missionId &&
+        isToday(event.occurredAt),
+    );
+  const quizToday = recognition.some((event) => isToday(event.occurredAt));
+  const hasStory = !!lastVisit || reviewedToday || quizToday;
+  const historyUnavailable = snapshot.history.unavailable || snapshot.passport.unavailable;
+  const newLimit = Math.min(STARTER_REVIEW_LIMIT, snapshot.newRemaining);
+  const freeDecks = (decks || []).filter(
+    (deck) =>
+      FREE_DECK_IDS.has(deck.id) &&
+      !deck.cards.some((card) => isPaidBundledCard(card.id)) &&
+      buildSessionQueue(deck.cards, {
+        size: STARTER_REVIEW_LIMIT,
+        newLimit,
+        now: snapshot.now,
+      }).length > 0,
+  );
+  const firstPractice = freeDecks.find((deck) => deck.id === 'deck-greetings') ?? freeDecks[0];
+
+  const openPractice = async () => {
+    if (opening.current) return;
+    if (!firstPractice) {
+      nav.navigate('Phrases');
+      return;
+    }
+    opening.current = true;
+    setOpeningPractice(true);
+    setPracticeError(false);
+    try {
+      await reload({ requireFreshBudget: true });
+      const [prefs, daily] = await Promise.all([getPrefs(), getDailyProgress()]);
+      const freshLimit = Math.min(
+        STARTER_REVIEW_LIMIT,
+        Math.max(0, prefs.newCardsPerDay - daily.newCount),
+      );
+      if (
+        !buildSessionQueue(firstPractice.cards, {
+          size: STARTER_REVIEW_LIMIT,
+          newLimit: freshLimit,
+        }).length
+      ) {
+        setAttempt((n) => n + 1);
+        return;
+      }
+      if (nav.isFocused?.() !== false) {
+        nav.navigate('Study', {
+          autoStartDeckId: firstPractice.id,
+          sessionCardLimit: STARTER_REVIEW_LIMIT,
+          sessionNewLimit: freshLimit,
+        });
+      }
+    } catch {
+      setPracticeError(true);
+    } finally {
+      opening.current = false;
+      setOpeningPractice(false);
+    }
+  };
 
   const stats = useMemo(() => {
     if (!ready || !decks) return { total: 0, studied: 0, due: 0 };
@@ -126,12 +241,14 @@ export default function ProgressScreen() {
     return { emoji: '💪', text: t('progress.motivation.default') };
   }, [dailyPct, streak, t]);
 
-  if (!ready) {
+  if (!ready || !snapshot.loaded || error) {
     return (
       <SafeAreaView style={styles.wrap}>
         <View style={styles.center}>
           <Text style={{ fontSize: 40 }}>📊</Text>
-          <Text style={styles.loadingText}>{t('common.loading')}</Text>
+          <Text accessibilityRole={error ? 'alert' : undefined} style={styles.loadingText}>
+            {t(error ? 'progress.evidenceUnavailable' : 'common.loading')}
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -147,6 +264,58 @@ export default function ProgressScreen() {
         {/* Title row */}
         <View style={styles.titleRow}>
           <Text style={styles.pageTitle}>{t('progress.title')}</Text>
+        </View>
+
+        <View style={styles.dailyCard}>
+          <Text accessibilityRole="header" style={styles.dailyTitle}>
+            {t(hasStory ? 'progress.story.today' : 'progress.story.activity')}
+          </Text>
+          {lastVisit && (
+            <Text style={styles.dailySub}>
+              {t(
+                stampToday
+                  ? stampToday.supported
+                    ? 'progress.story.supported'
+                    : 'progress.story.independent'
+                  : 'progress.story.revisit',
+                {
+                  visit: visitTitle,
+                },
+              )}
+            </Text>
+          )}
+          {reviewedToday && <Text style={styles.dailySub}>{t('progress.story.reviewed')}</Text>}
+          {quizToday && <Text style={styles.dailySub}>{t('progress.story.quiz')}</Text>}
+          {historyUnavailable && (
+            <Text accessibilityRole="alert" style={styles.dailySub}>
+              {t('progress.evidenceUnavailable')}
+            </Text>
+          )}
+          {!hasStory && !historyUnavailable && (
+            <Text style={styles.dailySub}>{t('progress.story.empty')}</Text>
+          )}
+          {practiceError && (
+            <Text accessibilityRole="alert" style={styles.dailySub}>
+              {t('home.progressUnavailable')}
+            </Text>
+          )}
+          {!hasStory && (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ busy: openingPractice }}
+              disabled={openingPractice}
+              style={({ pressed }) => [styles.studyMoreBtn, pressed && styles.pressed]}
+              onPress={() => void openPractice()}
+            >
+              <Text style={styles.studyMoreText}>
+                {firstPractice
+                  ? t('progress.story.practice', {
+                      deck: getDeckDisplayName(firstPractice, language),
+                    })
+                  : t('phrasebook.browse')}
+              </Text>
+            </Pressable>
+          )}
         </View>
 
         <PracticePassport />
@@ -288,7 +457,7 @@ export default function ProgressScreen() {
         <View style={styles.dailyCard}>
           <Text style={styles.dailyTitle}>{t('progress.recognition')}</Text>
           <Text style={styles.dailySub}>
-            {snapshot.history.unavailable || error
+            {snapshot.history.unavailable
               ? t('progress.recognitionUnavailable')
               : recognition.length
                 ? t('progress.recognitionScore', {
@@ -306,7 +475,7 @@ export default function ProgressScreen() {
             {t('progress.evidenceTitle')}
           </Text>
           <Text style={styles.evidenceNote}>{t('progress.evidenceNote')}</Text>
-          {snapshot.history.unavailable || error ? (
+          {snapshot.history.unavailable ? (
             <Text style={styles.evidenceNote}>{t('progress.evidenceUnavailable')}</Text>
           ) : (
             evidence.map((row) => (

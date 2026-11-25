@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { readDailyPlan, startDailyPlan } from '../../src/storage/dailyPlans';
+import { abandonDailyPlan, readDailyPlan, startDailyPlan } from '../../src/storage/dailyPlans';
 import { DailyPlan, validateDailyPlanEnvelope } from '../../src/storage/dailyPlanSchema';
 import { commitFlashcardAnswer } from '../../src/storage/flashcardAnswer';
 import { getLearningEvents } from '../../src/storage/learningEvents';
@@ -172,6 +172,19 @@ test('review-only completion permits a new plan but a retained old grade cannot 
   await startDailyPlan(next);
   await commitFlashcardAnswer(grade(initial));
   expect(await readDailyPlan()).toEqual(next);
+});
+test('an already-confirmed early end cannot erase a plan that finished first', async () => {
+  const initial = plan();
+  delete initial.applied;
+  await startDailyPlan(initial);
+  await commitFlashcardAnswer(grade(initial));
+  await commitFlashcardAnswer(grade(initial, 'c2', []));
+  const complete = await readDailyPlan();
+
+  await abandonDailyPlan(initial.id);
+  expect(complete?.phase).toBe('complete');
+  expect(await readDailyPlan()).toEqual(complete);
+  expect((await getDailyProgress()).count).toBe(2);
 });
 test('recovers a partial plan/grade write exactly once after disk failure', async () => {
   const initial = plan();
